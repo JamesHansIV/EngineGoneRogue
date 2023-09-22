@@ -1,0 +1,6 @@
+The core functionality for a game engine include having a rendering engine, a physics engine and/or collission detection, sound, scripting,
+animation, artificial intelligence, networking, streaming, memory management, threading, scene, and video support. A rendering engine controls how
+all graphics are displayed to the user. A physics engine controls the physics of the game. Scripting allows for the user of the game engine to
+code their own game mechanics. Scene allows users to create maps, graphics and GUI easily, normally through a graph structure. Artificial intelligence
+is how the Non-playable characters or NPCs function, and are edited by the user. Essentially, a game engine is an abstraction for the user using the game
+engine, so that they can spend more time creating their game instead of worrying about these lower level technical issues.
