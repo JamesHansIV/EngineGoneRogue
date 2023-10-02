@@ -10,6 +10,9 @@ LINKER_FLAGS = -lsdl2 -lSDL2_image
 
 all: t1 t2 t3 t4 t5 t6
 
+clean:
+	rm build/debug/*
+	
 t1: 
 	$(CC) $(COMPILER_FlAGS) $(LINKER_FLAGS) $(INCLUDE_PATHS) $(LIBRARY_PATHS) src/t1.cpp -o $(BUILD_DIR)/t1
 
