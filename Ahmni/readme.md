@@ -1,5 +1,5 @@
 # How to run
 1. Go into Ahmni directory. (Where this readme is located)
-2. $ make
-3. $ ./Tutorial
-4. Press on all arrow keys and see how the image that appears changes.
+3. Install SDL2 and SDL2_images into your current environment
+4. $ make
+5. $ ./Tutorial

@@ -1,0 +1,16 @@
+[
+ {
+  "directory": "/Users/Ahmni/Documents/581/EngineGoneRogue/Ahmni",
+  "arguments": [
+   "g++",
+   "-g",
+   "-Wall",
+   "-c",
+   "-pedantic",
+   "main.cpp",
+   "-I/usr/local/include/SDL2",
+   "-D_THREAD_SAFE"
+  ],
+  "file": "main.cpp"
+ }
+]
