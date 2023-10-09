@@ -1,0 +1,1 @@
+To run a tutorial, navigate to a directory and run "make". To run the compiled program, run "./prog".
