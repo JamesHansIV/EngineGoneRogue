@@ -4,6 +4,7 @@
 #include "../Character/Warrior.h"
 #include "../Object/GameObject.h"
 
+
 Engine* Engine::m_Instance = nullptr;
 Warrior* player = nullptr;
 
@@ -49,11 +50,11 @@ void Engine::Render(){
 void Engine::Events(){
     SDL_Event event;
     SDL_PollEvent(&event);
-    switch(event.type){
-        case SDL_QUIT:
-            Quit();
-            break;
+    if (event.type == SDL_QUIT) {
+        Quit();
+        return;
     }
+    m_EventHandler.handleEvent(event);
 }
 
 bool Engine::Clean(){
