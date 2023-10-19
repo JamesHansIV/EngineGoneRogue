@@ -1,6 +1,3 @@
-#include <SDL2/SDL.h>
-#include <SDL2_image/SDL_image.h>
-#include <iostream>
 #include "Core/Engine.h"
 
 int main(int argc, char* args[])

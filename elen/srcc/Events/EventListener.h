@@ -1,6 +1,8 @@
-#include <SDL2/SDL.h>
+#pragma once
+
+#include "Event.h"
 
 class EventListener {
     public:
-        virtual void OnEvent(SDL_Event event) = 0;
+        virtual void OnEvent(Event& event) = 0;
 };

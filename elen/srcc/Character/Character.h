@@ -1,8 +1,9 @@
 #pragma once
 #include "../Object/GameObject.h"
+#include "../Events/EventListener.h"
 #include <string>
 
-class Character: public GameObject {
+class Character: public GameObject, public EventListener {
 
     public:
         Character(Properties* props): GameObject(props) {}
@@ -10,6 +11,7 @@ class Character: public GameObject {
         virtual void Draw()=0;
         virtual void Clean()=0;
         virtual void Update(float dt)=0;
+        virtual void OnEvent(Event& e) = 0;
 
     protected:
         std::string m_Name;

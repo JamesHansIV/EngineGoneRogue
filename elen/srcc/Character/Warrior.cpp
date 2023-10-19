@@ -12,14 +12,46 @@ void Warrior::Draw(){
 }
 
 void Warrior::Update(float dt){
-    m_RigidBody->Update(0.4);
-    m_RigidBody->ApplyForceX(5);
+    m_RigidBody->Update(0.3);
+    m_RigidBody->ApplyForceX(0);
 
     m_Transform->TranslateX(m_RigidBody->Position().X);
     m_Transform->TranslateY(m_RigidBody->Position().Y);
 
     m_Animation->Update();
-} 
+}
+
+void Warrior::OnEvent(Event& event) {
+    SDL_Event& e = event.getEvent();
+    
+    if (e.type == SDL_KEYDOWN) {
+        switch(e.key.keysym.sym )
+        {
+            case SDLK_UP:
+            SDL_Log("Warrior move up\n");
+            m_Transform->TranslateY(m_RigidBody->Position().Y - 50);
+            break;
+
+            case SDLK_DOWN:
+            SDL_Log("Warrior move down\n");
+            m_Transform->TranslateY(m_RigidBody->Position().Y + 50);
+            break;
+
+            case SDLK_LEFT:
+            SDL_Log("Warrior move left\n");
+            m_Transform->TranslateX(m_RigidBody->Position().X - 50);
+            break;
+
+            case SDLK_RIGHT:
+            SDL_Log("Warrior move right\n");
+            m_Transform->TranslateX(m_RigidBody->Position().X + 50);
+            break;
+
+            default:
+            break;
+        }
+    }
+}
 
 void Warrior::Clean(){
     TextureManager::GetInstance()->Clean();

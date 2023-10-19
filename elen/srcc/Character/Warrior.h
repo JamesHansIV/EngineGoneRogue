@@ -12,6 +12,8 @@ class Warrior: public Character{
         virtual void Draw();
         virtual void Clean();
         virtual void Update(float dt);
+        
+        virtual void OnEvent(Event& e);
 
     private:
         Animation* m_Animation;

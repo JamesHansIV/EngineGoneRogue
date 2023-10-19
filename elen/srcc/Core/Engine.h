@@ -2,7 +2,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2_image/SDL_image.h>
 
-#include "../Events/EventHandler.h"
+#include "../Events/EventManager.h"
 
 #define SCREEN_WIDTH 960
 #define SCREEN_HEIGHT 500
@@ -32,6 +32,6 @@ class Engine{
     
         SDL_Window* m_Window;
         SDL_Renderer* m_Renderer;
-        EventHandler m_EventHandler;
+        EventManager m_EventHandler;
         static Engine* m_Instance;
 };

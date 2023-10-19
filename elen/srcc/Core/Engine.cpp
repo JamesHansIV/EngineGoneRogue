@@ -4,6 +4,7 @@
 #include "../Character/Warrior.h"
 #include "../Object/GameObject.h"
 
+#include <unistd.h>
 
 Engine* Engine::m_Instance = nullptr;
 Warrior* player = nullptr;
@@ -26,10 +27,12 @@ bool Engine::Init(){
         SDL_Log("Failed to create Renderer: %s", SDL_GetError());
         return false;
     }
-
-    TextureManager::GetInstance()->Load("player", "imgs/Idle.png");
+    //TODO: note that the cwd is <projectDir>/build instead of <projectDir>.
+    //      Set a working directory path macro to use absolute file paths
+    TextureManager::GetInstance()->Load("player", "../imgs/Idle.png");
     player = new Warrior(new Properties("player", 0, 0, 136, 96));
 
+    m_EventHandler.addListener(*player);
     Transform tf;
     tf.Log();
     return m_IsRunning = true;
@@ -58,11 +61,13 @@ void Engine::Events(){
 }
 
 bool Engine::Clean(){
+    //TODO: check if cleanup is successful
     TextureManager::GetInstance()->Clean();
     SDL_DestroyRenderer(m_Renderer);
     SDL_DestroyWindow(m_Window);
     IMG_Quit();
     SDL_Quit();
+    return true;
 }
 
 void Engine::Quit(){
