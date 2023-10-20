@@ -1,3 +1,0 @@
-/Users/minwoolee/engine_gone_rogue/elen/build/CMakeFiles/Engine.dir
-/Users/minwoolee/engine_gone_rogue/elen/build/CMakeFiles/edit_cache.dir
-/Users/minwoolee/engine_gone_rogue/elen/build/CMakeFiles/rebuild_cache.dir
