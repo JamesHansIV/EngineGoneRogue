@@ -6,7 +6,7 @@ To build this project:
 
 
 To build with cmake:
-1) % cmake -B <buildDir>
-2) % cd <buildDir>
+1) % cmake -B (buildDir)
+2) % cd (buildDir)
 3) % make all
 4) % ./Engine
