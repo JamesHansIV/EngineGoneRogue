@@ -3,6 +3,10 @@
 
 #include "../Character/Warrior.h"
 #include "../Object/GameObject.h"
+#include "InputChecker.h"
+
+#include "backends/imgui_impl_sdl2.h"
+#include "backends/imgui_impl_sdlrenderer2.h"
 
 #include <unistd.h>
 
@@ -32,6 +36,10 @@ bool Engine::Init(){
     TextureManager::GetInstance()->Load("player", "../res/imgs/Idle.png");
     player = new Warrior(new Properties("player", 0, 0, 136, 96));
 
+    ImGui::CreateContext();
+    ImGui_ImplSDL2_InitForSDLRenderer(m_Window, m_Renderer);
+    ImGui_ImplSDLRenderer2_Init(m_Renderer);
+
     m_EventHandler.addListener(*player);
     Transform tf;
     tf.Log();
@@ -40,28 +48,66 @@ bool Engine::Init(){
 
 void Engine::Update(float dt){
     player->Update(0);
+
+    ImGui_ImplSDLRenderer2_NewFrame();
+    ImGui_ImplSDL2_NewFrame();
+    ImGui::NewFrame();
+
+    {
+        static float f = 0.0f;
+        static int counter = 0;
+
+        ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
+
+        ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+
+        ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+
+        if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
+            counter++;
+        ImGui::SameLine();
+        ImGui::Text("counter = %d", counter);
+
+        ImGui::End();
+    }
 }
 
 void Engine::Render(){
+    ImGui::Render();
     SDL_SetRenderDrawColor(m_Renderer, 124, 218, 254, 255);
     SDL_RenderClear(m_Renderer);
-
+    ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
     player->Draw();
     SDL_RenderPresent(m_Renderer);
 }
 
 void Engine::Events(){
     SDL_Event event;
-    SDL_PollEvent(&event);
-    if (event.type == SDL_QUIT) {
-        Quit();
-        return;
+    while (SDL_PollEvent(&event)) {
+        ImGui_ImplSDL2_ProcessEvent(&event);
+        switch (event.type) {
+            case SDL_QUIT:
+                Quit();
+                return;
+            case SDL_KEYDOWN:
+                SDL_Log("Setting key %d to true, %d", event.key.keysym.sym, SDLK_UP);
+                InputChecker::setKeyPressed(event.key.keysym.sym, true);
+                SDL_Log("Key is set: %d", InputChecker::isKeyPressed(event.key.keysym.sym));
+                break;
+            case SDL_KEYUP:
+                InputChecker::setKeyPressed(event.key.keysym.sym, false);
+                break;
+        }
     }
     m_EventHandler.handleEvent(event);
 }
 
 bool Engine::Clean(){
     //TODO: check if cleanup is successful
+    ImGui_ImplSDLRenderer2_Shutdown();
+    ImGui_ImplSDL2_Shutdown();
+    ImGui::DestroyContext();
+
     TextureManager::GetInstance()->Clean();
     SDL_DestroyRenderer(m_Renderer);
     SDL_DestroyWindow(m_Window);

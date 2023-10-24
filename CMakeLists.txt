@@ -15,15 +15,16 @@ file(GLOB_RECURSE engineSrc CONFIGURE_DEPENDS
     "src/GUI/*.cpp"
     "src/Object/*.cpp"
     "src/Physics/*.cpp"
+    "vendor/imgui/backends/imgui_impl_sdlrenderer2.cpp"
+    "vendor/imgui/backends/imgui_impl_sdl2.cpp"
 )
-
-add_subdirectory(vendor/imgui)
 
 add_executable(Engine ${engineSrc})
 
 target_include_directories(Engine PUBLIC "${CMAKE_SOURCE_DIR}/vendor/imgui")
 target_include_directories(Engine PUBLIC "${CMAKE_SOURCE_DIR}/include")
 
+add_subdirectory(vendor/imgui)
 
 target_link_libraries(Engine imgui)
 target_link_libraries(Engine "${CMAKE_SOURCE_DIR}/lib/SDL2/libSDL2-2.0.0.dylib")
