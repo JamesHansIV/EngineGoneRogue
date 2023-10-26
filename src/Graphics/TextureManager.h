@@ -2,8 +2,21 @@
 #include <SDL2/SDL.h>
 #include <SDL2_image/SDL_image.h>
 
+#include "Texture.h"
+
 #include <string>
 #include <map>
+
+struct DrawData {
+    int srcX;
+    int srcY;
+    int destX;
+    int destY;
+    int destWidth;
+    int destHeight;
+    
+};
+
 
 class TextureManager{
     public:
@@ -12,14 +25,17 @@ class TextureManager{
             return m_Instance = (m_Instance != nullptr) ? m_Instance : new TextureManager();
         }
 
-        bool Load(std::string id, std::string filename);
+        bool AddTexture(std::string id, std::string filename);
+        Texture* GetTexture(std::string id) { return m_TextureMap.find(id) != m_TextureMap.end() ? m_TextureMap[id] : nullptr; }
         void Drop(std::string id);
         void Clean();
         void Draw(std::string id, int x, int y, int width, int height, SDL_RendererFlip flip = SDL_FLIP_NONE);
-        void DrawFrame(std::string id, int x, int y, int width, int heigt, int row, int frame, SDL_RendererFlip flip);
+        void Draw(std::string id, int x, int y, int width, int height, double angle, const SDL_Point* center, SDL_RendererFlip flip = SDL_FLIP_NONE);
+        void DrawFrame(std::string id, int x, int y, int width, int height, int row, int frame, SDL_RendererFlip flip = SDL_FLIP_NONE);
+        void DrawFrame(std::string id, int x, int y, int width, int height, int row, int frame, double angle, const SDL_Point* center, SDL_RendererFlip flip);
 
     private:
         TextureManager(){};
-        std::map<std::string, SDL_Texture*> m_TextureMap;
+        std::map<std::string, Texture*> m_TextureMap;
         static TextureManager* m_Instance;
 };

@@ -3,9 +3,9 @@
 #include <SDL2_image/SDL_image.h>
 
 #include "../Events/EventManager.h"
-
-#define SCREEN_WIDTH 960
-#define SCREEN_HEIGHT 500
+#include "Layer.h"
+#include "../Objects/Map.h"
+#include <unordered_map>
 
 class Engine{
     public:
@@ -22,6 +22,9 @@ class Engine{
         void Render();
         void Events();
 
+
+        void AddObject(GameObject* obj) { registry[m_CurrentID] = obj; m_CurrentID++; }
+
         inline bool IsRunning(){return m_IsRunning;};
         inline SDL_Renderer* GetRenderer(){return m_Renderer;};
 
@@ -33,5 +36,10 @@ class Engine{
         SDL_Window* m_Window;
         SDL_Renderer* m_Renderer;
         EventManager m_EventHandler;
+        Map* m_Map;
+
+        int m_CurrentID;
+        std::unordered_map<int, GameObject*> registry;
+        std::vector<Layer> layers;
         static Engine* m_Instance;
 };

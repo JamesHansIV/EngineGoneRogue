@@ -1,12 +1,14 @@
 #include "Engine.h"
 #include "../Graphics/TextureManager.h"
 
-#include "../Character/Warrior.h"
-#include "../Object/GameObject.h"
+#include "../Objects/Warrior.h"
+#include "../Objects/GameObject.h"
 #include "InputChecker.h"
 
 #include "backends/imgui_impl_sdl2.h"
 #include "backends/imgui_impl_sdlrenderer2.h"
+
+#include "../utils.h"
 
 #include <unistd.h>
 
@@ -33,8 +35,18 @@ bool Engine::Init(){
     }
     //TODO: note that the cwd is <projectDir>/build instead of <projectDir>.
     //      Set a working directory path macro to use absolute file paths
-    TextureManager::GetInstance()->Load("player", "../res/imgs/Idle.png");
+    m_CurrentID = 0;
+
+    TextureManager::GetInstance()->AddTexture("player", "../assets/textures/Idle.png");
+    TextureManager::GetInstance()->AddTexture("tilemap", "../assets/textures/kenney_tiny-dungeon/Tilemap/tilemap_packed.png");
+    m_Map = new Map("tilemap");
+    if (!m_Map->LoadMap("../assets/maps/tiny_dungeon1.txt")) {
+        SDL_Log("Failed to load map\n");
+    }
+    
     player = new Warrior(new Properties("player", 0, 0, 136, 96));
+
+    //AddObject(player);
 
     ImGui::CreateContext();
     ImGui_ImplSDL2_InitForSDLRenderer(m_Window, m_Renderer);
@@ -70,6 +82,9 @@ void Engine::Update(float dt){
 
         ImGui::End();
     }
+
+    //m_Map.LoadMap("../assets/textures/maps/tiny_dungeon1.txt");
+
 }
 
 void Engine::Render(){
@@ -90,9 +105,7 @@ void Engine::Events(){
                 Quit();
                 return;
             case SDL_KEYDOWN:
-                SDL_Log("Setting key %d to true, %d", event.key.keysym.sym, SDLK_UP);
                 InputChecker::setKeyPressed(event.key.keysym.sym, true);
-                SDL_Log("Key is set: %d", InputChecker::isKeyPressed(event.key.keysym.sym));
                 break;
             case SDL_KEYUP:
                 InputChecker::setKeyPressed(event.key.keysym.sym, false);
