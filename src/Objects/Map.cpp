@@ -10,13 +10,11 @@
 #include "../utils.h"
 
 Map::~Map() {
-    if (!m_Grid) {
-        return;
+    for (auto row : m_Grid) {
+        for (auto tile : row) {
+            delete tile;
+        }
     }
-    for (int i = 0; i < m_Height; i++) {
-        delete m_Grid[i];
-    }
-    delete m_Grid;
 }
 
 bool Map::LoadMap(std::string filename) {
@@ -25,6 +23,9 @@ bool Map::LoadMap(std::string filename) {
 
     std::string width = "";
     std::string height = "";
+    std::string srcTileSize = "";
+    std::string destTileSize = "";
+
     std::getline(file, width);
     if (width == "") {
         SDL_Log("Tile map contains no width\n");
@@ -35,27 +36,44 @@ bool Map::LoadMap(std::string filename) {
         SDL_Log("Tile map contains no height\n");
         return false;
     }
-    m_Width = atoi(width.c_str());
-    m_Height = atoi(height.c_str());
+    std::getline(file, srcTileSize);
+    if (srcTileSize == "") {
+        SDL_Log("Tile map contains no source tile size\n");
+        return false;
+    }
+    std::getline(file, destTileSize);
+    if (destTileSize == "") {
+        SDL_Log("Tile map contains no destination tile size\n");
+        return false;
+    }
+    m_Width = stoi(width);
+    m_Height = stoi(height);
+    m_SrcTileSize = stoi(srcTileSize);
+    m_DestTileSize = stoi(destTileSize);
 
     std::string row;
     std::string entry;
     int i = 0;
     int j = 0;
-    m_Grid = new Coord*[m_Height];
+
     while (std::getline(file, row)) {
         std::stringstream ss(row);
-        m_Grid[i] = new Coord[m_Width];
+        std::vector<Tile*> row;
+        m_Grid.push_back(row);
+
         SDL_Log("row %d", i);
         while (ss >> entry) {
             if (entry.size() != 2) {
                 SDL_Log("Tile map entry has incorrect size");
                 return false;
             }
-            
-            Coord c = { int(entry[0] - '0'), int(entry[1] - '0') };
-            m_Grid[i][j] = c;
-            SDL_Log("%d: (%d, %d)", j, c.x, c.y);
+            int tileRow = int(entry[0] - '0');
+            int tileColumn = int(entry[1] - '0');
+
+            Properties props(m_TextureID, j * m_DestTileSize, i * m_DestTileSize, m_DestTileSize, m_SrcTileSize);
+            Tile* tile = new Tile(props, tileRow, tileColumn, m_SrcTileSize, m_DestTileSize);
+            m_Grid[i].push_back(tile);
+            SDL_Log("%d: (%d, %d)", j, tileRow * m_SrcTileSize, tileColumn * m_SrcTileSize);
             j++;
         }
         j = 0;
@@ -65,12 +83,9 @@ bool Map::LoadMap(std::string filename) {
 }
 
 void Map::Draw() {
-    int destTileWidth = SCREEN_WIDTH / m_Width;
-    int destTileHeight = SCREEN_HEIGHT / m_Height;
-
-    for (int i = 0; i < m_Height; i++) {
-        for (int j = 0; j < m_Width; j++) {
-            //TextureManager::GetInstance()->DrawFrame(m_TextureID, i * destTileHeight, j * destTileHeight, dest);
+    for (auto row : m_Grid) {
+        for (auto tile : row) {
+            tile->Draw();
         }
     }
 }

@@ -42,9 +42,11 @@ bool Engine::Init(){
     m_Map = new Map("tilemap");
     if (!m_Map->LoadMap("../assets/maps/tiny_dungeon1.txt")) {
         SDL_Log("Failed to load map\n");
+        return false;
     }
     
-    player = new Warrior(new Properties("player", 0, 0, 136, 96));
+    Properties props("player", 0, 0, 136, 96);
+    player = new Warrior(props);
 
     //AddObject(player);
 
@@ -83,15 +85,16 @@ void Engine::Update(float dt){
         ImGui::End();
     }
 
-    //m_Map.LoadMap("../assets/textures/maps/tiny_dungeon1.txt");
-
 }
 
 void Engine::Render(){
+    
+    
     ImGui::Render();
     SDL_SetRenderDrawColor(m_Renderer, 124, 218, 254, 255);
     SDL_RenderClear(m_Renderer);
     ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
+    m_Map->Draw();
     player->Draw();
     SDL_RenderPresent(m_Renderer);
 }

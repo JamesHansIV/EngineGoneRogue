@@ -7,7 +7,7 @@
 class Warrior: public Character{
 
     public:
-        Warrior(Properties* props);
+        Warrior(Properties& props);
 
         virtual void Draw();
         virtual void Clean();

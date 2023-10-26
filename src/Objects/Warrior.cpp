@@ -2,7 +2,7 @@
 #include "../Graphics/TextureManager.h"
 #include "../Core/InputChecker.h"
 
-Warrior::Warrior(Properties* props): Character(props){
+Warrior::Warrior(Properties& props): Character(props){
     m_Animation = new Animation();
     m_Animation->SetProps(m_TextureID, 1, 6, 80, SDL_FLIP_HORIZONTAL);
     m_RigidBody = new RigidBody();

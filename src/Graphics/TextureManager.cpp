@@ -26,6 +26,17 @@ void TextureManager::Clean()
     SDL_Log("Texture Manager cleaned");
 }
 
+void TextureManager::Draw(std::string id, SDL_Rect& srcRect, SDL_Rect& dstRect, SDL_RendererFlip flip)
+{
+    
+    SDL_RenderCopyEx(Engine::GetInstance()->GetRenderer(), m_TextureMap[id]->GetTexture(), &srcRect, &dstRect, 0, nullptr, flip);
+}
+
+void TextureManager::Draw(std::string id, SDL_Rect& srcRect, SDL_Rect& dstRect, double angle, const SDL_Point* center, SDL_RendererFlip flip)
+{
+    SDL_RenderCopyEx(Engine::GetInstance()->GetRenderer(), m_TextureMap[id]->GetTexture(), &srcRect, &dstRect, angle, center, flip);
+}
+
 void TextureManager::Draw(std::string id, int x, int y, int width, int height, SDL_RendererFlip flip)
 {
     SDL_Rect srcRect = {0,0, width, height};

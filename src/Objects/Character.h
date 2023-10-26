@@ -6,7 +6,7 @@
 class Character: public GameObject, public EventListener {
 
     public:
-        Character(Properties* props): GameObject(props) {}
+        Character(Properties& props): GameObject(props) {}
 
         virtual void Draw()=0;
         virtual void Clean()=0;
