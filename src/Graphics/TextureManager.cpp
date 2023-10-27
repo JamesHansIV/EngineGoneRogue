@@ -26,6 +26,10 @@ void TextureManager::Clean()
     SDL_Log("Texture Manager cleaned");
 }
 
+void TextureManager::SetTextureColor(std::string id, Uint8 r, Uint8 g, Uint8 b) {
+    SDL_SetTextureColorMod(m_TextureMap[id]->GetTexture(), r, g, b);
+}
+
 void TextureManager::Draw(std::string id, SDL_Rect& srcRect, SDL_Rect& dstRect, SDL_RendererFlip flip)
 {
     

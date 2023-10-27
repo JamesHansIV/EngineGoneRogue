@@ -1,6 +1,6 @@
-#include "Warrior.h"
-#include "../Graphics/TextureManager.h"
-#include "../Core/InputChecker.h"
+// #include "Warrior.h"
+// #include "../Graphics/TextureManager.h"
+// #include "../Core/InputChecker.h"
 
 // Warrior::Warrior(Properties& props): Character(props){
 //     m_Animation = new Animation();

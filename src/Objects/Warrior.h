@@ -1,8 +1,6 @@
-#pragma once
-
-#include "Character.h"
-#include "../Components/Animation.h"
-#include "../Components/RigidBody.h"
+// #pragma once
+// #include "../Components/Animation.h"
+// #include "../Components/RigidBody.h"
 
 // class Warrior: public Character{
 
