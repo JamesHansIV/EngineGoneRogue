@@ -10,6 +10,7 @@
 
 #include "../globals.h"
 #include "../Components/DrawData.h"
+#include "../Components/Player.h"
 
 #include <unistd.h>
 #include <fstream>
@@ -36,6 +37,55 @@ bool DrawMap() {
         TextureManager::GetInstance()->Draw(d->TextureID, srcRect, dstRect);
     }
     return true;
+}
+
+bool LoadPlayer(std::string textureID) {
+    Engine* engine = Engine::GetInstance();
+    int currID = engine->GetCurrentObjID();
+
+    GameObject* obj = new GameObject(currID);
+    Position* pos = new Position(currID, 0, 0, 0, 0);
+    Dimensions* dim = new Dimensions(currID, 136, 96, 136, 96);
+    DrawData* draw = new DrawData(currID, textureID);
+    Player* player = new Player(currID, [](int objectID) {
+        GameObject* playerObj = Engine::GetInstance()->GetObject(objectID);
+        Position* p = (Position*)playerObj->GetComponent(ComponentType::Position);
+        if (InputChecker::isKeyPressed(SDLK_UP)) {
+            SDL_Log("Player move up\n");
+            p->DstY -= 10;
+        }
+        if (InputChecker::isKeyPressed(SDLK_DOWN)) {
+            SDL_Log("Player move down\n");
+            p->DstY += 10;
+        }
+        if (InputChecker::isKeyPressed(SDLK_LEFT)) {
+            SDL_Log("Player move left\n");
+            p->DstX -= 10;
+        }
+        if (InputChecker::isKeyPressed(SDLK_RIGHT)) {
+            SDL_Log("Player move right\n");
+            p->DstX += 10;
+        }
+    });
+    obj->AddComponent(pos);
+    obj->AddComponent(dim);
+    obj->AddComponent(draw);
+    obj->AddComponent(player);
+    engine->AddComponent(pos);
+    engine->AddComponent(dim);
+    engine->AddComponent(draw);
+    engine->AddComponent(player);
+
+    engine->AddObject(obj);
+    return true;
+}
+
+bool UpdatePlayer() {
+    std::vector<Component*>& playerComponents = Engine::GetInstance()->GetComponents(ComponentType::Player);
+    for (auto playerComponent : playerComponents) {
+        Player* player = (Player*)playerComponent;
+        player->OnUpdate(player->ObjectID);
+    }
 }
 
 bool LoadMap(std::string filename, std::string textureID) {
@@ -145,6 +195,11 @@ bool Engine::Init(){
         SDL_Log("Failed to load map\n");
         return false;
     }
+
+    if (!LoadPlayer("player")) {
+        SDL_Log("Failed to load player\n");
+        return false;
+    }
     
     //Properties props("player", 0, 0, 136, 96);
     //player = new Warrior(props);
@@ -173,7 +228,7 @@ std::vector<Component*>& Engine::GetComponents(ComponentType type) {
 }
 
 void Engine::Update(float dt){
-    //player->Update(0);
+    UpdatePlayer();
 
     ImGui_ImplSDLRenderer2_NewFrame();
     ImGui_ImplSDL2_NewFrame();

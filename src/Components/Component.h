@@ -4,7 +4,7 @@ enum class ComponentType {
     None = 0,
     Position, Dimensions, DrawData, Rotate, Physics, Animation, Transform, Lighting,
     ParticleEffect, Collision, UserControl, CameraFollow,
-    Destroy, Audio
+    Destroy, Audio, Player
 };
 
 struct Component {
