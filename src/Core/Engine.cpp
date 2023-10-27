@@ -8,12 +8,112 @@
 #include "backends/imgui_impl_sdl2.h"
 #include "backends/imgui_impl_sdlrenderer2.h"
 
-#include "../utils.h"
+#include "../globals.h"
+#include "../Components/DrawData.h"
 
 #include <unistd.h>
+#include <fstream>
+#include <sstream>
 
 Engine* Engine::m_Instance = nullptr;
-Warrior* player = nullptr;
+//Warrior* player = nullptr;
+
+bool DrawMap() {
+    std::vector<Component*>& drawData = Engine::GetInstance()->GetComponents(ComponentType::DrawData);
+
+    if (drawData.empty()) {
+        SDL_Log("Nothing to draw");
+        return false;
+    }
+
+    for (auto data : drawData) {
+        DrawData* d = (DrawData*)data;
+        GameObject* obj = Engine::GetInstance()->GetObject(d->ObjectID);
+        Position* pos = (Position*)obj->GetComponent(ComponentType::Position);
+        Dimensions* dim = (Dimensions*)obj->GetComponent(ComponentType::Dimensions);
+        SDL_Rect srcRect { pos->Col * dim->SrcWidth, pos->Row * dim->SrcHeight, dim->SrcWidth, dim->SrcHeight };
+        SDL_Rect dstRect { pos->DstX, pos->DstY, dim->DstWidth, dim->DstHeight };
+        TextureManager::GetInstance()->Draw(d->TextureID, srcRect, dstRect);
+    }
+    return true;
+}
+
+bool LoadMap(std::string filename, std::string textureID) {
+    std::ifstream file;
+    file.open(filename);
+
+    std::string width = "";
+    std::string height = "";
+    std::string srcTileSize = "";
+    std::string destTileSize = "";
+
+    std::getline(file, width);
+    if (width == "") {
+        SDL_Log("Tile map contains no width\n");
+        return false;
+    }
+    std::getline(file, height);
+    if (height == "") {
+        SDL_Log("Tile map contains no height\n");
+        return false;
+    }
+    std::getline(file, srcTileSize);
+    if (srcTileSize == "") {
+        SDL_Log("Tile map contains no source tile size\n");
+        return false;
+    }
+    std::getline(file, destTileSize);
+    if (destTileSize == "") {
+        SDL_Log("Tile map contains no destination tile size\n");
+        return false;
+    }
+    int Width = stoi(width);
+    int Height = stoi(height);
+    int SrcTileSize = stoi(srcTileSize);
+    int DestTileSize = stoi(destTileSize);
+
+    std::string row;
+    std::string entry;
+    int i = 0;
+    int j = 0;
+
+
+    while (std::getline(file, row)) {
+        std::stringstream ss(row);
+
+        SDL_Log("row %d", i);
+        while (ss >> entry) {
+            if (entry.size() != 2) {
+                SDL_Log("Tile map entry has incorrect size");
+                return false;
+            }
+            int tileRow = int(entry[0] - '0');
+            int tileColumn = int(entry[1] - '0');
+
+            Engine* engine = Engine::GetInstance();
+            int currID = engine->GetCurrentObjID();
+            //Properties props(textureID, j * DestTileSize, i * DestTileSize, DestTileSize, SrcTileSize);
+            GameObject* obj = new GameObject(currID);
+            Position* pos = new Position(currID, tileRow, tileColumn, j * DestTileSize, i * DestTileSize);
+            Dimensions* dim = new Dimensions(currID, SrcTileSize, SrcTileSize, DestTileSize, DestTileSize);
+            DrawData* draw = new DrawData(currID, textureID);
+            obj->AddComponent(pos);
+            obj->AddComponent(dim);
+            obj->AddComponent(draw);
+            engine->AddComponent(pos);
+            engine->AddComponent(dim);
+            engine->AddComponent(draw);
+
+            engine->AddObject(obj);
+            SDL_Log("%d: (%d, %d)", j, tileRow * SrcTileSize, tileColumn * SrcTileSize);
+            j++;
+        }
+        j = 0;
+        i++;
+    }
+    return true;
+}
+
 
 bool Engine::Init(){
 
@@ -33,20 +133,21 @@ bool Engine::Init(){
         SDL_Log("Failed to create Renderer: %s", SDL_GetError());
         return false;
     }
+    
+    m_CurrObjectID = 0;
+
     //TODO: note that the cwd is <projectDir>/build instead of <projectDir>.
     //      Set a working directory path macro to use absolute file paths
-    m_CurrentID = 0;
-
     TextureManager::GetInstance()->AddTexture("player", "../assets/textures/Idle.png");
     TextureManager::GetInstance()->AddTexture("tilemap", "../assets/textures/kenney_tiny-dungeon/Tilemap/tilemap_packed.png");
-    m_Map = new Map("tilemap");
-    if (!m_Map->LoadMap("../assets/maps/tiny_dungeon1.txt")) {
+    //m_Map = new Map("tilemap");
+    if (!LoadMap("../assets/maps/tiny_dungeon1.txt", "tilemap")) {
         SDL_Log("Failed to load map\n");
         return false;
     }
     
-    Properties props("player", 0, 0, 136, 96);
-    player = new Warrior(props);
+    //Properties props("player", 0, 0, 136, 96);
+    //player = new Warrior(props);
 
     //AddObject(player);
 
@@ -54,14 +155,25 @@ bool Engine::Init(){
     ImGui_ImplSDL2_InitForSDLRenderer(m_Window, m_Renderer);
     ImGui_ImplSDLRenderer2_Init(m_Renderer);
 
-    m_EventHandler.addListener(*player);
-    Transform tf;
-    tf.Log();
+    //m_EventHandler.addListener(*player);
     return m_IsRunning = true;
 }
 
+void Engine::AddComponent(Component* component) {
+    ComponentType type = component->GetComponentType();
+    if (m_ComponentStore.find(type) == m_ComponentStore.end()) {
+        m_ComponentStore[type];
+    }
+    m_ComponentStore[type].push_back(component);
+}
+
+std::vector<Component*>& Engine::GetComponents(ComponentType type) {
+    assert(m_ComponentStore.find(type) != m_ComponentStore.end());
+    return m_ComponentStore[type];
+}
+
 void Engine::Update(float dt){
-    player->Update(0);
+    //player->Update(0);
 
     ImGui_ImplSDLRenderer2_NewFrame();
     ImGui_ImplSDL2_NewFrame();
@@ -94,8 +206,9 @@ void Engine::Render(){
     SDL_SetRenderDrawColor(m_Renderer, 124, 218, 254, 255);
     SDL_RenderClear(m_Renderer);
     ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
-    m_Map->Draw();
-    player->Draw();
+    //m_Map->Draw();
+    //player->Draw();
+    DrawMap();
     SDL_RenderPresent(m_Renderer);
 }
 
@@ -119,10 +232,19 @@ void Engine::Events(){
 }
 
 bool Engine::Clean(){
+
+    for (auto it = m_ObjectStore.begin(); it != m_ObjectStore.end(); ++it) {
+        
+    }
+    for (auto it = m_ObjectStore.begin(); it != m_ObjectStore.end(); ++it) {
+        
+    }
+
     //TODO: check if cleanup is successful
     ImGui_ImplSDLRenderer2_Shutdown();
     ImGui_ImplSDL2_Shutdown();
     ImGui::DestroyContext();
+
 
     TextureManager::GetInstance()->Clean();
     SDL_DestroyRenderer(m_Renderer);

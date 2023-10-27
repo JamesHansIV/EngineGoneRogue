@@ -22,8 +22,12 @@ class Engine{
         void Render();
         void Events();
 
+        void AddObject(GameObject* obj) { m_ObjectStore[m_CurrObjectID] = obj; m_CurrObjectID++; }
+        GameObject* GetObject(int id) { return m_ObjectStore[id]; }
+        void AddComponent(Component* component);
+        std::vector<Component*>& GetComponents(ComponentType type);
 
-        void AddObject(GameObject* obj) { registry[m_CurrentID] = obj; m_CurrentID++; }
+        int GetCurrentObjID() { return m_CurrObjectID; }
 
         inline bool IsRunning(){return m_IsRunning;};
         inline SDL_Renderer* GetRenderer(){return m_Renderer;};
@@ -36,10 +40,11 @@ class Engine{
         SDL_Window* m_Window;
         SDL_Renderer* m_Renderer;
         EventManager m_EventHandler;
-        Map* m_Map;
+        //Map* m_Map;
 
-        int m_CurrentID;
-        std::unordered_map<int, GameObject*> registry;
-        std::vector<Layer> layers;
+        int m_CurrObjectID;
+        std::unordered_map<int, GameObject*> m_ObjectStore;
+        std::unordered_map<ComponentType, std::vector<Component*>> m_ComponentStore;
+        std::vector<Layer*> layers;
         static Engine* m_Instance;
 };

@@ -7,16 +7,6 @@
 #include <string>
 #include <map>
 
-struct DrawData {
-    int srcX;
-    int srcY;
-    int destX;
-    int destY;
-    int destWidth;
-    int destHeight;
-
-};
-
 
 class TextureManager{
     public:
