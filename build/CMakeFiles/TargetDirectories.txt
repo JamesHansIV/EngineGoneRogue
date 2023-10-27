@@ -1,0 +1,6 @@
+/Users/elen/code/EngineGoneRogue/build/CMakeFiles/Engine.dir
+/Users/elen/code/EngineGoneRogue/build/CMakeFiles/edit_cache.dir
+/Users/elen/code/EngineGoneRogue/build/CMakeFiles/rebuild_cache.dir
+/Users/elen/code/EngineGoneRogue/build/vendor/imgui/CMakeFiles/imgui.dir
+/Users/elen/code/EngineGoneRogue/build/vendor/imgui/CMakeFiles/edit_cache.dir
+/Users/elen/code/EngineGoneRogue/build/vendor/imgui/CMakeFiles/rebuild_cache.dir

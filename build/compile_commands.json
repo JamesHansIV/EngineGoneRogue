@@ -1,0 +1,122 @@
+[
+{
+  "directory": "/Users/elen/code/EngineGoneRogue/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/elen/code/EngineGoneRogue/vendor/imgui -I/Users/elen/code/EngineGoneRogue/include -std=gnu++11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/Engine.dir/src/Components/Animation.cpp.o -c /Users/elen/code/EngineGoneRogue/src/Components/Animation.cpp",
+  "file": "/Users/elen/code/EngineGoneRogue/src/Components/Animation.cpp",
+  "output": "CMakeFiles/Engine.dir/src/Components/Animation.cpp.o"
+},
+{
+  "directory": "/Users/elen/code/EngineGoneRogue/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/elen/code/EngineGoneRogue/vendor/imgui -I/Users/elen/code/EngineGoneRogue/include -std=gnu++11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/Engine.dir/src/Core/BaseLayer.cpp.o -c /Users/elen/code/EngineGoneRogue/src/Core/BaseLayer.cpp",
+  "file": "/Users/elen/code/EngineGoneRogue/src/Core/BaseLayer.cpp",
+  "output": "CMakeFiles/Engine.dir/src/Core/BaseLayer.cpp.o"
+},
+{
+  "directory": "/Users/elen/code/EngineGoneRogue/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/elen/code/EngineGoneRogue/vendor/imgui -I/Users/elen/code/EngineGoneRogue/include -std=gnu++11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/Engine.dir/src/Core/Engine.cpp.o -c /Users/elen/code/EngineGoneRogue/src/Core/Engine.cpp",
+  "file": "/Users/elen/code/EngineGoneRogue/src/Core/Engine.cpp",
+  "output": "CMakeFiles/Engine.dir/src/Core/Engine.cpp.o"
+},
+{
+  "directory": "/Users/elen/code/EngineGoneRogue/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/elen/code/EngineGoneRogue/vendor/imgui -I/Users/elen/code/EngineGoneRogue/include -std=gnu++11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/Engine.dir/src/Core/InputChecker.cpp.o -c /Users/elen/code/EngineGoneRogue/src/Core/InputChecker.cpp",
+  "file": "/Users/elen/code/EngineGoneRogue/src/Core/InputChecker.cpp",
+  "output": "CMakeFiles/Engine.dir/src/Core/InputChecker.cpp.o"
+},
+{
+  "directory": "/Users/elen/code/EngineGoneRogue/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/elen/code/EngineGoneRogue/vendor/imgui -I/Users/elen/code/EngineGoneRogue/include -std=gnu++11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/Engine.dir/src/Core/Layer.cpp.o -c /Users/elen/code/EngineGoneRogue/src/Core/Layer.cpp",
+  "file": "/Users/elen/code/EngineGoneRogue/src/Core/Layer.cpp",
+  "output": "CMakeFiles/Engine.dir/src/Core/Layer.cpp.o"
+},
+{
+  "directory": "/Users/elen/code/EngineGoneRogue/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/elen/code/EngineGoneRogue/vendor/imgui -I/Users/elen/code/EngineGoneRogue/include -std=gnu++11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/Engine.dir/src/Events/Event.cpp.o -c /Users/elen/code/EngineGoneRogue/src/Events/Event.cpp",
+  "file": "/Users/elen/code/EngineGoneRogue/src/Events/Event.cpp",
+  "output": "CMakeFiles/Engine.dir/src/Events/Event.cpp.o"
+},
+{
+  "directory": "/Users/elen/code/EngineGoneRogue/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/elen/code/EngineGoneRogue/vendor/imgui -I/Users/elen/code/EngineGoneRogue/include -std=gnu++11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/Engine.dir/src/Events/EventManager.cpp.o -c /Users/elen/code/EngineGoneRogue/src/Events/EventManager.cpp",
+  "file": "/Users/elen/code/EngineGoneRogue/src/Events/EventManager.cpp",
+  "output": "CMakeFiles/Engine.dir/src/Events/EventManager.cpp.o"
+},
+{
+  "directory": "/Users/elen/code/EngineGoneRogue/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/elen/code/EngineGoneRogue/vendor/imgui -I/Users/elen/code/EngineGoneRogue/include -std=gnu++11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/Engine.dir/src/Graphics/Texture.cpp.o -c /Users/elen/code/EngineGoneRogue/src/Graphics/Texture.cpp",
+  "file": "/Users/elen/code/EngineGoneRogue/src/Graphics/Texture.cpp",
+  "output": "CMakeFiles/Engine.dir/src/Graphics/Texture.cpp.o"
+},
+{
+  "directory": "/Users/elen/code/EngineGoneRogue/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/elen/code/EngineGoneRogue/vendor/imgui -I/Users/elen/code/EngineGoneRogue/include -std=gnu++11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/Engine.dir/src/Graphics/TextureManager.cpp.o -c /Users/elen/code/EngineGoneRogue/src/Graphics/TextureManager.cpp",
+  "file": "/Users/elen/code/EngineGoneRogue/src/Graphics/TextureManager.cpp",
+  "output": "CMakeFiles/Engine.dir/src/Graphics/TextureManager.cpp.o"
+},
+{
+  "directory": "/Users/elen/code/EngineGoneRogue/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/elen/code/EngineGoneRogue/vendor/imgui -I/Users/elen/code/EngineGoneRogue/include -std=gnu++11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/Engine.dir/src/Objects/Map.cpp.o -c /Users/elen/code/EngineGoneRogue/src/Objects/Map.cpp",
+  "file": "/Users/elen/code/EngineGoneRogue/src/Objects/Map.cpp",
+  "output": "CMakeFiles/Engine.dir/src/Objects/Map.cpp.o"
+},
+{
+  "directory": "/Users/elen/code/EngineGoneRogue/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/elen/code/EngineGoneRogue/vendor/imgui -I/Users/elen/code/EngineGoneRogue/include -std=gnu++11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/Engine.dir/src/Objects/Tile.cpp.o -c /Users/elen/code/EngineGoneRogue/src/Objects/Tile.cpp",
+  "file": "/Users/elen/code/EngineGoneRogue/src/Objects/Tile.cpp",
+  "output": "CMakeFiles/Engine.dir/src/Objects/Tile.cpp.o"
+},
+{
+  "directory": "/Users/elen/code/EngineGoneRogue/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/elen/code/EngineGoneRogue/vendor/imgui -I/Users/elen/code/EngineGoneRogue/include -std=gnu++11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/Engine.dir/src/Objects/Warrior.cpp.o -c /Users/elen/code/EngineGoneRogue/src/Objects/Warrior.cpp",
+  "file": "/Users/elen/code/EngineGoneRogue/src/Objects/Warrior.cpp",
+  "output": "CMakeFiles/Engine.dir/src/Objects/Warrior.cpp.o"
+},
+{
+  "directory": "/Users/elen/code/EngineGoneRogue/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/elen/code/EngineGoneRogue/vendor/imgui -I/Users/elen/code/EngineGoneRogue/include -std=gnu++11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/Engine.dir/src/main.cpp.o -c /Users/elen/code/EngineGoneRogue/src/main.cpp",
+  "file": "/Users/elen/code/EngineGoneRogue/src/main.cpp",
+  "output": "CMakeFiles/Engine.dir/src/main.cpp.o"
+},
+{
+  "directory": "/Users/elen/code/EngineGoneRogue/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/elen/code/EngineGoneRogue/vendor/imgui -I/Users/elen/code/EngineGoneRogue/include -std=gnu++11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/Engine.dir/vendor/imgui/backends/imgui_impl_sdl2.cpp.o -c /Users/elen/code/EngineGoneRogue/vendor/imgui/backends/imgui_impl_sdl2.cpp",
+  "file": "/Users/elen/code/EngineGoneRogue/vendor/imgui/backends/imgui_impl_sdl2.cpp",
+  "output": "CMakeFiles/Engine.dir/vendor/imgui/backends/imgui_impl_sdl2.cpp.o"
+},
+{
+  "directory": "/Users/elen/code/EngineGoneRogue/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/elen/code/EngineGoneRogue/vendor/imgui -I/Users/elen/code/EngineGoneRogue/include -std=gnu++11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/Engine.dir/vendor/imgui/backends/imgui_impl_sdlrenderer2.cpp.o -c /Users/elen/code/EngineGoneRogue/vendor/imgui/backends/imgui_impl_sdlrenderer2.cpp",
+  "file": "/Users/elen/code/EngineGoneRogue/vendor/imgui/backends/imgui_impl_sdlrenderer2.cpp",
+  "output": "CMakeFiles/Engine.dir/vendor/imgui/backends/imgui_impl_sdlrenderer2.cpp.o"
+},
+{
+  "directory": "/Users/elen/code/EngineGoneRogue/build/vendor/imgui",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++   -std=gnu++11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/imgui.dir/imgui_demo.cpp.o -c /Users/elen/code/EngineGoneRogue/vendor/imgui/imgui_demo.cpp",
+  "file": "/Users/elen/code/EngineGoneRogue/vendor/imgui/imgui_demo.cpp",
+  "output": "vendor/imgui/CMakeFiles/imgui.dir/imgui_demo.cpp.o"
+},
+{
+  "directory": "/Users/elen/code/EngineGoneRogue/build/vendor/imgui",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++   -std=gnu++11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/imgui.dir/imgui_draw.cpp.o -c /Users/elen/code/EngineGoneRogue/vendor/imgui/imgui_draw.cpp",
+  "file": "/Users/elen/code/EngineGoneRogue/vendor/imgui/imgui_draw.cpp",
+  "output": "vendor/imgui/CMakeFiles/imgui.dir/imgui_draw.cpp.o"
+},
+{
+  "directory": "/Users/elen/code/EngineGoneRogue/build/vendor/imgui",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++   -std=gnu++11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/imgui.dir/imgui_tables.cpp.o -c /Users/elen/code/EngineGoneRogue/vendor/imgui/imgui_tables.cpp",
+  "file": "/Users/elen/code/EngineGoneRogue/vendor/imgui/imgui_tables.cpp",
+  "output": "vendor/imgui/CMakeFiles/imgui.dir/imgui_tables.cpp.o"
+},
+{
+  "directory": "/Users/elen/code/EngineGoneRogue/build/vendor/imgui",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++   -std=gnu++11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/imgui.dir/imgui_widgets.cpp.o -c /Users/elen/code/EngineGoneRogue/vendor/imgui/imgui_widgets.cpp",
+  "file": "/Users/elen/code/EngineGoneRogue/vendor/imgui/imgui_widgets.cpp",
+  "output": "vendor/imgui/CMakeFiles/imgui.dir/imgui_widgets.cpp.o"
+},
+{
+  "directory": "/Users/elen/code/EngineGoneRogue/build/vendor/imgui",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++   -std=gnu++11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/imgui.dir/imgui.cpp.o -c /Users/elen/code/EngineGoneRogue/vendor/imgui/imgui.cpp",
+  "file": "/Users/elen/code/EngineGoneRogue/vendor/imgui/imgui.cpp",
+  "output": "vendor/imgui/CMakeFiles/imgui.dir/imgui.cpp.o"
+}
+]
