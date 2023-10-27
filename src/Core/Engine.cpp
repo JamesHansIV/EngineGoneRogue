@@ -17,7 +17,6 @@
 #include <sstream>
 
 Engine* Engine::m_Instance = nullptr;
-//Warrior* player = nullptr;
 
 bool DrawMap() {
     std::vector<Component*>& drawData = Engine::GetInstance()->GetComponents(ComponentType::DrawData);

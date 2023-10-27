@@ -1,33 +1,10 @@
 #pragma once
 
-#include "IObject.h"
 #include "../Components/Component.h"
 #include "../Components/Transform.h"
 #include "../Components/DrawData.h"
 #include <string>
 #include <unordered_map>
-
-struct Properties{
-    public:
-        Properties(
-            int objectID,
-            std::string textureID,
-            int srcX, int srcY,
-            int dstX, int dstY,
-            int srcWidth, int srcHeight,
-            int dstWidth, int dstHeight,
-            SDL_RendererFlip flip = SDL_FLIP_NONE
-        ) : ObjectID(objectID), TextureID(textureID), SrcX(srcX), SrcY(srcY), DstX(dstX), DstY(dstY),
-            SrcWidth(srcWidth), SrcHeight(srcHeight), DstHeight(dstHeight), Flip(flip) { }
-
-        int ObjectID;
-        std::string TextureID;
-        int SrcX, SrcY;
-        int DstX, DstY;
-        int SrcWidth, SrcHeight;
-        int DstWidth, DstHeight;
-        SDL_RendererFlip Flip;
-};
 
 class GameObject {
     public:
