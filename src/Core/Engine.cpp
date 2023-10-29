@@ -248,7 +248,9 @@ void Engine::Update(float dt){
 
             ImGui::SliderInt("Height", &dim->DstHeight, 0, 500);            // Edit 1 float using a slider from 0.0f to 1.0f
             ImGui::SliderInt("Width", &dim->DstWidth, 0, 500);            // Edit 1 float using a slider from 0.0f to 1.0f
-            static int r, g, b;
+            static int r = 255;
+            static int g = 255;
+            static int b = 255;
 
             ImGui::SliderInt("Red", &r, 0, 255);
             ImGui::SliderInt("Green", &g, 0, 255);
