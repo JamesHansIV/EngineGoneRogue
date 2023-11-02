@@ -140,8 +140,6 @@ void Renderer::DrawFrame(std::string id, int x, int y, int width, int height, in
     SDL_RenderCopyEx(m_Renderer, m_TextureMap[id]->GetTexture(), &srcRect, &dstRect, angle, center, flip);
 }
 
-
-
 void Renderer::MoveCameraX(float x) {
     m_Camera.x += x;
     if (m_Camera.x < 0)

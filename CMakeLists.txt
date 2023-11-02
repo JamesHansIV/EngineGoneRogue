@@ -6,6 +6,15 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+OPTION(EDITOR "Enable Editor" OFF)
+
+if(EDITOR)
+    ADD_DEFINITIONS(-DEDITOR=1)
+else()
+    ADD_DEFINITIONS(-DEDITOR=0)
+endif(EDITOR)
+unset(EDITOR CACHE)
+
 file(GLOB_RECURSE engineSrc CONFIGURE_DEPENDS
     "src/*.cpp"
     "vendor/imgui/backends/imgui_impl_sdlrenderer2.cpp"

@@ -88,7 +88,6 @@ void Editor::Render() {
     Renderer::GetInstance()->Render();
 }
 
-
 void Editor::Events() {
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
@@ -109,6 +108,8 @@ void Editor::Events() {
     }
 }
 
+#if EDITOR == 1
 Application* CreateApplication() {
     return new Editor();
 }
+#endif

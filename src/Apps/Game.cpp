@@ -41,3 +41,8 @@ void Game::Render() {
     Renderer::GetInstance()->Render();
 }
 
+#if EDITOR == 0
+Application* CreateApplication() {
+    return new Game();
+}
+#endif
