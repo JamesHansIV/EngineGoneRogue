@@ -70,7 +70,7 @@ bool Map::LoadMap(std::string filename) {
             int tileRow = int(entry[0] - '0');
             int tileColumn = int(entry[1] - '0');
 
-            Properties props(m_TextureID, j * m_DestTileSize, i * m_DestTileSize, m_DestTileSize, m_SrcTileSize);
+            Properties props(m_TextureID, j * m_DestTileSize, i * m_DestTileSize, m_DestTileSize, m_SrcTileSize,m_DestTileSize,m_SrcTileSize);
             Tile* tile = new Tile(props, tileRow, tileColumn, m_SrcTileSize, m_DestTileSize);
             m_Grid[i].push_back(tile);
             SDL_Log("%d: (%d, %d)", j, tileRow * m_SrcTileSize, tileColumn * m_SrcTileSize);
