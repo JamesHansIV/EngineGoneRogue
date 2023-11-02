@@ -10,3 +10,4 @@ bool InputChecker::isKeyPressed(int keycode) {
 void InputChecker::setKeyPressed(int keycode, bool value) {
     keys[keycode % NUMKEYS] = value;
 }
+

@@ -36,6 +36,8 @@ bool Engine::Init(){
 
     Renderer::GetInstance()->AddTexture("player", "../assets/textures/Idle.png");
     Renderer::GetInstance()->AddTexture("tilemap", "../assets/textures/kenney_tiny-dungeon/Tilemap/tilemap_packed.png");
+    Renderer::GetInstance()->AddTexture("player_run", "../assets/textures/Run.png");
+    
     m_Map = new Map("tilemap");
     if (!m_Map->LoadMap("../assets/maps/tiny_dungeon1.txt")) {
         SDL_Log("Failed to load map\n");
@@ -44,6 +46,8 @@ bool Engine::Init(){
     
     Properties props("player", 0, 0, 136, 96);
     player = new Warrior(props);
+    
+
 
     //AddObject(player);
 
