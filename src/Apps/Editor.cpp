@@ -22,7 +22,7 @@ Editor::Editor() : m_TextureID(""), m_CurrentTexture(nullptr) {
         assert(false);
     }
     Renderer::GetInstance()->AddTexture("background", "../assets/textures/bg.png");
-    Properties props("background", 0, 0, LEVEL_WIDTH, LEVEL_HEIGHT);
+    Properties props("background", 0, 0, LEVEL_WIDTH, LEVEL_HEIGHT, LEVEL_WIDTH, LEVEL_HEIGHT);
     m_Objects.push_back(std::unique_ptr<GameObject>(new GameObject(props)));
 }
 
@@ -53,7 +53,7 @@ void Editor::ShowTilemap() {
         ImGui::Image((void*) m_CurrentTexture->GetTexture(), ImVec2(m_CurrentTexture->GetWidth(), m_CurrentTexture->GetHeight()));
         
         if (ImGui::Button("Add object", ImVec2(100, 30))) {
-            Properties props(m_TextureID, 0, 0, m_CurrentTexture->GetWidth(), m_CurrentTexture->GetHeight());
+            Properties props(m_TextureID, 0, 0, m_CurrentTexture->GetWidth(), m_CurrentTexture->GetHeight(),m_CurrentTexture->GetWidth(),m_CurrentTexture->GetHeight());
             m_Objects.push_back(std::unique_ptr<GameObject>(new GameObject(props)));
         }
     }
