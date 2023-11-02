@@ -70,6 +70,11 @@ void Renderer::Clean()
     SDL_Log("Texture Manager cleaned");
 }
 
+void Renderer::DrawLine(int x1, int y1, int x2, int y2) {
+    SDL_SetRenderDrawColor(m_Renderer, 0, 0, 0, 100);
+    SDL_RenderDrawLine(m_Renderer, x1 - m_Camera.x, y1 - m_Camera.y, x2 - m_Camera.x, y2 - m_Camera.y);
+}
+
 void Renderer::Draw(std::string id, SDL_Rect& srcRect, SDL_Rect& dstRect, SDL_RendererFlip flip)
 {
     if (!checkCollision(dstRect, m_Camera))

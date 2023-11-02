@@ -29,6 +29,7 @@ class Renderer{
         Texture* GetTexture(std::string id) { return m_TextureMap.find(id) != m_TextureMap.end() ? m_TextureMap[id] : nullptr; }
         void Drop(std::string id);
         void Clean();
+        void DrawLine(int x1, int y1, int x2, int y2);
         void Draw(std::string id, SDL_Rect& srcRect, SDL_Rect& destRect, SDL_RendererFlip flip = SDL_FLIP_NONE);
         void Draw(std::string id, SDL_Rect& srcRect, SDL_Rect& destRect, double angle, const SDL_Point* center, SDL_RendererFlip flip = SDL_FLIP_NONE);
         void Draw(std::string id, int x, int y, int width, int height, SDL_RendererFlip flip = SDL_FLIP_NONE);

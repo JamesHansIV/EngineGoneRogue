@@ -33,6 +33,15 @@ Editor::~Editor() {
     ImGui::DestroyContext();
 }
 
+void DrawGrid() {
+    for (int i = 0; i < LEVEL_WIDTH; i += TILE_SIZE) {
+        Renderer::GetInstance()->DrawLine(i, 0, i, LEVEL_HEIGHT);
+    }
+    for (int i = 0; i < LEVEL_HEIGHT; i += TILE_SIZE) {
+        Renderer::GetInstance()->DrawLine(0, i, LEVEL_WIDTH, i);
+    }
+}
+
 void Editor::ShowTilemap() {
 
     ImGui::Begin("SDL2/SDL_Renderer Texture Test");
@@ -80,9 +89,11 @@ void Editor::Render() {
     ImGui::Render();
     Renderer::GetInstance()->RenderClear();
     
+
     for (auto& obj : m_Objects) {
         obj->Draw();
     }
+    DrawGrid();
     //m_Map->Draw();
     ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
     Renderer::GetInstance()->Render();
