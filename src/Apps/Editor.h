@@ -12,6 +12,7 @@ class Editor : public Application{
 
         virtual void Update(float dt);
         virtual void Render();
+        virtual void Events();
 
         void ShowTilemap();
     private:

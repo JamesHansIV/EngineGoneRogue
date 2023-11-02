@@ -41,7 +41,6 @@ Application::Application(){
 void Application::Events(){
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
-        ImGui_ImplSDL2_ProcessEvent(&event);
         m_EventManager.handleEvent(event);
         switch (event.type) {
             case SDL_QUIT:

@@ -4,13 +4,15 @@
 
 #include "Texture.h"
 
+#include "utils.h"
+
 #include <string>
 #include <map>
 
 
 class Renderer{
     public:
-        static Renderer* GetInstance() 
+        static Renderer* GetInstance()
         {
             return m_Instance = (m_Instance != nullptr) ? m_Instance : new Renderer();
         }
@@ -34,9 +36,13 @@ class Renderer{
         void DrawFrame(std::string id, int x, int y, int width, int height, int row, int frame, SDL_RendererFlip flip = SDL_FLIP_NONE);
         void DrawFrame(std::string id, int x, int y, int width, int height, int row, int frame, double angle, const SDL_Point* center, SDL_RendererFlip flip);
 
+        void MoveCameraX(float x);
+        void MoveCameraY(float y);
+
     private:
         Renderer() {}
         SDL_Renderer* m_Renderer;
+        SDL_Rect m_Camera {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
         std::map<std::string, Texture*> m_TextureMap;
         static Renderer* m_Instance;
 };
