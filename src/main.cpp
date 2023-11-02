@@ -1,16 +1,13 @@
-#include "Engine/Engine.h"
+#include "Apps/Application.h"
 #include <iostream>
+
+Application* CreateApplication();
 
 int main(int argc, char* args[])
 {
-    Engine::GetInstance()->Init();
+    auto app = CreateApplication();
 
-    while(Engine::GetInstance()->IsRunning())
-    {
-        Engine::GetInstance()->Events();
-        Engine::GetInstance()->Update(0.0);
-        Engine::GetInstance()->Render();
-    }
-
-    Engine::GetInstance()->Clean();
+    app->Run();
+    delete app;
+    return 0;
 }

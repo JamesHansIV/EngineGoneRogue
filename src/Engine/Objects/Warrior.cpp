@@ -18,17 +18,17 @@ void Warrior::Update(float dt){
     m_Animation->SetProps("player", 1, 6, 100);
 
     if (InputChecker::isKeyPressed(SDLK_UP)) {
-        m_Transform->TranslateY(m_RigidBody->Position().Y - 10);
+        m_Transform->TranslateY(m_RigidBody->Position().Y - 10 * dt);
     }
     if (InputChecker::isKeyPressed(SDLK_DOWN)) {
-        m_Transform->TranslateY(m_RigidBody->Position().Y + 10);
+        m_Transform->TranslateY(m_RigidBody->Position().Y + 10 * dt);
     }
     if (InputChecker::isKeyPressed(SDLK_LEFT)) {
-        m_Transform->TranslateX(m_RigidBody->Position().X - 10);
+        m_Transform->TranslateX(m_RigidBody->Position().X - 10 * dt);
         m_Animation->SetProps("player_run", 1, 8, 100, SDL_FLIP_HORIZONTAL);
     }
     if (InputChecker::isKeyPressed(SDLK_RIGHT)) {
-        m_Transform->TranslateX(m_RigidBody->Position().X + 10);
+        m_Transform->TranslateX(m_RigidBody->Position().X + 10 * dt);
         m_Animation->SetProps("player_run", 1, 8, 100);
     }
 
@@ -37,9 +37,7 @@ void Warrior::Update(float dt){
 
 void Warrior::OnEvent(Event& event) {
     SDL_Event e = event.getEvent();
-    SDL_Log("%d, %d", e.key.keysym.sym, SDL_KEYUP);
     if (e.type == SDL_KEYUP) {
-        SDL_Log("slkdfjs");
         if (e.key.keysym.sym == SDLK_LEFT) {
             SDL_Log("Left left");
             m_Animation->SetProps("player", 1, 6, 100, SDL_FLIP_HORIZONTAL);

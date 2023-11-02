@@ -3,8 +3,9 @@
 #include "Character.h"
 #include "Engine/Components/Animation.h"
 #include "Engine/Components/Physics/RigidBody.h"
+#include "functional"
 
-class Warrior: public Character{
+class Warrior: public Character, public EventListener{
 
     public:
         Warrior(Properties& props);
@@ -12,11 +13,10 @@ class Warrior: public Character{
         virtual void Draw();
         virtual void Clean();
         virtual void Update(float dt);
-        
-        virtual void OnEvent(Event& e);
+        void OnEvent(Event& event);
 
     private:
         Animation* m_Animation;
-        RigidBody* m_RigidBody; 
+        RigidBody* m_RigidBody;
 };
 

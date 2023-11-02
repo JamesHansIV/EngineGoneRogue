@@ -1,3 +1,5 @@
+#pragma once
+
 #include <vector>
 #include "Engine/Objects/GameObject.h"
 #include "Events/EventListener.h"

@@ -1,14 +1,15 @@
 #include "Renderer.h"
-#include "Engine/Engine.h"
+#include "Apps/Application.h"
 
 Renderer* Renderer::m_Instance = nullptr;
 
 
 void Renderer::Init() {
-    SDL_Window* window = Engine::GetInstance()->GetWindow();
+    SDL_Window* window = Application::Get()->GetWindow();
     m_Renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if(m_Renderer == nullptr){
         SDL_Log("Failed to create Renderer: %s", SDL_GetError());
+        assert(false);
     }
 }
 
