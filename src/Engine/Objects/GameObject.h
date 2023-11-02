@@ -1,7 +1,7 @@
 #pragma once
 
 #include "IObject.h"
-#include "../Components/Transform.h"
+#include "Engine/Components/Physics/Transform.h"
 #include <string>
 
 struct Properties{

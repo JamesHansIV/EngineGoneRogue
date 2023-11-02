@@ -1,9 +1,10 @@
 #include <vector>
-#include "../Objects/GameObject.h"
-#include "../Events/EventListener.h"
+#include "Engine/Objects/GameObject.h"
+#include "Events/EventListener.h"
 
 class Layer : public EventListener {
     public:
+        virtual ~Layer() {}
         virtual void OnAttach() = 0;
         virtual void OnDetach() = 0;
         virtual void Update() = 0;

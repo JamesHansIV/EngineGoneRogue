@@ -1,6 +1,6 @@
 #include "Warrior.h"
-#include "../Graphics/TextureManager.h"
-#include "../Core/InputChecker.h"
+#include "Engine/Renderer/Renderer.h"
+#include "Engine/InputChecker.h"
 
 Warrior::Warrior(Properties& props): Character(props){
     m_Animation = new Animation();
@@ -40,6 +40,6 @@ void Warrior::OnEvent(Event& event) {
 }
 
 void Warrior::Clean(){
-    TextureManager::GetInstance()->Clean();
+    Renderer::GetInstance()->Clean();
 }
 

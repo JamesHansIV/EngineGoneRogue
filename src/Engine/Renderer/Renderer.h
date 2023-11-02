@@ -7,23 +7,20 @@
 #include <string>
 #include <map>
 
-struct DrawData {
-    int srcX;
-    int srcY;
-    int destX;
-    int destY;
-    int destWidth;
-    int destHeight;
 
-};
-
-
-class TextureManager{
+class Renderer{
     public:
-        static TextureManager* GetInstance() 
+        static Renderer* GetInstance() 
         {
-            return m_Instance = (m_Instance != nullptr) ? m_Instance : new TextureManager();
+            return m_Instance = (m_Instance != nullptr) ? m_Instance : new Renderer();
         }
+
+        void Init();
+
+        SDL_Renderer* GetRenderer() { return m_Renderer; }
+        void Render();
+        void RenderClear();
+        void Destroy();
 
         bool AddTexture(std::string id, std::string filename);
         Texture* GetTexture(std::string id) { return m_TextureMap.find(id) != m_TextureMap.end() ? m_TextureMap[id] : nullptr; }
@@ -37,7 +34,8 @@ class TextureManager{
         void DrawFrame(std::string id, int x, int y, int width, int height, int row, int frame, double angle, const SDL_Point* center, SDL_RendererFlip flip);
 
     private:
-        TextureManager(){};
+        Renderer() {}
+        SDL_Renderer* m_Renderer;
         std::map<std::string, Texture*> m_TextureMap;
-        static TextureManager* m_Instance;
+        static Renderer* m_Instance;
 };

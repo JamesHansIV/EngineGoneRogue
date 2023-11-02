@@ -1,5 +1,5 @@
 #include "Tile.h"
-#include "../Graphics/TextureManager.h"
+#include "Engine/Renderer/Renderer.h"
 
 
 void Tile::Draw() {
@@ -7,5 +7,5 @@ void Tile::Draw() {
     SDL_Rect dstRect = { (int)m_Transform->X, (int)m_Transform->Y, m_DestTileSize, m_DestTileSize };
     SDL_Log("srcRect: %d, %d", dstRect.x, dstRect.y);
 
-    TextureManager::GetInstance()->Draw(m_TextureID, srcRect, dstRect);
+    Renderer::GetInstance()->Draw(m_TextureID, srcRect, dstRect);
 }

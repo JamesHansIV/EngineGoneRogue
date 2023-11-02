@@ -2,9 +2,9 @@
 #include <SDL2/SDL.h>
 #include <SDL2_image/SDL_image.h>
 
-#include "../Events/EventManager.h"
-#include "Layer.h"
-#include "../Objects/Map.h"
+#include "Events/EventManager.h"
+#include "Layers/Layer.h"
+#include "Objects/Map.h"
 #include <unordered_map>
 
 class Engine{
@@ -22,11 +22,11 @@ class Engine{
         void Render();
         void Events();
 
-
+        
         void AddObject(GameObject* obj) { registry[m_CurrentID] = obj; m_CurrentID++; }
 
-        inline bool IsRunning(){return m_IsRunning;};
-        inline SDL_Renderer* GetRenderer(){return m_Renderer;};
+        inline bool IsRunning(){return m_IsRunning;}
+        inline SDL_Window* GetWindow() { return m_Window; }
 
     
     private:
@@ -34,7 +34,7 @@ class Engine{
         bool m_IsRunning;
     
         SDL_Window* m_Window;
-        SDL_Renderer* m_Renderer;
+        
         EventManager m_EventHandler;
         Map* m_Map;
 

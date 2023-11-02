@@ -1,6 +1,6 @@
 #pragma once
-#include "../Objects/GameObject.h"
-#include "../Events/EventListener.h"
+#include "GameObject.h"
+#include "Events/EventListener.h"
 #include <string>
 
 class Character: public GameObject, public EventListener {

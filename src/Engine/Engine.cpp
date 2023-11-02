@@ -1,8 +1,8 @@
 #include "Engine.h"
-#include "../Graphics/TextureManager.h"
+#include "Renderer/Renderer.h"
 
-#include "../Objects/Warrior.h"
-#include "../Objects/GameObject.h"
+#include "Objects/Warrior.h"
+#include "Objects/GameObject.h"
 #include "InputChecker.h"
 
 #include "backends/imgui_impl_sdl2.h"
@@ -27,18 +27,15 @@ bool Engine::Init(){
         SDL_Log("Failed to create Window: %s", SDL_GetError());
         return false;
     }
-
-    m_Renderer = SDL_CreateRenderer(m_Window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-    if(m_Renderer == nullptr){
-        SDL_Log("Failed to create Renderer: %s", SDL_GetError());
-        return false;
-    }
+    
     //TODO: note that the cwd is <projectDir>/build instead of <projectDir>.
     //      Set a working directory path macro to use absolute file paths
     m_CurrentID = 0;
 
-    TextureManager::GetInstance()->AddTexture("player", "../assets/textures/Idle.png");
-    TextureManager::GetInstance()->AddTexture("tilemap", "../assets/textures/kenney_tiny-dungeon/Tilemap/tilemap_packed.png");
+    Renderer::GetInstance()->Init();
+
+    Renderer::GetInstance()->AddTexture("player", "../assets/textures/Idle.png");
+    Renderer::GetInstance()->AddTexture("tilemap", "../assets/textures/kenney_tiny-dungeon/Tilemap/tilemap_packed.png");
     m_Map = new Map("tilemap");
     if (!m_Map->LoadMap("../assets/maps/tiny_dungeon1.txt")) {
         SDL_Log("Failed to load map\n");
@@ -51,8 +48,9 @@ bool Engine::Init(){
     //AddObject(player);
 
     ImGui::CreateContext();
-    ImGui_ImplSDL2_InitForSDLRenderer(m_Window, m_Renderer);
-    ImGui_ImplSDLRenderer2_Init(m_Renderer);
+    SDL_Renderer* renderer = Renderer::GetInstance()->GetRenderer();
+    ImGui_ImplSDL2_InitForSDLRenderer(m_Window, renderer);
+    ImGui_ImplSDLRenderer2_Init(renderer);
 
     m_EventHandler.addListener(*player);
     Transform tf;
@@ -88,15 +86,12 @@ void Engine::Update(float dt){
 }
 
 void Engine::Render(){
-    
-    
     ImGui::Render();
-    SDL_SetRenderDrawColor(m_Renderer, 124, 218, 254, 255);
-    SDL_RenderClear(m_Renderer);
+    Renderer::GetInstance()->RenderClear();
     ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
     m_Map->Draw();
     player->Draw();
-    SDL_RenderPresent(m_Renderer);
+    Renderer::GetInstance()->Render();
 }
 
 void Engine::Events(){
@@ -124,8 +119,8 @@ bool Engine::Clean(){
     ImGui_ImplSDL2_Shutdown();
     ImGui::DestroyContext();
 
-    TextureManager::GetInstance()->Clean();
-    SDL_DestroyRenderer(m_Renderer);
+    Renderer::GetInstance()->Destroy();
+
     SDL_DestroyWindow(m_Window);
     IMG_Quit();
     SDL_Quit();

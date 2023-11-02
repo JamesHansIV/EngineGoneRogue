@@ -5,9 +5,9 @@
 #include <fstream>
 #include <stdlib.h>
 
-#include "../Graphics/TextureManager.h"
+#include "Engine/Renderer/Renderer.h"
 
-#include "../utils.h"
+#include "utils.h"
 
 Map::~Map() {
     for (auto row : m_Grid) {

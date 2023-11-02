@@ -1,5 +1,5 @@
 #include "Texture.h"
-#include "../Core/Engine.h"
+#include "Renderer.h"
 
 Texture::Texture(const std::string& filename) {
     SDL_Surface* surface = IMG_Load(filename.c_str());
@@ -7,7 +7,7 @@ Texture::Texture(const std::string& filename) {
     {
         SDL_Log("Failed to load texture %s, %s", filename.c_str(), SDL_GetError());
     }
-    SDL_Texture* texture = SDL_CreateTextureFromSurface(Engine::GetInstance()->GetRenderer(), surface);
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(Renderer::GetInstance()->GetRenderer(), surface);
     if(texture == nullptr)
     {
         SDL_Log("Failed to create texture from surface %s, %s", filename.c_str(), SDL_GetError());
