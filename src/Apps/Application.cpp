@@ -55,7 +55,6 @@ void Application::Events(){
                 break;
         }
     }
-    
 }
 
 void Application::Run() {

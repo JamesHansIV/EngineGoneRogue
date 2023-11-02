@@ -2,6 +2,8 @@
 
 #include "IObject.h"
 #include "Engine/Components/Physics/Transform.h"
+#include "Engine/Renderer/Renderer.h"
+#include <SDL2/SDL.h>
 #include <string>
 
 struct Properties{
@@ -29,9 +31,14 @@ class GameObject : public IObject {
             m_Transform = new Transform(props.X, props.Y);
         }
 
-        virtual void Draw()=0;
-        virtual void Clean()=0;
-        virtual void Update(float dt)=0;
+        virtual void Draw() {
+            SDL_Rect srcRect = { 0, 0, m_Width, m_Height };
+            SDL_Rect dstRect = { (int)m_Transform->X, (int)m_Transform->Y, m_Width, m_Height };
+
+            Renderer::GetInstance()->Draw(m_TextureID, srcRect, dstRect);
+        };
+        virtual void Clean() {};
+        virtual void Update(float dt) {};
 
         int GetID() { return m_ObjectID; }
         void SetID(int id) { m_ObjectID = id; }

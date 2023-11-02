@@ -27,10 +27,17 @@ void Renderer::Render() {
     SDL_RenderPresent(m_Renderer);
 }
 
-bool Renderer::AddTexture(std::string id, std::string filename) {
+Texture* Renderer::AddTexture(std::string id, std::string filename) {
     Texture* textureWrapper = new Texture(filename);
     m_TextureMap[id] = textureWrapper;
-    return true;
+    return textureWrapper;
+}
+
+Texture* Renderer::AddTexture(std::string id, const char* filename) {
+    SDL_Log("Texture filepath: %s", filename);
+    Texture* textureWrapper = new Texture(filename);
+    m_TextureMap[id] = textureWrapper;
+    return textureWrapper;
 }
 
 void Renderer::Drop(std::string id)

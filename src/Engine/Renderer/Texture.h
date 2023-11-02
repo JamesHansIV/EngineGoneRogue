@@ -8,6 +8,7 @@ class Texture
 {
 	public:
 		Texture(const std::string& path);
+		Texture(const char* path);
 		~Texture();
 
 		inline int GetWidth() const { return m_Width; }

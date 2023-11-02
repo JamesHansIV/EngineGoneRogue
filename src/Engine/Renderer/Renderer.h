@@ -22,7 +22,8 @@ class Renderer{
         void RenderClear();
         void Destroy();
 
-        bool AddTexture(std::string id, std::string filename);
+        Texture* AddTexture(std::string id, std::string filename);
+        Texture* AddTexture(std::string id, const char* filename);
         Texture* GetTexture(std::string id) { return m_TextureMap.find(id) != m_TextureMap.end() ? m_TextureMap[id] : nullptr; }
         void Drop(std::string id);
         void Clean();

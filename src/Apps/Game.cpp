@@ -41,7 +41,3 @@ void Game::Render() {
     Renderer::GetInstance()->Render();
 }
 
-
-Application* CreateApplication() {
-    return new Game();
-}

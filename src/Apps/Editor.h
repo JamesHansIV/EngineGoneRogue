@@ -2,6 +2,8 @@
 
 #include "Events/Event.h"
 #include "Application.h"
+#include "Engine/Renderer/Texture.h"
+#include <set>
 
 class Editor : public Application{
     public:
@@ -10,7 +12,13 @@ class Editor : public Application{
 
         virtual void Update(float dt);
         virtual void Render();
+
+        void ShowTilemap();
     private:
+        std::string m_TextureID;
         Map* m_Map;
+        std::set<std::string> m_TextureIDs;
+        Texture* m_CurrentTexture;
+        std::vector<std::unique_ptr<GameObject>> m_Objects;
 };
 
