@@ -6,13 +6,13 @@
 
 class RigidBody {
     public:
-        RigidBody() {
-            m_Mass = UNI_MASS;
+        RigidBody(float mass = UNI_MASS) {
+            m_Mass = mass;
             m_Gravity = GRAVITY;
         }
 
         inline void SetMass(float mass){m_Mass = mass;}
-        inline void SetFravity(float gravity){m_Gravity = gravity;}
+        inline void SetGravity(float gravity){m_Gravity = gravity;}
 
         inline void ApplyForce(Vector2D F){m_Force = F;}
         inline void ApplyForceX(float Fx){m_Force.X = Fx;}
@@ -27,11 +27,26 @@ class RigidBody {
         inline Vector2D Veclocity(){return m_Velocity;}
         inline Vector2D Acceleration(){return m_Acceleration;}
 
-        void Update(float dt){
-            m_Acceleration.X = (m_Force.X + m_Friction.X)/m_Mass;
-            m_Acceleration.Y = m_Gravity + m_Force.Y/m_Mass;
+        void Update(float dt)
+        {
+            m_Acceleration.X = (m_Force.X - m_Friction.X)/m_Mass;
+            m_Acceleration.Y = m_Force.Y/m_Mass;
             m_Velocity = m_Acceleration*dt;
             m_Position = m_Velocity*dt;
+        }
+
+        void UpdateProjectile(float dt)
+        {
+            float deg = m_Force.Y * 3.14159/180;
+            m_Force.X = m_Force.X;
+            m_Force.Y = m_Force.X;
+            m_Acceleration.X = (m_Force.X)/m_Mass;
+            m_Acceleration.Y = (m_Force.Y)/m_Mass;
+            m_Velocity = m_Acceleration*dt;
+            m_Position.X = m_Velocity.X * dt;
+            m_Position.Y = m_Velocity.Y * dt;
+            m_Position.X = m_Position.X * cos(deg);
+            m_Position.Y = m_Position.Y * sin(deg);
         }
 
     private:
