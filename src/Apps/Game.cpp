@@ -6,9 +6,10 @@
 #include "Engine/Objects/Warrior.h"
 #include "Events/EventListener.h"
 #include "Engine/Objects/Projectile.h"
+#include "Engine/InputChecker.h"
 
 Warrior* player = nullptr;
-Projectile* projectile = nullptr;
+std::vector<Projectile*> projectiles;
 
 Game::Game() {
     ImGui::CreateContext();
@@ -30,14 +31,28 @@ Game::Game() {
     Properties props("player", 0, 0, 136, 96, 136, 96);
     player = new Warrior(props);
     GetEventManager().addListener(*player);
-
-    Properties projectile_props("projectile", 0, 0, 723, 724, 25, 25);
-    projectile = new Projectile(projectile_props);
 }
 
 void Game::Update(float dt) {
     player->Update(dt);
-    projectile->Update(dt);
+    Properties projectile_props("projectile", player->getTransform()->X + 50, player->getTransform()->Y + 30, 723, 724, 15, 15);
+    if (InputChecker::isKeyPressed(SDLK_SPACE))
+    {
+        Projectile* projectile = nullptr;
+        if(player->getFlip() == SDL_FLIP_HORIZONTAL)
+        {
+            projectile = new Projectile(projectile_props, 50, 1.0, 180);
+        }
+        else
+        {
+            projectile = new Projectile(projectile_props, 50, 1.0, 0);
+        }
+        projectiles.push_back(projectile);
+        InputChecker::setKeyPressed(SDLK_SPACE,false);
+    } 
+    for (auto projectile : projectiles) {
+        projectile->Update(dt);
+    }  
 }
 
 
@@ -45,7 +60,10 @@ void Game::Render() {
     Renderer::GetInstance()->RenderClear();
     m_Map->Draw();
     player->Draw();
-    projectile->Draw();
+    for (auto projectile : projectiles) {
+        projectile->Draw();
+    }
+
     Renderer::GetInstance()->Render();
 }
 

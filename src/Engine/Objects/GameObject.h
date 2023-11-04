@@ -45,6 +45,9 @@ class GameObject : public IObject {
 
         int GetID() { return m_ObjectID; }
         void SetID(int id) { m_ObjectID = id; }
+        Transform* getTransform() {return m_Transform;};
+        SDL_RendererFlip getFlip() {return m_Flip;};
+        void setFlip(SDL_RendererFlip flip) {m_Flip = flip;};
 
     protected:
         Transform* m_Transform;

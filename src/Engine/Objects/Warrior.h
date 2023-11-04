@@ -14,7 +14,7 @@ class Warrior: public Character, public EventListener{
         virtual void Clean();
         virtual void Update(float dt);
         void OnEvent(Event& event);
-
+        RigidBody* getRigidBody() {return m_RigidBody;};
     private:
         Animation* m_Animation;
         RigidBody* m_RigidBody;
