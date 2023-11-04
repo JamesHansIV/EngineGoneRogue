@@ -36,7 +36,7 @@ Game::Game() {
 void Game::Update(float dt) {
     player->Update(dt);
     Properties projectile_props("projectile", player->GetX() + 50, player->GetY() + 30, 723, 724, 15, 15);
-    if (InputChecker::isKeyPressed(SDLK_SPACE))
+    if (InputChecker::isMouseButtonPressed(SDL_BUTTON_LEFT))
     {
         Projectile* projectile = nullptr;
         if(player->getFlip() == SDL_FLIP_HORIZONTAL)
@@ -48,7 +48,7 @@ void Game::Update(float dt) {
             projectile = new Projectile(projectile_props, 50, 1.0, 0);
         }
         projectiles.push_back(projectile);
-        InputChecker::setKeyPressed(SDLK_SPACE,false);
+        InputChecker::setMouseButtonPressed(SDL_BUTTON_LEFT, false);
     } 
     for (auto projectile : projectiles) {
         projectile->Update(dt);
