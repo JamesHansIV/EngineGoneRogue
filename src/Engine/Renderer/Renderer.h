@@ -9,6 +9,7 @@
 #include <string>
 #include <map>
 #include <cassert>
+#include <set>
 
 
 class Renderer{
@@ -46,5 +47,6 @@ class Renderer{
         SDL_Renderer* m_Renderer;
         SDL_Rect m_Camera {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
         std::map<std::string, Texture*> m_TextureMap;
+        std::set<std::string> m_Filepaths;
         static Renderer* m_Instance;
 };

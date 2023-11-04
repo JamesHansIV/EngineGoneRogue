@@ -41,15 +41,34 @@ void Renderer::Render() {
 }
 
 Texture* Renderer::AddTexture(std::string id, std::string filename) {
-    Texture* textureWrapper = new Texture(filename);
-    m_TextureMap[id] = textureWrapper;
+    Texture* textureWrapper = nullptr;
+    try {
+        if (m_Filepaths.find(filename) != m_Filepaths.end()) {
+            throw std::runtime_error("Filepath already exists");
+        }
+        textureWrapper = new Texture(filename, id);
+        m_TextureMap[id] = textureWrapper;
+        m_Filepaths.insert(filename);
+
+    } catch(std::runtime_error& err) {
+        SDL_LogError(0, "%s", err.what());
+    }
     return textureWrapper;
 }
 
 Texture* Renderer::AddTexture(std::string id, const char* filename) {
-    SDL_Log("Texture filepath: %s", filename);
-    Texture* textureWrapper = new Texture(filename);
-    m_TextureMap[id] = textureWrapper;
+    Texture* textureWrapper = nullptr;
+    try {
+        if (m_Filepaths.find(filename) != m_Filepaths.end()) {
+            throw std::runtime_error("Filepath already exists");
+        }
+        textureWrapper = new Texture(filename, id);
+        m_TextureMap[id] = textureWrapper;
+        m_Filepaths.insert(filename);
+
+    } catch(std::runtime_error& err) {
+        SDL_LogError(0, "%s", err.what());
+    }
     return textureWrapper;
 }
 
