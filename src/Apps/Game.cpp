@@ -35,7 +35,7 @@ Game::Game() {
 
 void Game::Update(float dt) {
     player->Update(dt);
-    Properties projectile_props("projectile", player->getTransform()->X + 50, player->getTransform()->Y + 30, 723, 724, 15, 15);
+    Properties projectile_props("projectile", player->GetX() + 50, player->GetY() + 30, 723, 724, 15, 15);
     if (InputChecker::isKeyPressed(SDLK_SPACE))
     {
         Projectile* projectile = nullptr;
