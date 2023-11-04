@@ -14,12 +14,16 @@ class Editor : public Application{
         virtual void Render();
         virtual void Events();
 
-        void ShowTilemap();
+        void ShowLoadTexture();
+        void ShowCreateObject();
+        void ShowObjectEditor();
+        void ShowTextureIDs();
+        void ShowObjectManager();
     private:
-        std::string m_TextureID;
         Map* m_Map;
-        std::set<std::string> m_TextureIDs;
+        std::vector<std::string> m_TextureIDs;
         Texture* m_CurrentTexture;
-        std::vector<std::unique_ptr<GameObject>> m_Objects;
+        GameObject* m_CurrentObject;
+        std::vector<GameObject*> m_Objects;
 };
 

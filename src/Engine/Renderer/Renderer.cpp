@@ -41,15 +41,34 @@ void Renderer::Render() {
 }
 
 Texture* Renderer::AddTexture(std::string id, std::string filename) {
-    Texture* textureWrapper = new Texture(filename);
-    m_TextureMap[id] = textureWrapper;
+    Texture* textureWrapper = nullptr;
+    try {
+        if (m_Filepaths.find(filename) != m_Filepaths.end()) {
+            throw std::runtime_error("Filepath already exists");
+        }
+        textureWrapper = new Texture(filename, id);
+        m_TextureMap[id] = textureWrapper;
+        m_Filepaths.insert(filename);
+
+    } catch(std::runtime_error& err) {
+        SDL_LogError(0, "%s", err.what());
+    }
     return textureWrapper;
 }
 
 Texture* Renderer::AddTexture(std::string id, const char* filename) {
-    SDL_Log("Texture filepath: %s", filename);
-    Texture* textureWrapper = new Texture(filename);
-    m_TextureMap[id] = textureWrapper;
+    Texture* textureWrapper = nullptr;
+    try {
+        if (m_Filepaths.find(filename) != m_Filepaths.end()) {
+            throw std::runtime_error("Filepath already exists");
+        }
+        textureWrapper = new Texture(filename, id);
+        m_TextureMap[id] = textureWrapper;
+        m_Filepaths.insert(filename);
+
+    } catch(std::runtime_error& err) {
+        SDL_LogError(0, "%s", err.what());
+    }
     return textureWrapper;
 }
 
@@ -68,6 +87,11 @@ void Renderer::Clean()
     m_TextureMap.clear();
 
     SDL_Log("Texture Manager cleaned");
+}
+
+void Renderer::DrawLine(int x1, int y1, int x2, int y2) {
+    SDL_SetRenderDrawColor(m_Renderer, 0, 0, 0, 100);
+    SDL_RenderDrawLine(m_Renderer, x1 - m_Camera.x, y1 - m_Camera.y, x2 - m_Camera.x, y2 - m_Camera.y);
 }
 
 void Renderer::Draw(std::string id, SDL_Rect& srcRect, SDL_Rect& dstRect, SDL_RendererFlip flip)

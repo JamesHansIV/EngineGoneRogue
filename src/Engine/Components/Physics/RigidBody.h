@@ -5,7 +5,6 @@
 #define GRAVITY 9.8f
 
 class RigidBody {
-
     public:
         RigidBody(float mass = UNI_MASS) {
             m_Mass = mass;

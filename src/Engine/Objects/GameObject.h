@@ -8,7 +8,7 @@
 
 struct Properties{
     public:
-        Properties(std::string textureID, int x, int y, int width, int height, int dst_width, int dst_height, SDL_RendererFlip flip = SDL_FLIP_NONE){
+        Properties(std::string textureID, int x, int y, int width, int height, int dst_width, int dst_height, std::string objectID = "", SDL_RendererFlip flip = SDL_FLIP_NONE){
             X = x;
             Y = y;
             Flip = flip;
@@ -17,8 +17,9 @@ struct Properties{
             DstWidth = dst_width;
             DstHeight = dst_height;
             TextureID = textureID;
+            ObjectID = objectID;
         }
-
+        std::string ObjectID;
         std::string TextureID;
         int Width, Height;
         int DstWidth, DstHeight;
@@ -29,7 +30,8 @@ struct Properties{
 class GameObject : public IObject {
     public:
         GameObject(Properties& props): m_TextureID(props.TextureID),
-            m_Width(props.Width), m_Height(props.Height), m_DstWidth(props.DstWidth), m_DstHeight(props.DstHeight), m_Flip(props.Flip), m_ObjectID(0){
+            m_Width(props.Width), m_Height(props.Height), m_DstWidth(props.DstWidth), m_DstHeight(props.DstHeight),
+            m_Flip(props.Flip), m_ObjectID(props.ObjectID){
 
             m_Transform = new Transform(props.X, props.Y);
         }
@@ -43,9 +45,19 @@ class GameObject : public IObject {
         virtual void Clean() {};
         virtual void Update(float dt) {};
 
-        int GetID() { return m_ObjectID; }
-        void SetID(int id) { m_ObjectID = id; }
-        Transform* getTransform() {return m_Transform;};
+        float& GetX() { return m_Transform->X; }
+        float& GetY() { return m_Transform->Y; }
+        void SetX(float x) { m_Transform->X = x; }
+        void SetY(float y) { m_Transform->Y = y; }
+
+        int& GetWidth() { return m_DstWidth; }
+        int& GetHeight() { return m_DstHeight; }
+        void SetWidth(int width) { m_DstWidth = width; }
+        void SetHeight(int height) { m_DstHeight = height; }
+
+        std::string GetTextureID() { return m_TextureID; }
+        std::string GetID() { return m_ObjectID; }
+        void SetID(std::string id) { m_ObjectID = id; }
         SDL_RendererFlip getFlip() {return m_Flip;};
         void setFlip(SDL_RendererFlip flip) {m_Flip = flip;};
 
@@ -54,6 +66,6 @@ class GameObject : public IObject {
         int m_Width, m_Height;
         int m_DstWidth, m_DstHeight;
         std::string m_TextureID;
-        int m_ObjectID;
+        std::string m_ObjectID;
         SDL_RendererFlip m_Flip;
 };
