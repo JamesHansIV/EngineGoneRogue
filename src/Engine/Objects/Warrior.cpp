@@ -22,12 +22,12 @@ void Warrior::Update(float dt){
         m_Transform->TranslateY(m_RigidBody->Position().Y + 10 * dt);
     }
     if (InputChecker::isKeyPressed(SDLK_a)) {
-        m_Transform->TranslateX(m_RigidBody->Position().X - 5 * dt);
+        m_Transform->TranslateX(m_RigidBody->Position().X - 10 * dt);
         m_Animation->SetProps("player_run", 1, 8, 100, SDL_FLIP_HORIZONTAL);
         setFlip(SDL_FLIP_HORIZONTAL);
     }
     if (InputChecker::isKeyPressed(SDLK_d)) {
-        m_Transform->TranslateX(m_RigidBody->Position().X + 5 * dt);
+        m_Transform->TranslateX(m_RigidBody->Position().X + 10 * dt);
         m_Animation->SetProps("player_run", 1, 8, 100);
         setFlip(SDL_FLIP_NONE);
 
