@@ -5,18 +5,22 @@
 #include "backends/imgui_impl_sdlrenderer2.h"
 
 #include "Engine/Objects/GameObject.h"
+#include "Engine/Objects/Warrior.h"
+#include "Engine/Objects/Projectile.h"
 #include "Engine/InputChecker.h"
 
 #include <memory>
 
 /*
 TODO list
+(x = finished)
 - show level/grid info
-- Move/resize/rotate/change color of objects
-- maintain a selected object
-- maintain a selected texture
-- Show a list of textures
-- show a list of objects
+x Move/resize objects
+- rotate/change color of objects
+x maintain a selected object
+x maintain a selected texture
+x Show a list of textures
+x show a list of objects
 - Add multiple textures to an object?
 - Move objects at fine and coarse granularity
 - Create object based on type
@@ -33,7 +37,7 @@ TODO list
         - scene transition animations?
         - layer info
         - enemy spawn locations/times?
-- Import objects in game class
+- Import objects into game class
 - Create json object template
 - Editor <-> game transitions
 - Create list of game objects and their required information
@@ -42,6 +46,8 @@ TODO list
 - create/load/save rooms
 - create/load/save projects
 */
+
+const char* OBJECT_TYPE_STRS[] = {"Base", "Projectile", "Warrior"};
 
 Editor::Editor() : m_CurrentTexture(nullptr) {
     ImGui::CreateContext();
@@ -86,11 +92,13 @@ void Editor::ShowTextureIDs() {
     if (m_TextureIDs.size() == 0) {
         ImGui::Text("No loaded textures");
     } else {
-        ImGui::Text("Loaded textures:");
-        for (auto ID : m_TextureIDs) {
-            if (ImGui::Button(ID.c_str(), ImVec2(100, 30))) {
-                m_CurrentTexture = Renderer::GetInstance()->GetTexture(ID);
+        if (ImGui::TreeNode("Select texture")) {
+            for (auto ID : m_TextureIDs) {
+                if (ImGui::Button(ID.c_str(), ImVec2(100, 30))) {
+                    m_CurrentTexture = Renderer::GetInstance()->GetTexture(ID);
+                }
             }
+            ImGui::TreePop();
         }
     }
 }
@@ -152,6 +160,93 @@ void Editor::ShowLoadTexture() {
     }
 }
 
+void Editor::ShowCreateBaseObject() {
+    if (ImGui::Button("Add object", ImVec2(100, 30))) {
+        std::string objID = m_CurrentTexture->GetID();
+        objID += std::to_string(m_CurrentTexture->GetObjectCount());
+        Properties props(
+            m_CurrentTexture->GetID(), 0, 0,
+            m_CurrentTexture->GetWidth(),
+            m_CurrentTexture->GetHeight(),
+            m_CurrentTexture->GetWidth(),
+            m_CurrentTexture->GetHeight(),
+            objID
+        );
+        m_CurrentTexture->IncObjectCount();
+        m_Objects.push_back(new GameObject(props));
+    }
+}
+
+void Editor::ShowCreatePlayer() {
+    ImGui::Text("Showing create player stuff");
+    if (ImGui::Button("Add player", ImVec2(100, 30))) {
+        std::string objID = m_CurrentTexture->GetID();
+        objID += std::to_string(m_CurrentTexture->GetObjectCount());
+        Properties props(
+            m_CurrentTexture->GetID(), 0, 0,
+            m_CurrentTexture->GetWidth(),
+            m_CurrentTexture->GetHeight(),
+            m_CurrentTexture->GetWidth(),
+            m_CurrentTexture->GetHeight(),
+            objID
+        );
+        m_CurrentTexture->IncObjectCount();
+        m_Objects.push_back(new Warrior(props));
+    }
+}
+
+void Editor::ShowCreateProjectile() {
+    ImGui::Text("Showing create projectile stuff");
+    // if (ImGui::Button("Add projectile", ImVec2(100, 30))) {
+    //     std::string objID = m_CurrentTexture->GetID();
+    //     objID += std::to_string(m_CurrentTexture->GetObjectCount());
+    //     Properties props(
+    //         m_CurrentTexture->GetID(), 0, 0,
+    //         m_CurrentTexture->GetWidth(),
+    //         m_CurrentTexture->GetHeight(),
+    //         m_CurrentTexture->GetWidth(),
+    //         m_CurrentTexture->GetHeight(),
+    //         objID
+    //     );
+    //     m_CurrentTexture->IncObjectCount();
+    //     m_Objects.push_back(new Projectile(props));
+    // }
+}
+
+void Editor::ShowSelectObjectType() {
+    static int currentIndex = 0; // Here we store our selection data as an index.
+    const char* previewValue = OBJECT_TYPE_STRS[currentIndex];
+    if (ImGui::BeginCombo("Select object type", previewValue, 0))
+    {
+        for (int i = 0; i < IM_ARRAYSIZE(OBJECT_TYPE_STRS); i++)
+        {
+            const bool isSelected = (currentIndex == i);
+            if (ImGui::Selectable(OBJECT_TYPE_STRS[i], isSelected))
+                currentIndex = i;
+
+            // Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
+            if (isSelected)
+                ImGui::SetItemDefaultFocus();
+        }
+        ImGui::EndCombo();
+    }
+
+    switch((ObjectType)(currentIndex+1)) {
+        case ObjectType::Base:
+            ShowCreateBaseObject();
+            break;
+        case ObjectType::Warrior:
+            ShowCreatePlayer();
+            break;
+        case ObjectType::Projectile:
+            ShowCreateProjectile();
+            break;
+        default:
+            SDL_LogError(0, "Invalid object type");
+            assert(false);
+    }
+}
+
 void Editor::ShowCreateObject() {
     if (ImGui::TreeNode("Create object")) {
         ShowTextureIDs();
@@ -159,25 +254,12 @@ void Editor::ShowCreateObject() {
         if (m_CurrentTexture == nullptr) {
             ImGui::Text("Please select a texture to create an object");
         } else {
-            ImGui::Text("Selected texture:");
+            ImGui::Text("Selected texture: %s", m_CurrentTexture->GetID().c_str());
             ImGui::Image((void*) m_CurrentTexture->GetTexture(), ImVec2(m_CurrentTexture->GetWidth(), m_CurrentTexture->GetHeight()));
             ImGui::Text("size = %d x %d", m_CurrentTexture->GetWidth(), m_CurrentTexture->GetHeight());
-            SDL_Log("Showed texture");
 
-            if (ImGui::Button("Add object", ImVec2(100, 30))) {
-                std::string objID = m_CurrentTexture->GetID();
-                objID += std::to_string(m_CurrentTexture->GetObjectCount());
-                Properties props(
-                    m_CurrentTexture->GetID(), 0, 0,
-                    m_CurrentTexture->GetWidth(),
-                    m_CurrentTexture->GetHeight(),
-                    m_CurrentTexture->GetWidth(),
-                    m_CurrentTexture->GetHeight(),
-                    objID
-                );
-                m_CurrentTexture->IncObjectCount();
-                m_Objects.push_back(new GameObject(props));
-            }
+            ShowSelectObjectType();
+            
         }
         ImGui::TreePop();
     }
