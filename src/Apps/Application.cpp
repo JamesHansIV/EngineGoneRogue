@@ -58,6 +58,9 @@ void Application::Events(){
             case SDL_MOUSEBUTTONUP:
                 InputChecker::setMouseButtonPressed(event.button.button, false);
                 break;
+            case SDL_MOUSEMOTION:
+                InputChecker::updateMousePosition(event.motion.x, event.motion.y);
+                break;
         }
     }
 }

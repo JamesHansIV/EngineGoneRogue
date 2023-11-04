@@ -12,7 +12,7 @@ void Projectile::Draw(){
 void Projectile::Update(float dt){
     m_RigidBody->UpdateProjectile(dt);
     m_RigidBody->ApplyForceX(m_Speed);
-    m_RigidBody->ApplyForceY(-m_Angle);
+    m_RigidBody->ApplyForceY(m_Angle);
 
     m_Transform->TranslateX(m_RigidBody->Position().X);
     m_Transform->TranslateY(m_RigidBody->Position().Y);

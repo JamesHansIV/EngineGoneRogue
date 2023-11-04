@@ -37,12 +37,16 @@ class RigidBody {
 
         void UpdateProjectile(float dt)
         {
-            float deg = m_Force.Y*3.14159/180;
-            m_Force.X = m_Force.X * cos(deg);
-            m_Acceleration.X = (m_Force.X - m_Friction.X)/m_Mass;
+            float deg = m_Force.Y * 3.14159/180;
+            m_Force.X = m_Force.X;
+            m_Force.Y = m_Force.X;
+            m_Acceleration.X = (m_Force.X)/m_Mass;
+            m_Acceleration.Y = (m_Force.Y)/m_Mass;
             m_Velocity = m_Acceleration*dt;
             m_Position.X = m_Velocity.X * dt;
-            m_Position.Y = sin(deg);
+            m_Position.Y = m_Velocity.Y * dt;
+            m_Position.X = m_Position.X * cos(deg);
+            m_Position.Y = m_Position.Y * sin(deg);
         }
 
     private:

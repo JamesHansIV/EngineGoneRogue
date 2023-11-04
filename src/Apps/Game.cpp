@@ -35,18 +35,29 @@ Game::Game() {
 
 void Game::Update(float dt) {
     player->Update(dt);
-    Properties projectile_props("projectile", player->GetX() + 50, player->GetY() + 30, 723, 724, 15, 15);
+
+    int playerX = player->GetMidPointX();
+    int playerY = player->GetMidPointY();
+
+    int mouseX = InputChecker::getMouseX();
+    int mouseY = InputChecker::getMouseY();
+
+    // Calculate the angle between the mouse and the player
+    float deltaX = mouseX - playerX;
+    float deltaY = mouseY - playerY;
+    float angle = atan2(deltaY, deltaX) * (180.0 / M_PI);
+    // Convert the angle range from -180 to 180 to 0 to 360
+    if (angle < 0) {
+        angle += 360.0f;
+    }
+
+    SDL_Log("%f", angle);
+
+    Properties projectile_props("projectile", player->GetMidPointX(), player->GetMidPointY(), 723, 724, 15, 15);
     if (InputChecker::isMouseButtonPressed(SDL_BUTTON_LEFT))
     {
         Projectile* projectile = nullptr;
-        if(player->getFlip() == SDL_FLIP_HORIZONTAL)
-        {
-            projectile = new Projectile(projectile_props, 50, 1.0, 180);
-        }
-        else
-        {
-            projectile = new Projectile(projectile_props, 50, 1.0, 0);
-        }
+        projectile = new Projectile(projectile_props, 50, 1.0, angle);
         projectiles.push_back(projectile);
         InputChecker::setMouseButtonPressed(SDL_BUTTON_LEFT, false);
     } 
@@ -54,7 +65,6 @@ void Game::Update(float dt) {
         projectile->Update(dt);
     }  
 }
-
 
 void Game::Render() {
     Renderer::GetInstance()->RenderClear();

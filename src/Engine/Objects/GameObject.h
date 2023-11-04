@@ -49,7 +49,12 @@ class GameObject : public IObject {
         float& GetY() { return m_Transform->Y; }
         void SetX(float x) { m_Transform->X = x; }
         void SetY(float y) { m_Transform->Y = y; }
-
+        float GetMidPointX() { 
+            return (m_Transform->X + (float)m_DstWidth/2);
+        };
+        float GetMidPointY() { 
+            return (m_Transform->Y + (float)m_DstHeight/2);
+        };
         int& GetWidth() { return m_DstWidth; }
         int& GetHeight() { return m_DstHeight; }
         void SetWidth(int width) { m_DstWidth = width; }
