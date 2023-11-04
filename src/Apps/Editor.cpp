@@ -160,7 +160,7 @@ void Editor::ShowLoadTexture() {
     }
 }
 
-void Editor::CreateObject(ObjectType type) {
+void Editor::ShowCreateBaseObject() {
     if (ImGui::Button("Add object", ImVec2(100, 30))) {
         std::string objID = m_CurrentTexture->GetID();
         objID += std::to_string(m_CurrentTexture->GetObjectCount());
@@ -173,31 +173,44 @@ void Editor::CreateObject(ObjectType type) {
             objID
         );
         m_CurrentTexture->IncObjectCount();
-        switch(type) {
-            case ObjectType::Base:
-                m_Objects.push_back(new GameObject(props));
-                break;
-            case ObjectType::Warrior:
-                m_Objects.push_back(new Warrior(props));
-                break;
-            case ObjectType::Projectile:
-                m_Objects.push_back(new Projectile(props));
-                break;
-            default:
-                SDL_LogError(0, "Invalid object type");
-                assert(false);
-        }
+        m_Objects.push_back(new GameObject(props));
     }
 }
 
 void Editor::ShowCreatePlayer() {
     ImGui::Text("Showing create player stuff");
-    CreateObject(ObjectType::Warrior);
+    if (ImGui::Button("Add player", ImVec2(100, 30))) {
+        std::string objID = m_CurrentTexture->GetID();
+        objID += std::to_string(m_CurrentTexture->GetObjectCount());
+        Properties props(
+            m_CurrentTexture->GetID(), 0, 0,
+            m_CurrentTexture->GetWidth(),
+            m_CurrentTexture->GetHeight(),
+            m_CurrentTexture->GetWidth(),
+            m_CurrentTexture->GetHeight(),
+            objID
+        );
+        m_CurrentTexture->IncObjectCount();
+        m_Objects.push_back(new Warrior(props));
+    }
 }
 
 void Editor::ShowCreateProjectile() {
     ImGui::Text("Showing create projectile stuff");
-    CreateObject(ObjectType::Projectile);
+    // if (ImGui::Button("Add projectile", ImVec2(100, 30))) {
+    //     std::string objID = m_CurrentTexture->GetID();
+    //     objID += std::to_string(m_CurrentTexture->GetObjectCount());
+    //     Properties props(
+    //         m_CurrentTexture->GetID(), 0, 0,
+    //         m_CurrentTexture->GetWidth(),
+    //         m_CurrentTexture->GetHeight(),
+    //         m_CurrentTexture->GetWidth(),
+    //         m_CurrentTexture->GetHeight(),
+    //         objID
+    //     );
+    //     m_CurrentTexture->IncObjectCount();
+    //     m_Objects.push_back(new Projectile(props));
+    // }
 }
 
 void Editor::ShowSelectObjectType() {
@@ -220,7 +233,7 @@ void Editor::ShowSelectObjectType() {
 
     switch((ObjectType)(currentIndex+1)) {
         case ObjectType::Base:
-            CreateObject(ObjectType::Base);
+            ShowCreateBaseObject();
             break;
         case ObjectType::Warrior:
             ShowCreatePlayer();
