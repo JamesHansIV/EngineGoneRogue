@@ -6,6 +6,11 @@
 #include <SDL2/SDL.h>
 #include <string>
 
+enum class ObjectType {
+    None = 0,
+    Base, Projectile, Warrior
+};
+
 struct Properties{
     public:
         Properties(std::string textureID, int x, int y, int width, int height, int dst_width, int dst_height, std::string objectID = "", SDL_RendererFlip flip = SDL_FLIP_NONE){

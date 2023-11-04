@@ -15,7 +15,12 @@ class Editor : public Application{
         virtual void Events();
 
         void ShowLoadTexture();
+        void ShowSelectObjectType();
+        void ShowCreateBaseObject();
+        void ShowCreateProjectile();
+        void ShowCreatePlayer();
         void ShowCreateObject();
+        void CreateObject(ObjectType type);
         void ShowObjectEditor();
         void ShowTextureIDs();
         void ShowObjectManager();
