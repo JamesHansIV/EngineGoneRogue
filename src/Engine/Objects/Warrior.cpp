@@ -9,7 +9,7 @@ Warrior::Warrior(Properties& props): Character(props){
 }
 
 void Warrior::Draw(){
-    m_Animation->Draw(m_Transform->X, m_Transform->Y, m_DstRect.w, m_DstRect.h);
+    m_Animation->Draw(m_Transform->GetX(), m_Transform->GetY(), m_DstRect.w, m_DstRect.h);
 }
 
 void Warrior::Update(float dt){

@@ -9,14 +9,14 @@ class Texture
 	public:
 		Texture(const std::string& path, std::string id);
 		Texture(const char* path, std::string id);
-		~Texture();
+		virtual ~Texture();
 
-		inline std::string GetID() const { return m_ID; }
-		inline int GetWidth() const { return m_Width; }
-		inline int GetHeight() const { return m_Height; }
-		inline int GetObjectCount() const { return m_ObjectCount; }
+		std::string GetID() const { return m_ID; }
+		int GetWidth() const { return m_Width; }
+		int GetHeight() const { return m_Height; }
+		int GetObjectCount() const { return m_ObjectCount; }
 		void IncObjectCount() { m_ObjectCount++; }
-		virtual SDL_Texture* GetTexture() { return m_Texture; }
+		SDL_Texture* GetTexture() { return m_Texture; }
 
 	private:
 		std::string m_ID;

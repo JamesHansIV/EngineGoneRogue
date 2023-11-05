@@ -4,6 +4,7 @@
 #include "Engine/Components/Physics/Transform.h"
 #include "Engine/Renderer/Renderer.h"
 #include "Engine/Renderer/TileMap.h"
+
 #include <SDL2/SDL.h>
 #include <string>
 
@@ -47,8 +48,9 @@ class GameObject : public IObject {
             m_TilePos(props.TilePosition), m_DstRect(props.DstRect),
             m_Flip(props.Flip), m_ObjectID(props.ObjectID){
 
-            m_Transform = new Transform(props.DstRect.x, props.DstRect.y);
+            m_Transform = new Transform(&m_DstRect.x, &m_DstRect.y);
         }
+        virtual ~GameObject() {}
 
         virtual void Draw() {
             SDL_Rect srcRect = { m_TilePos.col * m_TilePos.w, m_TilePos.row * m_TilePos.h, m_TilePos.w, m_TilePos.h };
@@ -78,6 +80,7 @@ class GameObject : public IObject {
         void SetID(std::string id) { m_ObjectID = id; }
         SDL_RendererFlip getFlip() {return m_Flip;}
         void setFlip(SDL_RendererFlip flip) {m_Flip = flip;}
+
 
     protected:
         Transform* m_Transform;

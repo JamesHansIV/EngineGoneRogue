@@ -78,6 +78,7 @@ TileMap* Renderer::AddTileMap(std::string id, std::string filename, int tileSize
         if (m_Filepaths.find(filename) != m_Filepaths.end()) {
             throw std::runtime_error("Filepath already exists");
         }
+        SDL_Log("Creating new tilemap");
         textureWrapper = new TileMap(filename, id, tileSize, rows, cols);
         m_TextureMap[id] = textureWrapper;
         m_Filepaths.insert(filename);
@@ -94,6 +95,7 @@ TileMap* Renderer::AddTileMap(std::string id, const char* filename, int tileSize
         if (m_Filepaths.find(filename) != m_Filepaths.end()) {
             throw std::runtime_error("Filepath already exists");
         }
+        SDL_Log("Creating new tilemap");
         textureWrapper = new TileMap(filename, id, tileSize, rows, cols);
         m_TextureMap[id] = textureWrapper;
         m_Filepaths.insert(filename);

@@ -60,10 +60,10 @@ void Game::Update(float dt) {
         projectile = new Projectile(projectile_props, 50, 1.0, angle);
         projectiles.push_back(projectile);
         InputChecker::setMouseButtonPressed(SDL_BUTTON_LEFT, false);
-    } 
+    }
     for (auto projectile : projectiles) {
         projectile->Update(dt);
-    }  
+    }
 }
 
 void Game::Render() {

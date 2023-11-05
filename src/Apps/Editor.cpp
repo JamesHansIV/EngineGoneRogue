@@ -168,11 +168,14 @@ void Editor::ShowLoadTexture() {
         }
         static char invalidFilepath[256] = "";
         if (strcmp(filepath, "") != 0 && strcmp(textureID, "") != 0) {
-            if (ImGui::Button("Load texture", ImVec2(100, 30)) && strcmp(filepath, "") != 0 && strcmp(textureID, "") != 0) {
-                SDL_Log("filepath: %s", filepath);
+            if (ImGui::Button("Load texture", ImVec2(100, 30))) {
+                
+                if (isTileMap) {
+                    SDL_Log("loading tile map: %d", isTileMap);
+                }
                 m_CurrentTexture = (isTileMap) ?
-                    Renderer::GetInstance()->AddTexture(textureID, filepath) :
-                    Renderer::GetInstance()->AddTileMap(textureID, filepath, tileSize, rows, cols);
+                    Renderer::GetInstance()->AddTileMap(textureID, filepath, tileSize, rows, cols) :
+                    Renderer::GetInstance()->AddTexture(textureID, filepath);
 
                 if (!m_CurrentTexture) {
                     strcpy(invalidFilepath, filepath);
@@ -198,88 +201,56 @@ void Editor::ShowLoadTexture() {
 TilePos Editor::ChooseTile(TileMap* tileMap) {
     static int row = 0;
     static int col = 0;
-    ImGui::SliderInt("Select tile row", &row, 0, tileMap->GetRows());
-    ImGui::SliderInt("Select tile column", &col, 0, tileMap->GetCols());
-    return { row, col };
+    ImGui::SliderInt("Select tile row", &row, 0, tileMap->GetRows() - 1);
+    ImGui::SliderInt("Select tile column", &col, 0, tileMap->GetCols() - 1);
+
+    return { row, col, tileMap->GetTileSize(), tileMap->GetTileSize() };
 }
 
-void Editor::ShowCreateBaseObject() {
+void Editor::ShowCreateBaseObject(TilePos tilePos, Rect dstRect) {
     if (ImGui::Button("Add object", ImVec2(100, 30))) {
         std::string objID = m_CurrentTexture->GetID();
         objID += std::to_string(m_CurrentTexture->GetObjectCount());
 
-        TileMap* tileMap = dynamic_cast<TileMap*>(m_CurrentTexture);
-        if (tileMap != nullptr)
-            TilePos tile = ChooseTile(tileMap);
-
         Properties props(
-            m_CurrentTexture->GetID(),
-            {
-                0, 0,
-                m_CurrentTexture->GetWidth(),
-                m_CurrentTexture->GetHeight(),
-            },
-            {
-                0.0f, 0.0f,
-                m_CurrentTexture->GetWidth(),
-                m_CurrentTexture->GetHeight(),
-            },
-            objID
+            m_CurrentTexture->GetID(), tilePos,
+            dstRect, objID
         );
         m_CurrentTexture->IncObjectCount();
         m_Objects.push_back(new GameObject(props));
     }
 }
 
-void Editor::ShowCreatePlayer() {
+void Editor::ShowCreatePlayer(TilePos tilePos, Rect dstRect) {
     ImGui::Text("Showing create player stuff");
     if (ImGui::Button("Add player", ImVec2(100, 30))) {
         std::string objID = m_CurrentTexture->GetID();
         objID += std::to_string(m_CurrentTexture->GetObjectCount());
+
         Properties props(
-            m_CurrentTexture->GetID(),
-            {
-                0, 0,
-                m_CurrentTexture->GetWidth(),
-                m_CurrentTexture->GetHeight(),
-            },
-            {
-                0.0f, 0.0f,
-                m_CurrentTexture->GetWidth(),
-                m_CurrentTexture->GetHeight(),
-            },
-            objID
+            m_CurrentTexture->GetID(), tilePos,
+            dstRect, objID
         );
         m_CurrentTexture->IncObjectCount();
         m_Objects.push_back(new Warrior(props));
     }
 }
 
-void Editor::ShowCreateProjectile() {
+void Editor::ShowCreateProjectile(TilePos tilePos, Rect dstRect) {
     ImGui::Text("Showing create projectile stuff");
     // if (ImGui::Button("Add projectile", ImVec2(100, 30))) {
     //     std::string objID = m_CurrentTexture->GetID();
     //     objID += std::to_string(m_CurrentTexture->GetObjectCount());
-    //     Properties props(
-            // m_CurrentTexture->GetID(),
-            // {
-            //     0, 0,
-            //     m_CurrentTexture->GetWidth(),
-            //     m_CurrentTexture->GetHeight(),
-            // },
-            // {
-            //     0.0f, 0.0f,
-            //     m_CurrentTexture->GetWidth(),
-            //     m_CurrentTexture->GetHeight(),
-            // },
-            // objID
+        // Properties props(
+        //     m_CurrentTexture->GetID(), tilePos,
+        //     { 0, 0, width, height }, objID
         // );
     //     m_CurrentTexture->IncObjectCount();
     //     m_Objects.push_back(new Projectile(props));
     // }
 }
 
-void Editor::ShowSelectObjectType() {
+ObjectType Editor::ShowSelectObjectType() {
     static int currentIndex = 0; // Here we store our selection data as an index.
     const char* previewValue = OBJECT_TYPE_STRS[currentIndex];
     if (ImGui::BeginCombo("Select object type", previewValue, 0))
@@ -296,21 +267,7 @@ void Editor::ShowSelectObjectType() {
         }
         ImGui::EndCombo();
     }
-
-    switch((ObjectType)(currentIndex+1)) {
-        case ObjectType::Base:
-            ShowCreateBaseObject();
-            break;
-        case ObjectType::Warrior:
-            ShowCreatePlayer();
-            break;
-        case ObjectType::Projectile:
-            ShowCreateProjectile();
-            break;
-        default:
-            SDL_LogError(0, "Invalid object type");
-            assert(false);
-    }
+    return (ObjectType)(currentIndex+1);
 }
 
 void Editor::ShowCreateObject() {
@@ -324,9 +281,34 @@ void Editor::ShowCreateObject() {
             ImGui::Image((void*) m_CurrentTexture->GetTexture(), ImVec2(m_CurrentTexture->GetWidth(), m_CurrentTexture->GetHeight()));
             ImGui::Text("size = %d x %d", m_CurrentTexture->GetWidth(), m_CurrentTexture->GetHeight());
 
-            
-            ShowSelectObjectType();
-            
+            TilePos tilePos = { 0, 0, m_CurrentTexture->GetWidth(), m_CurrentTexture->GetHeight() };
+
+            TileMap* tileMap = dynamic_cast<TileMap*>(m_CurrentTexture);
+            if (tileMap != nullptr)
+                tilePos = ChooseTile(tileMap);
+
+            Rect dstRect = (tileMap != nullptr) ? (Rect){0, 0, tileMap->GetTileSize(), tileMap->GetTileSize()} :
+               (Rect){0, 0, m_CurrentTexture->GetWidth(), m_CurrentTexture->GetHeight()};
+
+            ImGui::SeparatorText("Select dimensions");
+            ImGui::SliderInt("Select destination width: ", &dstRect.w, 0, LEVEL_WIDTH);
+            ImGui::SliderInt("Select destination height: ", &dstRect.h, 0, LEVEL_HEIGHT);
+
+            ObjectType type = ShowSelectObjectType();
+            switch(type) {
+                case ObjectType::Base:
+                    ShowCreateBaseObject(tilePos, dstRect);
+                    break;
+                case ObjectType::Warrior:
+                    ShowCreatePlayer(tilePos, dstRect);
+                    break;
+                case ObjectType::Projectile:
+                    ShowCreateProjectile(tilePos, dstRect);
+                    break;
+                default:
+                    SDL_LogError(0, "Invalid object type");
+                    assert(false);
+            }
         }
         ImGui::TreePop();
     }
@@ -347,13 +329,13 @@ void Editor::ShowObjectManager() {
 }
 
 void Editor::Update(float dt) {
-    if (InputChecker::isKeyPressed(SDLK_w))
+    if (InputChecker::isKeyPressed(SDLK_UP))
         Renderer::GetInstance()->MoveCameraY(-10.0f);
-    if (InputChecker::isKeyPressed(SDLK_s))
+    if (InputChecker::isKeyPressed(SDLK_DOWN))
         Renderer::GetInstance()->MoveCameraY(10.0f);
-    if (InputChecker::isKeyPressed(SDLK_a))
+    if (InputChecker::isKeyPressed(SDLK_LEFT))
         Renderer::GetInstance()->MoveCameraX(-10.0f);
-    if (InputChecker::isKeyPressed(SDLK_d))
+    if (InputChecker::isKeyPressed(SDLK_RIGHT))
         Renderer::GetInstance()->MoveCameraX(10.0f);
     
     ImGui_ImplSDLRenderer2_NewFrame();
@@ -377,10 +359,39 @@ void Editor::Render() {
     Renderer::GetInstance()->Render();
 }
 
+void Editor::OnMouseClicked(SDL_Event& event) {
+    for (auto& obj : m_Objects) {
+        if (
+            obj->GetX() <= InputChecker::getMouseX() &&
+            InputChecker::getMouseX() <= obj->GetX() + obj->GetWidth() &&
+            obj->GetY() <= InputChecker::getMouseY() &&
+            InputChecker::getMouseY() <= obj->GetY() + obj->GetHeight()
+        ) {
+            m_CurrentObject = obj;
+        }
+    }
+}
+
+void Editor::OnMouseMoved(SDL_Event& event) {
+    if (InputChecker::isMouseButtonPressed(SDL_BUTTON_LEFT)) {
+        float dx =  event.button.x - InputChecker::getMouseX();
+        float dy =  event.button.y - InputChecker::getMouseY();
+        
+        float x = m_CurrentObject->GetX();
+        float y = m_CurrentObject->GetY();
+        m_CurrentObject->SetX(x + dx);
+        m_CurrentObject->SetY(y + dy);
+    }
+}
+
 void Editor::Events() {
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
         ImGui_ImplSDL2_ProcessEvent(&event);
+        ImGuiIO& io = ImGui::GetIO();
+        if (io.WantCaptureKeyboard || io.WantCaptureMouse) {
+            return;
+        }
         GetEventManager().handleEvent(event);
         switch (event.type) {
             case SDL_QUIT:
@@ -388,10 +399,20 @@ void Editor::Events() {
                 return;
             case SDL_KEYDOWN:
                 InputChecker::setKeyPressed(event.key.keysym.sym, true);
-                
                 break;
             case SDL_KEYUP:
                 InputChecker::setKeyPressed(event.key.keysym.sym, false);
+                break;
+            case SDL_MOUSEBUTTONDOWN:
+                InputChecker::setMouseButtonPressed(event.button.button, true);
+                OnMouseClicked(event);
+                break;
+            case SDL_MOUSEBUTTONUP:
+                InputChecker::setMouseButtonPressed(event.button.button, false);
+                break;
+            case SDL_MOUSEMOTION:
+                OnMouseMoved(event);
+                InputChecker::updateMousePosition(event.motion.x, event.motion.y);
                 break;
         }
     }
