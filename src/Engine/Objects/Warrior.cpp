@@ -15,19 +15,19 @@ void Warrior::Draw(){
 void Warrior::Update(float dt){
     m_RigidBody->Update(dt);
     m_RigidBody->ApplyForceX(0);
-    if (InputChecker::isKeyPressed(SDLK_UP)) {
+    if (InputChecker::isKeyPressed(SDLK_w)) {
         m_Transform->TranslateY(m_RigidBody->Position().Y - 10 * dt);
     }
-    if (InputChecker::isKeyPressed(SDLK_DOWN)) {
+    if (InputChecker::isKeyPressed(SDLK_s)) {
         m_Transform->TranslateY(m_RigidBody->Position().Y + 10 * dt);
     }
-    if (InputChecker::isKeyPressed(SDLK_LEFT)) {
-        m_Transform->TranslateX(m_RigidBody->Position().X - 5 * dt);
+    if (InputChecker::isKeyPressed(SDLK_a)) {
+        m_Transform->TranslateX(m_RigidBody->Position().X - 10 * dt);
         m_Animation->SetProps("player_run", 1, 8, 100, SDL_FLIP_HORIZONTAL);
         setFlip(SDL_FLIP_HORIZONTAL);
     }
-    if (InputChecker::isKeyPressed(SDLK_RIGHT)) {
-        m_Transform->TranslateX(m_RigidBody->Position().X + 5 * dt);
+    if (InputChecker::isKeyPressed(SDLK_d)) {
+        m_Transform->TranslateX(m_RigidBody->Position().X + 10 * dt);
         m_Animation->SetProps("player_run", 1, 8, 100);
         setFlip(SDL_FLIP_NONE);
 
@@ -38,11 +38,11 @@ void Warrior::Update(float dt){
 void Warrior::OnEvent(Event& event) {
     SDL_Event e = event.getEvent();
     if (e.type == SDL_KEYUP) {
-        if (e.key.keysym.sym == SDLK_LEFT) {
+        if (e.key.keysym.sym == SDLK_a) {
             m_Animation->SetProps("player", 1, 6, 100, SDL_FLIP_HORIZONTAL);
             setFlip(SDL_FLIP_HORIZONTAL);
         }
-        if (e.key.keysym.sym == SDLK_RIGHT) {
+        if (e.key.keysym.sym == SDLK_d) {
             m_Animation->SetProps("player", 1, 6, 100);
             setFlip(SDL_FLIP_NONE);
         }
