@@ -9,7 +9,9 @@
 #include "Engine/InputChecker.h"
 
 Warrior* player = nullptr;
+Warrior* player2 = nullptr;
 std::vector<Projectile*> projectiles;
+std::vector<GameObject*> colliders;
 
 Game::Game() {
     ImGui::CreateContext();
@@ -30,12 +32,16 @@ Game::Game() {
 
     Properties props("player", 0, 0, 136, 96, 136, 96);
     player = new Warrior(props);
+
+
+    Properties props2("player", 500, 200, 136, 96, 136, 96);
+    player2 = new Warrior(props2);
+    colliders.push_back(player2);
     GetEventManager().addListener(*player);
 }
 
 void Game::Update(float dt) {
-    player->Update(dt);
-
+    player->Update(dt,colliders);
     int playerX = player->GetMidPointX();
     int playerY = player->GetMidPointY();
 
@@ -48,7 +54,7 @@ void Game::Update(float dt) {
     float angle = atan2(deltaY, deltaX) * (180.0 / M_PI);
     // Convert the angle range from -180 to 180 to 0 to 360
     if (angle < 0) {
-        angle += 360.0f;
+        angle += 360.0f; 
     }
 
     SDL_Log("%f", angle);
@@ -70,6 +76,7 @@ void Game::Render() {
     Renderer::GetInstance()->RenderClear();
     m_Map->Draw();
     player->Draw();
+    player2->Draw();
     for (auto projectile : projectiles) {
         projectile->Draw();
     }

@@ -10,7 +10,6 @@ class Game : public Application{
 
         void Update(float dt);
         void Render();
-
     private:
         Map* m_Map;
 };

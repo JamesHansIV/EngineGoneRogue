@@ -24,7 +24,7 @@ class RigidBody {
 
         inline float GetMass(){return m_Mass;}
         inline Vector2D Position(){return m_Position;}
-        inline Vector2D Veclocity(){return m_Velocity;}
+        inline Vector2D Velocity(){return m_Velocity;}
         inline Vector2D Acceleration(){return m_Acceleration;}
 
         void Update(float dt)
