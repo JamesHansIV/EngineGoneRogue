@@ -1,0 +1,3 @@
+[submodule "vendor/tinyxml2/tinyxml2"]
+    path = vendor/tinyxml2/tinyxml2
+    url = https://github.com/leethomason/tinyxml2
