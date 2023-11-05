@@ -43,8 +43,14 @@ void Warrior::Update(float dt, const std::vector<GameObject*>& colliders){
 
 bool Warrior::canMoveThrough(const std::vector<GameObject*>& colliders)
 {
-    for (auto collider : colliders) {
-        if (CollisionHandler::GetInstance()->CheckCollision(m_Collider->Get(), collider->getCollider()->Get())) {
+    for (auto collider : colliders) 
+    {
+        if (*m_Transform->X < 0.0f || 
+            *m_Transform->Y < 0.0f || 
+            *m_Transform->X + this->GetWidth() > SCREEN_WIDTH || 
+            *m_Transform->Y + this->GetHeight() > SCREEN_HEIGHT || 
+            CollisionHandler::GetInstance()->CheckCollision(m_Collider->Get(), collider->getCollider()->Get())) 
+        {
             m_Transform->TranslateX(-m_RigidBody->Velocity().X/2);
             m_Transform->TranslateY(-m_RigidBody->Velocity().Y/2);
             m_Collider->Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
