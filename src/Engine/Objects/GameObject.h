@@ -7,6 +7,7 @@
 
 #include <SDL2/SDL.h>
 #include <string>
+#include "Engine/Components/Physics/Collider.h"
 
 enum class ObjectType {
     None = 0,
@@ -82,6 +83,8 @@ class GameObject : public IObject {
         void setFlip(SDL_RendererFlip flip) {m_Flip = flip;}
 
 
+        Collider* getCollider(){return m_Collider;};
+
     protected:
         Transform* m_Transform;
         TilePos m_TilePos;
@@ -89,4 +92,5 @@ class GameObject : public IObject {
         std::string m_TextureID;
         std::string m_ObjectID;
         SDL_RendererFlip m_Flip;
+        Collider* m_Collider;
 };

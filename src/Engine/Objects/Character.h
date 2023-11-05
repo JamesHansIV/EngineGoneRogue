@@ -10,7 +10,7 @@ class Character: public GameObject {
 
         virtual void Draw()=0;
         virtual void Clean()=0;
-        virtual void Update(float dt)=0;
+        virtual void Update(float dt, const std::vector<GameObject*>& colliders)=0;
 
     protected:
         std::string m_Name;

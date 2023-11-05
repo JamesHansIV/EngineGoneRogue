@@ -1,5 +1,8 @@
 #include "Renderer.h"
 #include "Apps/Application.h"
+#include "Engine/Objects/GameObject.h"
+
+
 
 bool checkCollision(SDL_Rect& a, SDL_Rect& b) {
     if (a.x + a.w < b.x)
@@ -38,6 +41,8 @@ void Renderer::RenderClear() {
 
 void Renderer::Render() {
     SDL_RenderPresent(m_Renderer);
+    if(m_CameraTarget != nullptr)
+        CenterCameraOnObject();
 }
 
 Texture* Renderer::AddTexture(std::string id, std::string filename) {
@@ -198,6 +203,15 @@ void Renderer::DrawFrame(std::string id, int x, int y, int width, int height, in
     SDL_RenderCopyEx(m_Renderer, m_TextureMap[id]->GetTexture(), &srcRect, &dstRect, angle, center, flip);
 }
 
+void Renderer::CenterCameraOnObject() {
+
+  int targetX = m_CameraTarget->GetX() + m_CameraTarget->GetWidth() / 2;
+  int targetY = m_CameraTarget->GetY() + m_CameraTarget->GetHeight() / 2;
+
+  m_Camera.x = targetX - SCREEN_WIDTH/2;
+  m_Camera.y = targetY - SCREEN_HEIGHT/2;
+
+}
 void Renderer::MoveCameraX(float x) {
     m_Camera.x += x;
     if (m_Camera.x < 0)

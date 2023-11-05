@@ -12,6 +12,7 @@
 #include <cassert>
 #include <set>
 
+class GameObject;
 
 class Renderer{
     public:
@@ -45,6 +46,11 @@ class Renderer{
         void MoveCameraX(float x);
         void MoveCameraY(float y);
 
+        void CenterCameraOnObject();
+        void SetCameraTarget(GameObject* target) {
+            m_CameraTarget = target;
+        }
+
     private:
         Renderer() {}
         SDL_Renderer* m_Renderer;
@@ -52,4 +58,5 @@ class Renderer{
         std::map<std::string, Texture*> m_TextureMap;
         std::set<std::string> m_Filepaths;
         static Renderer* m_Instance;
+        GameObject* m_CameraTarget;
 };

@@ -9,7 +9,12 @@
 #include "Engine/InputChecker.h"
 
 Warrior* player = nullptr;
+Warrior* player2 = nullptr;
+Warrior* player3 = nullptr;
+Warrior* player4 = nullptr;
+Warrior* player5 = nullptr;
 std::vector<Projectile*> projectiles;
+std::vector<GameObject*> colliders;
 
 Game::Game() {
     ImGui::CreateContext();
@@ -30,12 +35,29 @@ Game::Game() {
 
     Properties props("player", {0, 0, 136, 96}, {0, 0, 136, 96});
     player = new Warrior(props);
+
+    Properties props2("player",{0, 0, 136, 96}, {100, 128, 136, 96});
+    player2 = new Warrior(props2);
+
+    Properties props3("player", {0, 0, 136, 96}, {700, 360, 136, 96});
+    Properties props4("player", {0, 0, 136, 96}, {300, 278, 136, 96});
+    Properties props5("player", {0, 0, 136, 96}, {200, 389, 136, 96});
+    player3 = new Warrior(props3);
+    player4 = new Warrior(props4);
+    player5 = new Warrior(props5);
+
+    colliders.push_back(player2);
+    colliders.push_back(player3);
+    colliders.push_back(player4);
+    colliders.push_back(player5);
+    
     GetEventManager().addListener(*player);
+
+    Renderer::GetInstance()->SetCameraTarget(player);
 }
 
 void Game::Update(float dt) {
-    player->Update(dt);
-
+    player->Update(dt,colliders);
     int playerX = player->GetMidPointX();
     int playerY = player->GetMidPointY();
 
@@ -48,7 +70,7 @@ void Game::Update(float dt) {
     float angle = atan2(deltaY, deltaX) * (180.0 / M_PI);
     // Convert the angle range from -180 to 180 to 0 to 360
     if (angle < 0) {
-        angle += 360.0f;
+        angle += 360.0f; 
     }
 
     SDL_Log("%f", angle);
@@ -70,6 +92,10 @@ void Game::Render() {
     Renderer::GetInstance()->RenderClear();
     m_Map->Draw();
     player->Draw();
+    player2->Draw();
+    player3->Draw();
+    player4->Draw();
+    player5->Draw();
     for (auto projectile : projectiles) {
         projectile->Draw();
     }
