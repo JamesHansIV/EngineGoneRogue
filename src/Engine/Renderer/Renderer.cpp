@@ -72,6 +72,38 @@ Texture* Renderer::AddTexture(std::string id, const char* filename) {
     return textureWrapper;
 }
 
+TileMap* Renderer::AddTileMap(std::string id, std::string filename, int tileSize, int rows, int cols) {
+    TileMap* textureWrapper = nullptr;
+    try {
+        if (m_Filepaths.find(filename) != m_Filepaths.end()) {
+            throw std::runtime_error("Filepath already exists");
+        }
+        textureWrapper = new TileMap(filename, id, tileSize, rows, cols);
+        m_TextureMap[id] = textureWrapper;
+        m_Filepaths.insert(filename);
+
+    } catch(std::runtime_error& err) {
+        SDL_LogError(0, "%s", err.what());
+    }
+    return textureWrapper;
+}
+
+TileMap* Renderer::AddTileMap(std::string id, const char* filename, int tileSize, int rows, int cols) {
+    TileMap* textureWrapper = nullptr;
+    try {
+        if (m_Filepaths.find(filename) != m_Filepaths.end()) {
+            throw std::runtime_error("Filepath already exists");
+        }
+        textureWrapper = new TileMap(filename, id, tileSize, rows, cols);
+        m_TextureMap[id] = textureWrapper;
+        m_Filepaths.insert(filename);
+
+    } catch(std::runtime_error& err) {
+        SDL_LogError(0, "%s", err.what());
+    }
+    return textureWrapper;
+}
+
 void Renderer::Drop(std::string id)
 {
     delete m_TextureMap[id];

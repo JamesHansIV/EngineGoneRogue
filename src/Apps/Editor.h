@@ -14,7 +14,11 @@ class Editor : public Application{
         virtual void Render();
         virtual void Events();
 
+
+        TilePos ChooseTile(TileMap* tileMap);
+        void ShowMenuBar();
         void ShowLoadTexture();
+        void ShowLoadTilemap();
         void ShowSelectObjectType();
         void ShowCreateBaseObject();
         void ShowCreateProjectile();

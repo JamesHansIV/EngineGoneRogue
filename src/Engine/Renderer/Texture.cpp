@@ -18,8 +18,6 @@ Texture::Texture(const std::string& filename, std::string id) {
     m_Texture = texture;
     m_Width = surface->w;
     m_Height = surface->h;
-    m_TileWidth = m_Width;
-    m_TileHeight = m_Height;
     m_ObjectCount = 0;
 }
 
@@ -40,8 +38,6 @@ Texture::Texture(const char* filename, std::string id) {
     m_Texture = texture;
     m_Width = surface->w;
     m_Height = surface->h;
-    m_TileWidth = m_Width;
-    m_TileHeight = m_Height;
     m_ObjectCount = 0;
 }
 

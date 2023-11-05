@@ -14,6 +14,7 @@
 /*
 TODO list
 (x = finished)
+(~ = in progress)
 - show level/grid info
 x Move/resize objects
 - rotate/change color of objects
@@ -23,7 +24,7 @@ x Show a list of textures
 x show a list of objects
 - Add multiple textures to an object?
 - Move objects at fine and coarse granularity
-- Create object based on type
+~ Create object based on type
     - Add animations
     - Add physics info
     - add state info
@@ -55,15 +56,19 @@ Editor::Editor() : m_CurrentTexture(nullptr) {
     ImGui_ImplSDL2_InitForSDLRenderer(GetWindow(), renderer);
     ImGui_ImplSDLRenderer2_Init(renderer);
 
-    Renderer::GetInstance()->AddTexture("tilemap", "../assets/textures/kenney_tiny-dungeon/Tilemap/tilemap_packed.png");
-    m_Map = new Map("tilemap");
-    if (!m_Map->LoadMap("../assets/maps/tiny_dungeon1.txt")) {
-        SDL_Log("Failed to load map\n");
-        assert(false);
-    }
+    // Renderer::GetInstance()->AddTexture("tilemap", "../assets/textures/kenney_tiny-dungeon/Tilemap/tilemap_packed.png");
+    // m_Map = new Map("tilemap");
+    // if (!m_Map->LoadMap("../assets/maps/tiny_dungeon1.txt")) {
+    //     SDL_Log("Failed to load map\n");
+    //     assert(false);
+    // }
     Texture* background = Renderer::GetInstance()->AddTexture("background", "../assets/textures/bg.png");
     assert(background != nullptr);
-    Properties props("background", 0, 0, LEVEL_WIDTH, LEVEL_HEIGHT, LEVEL_WIDTH, LEVEL_HEIGHT, "background");
+    Properties props(
+        "background", {0, 0, LEVEL_WIDTH, LEVEL_HEIGHT},
+        { 0, 0, LEVEL_WIDTH, LEVEL_HEIGHT },
+        "background"
+    );
     m_Objects.push_back(new GameObject(props));
 }
 
@@ -76,7 +81,7 @@ Editor::~Editor() {
     for (auto obj : m_Objects) {
         delete obj;
     }
-    delete m_Map;
+    // delete m_Map;
 }
 
 void DrawGrid() {
@@ -100,6 +105,18 @@ void Editor::ShowTextureIDs() {
             }
             ImGui::TreePop();
         }
+    }
+}
+
+void Editor::ShowMenuBar() {
+    if (ImGui::BeginMenuBar()) {
+        if (ImGui::BeginMenu("File")) {
+            if (ImGui::MenuItem("Save")) {
+            }
+            ImGui::EndMenu();
+        }
+
+        ImGui::EndMenuBar();
     }
 }
 
@@ -129,47 +146,84 @@ void Editor::ShowObjectEditor() {
 
         ImGui::TreePop();
     }
-
 }
 
 void Editor::ShowLoadTexture() {
     if (ImGui::TreeNode("Load texture")) {
-        ImGui::Text("Input a texture or tilemap filepath");
+        ImGui::Text("Input a texture filepath");
         static char filepath[256] = "";
         static char textureID[256] = "";
         ImGui::InputText("Filepath", filepath, sizeof(filepath));
         ImGui::InputText("Texture name", textureID, sizeof(textureID));
 
-        static char invalidFilepath[256] = "";
-        if (ImGui::Button("Load texture", ImVec2(100, 30))) {
-            assert(strcmp(filepath, "") != 0 && strcmp(textureID, "") != 0);
-            SDL_Log("filepath: %s", filepath);
-            m_CurrentTexture = Renderer::GetInstance()->AddTexture(textureID, filepath);
-            if (!m_CurrentTexture) {
-                strcpy(invalidFilepath, filepath);
-            } else {
-                strcpy(invalidFilepath, "");
-                m_TextureIDs.push_back(textureID);
-            }
-            strcpy(filepath, "");
-            strcpy(textureID, "");
+        static bool isTileMap = false;
+        ImGui::Checkbox("Tile map", &isTileMap);
+        static int tileSize = 0;
+        static int rows = 0;
+        static int cols = 0;
+        if (isTileMap) {
+            ImGui::InputInt("Set tile size", &tileSize);
+            ImGui::InputInt("Set rows", &rows);
+            ImGui::InputInt("Set columns", &cols);
         }
+        static char invalidFilepath[256] = "";
+        if (strcmp(filepath, "") != 0 && strcmp(textureID, "") != 0) {
+            if (ImGui::Button("Load texture", ImVec2(100, 30)) && strcmp(filepath, "") != 0 && strcmp(textureID, "") != 0) {
+                SDL_Log("filepath: %s", filepath);
+                m_CurrentTexture = (isTileMap) ?
+                    Renderer::GetInstance()->AddTexture(textureID, filepath) :
+                    Renderer::GetInstance()->AddTileMap(textureID, filepath, tileSize, rows, cols);
+
+                if (!m_CurrentTexture) {
+                    strcpy(invalidFilepath, filepath);
+                } else {
+                    strcpy(invalidFilepath, "");
+                    m_TextureIDs.push_back(textureID);
+                }
+                strcpy(filepath, "");
+                strcpy(textureID, "");
+                tileSize = 0;
+                rows = 0;
+                cols = 0;
+                isTileMap = false;
+            }
+        }
+        
         if (strcmp(invalidFilepath, "") != 0)
             ImGui::Text("ERROR: failed to load texture from %s", invalidFilepath);
         ImGui::TreePop();
     }
 }
 
+TilePos Editor::ChooseTile(TileMap* tileMap) {
+    static int row = 0;
+    static int col = 0;
+    ImGui::SliderInt("Select tile row", &row, 0, tileMap->GetRows());
+    ImGui::SliderInt("Select tile column", &col, 0, tileMap->GetCols());
+    return { row, col };
+}
+
 void Editor::ShowCreateBaseObject() {
     if (ImGui::Button("Add object", ImVec2(100, 30))) {
         std::string objID = m_CurrentTexture->GetID();
         objID += std::to_string(m_CurrentTexture->GetObjectCount());
+
+        TileMap* tileMap = dynamic_cast<TileMap*>(m_CurrentTexture);
+        if (tileMap != nullptr)
+            TilePos tile = ChooseTile(tileMap);
+
         Properties props(
-            m_CurrentTexture->GetID(), 0, 0,
-            m_CurrentTexture->GetWidth(),
-            m_CurrentTexture->GetHeight(),
-            m_CurrentTexture->GetWidth(),
-            m_CurrentTexture->GetHeight(),
+            m_CurrentTexture->GetID(),
+            {
+                0, 0,
+                m_CurrentTexture->GetWidth(),
+                m_CurrentTexture->GetHeight(),
+            },
+            {
+                0.0f, 0.0f,
+                m_CurrentTexture->GetWidth(),
+                m_CurrentTexture->GetHeight(),
+            },
             objID
         );
         m_CurrentTexture->IncObjectCount();
@@ -183,11 +237,17 @@ void Editor::ShowCreatePlayer() {
         std::string objID = m_CurrentTexture->GetID();
         objID += std::to_string(m_CurrentTexture->GetObjectCount());
         Properties props(
-            m_CurrentTexture->GetID(), 0, 0,
-            m_CurrentTexture->GetWidth(),
-            m_CurrentTexture->GetHeight(),
-            m_CurrentTexture->GetWidth(),
-            m_CurrentTexture->GetHeight(),
+            m_CurrentTexture->GetID(),
+            {
+                0, 0,
+                m_CurrentTexture->GetWidth(),
+                m_CurrentTexture->GetHeight(),
+            },
+            {
+                0.0f, 0.0f,
+                m_CurrentTexture->GetWidth(),
+                m_CurrentTexture->GetHeight(),
+            },
             objID
         );
         m_CurrentTexture->IncObjectCount();
@@ -201,13 +261,19 @@ void Editor::ShowCreateProjectile() {
     //     std::string objID = m_CurrentTexture->GetID();
     //     objID += std::to_string(m_CurrentTexture->GetObjectCount());
     //     Properties props(
-    //         m_CurrentTexture->GetID(), 0, 0,
-    //         m_CurrentTexture->GetWidth(),
-    //         m_CurrentTexture->GetHeight(),
-    //         m_CurrentTexture->GetWidth(),
-    //         m_CurrentTexture->GetHeight(),
-    //         objID
-    //     );
+            // m_CurrentTexture->GetID(),
+            // {
+            //     0, 0,
+            //     m_CurrentTexture->GetWidth(),
+            //     m_CurrentTexture->GetHeight(),
+            // },
+            // {
+            //     0.0f, 0.0f,
+            //     m_CurrentTexture->GetWidth(),
+            //     m_CurrentTexture->GetHeight(),
+            // },
+            // objID
+        // );
     //     m_CurrentTexture->IncObjectCount();
     //     m_Objects.push_back(new Projectile(props));
     // }
@@ -258,6 +324,7 @@ void Editor::ShowCreateObject() {
             ImGui::Image((void*) m_CurrentTexture->GetTexture(), ImVec2(m_CurrentTexture->GetWidth(), m_CurrentTexture->GetHeight()));
             ImGui::Text("size = %d x %d", m_CurrentTexture->GetWidth(), m_CurrentTexture->GetHeight());
 
+            
             ShowSelectObjectType();
             
         }
@@ -266,8 +333,12 @@ void Editor::ShowCreateObject() {
 }
 
 void Editor::ShowObjectManager() {
-    ImGui::Begin("Game Object Manager");
+    ImGuiWindowFlags windowFlags = 0;
+    windowFlags |= ImGuiWindowFlags_MenuBar;
 
+    ImGui::Begin("Game Object Manager", NULL, windowFlags);
+
+    ShowMenuBar();
     ShowLoadTexture();
     ShowObjectEditor();
     ShowCreateObject();

@@ -33,8 +33,6 @@ Application::Application(){
     //      Set a working directory path macro to use absolute file paths
     Renderer::GetInstance()->Init();
 
-    Transform tf;
-    tf.Log();
     m_IsRunning = true;
 }
 
