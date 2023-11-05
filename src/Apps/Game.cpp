@@ -10,6 +10,9 @@
 
 Warrior* player = nullptr;
 Warrior* player2 = nullptr;
+Warrior* player3 = nullptr;
+Warrior* player4 = nullptr;
+Warrior* player5 = nullptr;
 std::vector<Projectile*> projectiles;
 std::vector<GameObject*> colliders;
 
@@ -33,10 +36,21 @@ Game::Game() {
     Properties props("player", {0, 0, 136, 96}, {0, 0, 136, 96});
     player = new Warrior(props);
 
-
-    Properties props2("player", 500, 200, 136, 96, 136, 96);
+    Properties props2("player",{0, 0, 136, 96}, {100, 128, 136, 96});
     player2 = new Warrior(props2);
+
+    Properties props3("player", {0, 0, 136, 96}, {700, 360, 136, 96});
+    Properties props4("player", {0, 0, 136, 96}, {300, 278, 136, 96});
+    Properties props5("player", {0, 0, 136, 96}, {200, 389, 136, 96});
+    player3 = new Warrior(props3);
+    player4 = new Warrior(props4);
+    player5 = new Warrior(props5);
+
     colliders.push_back(player2);
+    colliders.push_back(player3);
+    colliders.push_back(player4);
+    colliders.push_back(player5);
+    
     GetEventManager().addListener(*player);
 }
 
@@ -77,6 +91,9 @@ void Game::Render() {
     m_Map->Draw();
     player->Draw();
     player2->Draw();
+    player3->Draw();
+    player4->Draw();
+    player5->Draw();
     for (auto projectile : projectiles) {
         projectile->Draw();
     }

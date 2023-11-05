@@ -9,7 +9,7 @@ Warrior::Warrior(Properties& props): Character(props){
     m_RigidBody = new RigidBody();
     m_Collider = new Collider();
     m_Collider->SetCorrection(100, 100, 60, 70 );
-    m_Collider->Set(m_Transform->X, m_Transform->Y, GetHeight(), GetWidth());
+    m_Collider->Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
 }
 
 void Warrior::Draw(){
@@ -42,7 +42,7 @@ void Warrior::Update(float dt, const std::vector<GameObject*>& colliders){
     }
     m_RigidBody->Update(dt);
     m_Transform->Translate(m_RigidBody->Position());
-    m_Collider->Set(m_Transform->X, m_Transform->Y, GetHeight(), GetWidth());
+    m_Collider->Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
     m_Animation->Update();
 }
 
