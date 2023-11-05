@@ -53,6 +53,8 @@ class GameObject : public IObject {
         }
         virtual ~GameObject() {}
 
+        virtual ObjectType GetObjectType() { return ObjectType::Base; }
+
         virtual void Draw() {
             SDL_Rect srcRect = { m_TilePos.col * m_TilePos.w, m_TilePos.row * m_TilePos.h, m_TilePos.w, m_TilePos.h };
             SDL_Rect dstRect = { (int)m_DstRect.x, (int)m_DstRect.y, m_DstRect.w, m_DstRect.h };
@@ -61,6 +63,9 @@ class GameObject : public IObject {
         virtual void Clean() {};
         virtual void Update(float dt) {};
 
+        TilePos& GetTilePos() { return m_TilePos; }
+        Rect& GetDstRect() { return m_DstRect; }
+        
         float& GetX() { return m_DstRect.x; }
         float& GetY() { return m_DstRect.y; }
         void SetX(int x) { m_DstRect.x = x; }

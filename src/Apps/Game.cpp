@@ -1,8 +1,5 @@
 #include "Game.h"
-#include "imgui.h"
 #include "Engine/Renderer/Renderer.h"
-#include "backends/imgui_impl_sdl2.h"
-#include "backends/imgui_impl_sdlrenderer2.h"
 #include "Engine/Objects/Warrior.h"
 #include "Events/EventListener.h"
 #include "Engine/Objects/Projectile.h"
@@ -17,10 +14,7 @@ std::vector<Projectile*> projectiles;
 std::vector<GameObject*> colliders;
 
 Game::Game() {
-    ImGui::CreateContext();
     SDL_Renderer* renderer = Renderer::GetInstance()->GetRenderer();
-    ImGui_ImplSDL2_InitForSDLRenderer(GetWindow(), renderer);
-    ImGui_ImplSDLRenderer2_Init(renderer);
 
     Renderer::GetInstance()->AddTexture("player", "../assets/textures/Idle.png");
     Renderer::GetInstance()->AddTexture("tilemap", "../assets/textures/kenney_tiny-dungeon/Tilemap/tilemap_packed.png");
@@ -54,6 +48,64 @@ Game::Game() {
     GetEventManager().addListener(*player);
 
     Renderer::GetInstance()->SetCameraTarget(player);
+
+    LoadProject();
+}
+
+void Game::LoadObject(tinyxml2::XMLElement* xmlObj) {
+    tinyxml2::XMLElement* textureID = xmlObj->FirstChildElement("TextureID");
+    tinyxml2::XMLElement* objectID = xmlObj->FirstChildElement("ObjectID");
+    tinyxml2::XMLElement* srcRect = xmlObj->FirstChildElement("SrcRect");
+    tinyxml2::XMLElement* dstRect = xmlObj->FirstChildElement("DstRect");
+
+    std::string textureIDVal = textureID->GetText();
+    std::string objectIDVal = objectID->GetText();
+    SDL_Log("Texture id: %s", textureIDVal.c_str());
+    SDL_Log("Object id: %s", objectIDVal.c_str());
+    TilePos tilePos;
+    tilePos.row = atoi(srcRect->FirstChildElement("Row")->GetText());
+    tilePos.col = atoi(srcRect->FirstChildElement("Column")->GetText());
+    tilePos.w = atoi(srcRect->FirstChildElement("Width")->GetText());
+    tilePos.h = atoi(srcRect->FirstChildElement("Height")->GetText());
+
+    SDL_Log("Src row: %d", tilePos.row);
+    SDL_Log("Src col: %d", tilePos.col);
+    SDL_Log("Src w: %d", tilePos.w);
+    SDL_Log("Src h: %d", tilePos.h);
+
+    Rect dstRectVal;
+    dstRectVal.x = std::stof(dstRect->FirstChildElement("XPos")->GetText());
+    dstRectVal.y = std::stof(dstRect->FirstChildElement("YPos")->GetText());
+    dstRectVal.w = atoi(dstRect->FirstChildElement("Width")->GetText());
+    dstRectVal.h = atoi(dstRect->FirstChildElement("Height")->GetText());
+
+    SDL_Log("Dst x: %f", dstRectVal.x);
+    SDL_Log("Dst y: %f", dstRectVal.y);
+    SDL_Log("dst w: %d", dstRectVal.w);
+    SDL_Log("dst h: %d", dstRectVal.h);
+
+    Properties props(
+        textureIDVal, tilePos,
+        dstRectVal, objectIDVal
+    );
+
+    m_Objects.push_back(new GameObject(props));
+}
+
+void Game::LoadProject() {
+    tinyxml2::XMLDocument doc;
+    char filePath[128];
+    sprintf(filePath, "../assets/projects/%s.xml", m_ProjectName.c_str());
+    tinyxml2::XMLError error = doc.LoadFile(filePath);
+    assert(error == tinyxml2::XML_SUCCESS);
+
+    tinyxml2::XMLElement* root = doc.FirstChildElement("Root");
+    tinyxml2::XMLElement* currObject = root->FirstChildElement("Object");
+
+    while (currObject != nullptr) {
+        LoadObject(currObject);
+        currObject = currObject->NextSiblingElement("Object");
+    }
 }
 
 void Game::Update(float dt) {
@@ -73,10 +125,7 @@ void Game::Update(float dt) {
         angle += 360.0f; 
     }
 
-    SDL_Log("%d, %d", mouseX, mouseY);
-
-
-    SDL_Log("%s, %f", "angle: ", angle);
+    //SDL_Log("%f", angle);
 
     Properties projectile_props("projectile", {0, 0, 723, 724}, {player->GetMidPointX(), player->GetMidPointY(), 15, 15});
     if (InputChecker::isMouseButtonPressed(SDL_BUTTON_LEFT))
