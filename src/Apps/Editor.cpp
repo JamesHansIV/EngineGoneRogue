@@ -29,7 +29,7 @@ x show a list of objects
     - Add physics info
     - add state info
     - Add abilities/stat/status info
-- Create objects from tilemap
+x Create objects from tilemap
 - Add layering
 - Export objects to json file
     - information could also include
@@ -50,26 +50,13 @@ x show a list of objects
 
 const char* OBJECT_TYPE_STRS[] = {"Base", "Projectile", "Warrior"};
 
-Editor::Editor() : m_CurrentTexture(nullptr) {
+Editor::Editor() : m_CurrentTexture(nullptr), m_CurrentLayer(0) {
     ImGui::CreateContext();
     SDL_Renderer* renderer = Renderer::GetInstance()->GetRenderer();
     ImGui_ImplSDL2_InitForSDLRenderer(GetWindow(), renderer);
     ImGui_ImplSDLRenderer2_Init(renderer);
 
-    // Renderer::GetInstance()->AddTexture("tilemap", "../assets/textures/kenney_tiny-dungeon/Tilemap/tilemap_packed.png");
-    // m_Map = new Map("tilemap");
-    // if (!m_Map->LoadMap("../assets/maps/tiny_dungeon1.txt")) {
-    //     SDL_Log("Failed to load map\n");
-    //     assert(false);
-    // }
-    Texture* background = Renderer::GetInstance()->AddTexture("background", "../assets/textures/bg.png");
-    assert(background != nullptr);
-    Properties props(
-        "background", {0, 0, LEVEL_WIDTH, LEVEL_HEIGHT},
-        { 0, 0, LEVEL_WIDTH, LEVEL_HEIGHT },
-        "background"
-    );
-    m_Objects.push_back(new GameObject(props));
+    m_Layers.push_back(std::vector<GameObject*>());
 }
 
 Editor::~Editor() {
@@ -78,8 +65,10 @@ Editor::~Editor() {
     ImGui_ImplSDL2_Shutdown();
     ImGui::DestroyContext();
 
-    for (auto obj : m_Objects) {
-        delete obj;
+    for (auto layer : m_Layers) {
+        for (auto obj : layer) {
+            delete obj;
+        }
     }
     // delete m_Map;
 }
@@ -93,6 +82,17 @@ void DrawGrid() {
     }
 }
 
+void Editor::SetObjectInfo() {
+    TileMap* tileMap = dynamic_cast<TileMap*>(m_CurrentTexture);
+    if (tileMap != nullptr) {
+        m_ObjectInfo.Tile = { 0, 0, tileMap->GetTileSize(), tileMap->GetTileSize() };
+        m_ObjectInfo.DstRect = { 0, 0, tileMap->GetTileSize(), tileMap->GetTileSize() };
+    } else {
+        m_ObjectInfo.Tile = { 0, 0, m_CurrentTexture->GetWidth(), m_CurrentTexture->GetHeight() };
+        m_ObjectInfo.DstRect = { 0, 0, m_CurrentTexture->GetWidth(), m_CurrentTexture->GetHeight() };
+    }
+}
+
 void Editor::ShowTextureIDs() {
     if (m_TextureIDs.size() == 0) {
         ImGui::Text("No loaded textures");
@@ -101,6 +101,7 @@ void Editor::ShowTextureIDs() {
             for (auto ID : m_TextureIDs) {
                 if (ImGui::Button(ID.c_str(), ImVec2(100, 30))) {
                     m_CurrentTexture = Renderer::GetInstance()->GetTexture(ID);
+                    SetObjectInfo();
                 }
             }
             ImGui::TreePop();
@@ -123,9 +124,12 @@ void Editor::ShowMenuBar() {
 void Editor::ShowObjectEditor() {
     if (ImGui::TreeNode("Object Editor")) {
         if (ImGui::TreeNode("Object list")) {
-            for (auto obj : m_Objects) {
-                if (ImGui::Button(obj->GetID().c_str(), ImVec2(100, 30))) {
-                    m_CurrentObject = obj;
+            
+            for (auto it = m_Layers[m_CurrentLayer].begin(); it != m_Layers[m_CurrentLayer].end(); it++) {
+                if (ImGui::Button((*it)->GetID().c_str(), ImVec2(100, 30))) {
+                    m_CurrentObject = *it;
+                    m_Layers[m_CurrentLayer].erase(it);
+                    m_Layers[m_CurrentLayer].insert(m_Layers[m_CurrentLayer].end(), m_CurrentObject);
                 }
             }
             ImGui::TreePop();
@@ -170,12 +174,11 @@ void Editor::ShowLoadTexture() {
         if (strcmp(filepath, "") != 0 && strcmp(textureID, "") != 0) {
             if (ImGui::Button("Load texture", ImVec2(100, 30))) {
                 
-                if (isTileMap) {
-                    SDL_Log("loading tile map: %d", isTileMap);
-                }
                 m_CurrentTexture = (isTileMap) ?
                     Renderer::GetInstance()->AddTileMap(textureID, filepath, tileSize, rows, cols) :
                     Renderer::GetInstance()->AddTexture(textureID, filepath);
+
+                SetObjectInfo();
 
                 if (!m_CurrentTexture) {
                     strcpy(invalidFilepath, filepath);
@@ -198,55 +201,46 @@ void Editor::ShowLoadTexture() {
     }
 }
 
-TilePos Editor::ChooseTile(TileMap* tileMap) {
-    static int row = 0;
-    static int col = 0;
-    ImGui::SliderInt("Select tile row", &row, 0, tileMap->GetRows() - 1);
-    ImGui::SliderInt("Select tile column", &col, 0, tileMap->GetCols() - 1);
-
-    return { row, col, tileMap->GetTileSize(), tileMap->GetTileSize() };
-}
-
-void Editor::ShowCreateBaseObject(TilePos tilePos, Rect dstRect) {
+void Editor::ShowCreateBaseObject() {
     if (ImGui::Button("Add object", ImVec2(100, 30))) {
         std::string objID = m_CurrentTexture->GetID();
         objID += std::to_string(m_CurrentTexture->GetObjectCount());
 
         Properties props(
-            m_CurrentTexture->GetID(), tilePos,
-            dstRect, objID
+            m_CurrentTexture->GetID(), m_ObjectInfo.Tile,
+            m_ObjectInfo.DstRect, objID
         );
         m_CurrentTexture->IncObjectCount();
-        m_Objects.push_back(new GameObject(props));
+        m_Layers[m_CurrentLayer].push_back(new GameObject(props));
     }
 }
 
-void Editor::ShowCreatePlayer(TilePos tilePos, Rect dstRect) {
+void Editor::ShowCreatePlayer() {
     ImGui::Text("Showing create player stuff");
     if (ImGui::Button("Add player", ImVec2(100, 30))) {
         std::string objID = m_CurrentTexture->GetID();
         objID += std::to_string(m_CurrentTexture->GetObjectCount());
 
         Properties props(
-            m_CurrentTexture->GetID(), tilePos,
-            dstRect, objID
+            m_CurrentTexture->GetID(), m_ObjectInfo.Tile,
+            m_ObjectInfo.DstRect, objID
         );
         m_CurrentTexture->IncObjectCount();
-        m_Objects.push_back(new Warrior(props));
+        m_Layers[m_CurrentLayer].push_back(new Warrior(props));
     }
 }
 
-void Editor::ShowCreateProjectile(TilePos tilePos, Rect dstRect) {
+void Editor::ShowCreateProjectile() {
     ImGui::Text("Showing create projectile stuff");
     // if (ImGui::Button("Add projectile", ImVec2(100, 30))) {
     //     std::string objID = m_CurrentTexture->GetID();
     //     objID += std::to_string(m_CurrentTexture->GetObjectCount());
         // Properties props(
-        //     m_CurrentTexture->GetID(), tilePos,
-        //     { 0, 0, width, height }, objID
+        //     m_CurrentTexture->GetID(), m_ObjectInfo.Tile,
+        //     m_ObjectInfo.DstRect, objID
         // );
     //     m_CurrentTexture->IncObjectCount();
-    //     m_Objects.push_back(new Projectile(props));
+    //     m_Layers[m_CurrentLayer].push_back(new Projectile(props));
     // }
 }
 
@@ -281,35 +275,65 @@ void Editor::ShowCreateObject() {
             ImGui::Image((void*) m_CurrentTexture->GetTexture(), ImVec2(m_CurrentTexture->GetWidth(), m_CurrentTexture->GetHeight()));
             ImGui::Text("size = %d x %d", m_CurrentTexture->GetWidth(), m_CurrentTexture->GetHeight());
 
-            TilePos tilePos = { 0, 0, m_CurrentTexture->GetWidth(), m_CurrentTexture->GetHeight() };
-
             TileMap* tileMap = dynamic_cast<TileMap*>(m_CurrentTexture);
-            if (tileMap != nullptr)
-                tilePos = ChooseTile(tileMap);
-
-            Rect dstRect = (tileMap != nullptr) ? (Rect){0, 0, tileMap->GetTileSize(), tileMap->GetTileSize()} :
-               (Rect){0, 0, m_CurrentTexture->GetWidth(), m_CurrentTexture->GetHeight()};
+            if (tileMap != nullptr) {
+                ImGui::SliderInt("Select tile row", &m_ObjectInfo.Tile.row, 0, tileMap->GetRows() - 1);
+                ImGui::SliderInt("Select tile column", &m_ObjectInfo.Tile.col, 0, tileMap->GetCols() - 1);
+            }
 
             ImGui::SeparatorText("Select dimensions");
-            ImGui::SliderInt("Select destination width: ", &dstRect.w, 0, LEVEL_WIDTH);
-            ImGui::SliderInt("Select destination height: ", &dstRect.h, 0, LEVEL_HEIGHT);
+            ImGui::SliderInt("Select destination width: ", &m_ObjectInfo.DstRect.w, 0, LEVEL_WIDTH);
+            ImGui::SliderInt("Select destination height: ", &m_ObjectInfo.DstRect.h, 0, LEVEL_HEIGHT);
 
             ObjectType type = ShowSelectObjectType();
             switch(type) {
                 case ObjectType::Base:
-                    ShowCreateBaseObject(tilePos, dstRect);
+                    ShowCreateBaseObject();
                     break;
                 case ObjectType::Warrior:
-                    ShowCreatePlayer(tilePos, dstRect);
+                    ShowCreatePlayer();
                     break;
                 case ObjectType::Projectile:
-                    ShowCreateProjectile(tilePos, dstRect);
+                    ShowCreateProjectile();
                     break;
                 default:
                     SDL_LogError(0, "Invalid object type");
                     assert(false);
             }
         }
+        ImGui::TreePop();
+    }
+}
+
+void Editor::ShowChooseLayer() {
+    if (ImGui::TreeNode("Layers")) {
+        if (ImGui::Button("Add Layer", ImVec2(100, 30))) {
+            m_Layers.push_back(std::vector<GameObject*>());
+        }
+        ImGui::SeparatorText("Select Layer");
+        for (int i = 0; i < m_Layers.size(); i++) {
+            char layerLabel[32];
+            sprintf(layerLabel, "Layer %d", i);
+            if (ImGui::Selectable(layerLabel, m_CurrentLayer == i)) {
+                m_CurrentLayer = i;
+                m_CurrentObject = nullptr;
+            }
+
+            char buttonLabel[32];
+            if (m_HiddenLayers.find(i) == m_HiddenLayers.end()) {
+                sprintf(buttonLabel, "Hide %d", i);
+                if (ImGui::Button(buttonLabel, ImVec2(60, 20))) {
+                    SDL_Log("layer %d should be hidden", i);
+                    m_HiddenLayers.insert(i);
+                }
+            } else {
+                sprintf(buttonLabel, "Show %d", i);
+                if (ImGui::Button(buttonLabel, ImVec2(60, 20))) {
+                    m_HiddenLayers.erase(i);
+                }
+            }
+        }
+
         ImGui::TreePop();
     }
 }
@@ -321,6 +345,7 @@ void Editor::ShowObjectManager() {
     ImGui::Begin("Game Object Manager", NULL, windowFlags);
 
     ShowMenuBar();
+    ShowChooseLayer();
     ShowLoadTexture();
     ShowObjectEditor();
     ShowCreateObject();
@@ -350,30 +375,40 @@ void Editor::Render() {
     ImGui::Render();
     Renderer::GetInstance()->RenderClear();
 
-    for (auto& obj : m_Objects) {
-        obj->Draw();
+    for (int i = 0; i < m_Layers.size(); i++) {
+        if (m_HiddenLayers.find(i) == m_HiddenLayers.end()) {
+            for (auto& obj : m_Layers[i]) {
+                obj->Draw();
+            }
+        }
     }
+    
     DrawGrid();
     //m_Map->Draw();
     ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
     Renderer::GetInstance()->Render();
 }
 
+bool checkMouseOver(GameObject* obj) {
+    return ((obj)->GetX() <= InputChecker::getMouseX() &&
+            InputChecker::getMouseX() <= (obj)->GetX() + (obj)->GetWidth() &&
+            (obj)->GetY() <= InputChecker::getMouseY() &&
+            InputChecker::getMouseY() <= (obj)->GetY() + (obj)->GetHeight());
+}
+
 void Editor::OnMouseClicked(SDL_Event& event) {
-    for (auto& obj : m_Objects) {
-        if (
-            obj->GetX() <= InputChecker::getMouseX() &&
-            InputChecker::getMouseX() <= obj->GetX() + obj->GetWidth() &&
-            obj->GetY() <= InputChecker::getMouseY() &&
-            InputChecker::getMouseY() <= obj->GetY() + obj->GetHeight()
-        ) {
-            m_CurrentObject = obj;
+    for (auto it = m_Layers[m_CurrentLayer].begin(); it != m_Layers[m_CurrentLayer].end(); it++) {
+        if (checkMouseOver(*it)) {
+            m_CurrentObject = *it;
+            m_Layers[m_CurrentLayer].erase(it);
+            m_Layers[m_CurrentLayer].push_back(m_CurrentObject);
         }
     }
 }
 
 void Editor::OnMouseMoved(SDL_Event& event) {
-    if (InputChecker::isMouseButtonPressed(SDL_BUTTON_LEFT)) {
+    if (InputChecker::isMouseButtonPressed(SDL_BUTTON_LEFT) &&
+        m_CurrentObject != nullptr && checkMouseOver(m_CurrentObject)) {
         float dx =  event.button.x - InputChecker::getMouseX();
         float dy =  event.button.y - InputChecker::getMouseY();
         

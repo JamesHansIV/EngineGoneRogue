@@ -5,6 +5,12 @@
 #include "Engine/Renderer/Texture.h"
 #include <set>
 
+struct ObjectInfo {
+    TilePos Tile;
+    Rect DstRect;
+    ObjectType type;
+};
+
 class Editor : public Application{
     public:
         Editor();
@@ -17,14 +23,16 @@ class Editor : public Application{
         void OnMouseClicked(SDL_Event& event);
         void OnMouseMoved(SDL_Event& event);
 
-        TilePos ChooseTile(TileMap* tileMap);
+        void SetObjectInfo();
+
         void ShowMenuBar();
+        void ShowChooseLayer();
         void ShowLoadTexture();
         void ShowLoadTilemap();
         ObjectType ShowSelectObjectType();
-        void ShowCreateBaseObject(TilePos tilePos, Rect dstRect);
-        void ShowCreateProjectile(TilePos tilePos, Rect dstRect);
-        void ShowCreatePlayer(TilePos tilePos, Rect dstRect);
+        void ShowCreateBaseObject();
+        void ShowCreateProjectile();
+        void ShowCreatePlayer();
         void ShowCreateObject();
         void CreateObject(ObjectType type);
         void ShowObjectEditor();
@@ -35,6 +43,10 @@ class Editor : public Application{
         std::vector<std::string> m_TextureIDs;
         Texture* m_CurrentTexture;
         GameObject* m_CurrentObject;
+        ObjectInfo m_ObjectInfo;
+        std::vector< std::vector<GameObject*>> m_Layers;
+        std::set<int> m_HiddenLayers;
+        int m_CurrentLayer;
         std::vector<GameObject*> m_Objects;
 };
 
