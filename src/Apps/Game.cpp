@@ -52,6 +52,8 @@ Game::Game() {
     colliders.push_back(player5);
     
     GetEventManager().addListener(*player);
+
+    Renderer::GetInstance()->SetCameraTarget(player);
 }
 
 void Game::Update(float dt) {
