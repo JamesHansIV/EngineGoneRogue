@@ -73,7 +73,10 @@ void Game::Update(float dt) {
         angle += 360.0f; 
     }
 
-    SDL_Log("%f", angle);
+    SDL_Log("%d, %d", mouseX, mouseY);
+
+
+    SDL_Log("%s, %f", "angle: ", angle);
 
     Properties projectile_props("projectile", {0, 0, 723, 724}, {player->GetMidPointX(), player->GetMidPointY(), 15, 15});
     if (InputChecker::isMouseButtonPressed(SDL_BUTTON_LEFT))
