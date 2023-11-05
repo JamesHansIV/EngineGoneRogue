@@ -30,7 +30,7 @@ Game::Game() {
         assert(false);
     }
 
-    Properties props("player", 0, 0, 136, 96, 136, 96);
+    Properties props("player", {0, 0, 136, 96}, {0, 0, 136, 96});
     player = new Warrior(props);
 
 
@@ -59,17 +59,17 @@ void Game::Update(float dt) {
 
     SDL_Log("%f", angle);
 
-    Properties projectile_props("projectile", player->GetMidPointX(), player->GetMidPointY(), 723, 724, 15, 15);
+    Properties projectile_props("projectile", {0, 0, 723, 724}, {player->GetMidPointX(), player->GetMidPointY(), 15, 15});
     if (InputChecker::isMouseButtonPressed(SDL_BUTTON_LEFT))
     {
         Projectile* projectile = nullptr;
         projectile = new Projectile(projectile_props, 50, 1.0, angle);
         projectiles.push_back(projectile);
         InputChecker::setMouseButtonPressed(SDL_BUTTON_LEFT, false);
-    } 
+    }
     for (auto projectile : projectiles) {
         projectile->Update(dt);
-    }  
+    }
 }
 
 void Game::Render() {

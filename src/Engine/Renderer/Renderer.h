@@ -3,6 +3,7 @@
 #include <SDL2_image/SDL_image.h>
 
 #include "Texture.h"
+#include "TileMap.h"
 
 #include "utils.h"
 
@@ -28,6 +29,8 @@ class Renderer{
 
         Texture* AddTexture(std::string id, std::string filename);
         Texture* AddTexture(std::string id, const char* filename);
+        TileMap* AddTileMap(std::string id, std::string filename, int tileSize, int rows, int cols);
+        TileMap* AddTileMap(std::string id, const char* filename, int tileSize, int rows, int cols);
         Texture* GetTexture(std::string id) { return m_TextureMap.find(id) != m_TextureMap.end() ? m_TextureMap[id] : nullptr; }
         void Drop(std::string id);
         void Clean();

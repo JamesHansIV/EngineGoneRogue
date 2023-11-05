@@ -14,11 +14,17 @@ class Editor : public Application{
         virtual void Render();
         virtual void Events();
 
+        void OnMouseClicked(SDL_Event& event);
+        void OnMouseMoved(SDL_Event& event);
+
+        TilePos ChooseTile(TileMap* tileMap);
+        void ShowMenuBar();
         void ShowLoadTexture();
-        void ShowSelectObjectType();
-        void ShowCreateBaseObject();
-        void ShowCreateProjectile();
-        void ShowCreatePlayer();
+        void ShowLoadTilemap();
+        ObjectType ShowSelectObjectType();
+        void ShowCreateBaseObject(TilePos tilePos, Rect dstRect);
+        void ShowCreateProjectile(TilePos tilePos, Rect dstRect);
+        void ShowCreatePlayer(TilePos tilePos, Rect dstRect);
         void ShowCreateObject();
         void CreateObject(ObjectType type);
         void ShowObjectEditor();
