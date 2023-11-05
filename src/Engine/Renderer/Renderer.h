@@ -48,7 +48,7 @@ class Renderer{
 
         void CenterCameraOnObject();
         void SetCameraTarget(GameObject* target) {
-            cameraTarget = target;
+            m_CameraTarget = target;
         }
 
     private:
@@ -58,5 +58,5 @@ class Renderer{
         std::map<std::string, Texture*> m_TextureMap;
         std::set<std::string> m_Filepaths;
         static Renderer* m_Instance;
-        GameObject* cameraTarget;
+        GameObject* m_CameraTarget;
 };

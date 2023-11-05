@@ -20,7 +20,6 @@ void Warrior::Update(float dt, const std::vector<GameObject*>& colliders){
     m_RigidBody->Update(dt);
     m_RigidBody->UnSetForce();
     bool canMove = !canMoveThrough(colliders);
-    SDL_Log("%s", canMove?"true":"false");
     if(canMove)
     {
         if (InputChecker::isKeyPressed(SDLK_w)) {
@@ -51,15 +50,10 @@ bool Warrior::canMoveThrough(const std::vector<GameObject*>& colliders)
     for (auto collider : colliders) {
         auto coll = collider->getCollider()->Get();
         auto coll2 = m_Collider->Get();
-        SDL_Log("SDL_Rect values: x=%d, y=%d, width=%d, height=%d", coll.x, coll.y, coll.w, coll.h);
-        SDL_Log("SDL_Rect values: x=%d, y=%d, width=%d, height=%d", coll2.x, coll2.y, coll2.w, coll2.h);
         if (CollisionHandler::GetInstance()->CheckCollision(m_Collider->Get(), collider->getCollider()->Get())) {
-            SDL_Log("%s, %f %f", "Velocity", m_RigidBody->Velocity().X, m_RigidBody->Velocity().Y );
-            SDL_Log("%s, %f %f", "Position before", this->GetX(), this->GetY() );
             m_Transform->TranslateX(-m_RigidBody->Velocity().X);
             m_Transform->TranslateY(-m_RigidBody->Velocity().Y);
             m_Collider->Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
-            SDL_Log("%s, %f %f", "Position after", this->GetX(), this->GetY() );
             return true;
         }
     }

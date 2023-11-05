@@ -41,7 +41,7 @@ void Renderer::RenderClear() {
 
 void Renderer::Render() {
     SDL_RenderPresent(m_Renderer);
-    if(cameraTarget != nullptr)
+    if(m_CameraTarget != nullptr)
         CenterCameraOnObject();
 }
 
@@ -205,8 +205,8 @@ void Renderer::DrawFrame(std::string id, int x, int y, int width, int height, in
 
 void Renderer::CenterCameraOnObject() {
 
-  int targetX = cameraTarget->GetX() + cameraTarget->GetWidth() / 2;
-  int targetY = cameraTarget->GetY() + cameraTarget->GetHeight() / 2;
+  int targetX = m_CameraTarget->GetX() + m_CameraTarget->GetWidth() / 2;
+  int targetY = m_CameraTarget->GetY() + m_CameraTarget->GetHeight() / 2;
 
   m_Camera.x = targetX - SCREEN_WIDTH/2;
   m_Camera.y = targetY - SCREEN_HEIGHT/2;
