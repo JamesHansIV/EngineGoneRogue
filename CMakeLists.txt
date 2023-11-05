@@ -24,12 +24,14 @@ file(GLOB_RECURSE engineSrc CONFIGURE_DEPENDS
 add_executable(Engine ${engineSrc})
 
 target_include_directories(Engine PUBLIC "${CMAKE_SOURCE_DIR}/vendor/imgui")
+target_include_directories(Engine PUBLIC "${CMAKE_SOURCE_DIR}/vendor/tinyxml2/tinyxml2")
 target_include_directories(Engine PUBLIC "${CMAKE_SOURCE_DIR}/include")
 target_include_directories(Engine PUBLIC "${CMAKE_SOURCE_DIR}/src")
 
 add_subdirectory(vendor/imgui)
+add_subdirectory(vendor/tinyxml2/tinyxml2)
 
-target_link_libraries(Engine imgui)
+target_link_libraries(Engine imgui tinyxml2)
 target_link_libraries(Engine "${CMAKE_SOURCE_DIR}/lib/SDL2/libSDL2-2.0.0.dylib")
 target_link_libraries(Engine "${CMAKE_SOURCE_DIR}/lib/SDL2_image/libSDL2_image-2.0.0.dylib")
 target_link_libraries(Engine "${CMAKE_SOURCE_DIR}/lib/SDL2_mixer/libSDL2_mixer-2.0.0.dylib")

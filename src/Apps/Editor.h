@@ -38,6 +38,9 @@ class Editor : public Application{
         void ShowObjectEditor();
         void ShowTextureIDs();
         void ShowObjectManager();
+
+        void SaveProject();
+        void ShowSaveProject();
     private:
         Map* m_Map;
         std::vector<std::string> m_TextureIDs;

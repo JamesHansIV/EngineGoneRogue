@@ -14,7 +14,7 @@
 
 Application* Application::m_Instance = nullptr;
 
-Application::Application(){
+Application::Application() : m_ProjectName("test_project") {
 
     if(SDL_Init(SDL_INIT_VIDEO)!=0 && IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG)!= 0){
         SDL_Log("Failed to initialize SDL: %s", SDL_GetError());

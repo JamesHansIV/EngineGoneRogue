@@ -24,6 +24,9 @@ class Application{
         inline SDL_Window* GetWindow() { return m_Window; }
         inline EventManager& GetEventManager() { return m_EventManager; }
         inline static Application* Get() { return m_Instance; }
+    
+    protected:
+        std::string m_ProjectName;
     private:
         bool m_IsRunning;
         SDL_Window* m_Window;

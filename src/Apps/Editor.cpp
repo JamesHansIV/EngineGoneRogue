@@ -9,6 +9,8 @@
 #include "Engine/Objects/Projectile.h"
 #include "Engine/InputChecker.h"
 
+
+#include <tinyxml2.h>
 #include <memory>
 
 /*
@@ -30,7 +32,7 @@ x show a list of objects
     - add state info
     - Add abilities/stat/status info
 x Create objects from tilemap
-- Add layering
+x Add layering
 - Export objects to json file
     - information could also include
         - start position
@@ -49,6 +51,22 @@ x Create objects from tilemap
 */
 
 const char* OBJECT_TYPE_STRS[] = {"Base", "Projectile", "Warrior"};
+
+void DrawGrid() {
+    for (int i = 0; i < LEVEL_WIDTH; i += TILE_SIZE) {
+        Renderer::GetInstance()->DrawLine(i, 0, i, LEVEL_HEIGHT);
+    }
+    for (int i = 0; i < LEVEL_HEIGHT; i += TILE_SIZE) {
+        Renderer::GetInstance()->DrawLine(0, i, LEVEL_WIDTH, i);
+    }
+}
+
+bool CheckMouseOver(GameObject* obj) {
+    return ((obj)->GetX() <= InputChecker::getMouseX() &&
+            InputChecker::getMouseX() <= (obj)->GetX() + (obj)->GetWidth() &&
+            (obj)->GetY() <= InputChecker::getMouseY() &&
+            InputChecker::getMouseY() <= (obj)->GetY() + (obj)->GetHeight());
+}
 
 Editor::Editor() : m_CurrentTexture(nullptr), m_CurrentLayer(0) {
     ImGui::CreateContext();
@@ -73,14 +91,101 @@ Editor::~Editor() {
     // delete m_Map;
 }
 
-void DrawGrid() {
-    for (int i = 0; i < LEVEL_WIDTH; i += TILE_SIZE) {
-        Renderer::GetInstance()->DrawLine(i, 0, i, LEVEL_HEIGHT);
+void SaveBaseObject(tinyxml2::XMLDocument& doc, tinyxml2::XMLElement* xmlObj, GameObject* obj) {
+    tinyxml2::XMLElement* textureID = doc.NewElement("TextureID");
+    tinyxml2::XMLElement* objectID = doc.NewElement("ObjectID");
+    tinyxml2::XMLElement* srcRect = doc.NewElement("SrcRect");
+    tinyxml2::XMLElement* dstRect = doc.NewElement("DstRect");
+
+    textureID->SetText(obj->GetTextureID().c_str());
+    objectID->SetText(obj->GetID().c_str());
+
+    TilePos tilePos = obj->GetTilePos();
+    tinyxml2::XMLElement* row = doc.NewElement("Row");
+    tinyxml2::XMLElement* column = doc.NewElement("Column");
+    tinyxml2::XMLElement* srcWidth = doc.NewElement("Width");
+    tinyxml2::XMLElement* srcHeight = doc.NewElement("Height");
+
+    row->SetText(std::to_string(tilePos.row).c_str());
+    column->SetText(std::to_string(tilePos.col).c_str());
+    srcWidth->SetText(std::to_string(tilePos.w).c_str());
+    srcHeight->SetText(std::to_string(tilePos.h).c_str());
+
+    srcRect->InsertEndChild(row);
+    srcRect->InsertEndChild(column);
+    srcRect->InsertEndChild(srcWidth);
+    srcRect->InsertEndChild(srcHeight);
+
+    Rect rect = obj->GetDstRect();
+    tinyxml2::XMLElement* xPos = doc.NewElement("XPos");
+    tinyxml2::XMLElement* yPos = doc.NewElement("YPos");
+    tinyxml2::XMLElement* dstWidth = doc.NewElement("Width");
+    tinyxml2::XMLElement* dstHeight = doc.NewElement("Height");
+
+    xPos->SetText(std::to_string(rect.x).c_str());
+    yPos->SetText(std::to_string(rect.y).c_str());
+    dstWidth->SetText(std::to_string(rect.w).c_str());
+    dstHeight->SetText(std::to_string(rect.h).c_str());
+
+    dstRect->InsertEndChild(xPos);
+    dstRect->InsertEndChild(yPos);
+    dstRect->InsertEndChild(dstWidth);
+    dstRect->InsertEndChild(dstHeight);
+
+    xmlObj->InsertEndChild(textureID);
+    xmlObj->InsertEndChild(objectID);
+    xmlObj->InsertEndChild(srcRect);
+    xmlObj->InsertEndChild(dstRect);
+}
+
+void Editor::SaveProject() {
+    tinyxml2::XMLDocument doc;
+    tinyxml2::XMLElement* root = doc.NewElement("Root");
+    doc.InsertFirstChild(root);
+
+    tinyxml2::XMLElement* currXMLObject;
+    for (auto layer : m_Layers) {
+        for (auto obj : layer) {
+            currXMLObject = doc.NewElement("Object");
+            switch(obj->GetObjectType()) {
+                case ObjectType::Base:
+                    SaveBaseObject(doc, currXMLObject, obj);
+                    break;
+                case ObjectType::Projectile:
+                    break;
+                case ObjectType::Warrior:
+                    break;
+            }
+            root->InsertEndChild(currXMLObject);
+        }
     }
-    for (int i = 0; i < LEVEL_HEIGHT; i += TILE_SIZE) {
-        Renderer::GetInstance()->DrawLine(0, i, LEVEL_WIDTH, i);
+    
+    char filePath[128];
+    sprintf(filePath, "../assets/projects/%s.xml", m_ProjectName.c_str());
+    int success = doc.SaveFile(filePath);
+    SDL_Log("Saving file a success: %d", success);
+}
+
+void Editor::ShowSaveProject() {
+    if (ImGui::BeginPopupModal("Save Room?", NULL, 0))
+    {
+        SDL_Log("Showing modal window");
+        //static int unused_i = 0;
+        //ImGui::Combo("Combo", &unused_i, "Delete\0Delete harder\0");
+
+        static bool dont_ask_me_next_time = false;
+        ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
+        ImGui::Checkbox("Don't ask me next time", &dont_ask_me_next_time);
+        ImGui::PopStyleVar();
+
+        if (ImGui::Button("OK", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); SaveProject(); }
+        ImGui::SetItemDefaultFocus();
+        ImGui::SameLine();
+        if (ImGui::Button("Cancel", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
+        ImGui::EndPopup();
     }
 }
+
 
 void Editor::SetObjectInfo() {
     TileMap* tileMap = dynamic_cast<TileMap*>(m_CurrentTexture);
@@ -113,6 +218,7 @@ void Editor::ShowMenuBar() {
     if (ImGui::BeginMenuBar()) {
         if (ImGui::BeginMenu("File")) {
             if (ImGui::MenuItem("Save")) {
+                SaveProject();
             }
             ImGui::EndMenu();
         }
@@ -389,16 +495,11 @@ void Editor::Render() {
     Renderer::GetInstance()->Render();
 }
 
-bool checkMouseOver(GameObject* obj) {
-    return ((obj)->GetX() <= InputChecker::getMouseX() &&
-            InputChecker::getMouseX() <= (obj)->GetX() + (obj)->GetWidth() &&
-            (obj)->GetY() <= InputChecker::getMouseY() &&
-            InputChecker::getMouseY() <= (obj)->GetY() + (obj)->GetHeight());
-}
+
 
 void Editor::OnMouseClicked(SDL_Event& event) {
     for (auto it = m_Layers[m_CurrentLayer].begin(); it != m_Layers[m_CurrentLayer].end(); it++) {
-        if (checkMouseOver(*it)) {
+        if (CheckMouseOver(*it)) {
             m_CurrentObject = *it;
             m_Layers[m_CurrentLayer].erase(it);
             m_Layers[m_CurrentLayer].push_back(m_CurrentObject);
@@ -408,7 +509,7 @@ void Editor::OnMouseClicked(SDL_Event& event) {
 
 void Editor::OnMouseMoved(SDL_Event& event) {
     if (InputChecker::isMouseButtonPressed(SDL_BUTTON_LEFT) &&
-        m_CurrentObject != nullptr && checkMouseOver(m_CurrentObject)) {
+        m_CurrentObject != nullptr && CheckMouseOver(m_CurrentObject)) {
         float dx =  event.button.x - InputChecker::getMouseX();
         float dy =  event.button.y - InputChecker::getMouseY();
         
