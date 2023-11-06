@@ -1,7 +1,7 @@
 #include "Warrior.h"
 #include "Engine/Renderer/Renderer.h"
-#include "Engine/InputChecker.h"
-#include "Engine/Components/CollisionHandler.h"
+#include "Engine/Input/InputChecker.h"
+#include "Engine/Physics/CollisionHandler.h"
 
 Warrior::Warrior(Properties& props): Character(props){
     m_Animation = new Animation();
@@ -19,40 +19,40 @@ void Warrior::Draw(){
 void Warrior::Update(float dt, const std::vector<GameObject*>& colliders){
     m_RigidBody->Update(dt);
     m_RigidBody->UnSetForce();
-    bool canMove = !canMoveThrough(colliders);
-    if(canMove)
-    {
-        if (InputChecker::isKeyPressed(SDLK_w)) {
-            m_RigidBody->ApplyForceY(-20);
-        }
-        if (InputChecker::isKeyPressed(SDLK_s)) {
-            m_RigidBody->ApplyForceY(20);
-        }
-        if (InputChecker::isKeyPressed(SDLK_a)) {
-            m_RigidBody->ApplyForceX(-20);
-            m_Animation->SetProps("player_run", 1, 8, 100, SDL_FLIP_HORIZONTAL);
-            setFlip(SDL_FLIP_HORIZONTAL);
-        }
-        if (InputChecker::isKeyPressed(SDLK_d)) {
-            m_RigidBody->ApplyForceX(20);
-            m_Animation->SetProps("player_run", 1, 8, 100);
-            setFlip(SDL_FLIP_NONE);
-        } 
+    if (InputChecker::isKeyPressed(SDLK_w)) {
+        m_RigidBody->ApplyForceY(-20);
     }
-    m_RigidBody->Update(dt);
+    if (InputChecker::isKeyPressed(SDLK_s)) {
+        m_RigidBody->ApplyForceY(20);
+    }
+    if (InputChecker::isKeyPressed(SDLK_a)) {
+        m_RigidBody->ApplyForceX(-20);
+        m_Animation->SetProps("player_run", 1, 8, 100, SDL_FLIP_HORIZONTAL);
+        setFlip(SDL_FLIP_HORIZONTAL);
+    }
+    if (InputChecker::isKeyPressed(SDLK_d)) {
+        m_RigidBody->ApplyForceX(20);
+        m_Animation->SetProps("player_run", 1, 8, 100);
+        setFlip(SDL_FLIP_NONE);
+    }
     m_Transform->Translate(m_RigidBody->Position());
     m_Collider->Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
     m_Animation->Update();
+    canMoveThrough(colliders);
 }
 
 bool Warrior::canMoveThrough(const std::vector<GameObject*>& colliders)
 {
-    for (auto collider : colliders) {
-        auto coll = collider->getCollider()->Get();
-        auto coll2 = m_Collider->Get();
-        if (CollisionHandler::GetInstance()->CheckCollision(m_Collider->Get(), collider->getCollider()->Get())) {
-            m_Transform->TranslateX(-m_RigidBody->Velocity().X);
-            m_Transform->TranslateY(-m_RigidBody->Velocity().Y);
+    for (auto collider : colliders)
+    {
+        if (*m_Transform->X < 0.0f ||
+            *m_Transform->Y < 0.0f ||
+            *m_Transform->X + this->GetWidth() > SCREEN_WIDTH ||
+            *m_Transform->Y + this->GetHeight() > SCREEN_HEIGHT ||
+            CollisionHandler::GetInstance()->CheckCollision(m_Collider->Get(), collider->getCollider()->Get()))
+        {
+            m_Transform->TranslateX(-m_RigidBody->Velocity().X/2);
+            m_Transform->TranslateY(-m_RigidBody->Velocity().Y/2);
             m_Collider->Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
             return true;
         }

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Events/Event.h"
-#include "Application.h"
+#include "Engine/Events/Event.h"
+#include "Engine/Application/Application.h"
 #include "Engine/Renderer/Texture.h"
 #include <set>
 

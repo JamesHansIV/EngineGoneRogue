@@ -3,12 +3,12 @@
 
 #include "Engine/Objects/Warrior.h"
 #include "Engine/Objects/GameObject.h"
-#include "Engine/InputChecker.h"
+#include "Engine/Input/InputChecker.h"
 
 #include "backends/imgui_impl_sdl2.h"
 #include "backends/imgui_impl_sdlrenderer2.h"
 
-#include "utils.h"
+#include "Engine/utils/utils.h"
 
 #include <unistd.h>
 
@@ -26,9 +26,9 @@ Application::Application() : m_ProjectName("test_project") {
         SDL_Log("Failed to create Window: %s", SDL_GetError());
         assert(false);
     }
-    
+
     m_Instance = this;
-    
+
     //TODO: note that the cwd is <projectDir>/build instead of <projectDir>.
     //      Set a working directory path macro to use absolute file paths
     Renderer::GetInstance()->Init();

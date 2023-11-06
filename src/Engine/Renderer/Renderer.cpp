@@ -1,5 +1,5 @@
 #include "Renderer.h"
-#include "Apps/Application.h"
+#include "Engine/Application/Application.h"
 #include "Engine/Objects/GameObject.h"
 
 
@@ -137,7 +137,7 @@ void Renderer::Draw(std::string id, SDL_Rect& srcRect, SDL_Rect& dstRect, SDL_Re
 {
     if (!checkCollision(dstRect, m_Camera))
         return;
-    
+
     dstRect.x -= m_Camera.x;
     dstRect.y -= m_Camera.y;
     SDL_RenderCopyEx(m_Renderer, m_TextureMap[id]->GetTexture(), &srcRect, &dstRect, 0, nullptr, flip);
@@ -147,7 +147,7 @@ void Renderer::Draw(std::string id, SDL_Rect& srcRect, SDL_Rect& dstRect, double
 {
     if (!checkCollision(dstRect, m_Camera))
         return;
-    
+
     dstRect.x -= m_Camera.x;
     dstRect.y -= m_Camera.y;
     SDL_RenderCopyEx(m_Renderer, m_TextureMap[id]->GetTexture(), &srcRect, &dstRect, angle, center, flip);
@@ -160,7 +160,7 @@ void Renderer::Draw(std::string id, int x, int y, int width, int height, SDL_Ren
 
     if (!checkCollision(dstRect, m_Camera))
         return;
-    
+
     dstRect.x -= m_Camera.x;
     dstRect.y -= m_Camera.y;
     SDL_RenderCopyEx(m_Renderer, m_TextureMap[id]->GetTexture(), &srcRect, &dstRect, 0, nullptr, flip);
@@ -173,7 +173,7 @@ void Renderer::Draw(std::string id, int x, int y, int width, int height, double 
 
     if (!checkCollision(dstRect, m_Camera))
         return;
-    
+
     dstRect.x -= m_Camera.x;
     dstRect.y -= m_Camera.y;
     SDL_RenderCopyEx(m_Renderer, m_TextureMap[id]->GetTexture(), &srcRect, &dstRect, angle, center, flip);
@@ -185,7 +185,7 @@ void Renderer::DrawFrame(std::string id, int x, int y, int width, int height, in
 
     if (!checkCollision(dstRect, m_Camera))
         return;
-    
+
     dstRect.x -= m_Camera.x;
     dstRect.y -= m_Camera.y;
     SDL_RenderCopyEx(m_Renderer, m_TextureMap[id]->GetTexture(), &srcRect, &dstRect, 0, nullptr, flip);
@@ -197,7 +197,7 @@ void Renderer::DrawFrame(std::string id, int x, int y, int width, int height, in
 
     if (!checkCollision(dstRect, m_Camera))
         return;
-    
+
     dstRect.x -= m_Camera.x;
     dstRect.y -= m_Camera.y;
     SDL_RenderCopyEx(m_Renderer, m_TextureMap[id]->GetTexture(), &srcRect, &dstRect, angle, center, flip);

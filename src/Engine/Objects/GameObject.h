@@ -1,13 +1,13 @@
 #pragma once
 
 #include "IObject.h"
-#include "Engine/Components/Physics/Transform.h"
+#include "Engine/Physics/Transform.h"
 #include "Engine/Renderer/Renderer.h"
 #include "Engine/Renderer/TileMap.h"
 
 #include <SDL2/SDL.h>
 #include <string>
-#include "Engine/Components/Physics/Collider.h"
+#include "Engine/Physics/Collider.h"
 
 enum class ObjectType {
     None = 0,
@@ -65,15 +65,15 @@ class GameObject : public IObject {
 
         TilePos& GetTilePos() { return m_TilePos; }
         Rect& GetDstRect() { return m_DstRect; }
-        
+
         float& GetX() { return m_DstRect.x; }
         float& GetY() { return m_DstRect.y; }
         void SetX(int x) { m_DstRect.x = x; }
         void SetY(int y) { m_DstRect.y = y; }
-        float GetMidPointX() { 
+        float GetMidPointX() {
             return (m_DstRect.x + (float)m_DstRect.w/2);
         };
-        float GetMidPointY() { 
+        float GetMidPointY() {
             return (m_DstRect.y + (float)m_DstRect.h/2);
         };
         int& GetWidth() { return m_DstRect.w; }
