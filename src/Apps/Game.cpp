@@ -110,11 +110,14 @@ void Game::LoadProject() {
 
 void Game::Update(float dt) {
     player->Update(dt,colliders);
-    int playerX = player->GetMidPointX();
-    int playerY = player->GetMidPointY();
+    int playerX = player->GetMidPointX() - Renderer::GetInstance()->GetCameraX();
+    int playerY = player->GetMidPointY() - Renderer::GetInstance()->GetCameraY();
 
+    SDL_Log("%d, %d", playerX , playerY );
     int mouseX = InputChecker::getMouseX();
     int mouseY = InputChecker::getMouseY();
+
+    SDL_Log("%d, %d", mouseX , mouseY );
 
     // Calculate the angle between the mouse and the player
     float deltaX = mouseX - playerX;
@@ -125,7 +128,7 @@ void Game::Update(float dt) {
         angle += 360.0f;
     }
 
-    //SDL_Log("%f", angle);
+    SDL_Log("%f", angle);
 
     Properties projectile_props("projectile", {0, 0, 723, 724}, {player->GetMidPointX(), player->GetMidPointY(), 15, 15});
     if (InputChecker::isMouseButtonPressed(SDL_BUTTON_LEFT))
