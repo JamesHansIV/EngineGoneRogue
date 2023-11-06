@@ -1,8 +1,8 @@
 #pragma once
 
 #include "GameObject.h"
-#include "Engine/Components/Animation.h"
-#include "Engine/Components/Physics/RigidBody.h"
+#include "Engine/Animation/Animation.h"
+#include "Engine/Physics/RigidBody.h"
 #include "functional"
 
 class Projectile: public GameObject{
@@ -17,6 +17,6 @@ class Projectile: public GameObject{
         Animation* m_Animation;
         RigidBody* m_RigidBody;
         int m_Speed;
-        float m_Mass;   
+        float m_Mass;
         float m_Angle;
 };

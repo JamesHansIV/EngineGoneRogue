@@ -2,8 +2,8 @@
 #include <SDL2/SDL.h>
 #include <SDL2_image/SDL_image.h>
 
-#include "Events/EventManager.h"
-#include "Layers/Layer.h"
+#include "Engine/Events/EventManager.h"
+#include "Engine/Layers/Layer.h"
 #include "Engine/Objects/Map.h"
 #include <unordered_map>
 
@@ -11,7 +11,7 @@ class Application{
     public:
         Application();
         virtual ~Application() {}
-        
+
         bool Clean();
         void Quit();
 
@@ -24,7 +24,7 @@ class Application{
         inline SDL_Window* GetWindow() { return m_Window; }
         inline EventManager& GetEventManager() { return m_EventManager; }
         inline static Application* Get() { return m_Instance; }
-    
+
     protected:
         std::string m_ProjectName;
     private:

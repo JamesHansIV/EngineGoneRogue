@@ -1,9 +1,9 @@
 #include "Game.h"
 #include "Engine/Renderer/Renderer.h"
 #include "Engine/Objects/Warrior.h"
-#include "Events/EventListener.h"
+#include "Engine/Events/EventListener.h"
 #include "Engine/Objects/Projectile.h"
-#include "Engine/InputChecker.h"
+#include "Engine/Input/InputChecker.h"
 
 Warrior* player = nullptr;
 Warrior* player2 = nullptr;
@@ -44,7 +44,7 @@ Game::Game() {
     colliders.push_back(player3);
     colliders.push_back(player4);
     colliders.push_back(player5);
-    
+
     GetEventManager().addListener(*player);
 
     Renderer::GetInstance()->SetCameraTarget(player);
@@ -122,7 +122,7 @@ void Game::Update(float dt) {
     float angle = atan2(deltaY, deltaX) * (180.0 / M_PI);
     // Convert the angle range from -180 to 180 to 0 to 360
     if (angle < 0) {
-        angle += 360.0f; 
+        angle += 360.0f;
     }
 
     //SDL_Log("%f", angle);

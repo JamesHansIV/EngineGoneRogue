@@ -7,7 +7,7 @@
 #include "Engine/Objects/GameObject.h"
 #include "Engine/Objects/Warrior.h"
 #include "Engine/Objects/Projectile.h"
-#include "Engine/InputChecker.h"
+#include "Engine/Input/InputChecker.h"
 
 
 #include <tinyxml2.h>
@@ -159,7 +159,7 @@ void Editor::SaveProject() {
             root->InsertEndChild(currXMLObject);
         }
     }
-    
+
     char filePath[128];
     sprintf(filePath, "../assets/projects/%s.xml", m_ProjectName.c_str());
     int success = doc.SaveFile(filePath);
@@ -230,7 +230,7 @@ void Editor::ShowMenuBar() {
 void Editor::ShowObjectEditor() {
     if (ImGui::TreeNode("Object Editor")) {
         if (ImGui::TreeNode("Object list")) {
-            
+
             for (auto it = m_Layers[m_CurrentLayer].begin(); it != m_Layers[m_CurrentLayer].end(); it++) {
                 if (ImGui::Button((*it)->GetID().c_str(), ImVec2(100, 30))) {
                     m_CurrentObject = *it;
@@ -279,7 +279,7 @@ void Editor::ShowLoadTexture() {
         static char invalidFilepath[256] = "";
         if (strcmp(filepath, "") != 0 && strcmp(textureID, "") != 0) {
             if (ImGui::Button("Load texture", ImVec2(100, 30))) {
-                
+
                 m_CurrentTexture = (isTileMap) ?
                     Renderer::GetInstance()->AddTileMap(textureID, filepath, tileSize, rows, cols) :
                     Renderer::GetInstance()->AddTexture(textureID, filepath);
@@ -300,7 +300,7 @@ void Editor::ShowLoadTexture() {
                 isTileMap = false;
             }
         }
-        
+
         if (strcmp(invalidFilepath, "") != 0)
             ImGui::Text("ERROR: failed to load texture from %s", invalidFilepath);
         ImGui::TreePop();
@@ -455,7 +455,7 @@ void Editor::ShowObjectManager() {
     ShowLoadTexture();
     ShowObjectEditor();
     ShowCreateObject();
-    
+
     ImGui::End();
 }
 
@@ -468,7 +468,7 @@ void Editor::Update(float dt) {
         Renderer::GetInstance()->MoveCameraX(-10.0f);
     if (InputChecker::isKeyPressed(SDLK_RIGHT))
         Renderer::GetInstance()->MoveCameraX(10.0f);
-    
+
     ImGui_ImplSDLRenderer2_NewFrame();
     ImGui_ImplSDL2_NewFrame();
     ImGui::NewFrame();
@@ -488,7 +488,7 @@ void Editor::Render() {
             }
         }
     }
-    
+
     DrawGrid();
     //m_Map->Draw();
     ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
@@ -512,7 +512,7 @@ void Editor::OnMouseMoved(SDL_Event& event) {
         m_CurrentObject != nullptr && CheckMouseOver(m_CurrentObject)) {
         float dx =  event.button.x - InputChecker::getMouseX();
         float dy =  event.button.y - InputChecker::getMouseY();
-        
+
         float x = m_CurrentObject->GetX();
         float y = m_CurrentObject->GetY();
         m_CurrentObject->SetX(x + dx);
