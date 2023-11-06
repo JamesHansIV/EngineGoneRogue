@@ -33,15 +33,15 @@ x show a list of objects
     - Add abilities/stat/status info
 x Create objects from tilemap
 x Add layering
-- Export objects to json file
+x Export objects to json file
     - information could also include
         - start position
         - room info
         - scene transition animations?
         - layer info
         - enemy spawn locations/times?
-- Import objects into game class
-- Create json object template
+x Import objects into game class
+x Create json object template
 - Editor <-> game transitions
 - Create list of game objects and their required information
 - main menu bar
@@ -170,8 +170,6 @@ void Editor::ShowSaveProject() {
     if (ImGui::BeginPopupModal("Save Room?", NULL, 0))
     {
         SDL_Log("Showing modal window");
-        //static int unused_i = 0;
-        //ImGui::Combo("Combo", &unused_i, "Delete\0Delete harder\0");
 
         static bool dont_ask_me_next_time = false;
         ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
