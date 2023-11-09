@@ -27,7 +27,7 @@ x maintain a selected texture
 x Show a list of textures
 x show a list of objects
 - Add multiple textures to an object?
-- Move objects at fine and coarse granularity
+- Add snap to grid
 ~ Create object based on type
     - Add animations
     - Add physics info
@@ -50,6 +50,10 @@ x Create json object template
 - action management and undoing actions
 - create/load/save rooms
 - create/load/save projects
+- add auto tiling
+- add file browser
+- change topmost tree nodes to tabs
+
 */
 
 const char* OBJECT_TYPE_STRS[] = {"Base", "Projectile", "Warrior"};
@@ -235,7 +239,6 @@ void Editor::ShowMenuBar() {
 void Editor::ShowObjectEditor() {
     if (ImGui::TreeNode("Object Editor")) {
         if (ImGui::TreeNode("Object list")) {
-
             for (auto it = m_Layers[m_CurrentLayer].begin(); it != m_Layers[m_CurrentLayer].end(); it++) {
                 if (ImGui::Button((*it)->GetID().c_str(), ImVec2(100, 30))) {
                     m_CurrentObject = *it;
@@ -257,6 +260,16 @@ void Editor::ShowObjectEditor() {
 
             ImGui::SliderInt("Width", &m_CurrentObject->GetWidth(), 0, LEVEL_WIDTH);
             ImGui::SliderInt("Height", &m_CurrentObject->GetHeight(), 0, LEVEL_HEIGHT);
+
+            if (ImGui::Button("Rotate left", ImVec2(80, 30))) {
+                m_CurrentObject->GetRotation() -= 90.0f;
+                m_CurrentObject->GetRotation() = (int)m_CurrentObject->GetRotation() % 360;
+            }
+            ImGui::SameLine();
+            if (ImGui::Button("Rotate right", ImVec2(80, 30))) {
+                m_CurrentObject->GetRotation() += 90.0f;
+                m_CurrentObject->GetRotation() = (int)m_CurrentObject->GetRotation() % 360;
+            }
         }
 
         ImGui::TreePop();
@@ -319,7 +332,7 @@ void Editor::ShowCreateBaseObject() {
 
         Properties props(
             m_CurrentTexture->GetID(), m_ObjectInfo.Tile,
-            m_ObjectInfo.DstRect, objID
+            m_ObjectInfo.DstRect, m_ObjectInfo.Rotation, objID
         );
         m_CurrentTexture->IncObjectCount();
         m_Layers[m_CurrentLayer].push_back(new GameObject(props));
@@ -334,7 +347,7 @@ void Editor::ShowCreatePlayer() {
 
         Properties props(
             m_CurrentTexture->GetID(), m_ObjectInfo.Tile,
-            m_ObjectInfo.DstRect, objID
+            m_ObjectInfo.DstRect, m_ObjectInfo.Rotation, objID
         );
         m_CurrentTexture->IncObjectCount();
         m_Layers[m_CurrentLayer].push_back(new Warrior(props));
@@ -348,6 +361,7 @@ void Editor::ShowCreateProjectile() {
     //     objID += std::to_string(m_CurrentTexture->GetObjectCount());
         // Properties props(
         //     m_CurrentTexture->GetID(), m_ObjectInfo.Tile,
+            // m_ObjectInfo.Rotation,
         //     m_ObjectInfo.DstRect, objID
         // );
     //     m_CurrentTexture->IncObjectCount();

@@ -57,6 +57,7 @@ void Game::LoadObject(tinyxml2::XMLElement* xmlObj) {
     tinyxml2::XMLElement* objectID = xmlObj->FirstChildElement("ObjectID");
     tinyxml2::XMLElement* srcRect = xmlObj->FirstChildElement("SrcRect");
     tinyxml2::XMLElement* dstRect = xmlObj->FirstChildElement("DstRect");
+    tinyxml2::XMLElement* rotation = xmlObj->FirstChildElement("Rotation");
 
     std::string textureIDVal = textureID->GetText();
     std::string objectIDVal = objectID->GetText();
@@ -84,9 +85,11 @@ void Game::LoadObject(tinyxml2::XMLElement* xmlObj) {
     SDL_Log("dst w: %d", dstRectVal.w);
     SDL_Log("dst h: %d", dstRectVal.h);
 
+    float angle = std::stof(rotation->FirstChildElement("Rotation")->GetText());
+
     Properties props(
         textureIDVal, tilePos,
-        dstRectVal, objectIDVal
+        dstRectVal, angle, objectIDVal
     );
 
     m_Objects.push_back(new GameObject(props));

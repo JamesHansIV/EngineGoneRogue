@@ -8,7 +8,8 @@
 struct ObjectInfo {
     TilePos Tile;
     Rect DstRect;
-    ObjectType type;
+    float Rotation = 0.0f;
+    ObjectType type = ObjectType::Base;
 };
 
 class Editor : public Application{
