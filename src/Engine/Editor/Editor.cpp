@@ -1,3 +1,5 @@
+#define IMGUI_IMPL_API
+
 #include "Editor.h"
 #include "imgui.h"
 #include "Engine/Renderer/Renderer.h"
@@ -71,6 +73,11 @@ bool CheckMouseOver(GameObject* obj) {
 Editor::Editor() : m_CurrentTexture(nullptr), m_CurrentLayer(0) {
     ImGui::CreateContext();
     SDL_Renderer* renderer = Renderer::GetInstance()->GetRenderer();
+
+    ImGuiIO& io = ImGui::GetIO();
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+    io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+
     ImGui_ImplSDL2_InitForSDLRenderer(GetWindow(), renderer);
     ImGui_ImplSDLRenderer2_Init(renderer);
 
@@ -490,6 +497,13 @@ void Editor::Render() {
     DrawGrid();
     //m_Map->Draw();
     ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
+
+    if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+    {
+        ImGui::UpdatePlatformWindows();
+        ImGui::RenderPlatformWindowsDefault();
+    }
+
     Renderer::GetInstance()->Render();
 }
 
