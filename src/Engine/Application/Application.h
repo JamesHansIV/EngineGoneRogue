@@ -14,8 +14,9 @@ class Application{
         virtual ~Application() {}
 
         bool LoadTextures(char* projectPath);
-        bool LoadObject(tinyxml2::XMLElement* xmlObj);
-        bool LoadObjects(char* projectPath);
+        bool LoadObject(tinyxml2::XMLElement* xmlObj, std::string roomID);
+        bool LoadObjects(std::string roomPath, std::string roomID);
+        bool LoadRooms(char* projectPath);
         bool LoadProject();
 
         bool Clean();
@@ -34,7 +35,7 @@ class Application{
 
     protected:
         std::string m_ProjectName;
-        std::vector<GameObject*> m_Objects;
+        std::unordered_map<std::string, std::vector<GameObject*>> m_Rooms;
     private:
         bool m_IsRunning;
         SDL_Window* m_Window;

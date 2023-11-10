@@ -11,6 +11,7 @@
 #include "Engine/utils/utils.h"
 
 #include <unistd.h>
+#include <dirent.h>
 
 Application* Application::m_Instance = nullptr;
 
@@ -38,7 +39,6 @@ Application::Application() : m_ProjectName("test_project") {
             SDL_Log("Failed to load project");
         }
     }
-    SDL_Log("objects size: %lu", m_Objects.size());
     
     m_IsRunning = true;
 }
@@ -69,7 +69,7 @@ bool Application::LoadTextures(char* projectPath) {
     return true;
 }
 
-bool Application::LoadObject(tinyxml2::XMLElement* xmlObj) {
+bool Application::LoadObject(tinyxml2::XMLElement* xmlObj, std::string roomID) {
     tinyxml2::XMLElement* textureID = xmlObj->FirstChildElement("TextureID");
     tinyxml2::XMLElement* objectID = xmlObj->FirstChildElement("ObjectID");
     tinyxml2::XMLElement* srcRect = xmlObj->FirstChildElement("SrcRect");
@@ -109,17 +109,13 @@ bool Application::LoadObject(tinyxml2::XMLElement* xmlObj) {
         dstRectVal, angle, objectIDVal
     );
 
-    m_Objects.push_back(new GameObject(props));
+    m_Rooms[roomID].push_back(new GameObject(props));
     return true;
 }
 
-bool Application::LoadObjects(char* projectPath) {
+bool Application::LoadObjects(std::string roomPath, std::string roomID) {
     tinyxml2::XMLDocument doc;
-    std::string roomPath;
-    
-    roomPath += projectPath;
-    SDL_Log("%s", roomPath.c_str());
-    roomPath += "/room1.xml";
+
     SDL_Log("%s", roomPath.c_str());
     tinyxml2::XMLError error = doc.LoadFile(roomPath.c_str());
     if (error != tinyxml2::XML_SUCCESS) {
@@ -131,11 +127,43 @@ bool Application::LoadObjects(char* projectPath) {
     tinyxml2::XMLElement* currObject = root->FirstChildElement("Object");
 
     while (currObject != nullptr) {
-        if (!LoadObject(currObject)) return false;
+        if (!LoadObject(currObject, roomID)) return false;
         currObject = currObject->NextSiblingElement("Object");
     }
     return true;
 
+}
+
+bool Application::LoadRooms(char* projectPath) {
+    struct dirent* entry;
+    DIR* dp;
+
+    std::string roomsPath = projectPath;
+    roomsPath += "/rooms";
+    dp = opendir(roomsPath.c_str());
+    if (dp == NULL) {
+        perror("Rooms path does not exist");
+        return false;
+    }
+    
+    std::string roomPath = roomsPath;
+    std::string roomID = "";
+    int index = 0;
+    while ((entry = readdir(dp))) {
+        if (strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0) {
+            std::string fileName = entry->d_name;
+            roomPath += "/";
+            roomPath += entry->d_name;
+            roomID = fileName.substr(0, fileName.rfind("."));
+
+            m_Rooms[roomID] = std::vector<GameObject*>();
+            if (!LoadObjects(roomPath, roomID)) return false;
+            roomPath = roomsPath;
+        }
+    }
+
+    closedir(dp);
+    return true;
 }
 
 bool Application::LoadProject() {
@@ -144,7 +172,7 @@ bool Application::LoadProject() {
     if (!LoadTextures(projectPath)) return false;
     SDL_Log("Textures are fine");
     SDL_Log("%s", projectPath);
-    if (!LoadObjects(projectPath)) return false;
+    if (!LoadRooms(projectPath)) return false;
     return true;
 }
 

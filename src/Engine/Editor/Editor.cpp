@@ -15,6 +15,7 @@
 #include <tinyxml2.h>
 #include <memory>
 #include <stdlib.h>
+#include <sys/stat.h>
 
 /*
 TODO list
@@ -57,6 +58,8 @@ x Create json object template
 - delete objects
 */
 
+struct stat info;
+
 const char* OBJECT_TYPE_STRS[] = {"Base", "Projectile", "Warrior"};
 
 void DrawGrid() {
@@ -75,7 +78,7 @@ bool CheckMouseOver(GameObject* obj) {
             InputChecker::getMouseY() <= (obj)->GetY() + (obj)->GetHeight());
 }
 
-Editor::Editor() : m_CurrentTexture(nullptr), m_CurrentLayer(0) {
+Editor::Editor() : m_CurrentTexture(nullptr), m_CurrentLayer(0), m_CurrentRoomID("") {
     ImGui::CreateContext();
     SDL_Renderer* renderer = Renderer::GetInstance()->GetRenderer();
 
@@ -86,7 +89,8 @@ Editor::Editor() : m_CurrentTexture(nullptr), m_CurrentLayer(0) {
     ImGui_ImplSDL2_InitForSDLRenderer(GetWindow(), renderer);
     ImGui_ImplSDLRenderer2_Init(renderer);
 
-    m_Layers.push_back(std::vector<GameObject*>(Application::m_Objects));
+    m_Rooms = Application::m_Rooms;
+    m_Layers.push_back(std::vector<GameObject*>());
 }
 
 Editor::~Editor() {
@@ -95,10 +99,20 @@ Editor::~Editor() {
     ImGui_ImplSDL2_Shutdown();
     ImGui::DestroyContext();
 
-    for (auto layer : m_Layers) {
-        for (auto obj : layer) {
+    CleanLayers();
+}
+
+void Editor::CleanLayers() {
+    m_HiddenLayers.clear();
+    m_CurrentTexture = nullptr;
+    m_CurrentObject = nullptr;
+    auto it = m_Layers.begin();
+    for (int i = 0; i < m_Layers.size(); i++) {
+        for (auto obj : m_Layers[i]) {
             delete obj;
         }
+        m_Layers.erase(it);
+        it++;
     }
 }
 
@@ -153,7 +167,7 @@ void SaveBaseObject(tinyxml2::XMLDocument& doc, tinyxml2::XMLElement* xmlObj, Ga
     xmlObj->InsertEndChild(rotation);
 }
 
-void Editor::SaveRoom() {
+void Editor::SaveRoom(const char* roomName) {
     tinyxml2::XMLDocument doc;
     tinyxml2::XMLElement* root = doc.NewElement("Root");
     doc.InsertFirstChild(root);
@@ -180,37 +194,19 @@ void Editor::SaveRoom() {
     }
 
     char filePath[128];
-    sprintf(filePath, "../assets/projects/%s/room1.xml", m_ProjectName.c_str());
+    sprintf(filePath, "../assets/projects/%s/rooms/%s.xml", m_ProjectName.c_str(), roomName);
     int success = doc.SaveFile(filePath);
     SDL_Log("Saving room a success: %d", success);
 }
 
-void Editor::SaveTextures() {
-}
 
 void Editor::SaveProject() {
     char command[128];
     sprintf(command, "mkdir ../assets/projects/%s", m_ProjectName.c_str());
     system(command);
     Renderer::GetInstance()->SaveTextures();
-    SaveRoom();
-}
-
-void Editor::ShowSaveProject() {
-    if (ImGui::BeginPopupModal("Save Room?", NULL, 0))
-    {
-        SDL_Log("Showing modal window");
-
-        static bool dont_ask_me_next_time = false;
-        ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
-        ImGui::Checkbox("Don't ask me next time", &dont_ask_me_next_time);
-        ImGui::PopStyleVar();
-
-        if (ImGui::Button("OK", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); SaveProject(); }
-        ImGui::SetItemDefaultFocus();
-        ImGui::SameLine();
-        if (ImGui::Button("Cancel", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
-        ImGui::EndPopup();
+    for (auto [id, room] : m_Rooms) {
+        SaveRoom(id.c_str());
     }
 }
 
@@ -241,21 +237,78 @@ void Editor::ShowTextureIDs() {
     }
 }
 
-void Editor::ShowMenuBar() {
-    if (ImGui::BeginMenuBar()) {
-        if (ImGui::BeginMenu("File")) {
-            if (ImGui::MenuItem("Save")) {
-                SaveProject();
-            }
-            ImGui::EndMenu();
+void Editor::AddCurrentRoom() {
+    std::vector<GameObject*> objects;
+    for (auto row : m_Layers) {
+        for (auto obj: row) {
+            objects.push_back(new GameObject(obj));
+        }
+    }
+    m_Rooms[m_CurrentRoomID] = std::vector<GameObject*>(objects);
+}
+
+void Editor::ShowFileManager() {
+    if (ImGui::BeginTabItem("File")) {
+        if (ImGui::Button("Save Project", ImVec2(150, 20))) {
+            SaveProject();
         }
 
-        ImGui::EndMenuBar();
+        if (ImGui::Button("Create Room", ImVec2(150, 20)))
+            ImGui::OpenPopup("create_room");
+
+        if (ImGui::BeginPopup("create_room")) {
+            static char roomName[128];
+            ImGui::InputText("Input room name", roomName, sizeof(roomName));
+            if (strcmp(roomName, "") != 0) {
+                if (ImGui::Button("Create", ImVec2(100, 30))) {
+                    if (m_CurrentRoomID != "")
+                        SaveRoom(m_CurrentRoomID.c_str());
+                        AddCurrentRoom();
+                    CleanLayers();
+                    m_CurrentRoomID = roomName;
+                    m_Layers.push_back(std::vector<GameObject*>());
+                }
+            }
+            ImGui::EndPopup();
+        }
+
+        if (ImGui::Button("Save Room", ImVec2(150, 20)))
+            ImGui::OpenPopup("save_room");
+
+        if (ImGui::BeginPopup("save_room")) {
+            if (ImGui::Button("Save", ImVec2(100, 30)) ) {
+                Renderer::GetInstance()->SaveTextures();
+                SaveRoom(m_CurrentRoomID.c_str());
+                AddCurrentRoom();
+            }
+            ImGui::EndPopup();
+        }
+        if (ImGui::Button("Load Room", ImVec2(150, 20)))
+            ImGui::OpenPopup("load_room");
+
+        if (ImGui::BeginPopup("load_room")) {
+            for (auto [id, room] : m_Rooms) {
+                SDL_Log("Room: %s", id.c_str());
+                if (strcmp(id.c_str(), "") != 0) {
+                    if (ImGui::Button(id.c_str(), ImVec2(100, 30))) {
+                        if (m_CurrentRoomID != "")
+                            SaveRoom(m_CurrentRoomID.c_str());
+                            AddCurrentRoom();
+                        CleanLayers();
+                        m_Layers.push_back(std::vector<GameObject*>(m_Rooms[id]));
+                        m_CurrentRoomID = id;
+                    }
+
+                }
+            }
+            ImGui::EndPopup();
+        }
+        ImGui::EndTabItem();
     }
 }
 
 void Editor::ShowObjectEditor() {
-    if (ImGui::TreeNode("Object Editor")) {
+    if (ImGui::BeginTabItem("Object Editor")) {
         if (ImGui::TreeNode("Object list")) {
             for (auto it = m_Layers[m_CurrentLayer].begin(); it != m_Layers[m_CurrentLayer].end(); it++) {
                 if (ImGui::Button((*it)->GetID().c_str(), ImVec2(100, 30))) {
@@ -318,12 +371,12 @@ void Editor::ShowObjectEditor() {
             }
         }
 
-        ImGui::TreePop();
+        ImGui::EndTabItem();
     }
 }
 
 void Editor::ShowLoadTexture() {
-    if (ImGui::TreeNode("Load texture")) {
+    if (ImGui::BeginTabItem("Load texture")) {
         ImGui::Text("Input a texture filepath");
         static char filepath[256] = "";
         static char textureID[256] = "";
@@ -366,7 +419,8 @@ void Editor::ShowLoadTexture() {
 
         if (strcmp(invalidFilepath, "") != 0)
             ImGui::Text("ERROR: failed to load texture from %s", invalidFilepath);
-        ImGui::TreePop();
+
+        ImGui::EndTabItem();
     }
 }
 
@@ -468,7 +522,7 @@ void Editor::ShowTiles(TileMap* tileMap) {
 }
 
 void Editor::ShowCreateObject() {
-    if (ImGui::TreeNode("Create object")) {
+    if (ImGui::BeginTabItem("Create object")) {
         ShowTextureIDs();
 
         if (m_CurrentTexture == nullptr) {
@@ -505,12 +559,12 @@ void Editor::ShowCreateObject() {
                     assert(false);
             }
         }
-        ImGui::TreePop();
+        ImGui::EndTabItem();
     }
 }
 
 void Editor::ShowChooseLayer() {
-    if (ImGui::TreeNode("Layers")) {
+    if (ImGui::BeginTabItem("Layers")) {
         if (ImGui::Button("Add Layer", ImVec2(100, 30))) {
             m_Layers.push_back(std::vector<GameObject*>());
         }
@@ -538,7 +592,7 @@ void Editor::ShowChooseLayer() {
             }
         }
 
-        ImGui::TreePop();
+        ImGui::EndTabItem();
     }
 }
 
@@ -548,11 +602,15 @@ void Editor::ShowObjectManager() {
 
     ImGui::Begin("Game Object Manager", NULL, windowFlags);
 
-    ShowMenuBar();
-    ShowChooseLayer();
-    ShowLoadTexture();
-    ShowObjectEditor();
-    ShowCreateObject();
+    if (ImGui::BeginTabBar("##tabs", ImGuiTabBarFlags_None)) {
+        ShowFileManager();
+        ShowChooseLayer();
+        ShowLoadTexture();
+        ShowObjectEditor();
+        ShowCreateObject();
+
+        ImGui::EndTabBar();
+    }
 
     ImGui::End();
 }
@@ -577,6 +635,7 @@ void Editor::Update(float dt) {
 
 void Editor::Render() {
     ImGui::Render();
+    //SDL_Log("Rendering %lu", m_Layers.size());
     Renderer::GetInstance()->RenderClear();
     for (int i = 0; i < m_Layers.size(); i++) {
         if (m_HiddenLayers.find(i) == m_HiddenLayers.end()) {
@@ -585,6 +644,7 @@ void Editor::Render() {
             }
         }
     }
+    //SDL_Log("rendered objects");
 
     DrawGrid();
     ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());

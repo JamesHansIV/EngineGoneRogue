@@ -55,6 +55,17 @@ class GameObject : public IObject {
 
             m_Transform = new Transform(&m_DstRect.x, &m_DstRect.y);
         }
+
+        GameObject(GameObject* rhs) {
+            m_TextureID = rhs->m_TextureID;
+            m_TilePos = rhs->m_TilePos;
+            m_DstRect = rhs->m_DstRect;
+            m_Rotation = rhs->m_Rotation;
+            m_Flip = rhs->m_Flip;
+            m_ObjectID = rhs->m_ObjectID;
+
+            m_Transform = new Transform(&m_DstRect.x, &m_DstRect.y);
+        }
         virtual ~GameObject() {}
 
         virtual ObjectType GetObjectType() { return ObjectType::Base; }

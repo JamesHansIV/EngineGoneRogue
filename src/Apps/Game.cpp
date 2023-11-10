@@ -27,7 +27,7 @@ Game::Game() {
     //     assert(false);
     // }
 
-    m_Objects = Application::m_Objects;
+    m_Objects = Application::m_Rooms[0];
 
 
     Properties props("player", {0, 0, 136, 96}, {0, 0, 136, 96});

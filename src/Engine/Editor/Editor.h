@@ -18,6 +18,8 @@ class Editor : public Application{
         Editor();
         ~Editor();
 
+        void CleanLayers();
+
         virtual void Update(float dt);
         virtual void Render();
         virtual void Events();
@@ -28,7 +30,7 @@ class Editor : public Application{
 
         void SetObjectInfo();
 
-        void ShowMenuBar();
+        void ShowFileManager();
         void ShowChooseLayer();
         void ShowLoadTexture();
         void ShowLoadTilemap();
@@ -43,12 +45,11 @@ class Editor : public Application{
         void ShowTextureIDs();
         void ShowObjectManager();
 
-        void SaveRoom();
-        void SaveTextures();
+        void AddCurrentRoom();
+        void SaveRoom(const char* roomName);
         void SaveProject();
-        void ShowSaveProject();
     private:
-        Map* m_Map;
+        std::string m_CurrentRoomID;
         std::vector<std::string> m_TextureIDs;
         Texture* m_CurrentTexture;
         GameObject* m_CurrentObject;
