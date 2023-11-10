@@ -54,6 +54,8 @@ class Renderer{
         int GetCameraX(){return m_Camera.x;};
         int GetCameraY(){return m_Camera.y;};
 
+        void SaveTextures();
+
     private:
         Renderer() {}
         SDL_Renderer* m_Renderer;

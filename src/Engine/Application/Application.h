@@ -6,11 +6,17 @@
 #include "Engine/Layers/Layer.h"
 #include "Engine/Objects/Map.h"
 #include <unordered_map>
+#include <tinyxml2.h>
 
 class Application{
     public:
         Application();
         virtual ~Application() {}
+
+        bool LoadTextures(char* projectPath);
+        bool LoadObject(tinyxml2::XMLElement* xmlObj);
+        bool LoadObjects(char* projectPath);
+        bool LoadProject();
 
         bool Clean();
         void Quit();
@@ -23,10 +29,12 @@ class Application{
         inline bool IsRunning(){return m_IsRunning;}
         inline SDL_Window* GetWindow() { return m_Window; }
         inline EventManager& GetEventManager() { return m_EventManager; }
+        inline std::string GetProjectName() { return m_ProjectName; }
         inline static Application* Get() { return m_Instance; }
 
     protected:
         std::string m_ProjectName;
+        std::vector<GameObject*> m_Objects;
     private:
         bool m_IsRunning;
         SDL_Window* m_Window;

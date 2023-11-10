@@ -2,6 +2,7 @@
 #include "Renderer.h"
 
 Texture::Texture(const std::string& filename, std::string id) {
+    m_FilePath = filename;
     SDL_Surface* surface = IMG_Load(filename.c_str());
     if(surface == nullptr)
     {
@@ -22,6 +23,7 @@ Texture::Texture(const std::string& filename, std::string id) {
 }
 
 Texture::Texture(const char* filename, std::string id) {
+    m_FilePath = filename;
     SDL_Surface* surface = IMG_Load(filename);
     if(surface == nullptr)
     {

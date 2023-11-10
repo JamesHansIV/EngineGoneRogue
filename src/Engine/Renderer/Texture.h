@@ -12,6 +12,7 @@ class Texture
 		virtual ~Texture();
 
 		std::string GetID() const { return m_ID; }
+		std::string GetFilePath() const { return m_FilePath; }
 		int GetWidth() const { return m_Width; }
 		int GetHeight() const { return m_Height; }
 		int GetObjectCount() const { return m_ObjectCount; }
@@ -20,6 +21,7 @@ class Texture
 
 	private:
 		std::string m_ID;
+		std::string m_FilePath;
 		SDL_Texture* m_Texture;
 		int m_ObjectCount;
 		int m_Width;

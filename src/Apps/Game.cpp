@@ -21,11 +21,14 @@ Game::Game() {
     Renderer::GetInstance()->AddTexture("player_run", "../assets/textures/Run.png");
     Renderer::GetInstance()->AddTexture("projectile", "../assets/textures/dot_PNG2.png");
 
-    m_Map = new Map("tilemap");
-    if (!m_Map->LoadMap("../assets/maps/tiny_dungeon1.txt")) {
-        SDL_Log("Failed to load map\n");
-        assert(false);
-    }
+    // m_Map = new Map("tilemap");
+    // if (!m_Map->LoadMap("../assets/maps/tiny_dungeon1.txt")) {
+    //     SDL_Log("Failed to load map\n");
+    //     assert(false);
+    // }
+
+    m_Objects = Application::m_Objects;
+
 
     Properties props("player", {0, 0, 136, 96}, {0, 0, 136, 96});
     player = new Warrior(props);
@@ -48,68 +51,8 @@ Game::Game() {
     GetEventManager().addListener(*player);
 
     Renderer::GetInstance()->SetCameraTarget(player);
-
-    LoadProject();
 }
 
-void Game::LoadObject(tinyxml2::XMLElement* xmlObj) {
-    tinyxml2::XMLElement* textureID = xmlObj->FirstChildElement("TextureID");
-    tinyxml2::XMLElement* objectID = xmlObj->FirstChildElement("ObjectID");
-    tinyxml2::XMLElement* srcRect = xmlObj->FirstChildElement("SrcRect");
-    tinyxml2::XMLElement* dstRect = xmlObj->FirstChildElement("DstRect");
-    tinyxml2::XMLElement* rotation = xmlObj->FirstChildElement("Rotation");
-
-    std::string textureIDVal = textureID->GetText();
-    std::string objectIDVal = objectID->GetText();
-    SDL_Log("Texture id: %s", textureIDVal.c_str());
-    SDL_Log("Object id: %s", objectIDVal.c_str());
-    TilePos tilePos;
-    tilePos.row = atoi(srcRect->FirstChildElement("Row")->GetText());
-    tilePos.col = atoi(srcRect->FirstChildElement("Column")->GetText());
-    tilePos.w = atoi(srcRect->FirstChildElement("Width")->GetText());
-    tilePos.h = atoi(srcRect->FirstChildElement("Height")->GetText());
-
-    SDL_Log("Src row: %d", tilePos.row);
-    SDL_Log("Src col: %d", tilePos.col);
-    SDL_Log("Src w: %d", tilePos.w);
-    SDL_Log("Src h: %d", tilePos.h);
-
-    Rect dstRectVal;
-    dstRectVal.x = std::stof(dstRect->FirstChildElement("XPos")->GetText());
-    dstRectVal.y = std::stof(dstRect->FirstChildElement("YPos")->GetText());
-    dstRectVal.w = atoi(dstRect->FirstChildElement("Width")->GetText());
-    dstRectVal.h = atoi(dstRect->FirstChildElement("Height")->GetText());
-
-    SDL_Log("Dst x: %f", dstRectVal.x);
-    SDL_Log("Dst y: %f", dstRectVal.y);
-    SDL_Log("dst w: %d", dstRectVal.w);
-    SDL_Log("dst h: %d", dstRectVal.h);
-
-    float angle = std::stof(rotation->FirstChildElement("Rotation")->GetText());
-
-    Properties props(
-        textureIDVal, tilePos,
-        dstRectVal, angle, objectIDVal
-    );
-
-    m_Objects.push_back(new GameObject(props));
-}
-
-void Game::LoadProject() {
-    tinyxml2::XMLDocument doc;
-    char filePath[128];
-    sprintf(filePath, "../assets/projects/%s.xml", m_ProjectName.c_str());
-    tinyxml2::XMLError error = doc.LoadFile(filePath);
-    assert(error == tinyxml2::XML_SUCCESS);
-
-    tinyxml2::XMLElement* root = doc.FirstChildElement("Root");
-    tinyxml2::XMLElement* currObject = root->FirstChildElement("Object");
-
-    while (currObject != nullptr) {
-        LoadObject(currObject);
-        currObject = currObject->NextSiblingElement("Object");
-    }
-}
 
 void Game::Update(float dt) {
     player->Update(dt,colliders);
@@ -148,7 +91,10 @@ void Game::Update(float dt) {
 
 void Game::Render() {
     Renderer::GetInstance()->RenderClear();
-    m_Map->Draw();
+    // m_Map->Draw();
+    for (auto obj : m_Objects) {
+        obj->Draw();
+    }
     player->Draw();
     player2->Draw();
     player3->Draw();

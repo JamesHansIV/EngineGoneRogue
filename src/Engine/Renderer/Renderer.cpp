@@ -1,7 +1,7 @@
 #include "Renderer.h"
 #include "Engine/Application/Application.h"
 #include "Engine/Objects/GameObject.h"
-
+#include <tinyxml2.h>
 
 
 bool checkCollision(SDL_Rect& a, SDL_Rect& b) {
@@ -226,4 +226,33 @@ void Renderer::MoveCameraY(float y) {
         m_Camera.y = 0;
     if (m_Camera.y + m_Camera.h > LEVEL_HEIGHT)
         m_Camera.y = LEVEL_HEIGHT - m_Camera.h;
+}
+
+void Renderer::SaveTextures() {
+    tinyxml2::XMLDocument doc;
+    tinyxml2::XMLElement* root = doc.NewElement("Root");
+    doc.InsertFirstChild(root);
+
+    tinyxml2::XMLElement* texture;
+    tinyxml2::XMLElement* id;
+    tinyxml2::XMLElement* filePath;
+
+    for (auto it = m_TextureMap.begin(); it != m_TextureMap.end(); it++) {
+        texture = doc.NewElement("Texture");
+        filePath = doc.NewElement("FilePath");
+        id = doc.NewElement("ID");
+
+        id->SetText(it->first.c_str());
+        filePath->SetText(it->second->GetFilePath().c_str());
+
+        texture->InsertEndChild(filePath);
+        texture->InsertEndChild(id);
+
+        root->InsertEndChild(texture);
+    }
+
+    char dstPath[128];
+    sprintf(dstPath, "../assets/projects/%s/textures.xml", Application::Get()->GetProjectName().c_str());
+    int success = doc.SaveFile(dstPath);
+    SDL_Log("Saving textures a success: %d", success);
 }

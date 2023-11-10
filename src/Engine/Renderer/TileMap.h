@@ -1,5 +1,6 @@
 #pragma once
 #include "Texture.h"
+#include <vector>
 
 struct TilePos {
     int row;
@@ -16,9 +17,12 @@ class TileMap : public Texture{
         inline int GetTileSize() { return m_TileSize; }
         inline int GetRows() { return m_Rows; }
         inline int GetCols() { return m_Cols; }
+        std::vector<std::vector<bool>>& GetActiveButtons() { return m_ActiveTileButtons; }
+        void ClearButtons();
 
     private:
         int m_TileSize;
         int m_Rows;
         int m_Cols;
+        std::vector< std::vector<bool>> m_ActiveTileButtons;
 };

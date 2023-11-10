@@ -5,3 +5,5 @@
 #define LEVEL_HEIGHT 960
 
 #define TILE_SIZE 32
+
+#define LOAD_PROJECT 1

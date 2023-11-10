@@ -1,0 +1,10 @@
+<Root>
+    <Texture>
+        <FilePath>../assets/textures/arrow.png</FilePath>
+        <ID>arrow</ID>
+    </Texture>
+    <Texture>
+        <FilePath>../assets/textures/foo.png</FilePath>
+        <ID>foo</ID>
+    </Texture>
+</Root>

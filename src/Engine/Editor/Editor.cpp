@@ -14,6 +14,7 @@
 
 #include <tinyxml2.h>
 #include <memory>
+#include <stdlib.h>
 
 /*
 TODO list
@@ -53,7 +54,7 @@ x Create json object template
 - add auto tiling
 - add file browser
 - change topmost tree nodes to tabs
-
+- delete objects
 */
 
 const char* OBJECT_TYPE_STRS[] = {"Base", "Projectile", "Warrior"};
@@ -85,7 +86,7 @@ Editor::Editor() : m_CurrentTexture(nullptr), m_CurrentLayer(0) {
     ImGui_ImplSDL2_InitForSDLRenderer(GetWindow(), renderer);
     ImGui_ImplSDLRenderer2_Init(renderer);
 
-    m_Layers.push_back(std::vector<GameObject*>());
+    m_Layers.push_back(std::vector<GameObject*>(Application::m_Objects));
 }
 
 Editor::~Editor() {
@@ -99,7 +100,6 @@ Editor::~Editor() {
             delete obj;
         }
     }
-    // delete m_Map;
 }
 
 void SaveBaseObject(tinyxml2::XMLDocument& doc, tinyxml2::XMLElement* xmlObj, GameObject* obj) {
@@ -107,6 +107,7 @@ void SaveBaseObject(tinyxml2::XMLDocument& doc, tinyxml2::XMLElement* xmlObj, Ga
     tinyxml2::XMLElement* objectID = doc.NewElement("ObjectID");
     tinyxml2::XMLElement* srcRect = doc.NewElement("SrcRect");
     tinyxml2::XMLElement* dstRect = doc.NewElement("DstRect");
+    tinyxml2::XMLElement* rotation = doc.NewElement("Rotation");
 
     textureID->SetText(obj->GetTextureID().c_str());
     objectID->SetText(obj->GetID().c_str());
@@ -143,13 +144,16 @@ void SaveBaseObject(tinyxml2::XMLDocument& doc, tinyxml2::XMLElement* xmlObj, Ga
     dstRect->InsertEndChild(dstWidth);
     dstRect->InsertEndChild(dstHeight);
 
+    rotation->SetText(std::to_string(obj->GetRotation()).c_str());
+
     xmlObj->InsertEndChild(textureID);
     xmlObj->InsertEndChild(objectID);
     xmlObj->InsertEndChild(srcRect);
     xmlObj->InsertEndChild(dstRect);
+    xmlObj->InsertEndChild(rotation);
 }
 
-void Editor::SaveProject() {
+void Editor::SaveRoom() {
     tinyxml2::XMLDocument doc;
     tinyxml2::XMLElement* root = doc.NewElement("Root");
     doc.InsertFirstChild(root);
@@ -166,15 +170,30 @@ void Editor::SaveProject() {
                     break;
                 case ObjectType::Warrior:
                     break;
+                default:
+                    SDL_LogError(0, "Invalid object type");
+                    assert(false);
+                    break;
             }
             root->InsertEndChild(currXMLObject);
         }
     }
 
     char filePath[128];
-    sprintf(filePath, "../assets/projects/%s.xml", m_ProjectName.c_str());
+    sprintf(filePath, "../assets/projects/%s/room1.xml", m_ProjectName.c_str());
     int success = doc.SaveFile(filePath);
-    SDL_Log("Saving file a success: %d", success);
+    SDL_Log("Saving room a success: %d", success);
+}
+
+void Editor::SaveTextures() {
+}
+
+void Editor::SaveProject() {
+    char command[128];
+    sprintf(command, "mkdir ../assets/projects/%s", m_ProjectName.c_str());
+    system(command);
+    Renderer::GetInstance()->SaveTextures();
+    SaveRoom();
 }
 
 void Editor::ShowSaveProject() {
@@ -195,12 +214,11 @@ void Editor::ShowSaveProject() {
     }
 }
 
-
 void Editor::SetObjectInfo() {
     TileMap* tileMap = dynamic_cast<TileMap*>(m_CurrentTexture);
     if (tileMap != nullptr) {
         m_ObjectInfo.Tile = { 0, 0, tileMap->GetTileSize(), tileMap->GetTileSize() };
-        m_ObjectInfo.DstRect = { 0, 0, tileMap->GetTileSize(), tileMap->GetTileSize() };
+        m_ObjectInfo.DstRect = { 0, 0, TILE_SIZE, TILE_SIZE };
     } else {
         m_ObjectInfo.Tile = { 0, 0, m_CurrentTexture->GetWidth(), m_CurrentTexture->GetHeight() };
         m_ObjectInfo.DstRect = { 0, 0, m_CurrentTexture->GetWidth(), m_CurrentTexture->GetHeight() };
@@ -253,13 +271,41 @@ void Editor::ShowObjectEditor() {
             ImGui::Text("Selected object: %s", m_CurrentObject->GetID().c_str());
             ImGui::Text("Texture:");
             Texture* objTexture = Renderer::GetInstance()->GetTexture(m_CurrentObject->GetTextureID());
-            ImGui::Image((void*) objTexture->GetTexture(), ImVec2(objTexture->GetWidth(), objTexture->GetHeight()));
+
+            ImVec2 size;
+            ImVec2 uv0;
+            ImVec2 uv1;
+
+            if (TileMap* tileMap = dynamic_cast<TileMap*>(objTexture)) {
+                size = { (float)tileMap->GetTileSize() * 10, (float)tileMap->GetTileSize() * 10 };
+                uv0 = ImVec2(
+                    m_CurrentObject->GetTilePos().col / (float)tileMap->GetCols(),
+                    m_CurrentObject->GetTilePos().row / (float)tileMap->GetRows()
+                );
+                uv1 = ImVec2(
+                    (m_CurrentObject->GetTilePos().col + 1) / (float)tileMap->GetCols(),
+                    (m_CurrentObject->GetTilePos().row + 1) / (float)tileMap->GetRows()
+                );
+            } else {
+                size = ImVec2(objTexture->GetWidth(), objTexture->GetHeight());
+                uv0 = { 0, 0 };
+                uv1 = { 1, 1 };
+            }
+            
+            ImGui::Image((void*) objTexture->GetTexture(), size, uv0, uv1);
 
             ImGui::SliderFloat("X position", &m_CurrentObject->GetX(), 0, LEVEL_WIDTH - m_CurrentObject->GetWidth());
             ImGui::SliderFloat("Y position", &m_CurrentObject->GetY(), 0, LEVEL_HEIGHT - m_CurrentObject->GetHeight());
 
             ImGui::SliderInt("Width", &m_CurrentObject->GetWidth(), 0, LEVEL_WIDTH);
             ImGui::SliderInt("Height", &m_CurrentObject->GetHeight(), 0, LEVEL_HEIGHT);
+
+            ImGui::Text("Snap to grid: ");
+            ImGui::SameLine();
+            const char* snapToGrid = m_ObjectInfo.SnapToGrid ? "True" : "False";
+            if (ImGui::Button(snapToGrid, ImVec2(80, 30))) {
+                m_ObjectInfo.SnapToGrid = !m_ObjectInfo.SnapToGrid;
+            }
 
             if (ImGui::Button("Rotate left", ImVec2(80, 30))) {
                 m_CurrentObject->GetRotation() -= 90.0f;
@@ -301,12 +347,11 @@ void Editor::ShowLoadTexture() {
                 m_CurrentTexture = (isTileMap) ?
                     Renderer::GetInstance()->AddTileMap(textureID, filepath, tileSize, rows, cols) :
                     Renderer::GetInstance()->AddTexture(textureID, filepath);
-
-                SetObjectInfo();
-
+                
                 if (!m_CurrentTexture) {
                     strcpy(invalidFilepath, filepath);
                 } else {
+                    SetObjectInfo();
                     strcpy(invalidFilepath, "");
                     m_TextureIDs.push_back(textureID);
                 }
@@ -389,6 +434,39 @@ ObjectType Editor::ShowSelectObjectType() {
     return (ObjectType)(currentIndex+1);
 }
 
+void Editor::ShowTiles(TileMap* tileMap) {
+    ImGui::Text("Select tile");
+    ImVec2 size = ImVec2(tileMap->GetTileSize(), tileMap->GetTileSize());
+    for (int i = 0; i < tileMap->GetRows(); i++) {
+        for (int j = 0; j < tileMap->GetCols(); j++) {
+            if (j != 0)
+                ImGui::SameLine();
+            
+            ImVec2 uv0 = ImVec2(j / (float)tileMap->GetCols(), i / (float)tileMap->GetRows());
+            ImVec2 uv1 = ImVec2(
+                (j + 1) / (float)tileMap->GetCols(),
+                (i + 1) / (float)tileMap->GetRows()
+            );
+
+            bool isActive = tileMap->GetActiveButtons()[i][j];
+            if (isActive)
+                ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(23, 30, 57, 255));
+            
+            ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(23, 30, 57, 255));
+
+            if (ImGui::ImageButton("", (ImTextureID) tileMap->GetTexture(), size, uv0, uv1) || ImGui::IsItemClicked()) {
+                tileMap->ClearButtons();
+                m_ObjectInfo.Tile.row = i;
+                m_ObjectInfo.Tile.col = j;
+                tileMap->GetActiveButtons()[i][j] = !isActive;
+            }
+
+            ImGui::PopStyleColor();
+            if (isActive) ImGui::PopStyleColor();
+        }
+    }
+}
+
 void Editor::ShowCreateObject() {
     if (ImGui::TreeNode("Create object")) {
         ShowTextureIDs();
@@ -402,8 +480,9 @@ void Editor::ShowCreateObject() {
 
             TileMap* tileMap = dynamic_cast<TileMap*>(m_CurrentTexture);
             if (tileMap != nullptr) {
-                ImGui::SliderInt("Select tile row", &m_ObjectInfo.Tile.row, 0, tileMap->GetRows() - 1);
-                ImGui::SliderInt("Select tile column", &m_ObjectInfo.Tile.col, 0, tileMap->GetCols() - 1);
+                // ImGui::SliderInt("Select tile row", &m_ObjectInfo.Tile.row, 0, tileMap->GetRows() - 1);
+                // ImGui::SliderInt("Select tile column", &m_ObjectInfo.Tile.col, 0, tileMap->GetCols() - 1);
+                ShowTiles(tileMap);
             }
 
             ImGui::SeparatorText("Select dimensions");
@@ -499,7 +578,6 @@ void Editor::Update(float dt) {
 void Editor::Render() {
     ImGui::Render();
     Renderer::GetInstance()->RenderClear();
-
     for (int i = 0; i < m_Layers.size(); i++) {
         if (m_HiddenLayers.find(i) == m_HiddenLayers.end()) {
             for (auto& obj : m_Layers[i]) {
@@ -509,7 +587,6 @@ void Editor::Render() {
     }
 
     DrawGrid();
-    //m_Map->Draw();
     ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
 
     if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
@@ -520,7 +597,6 @@ void Editor::Render() {
 
     Renderer::GetInstance()->Render();
 }
-
 
 
 void Editor::OnMouseClicked(SDL_Event& event) {
@@ -536,13 +612,40 @@ void Editor::OnMouseClicked(SDL_Event& event) {
 void Editor::OnMouseMoved(SDL_Event& event) {
     if (InputChecker::isMouseButtonPressed(SDL_BUTTON_LEFT) &&
         m_CurrentObject != nullptr && CheckMouseOver(m_CurrentObject)) {
+
         float dx =  event.button.x - InputChecker::getMouseX();
         float dy =  event.button.y - InputChecker::getMouseY();
 
         float x = m_CurrentObject->GetX();
         float y = m_CurrentObject->GetY();
-        m_CurrentObject->SetX(x + dx);
-        m_CurrentObject->SetY(y + dy);
+
+        float nextX;
+        float nextY;
+
+        nextX = x + dx;
+        nextY = y + dy;
+        
+        m_CurrentObject->SetX(nextX);
+        m_CurrentObject->SetY(nextY);
+    }
+}
+
+void Editor::OnMouseUp(SDL_Event& event) {
+    if (InputChecker::isMouseButtonPressed(SDL_BUTTON_LEFT) &&
+        m_CurrentObject != nullptr && CheckMouseOver(m_CurrentObject)) {
+        
+        if (m_ObjectInfo.SnapToGrid) {
+            float x = m_CurrentObject->GetX();
+            float y = m_CurrentObject->GetY();
+
+            float nextX;
+            float nextY;
+            nextX = (int(x + TILE_SIZE / 2) / TILE_SIZE) * TILE_SIZE;
+            nextY = (int(y + TILE_SIZE / 2) / TILE_SIZE) * TILE_SIZE;
+
+            m_CurrentObject->SetX(nextX);
+            m_CurrentObject->SetY(nextY);
+        }
     }
 }
 
@@ -570,6 +673,7 @@ void Editor::Events() {
                 OnMouseClicked(event);
                 break;
             case SDL_MOUSEBUTTONUP:
+                OnMouseUp(event);
                 InputChecker::setMouseButtonPressed(event.button.button, false);
                 break;
             case SDL_MOUSEMOTION:

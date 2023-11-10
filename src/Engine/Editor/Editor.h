@@ -10,6 +10,7 @@ struct ObjectInfo {
     Rect DstRect;
     float Rotation = 0.0f;
     ObjectType type = ObjectType::Base;
+    bool SnapToGrid = true;
 };
 
 class Editor : public Application{
@@ -23,6 +24,7 @@ class Editor : public Application{
 
         void OnMouseClicked(SDL_Event& event);
         void OnMouseMoved(SDL_Event& event);
+        void OnMouseUp(SDL_Event& event);
 
         void SetObjectInfo();
 
@@ -30,6 +32,7 @@ class Editor : public Application{
         void ShowChooseLayer();
         void ShowLoadTexture();
         void ShowLoadTilemap();
+        void ShowTiles(TileMap* tilemap);
         ObjectType ShowSelectObjectType();
         void ShowCreateBaseObject();
         void ShowCreateProjectile();
@@ -40,6 +43,8 @@ class Editor : public Application{
         void ShowTextureIDs();
         void ShowObjectManager();
 
+        void SaveRoom();
+        void SaveTextures();
         void SaveProject();
         void ShowSaveProject();
     private:

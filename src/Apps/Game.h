@@ -12,8 +12,6 @@ class Game : public Application{
         void Update(float dt);
         void Render();
 
-        void LoadProject();
-        void LoadObject(tinyxml2::XMLElement* xmlObj);
     private:
         Map* m_Map;
         std::vector<GameObject*> m_Objects;
