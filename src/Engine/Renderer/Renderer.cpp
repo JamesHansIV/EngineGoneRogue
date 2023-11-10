@@ -54,6 +54,7 @@ Texture* Renderer::AddTexture(std::string id, std::string filename) {
         textureWrapper = new Texture(filename, id);
         m_TextureMap[id] = textureWrapper;
         m_Filepaths.insert(filename);
+        m_TextureIDs.push_back(id);
 
     } catch(std::runtime_error& err) {
         SDL_LogError(0, "%s", err.what());
@@ -70,6 +71,8 @@ Texture* Renderer::AddTexture(std::string id, const char* filename) {
         textureWrapper = new Texture(filename, id);
         m_TextureMap[id] = textureWrapper;
         m_Filepaths.insert(filename);
+        m_TextureIDs.push_back(id);
+
 
     } catch(std::runtime_error& err) {
         SDL_LogError(0, "%s", err.what());
@@ -87,6 +90,8 @@ TileMap* Renderer::AddTileMap(std::string id, std::string filename, int tileSize
         textureWrapper = new TileMap(filename, id, tileSize, rows, cols);
         m_TextureMap[id] = textureWrapper;
         m_Filepaths.insert(filename);
+        m_TextureIDs.push_back(id);
+
 
     } catch(std::runtime_error& err) {
         SDL_LogError(0, "%s", err.what());
@@ -104,6 +109,8 @@ TileMap* Renderer::AddTileMap(std::string id, const char* filename, int tileSize
         textureWrapper = new TileMap(filename, id, tileSize, rows, cols);
         m_TextureMap[id] = textureWrapper;
         m_Filepaths.insert(filename);
+        m_TextureIDs.push_back(id);
+
 
     } catch(std::runtime_error& err) {
         SDL_LogError(0, "%s", err.what());

@@ -24,6 +24,7 @@ class Renderer{
         void Init();
 
         SDL_Renderer* GetRenderer() { return m_Renderer; }
+        std::vector<std::string>& GetTextureIDs() { return m_TextureIDs; }
         void Render();
         void RenderClear();
         void Destroy();
@@ -61,6 +62,7 @@ class Renderer{
         SDL_Renderer* m_Renderer;
         SDL_Rect m_Camera {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
         std::map<std::string, Texture*> m_TextureMap;
+        std::vector<std::string> m_TextureIDs;
         std::set<std::string> m_Filepaths;
         static Renderer* m_Instance;
         GameObject* m_CameraTarget;

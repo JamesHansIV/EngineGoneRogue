@@ -50,7 +50,6 @@ class Editor : public Application{
         void SaveProject();
     private:
         std::string m_CurrentRoomID;
-        std::vector<std::string> m_TextureIDs;
         Texture* m_CurrentTexture;
         GameObject* m_CurrentObject;
         ObjectInfo m_ObjectInfo;
