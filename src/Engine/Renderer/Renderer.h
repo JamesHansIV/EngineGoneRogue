@@ -29,20 +29,20 @@ class Renderer{
         void RenderClear();
         void Destroy();
 
-        Texture* AddTexture(std::string id, std::string filename);
-        Texture* AddTexture(std::string id, const char* filename);
-        TileMap* AddTileMap(std::string id, std::string filename, int tileSize, int rows, int cols);
-        TileMap* AddTileMap(std::string id, const char* filename, int tileSize, int rows, int cols);
+        Texture* AddTexture(const std::string& id, const std::string& filename);
+        Texture* AddTexture(const std::string& id, const char* filename);
+        TileMap* AddTileMap(const std::string& id, const std::string& filename, int tileSize, int rows, int cols);
+        TileMap* AddTileMap(const std::string& id, const char* filename, int tileSize, int rows, int cols);
         Texture* GetTexture(std::string id) { return m_TextureMap.find(id) != m_TextureMap.end() ? m_TextureMap[id] : nullptr; }
-        void Drop(std::string id);
+        void Drop(const std::string& id);
         void Clean();
         void DrawLine(int x1, int y1, int x2, int y2);
-        void Draw(std::string id, SDL_Rect& srcRect, SDL_Rect& destRect, SDL_RendererFlip flip = SDL_FLIP_NONE);
-        void Draw(std::string id, SDL_Rect& srcRect, SDL_Rect& destRect, double angle, const SDL_Point* center, SDL_RendererFlip flip = SDL_FLIP_NONE);
-        void Draw(std::string id, int x, int y, int width, int height, SDL_RendererFlip flip = SDL_FLIP_NONE);
-        void Draw(std::string id, int x, int y, int width, int height, double angle, const SDL_Point* center, SDL_RendererFlip flip = SDL_FLIP_NONE);
-        void DrawFrame(std::string id, int x, int y, int width, int height, int row, int frame, SDL_RendererFlip flip = SDL_FLIP_NONE);
-        void DrawFrame(std::string id, int x, int y, int width, int height, int row, int frame, double angle, const SDL_Point* center, SDL_RendererFlip flip);
+        void Draw(const std::string& id, SDL_Rect& srcRect, SDL_Rect& dstRect, SDL_RendererFlip flip = SDL_FLIP_NONE);
+        void Draw(const std::string& id, SDL_Rect& srcRect, SDL_Rect& dstRect, double angle, const SDL_Point* center, SDL_RendererFlip flip = SDL_FLIP_NONE);
+        void Draw(const std::string& id, int x, int y, int width, int height, SDL_RendererFlip flip = SDL_FLIP_NONE);
+        void Draw(const std::string& id, int x, int y, int width, int height, double angle, const SDL_Point* center, SDL_RendererFlip flip = SDL_FLIP_NONE);
+        void DrawFrame(const std::string& id, int x, int y, int width, int height, int row, int frame, SDL_RendererFlip flip = SDL_FLIP_NONE);
+        void DrawFrame(const std::string& id, int x, int y, int width, int height, int row, int frame, double angle, const SDL_Point* center, SDL_RendererFlip flip);
 
         void MoveCameraX(float x);
         void MoveCameraY(float y);

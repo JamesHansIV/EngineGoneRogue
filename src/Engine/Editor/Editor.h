@@ -33,7 +33,7 @@ class Editor : public Application{
         virtual void Render();
         virtual void Events();
 
-        std::pair<float, float> SnapToGrid(float x, float y);
+        static std::pair<float, float> SnapToGrid(float x, float y);
 
         void OnMouseClicked(SDL_Event& event);
         void OnMouseMoved(SDL_Event& event);
@@ -48,8 +48,8 @@ class Editor : public Application{
         void ShowLoadTilemap();
         void ShowTiles(TileMap* tilemap);
         ObjectType ShowSelectObjectType();
-        void ShowBuildProjectile();
-        void ShowBuildPlayer();
+        static void ShowBuildProjectile();
+        static void ShowBuildPlayer();
         void ShowCreateObject();
         void DeleteObject();
         void CreateObject(ObjectType type);

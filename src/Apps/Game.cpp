@@ -21,7 +21,18 @@ Game::Game() {
     Renderer::GetInstance()->AddTexture("player_run", "../assets/textures/Run.png");
     Renderer::GetInstance()->AddTexture("projectile", "../assets/textures/dot_PNG2.png");
 
+<<<<<<< HEAD
     m_Objects = Application::m_Rooms["room1"];
+=======
+    // m_Map = new Map("tilemap");
+    // if (!m_Map->LoadMap("../assets/maps/tiny_dungeon1.txt")) {
+    //     SDL_Log("Failed to load map\n");
+    //     assert(false);
+    // }
+
+    m_Objects = Application::m_Rooms[nullptr];
+
+>>>>>>> 6fcad1745ec7ed6e5dbf12361a793c4c4aca3efa
 
     Properties props("player", {0, 0, 136, 96}, {0, 0, 136, 96});
     player = new Player(props);
@@ -49,22 +60,22 @@ Game::Game() {
 
 void Game::Update(float dt) {
     player->Update(dt,colliders);
-    int playerX = player->GetMidPointX() - Renderer::GetInstance()->GetCameraX();
-    int playerY = player->GetMidPointY() - Renderer::GetInstance()->GetCameraY();
+    int const player_x = player->GetMidPointX() - Renderer::GetInstance()->GetCameraX();
+    int const player_y = player->GetMidPointY() - Renderer::GetInstance()->GetCameraY();
 
-    SDL_Log("%d, %d", playerX , playerY );
-    int mouseX = InputChecker::getMouseX();
-    int mouseY = InputChecker::getMouseY();
+    SDL_Log("%d, %d", player_x , player_y );
+    int const mouse_x = InputChecker::getMouseX();
+    int const mouse_y = InputChecker::getMouseY();
 
-    SDL_Log("%d, %d", mouseX , mouseY );
+    SDL_Log("%d, %d", mouse_x , mouse_y );
 
     // Calculate the angle between the mouse and the player
-    float deltaX = mouseX - playerX;
-    float deltaY = mouseY - playerY;
-    float angle = atan2(deltaY, deltaX) * (180.0 / M_PI);
+    float const delta_x = mouse_x - player_x;
+    float const delta_y = mouse_y - player_y;
+    float angle = atan2(delta_y, delta_x) * (180.0 / M_PI);
     // Convert the angle range from -180 to 180 to 0 to 360
     if (angle < 0) {
-        angle += 360.0f;
+        angle += 360.0F;
     }
 
     SDL_Log("%f", angle);
@@ -77,14 +88,19 @@ void Game::Update(float dt) {
         projectiles.push_back(projectile);
         InputChecker::setMouseButtonPressed(SDL_BUTTON_LEFT, false);
     }
-    for (auto projectile : projectiles) {
+    for (auto *projectile : projectiles) {
         projectile->Update(dt);
     }
 }
 
 void Game::Render() {
     Renderer::GetInstance()->RenderClear();
+<<<<<<< HEAD
     for (auto obj : m_Objects) {
+=======
+    // m_Map->Draw();
+    for (auto *obj : m_Objects) {
+>>>>>>> 6fcad1745ec7ed6e5dbf12361a793c4c4aca3efa
         obj->Draw();
     }
     player->Draw();
@@ -92,7 +108,7 @@ void Game::Render() {
     player3->Draw();
     player4->Draw();
     player5->Draw();
-    for (auto projectile : projectiles) {
+    for (auto *projectile : projectiles) {
         projectile->Draw();
     }
 

@@ -10,7 +10,7 @@ class Map {
         Map(std::string textureID) : m_TextureID(textureID), m_Width(0), m_Height(0) { }
         ~Map();
 
-        bool LoadMap(std::string filename);
+        bool LoadMap(const std::string& filename);
         void Draw();
 
     private:

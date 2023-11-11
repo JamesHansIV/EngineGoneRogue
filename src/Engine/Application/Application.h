@@ -13,10 +13,10 @@ class Application{
         Application();
         virtual ~Application() {}
 
-        bool LoadTextures(char* projectPath);
-        bool LoadObject(tinyxml2::XMLElement* xmlObj, std::string roomID);
-        bool LoadObjects(std::string roomPath, std::string roomID);
-        bool LoadRooms(char* projectPath);
+        static bool LoadTextures(char* projectPath);
+        bool LoadObject(tinyxml2::XMLElement* xmlObj, const std::string& roomID);
+        bool LoadObjects(const std::string& roomPath, const std::string& roomID);
+        bool LoadRooms(const char* projectPath);
         bool LoadProject();
 
         bool Clean();
