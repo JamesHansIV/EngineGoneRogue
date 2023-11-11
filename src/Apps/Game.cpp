@@ -21,14 +21,7 @@ Game::Game() {
     Renderer::GetInstance()->AddTexture("player_run", "../assets/textures/Run.png");
     Renderer::GetInstance()->AddTexture("projectile", "../assets/textures/dot_PNG2.png");
 
-    // m_Map = new Map("tilemap");
-    // if (!m_Map->LoadMap("../assets/maps/tiny_dungeon1.txt")) {
-    //     SDL_Log("Failed to load map\n");
-    //     assert(false);
-    // }
-
-    m_Objects = Application::m_Rooms[0];
-
+    m_Objects = Application::m_Rooms["room1"];
 
     Properties props("player", {0, 0, 136, 96}, {0, 0, 136, 96});
     player = new Player(props);
@@ -91,7 +84,6 @@ void Game::Update(float dt) {
 
 void Game::Render() {
     Renderer::GetInstance()->RenderClear();
-    // m_Map->Draw();
     for (auto obj : m_Objects) {
         obj->Draw();
     }

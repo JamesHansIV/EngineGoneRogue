@@ -13,7 +13,6 @@ class Game : public Application{
         void Render();
 
     private:
-        Map* m_Map;
         std::vector<GameObject*> m_Objects;
 };
 
