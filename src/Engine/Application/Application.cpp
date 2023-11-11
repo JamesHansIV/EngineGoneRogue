@@ -13,7 +13,7 @@
 #include <unistd.h>
 #include <dirent.h>
 
-Application* Application::m_Instance = nullptr;
+Application* Application::m_instance = nullptr;
 
 Application::Application() : m_ProjectName("test_project") {
 
@@ -28,7 +28,7 @@ Application::Application() : m_ProjectName("test_project") {
         assert(false);
     }
 
-    m_Instance = this;
+    m_instance = this;
 
     //TODO: note that the cwd is <projectDir>/build instead of <projectDir>.
     //      Set a working directory path macro to use absolute file paths
@@ -178,25 +178,25 @@ bool Application::LoadProject() {
 void Application::Events(){
     SDL_Event event;
     while (SDL_PollEvent(&event) != 0) {
-        m_EventManager.handleEvent(event);
+        m_EventManager.HandleEvent(event);
         switch (event.type) {
             case SDL_QUIT:
                 Quit();
                 return;
             case SDL_KEYDOWN:
-                InputChecker::setKeyPressed(event.key.keysym.sym, true);
+                InputChecker::SetKeyPressed(event.key.keysym.sym, true);
                 break;
             case SDL_KEYUP:
-                InputChecker::setKeyPressed(event.key.keysym.sym, false);
+                InputChecker::SetKeyPressed(event.key.keysym.sym, false);
                 break;
             case SDL_MOUSEBUTTONDOWN:
-                InputChecker::setMouseButtonPressed(event.button.button, true);
+                InputChecker::SetMouseButtonPressed(event.button.button, true);
                 break;
             case SDL_MOUSEBUTTONUP:
-                InputChecker::setMouseButtonPressed(event.button.button, false);
+                InputChecker::SetMouseButtonPressed(event.button.button, false);
                 break;
             case SDL_MOUSEMOTION:
-                InputChecker::updateMousePosition(event.motion.x, event.motion.y);
+                InputChecker::UpdateMousePosition(event.motion.x, event.motion.y);
                 break;
         }
     }

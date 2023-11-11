@@ -1,8 +1,8 @@
 #include "EventManager.h"
 
-void EventManager::handleEvent(SDL_Event& event) {
+void EventManager::HandleEvent(SDL_Event& event) {
     Event evt(event);
-    for (EventListener* listener : listeners) {
+    for (EventListener* listener : m_listeners) {
         listener->OnEvent(evt);
     }
 }

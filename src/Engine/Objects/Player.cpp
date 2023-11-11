@@ -19,37 +19,37 @@ void Player::Draw(){
 void Player::Update(float dt, const std::vector<GameObject*>& colliders){
     m_RigidBody->Update(dt);
     m_RigidBody->UnSetForce();
-    if (InputChecker::isKeyPressed(SDLK_w)) {
+    if (InputChecker::IsKeyPressed(SDLK_w)) {
         m_RigidBody->ApplyForceY(-20);
     }
-    if (InputChecker::isKeyPressed(SDLK_s)) {
+    if (InputChecker::IsKeyPressed(SDLK_s)) {
         m_RigidBody->ApplyForceY(20);
     }
-    if (InputChecker::isKeyPressed(SDLK_a)) {
+    if (InputChecker::IsKeyPressed(SDLK_a)) {
         m_RigidBody->ApplyForceX(-20);
         m_Animation->SetProps("player_run", 1, 8, 100, SDL_FLIP_HORIZONTAL);
-        setFlip(SDL_FLIP_HORIZONTAL);
+        SetFlip(SDL_FLIP_HORIZONTAL);
     }
-    if (InputChecker::isKeyPressed(SDLK_d)) {
+    if (InputChecker::IsKeyPressed(SDLK_d)) {
         m_RigidBody->ApplyForceX(20);
         m_Animation->SetProps("player_run", 1, 8, 100);
-        setFlip(SDL_FLIP_NONE);
+        SetFlip(SDL_FLIP_NONE);
     }
     m_Transform->Translate(m_RigidBody->Position());
     m_Collider->Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
     m_Animation->Update();
-    canMoveThrough(colliders);
+    CanMoveThrough(colliders);
 }
 
-bool Player::canMoveThrough(const std::vector<GameObject*>& colliders)
+bool Player::CanMoveThrough(const std::vector<GameObject*>& colliders)
 {
-    for (auto collider : colliders)
+    for (auto *collider : colliders)
     {
-        if (*m_Transform->X < 0.0f ||
-            *m_Transform->Y < 0.0f ||
+        if (*m_Transform->X < 0.0F ||
+            *m_Transform->Y < 0.0F ||
             *m_Transform->X + this->GetWidth() > SCREEN_WIDTH ||
             *m_Transform->Y + this->GetHeight() > SCREEN_HEIGHT ||
-            CollisionHandler::GetInstance()->CheckCollision(m_Collider->Get(), collider->getCollider()->Get()))
+            CollisionHandler::GetInstance()->CheckCollision(m_Collider->Get(), collider->GetCollider()->Get()))
         {
             m_Transform->TranslateX(-m_RigidBody->Velocity().X/2);
             m_Transform->TranslateY(-m_RigidBody->Velocity().Y/2);
@@ -61,15 +61,15 @@ bool Player::canMoveThrough(const std::vector<GameObject*>& colliders)
 }
 
 void Player::OnEvent(Event& event) {
-    SDL_Event e = event.getEvent();
+    SDL_Event const e = event.GetEvent();
     if (e.type == SDL_KEYUP) {
         if (e.key.keysym.sym == SDLK_a) {
             m_Animation->SetProps("player", 1, 6, 100, SDL_FLIP_HORIZONTAL);
-            setFlip(SDL_FLIP_HORIZONTAL);
+            SetFlip(SDL_FLIP_HORIZONTAL);
         }
         if (e.key.keysym.sym == SDLK_d) {
             m_Animation->SetProps("player", 1, 6, 100);
-            setFlip(SDL_FLIP_NONE);
+            SetFlip(SDL_FLIP_NONE);
         }
     }
 }

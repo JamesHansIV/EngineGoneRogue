@@ -18,7 +18,7 @@ class Renderer{
     public:
         static Renderer* GetInstance()
         {
-            return m_Instance = (m_Instance != nullptr) ? m_Instance : new Renderer();
+            return m_instance = (m_instance != nullptr) ? m_instance : new Renderer();
         }
 
         void Init();
@@ -33,7 +33,7 @@ class Renderer{
         Texture* AddTexture(const std::string& id, const char* filename);
         TileMap* AddTileMap(const std::string& id, const std::string& filename, int tileSize, int rows, int cols);
         TileMap* AddTileMap(const std::string& id, const char* filename, int tileSize, int rows, int cols);
-        Texture* GetTexture(std::string id) { return m_TextureMap.find(id) != m_TextureMap.end() ? m_TextureMap[id] : nullptr; }
+        Texture* GetTexture(const std::string& id) { return m_TextureMap.find(id) != m_TextureMap.end() ? m_TextureMap[id] : nullptr; }
         void Drop(const std::string& id);
         void Clean();
         void DrawLine(int x1, int y1, int x2, int y2);
@@ -52,8 +52,8 @@ class Renderer{
             m_CameraTarget = target;
         }
 
-        int GetCameraX(){return m_Camera.x;};
-        int GetCameraY(){return m_Camera.y;};
+        int GetCameraX() const{return m_Camera.x;};
+        int GetCameraY() const{return m_Camera.y;};
 
         void SaveTextures();
 
@@ -64,6 +64,6 @@ class Renderer{
         std::map<std::string, Texture*> m_TextureMap;
         std::vector<std::string> m_TextureIDs;
         std::set<std::string> m_Filepaths;
-        static Renderer* m_Instance;
+        static Renderer* m_instance;
         GameObject* m_CameraTarget;
 };

@@ -6,13 +6,13 @@
 
 class Layer : public EventListener {
     public:
-        virtual ~Layer() {}
+        virtual ~Layer() = default;
         virtual void OnAttach() = 0;
         virtual void OnDetach() = 0;
         virtual void Update() = 0;
-        virtual void OnEvent(Event& event) = 0;
-        void AddObject(GameObject* obj) { objects.push_back(obj); }
+        void OnEvent(Event& event) override = 0;
+        void AddObject(GameObject* obj) { m_objects.push_back(obj); }
         void RemoveEntity(GameObject* obj);
     private:
-        std::vector<GameObject*> objects;
+        std::vector<GameObject*> m_objects;
 };

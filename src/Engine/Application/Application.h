@@ -11,7 +11,7 @@
 class Application{
     public:
         Application();
-        virtual ~Application() {}
+        virtual ~Application() = default;
 
         static bool LoadTextures(char* projectPath);
         bool LoadObject(tinyxml2::XMLElement* xmlObj, const std::string& roomID);
@@ -27,11 +27,11 @@ class Application{
         virtual void Render() {}
         virtual void Events();
 
-        inline bool IsRunning(){return m_IsRunning;}
+        inline bool IsRunning() const{return m_IsRunning;}
         inline SDL_Window* GetWindow() { return m_Window; }
         inline EventManager& GetEventManager() { return m_EventManager; }
         inline std::string GetProjectName() { return m_ProjectName; }
-        inline static Application* Get() { return m_Instance; }
+        inline static Application* Get() { return m_instance; }
 
     protected:
         std::string m_ProjectName;
@@ -40,5 +40,5 @@ class Application{
         bool m_IsRunning;
         SDL_Window* m_Window;
         EventManager m_EventManager;
-        static Application* m_Instance;
+        static Application* m_instance;
 };

@@ -10,8 +10,8 @@
 struct ObjectInfo {
     TilePos Tile;
     Rect DstRect;
-    float Rotation = 0.0f;
-    ObjectType type = ObjectType::Base;
+    float Rotation = 0.0F;
+    ObjectType type = ObjectType::kBase;
     bool SnapToGrid = true;
 };
 
@@ -25,13 +25,13 @@ struct DrawState {
 class Editor : public Application{
     public:
         Editor();
-        ~Editor();
+        ~Editor() override;
 
         void CleanLayers();
 
-        virtual void Update(float dt);
-        virtual void Render();
-        virtual void Events();
+        void Update(float dt) override;
+        void Render() override;
+        void Events() override;
 
         static std::pair<float, float> SnapToGrid(float x, float y);
 
@@ -65,12 +65,12 @@ class Editor : public Application{
         void SaveProject();
     private:
         std::string m_CurrentRoomID;
-        Texture* m_CurrentTexture;
+        Texture* m_CurrentTexture{nullptr};
         GameObject* m_CurrentObject;
         DrawState m_DrawState;
         ObjectInfo m_ObjectInfo;
         std::vector< std::vector<GameObject*>> m_Layers;
         std::set<int> m_HiddenLayers;
-        int m_CurrentLayer;
+        int m_CurrentLayer{0};
 };
 

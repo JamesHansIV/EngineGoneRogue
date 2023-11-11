@@ -41,7 +41,7 @@ Game::Game() {
     colliders.push_back(player4);
     colliders.push_back(player5);
 
-    GetEventManager().addListener(*player);
+    GetEventManager().AddListener(*player);
 
     Renderer::GetInstance()->SetCameraTarget(player);
 }
@@ -53,8 +53,8 @@ void Game::Update(float dt) {
     int const player_y = player->GetMidPointY() - Renderer::GetInstance()->GetCameraY();
 
     SDL_Log("%d, %d", player_x , player_y );
-    int const mouse_x = InputChecker::getMouseX();
-    int const mouse_y = InputChecker::getMouseY();
+    int const mouse_x = InputChecker::GetMouseX();
+    int const mouse_y = InputChecker::GetMouseY();
 
     SDL_Log("%d, %d", mouse_x , mouse_y );
 
@@ -70,12 +70,12 @@ void Game::Update(float dt) {
     SDL_Log("%f", angle);
 
     Properties projectile_props("projectile", {0, 0, 723, 724}, {player->GetMidPointX(), player->GetMidPointY(), 15, 15});
-    if (InputChecker::isMouseButtonPressed(SDL_BUTTON_LEFT))
+    if (InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT))
     {
         Projectile* projectile = nullptr;
         projectile = new Projectile(projectile_props, 50, 1.0, angle);
         projectiles.push_back(projectile);
-        InputChecker::setMouseButtonPressed(SDL_BUTTON_LEFT, false);
+        InputChecker::SetMouseButtonPressed(SDL_BUTTON_LEFT, false);
     }
     for (auto *projectile : projectiles) {
         projectile->Update(dt);

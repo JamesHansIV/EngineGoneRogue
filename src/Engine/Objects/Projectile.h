@@ -9,9 +9,9 @@ class Projectile: public GameObject{
 
     public:
         Projectile(Properties& props, int speed, float mass, float angle);
-        virtual void Draw();
-        virtual void Clean();
-        virtual void Update(float dt);
+        void Draw() override;
+        void Clean() override;
+        void Update(float dt) override;
 
     private:
         Animation* m_Animation;

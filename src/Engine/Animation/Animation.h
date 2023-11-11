@@ -4,7 +4,7 @@
 
 class Animation{
     public:
-        Animation(){}
+        Animation()= default;
 
         void Update();
         void Draw(float x, float y, int spritWidth, int spriteHeight);

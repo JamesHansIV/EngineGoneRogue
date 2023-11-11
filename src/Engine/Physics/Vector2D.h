@@ -4,11 +4,11 @@
 #include <string>
 #include <iostream>
 
-class Vector2D{    
+class Vector2D{
     public:
         float X;
         float Y;
-        Vector2D(float x = 0, float y=0): X(x), Y(y) {};
+        explicit Vector2D(float x = 0, float y=0): X(x), Y(y) {};
 
         inline Vector2D operator+(const Vector2D& v2) const{
             return Vector2D(X + v2.X, Y + v2.Y);
@@ -22,11 +22,11 @@ class Vector2D{
             return Vector2D(X*scalar, Y*scalar);
         }
 
-        void Log(std::string msg = ""){
-            std::cout << msg << "(X Y) = (" << X << " " << Y << ")"<< std::endl;
+        void Log(const std::string& msg = "") const{
+            std::cout << msg << "(X Y) = (" << X << " " << Y << ")"<< '\n';
         }
 
     private:
-    
+
 };
 

@@ -7,12 +7,12 @@ class Tile : public GameObject {
         Tile(Properties& props, int tileRow, int tileColumn, int srcTileSize, int destTileSize)
             : GameObject(props), m_TileRow(tileRow), m_TileColumn(tileColumn), m_SrcTileSize(srcTileSize), m_DestTileSize(destTileSize) {}
 
-        virtual void Draw() override;
-        virtual void Clean() override {};
-        virtual void Update(float dt) override {};
+        void Draw() override;
+        void Clean() override {};
+        void Update(float dt) override {};
 
-        int GetRow() { return m_TileRow; }
-        int GetColumn() { return m_TileColumn; }
+        int GetRow() const { return m_TileRow; }
+        int GetColumn() const { return m_TileColumn; }
 
     private:
         int m_SrcTileSize;

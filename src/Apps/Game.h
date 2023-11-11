@@ -9,8 +9,8 @@ class Game : public Application{
     public:
         Game();
 
-        void Update(float dt);
-        void Render();
+        void Update(float dt) override;
+        void Render() override;
 
     private:
         std::vector<GameObject*> m_Objects;
