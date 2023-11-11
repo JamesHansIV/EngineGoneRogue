@@ -1,5 +1,7 @@
 #include "Texture.h"
+
 #include "Renderer.h"
+#include <utility>
 
 Texture::Texture(const std::string& filename, std::string id) {
     m_FilePath = filename;
@@ -15,7 +17,7 @@ Texture::Texture(const std::string& filename, std::string id) {
         throw std::runtime_error("Failed to create texture from surface");
     }
 
-    m_ID = id;
+    m_ID = std::move(id);
     m_Texture = texture;
     m_Width = surface->w;
     m_Height = surface->h;
@@ -36,7 +38,7 @@ Texture::Texture(const char* filename, std::string id) {
         throw std::runtime_error("Failed to load texture");
     }
 
-    m_ID = id;
+    m_ID = std::move(id);
     m_Texture = texture;
     m_Width = surface->w;
     m_Height = surface->h;

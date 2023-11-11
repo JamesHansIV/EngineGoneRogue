@@ -3,38 +3,38 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 
-const int NUMKEYS = 322;
-const int NUMMOUSEBUTTONS = 3;
-bool keys[NUMKEYS];
-bool mouseButtons[NUMMOUSEBUTTONS];
-int mouseX;
-int mouseY;
+const int kNumkeys = 322;
+const int kNummousebuttons = 3;
+bool keys[kNumkeys];
+bool mouse_buttons[kNummousebuttons];
+int mouse_x;
+int mouse_y;
 
 bool InputChecker::isKeyPressed(int keycode) {
-    return keys[keycode % NUMKEYS];
+    return keys[keycode % kNumkeys];
 }
 
 void InputChecker::setKeyPressed(int keycode, bool value) {
-    keys[keycode % NUMKEYS] = value;
+    keys[keycode % kNumkeys] = value;
 }
 
 bool InputChecker::isMouseButtonPressed(int button) {
-    return mouseButtons[button % NUMMOUSEBUTTONS];
+    return mouse_buttons[button % kNummousebuttons];
 }
 
 void InputChecker::setMouseButtonPressed(int button, bool value) {
-    mouseButtons[button % NUMMOUSEBUTTONS] = value;
+    mouse_buttons[button % kNummousebuttons] = value;
 }
 
 int InputChecker::getMouseX() {
-    return mouseX;
+    return mouse_x;
 }
 
 int InputChecker::getMouseY() {
-    return mouseY;
+    return mouse_y;
 }
 
 void InputChecker::updateMousePosition(int x, int y) {
-    mouseX = x;
-    mouseY = y;
+    mouse_x = x;
+    mouse_y = y;
 }

@@ -7,8 +7,8 @@
 class Texture
 {
 	public:
-		Texture(const std::string& path, std::string id);
-		Texture(const char* path, std::string id);
+		Texture(const std::string& filename, std::string id);
+		Texture(const char* filename, std::string id);
 		virtual ~Texture();
 
 		std::string GetID() const { return m_ID; }

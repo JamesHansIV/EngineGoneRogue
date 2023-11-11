@@ -46,119 +46,119 @@ Application::Application() : m_ProjectName("test_project") {
 
 bool Application::LoadTextures(char* projectPath) {
     tinyxml2::XMLDocument doc;
-    std::string texturesPath = "";
-    texturesPath += projectPath;
-    texturesPath += "/textures.xml";
-    SDL_Log("%s", texturesPath.c_str());
-    tinyxml2::XMLError error = doc.LoadFile(texturesPath.c_str());
+    std::string textures_path;
+    textures_path += projectPath;
+    textures_path += "/textures.xml";
+    SDL_Log("%s", textures_path.c_str());
+    tinyxml2::XMLError const error = doc.LoadFile(textures_path.c_str());
     if (error != tinyxml2::XML_SUCCESS) {
         SDL_LogError(0, "Could not load textures");
         return false;
     }
 
     tinyxml2::XMLElement* root = doc.FirstChildElement("Root");
-    tinyxml2::XMLElement* currTexture = root->FirstChildElement("Texture");
+    tinyxml2::XMLElement* curr_texture = root->FirstChildElement("Texture");
 
-    std::string id = "";
-    std::string texturePath = "";
-    while (currTexture != nullptr) {
-        id = currTexture->FirstChildElement("ID")->GetText();
-        texturePath = currTexture->FirstChildElement("FilePath")->GetText();
-        Renderer::GetInstance()->AddTexture(id, texturePath);
-        currTexture = currTexture->NextSiblingElement("Texture");
+    std::string id;
+    std::string texture_path;
+    while (curr_texture != nullptr) {
+        id = curr_texture->FirstChildElement("ID")->GetText();
+        texture_path = curr_texture->FirstChildElement("FilePath")->GetText();
+        Renderer::GetInstance()->AddTexture(id, texture_path);
+        curr_texture = curr_texture->NextSiblingElement("Texture");
     }
     return true;
 }
 
-bool Application::LoadObject(tinyxml2::XMLElement* xmlObj, std::string roomID) {
-    tinyxml2::XMLElement* textureID = xmlObj->FirstChildElement("TextureID");
-    tinyxml2::XMLElement* objectID = xmlObj->FirstChildElement("ObjectID");
-    tinyxml2::XMLElement* srcRect = xmlObj->FirstChildElement("SrcRect");
-    tinyxml2::XMLElement* dstRect = xmlObj->FirstChildElement("DstRect");
+bool Application::LoadObject(tinyxml2::XMLElement* xmlObj, const std::string& roomID) {
+    tinyxml2::XMLElement* texture_id = xmlObj->FirstChildElement("TextureID");
+    tinyxml2::XMLElement* object_id = xmlObj->FirstChildElement("ObjectID");
+    tinyxml2::XMLElement* src_rect = xmlObj->FirstChildElement("SrcRect");
+    tinyxml2::XMLElement* dst_rect = xmlObj->FirstChildElement("DstRect");
     tinyxml2::XMLElement* rotation = xmlObj->FirstChildElement("Rotation");
 
-    std::string textureIDVal = textureID->GetText();
-    std::string objectIDVal = objectID->GetText();
-    SDL_Log("Texture id: %s", textureIDVal.c_str());
-    SDL_Log("Object id: %s", objectIDVal.c_str());
-    TilePos tilePos;
-    tilePos.row = atoi(srcRect->FirstChildElement("Row")->GetText());
-    tilePos.col = atoi(srcRect->FirstChildElement("Column")->GetText());
-    tilePos.w = atoi(srcRect->FirstChildElement("Width")->GetText());
-    tilePos.h = atoi(srcRect->FirstChildElement("Height")->GetText());
+    std::string const texture_id_val = texture_id->GetText();
+    std::string const object_id_val = object_id->GetText();
+    SDL_Log("Texture id: %s", texture_id_val.c_str());
+    SDL_Log("Object id: %s", object_id_val.c_str());
+    TilePos tile_pos;
+    tile_pos.row = atoi(src_rect->FirstChildElement("Row")->GetText());
+    tile_pos.col = atoi(src_rect->FirstChildElement("Column")->GetText());
+    tile_pos.w = atoi(src_rect->FirstChildElement("Width")->GetText());
+    tile_pos.h = atoi(src_rect->FirstChildElement("Height")->GetText());
 
-    SDL_Log("Src row: %d", tilePos.row);
-    SDL_Log("Src col: %d", tilePos.col);
-    SDL_Log("Src w: %d", tilePos.w);
-    SDL_Log("Src h: %d", tilePos.h);
+    SDL_Log("Src row: %d", tile_pos.row);
+    SDL_Log("Src col: %d", tile_pos.col);
+    SDL_Log("Src w: %d", tile_pos.w);
+    SDL_Log("Src h: %d", tile_pos.h);
 
-    Rect dstRectVal;
-    dstRectVal.x = std::stof(dstRect->FirstChildElement("XPos")->GetText());
-    dstRectVal.y = std::stof(dstRect->FirstChildElement("YPos")->GetText());
-    dstRectVal.w = atoi(dstRect->FirstChildElement("Width")->GetText());
-    dstRectVal.h = atoi(dstRect->FirstChildElement("Height")->GetText());
+    Rect dst_rect_val;
+    dst_rect_val.x = std::stof(dst_rect->FirstChildElement("XPos")->GetText());
+    dst_rect_val.y = std::stof(dst_rect->FirstChildElement("YPos")->GetText());
+    dst_rect_val.w = atoi(dst_rect->FirstChildElement("Width")->GetText());
+    dst_rect_val.h = atoi(dst_rect->FirstChildElement("Height")->GetText());
 
-    SDL_Log("Dst x: %f", dstRectVal.x);
-    SDL_Log("Dst y: %f", dstRectVal.y);
-    SDL_Log("dst w: %d", dstRectVal.w);
-    SDL_Log("dst h: %d", dstRectVal.h);
+    SDL_Log("Dst x: %f", dst_rect_val.x);
+    SDL_Log("Dst y: %f", dst_rect_val.y);
+    SDL_Log("dst w: %d", dst_rect_val.w);
+    SDL_Log("dst h: %d", dst_rect_val.h);
 
-    float angle = std::stof(rotation->GetText());
+    float const angle = std::stof(rotation->GetText());
 
     Properties props(
-        textureIDVal, tilePos,
-        dstRectVal, angle, objectIDVal
+        texture_id_val, tile_pos,
+        dst_rect_val, angle, object_id_val
     );
 
     m_Rooms[roomID].push_back(new GameObject(props));
     return true;
 }
 
-bool Application::LoadObjects(std::string roomPath, std::string roomID) {
+bool Application::LoadObjects(const std::string& roomPath, const std::string& roomID) {
     tinyxml2::XMLDocument doc;
 
     SDL_Log("%s", roomPath.c_str());
-    tinyxml2::XMLError error = doc.LoadFile(roomPath.c_str());
+    tinyxml2::XMLError const error = doc.LoadFile(roomPath.c_str());
     if (error != tinyxml2::XML_SUCCESS) {
         SDL_LogError(0, "Could not load objects");
         return false;
     }
 
     tinyxml2::XMLElement* root = doc.FirstChildElement("Root");
-    tinyxml2::XMLElement* currObject = root->FirstChildElement("Object");
+    tinyxml2::XMLElement* curr_object = root->FirstChildElement("Object");
 
-    while (currObject != nullptr) {
-        if (!LoadObject(currObject, roomID)) return false;
-        currObject = currObject->NextSiblingElement("Object");
+    while (curr_object != nullptr) {
+        if (!LoadObject(curr_object, roomID)) return false;
+        curr_object = curr_object->NextSiblingElement("Object");
     }
     return true;
 
 }
 
-bool Application::LoadRooms(char* projectPath) {
+bool Application::LoadRooms(const char* projectPath) {
     struct dirent* entry;
     DIR* dp;
 
-    std::string roomsPath = projectPath;
-    roomsPath += "/rooms";
-    dp = opendir(roomsPath.c_str());
-    if (dp == NULL) {
+    std::string rooms_path = projectPath;
+    rooms_path += "/rooms";
+    dp = opendir(rooms_path.c_str());
+    if (dp == nullptr) {
         perror("Rooms path does not exist");
         return false;
     }
     
-    std::string roomPath = roomsPath;
-    std::string roomID = "";
-    int index = 0;
-    while ((entry = readdir(dp))) {
+    std::string room_path = rooms_path;
+    std::string room_id;
+    int const index = 0;
+    while ((entry = readdir(dp)) != nullptr) {
         if (strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0) {
-            std::string fileName = entry->d_name;
-            roomPath += "/";
-            roomPath += entry->d_name;
-            roomID = fileName.substr(0, fileName.rfind("."));
-            m_Rooms[roomID] = std::vector<GameObject*>();
-            if (!LoadObjects(roomPath, roomID)) return false;
-            roomPath = roomsPath;
+            std::string const file_name = entry->d_name;
+            room_path += "/";
+            room_path += entry->d_name;
+            room_id = file_name.substr(0, file_name.rfind('.'));
+            m_Rooms[room_id] = std::vector<GameObject*>();
+            if (!LoadObjects(room_path, room_id)) return false;
+            room_path = rooms_path;
         }
     }
 
@@ -167,18 +167,17 @@ bool Application::LoadRooms(char* projectPath) {
 }
 
 bool Application::LoadProject() {
-    char projectPath[128];
-    sprintf(projectPath, "../assets/projects/%s", m_ProjectName.c_str());
-    if (!LoadTextures(projectPath)) return false;
+    char project_path[128];
+    sprintf(project_path, "../assets/projects/%s", m_ProjectName.c_str());
+    if (!LoadTextures(project_path)) return false;
     SDL_Log("Textures are fine");
-    SDL_Log("%s", projectPath);
-    if (!LoadRooms(projectPath)) return false;
-    return true;
+    SDL_Log("%s", project_path);
+    return LoadRooms(project_path);
 }
 
 void Application::Events(){
     SDL_Event event;
-    while (SDL_PollEvent(&event)) {
+    while (SDL_PollEvent(&event) != 0) {
         m_EventManager.handleEvent(event);
         switch (event.type) {
             case SDL_QUIT:
