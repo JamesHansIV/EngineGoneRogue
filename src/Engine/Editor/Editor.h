@@ -51,6 +51,7 @@ class Editor : public Application{
         void ShowBuildProjectile();
         void ShowBuildPlayer();
         void ShowCreateObject();
+        void DeleteObject();
         void CreateObject(ObjectType type);
         // Player* CreatePlayer(Properties props);
         // Projectile* CreateProjectile(Properties props);
@@ -71,6 +72,5 @@ class Editor : public Application{
         std::vector< std::vector<GameObject*>> m_Layers;
         std::set<int> m_HiddenLayers;
         int m_CurrentLayer;
-        std::vector<GameObject*> m_Objects;
 };
 

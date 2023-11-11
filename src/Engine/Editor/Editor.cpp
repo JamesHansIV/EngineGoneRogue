@@ -23,13 +23,14 @@ TODO list
 (~ = in progress)
 - show level/grid info
 x Move/resize objects
-- rotate/change color of objects
+x rotate objects
+- change color of objects
 x maintain a selected object
 x maintain a selected texture
 x Show a list of textures
 x show a list of objects
 - Add multiple textures to an object?
-- Add snap to grid
+x Add snap to grid
 ~ Create object based on type
     - Add animations
     - Add physics info
@@ -47,14 +48,14 @@ x Export objects to json file
 x Import objects into game class
 x Create json object template
 - Editor <-> game transitions
-- Create list of game objects and their required information
+x Create list of game objects and their required information
 - main menu bar
 - action management and undoing actions
-- create/load/save rooms
+x create/load/save rooms
 - create/load/save projects
 - add auto tiling
 - add file browser
-- change topmost tree nodes to tabs
+x change topmost tree nodes to tabs
 - delete objects
 */
 
@@ -299,7 +300,7 @@ void Editor::ShowFileManager() {
                             SaveRoom(m_CurrentRoomID.c_str());
                             AddRoom();
                         CleanLayers();
-                        m_Layers.push_back(std::vector<GameObject*>(m_Rooms[id]));
+                        m_Layers.push_back(m_Rooms[id]);
                         m_CurrentRoomID = id;
                     }
 
@@ -364,14 +365,18 @@ void Editor::ShowObjectEditor() {
                 m_ObjectInfo.SnapToGrid = !m_ObjectInfo.SnapToGrid;
             }
 
-            if (ImGui::Button("Rotate left", ImVec2(80, 30))) {
+            if (ImGui::Button("Rotate left", ImVec2(100, 30))) {
                 m_CurrentObject->GetRotation() -= 90.0f;
                 m_CurrentObject->GetRotation() = (int)m_CurrentObject->GetRotation() % 360;
             }
             ImGui::SameLine();
-            if (ImGui::Button("Rotate right", ImVec2(80, 30))) {
+            if (ImGui::Button("Rotate right", ImVec2(100, 30))) {
                 m_CurrentObject->GetRotation() += 90.0f;
                 m_CurrentObject->GetRotation() = (int)m_CurrentObject->GetRotation() % 360;
+            }
+
+            if (ImGui::Button("Delete object", ImVec2(100, 30))) {
+                DeleteObject();
             }
         }
 
@@ -459,6 +464,28 @@ void Editor::AddObject(float x, float y) {
     }
     m_CurrentTexture->IncObjectCount();
     m_Layers[m_CurrentLayer].push_back(newObject);
+}
+
+void Editor::DeleteObject() {
+    if (m_Rooms.find(m_CurrentRoomID) != m_Rooms.end()) {
+        std::vector<GameObject*>& room = m_Rooms[m_CurrentRoomID];
+        auto it = std::find(room.begin(), room.end(), m_CurrentObject);
+        if (it != room.end()) {
+            room.erase(it);
+        }
+    }
+    for (auto& layer : m_Layers) {
+        auto it = std::find(layer.begin(), layer.end(), m_CurrentObject);
+        if (it != layer.end()) {
+            SDL_Log("found obj in layer: %s", (*it)->GetID().c_str());
+            layer.erase(it);
+            SDL_Log("layer size: %lu", layer.size());
+        }
+    }
+    SDL_Log("Successfully cleaned from layers");
+    delete m_CurrentObject;
+    m_CurrentObject = nullptr;
+    SDL_Log("deleted object");
 }
 
 void Editor::ShowBuildPlayer() {
@@ -622,7 +649,6 @@ void Editor::ShowObjectManager() {
 }
 
 void Editor::Update(float dt) {
-    SDL_Log("About to update");
     if (InputChecker::isKeyPressed(SDLK_UP))
         Renderer::GetInstance()->MoveCameraY(-10.0f);
     if (InputChecker::isKeyPressed(SDLK_DOWN))
@@ -642,17 +668,15 @@ void Editor::Update(float dt) {
 
 void Editor::Render() {
     ImGui::Render();
-    //SDL_Log("Rendering %lu", m_Layers.size());
     SDL_Log("About to render");
     Renderer::GetInstance()->RenderClear();
     for (int i = 0; i < m_Layers.size(); i++) {
         if (m_HiddenLayers.find(i) == m_HiddenLayers.end()) {
-            for (auto& obj : m_Layers[i]) {
+            for (auto obj : m_Layers[i]) {
                 obj->Draw();
             }
         }
     }
-    SDL_Log("rendered objects");
 
     DrawGrid();
     ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());

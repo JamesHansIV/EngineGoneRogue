@@ -67,21 +67,4 @@
         </DstRect>
         <Rotation>0.000000</Rotation>
     </Object>
-    <Object>
-        <TextureID>arrow</TextureID>
-        <ObjectID>arrow1</ObjectID>
-        <SrcRect>
-            <Row>0</Row>
-            <Column>0</Column>
-            <Width>296</Width>
-            <Height>214</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>0.000000</XPos>
-            <YPos>192.000000</YPos>
-            <Width>296</Width>
-            <Height>214</Height>
-        </DstRect>
-        <Rotation>0.000000</Rotation>
-    </Object>
 </Root>
