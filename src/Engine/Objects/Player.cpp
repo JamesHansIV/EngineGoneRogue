@@ -20,18 +20,18 @@ void Player::Update(float dt, const std::vector<GameObject*>& colliders){
     m_RigidBody->Update(dt);
     m_RigidBody->UnSetForce();
     if (InputChecker::IsKeyPressed(SDLK_w)) {
-        m_RigidBody->ApplyForceY(-20);
+        m_RigidBody->ApplyForceY(-13);
     }
     if (InputChecker::IsKeyPressed(SDLK_s)) {
-        m_RigidBody->ApplyForceY(20);
+        m_RigidBody->ApplyForceY(13);
     }
     if (InputChecker::IsKeyPressed(SDLK_a)) {
-        m_RigidBody->ApplyForceX(-20);
+        m_RigidBody->ApplyForceX(-13);
         m_Animation->SetProps("player_run", 1, 8, 100, SDL_FLIP_HORIZONTAL);
         SetFlip(SDL_FLIP_HORIZONTAL);
     }
     if (InputChecker::IsKeyPressed(SDLK_d)) {
-        m_RigidBody->ApplyForceX(20);
+        m_RigidBody->ApplyForceX(13);
         m_Animation->SetProps("player_run", 1, 8, 100);
         SetFlip(SDL_FLIP_NONE);
     }
