@@ -84,12 +84,8 @@ void Game::Update(float dt) {
 
 void Game::Render() {
     Renderer::GetInstance()->RenderClear();
-<<<<<<< HEAD
-    for (auto obj : m_Objects) {
-=======
     // m_Map->Draw();
     for (auto *obj : m_Objects) {
->>>>>>> 6fcad1745ec7ed6e5dbf12361a793c4c4aca3efa
         obj->Draw();
     }
     player->Draw();
