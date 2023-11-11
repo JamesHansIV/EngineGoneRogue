@@ -1,7 +1,7 @@
 #include "Application.h"
 #include "Engine/Renderer/Renderer.h"
 
-#include "Engine/Objects/Warrior.h"
+#include "Engine/Objects/Player.h"
 #include "Engine/Objects/GameObject.h"
 #include "Engine/Input/InputChecker.h"
 
@@ -37,6 +37,7 @@ Application::Application() : m_ProjectName("test_project") {
     if (LOAD_PROJECT) {
         if (!LoadProject()) {
             SDL_Log("Failed to load project");
+            assert(false);
         }
     }
     
@@ -155,7 +156,6 @@ bool Application::LoadRooms(char* projectPath) {
             roomPath += "/";
             roomPath += entry->d_name;
             roomID = fileName.substr(0, fileName.rfind("."));
-
             m_Rooms[roomID] = std::vector<GameObject*>();
             if (!LoadObjects(roomPath, roomID)) return false;
             roomPath = roomsPath;

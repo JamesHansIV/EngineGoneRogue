@@ -11,7 +11,7 @@
 
 enum class ObjectType {
     None = 0,
-    Base, Projectile, Warrior
+    Base, Projectile, Player
 };
 
 struct Rect {

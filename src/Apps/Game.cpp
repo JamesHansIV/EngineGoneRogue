@@ -1,15 +1,15 @@
 #include "Game.h"
 #include "Engine/Renderer/Renderer.h"
-#include "Engine/Objects/Warrior.h"
+#include "Engine/Objects/Player.h"
 #include "Engine/Events/EventListener.h"
 #include "Engine/Objects/Projectile.h"
 #include "Engine/Input/InputChecker.h"
 
-Warrior* player = nullptr;
-Warrior* player2 = nullptr;
-Warrior* player3 = nullptr;
-Warrior* player4 = nullptr;
-Warrior* player5 = nullptr;
+Player* player = nullptr;
+Player* player2 = nullptr;
+Player* player3 = nullptr;
+Player* player4 = nullptr;
+Player* player5 = nullptr;
 std::vector<Projectile*> projectiles;
 std::vector<GameObject*> colliders;
 
@@ -31,17 +31,17 @@ Game::Game() {
 
 
     Properties props("player", {0, 0, 136, 96}, {0, 0, 136, 96});
-    player = new Warrior(props);
+    player = new Player(props);
 
     Properties props2("player",{0, 0, 136, 96}, {100, 128, 136, 96});
-    player2 = new Warrior(props2);
+    player2 = new Player(props2);
 
     Properties props3("player", {0, 0, 136, 96}, {700, 360, 136, 96});
     Properties props4("player", {0, 0, 136, 96}, {300, 278, 136, 96});
     Properties props5("player", {0, 0, 136, 96}, {200, 389, 136, 96});
-    player3 = new Warrior(props3);
-    player4 = new Warrior(props4);
-    player5 = new Warrior(props5);
+    player3 = new Player(props3);
+    player4 = new Player(props4);
+    player5 = new Player(props5);
 
     colliders.push_back(player2);
     colliders.push_back(player3);

@@ -1,9 +1,9 @@
-#include "Warrior.h"
+#include "Player.h"
 #include "Engine/Renderer/Renderer.h"
 #include "Engine/Input/InputChecker.h"
 #include "Engine/Physics/CollisionHandler.h"
 
-Warrior::Warrior(Properties& props): Character(props){
+Player::Player(Properties& props): Character(props){
     m_Animation = new Animation();
     m_Animation->SetProps(m_TextureID, 1, 6, 80);
     m_RigidBody = new RigidBody();
@@ -12,11 +12,11 @@ Warrior::Warrior(Properties& props): Character(props){
     m_Collider->Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
 }
 
-void Warrior::Draw(){
+void Player::Draw(){
     m_Animation->Draw(m_Transform->GetX(), m_Transform->GetY(), m_DstRect.w, m_DstRect.h);
 }
 
-void Warrior::Update(float dt, const std::vector<GameObject*>& colliders){
+void Player::Update(float dt, const std::vector<GameObject*>& colliders){
     m_RigidBody->Update(dt);
     m_RigidBody->UnSetForce();
     if (InputChecker::isKeyPressed(SDLK_w)) {
@@ -41,7 +41,7 @@ void Warrior::Update(float dt, const std::vector<GameObject*>& colliders){
     canMoveThrough(colliders);
 }
 
-bool Warrior::canMoveThrough(const std::vector<GameObject*>& colliders)
+bool Player::canMoveThrough(const std::vector<GameObject*>& colliders)
 {
     for (auto collider : colliders)
     {
@@ -60,7 +60,7 @@ bool Warrior::canMoveThrough(const std::vector<GameObject*>& colliders)
     return false;
 }
 
-void Warrior::OnEvent(Event& event) {
+void Player::OnEvent(Event& event) {
     SDL_Event e = event.getEvent();
     if (e.type == SDL_KEYUP) {
         if (e.key.keysym.sym == SDLK_a) {
@@ -74,7 +74,7 @@ void Warrior::OnEvent(Event& event) {
     }
 }
 
-void Warrior::Clean(){
+void Player::Clean(){
     Renderer::GetInstance()->Clean();
 }
 

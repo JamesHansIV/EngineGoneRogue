@@ -5,10 +5,10 @@
 #include "Engine/Physics/RigidBody.h"
 #include "functional"
 
-class Warrior: public Character, public EventListener{
+class Player: public Character, public EventListener{
 
     public:
-        Warrior(Properties& props);
+        Player(Properties& props);
         virtual void Draw();
         virtual void Clean();
         virtual void Update(float dt, const std::vector<GameObject*>& colliders);
