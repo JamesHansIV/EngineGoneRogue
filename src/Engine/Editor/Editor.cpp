@@ -73,10 +73,10 @@ void DrawGrid() {
 }
 
 bool CheckMouseOver(GameObject* obj) {
-    return ((obj)->GetX() <= InputChecker::GetMouseX() &&
-            InputChecker::GetMouseX() <= (obj)->GetX() + (obj)->GetWidth() &&
-            (obj)->GetY() <= InputChecker::GetMouseY() &&
-            InputChecker::GetMouseY() <= (obj)->GetY() + (obj)->GetHeight());
+    return ((obj)->GetX() <= InputChecker::GetMouseX() + Renderer::GetInstance()->GetCameraX() &&
+            InputChecker::GetMouseX() + Renderer::GetInstance()->GetCameraX() <= (obj)->GetX() + (obj)->GetWidth() &&
+            (obj)->GetY() <= InputChecker::GetMouseY() + Renderer::GetInstance()->GetCameraY()&&
+            InputChecker::GetMouseY() + Renderer::GetInstance()->GetCameraY() <= (obj)->GetY() + (obj)->GetHeight());
 }
 
 Editor::Editor()  {
@@ -283,6 +283,7 @@ void Editor::ShowFileManager() {
                     m_CurrentRoomID = room_name;
                     SaveRoom(m_CurrentRoomID.c_str());
                     AddRoom();
+                    ImGui::CloseCurrentPopup();
                 }
             }
             ImGui::EndPopup();
@@ -305,6 +306,7 @@ void Editor::ShowFileManager() {
                         CleanLayers();
                         m_Layers.push_back(m_Rooms[id]);
                         m_CurrentRoomID = id;
+                        ImGui::CloseCurrentPopup();
                     }
 
                 }
@@ -379,8 +381,13 @@ void Editor::ShowObjectEditor() {
             }
 
             if (ImGui::Button("Delete object", ImVec2(100, 30))) {
-                DeleteObject();
+                DeleteObject(m_CurrentObject);
             }
+        }
+
+        std::string const erase_label = m_DrawState.DrawMode == DrawMode::ERASE ? "Stop Erase" : "Begin Erase";
+        if (ImGui::Button(erase_label.c_str())) {
+            m_DrawState.DrawMode = m_DrawState.DrawMode == DrawMode::ERASE ? DrawMode::NONE : DrawMode::ERASE;
         }
 
         ImGui::EndTabItem();
@@ -470,26 +477,25 @@ void Editor::AddObject(float x, float y) {
     m_Layers[m_CurrentLayer].push_back(new_object);
 }
 
-void Editor::DeleteObject() {
+void Editor::DeleteObject(GameObject* obj) {
     if (m_Rooms.find(m_CurrentRoomID) != m_Rooms.end()) {
         std::vector<GameObject*>& room = m_Rooms[m_CurrentRoomID];
-        auto it = std::find(room.begin(), room.end(), m_CurrentObject);
+        auto it = std::find(room.begin(), room.end(), obj);
         if (it != room.end()) {
             room.erase(it);
         }
     }
     for (auto& layer : m_Layers) {
-        auto it = std::find(layer.begin(), layer.end(), m_CurrentObject);
+        auto it = std::find(layer.begin(), layer.end(), obj);
         if (it != layer.end()) {
             SDL_Log("found obj in layer: %s", (*it)->GetID().c_str());
             layer.erase(it);
             SDL_Log("layer size: %lu", layer.size());
         }
     }
-    SDL_Log("Successfully cleaned from layers");
-    delete m_CurrentObject;
-    m_CurrentObject = nullptr;
-    SDL_Log("deleted object");
+
+    delete obj;
+    obj = nullptr;
 }
 
 void Editor::ShowBuildPlayer() {
@@ -594,10 +600,10 @@ void Editor::ShowCreateObject() {
                     SDL_LogError(0, "Invalid object type");
                     assert(false);
             }
-            std::string const button_label = m_DrawState.DrawMode ? "Stop Draw" : "Draw";
+            std::string const draw_label = m_DrawState.DrawMode == DrawMode::DRAW ? "Stop Draw" : "Begin Draw";
 
-            if (ImGui::Button(button_label.c_str())) {
-                m_DrawState.DrawMode = !m_DrawState.DrawMode;
+            if (ImGui::Button(draw_label.c_str())) {
+                m_DrawState.DrawMode = m_DrawState.DrawMode == DrawMode::DRAW ? DrawMode::NONE : DrawMode::DRAW;
             }
         }
         ImGui::EndTabItem();
@@ -680,7 +686,6 @@ void Editor::Update(float  /*dt*/) {
 
 void Editor::Render() {
     ImGui::Render();
-    SDL_Log("About to render");
     Renderer::GetInstance()->RenderClear();
     for (int i = 0; i < m_Layers.size(); i++) {
         if (m_HiddenLayers.find(i) == m_HiddenLayers.end()) {
@@ -702,22 +707,43 @@ void Editor::Render() {
     Renderer::GetInstance()->Render();
 }
 
+GameObject* Editor::GetObjectUnderMouse() {
+    GameObject* obj = nullptr;
+    auto it = m_Layers[m_CurrentLayer].end();
+    while (it != m_Layers[m_CurrentLayer].begin()) {
+        --it;
+        if (CheckMouseOver(*it)) {
+            obj = *it;
+            m_Layers[m_CurrentLayer].erase(it);
+            return obj;
+        }
+    }
+    return obj;
+}
+
 void Editor::OnMouseClicked(SDL_Event&  /*event*/) {
-    if (m_DrawState.DrawMode) {
-        m_DrawState.IsDrawing = true;
-        float const x = (InputChecker::GetMouseX() / TILE_SIZE) * TILE_SIZE;
-        float const y = (InputChecker::GetMouseY() / TILE_SIZE) * TILE_SIZE;
-        AddObject(x, y);
+    if (m_DrawState.DrawMode != DrawMode::NONE) {
+        float const x = ((InputChecker::GetMouseX() + Renderer::GetInstance()->GetCameraX()) / TILE_SIZE) * TILE_SIZE;
+        float const y = ((InputChecker::GetMouseY() + Renderer::GetInstance()->GetCameraY()) / TILE_SIZE) * TILE_SIZE;
+
+        if (m_DrawState.DrawMode == DrawMode::DRAW) {
+            m_DrawState.IsEditing = true;
+            AddObject(x, y);
+        } else if (m_DrawState.DrawMode == DrawMode::ERASE) {
+            m_DrawState.IsEditing = true;
+            GameObject* obj = GetObjectUnderMouse();
+            if (obj != nullptr) {
+                DeleteObject(obj);
+            }
+        }
         m_DrawState.PrevX = x;
         m_DrawState.PrevY = y;
 
     } else {
-        for (auto it = m_Layers[m_CurrentLayer].begin(); it != m_Layers[m_CurrentLayer].end(); it++) {
-            if (CheckMouseOver(*it)) {
-                m_CurrentObject = *it;
-                m_Layers[m_CurrentLayer].erase(it);
-                m_Layers[m_CurrentLayer].push_back(m_CurrentObject);
-            }
+        GameObject* obj = GetObjectUnderMouse();
+        if (obj != nullptr) {
+            m_CurrentObject = obj;
+            m_Layers[m_CurrentLayer].push_back(m_CurrentObject);
         }
     }
 }
@@ -725,16 +751,23 @@ void Editor::OnMouseClicked(SDL_Event&  /*event*/) {
 void Editor::OnMouseMoved(SDL_Event& event) {
     if (InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT)) {
 
-        if (m_DrawState.DrawMode && m_DrawState.IsDrawing) {
-            float const x = (InputChecker::GetMouseX() / TILE_SIZE) * TILE_SIZE;
-            float const y = (InputChecker::GetMouseY() / TILE_SIZE) * TILE_SIZE;
+        if (m_DrawState.IsEditing) {
+            float const x = ((InputChecker::GetMouseX() + Renderer::GetInstance()->GetCameraX()) / TILE_SIZE) * TILE_SIZE;
+            float const y = ((InputChecker::GetMouseY() + Renderer::GetInstance()->GetCameraY()) / TILE_SIZE) * TILE_SIZE;
 
-            if (x != m_DrawState.PrevX || y != m_DrawState.PrevY) {
-                AddObject(x, y);
-                m_DrawState.PrevX = x;
-                m_DrawState.PrevY = y;
+            if ((x != m_DrawState.PrevX || y != m_DrawState.PrevY)) {
+                if (m_DrawState.DrawMode == DrawMode::DRAW) {
+                    AddObject(x, y);
+                    m_DrawState.PrevX = x;
+                    m_DrawState.PrevY = y;
+                    
+                } else if (m_DrawState.DrawMode == DrawMode::ERASE) {
+                    GameObject* obj = GetObjectUnderMouse();
+                    if (obj != nullptr) {
+                        DeleteObject(obj);
+                    }
+                }
             }
-
         } else if (m_CurrentObject != nullptr && CheckMouseOver(m_CurrentObject)) {
             float const dx =  event.button.x - InputChecker::GetMouseX();
             float const dy =  event.button.y - InputChecker::GetMouseY();
@@ -755,8 +788,8 @@ void Editor::OnMouseMoved(SDL_Event& event) {
 
 void Editor::OnMouseUp(SDL_Event&  /*event*/) {
     if (InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT)) {
-        if (m_DrawState.IsDrawing) {
-            m_DrawState.IsDrawing = false;
+        if (m_DrawState.IsEditing) {
+            m_DrawState.IsEditing = false;
 
         } else if (m_CurrentObject != nullptr && CheckMouseOver(m_CurrentObject)) {
         

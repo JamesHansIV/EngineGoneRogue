@@ -15,9 +15,15 @@ struct ObjectInfo {
     bool SnapToGrid = true;
 };
 
+enum class DrawMode {
+    NONE = 0,
+    DRAW,
+    ERASE
+};
+
 struct DrawState {
-    bool DrawMode = false;
-    bool IsDrawing = false;
+    DrawMode DrawMode = DrawMode::NONE;
+    bool IsEditing = false;
     float PrevX = -1;
     float PrevY = -1;
 };
@@ -35,6 +41,8 @@ class Editor : public Application{
 
         static std::pair<float, float> SnapToGrid(float x, float y);
 
+        GameObject* GetObjectUnderMouse();
+
         void OnMouseClicked(SDL_Event& event);
         void OnMouseMoved(SDL_Event& event);
         void OnMouseUp(SDL_Event& event);
@@ -51,7 +59,7 @@ class Editor : public Application{
         static void ShowBuildProjectile();
         static void ShowBuildPlayer();
         void ShowCreateObject();
-        void DeleteObject();
+        void DeleteObject(GameObject* obj);
         void CreateObject(ObjectType type);
         // Player* CreatePlayer(Properties props);
         // Projectile* CreateProjectile(Properties props);

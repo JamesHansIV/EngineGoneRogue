@@ -5,7 +5,7 @@
 
 Player::Player(Properties& props): Character(props){
     m_Animation = new Animation();
-    m_Animation->SetProps(m_TextureID, 1, 6, 80);
+    m_Animation->SetProps(m_TextureID, 1, 2, 500);
     m_RigidBody = new RigidBody();
     m_Collider = new Collider();
     m_Collider->SetCorrection(-45, -20, 60, 80 );
@@ -27,13 +27,14 @@ void Player::Update(float dt, const std::vector<GameObject*>& colliders){
     }
     if (InputChecker::IsKeyPressed(SDLK_a)) {
         m_RigidBody->ApplyForceX(-13);
-        m_Animation->SetProps("player_run", 1, 8, 100, SDL_FLIP_HORIZONTAL);
-        SetFlip(SDL_FLIP_HORIZONTAL);
+        // TODO: Add run animation
+        //m_Animation->SetProps("player_run", 1, 8, 100, SDL_FLIP_HORIZONTAL);
+        //SetFlip(SDL_FLIP_HORIZONTAL);
     }
     if (InputChecker::IsKeyPressed(SDLK_d)) {
         m_RigidBody->ApplyForceX(13);
-        m_Animation->SetProps("player_run", 1, 8, 100);
-        SetFlip(SDL_FLIP_NONE);
+        //m_Animation->SetProps("player_run", 1, 8, 100);
+        //SetFlip(SDL_FLIP_NONE);
     }
     m_Transform->Translate(m_RigidBody->Position());
     m_Collider->Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
@@ -70,12 +71,13 @@ void Player::OnEvent(Event& event) {
     SDL_Event const e = event.GetEvent();
     if (e.type == SDL_KEYUP) {
         if (e.key.keysym.sym == SDLK_a) {
-            m_Animation->SetProps("player", 1, 6, 100, SDL_FLIP_HORIZONTAL);
-            SetFlip(SDL_FLIP_HORIZONTAL);
+            // dont think this is needed anymore, character does not face right or left
+            //m_Animation->SetProps("player", 1, 6, 100, SDL_FLIP_HORIZONTAL);
+            //SetFlip(SDL_FLIP_HORIZONTAL);
         }
         if (e.key.keysym.sym == SDLK_d) {
-            m_Animation->SetProps("player", 1, 6, 100);
-            SetFlip(SDL_FLIP_NONE);
+            //m_Animation->SetProps("player", 1, 6, 100);
+            //SetFlip(SDL_FLIP_NONE);
         }
     }
 }

@@ -59,12 +59,27 @@ bool Application::LoadTextures(char* projectPath) {
     tinyxml2::XMLElement* root = doc.FirstChildElement("Root");
     tinyxml2::XMLElement* curr_texture = root->FirstChildElement("Texture");
 
+    std::string type;
     std::string id;
     std::string texture_path;
+    int tile_size;
+    int rows;
+    int cols;
+
     while (curr_texture != nullptr) {
+        type = curr_texture->Attribute("type");
         id = curr_texture->FirstChildElement("ID")->GetText();
         texture_path = curr_texture->FirstChildElement("FilePath")->GetText();
-        Renderer::GetInstance()->AddTexture(id, texture_path);
+        if (type == "tileMap") {
+            SDL_Log("texture filepath: %s", texture_path.c_str());
+            tile_size = atoi(curr_texture->FirstChildElement("TileSize")->GetText());
+            rows = atoi(curr_texture->FirstChildElement("Rows")->GetText());
+            cols = atoi(curr_texture->FirstChildElement("Cols")->GetText());
+            Renderer::GetInstance()->AddTileMap(id, texture_path, tile_size, rows, cols);
+        } else {
+            Renderer::GetInstance()->AddTexture(id, texture_path);
+        }
+
         curr_texture = curr_texture->NextSiblingElement("Texture");
     }
     return true;

@@ -196,16 +196,19 @@ void Renderer::Draw(const std::string& id, int x, int y, int width, int height, 
 }
 
 void Renderer::DrawFrame(const std::string& id, int x, int y, int width, int height, int row, int frame, SDL_RendererFlip flip){
-    SDL_Rect const src_rect = {width*frame, height*(row-1), width, height};
-    SDL_Rect dst_rect = {x, y, width, height};
+  SDL_Rect const src_rect = {width*frame, height*(row-1), width, height};
+  // New sprite is small, has to be scaled larger to look right. Could cause trouble in the future.
+  int const new_x = (x + width/2) - (width/2 * 2);
+  int const new_y = (y + height/2) - (height/2 * 2);
+  SDL_Rect dst_rect = {new_x, new_y, width*2, height*2};
 
-    if (!CheckCollision(dst_rect, m_Camera)) {
-        return;
-}
+  if (!CheckCollision(dst_rect, m_Camera)) {
+    return;
+  }
 
-    dst_rect.x -= m_Camera.x;
-    dst_rect.y -= m_Camera.y;
-    SDL_RenderCopyEx(m_Renderer, m_TextureMap[id]->GetTexture(), &src_rect, &dst_rect, 0, nullptr, flip);
+  dst_rect.x -= m_Camera.x;
+  dst_rect.y -= m_Camera.y;
+  SDL_RenderCopyEx(m_Renderer, m_TextureMap[id]->GetTexture(), &src_rect, &dst_rect, 0, nullptr, flip);
 }
 
 void Renderer::DrawFrame(const std::string& id, int x, int y, int width, int height, int row, int frame, double angle, const SDL_Point* center, SDL_RendererFlip flip){
@@ -258,11 +261,37 @@ void Renderer::SaveTextures() {
     tinyxml2::XMLElement* texture;
     tinyxml2::XMLElement* id;
     tinyxml2::XMLElement* file_path;
+    tinyxml2::XMLElement* type;
+
+    tinyxml2::XMLElement* tile_size;
+    tinyxml2::XMLElement* rows;
+    tinyxml2::XMLElement* cols;
+
 
     for (auto & it : m_TextureMap) {
         texture = doc.NewElement("Texture");
-        file_path = doc.NewElement("FilePath");
+        type = doc.NewElement("Type");
         id = doc.NewElement("ID");
+        file_path = doc.NewElement("FilePath");
+
+        auto* tile_map = dynamic_cast<TileMap*>(it.second);
+        if (tile_map != nullptr) {
+            SDL_Log("Saving tilemap");
+            texture->SetAttribute("type", "tileMap");
+            tile_size = doc.NewElement("TileSize");
+            rows = doc.NewElement("Rows");
+            cols = doc.NewElement("Cols");
+
+            tile_size->SetText(tile_map->GetTileSize());
+            rows->SetText(tile_map->GetRows());
+            cols->SetText(tile_map->GetCols());
+
+            texture->InsertEndChild(tile_size);
+            texture->InsertEndChild(rows);
+            texture->InsertEndChild(cols);
+        } else {
+            texture->SetAttribute("type", "base");
+        }
 
         id->SetText(it.first.c_str());
         file_path->SetText(it.second->GetFilePath().c_str());
