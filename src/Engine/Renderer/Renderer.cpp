@@ -258,11 +258,37 @@ void Renderer::SaveTextures() {
     tinyxml2::XMLElement* texture;
     tinyxml2::XMLElement* id;
     tinyxml2::XMLElement* file_path;
+    tinyxml2::XMLElement* type;
+
+    tinyxml2::XMLElement* tileSize;
+    tinyxml2::XMLElement* rows;
+    tinyxml2::XMLElement* cols;
+
 
     for (auto & it : m_TextureMap) {
         texture = doc.NewElement("Texture");
-        file_path = doc.NewElement("FilePath");
+        type = doc.NewElement("Type");
         id = doc.NewElement("ID");
+        file_path = doc.NewElement("FilePath");
+
+        TileMap* tileMap = dynamic_cast<TileMap*>(it.second);
+        if (tileMap != nullptr) {
+            SDL_Log("Saving tilemap");
+            texture->SetAttribute("type", "tileMap");
+            tileSize = doc.NewElement("TileSize");
+            rows = doc.NewElement("Rows");
+            cols = doc.NewElement("Cols");
+
+            tileSize->SetText(tileMap->GetTileSize());
+            rows->SetText(tileMap->GetRows());
+            cols->SetText(tileMap->GetCols());
+
+            texture->InsertEndChild(tileSize);
+            texture->InsertEndChild(rows);
+            texture->InsertEndChild(cols);
+        } else {
+            texture->SetAttribute("type", "base");
+        }
 
         id->SetText(it.first.c_str());
         file_path->SetText(it.second->GetFilePath().c_str());

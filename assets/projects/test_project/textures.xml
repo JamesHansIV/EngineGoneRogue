@@ -1,26 +1,14 @@
 <Root>
-    <Texture>
-        <FilePath>../assets/textures/arrow.png</FilePath>
-        <ID>arrow</ID>
+    <Texture type="tileMap">
+        <TileSize>16</TileSize>
+        <Rows>25</Rows>
+        <Cols>8</Cols>
+        <FilePath>../assets/textures/spritesheets/tile.png</FilePath>
+        <ID>background-tiles</ID>
     </Texture>
-    <Texture>
-        <FilePath>../assets/textures/bg.png</FilePath>
-        <ID>bg</ID>
-    </Texture>
-    <Texture>
-        <FilePath>../assets/textures/colors.png</FilePath>
-        <ID>colors</ID>
-    </Texture>
-    <Texture>
-        <FilePath>../assets/textures/dots.png</FilePath>
-        <ID>dots</ID>
-    </Texture>
-    <Texture>
+    <Texture type="base">
+        <Type>Base</Type>
         <FilePath>../assets/textures/foo.png</FilePath>
         <ID>foo</ID>
-    </Texture>
-    <Texture>
-        <FilePath>../assets/textures/foo2.png</FilePath>
-        <ID>foo2</ID>
     </Texture>
 </Root>

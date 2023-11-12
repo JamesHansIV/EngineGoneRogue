@@ -73,10 +73,10 @@ void DrawGrid() {
 }
 
 bool CheckMouseOver(GameObject* obj) {
-    return ((obj)->GetX() <= InputChecker::GetMouseX() &&
-            InputChecker::GetMouseX() <= (obj)->GetX() + (obj)->GetWidth() &&
-            (obj)->GetY() <= InputChecker::GetMouseY() &&
-            InputChecker::GetMouseY() <= (obj)->GetY() + (obj)->GetHeight());
+    return ((obj)->GetX() <= InputChecker::GetMouseX() + Renderer::GetInstance()->GetCameraX() &&
+            InputChecker::GetMouseX() + Renderer::GetInstance()->GetCameraX() <= (obj)->GetX() + (obj)->GetWidth() &&
+            (obj)->GetY() <= InputChecker::GetMouseY() + Renderer::GetInstance()->GetCameraY()&&
+            InputChecker::GetMouseY() + Renderer::GetInstance()->GetCameraY() <= (obj)->GetY() + (obj)->GetHeight());
 }
 
 Editor::Editor()  {
@@ -705,8 +705,8 @@ void Editor::Render() {
 void Editor::OnMouseClicked(SDL_Event&  /*event*/) {
     if (m_DrawState.DrawMode) {
         m_DrawState.IsDrawing = true;
-        float const x = (InputChecker::GetMouseX() / TILE_SIZE) * TILE_SIZE;
-        float const y = (InputChecker::GetMouseY() / TILE_SIZE) * TILE_SIZE;
+        float const x = ((InputChecker::GetMouseX() + Renderer::GetInstance()->GetCameraX()) / TILE_SIZE) * TILE_SIZE;
+        float const y = ((InputChecker::GetMouseY() + Renderer::GetInstance()->GetCameraY()) / TILE_SIZE) * TILE_SIZE;
         AddObject(x, y);
         m_DrawState.PrevX = x;
         m_DrawState.PrevY = y;
@@ -726,8 +726,8 @@ void Editor::OnMouseMoved(SDL_Event& event) {
     if (InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT)) {
 
         if (m_DrawState.DrawMode && m_DrawState.IsDrawing) {
-            float const x = (InputChecker::GetMouseX() / TILE_SIZE) * TILE_SIZE;
-            float const y = (InputChecker::GetMouseY() / TILE_SIZE) * TILE_SIZE;
+            float const x = ((InputChecker::GetMouseX() + Renderer::GetInstance()->GetCameraX()) / TILE_SIZE) * TILE_SIZE;
+            float const y = ((InputChecker::GetMouseY() + Renderer::GetInstance()->GetCameraY()) / TILE_SIZE) * TILE_SIZE;
 
             if (x != m_DrawState.PrevX || y != m_DrawState.PrevY) {
                 AddObject(x, y);
