@@ -7,13 +7,11 @@ Each  member should have a readme in their folder that explains how to compile a
 
 
 To build the game with cmake:
-1) % cmake -B (buildDir)
-2) % cd (buildDir)
-3) % make all
-4) % ./Engine
+```console
+$ ./build-engine.sh
+```
 
 To build the editor with cmake:
-1) % cmake -DEDITOR=ON -B (buildDir)
-2) % cd (buildDir)
-3) % make all
-4) % ./Engine
+```console
+$ ./build-engine.sh editor
+```
