@@ -16,22 +16,22 @@ std::vector<GameObject*> colliders;
 Game::Game() {
     SDL_Renderer* renderer = Renderer::GetInstance()->GetRenderer();
 
-    Renderer::GetInstance()->AddTexture("player", "../assets/textures/Idle.png");
+    Renderer::GetInstance()->AddTexture("player", "../assets/textures/spritesheets/player-front-idle.png");
     Renderer::GetInstance()->AddTexture("tilemap", "../assets/textures/kenney_tiny-dungeon/Tilemap/tilemap_packed.png");
     Renderer::GetInstance()->AddTexture("player_run", "../assets/textures/Run.png");
     Renderer::GetInstance()->AddTexture("projectile", "../assets/textures/dot_PNG2.png");
 
     m_Objects = Application::m_Rooms["room1"];
 
-    Properties props("player", {0, 0, 136, 96}, {0, 0, 136, 96});
+    Properties props("player", {0, 0, 18, 16}, {0, 0, 18, 16});
     player = new Player(props);
 
-    Properties props2("player",{0, 0, 136, 96}, {100, 128, 136, 96});
+    Properties props2("player",{0, 0, 18, 16}, {100, 128, 18, 16});
     player2 = new Player(props2);
 
-    Properties props3("player", {0, 0, 136, 96}, {700, 360, 136, 96});
-    Properties props4("player", {0, 0, 136, 96}, {300, 278, 136, 96});
-    Properties props5("player", {0, 0, 136, 96}, {200, 389, 136, 96});
+    Properties props3("player", {0, 0, 18, 16}, {700, 360, 16});
+    Properties props4("player", {0, 0, 18, 16}, {300, 278, 18, 16});
+    Properties props5("player", {0, 0, 18, 16}, {200, 389, 18, 16});
     player3 = new Player(props3);
     player4 = new Player(props4);
     player5 = new Player(props5);
