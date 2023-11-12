@@ -42,7 +42,7 @@ void Player::Update(float dt, const std::vector<GameObject*>& colliders){
     CanMoveThrough(colliders);
 }
 
-bool Player::CanMoveThrough(const std::vector<GameObject*>& colliders)
+void Player::CanMoveThrough(const std::vector<GameObject*>& colliders)
 {
     for (auto *collider : colliders)
     {
@@ -57,7 +57,6 @@ bool Player::CanMoveThrough(const std::vector<GameObject*>& colliders)
             m_Collider->Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());            
         }
     }
-    return false;
 }
 
 void Player::OnEvent(Event& event) {

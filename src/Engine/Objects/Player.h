@@ -18,6 +18,6 @@ class Player: public Character, public EventListener{
     private:
         Animation* m_Animation;
         RigidBody* m_RigidBody;
-        bool CanMoveThrough(const std::vector<GameObject*>& colliders);
+        void CanMoveThrough(const std::vector<GameObject*>& colliders);
 };
 

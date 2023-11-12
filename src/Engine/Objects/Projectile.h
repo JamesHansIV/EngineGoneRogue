@@ -20,5 +20,5 @@ class Projectile: public GameObject{
         float m_Mass;
         float m_Angle;
 
-        bool canMoveThrough(const std::vector<GameObject*>& colliders);
+        void CanMoveThrough(const std::vector<GameObject*>& colliders);
 };
