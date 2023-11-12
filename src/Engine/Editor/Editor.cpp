@@ -385,6 +385,11 @@ void Editor::ShowObjectEditor() {
             }
         }
 
+        std::string const erase_label = m_DrawState.DrawMode == DrawMode::ERASE ? "Stop Erase" : "Begin Erase";
+        if (ImGui::Button(erase_label.c_str())) {
+            m_DrawState.DrawMode = m_DrawState.DrawMode == DrawMode::ERASE ? DrawMode::NONE : DrawMode::ERASE;
+        }
+
         ImGui::EndTabItem();
     }
 }
@@ -488,10 +493,9 @@ void Editor::DeleteObject(GameObject* obj) {
             SDL_Log("layer size: %lu", layer.size());
         }
     }
-    SDL_Log("Successfully cleaned from layers");
+
     delete obj;
     obj = nullptr;
-    SDL_Log("deleted object");
 }
 
 void Editor::ShowBuildPlayer() {
@@ -596,14 +600,10 @@ void Editor::ShowCreateObject() {
                     SDL_LogError(0, "Invalid object type");
                     assert(false);
             }
-            std::string const draw_label = m_DrawState.DrawMode == DrawMode::DRAW ? "Stop Draw" : "Draw";
+            std::string const draw_label = m_DrawState.DrawMode == DrawMode::DRAW ? "Stop Draw" : "Begin Draw";
 
             if (ImGui::Button(draw_label.c_str())) {
                 m_DrawState.DrawMode = m_DrawState.DrawMode == DrawMode::DRAW ? DrawMode::NONE : DrawMode::DRAW;
-            }
-            std::string const erase_label = m_DrawState.DrawMode == DrawMode::ERASE ? "Stop Erase" : "Erase";
-            if (ImGui::Button(erase_label.c_str())) {
-                m_DrawState.DrawMode = m_DrawState.DrawMode == DrawMode::ERASE ? DrawMode::NONE : DrawMode::ERASE;
             }
         }
         ImGui::EndTabItem();
@@ -686,7 +686,6 @@ void Editor::Update(float  /*dt*/) {
 
 void Editor::Render() {
     ImGui::Render();
-    SDL_Log("About to render");
     Renderer::GetInstance()->RenderClear();
     for (int i = 0; i < m_Layers.size(); i++) {
         if (m_HiddenLayers.find(i) == m_HiddenLayers.end()) {
@@ -714,8 +713,8 @@ GameObject* Editor::GetObjectUnderMouse() {
     while (it != m_Layers[m_CurrentLayer].begin()) {
         --it;
         if (CheckMouseOver(*it)) {
-            m_Layers[m_CurrentLayer].erase(it);
             obj = *it;
+            m_Layers[m_CurrentLayer].erase(it);
             return obj;
         }
     }
@@ -753,19 +752,20 @@ void Editor::OnMouseMoved(SDL_Event& event) {
     if (InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT)) {
 
         if (m_DrawState.IsEditing) {
-            if (m_DrawState.DrawMode == DrawMode::ERASE) {
-                GameObject* obj = GetObjectUnderMouse();
-                if (obj) {
-                    DeleteObject(obj);
-                }
-            } else if (m_DrawState.DrawMode == DrawMode::DRAW) {
-                float const x = ((InputChecker::GetMouseX() + Renderer::GetInstance()->GetCameraX()) / TILE_SIZE) * TILE_SIZE;
-                float const y = ((InputChecker::GetMouseY() + Renderer::GetInstance()->GetCameraY()) / TILE_SIZE) * TILE_SIZE;
+            float const x = ((InputChecker::GetMouseX() + Renderer::GetInstance()->GetCameraX()) / TILE_SIZE) * TILE_SIZE;
+            float const y = ((InputChecker::GetMouseY() + Renderer::GetInstance()->GetCameraY()) / TILE_SIZE) * TILE_SIZE;
 
-                if ((x != m_DrawState.PrevX || y != m_DrawState.PrevY)) {
+            if ((x != m_DrawState.PrevX || y != m_DrawState.PrevY)) {
+                if (m_DrawState.DrawMode == DrawMode::DRAW) {
                     AddObject(x, y);
                     m_DrawState.PrevX = x;
                     m_DrawState.PrevY = y;
+                    
+                } else if (m_DrawState.DrawMode == DrawMode::ERASE) {
+                    GameObject* obj = GetObjectUnderMouse();
+                    if (obj) {
+                        DeleteObject(obj);
+                    }
                 }
             }
         } else if (m_CurrentObject != nullptr && CheckMouseOver(m_CurrentObject)) {
