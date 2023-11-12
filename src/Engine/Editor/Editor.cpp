@@ -732,7 +732,7 @@ void Editor::OnMouseClicked(SDL_Event&  /*event*/) {
         } else if (m_DrawState.DrawMode == DrawMode::ERASE) {
             m_DrawState.IsEditing = true;
             GameObject* obj = GetObjectUnderMouse();
-            if (obj) {
+            if (obj != nullptr) {
                 DeleteObject(obj);
             }
         }
@@ -741,7 +741,7 @@ void Editor::OnMouseClicked(SDL_Event&  /*event*/) {
 
     } else {
         GameObject* obj = GetObjectUnderMouse();
-        if (obj) {
+        if (obj != nullptr) {
             m_CurrentObject = obj;
             m_Layers[m_CurrentLayer].push_back(m_CurrentObject);
         }
@@ -763,7 +763,7 @@ void Editor::OnMouseMoved(SDL_Event& event) {
                     
                 } else if (m_DrawState.DrawMode == DrawMode::ERASE) {
                     GameObject* obj = GetObjectUnderMouse();
-                    if (obj) {
+                    if (obj != nullptr) {
                         DeleteObject(obj);
                     }
                 }

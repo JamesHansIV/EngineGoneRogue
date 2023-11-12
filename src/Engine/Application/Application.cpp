@@ -62,7 +62,7 @@ bool Application::LoadTextures(char* projectPath) {
     std::string type;
     std::string id;
     std::string texture_path;
-    int tileSize;
+    int tile_size;
     int rows;
     int cols;
 
@@ -72,10 +72,10 @@ bool Application::LoadTextures(char* projectPath) {
         texture_path = curr_texture->FirstChildElement("FilePath")->GetText();
         if (type == "tileMap") {
             SDL_Log("texture filepath: %s", texture_path.c_str());
-            tileSize = atoi(curr_texture->FirstChildElement("TileSize")->GetText());
+            tile_size = atoi(curr_texture->FirstChildElement("TileSize")->GetText());
             rows = atoi(curr_texture->FirstChildElement("Rows")->GetText());
             cols = atoi(curr_texture->FirstChildElement("Cols")->GetText());
-            Renderer::GetInstance()->AddTileMap(id, texture_path, tileSize, rows, cols);
+            Renderer::GetInstance()->AddTileMap(id, texture_path, tile_size, rows, cols);
         } else {
             Renderer::GetInstance()->AddTexture(id, texture_path);
         }
