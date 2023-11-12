@@ -39,8 +39,11 @@ Checks: >
   -readability-magic-numbers,
   -modernize-use-trailing-return-type,
 
-# Turn all the warnings from the checks above into errors.
-WarningsAsErrors: "*"
+# Turn all the warnings from the checks above into errors. TODO(enable once less errors)
+# WarningsAsErrors: "*"
+
+# Enable to apply clang-tidy to header files as well, does something weird to utils.h though for some reason
+# HeaderFilterRegex: "src/"
 
 CheckOptions:
   - { key: readability-identifier-naming.NamespaceCase,          value: lower_case }

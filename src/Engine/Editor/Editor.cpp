@@ -73,13 +73,13 @@ void DrawGrid() {
 }
 
 bool CheckMouseOver(GameObject* obj) {
-    return ((obj)->GetX() <= InputChecker::getMouseX() &&
-            InputChecker::getMouseX() <= (obj)->GetX() + (obj)->GetWidth() &&
-            (obj)->GetY() <= InputChecker::getMouseY() &&
-            InputChecker::getMouseY() <= (obj)->GetY() + (obj)->GetHeight());
+    return ((obj)->GetX() <= InputChecker::GetMouseX() &&
+            InputChecker::GetMouseX() <= (obj)->GetX() + (obj)->GetWidth() &&
+            (obj)->GetY() <= InputChecker::GetMouseY() &&
+            InputChecker::GetMouseY() <= (obj)->GetY() + (obj)->GetHeight());
 }
 
-Editor::Editor() : m_CurrentTexture(nullptr), m_CurrentLayer(0) {
+Editor::Editor()  {
     ImGui::CreateContext();
     SDL_Renderer* renderer = Renderer::GetInstance()->GetRenderer();
 
@@ -179,12 +179,12 @@ void Editor::SaveRoom(const char* roomName) {
         for (auto *obj : layer) {
             curr_xml_object = doc.NewElement("Object");
             switch(obj->GetObjectType()) {
-                case ObjectType::Base:
+                case ObjectType::kBase:
                     SaveBaseObject(doc, curr_xml_object, obj);
                     break;
-                case ObjectType::Projectile:
+                case ObjectType::kProjectile:
                     break;
-                case ObjectType::Player:
+                case ObjectType::kPlayer:
                     break;
                 default:
                     SDL_LogError(0, "Invalid object type");
@@ -451,13 +451,13 @@ void Editor::AddObject(float x, float y) {
     );
 
     switch (m_ObjectInfo.type) {
-        case ObjectType::Base:
+        case ObjectType::kBase:
             new_object = new GameObject(props);
             break;
-        case ObjectType::Player:
+        case ObjectType::kPlayer:
             new_object = new Player(props);
             break;
-        case ObjectType::Projectile:
+        case ObjectType::kProjectile:
             //Make this work with projectiles
             new_object = new GameObject(props);
             break;
@@ -582,12 +582,12 @@ void Editor::ShowCreateObject() {
 
             ObjectType const type = ShowSelectObjectType();
             switch(type) {
-                case ObjectType::Base:
+                case ObjectType::kBase:
                     break;
-                case ObjectType::Player:
+                case ObjectType::kPlayer:
                     ShowBuildPlayer();
                     break;
-                case ObjectType::Projectile:
+                case ObjectType::kProjectile:
                     ShowBuildProjectile();
                     break;
                 default:
@@ -657,16 +657,16 @@ void Editor::ShowObjectManager() {
 }
 
 void Editor::Update(float  /*dt*/) {
-    if (InputChecker::isKeyPressed(SDLK_UP)) {
+    if (InputChecker::IsKeyPressed(SDLK_UP)) {
         Renderer::GetInstance()->MoveCameraY(-10.0F);
 }
-    if (InputChecker::isKeyPressed(SDLK_DOWN)) {
+    if (InputChecker::IsKeyPressed(SDLK_DOWN)) {
         Renderer::GetInstance()->MoveCameraY(10.0F);
 }
-    if (InputChecker::isKeyPressed(SDLK_LEFT)) {
+    if (InputChecker::IsKeyPressed(SDLK_LEFT)) {
         Renderer::GetInstance()->MoveCameraX(-10.0F);
 }
-    if (InputChecker::isKeyPressed(SDLK_RIGHT)) {
+    if (InputChecker::IsKeyPressed(SDLK_RIGHT)) {
         Renderer::GetInstance()->MoveCameraX(10.0F);
 }
 
@@ -705,8 +705,8 @@ void Editor::Render() {
 void Editor::OnMouseClicked(SDL_Event&  /*event*/) {
     if (m_DrawState.DrawMode) {
         m_DrawState.IsDrawing = true;
-        float const x = (InputChecker::getMouseX() / TILE_SIZE) * TILE_SIZE;
-        float const y = (InputChecker::getMouseY() / TILE_SIZE) * TILE_SIZE;
+        float const x = (InputChecker::GetMouseX() / TILE_SIZE) * TILE_SIZE;
+        float const y = (InputChecker::GetMouseY() / TILE_SIZE) * TILE_SIZE;
         AddObject(x, y);
         m_DrawState.PrevX = x;
         m_DrawState.PrevY = y;
@@ -723,11 +723,11 @@ void Editor::OnMouseClicked(SDL_Event&  /*event*/) {
 }
 
 void Editor::OnMouseMoved(SDL_Event& event) {
-    if (InputChecker::isMouseButtonPressed(SDL_BUTTON_LEFT)) {
+    if (InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT)) {
 
         if (m_DrawState.DrawMode && m_DrawState.IsDrawing) {
-            float const x = (InputChecker::getMouseX() / TILE_SIZE) * TILE_SIZE;
-            float const y = (InputChecker::getMouseY() / TILE_SIZE) * TILE_SIZE;
+            float const x = (InputChecker::GetMouseX() / TILE_SIZE) * TILE_SIZE;
+            float const y = (InputChecker::GetMouseY() / TILE_SIZE) * TILE_SIZE;
 
             if (x != m_DrawState.PrevX || y != m_DrawState.PrevY) {
                 AddObject(x, y);
@@ -736,8 +736,8 @@ void Editor::OnMouseMoved(SDL_Event& event) {
             }
 
         } else if (m_CurrentObject != nullptr && CheckMouseOver(m_CurrentObject)) {
-            float const dx =  event.button.x - InputChecker::getMouseX();
-            float const dy =  event.button.y - InputChecker::getMouseY();
+            float const dx =  event.button.x - InputChecker::GetMouseX();
+            float const dy =  event.button.y - InputChecker::GetMouseY();
             float const x = m_CurrentObject->GetX();
             float const y = m_CurrentObject->GetY();
 
@@ -754,7 +754,7 @@ void Editor::OnMouseMoved(SDL_Event& event) {
 }
 
 void Editor::OnMouseUp(SDL_Event&  /*event*/) {
-    if (InputChecker::isMouseButtonPressed(SDL_BUTTON_LEFT)) {
+    if (InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT)) {
         if (m_DrawState.IsDrawing) {
             m_DrawState.IsDrawing = false;
 
@@ -786,28 +786,28 @@ void Editor::Events() {
         if (io.WantCaptureKeyboard || io.WantCaptureMouse) {
             return;
         }
-        GetEventManager().handleEvent(event);
+        GetEventManager().HandleEvent(event);
         switch (event.type) {
             case SDL_QUIT:
                 Quit();
                 return;
             case SDL_KEYDOWN:
-                InputChecker::setKeyPressed(event.key.keysym.sym, true);
+                InputChecker::SetKeyPressed(event.key.keysym.sym, true);
                 break;
             case SDL_KEYUP:
-                InputChecker::setKeyPressed(event.key.keysym.sym, false);
+                InputChecker::SetKeyPressed(event.key.keysym.sym, false);
                 break;
             case SDL_MOUSEBUTTONDOWN:
-                InputChecker::setMouseButtonPressed(event.button.button, true);
+                InputChecker::SetMouseButtonPressed(event.button.button, true);
                 OnMouseClicked(event);
                 break;
             case SDL_MOUSEBUTTONUP:
                 OnMouseUp(event);
-                InputChecker::setMouseButtonPressed(event.button.button, false);
+                InputChecker::SetMouseButtonPressed(event.button.button, false);
                 break;
             case SDL_MOUSEMOTION:
                 OnMouseMoved(event);
-                InputChecker::updateMousePosition(event.motion.x, event.motion.y);
+                InputChecker::UpdateMousePosition(event.motion.x, event.motion.y);
                 break;
         }
     }

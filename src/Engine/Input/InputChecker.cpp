@@ -10,31 +10,31 @@ bool mouse_buttons[kNummousebuttons];
 int mouse_x;
 int mouse_y;
 
-bool InputChecker::isKeyPressed(int keycode) {
+bool InputChecker::IsKeyPressed(int keycode) {
     return keys[keycode % kNumkeys];
 }
 
-void InputChecker::setKeyPressed(int keycode, bool value) {
+void InputChecker::SetKeyPressed(int keycode, bool value) {
     keys[keycode % kNumkeys] = value;
 }
 
-bool InputChecker::isMouseButtonPressed(int button) {
+bool InputChecker::IsMouseButtonPressed(int button) {
     return mouse_buttons[button % kNummousebuttons];
 }
 
-void InputChecker::setMouseButtonPressed(int button, bool value) {
+void InputChecker::SetMouseButtonPressed(int button, bool value) {
     mouse_buttons[button % kNummousebuttons] = value;
 }
 
-int InputChecker::getMouseX() {
+int InputChecker::GetMouseX() {
     return mouse_x;
 }
 
-int InputChecker::getMouseY() {
+int InputChecker::GetMouseY() {
     return mouse_y;
 }
 
-void InputChecker::updateMousePosition(int x, int y) {
+void InputChecker::UpdateMousePosition(int x, int y) {
     mouse_x = x;
     mouse_y = y;
 }

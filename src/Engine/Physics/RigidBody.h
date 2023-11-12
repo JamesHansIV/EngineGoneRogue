@@ -6,7 +6,7 @@
 
 class RigidBody {
     public:
-        RigidBody(float mass = UNI_MASS) {
+        explicit RigidBody(float mass = UNI_MASS) {
             m_Mass = mass;
             m_Gravity = GRAVITY;
         }
@@ -22,7 +22,7 @@ class RigidBody {
         inline void ApplyFriction(Vector2D Fr){m_Friction = Fr;}
         inline void UnSetFriction(){m_Friction = Vector2D(0,0);}
 
-        inline float GetMass(){return m_Mass;}
+        inline float GetMass() const{return m_Mass;}
         inline Vector2D Position(){return m_Position;}
         inline Vector2D Velocity(){return m_Velocity;}
         inline Vector2D Acceleration(){return m_Acceleration;}
@@ -37,7 +37,7 @@ class RigidBody {
 
         void UpdateProjectile(float dt)
         {
-            float deg = m_Force.Y * 3.14159/180;
+            float const deg = m_Force.Y * 3.14159/180;
             m_Force.X = m_Force.X;
             m_Force.Y = m_Force.X;
             m_Acceleration.X = (m_Force.X)/m_Mass;

@@ -5,9 +5,9 @@
 
 class EventManager {
     public:
-        void addListener(EventListener& listener) { listeners.push_back(&listener); }
-        void handleEvent(SDL_Event& event);
+        void AddListener(EventListener& listener) { m_listeners.push_back(&listener); }
+        void HandleEvent(SDL_Event& event);
     private:
-        std::vector<EventListener*> listeners;
+        std::vector<EventListener*> m_listeners;
 
 };

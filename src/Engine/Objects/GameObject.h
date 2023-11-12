@@ -5,13 +5,14 @@
 #include "Engine/Renderer/Renderer.h"
 #include "Engine/Renderer/TileMap.h"
 
+#include "Engine/Physics/Collider.h"
 #include <SDL2/SDL.h>
 #include <string>
-#include "Engine/Physics/Collider.h"
+#include <utility>
 
 enum class ObjectType {
-    None = 0,
-    Base, Projectile, Player
+    kNone = 0,
+    kBase, kProjectile, kPlayer
 };
 
 struct Rect {
@@ -27,7 +28,7 @@ struct Properties{
             std::string textureID,
             TilePos tilePos,
             Rect dstRect,
-            float rotation = 0.0f,
+            float rotation = 0.0F,
             std::string objectID = "",
             SDL_RendererFlip flip = SDL_FLIP_NONE
         ){
@@ -35,8 +36,8 @@ struct Properties{
             DstRect = dstRect;
             Flip = flip;
             Rotation = rotation;
-            TextureID = textureID;
-            ObjectID = objectID;
+            TextureID = std::move(textureID);
+            ObjectID = std::move(objectID);
         }
         std::string ObjectID;
         std::string TextureID;
@@ -48,7 +49,7 @@ struct Properties{
 
 class GameObject : public IObject {
     public:
-        GameObject(Properties& props): m_TextureID(props.TextureID),
+        explicit GameObject(Properties& props): m_TextureID(props.TextureID),
             m_TilePos(props.TilePosition), m_DstRect(props.DstRect),
             m_Rotation(props.Rotation),
             m_Flip(props.Flip), m_ObjectID(props.ObjectID){
@@ -56,7 +57,7 @@ class GameObject : public IObject {
             m_Transform = new Transform(&m_DstRect.x, &m_DstRect.y);
         }
 
-        GameObject(GameObject* rhs) {
+        explicit GameObject(GameObject* rhs) {
             m_TextureID = rhs->m_TextureID;
             m_TilePos = rhs->m_TilePos;
             m_DstRect = rhs->m_DstRect;
@@ -66,17 +67,17 @@ class GameObject : public IObject {
 
             m_Transform = new Transform(&m_DstRect.x, &m_DstRect.y);
         }
-        virtual ~GameObject() {}
+        virtual ~GameObject() = default;
 
-        virtual ObjectType GetObjectType() { return ObjectType::Base; }
+        virtual ObjectType GetObjectType() { return ObjectType::kBase; }
 
-        virtual void Draw() {
-            SDL_Rect srcRect = { m_TilePos.col * m_TilePos.w, m_TilePos.row * m_TilePos.h, m_TilePos.w, m_TilePos.h };
-            SDL_Rect dstRect = { (int)m_DstRect.x, (int)m_DstRect.y, m_DstRect.w, m_DstRect.h };
-            Renderer::GetInstance()->Draw(m_TextureID, srcRect, dstRect, m_Rotation, 0);
+        void Draw() override {
+            SDL_Rect src_rect = { m_TilePos.col * m_TilePos.w, m_TilePos.row * m_TilePos.h, m_TilePos.w, m_TilePos.h };
+            SDL_Rect dst_rect = { static_cast<int>(m_DstRect.x), static_cast<int>(m_DstRect.y), m_DstRect.w, m_DstRect.h };
+            Renderer::GetInstance()->Draw(m_TextureID, src_rect, dst_rect, m_Rotation, nullptr);
         };
-        virtual void Clean() {};
-        virtual void Update(float dt) {};
+        void Clean() override {};
+        void Update(float dt) override {};
 
         TilePos& GetTilePos() { return m_TilePos; }
         Rect& GetDstRect() { return m_DstRect; }
@@ -85,11 +86,11 @@ class GameObject : public IObject {
         float& GetY() { return m_DstRect.y; }
         void SetX(int x) { m_DstRect.x = x; }
         void SetY(int y) { m_DstRect.y = y; }
-        float GetMidPointX() {
-            return (m_DstRect.x + (float)m_DstRect.w/2);
+        float GetMidPointX() const {
+            return (m_DstRect.x + static_cast<float>(m_DstRect.w)/2);
         };
-        float GetMidPointY() {
-            return (m_DstRect.y + (float)m_DstRect.h/2);
+        float GetMidPointY() const {
+            return (m_DstRect.y + static_cast<float>(m_DstRect.h)/2);
         };
         int& GetWidth() { return m_DstRect.w; }
         int& GetHeight() { return m_DstRect.h; }
@@ -101,11 +102,11 @@ class GameObject : public IObject {
 
         std::string GetTextureID() { return m_TextureID; }
         std::string GetID() { return m_ObjectID; }
-        void SetID(std::string id) { m_ObjectID = id; }
-        SDL_RendererFlip getFlip() {return m_Flip;}
-        void setFlip(SDL_RendererFlip flip) {m_Flip = flip;}
+        void SetID(std::string id) { m_ObjectID = std::move(id); }
+        SDL_RendererFlip GetFlip() {return m_Flip;}
+        void SetFlip(SDL_RendererFlip flip) {m_Flip = flip;}
 
-        Collider* getCollider(){return m_Collider;};
+        Collider* GetCollider(){return m_Collider;};
 
     protected:
         Transform* m_Transform;

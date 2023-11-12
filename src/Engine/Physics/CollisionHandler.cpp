@@ -1,6 +1,6 @@
 #include "CollisionHandler.h"
 
-CollisionHandler* CollisionHandler::s_Instance = nullptr;
+CollisionHandler* CollisionHandler::s_instance = nullptr;
 
 CollisionHandler::CollisionHandler()= default;
 

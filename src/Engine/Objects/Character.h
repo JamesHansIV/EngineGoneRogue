@@ -6,10 +6,10 @@
 class Character: public GameObject {
 
     public:
-        Character(Properties& props): GameObject(props) {}
+        explicit Character(Properties& props): GameObject(props) {}
 
-        virtual void Draw()=0;
-        virtual void Clean()=0;
+        void Draw() override =0;
+        void Clean() override =0;
         virtual void Update(float dt, const std::vector<GameObject*>& colliders)=0;
 
     protected:

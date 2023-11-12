@@ -22,7 +22,7 @@ bool CheckCollision(SDL_Rect& a, SDL_Rect& b) {
     return true;
 }
 
-Renderer* Renderer::m_Instance = nullptr;
+Renderer* Renderer::m_instance = nullptr;
 
 void Renderer::Init() {
     SDL_Window* window = Application::Get()->GetWindow();

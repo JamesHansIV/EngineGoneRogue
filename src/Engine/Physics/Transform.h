@@ -6,12 +6,12 @@ class Transform{
         float* X;
         float* Y;
         Transform(float* x, float* y) : X(x), Y(y){}
-        void Log(std::string msg = ""){
-            std::cout << msg << "(X Y) = (" << *X << " " << *Y << ")"<< std::endl;
+        void Log(const std::string& msg = "") const{
+            std::cout << msg << "(X Y) = (" << *X << " " << *Y << ")"<< '\n';
         }
-        inline float GetX() { return *X; }
-        inline float GetY() { return *Y; }
-        inline void TranslateX(float x){*X += x;}
-        inline void TranslateY(float y){*Y += y;}
-        inline void Translate(Vector2D v){*X += v.X; *Y += v.Y;}
+        inline float GetX() const { return *X; }
+        inline float GetY() const { return *Y; }
+        inline void TranslateX(float x) const{*X += x;}
+        inline void TranslateY(float y) const{*Y += y;}
+        inline void Translate(Vector2D v) const{*X += v.X; *Y += v.Y;}
 };
