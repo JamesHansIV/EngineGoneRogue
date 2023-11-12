@@ -47,7 +47,7 @@ void Renderer::Render() {
     SDL_RenderPresent(m_Renderer);
     if(m_CameraTarget != nullptr) {
         CenterCameraOnObject();
-}
+    }
 }
 
 Texture* Renderer::AddTexture(const std::string& id, const std::string& filename) {

@@ -8,7 +8,7 @@ Player::Player(Properties& props): Character(props){
     m_Animation->SetProps(m_TextureID, 1, 6, 80);
     m_RigidBody = new RigidBody();
     m_Collider = new Collider();
-    m_Collider->SetCorrection(100, 100, 60, 70 );
+    m_Collider->SetCorrection(-45, -20, 60, 80 );
     m_Collider->Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
 }
 
@@ -54,7 +54,13 @@ bool Player::CanMoveThrough(const std::vector<GameObject*>& colliders)
             m_Transform->TranslateX(-m_RigidBody->Velocity().X/2);
             m_Transform->TranslateY(-m_RigidBody->Velocity().Y/2);
             m_Collider->Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
-            return true;
+            // SDL_SetRenderDrawColor(Renderer::GetInstance()->GetRenderer(), 255, 0, 0, 255); // Set red color (adjust as needed)
+            // // Render the collider with the changed colors
+            // SDL_Rect rect = collider->GetCollider()->Get();
+
+            // SDL_RenderDrawRect(Renderer::GetInstance()->GetRenderer(), &rect);
+            // SDL_RenderPresent(Renderer::GetInstance()->GetRenderer());
+            
         }
     }
     return false;

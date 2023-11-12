@@ -8,8 +8,6 @@
 Player* player = nullptr;
 Player* player2 = nullptr;
 Player* player3 = nullptr;
-Player* player4 = nullptr;
-Player* player5 = nullptr;
 std::vector<Projectile*> projectiles;
 std::vector<GameObject*> colliders;
 
@@ -33,13 +31,13 @@ Game::Game() {
     Properties props4("player", {0, 0, 136, 96}, {300, 278, 136, 96});
     Properties props5("player", {0, 0, 136, 96}, {200, 389, 136, 96});
     player3 = new Player(props3);
-    player4 = new Player(props4);
-    player5 = new Player(props5);
+    // player4 = new Player(props4);
+    // player5 = new Player(props5);
+    // player4 = new Player(props4);
+    // player5 = new Player(props5);
 
     colliders.push_back(player2);
     colliders.push_back(player3);
-    colliders.push_back(player4);
-    colliders.push_back(player5);
 
     GetEventManager().AddListener(*player);
 
@@ -63,9 +61,8 @@ void Game::Update(float dt) {
     float const delta_y = mouse_y - player_y;
     float angle = atan2(delta_y, delta_x) * (180.0 / M_PI);
     // Convert the angle range from -180 to 180 to 0 to 360
-    if (angle < 0) {
-        angle += 360.0F;
-    }
+    if (angle < 0) angle += 360.0F;
+    if (angle < 0) angle += 360.0F;
 
     SDL_Log("%f", angle);
 
@@ -78,7 +75,7 @@ void Game::Update(float dt) {
         InputChecker::SetMouseButtonPressed(SDL_BUTTON_LEFT, false);
     }
     for (auto *projectile : projectiles) {
-        projectile->Update(dt);
+        projectile->Update(dt, colliders);
     }
 }
 
@@ -91,8 +88,6 @@ void Game::Render() {
     player->Draw();
     player2->Draw();
     player3->Draw();
-    player4->Draw();
-    player5->Draw();
     for (auto *projectile : projectiles) {
         projectile->Draw();
     }
