@@ -5,7 +5,7 @@
 
 Player::Player(Properties& props): Character(props){
     m_Animation = new Animation();
-    m_Animation->SetProps(m_TextureID, 1, 2, 200);
+    m_Animation->SetProps(m_TextureID, 1, 2, 500);
     m_RigidBody = new RigidBody();
     m_Collider = new Collider();
     m_Collider->SetCorrection(100, 100, 60, 70 );
