@@ -20,9 +20,8 @@ Game::Game() {
     Renderer::GetInstance()->AddTexture("tilemap", "../assets/textures/kenney_tiny-dungeon/Tilemap/tilemap_packed.png");
     Renderer::GetInstance()->AddTexture("player_run", "../assets/textures/Run.png");
     Renderer::GetInstance()->AddTexture("player_dead", "../assets/textures/spritesheets/player-dead.png");
-    Renderer::GetInstance()->AddTexture("projectile", "../assets/textures/dot_PNG2.png");
+    Renderer::GetInstance()->AddTexture("projectile", "../assets/textures/BulletHell/PURPLE/Weapons/weapons/Firearms/Bullets/spr_bullet3.png");
     
-
     m_Objects = Application::m_Rooms["room1"];
 
     Properties props("player", {0, 0, 18, 16}, {0, 0, 18, 16});

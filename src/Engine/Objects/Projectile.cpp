@@ -28,7 +28,6 @@ void Projectile::Update(float dt, const std::vector<GameObject*>& colliders){
 
 void Projectile::CanMoveThrough(const std::vector<GameObject*>& colliders)
 {
-    SDL_Log("%zu", colliders.size());
     if (*m_Transform->X < 0.0f ||
         *m_Transform->Y < 0.0f ||
         *m_Transform->X + this->GetWidth() > SCREEN_WIDTH ||

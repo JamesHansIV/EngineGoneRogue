@@ -40,14 +40,14 @@ void Enemy::DrawEnemyHealth(){
 }
 
 void Enemy::Update(float dt){
-    m_Animation->Update();
     if(m_Health->GetHealth() <= 0)
     {
-        m_Animation->SetProps("player_dead", 1, 6, 200);
+        m_Animation->SetProps("player_dead", 1, 6, 500);
         if (m_Animation->GetCurrentFrame() == 6-1) {
             m_MarkedForDeletion = true;
         }
     }
+    m_Animation->Update();
 }
 
 void Enemy::OnEvent(Event& event) {
