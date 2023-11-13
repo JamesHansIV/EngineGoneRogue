@@ -8,6 +8,7 @@
 Player* player = nullptr;
 Player* player2 = nullptr;
 Player* player3 = nullptr;
+Player* player4 = nullptr;
 std::vector<Projectile*> projectiles;
 std::vector<GameObject*> colliders;
 
@@ -24,20 +25,18 @@ Game::Game() {
     Properties props("player", {0, 0, 18, 16}, {0, 0, 18, 16});
     player = new Player(props);
 
-    Properties props2("player",{0, 0, 18, 16}, {100, 128, 18, 16});
+    Properties props2("player",{0, 0, 18, 16}, {200, 200, 18, 16});
     player2 = new Player(props2);
 
-    Properties props3("player", {0, 0, 18, 16}, {700, 360, 16});
-    Properties props4("player", {0, 0, 18, 16}, {300, 278, 18, 16});
-    Properties props5("player", {0, 0, 18, 16}, {200, 389, 18, 16});
+    Properties props3("player", {0, 0, 18, 16}, {300, 260, 18, 16});
     player3 = new Player(props3);
-    // player4 = new Player(props4);
-    // player5 = new Player(props5);
-    // player4 = new Player(props4);
-    // player5 = new Player(props5);
+
+    Properties props4("player", {0, 0, 18, 16}, {500, 200, 18, 16});
+    player4 = new Player(props4);
 
     colliders.push_back(player2);
     colliders.push_back(player3);
+    colliders.push_back(player4);
 
     GetEventManager().AddListener(*player);
 
@@ -74,8 +73,19 @@ void Game::Update(float dt) {
         projectiles.push_back(projectile);
         InputChecker::SetMouseButtonPressed(SDL_BUTTON_LEFT, false);
     }
-    for (auto *projectile : projectiles) {
-        projectile->Update(dt, colliders);
+    for (auto it = projectiles.begin(); it != projectiles.end();)
+    {
+        (*it)->Update(dt, colliders);
+        if ((*it)->IsMarkedForDeletion())
+        {
+            (*it)->Clean();
+            delete *it;
+            it = projectiles.erase(it);
+        }
+        else
+        {
+            ++it;
+        }
     }
 }
 
@@ -88,6 +98,7 @@ void Game::Render() {
     player->Draw();
     player2->Draw();
     player3->Draw();
+    player4->Draw();
     for (auto *projectile : projectiles) {
         projectile->Draw();
     }

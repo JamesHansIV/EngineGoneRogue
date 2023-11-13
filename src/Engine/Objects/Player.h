@@ -19,5 +19,6 @@ class Player: public Character, public EventListener{
         Animation* m_Animation;
         RigidBody* m_RigidBody;
         void CanMoveThrough(const std::vector<GameObject*>& colliders);
+        void DrawPlayerHealth();
 };
 

@@ -3,17 +3,42 @@
 #include "Engine/Input/InputChecker.h"
 #include "Engine/Physics/CollisionHandler.h"
 
+
 Player::Player(Properties& props): Character(props){
     m_Animation = new Animation();
     m_Animation->SetProps(m_TextureID, 1, 2, 500);
     m_RigidBody = new RigidBody();
     m_Collider = new Collider();
-    m_Collider->SetCorrection(-45, -20, 60, 80 );
+    // m_Collider->SetCorrection(-45, -20, 60, 80 );
     m_Collider->Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
+    m_Health = new Health(100);
 }
+
 
 void Player::Draw(){
     m_Animation->Draw(m_Transform->GetX(), m_Transform->GetY(), m_DstRect.w, m_DstRect.h);
+    DrawPlayerHealth();
+}
+
+void Player::DrawPlayerHealth(){
+    const int HEALTH_BAR_HEIGHT = 10;
+
+    int healthBarWidth = static_cast<int>((GetWidth() + 15) * (m_Health->GetHealth() / 100.0));
+
+    // Set the position of the health bar relative to the player
+    int healthBarX = GetX();
+    int healthBarY = GetY() - HEALTH_BAR_HEIGHT - 5;
+
+    // Create a rectangle for the health bar
+    SDL_Rect healthBarRect;
+    healthBarRect.x = healthBarX - Renderer::GetInstance()->GetCameraX() - 5;
+    healthBarRect.y = healthBarY - Renderer::GetInstance()->GetCameraY();
+    healthBarRect.w = healthBarWidth;
+    healthBarRect.h = HEALTH_BAR_HEIGHT;
+
+    // Set the color of the health bar (e.g., green for full health, red for low health)
+    SDL_SetRenderDrawColor(Renderer::GetInstance()->GetRenderer(), 0, 255, 0, 255);
+    SDL_RenderFillRect(Renderer::GetInstance()->GetRenderer(), &healthBarRect);
 }
 
 void Player::Update(float dt, const std::vector<GameObject*>& colliders){

@@ -8,6 +8,7 @@ Projectile::Projectile(Properties& props, int speed, float mass, float angle): G
     m_Collider = new Collider();
     m_Collider->SetCorrection(0, 0, 10, 10 );
     m_Collider->Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());   
+    m_MarkedForDeletion = false;
 }
 
 void Projectile::Draw(){
@@ -33,16 +34,25 @@ void Projectile::CanMoveThrough(const std::vector<GameObject*>& colliders)
         if (*m_Transform->X < 0.0f ||
             *m_Transform->Y < 0.0f ||
             *m_Transform->X + this->GetWidth() > SCREEN_WIDTH ||
-            *m_Transform->Y + this->GetHeight() > SCREEN_HEIGHT ||
-            CollisionHandler::GetInstance()->CheckCollision(m_Collider->Get(), collider->GetCollider()->Get()))
+            *m_Transform->Y + this->GetHeight() > SCREEN_HEIGHT)
+            {
+                // float deg = m_Angle * 3.14159/180;
+                // m_Transform->TranslateX(-((m_RigidBody->Velocity().X/2) * cos(deg)));
+                // m_Transform->TranslateY(-((m_RigidBody->Velocity().Y/2) * sin(deg)));
+                m_MarkedForDeletion = true;
+            }
+        else if(CollisionHandler::GetInstance()->CheckCollision(m_Collider->Get(), collider->GetCollider()->Get()))
         {
-            float deg = m_Angle * 3.14159/180;
-            m_Transform->TranslateX(-((m_RigidBody->Velocity().X/2) * cos(deg)));
-            m_Transform->TranslateY(-((m_RigidBody->Velocity().Y/2) * sin(deg)));
+            collider->GetHealthObj()->SetDamage(10);
+            if(collider->GetHealthObj()->GetHealth() < 0){
+                collider->GetHealthObj()->SetDamage(-100);
+            }
+            m_MarkedForDeletion = true;
         }
     }
 }
 
 void Projectile::Clean(){
-    Renderer::GetInstance()->Clean();
+    delete m_Animation;
+    delete m_RigidBody;
 }

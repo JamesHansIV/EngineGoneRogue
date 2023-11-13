@@ -13,12 +13,13 @@ class Projectile: public GameObject{
         virtual void Draw();
         virtual void Clean();
         virtual void Update(float dt, const std::vector<GameObject*>& colliders);
+        bool IsMarkedForDeletion() {return m_MarkedForDeletion;};
     private:
         Animation* m_Animation;
         RigidBody* m_RigidBody;
         int m_Speed;
         float m_Mass;
         float m_Angle;
-
+        bool m_MarkedForDeletion;
         void CanMoveThrough(const std::vector<GameObject*>& colliders);
 };

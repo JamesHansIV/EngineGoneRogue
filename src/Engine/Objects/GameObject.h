@@ -4,11 +4,13 @@
 #include "Engine/Physics/Transform.h"
 #include "Engine/Renderer/Renderer.h"
 #include "Engine/Renderer/TileMap.h"
+#include "Health.h"
 
 #include "Engine/Physics/Collider.h"
 #include <SDL2/SDL.h>
 #include <string>
 #include <utility>
+
 
 enum class ObjectType {
     kNone = 0,
@@ -107,6 +109,7 @@ class GameObject : public IObject {
         void SetFlip(SDL_RendererFlip flip) {m_Flip = flip;}
 
         Collider* GetCollider(){return m_Collider;};
+        Health* GetHealthObj(){return m_Health;};
 
     protected:
         Transform* m_Transform;
@@ -117,4 +120,5 @@ class GameObject : public IObject {
         std::string m_ObjectID;
         SDL_RendererFlip m_Flip;
         Collider* m_Collider;
+        Health* m_Health;
 };
