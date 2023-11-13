@@ -3,8 +3,9 @@
 #include "Engine/Input/InputChecker.h"
 #include "Engine/Physics/CollisionHandler.h"
 #include "Projectile.h"
+#include "Weapon.h"
 
-std::vector<Projectile*> projectiles;
+std::vector<Weapon*> weapons;
 
 Player::Player(Properties& props): Character(props){
     m_Animation = new Animation();
@@ -14,15 +15,19 @@ Player::Player(Properties& props): Character(props){
     // m_Collider->SetCorrection(-45, -20, 60, 80 );
     m_Collider->Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
     m_Health = new Health(100);
+
+    Properties propsG("gun", {0, 0, 18, 16}, {0, 0, 18, 16}, 0.0);
+    Weapon* w1 = new Weapon(propsG, PROJECTILE);
+    weapons.push_back(w1);
 }
 
 
 void Player::Draw(){
     m_Animation->Draw(m_Transform->GetX(), m_Transform->GetY(), m_DstRect.w, m_DstRect.h);
     DrawPlayerHealth();
-    DrawWeapon();
-    for (auto *projectile : projectiles) {
-        projectile->Draw();
+    for(auto *weapon: weapons)
+    {
+        weapon->Draw();
     }
 }
 
@@ -44,11 +49,7 @@ void Player::DrawPlayerHealth(){
     SDL_RenderFillRect(Renderer::GetInstance()->GetRenderer(), &healthBarRect);
 }
 
-void Player::DrawWeapon()
-{
-    int gunX = GetX() + GetWidth() / 2;
-    int gunY = GetY() + GetHeight() / 3;
-
+void Player::Update(float dt){
     int gunXX = GetMidPointX() - Renderer::GetInstance()->GetCameraX();
     int gunYY = GetMidPointY() - Renderer::GetInstance()->GetCameraY();
 
@@ -56,13 +57,17 @@ void Player::DrawWeapon()
     float const delta_y = InputChecker::GetMouseY() - gunYY;
     float angle = atan2(delta_y, delta_x) * (180.0 / M_PI);
     if (angle < 0) angle += 360.0F;
-    SDL_Log("%s, %f", "angle of gun :  ", angle );
-    Properties props("gun", {0, 0, 18, 16}, {static_cast<float>(gunX), static_cast<float>(gunY), 18, 16}, angle);
-    GameObject* gun = new GameObject(props);
-    gun->Draw();
-}
 
-void Player::Update(float dt){
+    for(auto *weapon: weapons){
+        weapon->UpdateColliders(m_Colliders);
+        weapon->SetRotation(angle);
+        weapon->Update(dt);
+        int gunX = GetX() + GetWidth() / 2;
+        int gunY = GetY() + GetHeight() / 3;
+        weapon->SetX(gunX);
+        weapon->SetY(gunY);
+    }
+
     m_RigidBody->Update(dt);
     m_RigidBody->UnSetForce();
     if (InputChecker::IsKeyPressed(SDLK_w)) {
@@ -82,44 +87,6 @@ void Player::Update(float dt){
         //m_Animation->SetProps("player_run", 1, 8, 100);
         //SetFlip(SDL_FLIP_NONE);
     }
-
-    int const player_x = GetMidPointX() - Renderer::GetInstance()->GetCameraX();
-    int const player_y = GetMidPointY() - Renderer::GetInstance()->GetCameraY();
-    int const mouse_x = InputChecker::GetMouseX();
-    int const mouse_y = InputChecker::GetMouseY();
-
-    // Calculate the angle between the mouse and the player
-    float const delta_x = mouse_x - player_x;
-    float const delta_y = mouse_y - player_y;
-    float angle = atan2(delta_y, delta_x) * (180.0 / M_PI);
-    // Convert the angle range from -180 to 180 to 0 to 360
-    if (angle < 0) angle += 360.0F;
-
-    SDL_Log("%f", angle);
-
-    Properties projectile_props("projectile", {0, 0, 723, 724}, {GetMidPointX(), GetMidPointY(), 10, 10}, angle);
-    if (InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT))
-    {
-        Projectile* projectile = nullptr;
-        projectile = new Projectile(projectile_props, 50, 1.0, angle);
-        projectiles.push_back(projectile);
-        InputChecker::SetMouseButtonPressed(SDL_BUTTON_LEFT, false);
-    }
-    for (auto it = projectiles.begin(); it != projectiles.end();)
-    {
-        (*it)->Update(dt, m_Colliders);
-        if ((*it)->IsMarkedForDeletion())
-        {
-            (*it)->Clean();
-            delete *it;
-            it = projectiles.erase(it);
-        }
-        else
-        {
-            ++it;
-        }
-    }
-
     m_Transform->Translate(m_RigidBody->Position());
     m_Collider->Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
     m_Animation->Update();
