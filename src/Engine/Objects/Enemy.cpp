@@ -25,7 +25,7 @@ void Enemy::DrawEnemyHealth(){
     const int HEALTH_BAR_HEIGHT = 10;
 
     int healthBarWidth = static_cast<int>((GetWidth() + 15) * (m_Health->GetHealth() / 100.0));
-
+    if (healthBarWidth <= 0) healthBarWidth = 0;
     int healthBarX = GetX();
     int healthBarY = GetY() - HEALTH_BAR_HEIGHT - 5;
 

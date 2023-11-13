@@ -66,13 +66,18 @@ void Player::Update(float dt){
 
 void Player::CanMoveThrough()
 {
+    if(*m_Transform->X < 0.0F ||
+        *m_Transform->Y < 0.0F ||
+        *m_Transform->X + this->GetWidth() > SCREEN_WIDTH ||
+        *m_Transform->Y + this->GetHeight() > SCREEN_HEIGHT)
+    {
+        m_Transform->TranslateX(-m_RigidBody->Velocity().X/2);
+        m_Transform->TranslateY(-m_RigidBody->Velocity().Y/2);
+        m_Collider->Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());    
+    }
     for (auto *collider : m_Colliders)
     {
-        if (*m_Transform->X < 0.0F ||
-            *m_Transform->Y < 0.0F ||
-            *m_Transform->X + this->GetWidth() > SCREEN_WIDTH ||
-            *m_Transform->Y + this->GetHeight() > SCREEN_HEIGHT ||
-            CollisionHandler::GetInstance()->CheckCollision(m_Collider->Get(), collider->GetCollider()->Get()))
+        if (CollisionHandler::GetInstance()->CheckCollision(m_Collider->Get(), collider->GetCollider()->Get()))
         {
             m_Transform->TranslateX(-m_RigidBody->Velocity().X/2);
             m_Transform->TranslateY(-m_RigidBody->Velocity().Y/2);

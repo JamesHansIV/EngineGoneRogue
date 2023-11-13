@@ -29,19 +29,16 @@ void Projectile::Update(float dt, const std::vector<GameObject*>& colliders){
 void Projectile::CanMoveThrough(const std::vector<GameObject*>& colliders)
 {
     SDL_Log("%zu", colliders.size());
+    if (*m_Transform->X < 0.0f ||
+        *m_Transform->Y < 0.0f ||
+        *m_Transform->X + this->GetWidth() > SCREEN_WIDTH ||
+        *m_Transform->Y + this->GetHeight() > SCREEN_HEIGHT)
+    {
+        m_MarkedForDeletion = true;
+    }
     for (auto collider : colliders)
     {
-        if (*m_Transform->X < 0.0f ||
-            *m_Transform->Y < 0.0f ||
-            *m_Transform->X + this->GetWidth() > SCREEN_WIDTH ||
-            *m_Transform->Y + this->GetHeight() > SCREEN_HEIGHT)
-            {
-                // float deg = m_Angle * 3.14159/180;
-                // m_Transform->TranslateX(-((m_RigidBody->Velocity().X/2) * cos(deg)));
-                // m_Transform->TranslateY(-((m_RigidBody->Velocity().Y/2) * sin(deg)));
-                m_MarkedForDeletion = true;
-            }
-        else if(CollisionHandler::GetInstance()->CheckCollision(m_Collider->Get(), collider->GetCollider()->Get()))
+        if(CollisionHandler::GetInstance()->CheckCollision(m_Collider->Get(), collider->GetCollider()->Get()))
         {
             collider->GetHealthObj()->SetDamage(10);
             m_MarkedForDeletion = true;
