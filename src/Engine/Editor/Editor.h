@@ -15,14 +15,15 @@ struct ObjectInfo {
     bool SnapToGrid = true;
 };
 
-enum class DrawMode {
+enum class EditMode {
     NONE = 0,
     DRAW,
-    ERASE
+    ERASE,
+    SELECT
 };
 
-struct DrawState {
-    DrawMode DrawMode = DrawMode::NONE;
+struct EditState {
+    EditMode EditMode = EditMode::NONE;
     bool IsEditing = false;
     float PrevX = -1;
     float PrevY = -1;
@@ -75,7 +76,8 @@ class Editor : public Application{
         std::string m_CurrentRoomID;
         Texture* m_CurrentTexture{nullptr};
         GameObject* m_CurrentObject;
-        DrawState m_DrawState;
+        std::vector<GameObject*> m_SelectedObjects;
+        EditState m_DrawState;
         ObjectInfo m_ObjectInfo;
         std::vector< std::vector<GameObject*>> m_Layers;
         std::set<int> m_HiddenLayers;

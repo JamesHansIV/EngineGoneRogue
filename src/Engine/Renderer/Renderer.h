@@ -37,6 +37,7 @@ class Renderer{
         void Drop(const std::string& id);
         void Clean();
         void DrawLine(int x1, int y1, int x2, int y2);
+        void DrawRect(SDL_Rect& rect);
         void Draw(const std::string& id, SDL_Rect& srcRect, SDL_Rect& dstRect, SDL_RendererFlip flip = SDL_FLIP_NONE);
         void Draw(const std::string& id, SDL_Rect& srcRect, SDL_Rect& dstRect, double angle, const SDL_Point* center, SDL_RendererFlip flip = SDL_FLIP_NONE);
         void Draw(const std::string& id, int x, int y, int width, int height, SDL_RendererFlip flip = SDL_FLIP_NONE);
