@@ -21,6 +21,7 @@ class Player: public Character, public EventListener{
         RigidBody* m_RigidBody;
         void CanMoveThrough();
         void DrawPlayerHealth();
+        void DrawWeapon();
         std::vector<GameObject*> m_Colliders;
 };
 

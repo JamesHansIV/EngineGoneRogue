@@ -4,6 +4,7 @@
 #include <utility>
 
 void Animation::Update(){
+    // need to work on how to get the animation to start from frame 0 when a new animation is played
     m_SpriteFrame = (SDL_GetTicks()/m_AnimSpeed) % m_FrameCount;
 }
 
