@@ -57,6 +57,31 @@ void Player::DrawPlayerHealth(){
 }
 
 void Player::Update(float dt){
+    m_RigidBody->Update(dt);
+    m_RigidBody->UnSetForce();
+    if (InputChecker::IsKeyPressed(SDLK_w)) {
+        m_RigidBody->ApplyForceY(-13);
+    }
+    if (InputChecker::IsKeyPressed(SDLK_s)) {
+        m_RigidBody->ApplyForceY(13);
+    }
+    if (InputChecker::IsKeyPressed(SDLK_a)) {
+        m_RigidBody->ApplyForceX(-13);
+        // TODO: Add run animation
+        //m_Animation->SetProps("player_run", 1, 8, 100, SDL_FLIP_HORIZONTAL);
+        SetFlip(SDL_FLIP_HORIZONTAL);
+    }
+    if (InputChecker::IsKeyPressed(SDLK_d)) {
+        m_RigidBody->ApplyForceX(13);
+        //m_Animation->SetProps("player_run", 1, 8, 100);
+        SetFlip(SDL_FLIP_NONE);
+    }
+    m_Transform->Translate(m_RigidBody->Position());
+    m_Collider->Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
+    m_Animation->Update();
+    CanMoveThrough();
+
+
     if (InputChecker::IsKeyPressed(SDLK_k)) {
         if (m_CurrentWeapon == PROJECTILE) {
             m_CurrentWeapon = MELEE;
@@ -77,39 +102,16 @@ void Player::Update(float dt){
     for(auto *weapon: weapons){
         if(weapon->GetType() == m_CurrentWeapon)
         {
-            weapon->UpdateColliders(m_Colliders);
-            weapon->SetRotation(angle);
-            weapon->Update(dt);
             int gunX = GetX() + GetWidth() / 2;
             int gunY = GetY() + GetHeight() / 3;
             weapon->SetX(gunX);
-            weapon->SetY(gunY);   
+            weapon->SetY(gunY); 
+            weapon->UpdateColliders(m_Colliders);
+            weapon->SetRotation(angle);
+            weapon->SetFlip(m_Flip);
+            weapon->Update(dt);
         }
     }
-
-    m_RigidBody->Update(dt);
-    m_RigidBody->UnSetForce();
-    if (InputChecker::IsKeyPressed(SDLK_w)) {
-        m_RigidBody->ApplyForceY(-13);
-    }
-    if (InputChecker::IsKeyPressed(SDLK_s)) {
-        m_RigidBody->ApplyForceY(13);
-    }
-    if (InputChecker::IsKeyPressed(SDLK_a)) {
-        m_RigidBody->ApplyForceX(-13);
-        // TODO: Add run animation
-        //m_Animation->SetProps("player_run", 1, 8, 100, SDL_FLIP_HORIZONTAL);
-        //SetFlip(SDL_FLIP_HORIZONTAL);
-    }
-    if (InputChecker::IsKeyPressed(SDLK_d)) {
-        m_RigidBody->ApplyForceX(13);
-        //m_Animation->SetProps("player_run", 1, 8, 100);
-        //SetFlip(SDL_FLIP_NONE);
-    }
-    m_Transform->Translate(m_RigidBody->Position());
-    m_Collider->Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
-    m_Animation->Update();
-    CanMoveThrough();
 }
 
 void Player::CanMoveThrough()
@@ -140,11 +142,11 @@ void Player::OnEvent(Event& event) {
         if (e.key.keysym.sym == SDLK_a) {
             // dont think this is needed anymore, character does not face right or left
             //m_Animation->SetProps("player", 1, 6, 100, SDL_FLIP_HORIZONTAL);
-            //SetFlip(SDL_FLIP_HORIZONTAL);
+            SetFlip(SDL_FLIP_HORIZONTAL);
         }
         if (e.key.keysym.sym == SDLK_d) {
             //m_Animation->SetProps("player", 1, 6, 100);
-            //SetFlip(SDL_FLIP_NONE);
+            SetFlip(SDL_FLIP_NONE);
         }
     }
 }

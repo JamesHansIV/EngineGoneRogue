@@ -76,7 +76,7 @@ class GameObject : public IObject {
         void Draw() override {
             SDL_Rect src_rect = { m_TilePos.col * m_TilePos.w, m_TilePos.row * m_TilePos.h, m_TilePos.w, m_TilePos.h };
             SDL_Rect dst_rect = { static_cast<int>(m_DstRect.x), static_cast<int>(m_DstRect.y), m_DstRect.w, m_DstRect.h };
-            Renderer::GetInstance()->Draw(m_TextureID, src_rect, dst_rect, m_Rotation, nullptr);
+            Renderer::GetInstance()->Draw(m_TextureID, src_rect, dst_rect, m_Rotation, nullptr,m_Flip);
         };
         void Clean() override {};
         void Update(float dt) override {};

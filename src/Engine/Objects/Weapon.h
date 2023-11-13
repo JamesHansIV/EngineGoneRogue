@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "Engine/Input/InputChecker.h"
 #include "Projectile.h"
+#include "Engine/Physics/CollisionHandler.h"
 
 /*
     notes:
@@ -16,7 +17,7 @@ enum WeaponType {
 
 class Weapon : public GameObject {
     public:
-        Weapon(Properties& props, WeaponType weaponType) : GameObject(props), m_Type(weaponType){};
+        Weapon(Properties& props, WeaponType weaponType);
         void Draw() override;
         void Clean() override;
         void Update(float dt) override;
