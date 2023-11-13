@@ -25,23 +25,20 @@ void Player::DrawPlayerHealth(){
 
     int healthBarWidth = static_cast<int>((GetWidth() + 15) * (m_Health->GetHealth() / 100.0));
 
-    // Set the position of the health bar relative to the player
     int healthBarX = GetX();
     int healthBarY = GetY() - HEALTH_BAR_HEIGHT - 5;
 
-    // Create a rectangle for the health bar
     SDL_Rect healthBarRect;
     healthBarRect.x = healthBarX - Renderer::GetInstance()->GetCameraX() - 5;
     healthBarRect.y = healthBarY - Renderer::GetInstance()->GetCameraY();
     healthBarRect.w = healthBarWidth;
     healthBarRect.h = HEALTH_BAR_HEIGHT;
-
-    // Set the color of the health bar (e.g., green for full health, red for low health)
+    
     SDL_SetRenderDrawColor(Renderer::GetInstance()->GetRenderer(), 0, 255, 0, 255);
     SDL_RenderFillRect(Renderer::GetInstance()->GetRenderer(), &healthBarRect);
 }
 
-void Player::Update(float dt, const std::vector<GameObject*>& colliders){
+void Player::Update(float dt){
     m_RigidBody->Update(dt);
     m_RigidBody->UnSetForce();
     if (InputChecker::IsKeyPressed(SDLK_w)) {
@@ -64,12 +61,12 @@ void Player::Update(float dt, const std::vector<GameObject*>& colliders){
     m_Transform->Translate(m_RigidBody->Position());
     m_Collider->Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
     m_Animation->Update();
-    CanMoveThrough(colliders);
+    CanMoveThrough();
 }
 
-void Player::CanMoveThrough(const std::vector<GameObject*>& colliders)
+void Player::CanMoveThrough()
 {
-    for (auto *collider : colliders)
+    for (auto *collider : m_Colliders)
     {
         if (*m_Transform->X < 0.0F ||
             *m_Transform->Y < 0.0F ||

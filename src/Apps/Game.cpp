@@ -1,14 +1,15 @@
 #include "Game.h"
 #include "Engine/Renderer/Renderer.h"
 #include "Engine/Objects/Player.h"
+#include "Engine/Objects/Enemy.h"
 #include "Engine/Events/EventListener.h"
 #include "Engine/Objects/Projectile.h"
 #include "Engine/Input/InputChecker.h"
 
 Player* player = nullptr;
-Player* player2 = nullptr;
-Player* player3 = nullptr;
-Player* player4 = nullptr;
+Enemy* enemy1 = nullptr;
+Enemy* enemy2 = nullptr;
+Enemy* enemy3 = nullptr;
 std::vector<Projectile*> projectiles;
 std::vector<GameObject*> colliders;
 
@@ -26,17 +27,17 @@ Game::Game() {
     player = new Player(props);
 
     Properties props2("player",{0, 0, 18, 16}, {200, 200, 18, 16});
-    player2 = new Player(props2);
+    enemy1 = new Enemy(props2);
 
     Properties props3("player", {0, 0, 18, 16}, {300, 260, 18, 16});
-    player3 = new Player(props3);
+    enemy2 = new Enemy(props3);
 
     Properties props4("player", {0, 0, 18, 16}, {500, 200, 18, 16});
-    player4 = new Player(props4);
+    enemy3 = new Enemy(props4);
 
-    colliders.push_back(player2);
-    colliders.push_back(player3);
-    colliders.push_back(player4);
+    colliders.push_back(enemy1);
+    colliders.push_back(enemy2);
+    colliders.push_back(enemy3);
 
     GetEventManager().AddListener(*player);
 
@@ -45,7 +46,13 @@ Game::Game() {
 
 
 void Game::Update(float dt) {
-    player->Update(dt,colliders);
+    player->UpdateColliders(colliders);
+    player->Update(dt);
+    for(auto *collider: colliders)
+    {
+        collider->Update(dt);
+    }
+
     int const player_x = player->GetMidPointX() - Renderer::GetInstance()->GetCameraX();
     int const player_y = player->GetMidPointY() - Renderer::GetInstance()->GetCameraY();
 
@@ -96,9 +103,9 @@ void Game::Render() {
         obj->Draw();
     }
     player->Draw();
-    player2->Draw();
-    player3->Draw();
-    player4->Draw();
+    for(auto *collider: colliders){
+        collider->Draw();
+    }
     for (auto *projectile : projectiles) {
         projectile->Draw();
     }
