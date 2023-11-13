@@ -21,6 +21,7 @@ class Weapon : public GameObject {
         void Clean() override;
         void Update(float dt) override;
         void UpdateColliders(const std::vector<GameObject*>& colliders){m_Colliders = colliders;};
+        WeaponType GetType() {return m_Type;};
     private:
         WeaponType m_Type;
         std::vector<GameObject*> m_Colliders;

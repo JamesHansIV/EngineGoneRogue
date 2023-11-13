@@ -4,6 +4,7 @@
 #include "Engine/Animation/Animation.h"
 #include "Engine/Physics/RigidBody.h"
 #include "functional"
+#include "Weapon.h"
 
 class Player: public Character, public EventListener{
 
@@ -16,6 +17,7 @@ class Player: public Character, public EventListener{
         void OnEvent(Event& event) override;
         RigidBody* GetRigidBody() {return m_RigidBody;};
 
+
     private:
         Animation* m_Animation;
         RigidBody* m_RigidBody;
@@ -23,5 +25,6 @@ class Player: public Character, public EventListener{
         void DrawPlayerHealth();
         void DrawWeapon();
         std::vector<GameObject*> m_Colliders;
+        WeaponType m_CurrentWeapon;
 };
 

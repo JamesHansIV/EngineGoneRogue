@@ -3,7 +3,6 @@
 #include "Engine/Input/InputChecker.h"
 #include "Engine/Physics/CollisionHandler.h"
 #include "Projectile.h"
-#include "Weapon.h"
 
 std::vector<Weapon*> weapons;
 
@@ -19,6 +18,11 @@ Player::Player(Properties& props): Character(props){
     Properties propsG("gun", {0, 0, 18, 16}, {0, 0, 18, 16}, 0.0);
     Weapon* w1 = new Weapon(propsG, PROJECTILE);
     weapons.push_back(w1);
+
+    Properties propsM("melee", {0, 0, 18, 16}, {0, 0, 18, 16}, 0.0);
+    Weapon* w2 = new Weapon(propsM, MELEE);
+    weapons.push_back(w2);
+    m_CurrentWeapon = PROJECTILE;
 }
 
 
@@ -27,7 +31,10 @@ void Player::Draw(){
     DrawPlayerHealth();
     for(auto *weapon: weapons)
     {
-        weapon->Draw();
+        if(weapon->GetType() == m_CurrentWeapon)
+        {
+            weapon->Draw();
+        }
     }
 }
 
@@ -50,6 +57,15 @@ void Player::DrawPlayerHealth(){
 }
 
 void Player::Update(float dt){
+    if (InputChecker::IsKeyPressed(SDLK_k)) {
+        if (m_CurrentWeapon == PROJECTILE) {
+            m_CurrentWeapon = MELEE;
+        } else {
+            m_CurrentWeapon = PROJECTILE;
+        }
+        InputChecker::SetKeyPressed(SDLK_k, false);
+    }
+
     int gunXX = GetMidPointX() - Renderer::GetInstance()->GetCameraX();
     int gunYY = GetMidPointY() - Renderer::GetInstance()->GetCameraY();
 
@@ -59,13 +75,16 @@ void Player::Update(float dt){
     if (angle < 0) angle += 360.0F;
 
     for(auto *weapon: weapons){
-        weapon->UpdateColliders(m_Colliders);
-        weapon->SetRotation(angle);
-        weapon->Update(dt);
-        int gunX = GetX() + GetWidth() / 2;
-        int gunY = GetY() + GetHeight() / 3;
-        weapon->SetX(gunX);
-        weapon->SetY(gunY);
+        if(weapon->GetType() == m_CurrentWeapon)
+        {
+            weapon->UpdateColliders(m_Colliders);
+            weapon->SetRotation(angle);
+            weapon->Update(dt);
+            int gunX = GetX() + GetWidth() / 2;
+            int gunY = GetY() + GetHeight() / 3;
+            weapon->SetX(gunX);
+            weapon->SetY(gunY);   
+        }
     }
 
     m_RigidBody->Update(dt);

@@ -5,7 +5,9 @@ std::vector<Projectile*> projectiles;
 
 void Weapon:: Draw()
 {
-    
+    if (m_Type == MELEE) {
+        SetRotation(0.0);
+    }
     GameObject::Draw();
     for (auto *projectile : projectiles) {
         projectile->Draw();
@@ -28,26 +30,29 @@ void Weapon::Update(float dt)
 
     SDL_Log("%f", angle);
 
-    Properties projectile_props("projectile", {0, 0, 723, 724}, {GetMidPointX(), GetMidPointY(), 10, 10}, angle);
-    if (InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT))
+    if (m_Type == PROJECTILE)
     {
-        Projectile* projectile = nullptr;
-        projectile = new Projectile(projectile_props, 50, 1.0, angle);
-        projectiles.push_back(projectile);
-        InputChecker::SetMouseButtonPressed(SDL_BUTTON_LEFT, false);
-    }
-    for (auto it = projectiles.begin(); it != projectiles.end();)
-    {
-        (*it)->Update(dt, m_Colliders);
-        if ((*it)->IsMarkedForDeletion())
+        Properties projectile_props("projectile", {0, 0, 723, 724}, {GetMidPointX(), GetMidPointY(), 10, 10}, angle);
+        if (InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT))
         {
-            (*it)->Clean();
-            delete *it;
-            it = projectiles.erase(it);
+            Projectile* projectile = nullptr;
+            projectile = new Projectile(projectile_props, 50, 1.0, angle);
+            projectiles.push_back(projectile);
+            InputChecker::SetMouseButtonPressed(SDL_BUTTON_LEFT, false);
         }
-        else
+        for (auto it = projectiles.begin(); it != projectiles.end();)
         {
-            ++it;
+            (*it)->Update(dt, m_Colliders);
+            if ((*it)->IsMarkedForDeletion())
+            {
+                (*it)->Clean();
+                delete *it;
+                it = projectiles.erase(it);
+            }
+            else
+            {
+                ++it;
+            }
         }
     }
 }
