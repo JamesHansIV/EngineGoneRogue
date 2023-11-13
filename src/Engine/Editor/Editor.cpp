@@ -429,6 +429,7 @@ void Editor::ShowObjectEditor() {
 
         std::string const select_label = m_DrawState.EditMode == EditMode::SELECT ? "Stop Select" : "Begin Select";
         if (ImGui::Button(select_label.c_str())) {
+            m_CurrentObject = nullptr;
             m_DrawState.EditMode = m_DrawState.EditMode == EditMode::SELECT ? EditMode::NONE : EditMode::SELECT;
         }
 
@@ -742,7 +743,15 @@ void Editor::Render() {
     for (int i = 0; i < m_Layers.size(); i++) {
         if (m_HiddenLayers.find(i) == m_HiddenLayers.end()) {
             for (auto *obj : m_Layers[i]) {
+                
                 obj->Draw();
+                if (m_SelectedObjects.find(obj) != m_SelectedObjects.end()) {
+                    std::vector<SDL_Rect> rects;
+                    for (int i = 0; i < 4; i++) {
+                        rects.push_back({ static_cast<int>(obj->GetX())+i, static_cast<int>(obj->GetY())+i, obj->GetWidth(), obj->GetHeight() });
+                    }
+                    Renderer::GetInstance()->DrawRects(rects);
+                }
             }
         }
     }
@@ -788,13 +797,14 @@ void Editor::OnMouseClicked(SDL_Event&  /*event*/) {
             }
         } else {
             GameObject* obj = GetObjectUnderMouse();
-            auto it = std::find(m_SelectedObjects.begin(), m_SelectedObjects.end(), obj);
-            if (obj && it == m_SelectedObjects.end()) {
-                m_SelectedObjects.push_back(obj);
+
+            if (obj) {
+                m_SelectedObjects.insert(obj);
             }
             for (auto& obj : m_SelectedObjects) {
                 SDL_Log("%s", obj->GetID().c_str());
             }
+            SDL_Log("\n");
         }
         m_DrawState.PrevX = x;
         m_DrawState.PrevY = y;
@@ -824,15 +834,15 @@ void Editor::OnMouseMoved(SDL_Event& event) {
                     
                 } else if (m_DrawState.EditMode == EditMode::ERASE) {
                     GameObject* obj = GetObjectUnderMouse();
-                    auto it = std::find(m_SelectedObjects.begin(), m_SelectedObjects.end(), obj);
-                    if (obj && it == m_SelectedObjects.end()) {
+
+                    if (obj) {
                         DeleteObject(obj);
                     }
                 } else {
                     GameObject* obj = GetObjectUnderMouse();
-                    auto it = std::find(m_SelectedObjects.begin(), m_SelectedObjects.end(), obj);
-                    if (obj && it == m_SelectedObjects.end()) {
-                        m_SelectedObjects.push_back(obj);
+
+                    if (obj) {
+                        m_SelectedObjects.insert(obj);
                     }
                 }
                 m_DrawState.PrevX = x;

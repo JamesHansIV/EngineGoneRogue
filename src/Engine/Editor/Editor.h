@@ -76,7 +76,7 @@ class Editor : public Application{
         std::string m_CurrentRoomID;
         Texture* m_CurrentTexture{nullptr};
         GameObject* m_CurrentObject;
-        std::vector<GameObject*> m_SelectedObjects;
+        std::set<GameObject*> m_SelectedObjects;
         EditState m_DrawState;
         ObjectInfo m_ObjectInfo;
         std::vector< std::vector<GameObject*>> m_Layers;
