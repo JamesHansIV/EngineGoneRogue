@@ -44,9 +44,6 @@ void Projectile::CanMoveThrough(const std::vector<GameObject*>& colliders)
         else if(CollisionHandler::GetInstance()->CheckCollision(m_Collider->Get(), collider->GetCollider()->Get()))
         {
             collider->GetHealthObj()->SetDamage(10);
-            if(collider->GetHealthObj()->GetHealth() < 0){
-                collider->GetHealthObj()->SetDamage(-100);
-            }
             m_MarkedForDeletion = true;
         }
     }

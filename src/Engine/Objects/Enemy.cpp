@@ -11,12 +11,14 @@ Enemy::Enemy(Properties& props): Character(props){
     m_Collider = new Collider();
     m_Collider->Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
     m_Health = new Health(100);
+    m_MarkedForDeletion = false;
 }
 
 
 void Enemy::Draw(){
     m_Animation->Draw(m_Transform->GetX(), m_Transform->GetY(), m_DstRect.w, m_DstRect.h);
-    DrawEnemyHealth();
+    if (m_MarkedForDeletion == false)
+        DrawEnemyHealth();
 }
 
 void Enemy::DrawEnemyHealth(){
@@ -39,12 +41,20 @@ void Enemy::DrawEnemyHealth(){
 
 void Enemy::Update(float dt){
     m_Animation->Update();
+    if(m_Health->GetHealth() <= 0)
+    {
+        m_Animation->SetProps("player_dead", 1, 6, 200);
+        if (m_Animation->GetCurrentFrame() == 6-1) {
+            m_MarkedForDeletion = true;
+        }
+    }
 }
 
 void Enemy::OnEvent(Event& event) {
 }
 
 void Enemy::Clean(){
-    Renderer::GetInstance()->Clean();
+    delete m_Animation;
+    delete m_RigidBody;
 }
 

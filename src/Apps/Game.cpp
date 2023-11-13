@@ -19,7 +19,9 @@ Game::Game() {
     Renderer::GetInstance()->AddTexture("player", "../assets/textures/spritesheets/player-front-idle.png");
     Renderer::GetInstance()->AddTexture("tilemap", "../assets/textures/kenney_tiny-dungeon/Tilemap/tilemap_packed.png");
     Renderer::GetInstance()->AddTexture("player_run", "../assets/textures/Run.png");
+    Renderer::GetInstance()->AddTexture("player_dead", "../assets/textures/spritesheets/player-dead.png");
     Renderer::GetInstance()->AddTexture("projectile", "../assets/textures/dot_PNG2.png");
+    
 
     m_Objects = Application::m_Rooms["room1"];
 
@@ -48,9 +50,20 @@ Game::Game() {
 void Game::Update(float dt) {
     player->UpdateColliders(colliders);
     player->Update(dt);
-    for(auto *collider: colliders)
+    for (auto it = colliders.begin(); it != colliders.end();)
     {
-        collider->Update(dt);
+        (*it)->Update(dt);
+        Enemy* enemy = dynamic_cast<Enemy*>(*it);  // Cast to Enemy type
+        if (enemy && enemy->IsMarkedForDeletion())  // Check if it's an Enemy and marked for deletion
+        {
+            (*it)->Clean();
+            delete *it;
+            it = colliders.erase(it);
+        }
+        else
+        {
+            ++it;
+        }
     }
 
     int const player_x = player->GetMidPointX() - Renderer::GetInstance()->GetCameraX();
@@ -72,7 +85,7 @@ void Game::Update(float dt) {
 
     SDL_Log("%f", angle);
 
-    Properties projectile_props("projectile", {0, 0, 723, 724}, {player->GetMidPointX(), player->GetMidPointY(), 15, 15});
+    Properties projectile_props("projectile", {0, 0, 723, 724}, {player->GetMidPointX(), player->GetMidPointY(), 10, 10});
     if (InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT))
     {
         Projectile* projectile = nullptr;

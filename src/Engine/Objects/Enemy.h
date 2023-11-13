@@ -13,10 +13,11 @@ class Enemy: public Character, public EventListener{
         void Update(float dt) override;
         void OnEvent(Event& event) override;
         RigidBody* GetRigidBody() {return m_RigidBody;};
-
+        bool IsMarkedForDeletion(){return m_MarkedForDeletion;};
     private:
         Animation* m_Animation;
         RigidBody* m_RigidBody;
+        bool m_MarkedForDeletion;
         void CanMoveThrough(const std::vector<GameObject*>& colliders);
         void DrawEnemyHealth();
 };
