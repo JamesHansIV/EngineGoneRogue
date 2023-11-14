@@ -145,6 +145,22 @@ void Renderer::DrawLine(int x1, int y1, int x2, int y2) {
     SDL_RenderDrawLine(m_Renderer, x1 - m_Camera.x, y1 - m_Camera.y, x2 - m_Camera.x, y2 - m_Camera.y);
 }
 
+void Renderer::DrawRect(SDL_Rect& rect) {
+    SDL_SetRenderDrawColor(m_Renderer, 0, 150, 255, 255);
+    if (!CheckCollision(rect, m_Camera)) {
+        return;
+    }
+    rect.x -= m_Camera.x;
+    rect.y -= m_Camera.y;
+    SDL_RenderDrawRect(m_Renderer, &rect);
+}
+
+void Renderer::DrawRects(std::vector<SDL_Rect> rects) {
+    for (auto& rect : rects) {
+        DrawRect(rect);
+    }
+}
+
 void Renderer::Draw(const std::string& id, SDL_Rect& srcRect, SDL_Rect& dstRect, SDL_RendererFlip flip)
 {
     if (!CheckCollision(dstRect, m_Camera)) {
