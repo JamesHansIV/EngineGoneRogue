@@ -47,7 +47,7 @@ void Renderer::Render() {
     SDL_RenderPresent(m_Renderer);
     if(m_CameraTarget != nullptr) {
         CenterCameraOnObject();
-}
+    }
 }
 
 Texture* Renderer::AddTexture(const std::string& id, const std::string& filename) {
@@ -214,8 +214,8 @@ void Renderer::Draw(const std::string& id, int x, int y, int width, int height, 
 void Renderer::DrawFrame(const std::string& id, int x, int y, int width, int height, int row, int frame, SDL_RendererFlip flip){
   SDL_Rect const src_rect = {width*frame, height*(row-1), width, height};
   // New sprite is small, has to be scaled larger to look right. Could cause trouble in the future.
-  int new_x = (x + width/2) - (width/2 * 2);
-  int new_y = (y + height/2) - (height/2 * 2);
+  int const new_x = (x + width/2) - (width/2 * 2);
+  int const new_y = (y + height/2) - (height/2 * 2);
   SDL_Rect dst_rect = {new_x, new_y, width*2, height*2};
 
   if (!CheckCollision(dst_rect, m_Camera)) {
@@ -279,7 +279,7 @@ void Renderer::SaveTextures() {
     tinyxml2::XMLElement* file_path;
     tinyxml2::XMLElement* type;
 
-    tinyxml2::XMLElement* tileSize;
+    tinyxml2::XMLElement* tile_size;
     tinyxml2::XMLElement* rows;
     tinyxml2::XMLElement* cols;
 
@@ -290,19 +290,19 @@ void Renderer::SaveTextures() {
         id = doc.NewElement("ID");
         file_path = doc.NewElement("FilePath");
 
-        TileMap* tileMap = dynamic_cast<TileMap*>(it.second);
-        if (tileMap != nullptr) {
+        auto* tile_map = dynamic_cast<TileMap*>(it.second);
+        if (tile_map != nullptr) {
             SDL_Log("Saving tilemap");
             texture->SetAttribute("type", "tileMap");
-            tileSize = doc.NewElement("TileSize");
+            tile_size = doc.NewElement("TileSize");
             rows = doc.NewElement("Rows");
             cols = doc.NewElement("Cols");
 
-            tileSize->SetText(tileMap->GetTileSize());
-            rows->SetText(tileMap->GetRows());
-            cols->SetText(tileMap->GetCols());
+            tile_size->SetText(tile_map->GetTileSize());
+            rows->SetText(tile_map->GetRows());
+            cols->SetText(tile_map->GetCols());
 
-            texture->InsertEndChild(tileSize);
+            texture->InsertEndChild(tile_size);
             texture->InsertEndChild(rows);
             texture->InsertEndChild(cols);
         } else {

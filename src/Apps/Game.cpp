@@ -1,45 +1,65 @@
 #include "Game.h"
 #include "Engine/Renderer/Renderer.h"
 #include "Engine/Objects/Player.h"
+#include "Engine/Objects/Enemy.h"
 #include "Engine/Events/EventListener.h"
-#include "Engine/Objects/Projectile.h"
 #include "Engine/Input/InputChecker.h"
 
 Player* player = nullptr;
-Player* player2 = nullptr;
-Player* player3 = nullptr;
-Player* player4 = nullptr;
-Player* player5 = nullptr;
-std::vector<Projectile*> projectiles;
+Enemy* enemy1 = nullptr;
+Enemy* enemy2 = nullptr;
+Enemy* enemy3 = nullptr;
+Enemy* enemy4 = nullptr;
+Enemy* enemy5 = nullptr;
+Enemy* enemy6 = nullptr;
+Enemy* enemy7 = nullptr;
 std::vector<GameObject*> colliders;
 
 Game::Game() {
     SDL_Renderer* renderer = Renderer::GetInstance()->GetRenderer();
 
     Renderer::GetInstance()->AddTexture("player", "../assets/textures/spritesheets/player-front-idle.png");
+    Renderer::GetInstance()->AddTexture("enemy", "../assets/textures/BulletHell/PURPLE/Boss/idle/spr_boss_idle (1).png");
     Renderer::GetInstance()->AddTexture("tilemap", "../assets/textures/kenney_tiny-dungeon/Tilemap/tilemap_packed.png");
     Renderer::GetInstance()->AddTexture("player_run", "../assets/textures/Run.png");
-    Renderer::GetInstance()->AddTexture("projectile", "../assets/textures/dot_PNG2.png");
+    Renderer::GetInstance()->AddTexture("player_dead", "../assets/textures/spritesheets/player-dead.png");
+    Renderer::GetInstance()->AddTexture("projectile", "../assets/textures/BulletHell/PURPLE/Weapons/weapons/Firearms/Bullets/spr_bullet3.png");
+    Renderer::GetInstance()->AddTexture("melee", "../assets/textures/BulletHell/PURPLE/Weapons/weapons/Melee/spr_sword_03.png");
+    Renderer::GetInstance()->AddTexture("gun", "../assets/textures/BulletHell/PURPLE/Weapons/weapons/Firearms/spr_weapon06.png");
 
     m_Objects = Application::m_Rooms["room1"];
 
-    Properties props("player", {0, 0, 18, 16}, {0, 0, 18, 16});
-    player = new Player(props);
+    Properties props_p("player", {0, 0, 18, 16}, {0, 0, 18, 16});
+    player = new Player(props_p);
 
-    Properties props2("player",{0, 0, 18, 16}, {100, 128, 18, 16});
-    player2 = new Player(props2);
+    Properties props1("player",{0, 0, 18, 16}, {200, 200, 18, 16});
+    enemy1 = new Enemy(props1);
 
-    Properties props3("player", {0, 0, 18, 16}, {700, 360, 16});
-    Properties props4("player", {0, 0, 18, 16}, {300, 278, 18, 16});
-    Properties props5("player", {0, 0, 18, 16}, {200, 389, 18, 16});
-    player3 = new Player(props3);
-    player4 = new Player(props4);
-    player5 = new Player(props5);
+    Properties props2("player", {0, 0, 18, 16}, {300, 260, 18, 16});
+    enemy2 = new Enemy(props2);
 
-    colliders.push_back(player2);
-    colliders.push_back(player3);
-    colliders.push_back(player4);
-    colliders.push_back(player5);
+    Properties props3("player", {0, 0, 18, 16}, {500, 200, 18, 16});
+    enemy3 = new Enemy(props3);
+    
+    Properties props4("player", {0, 0, 18, 16}, {800, 267, 18, 16});
+    enemy4 = new Enemy(props4);
+
+    Properties props5("player", {0, 0, 18, 16}, {700, 300, 18, 16});
+    enemy5 = new Enemy(props5);
+    
+    Properties props6("player", {0, 0, 18, 16}, {600, 150, 18, 16});
+    enemy6 = new Enemy(props6);
+
+    Properties props7("player", {0, 0, 18, 16}, {700, 299, 18, 16});
+    enemy7 = new Enemy(props7);
+
+    colliders.push_back(enemy1);
+    colliders.push_back(enemy2);
+    colliders.push_back(enemy3);
+    colliders.push_back(enemy4);
+    colliders.push_back(enemy5);
+    colliders.push_back(enemy6);
+    colliders.push_back(enemy7);
 
     GetEventManager().AddListener(*player);
 
@@ -48,37 +68,22 @@ Game::Game() {
 
 
 void Game::Update(float dt) {
-    player->Update(dt,colliders);
-    int const player_x = player->GetMidPointX() - Renderer::GetInstance()->GetCameraX();
-    int const player_y = player->GetMidPointY() - Renderer::GetInstance()->GetCameraY();
-
-    SDL_Log("%d, %d", player_x , player_y );
-    int const mouse_x = InputChecker::GetMouseX();
-    int const mouse_y = InputChecker::GetMouseY();
-
-    SDL_Log("%d, %d", mouse_x , mouse_y );
-
-    // Calculate the angle between the mouse and the player
-    float const delta_x = mouse_x - player_x;
-    float const delta_y = mouse_y - player_y;
-    float angle = atan2(delta_y, delta_x) * (180.0 / M_PI);
-    // Convert the angle range from -180 to 180 to 0 to 360
-    if (angle < 0) {
-        angle += 360.0F;
-    }
-
-    SDL_Log("%f", angle);
-
-    Properties projectile_props("projectile", {0, 0, 723, 724}, {player->GetMidPointX(), player->GetMidPointY(), 15, 15});
-    if (InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT))
+    player->UpdateColliders(colliders);
+    player->Update(dt);
+    for (auto it = colliders.begin(); it != colliders.end();)
     {
-        Projectile* projectile = nullptr;
-        projectile = new Projectile(projectile_props, 50, 1.0, angle);
-        projectiles.push_back(projectile);
-        InputChecker::SetMouseButtonPressed(SDL_BUTTON_LEFT, false);
-    }
-    for (auto *projectile : projectiles) {
-        projectile->Update(dt);
+        (*it)->Update(dt);
+        Enemy* enemy = dynamic_cast<Enemy*>(*it);  // Cast to Enemy type
+        if (enemy && enemy->IsMarkedForDeletion())  // Check if it's an Enemy and marked for deletion
+        {
+            (*it)->Clean();
+            delete *it;
+            it = colliders.erase(it);
+        }
+        else
+        {
+            ++it;
+        }
     }
 }
 
@@ -89,14 +94,9 @@ void Game::Render() {
         obj->Draw();
     }
     player->Draw();
-    player2->Draw();
-    player3->Draw();
-    player4->Draw();
-    player5->Draw();
-    for (auto *projectile : projectiles) {
-        projectile->Draw();
+    for(auto *collider: colliders){
+        collider->Draw();
     }
-
     Renderer::GetInstance()->Render();
 }
 

@@ -122,14 +122,13 @@ void Editor::CleanLayers() {
     m_HiddenLayers.clear();
     m_CurrentTexture = nullptr;
     m_CurrentObject = nullptr;
-    auto it = m_Layers.begin();
     for (int i = 0; i < m_Layers.size(); i++) {
         for (auto *obj : m_Layers[i]) {
+
             delete obj;
         }
-        m_Layers.erase(it);
-        it++;
     }
+    m_Layers.clear();
 }
 
 void SaveBaseObject(tinyxml2::XMLDocument& doc, tinyxml2::XMLElement* xmlObj, GameObject* obj) {
@@ -293,7 +292,7 @@ void Editor::ShowFileManager() {
             static char room_name[128];
             ImGui::InputText("Input room name", room_name, sizeof(room_name));
             if (strcmp(room_name, "") != 0) {
-                if (ImGui::Button("Save current room", ImVec2(100, 30))) {
+                if (ImGui::Button("Save room", ImVec2(100, 30))) {
                     m_CurrentRoomID = room_name;
                     SaveRoom(m_CurrentRoomID.c_str());
                     AddRoom();
@@ -319,7 +318,7 @@ void Editor::ShowFileManager() {
                     if (ImGui::Button(id.c_str(), ImVec2(100, 30))) {
                         
                         CleanLayers();
-                        m_Layers.push_back(m_Rooms[id]);
+                        m_Layers.push_back(std::vector<GameObject*>(m_Rooms[id]));
                         m_CurrentRoomID = id;
                         ImGui::CloseCurrentPopup();
                     }
@@ -792,7 +791,7 @@ void Editor::OnMouseClicked(SDL_Event&  /*event*/) {
             AddObject(x, y);
         } else if (m_DrawState.EditMode == EditMode::ERASE) {
             GameObject* obj = GetObjectUnderMouse();
-            if (obj) {
+            if (obj != nullptr) {
                 DeleteObject(obj);
             }
         } else {
@@ -811,7 +810,7 @@ void Editor::OnMouseClicked(SDL_Event&  /*event*/) {
 
     } else {
         GameObject* obj = GetObjectUnderMouse();
-        if (obj) {
+        if (obj != nullptr) {
             auto it = std::find(m_Layers[m_CurrentLayer].begin(), m_Layers[m_CurrentLayer].end(), obj);
             m_Layers[m_CurrentLayer].erase(it);
             m_Layers[m_CurrentLayer].push_back(obj);
