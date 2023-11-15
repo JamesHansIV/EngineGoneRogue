@@ -54,7 +54,8 @@ class GameObject : public IObject {
         explicit GameObject(Properties& props): m_TextureID(props.TextureID),
             m_TilePos(props.TilePosition), m_DstRect(props.DstRect),
             m_Rotation(props.Rotation),
-            m_Flip(props.Flip), m_ObjectID(props.ObjectID){
+            m_Flip(props.Flip), m_ObjectID(props.ObjectID),
+            m_Collider(nullptr) {
 
             m_Transform = new Transform(&m_DstRect.x, &m_DstRect.y);
         }
@@ -108,8 +109,9 @@ class GameObject : public IObject {
         SDL_RendererFlip GetFlip() {return m_Flip;}
         void SetFlip(SDL_RendererFlip flip) {m_Flip = flip;}
 
-        Collider* GetCollider(){return m_Collider;};
-        Health* GetHealthObj(){return m_Health;};
+        void SetCollider(Collider* collider) { m_Collider = collider; }
+        Collider* GetCollider(){return m_Collider;}
+        Health* GetHealthObj(){return m_Health;}
 
     protected:
         Transform* m_Transform;

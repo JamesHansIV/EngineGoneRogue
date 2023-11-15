@@ -33,6 +33,12 @@ Game::Game() {
 
     m_Objects = Application::m_Rooms["room1"];
 
+    for (auto& obj : m_Objects) {
+        if (obj->GetCollider() != nullptr) {
+            colliders.push_back(obj);
+        }
+    }
+
     Properties props_p("player", {0, 0, 18, 16}, {0, 0, 18, 16});
     player = new Player(props_p);
 
@@ -57,6 +63,13 @@ Game::Game() {
     Properties props7("enemy5", {0, 0, 18, 16}, {700, 299, 18, 16});
     enemy7 = new Enemy(props7);
 
+    m_Objects.push_back(enemy1);
+    m_Objects.push_back(enemy2);
+    m_Objects.push_back(enemy3);
+    m_Objects.push_back(enemy4);
+    m_Objects.push_back(enemy5);
+    m_Objects.push_back(enemy6);
+    m_Objects.push_back(enemy7);
     colliders.push_back(enemy1);
     colliders.push_back(enemy2);
     colliders.push_back(enemy3);
@@ -70,7 +83,6 @@ Game::Game() {
     Renderer::GetInstance()->SetCameraTarget(player);
 }
 
-
 void Game::Update(float dt) {
     player->UpdateColliders(colliders);
     player->Update(dt);
@@ -80,8 +92,7 @@ void Game::Update(float dt) {
         Enemy* enemy = dynamic_cast<Enemy*>(*it);  // Cast to Enemy type
         if (enemy && enemy->IsMarkedForDeletion())  // Check if it's an Enemy and marked for deletion
         {
-            (*it)->Clean();
-            delete *it;
+            DeleteObject(enemy);
             it = colliders.erase(it);
         }
         else
@@ -98,10 +109,19 @@ void Game::Render() {
         obj->Draw();
     }
     player->Draw();
-    for(auto *collider: colliders){
-        collider->Draw();
-    }
     Renderer::GetInstance()->Render();
+}
+
+void Game::DeleteObject(GameObject* obj) {
+    auto it = std::find(m_Objects.begin(), m_Objects.end(), obj);
+    if (it != m_Objects.end()) {
+        SDL_Log("found obj in m_Objects: %s", (*it)->GetID().c_str());
+        m_Objects.erase(it);
+        SDL_Log("m_Objects size: %lu", m_Objects.size());
+    }
+    obj->Clean();
+    delete obj;
+    obj = nullptr;
 }
 
 #if EDITOR == 0

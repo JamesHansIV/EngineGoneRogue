@@ -127,6 +127,11 @@ void Player::CanMoveThrough()
     }
     for (auto *collider : m_Colliders)
     {
+        SDL_Log("Checking collider: %s", collider->GetID().c_str());
+        SDL_Log("x: %d", collider->GetCollider()->Get().x);
+        SDL_Log("y: %d", collider->GetCollider()->Get().y);
+        SDL_Log("w: %d", collider->GetCollider()->Get().w);
+        SDL_Log("h: %d", collider->GetCollider()->Get().h);
         if (CollisionHandler::GetInstance()->CheckCollision(m_Collider->Get(), collider->GetCollider()->Get()))
         {
             m_Transform->TranslateX(-m_RigidBody->Velocity().X/2);

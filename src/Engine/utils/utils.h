@@ -7,3 +7,6 @@
 #define TILE_SIZE 32
 
 #define LOAD_PROJECT 1
+
+#define FILEPATH_LEN 128
+#define LABEL_LEN 32

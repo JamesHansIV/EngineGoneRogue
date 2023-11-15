@@ -318,8 +318,8 @@ void Renderer::SaveTextures() {
         root->InsertEndChild(texture);
     }
 
-    char dst_path[128];
-    sprintf(dst_path, "../assets/projects/%s/textures.xml", Application::Get()->GetProjectName().c_str());
+    char dst_path[FILEPATH_LEN+1];
+    snprintf(dst_path, FILEPATH_LEN, "../assets/projects/%s/textures.xml", Application::Get()->GetProjectName().c_str());
     int const success = doc.SaveFile(dst_path);
     SDL_Log("Saving textures a success: %d", success);
 }

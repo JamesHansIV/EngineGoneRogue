@@ -13,10 +13,9 @@ class Player: public Character, public EventListener{
         void Draw() override;
         void Clean() override;
         void Update(float dt) override;
-        void UpdateColliders(const std::vector<GameObject*>& colliders){m_Colliders = colliders;};
+        void UpdateColliders(const std::vector<GameObject*>& colliders){m_Colliders = colliders;}
         void OnEvent(Event& event) override;
         RigidBody* GetRigidBody() {return m_RigidBody;};
-
 
     private:
         Animation* m_Animation;

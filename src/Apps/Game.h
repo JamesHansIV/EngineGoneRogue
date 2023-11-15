@@ -12,6 +12,8 @@ class Game : public Application{
         void Update(float dt) override;
         void Render() override;
 
+        void DeleteObject(GameObject* obj);
+
     private:
         std::vector<GameObject*> m_Objects;
 };

@@ -125,7 +125,25 @@ bool Application::LoadObject(tinyxml2::XMLElement* xmlObj, const std::string& ro
         dst_rect_val, angle, object_id_val
     );
 
-    m_Rooms[roomID].push_back(new GameObject(props));
+    GameObject* obj = new GameObject(props);
+
+    tinyxml2::XMLElement* collider = xmlObj->FirstChildElement("Collider");
+    SDL_Log("Collider exists: %d", collider != nullptr);
+    if (collider != nullptr) {
+        obj->SetCollider(new Collider());
+        obj->GetCollider()->Set(
+            atoi(collider->FirstChildElement("XPos")->GetText()),
+            atoi(collider->FirstChildElement("YPos")->GetText()),
+            atoi(collider->FirstChildElement("Width")->GetText()),
+            atoi(collider->FirstChildElement("Height")->GetText())
+        );
+        SDL_Log("collider x: %d", obj->GetCollider()->Get().x);
+        SDL_Log("collider y: %d", obj->GetCollider()->Get().y);
+        SDL_Log("collider w: %d", obj->GetCollider()->Get().w);
+        SDL_Log("collider h: %d", obj->GetCollider()->Get().h);
+    }
+
+    m_Rooms[roomID].push_back(obj);
     return true;
 }
 
@@ -182,8 +200,8 @@ bool Application::LoadRooms(const char* projectPath) {
 }
 
 bool Application::LoadProject() {
-    char project_path[128];
-    sprintf(project_path, "../assets/projects/%s", m_ProjectName.c_str());
+    char project_path[FILEPATH_LEN+1];
+    snprintf(project_path, FILEPATH_LEN, "../assets/projects/%s", m_ProjectName.c_str());
     if (!LoadTextures(project_path)) return false;
     SDL_Log("Textures are fine");
     SDL_Log("%s", project_path);

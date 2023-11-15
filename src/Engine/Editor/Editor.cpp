@@ -10,12 +10,14 @@
 #include "Engine/Objects/Player.h"
 #include "Engine/Objects/Projectile.h"
 #include "Engine/Input/InputChecker.h"
+#include "Engine/Physics/Collider.h"
 
 #include <cstdlib>
 #include <dirent.h>
 #include <memory>
 #include <sys/stat.h>
 #include <tinyxml2.h>
+
 
 /*
 TODO list
@@ -93,6 +95,15 @@ void MoveObject(GameObject* obj, int dx, int dy) {
     obj->SetY(next_y);
 }
 
+std::vector<GameObject*> CopyObjects(std::vector<GameObject*> objects) {
+    std::vector<GameObject*> objectCopies;
+
+    for (auto *obj: objects) {
+        objectCopies.push_back(new GameObject(obj));
+    }
+    return objectCopies;
+}
+
 Editor::Editor()  {
     ImGui::CreateContext();
     SDL_Renderer* renderer = Renderer::GetInstance()->GetRenderer();
@@ -124,7 +135,6 @@ void Editor::CleanLayers() {
     m_CurrentObject = nullptr;
     for (int i = 0; i < m_Layers.size(); i++) {
         for (auto *obj : m_Layers[i]) {
-
             delete obj;
         }
     }
@@ -180,6 +190,26 @@ void SaveBaseObject(tinyxml2::XMLDocument& doc, tinyxml2::XMLElement* xmlObj, Ga
     xmlObj->InsertEndChild(src_rect);
     xmlObj->InsertEndChild(dst_rect);
     xmlObj->InsertEndChild(rotation);
+
+    if (obj->GetCollider() != nullptr) {
+        tinyxml2::XMLElement* collider = doc.NewElement("Collider");
+        tinyxml2::XMLElement* colliderX = doc.NewElement("XPos");
+        tinyxml2::XMLElement* colliderY = doc.NewElement("YPos");
+        tinyxml2::XMLElement* colliderW = doc.NewElement("Width");
+        tinyxml2::XMLElement* colliderH = doc.NewElement("Height");
+        colliderX->SetText(std::to_string(obj->GetCollider()->Get().x).c_str());
+        colliderY->SetText(std::to_string(obj->GetCollider()->Get().y).c_str());
+        colliderW->SetText(std::to_string(obj->GetCollider()->Get().w).c_str());
+        colliderH->SetText(std::to_string(obj->GetCollider()->Get().h).c_str());
+
+        collider->InsertEndChild(colliderX);
+        collider->InsertEndChild(colliderY);
+        collider->InsertEndChild(colliderW);
+        collider->InsertEndChild(colliderH);
+
+        xmlObj->InsertEndChild(collider);
+    }
+
 }
 
 void Editor::SaveRoom(const char* roomName) {
@@ -208,8 +238,8 @@ void Editor::SaveRoom(const char* roomName) {
         }
     }
 
-    char file_path[128];
-    sprintf(file_path, "../assets/projects/%s/rooms/%s.xml", m_ProjectName.c_str(), roomName);
+    char file_path[FILEPATH_LEN+1];
+    snprintf(file_path, FILEPATH_LEN, "../assets/projects/%s/rooms/%s.xml", m_ProjectName.c_str(), roomName);
     int const success = doc.SaveFile(file_path);
     SDL_Log("Saving room a success: %d", success);
 }
@@ -227,12 +257,12 @@ void Editor::CreateProjectFolder() {
     struct dirent* entry;
     DIR* dp;
 
-    char project_path[128];
-    sprintf(project_path, "../assets/projects/%s", m_ProjectName.c_str());
+    char project_path[FILEPATH_LEN+1];
+    snprintf(project_path, FILEPATH_LEN, "../assets/projects/%s", m_ProjectName.c_str());
     dp = opendir(project_path);
     if (dp == nullptr) {
-        char command[128];
-        sprintf(command, "mkdir %s", project_path);
+        char command[FILEPATH_LEN+1];
+        snprintf(command, FILEPATH_LEN, "mkdir %s", project_path);
         system(command);
     }
     closedir(dp);
@@ -318,7 +348,8 @@ void Editor::ShowFileManager() {
                     if (ImGui::Button(id.c_str(), ImVec2(100, 30))) {
                         
                         CleanLayers();
-                        m_Layers.push_back(std::vector<GameObject*>(m_Rooms[id]));
+                        
+                        m_Layers.push_back(CopyObjects(m_Rooms[id]));
                         m_CurrentRoomID = id;
                         ImGui::CloseCurrentPopup();
                     }
@@ -329,6 +360,21 @@ void Editor::ShowFileManager() {
         }
 
         ImGui::EndTabItem();
+    }
+}
+
+void Editor::ShowAddCollider() {
+    if (m_CurrentObject->GetCollider() == nullptr && ImGui::TreeNode("Add Collider")) {
+        
+        ImGui::InputInt("Set collider width", &m_ObjectInfo.Collider.w);
+
+        ImGui::InputInt("Set collider height", &m_ObjectInfo.Collider.h);
+
+        if (ImGui::Button("Add collider", ImVec2(100, 30))) {
+            m_CurrentObject->SetCollider(new Collider());
+            m_CurrentObject->GetCollider()->Set(m_CurrentObject->GetX(), m_CurrentObject->GetY(), m_ObjectInfo.Collider.w, m_ObjectInfo.Collider.h);
+        }
+        ImGui::TreePop();
     }
 }
 
@@ -367,6 +413,7 @@ void Editor::ShowObjectEditor() {
                 for (auto& obj : m_SelectedObjects) {
                     DeleteObject(obj);
                 }
+                m_SelectedObjects.clear();
             }
 
         } else if (m_CurrentObject != nullptr) {
@@ -402,8 +449,6 @@ void Editor::ShowObjectEditor() {
             ImGui::SliderInt("Width", &m_CurrentObject->GetWidth(), 0, LEVEL_WIDTH);
             ImGui::SliderInt("Height", &m_CurrentObject->GetHeight(), 0, LEVEL_HEIGHT);
 
-            
-
             if (ImGui::Button("Rotate left", ImVec2(100, 30))) {
                 m_CurrentObject->GetRotation() -= 90.0F;
                 m_CurrentObject->GetRotation() = static_cast<int>(m_CurrentObject->GetRotation()) % 360;
@@ -417,6 +462,8 @@ void Editor::ShowObjectEditor() {
             if (ImGui::Button("Delete object", ImVec2(100, 30))) {
                 DeleteObject(m_CurrentObject);
             }
+
+            ShowAddCollider();
         }
 
         ImGui::Text("Snap to grid: ");
@@ -669,22 +716,22 @@ void Editor::ShowChooseLayer() {
         }
         ImGui::SeparatorText("Select Layer");
         for (int i = 0; i < m_Layers.size(); i++) {
-            char layer_label[32];
-            sprintf(layer_label, "Layer %d", i);
+            char layer_label[LABEL_LEN+1];
+            snprintf(layer_label, LABEL_LEN, "Layer %d", i);
             if (ImGui::Selectable(layer_label, m_CurrentLayer == i)) {
                 m_CurrentLayer = i;
                 m_CurrentObject = nullptr;
             }
 
-            char button_label[32];
+            char button_label[LABEL_LEN+1];
             if (m_HiddenLayers.find(i) == m_HiddenLayers.end()) {
-                sprintf(button_label, "Hide %d", i);
+                snprintf(button_label, LABEL_LEN, "Hide %d", i);
                 if (ImGui::Button(button_label, ImVec2(60, 20))) {
                     SDL_Log("layer %d should be hidden", i);
                     m_HiddenLayers.insert(i);
                 }
             } else {
-                sprintf(button_label, "Show %d", i);
+                snprintf(button_label, LABEL_LEN, "Show %d", i);
                 if (ImGui::Button(button_label, ImVec2(60, 20))) {
                     m_HiddenLayers.erase(i);
                 }
@@ -829,7 +876,6 @@ void Editor::OnMouseMoved(SDL_Event& event) {
             if ((x != m_DrawState.PrevX || y != m_DrawState.PrevY)) {
                 if (m_DrawState.EditMode == EditMode::DRAW) {
                     AddObject(x, y);
-                    
                     
                 } else if (m_DrawState.EditMode == EditMode::ERASE) {
                     GameObject* obj = GetObjectUnderMouse();

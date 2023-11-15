@@ -12,6 +12,7 @@ struct ObjectInfo {
     Rect DstRect;
     float Rotation = 0.0F;
     ObjectType type = ObjectType::kBase;
+    SDL_Rect Collider;
     bool SnapToGrid = true;
 };
 
@@ -64,6 +65,7 @@ class Editor : public Application{
         void CreateObject(ObjectType type);
         // Player* CreatePlayer(Properties props);
         // Projectile* CreateProjectile(Properties props);
+        void ShowAddCollider();
         void ShowObjectEditor();
         void ShowTextureIDs();
         void ShowObjectManager();
