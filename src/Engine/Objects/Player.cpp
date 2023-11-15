@@ -23,6 +23,7 @@ Player::Player(Properties& props): Character(props){
     Weapon* w2 = new Weapon(propsM, MELEE);
     weapons.push_back(w2);
     m_CurrentWeapon = PROJECTILE;
+    m_MarkedForDeletion = false;
 }
 
 
@@ -42,7 +43,7 @@ void Player::DrawPlayerHealth(){
     const int HEALTH_BAR_HEIGHT = 10;
 
     int healthBarWidth = static_cast<int>((GetWidth() + 15) * (m_Health->GetHealth() / 100.0));
-
+    if (healthBarWidth <= 0) healthBarWidth = 0;
     int healthBarX = GetX();
     int healthBarY = GetY() - HEALTH_BAR_HEIGHT - 5;
 
@@ -57,6 +58,14 @@ void Player::DrawPlayerHealth(){
 }
 
 void Player::Update(float dt){
+    if(m_Health->GetHealth() <= 0)
+    {
+        m_Animation->SetProps("player_dead", 1, 6, 500);
+        if (m_Animation->GetCurrentFrame() == 6-1) {
+            m_MarkedForDeletion = true;
+        }
+    }
+    m_Animation->Update();
     m_RigidBody->Update(dt);
     m_RigidBody->UnSetForce();
     if (InputChecker::IsKeyPressed(SDLK_w)) {
@@ -82,14 +91,15 @@ void Player::Update(float dt){
     CanMoveThrough();
 
 
-    if (InputChecker::IsKeyPressed(SDLK_k)) {
+    if (InputChecker::GetMouseWheelDirection() != 0) {
         if (m_CurrentWeapon == PROJECTILE) {
             m_CurrentWeapon = MELEE;
         } else {
             m_CurrentWeapon = PROJECTILE;
         }
-        InputChecker::SetKeyPressed(SDLK_k, false);
-    }
+        // Reset the mouse wheel direction to avoid toggling multiple times
+        InputChecker::SetMouseWheelDirection(0);
+    }   
 
     int gunXX = GetMidPointX() - Renderer::GetInstance()->GetCameraX();
     int gunYY = GetMidPointY() - Renderer::GetInstance()->GetCameraY();
@@ -136,7 +146,7 @@ void Player::CanMoveThrough()
         {
             m_Transform->TranslateX(-m_RigidBody->Velocity().X/2);
             m_Transform->TranslateY(-m_RigidBody->Velocity().Y/2);
-            m_Collider->Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());            
+            m_Collider->Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());         
         }
     }
 }

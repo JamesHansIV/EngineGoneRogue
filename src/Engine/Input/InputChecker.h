@@ -9,4 +9,6 @@ public:
     static int GetMouseX();
     static int GetMouseY();
     static void UpdateMousePosition(int x, int y);
+    static int GetMouseWheelDirection();
+    static void SetMouseWheelDirection(int direction);
 };

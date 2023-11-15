@@ -16,7 +16,7 @@ class Player: public Character, public EventListener{
         void UpdateColliders(const std::vector<GameObject*>& colliders){m_Colliders = colliders;}
         void OnEvent(Event& event) override;
         RigidBody* GetRigidBody() {return m_RigidBody;};
-
+        bool IsMarkedForDeletion(){return m_MarkedForDeletion;};
     private:
         Animation* m_Animation;
         RigidBody* m_RigidBody;
@@ -25,5 +25,6 @@ class Player: public Character, public EventListener{
         void DrawWeapon();
         std::vector<GameObject*> m_Colliders;
         WeaponType m_CurrentWeapon;
+        bool m_MarkedForDeletion;
 };
 

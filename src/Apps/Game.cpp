@@ -13,6 +13,7 @@ Enemy* enemy4 = nullptr;
 Enemy* enemy5 = nullptr;
 Enemy* enemy6 = nullptr;
 Enemy* enemy7 = nullptr;
+Enemy* enemy8 = nullptr;
 std::vector<GameObject*> colliders;
 
 Game::Game() {
@@ -24,6 +25,7 @@ Game::Game() {
     Renderer::GetInstance()->AddTexture("enemy3", "../assets/textures/spritesheets/enemy3_idle_spritesheet.png");
     Renderer::GetInstance()->AddTexture("enemy4", "../assets/textures/spritesheets/enemy4_idle_spritesheet.png");
     Renderer::GetInstance()->AddTexture("enemy5", "../assets/textures/spritesheets/enemy5_idle_spritesheet.png");
+    Renderer::GetInstance()->AddTexture("boss", "../assets/textures/spritesheets/boss_idle_spritesheet.png" );
     Renderer::GetInstance()->AddTexture("tilemap", "../assets/textures/kenney_tiny-dungeon/Tilemap/tilemap_packed.png");
     Renderer::GetInstance()->AddTexture("player_run", "../assets/textures/Run.png");
     Renderer::GetInstance()->AddTexture("player_dead", "../assets/textures/spritesheets/player-dead.png");
@@ -42,26 +44,23 @@ Game::Game() {
     Properties props_p("player", {0, 0, 18, 16}, {0, 0, 18, 16});
     player = new Player(props_p);
 
-    Properties props1("enemy1",{0, 0, 18, 16}, {200, 200, 18, 16});
-    enemy1 = new Enemy(props1);
+    Properties props1("enemy5",{0, 0, 18, 16}, {200, 200, 18, 16});
+    enemy1 = new Enemy(props1, 150, 150);
 
-    Properties props2("enemy2", {0, 0, 18, 16}, {300, 260, 18, 16});
-    enemy2 = new Enemy(props2);
+    Properties props2("enemy5", {0, 0, 18, 16}, {300, 260, 18, 16});
+    enemy2 = new Enemy(props2,  150, 150);
 
-    Properties props3("enemy3", {0, 0, 18, 16}, {500, 200, 18, 16});
-    enemy3 = new Enemy(props3);
+    Properties props3("enemy5", {0, 0, 18, 16}, {500, 200, 18, 16});
+    enemy3 = new Enemy(props3,  150, 150);
     
-    Properties props4("enemy4", {0, 0, 18, 16}, {800, 267, 18, 16});
-    enemy4 = new Enemy(props4);
+    Properties props4("enemy5", {0, 0, 18, 16}, {600, 367, 18, 16});
+    enemy4 = new Enemy(props4,  150, 150);
 
     Properties props5("enemy5", {0, 0, 18, 16}, {700, 300, 18, 16});
-    enemy5 = new Enemy(props5);
+    enemy5 = new Enemy(props5, 150, 150);
     
     Properties props6("enemy5", {0, 0, 18, 16}, {600, 150, 18, 16});
-    enemy6 = new Enemy(props6);
-
-    Properties props7("enemy5", {0, 0, 18, 16}, {700, 299, 18, 16});
-    enemy7 = new Enemy(props7);
+    enemy6 = new Enemy(props6,  150, 150);
 
     m_Objects.push_back(enemy1);
     m_Objects.push_back(enemy2);
@@ -76,7 +75,6 @@ Game::Game() {
     colliders.push_back(enemy4);
     colliders.push_back(enemy5);
     colliders.push_back(enemy6);
-    colliders.push_back(enemy7);
 
     GetEventManager().AddListener(*player);
 
@@ -84,12 +82,22 @@ Game::Game() {
 }
 
 void Game::Update(float dt) {
+    if(player->IsMarkedForDeletion())
+    {
+        player->Clean();
+        delete player;
+    }
     player->UpdateColliders(colliders);
     player->Update(dt);
     for (auto it = colliders.begin(); it != colliders.end();)
     {
-        (*it)->Update(dt);
         Enemy* enemy = dynamic_cast<Enemy*>(*it);  // Cast to Enemy type
+        if (enemy)
+        {
+            enemy->SetPlayer(player);
+            enemy->UpdateColliders(colliders);
+        }
+        (*it)->Update(dt);
         if (enemy && enemy->IsMarkedForDeletion())  // Check if it's an Enemy and marked for deletion
         {
             DeleteObject(enemy);
