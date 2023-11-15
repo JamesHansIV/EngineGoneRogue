@@ -1,6 +1,7 @@
 #include "Projectile.h"
 #include "Engine/Renderer/Renderer.h"
 #include "Engine/Physics/CollisionHandler.h"
+#include "Character.h"
 #include <SDL2/SDL.h>
 
 Projectile::Projectile(Properties& props, int speed, float mass, float angle): GameObject(props), m_Speed(speed), m_Mass(mass), m_Angle(angle){
@@ -39,7 +40,9 @@ void Projectile::CanMoveThrough(const std::vector<GameObject*>& colliders)
     {
         if(CollisionHandler::GetInstance()->CheckCollision(m_Collider->Get(), collider->GetCollider()->Get()))
         {
-            collider->GetHealthObj()->SetDamage(10);
+            if (dynamic_cast<Character*>(collider)) {
+                collider->GetHealthObj()->SetDamage(10);
+            }
             m_MarkedForDeletion = true;
         }
     }
