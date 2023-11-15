@@ -91,14 +91,15 @@ void Player::Update(float dt){
     CanMoveThrough();
 
 
-    if (InputChecker::IsKeyPressed(SDLK_k)) {
+    if (InputChecker::GetMouseWheelDirection() != 0) {
         if (m_CurrentWeapon == PROJECTILE) {
             m_CurrentWeapon = MELEE;
         } else {
             m_CurrentWeapon = PROJECTILE;
         }
-        InputChecker::SetKeyPressed(SDLK_k, false);
-    }
+        // Reset the mouse wheel direction to avoid toggling multiple times
+        InputChecker::SetMouseWheelDirection(0);
+    }   
 
     int gunXX = GetMidPointX() - Renderer::GetInstance()->GetCameraX();
     int gunYY = GetMidPointY() - Renderer::GetInstance()->GetCameraY();

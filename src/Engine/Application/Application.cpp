@@ -213,6 +213,9 @@ void Application::Events(){
             case SDL_MOUSEMOTION:
                 InputChecker::UpdateMousePosition(event.motion.x, event.motion.y);
                 break;
+            case SDL_MOUSEWHEEL:
+                InputChecker::SetMouseWheelDirection(event.wheel.y);
+                break;
         }
     }
 }

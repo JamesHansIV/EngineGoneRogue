@@ -9,6 +9,7 @@ bool keys[kNumkeys];
 bool mouse_buttons[kNummousebuttons];
 int mouse_x;
 int mouse_y;
+int mouse_wheel_direction = 0;
 
 bool InputChecker::IsKeyPressed(int keycode) {
     return keys[keycode % kNumkeys];
@@ -37,4 +38,12 @@ int InputChecker::GetMouseY() {
 void InputChecker::UpdateMousePosition(int x, int y) {
     mouse_x = x;
     mouse_y = y;
+}
+
+void InputChecker::SetMouseWheelDirection(int direction) {
+    mouse_wheel_direction = direction;
+}
+
+int InputChecker::GetMouseWheelDirection() {
+    return mouse_wheel_direction;
 }
