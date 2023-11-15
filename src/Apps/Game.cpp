@@ -68,7 +68,6 @@ Game::Game() {
     m_Objects.push_back(enemy4);
     m_Objects.push_back(enemy5);
     m_Objects.push_back(enemy6);
-    m_Objects.push_back(enemy7);
     colliders.push_back(enemy1);
     colliders.push_back(enemy2);
     colliders.push_back(enemy3);
