@@ -100,28 +100,6 @@ std::vector<GameObject*> CopyObjects(std::vector<GameObject*> objects) {
 
     for (auto *obj: objects) {
         GameObject* newObj = new GameObject(obj);
-        if (obj->GetAnimation()) {
-            newObj->SetAnimation(new Animation());
-
-            newObj->GetAnimation()->SetProps(
-                obj->GetAnimation()->GetTextureID(),
-                {obj->GetAnimation()->GetSpriteRow(),
-                obj->GetAnimation()->GetSpriteCol(),
-                obj->GetAnimation()->GetSpriteWidth(),
-                obj->GetAnimation()->GetSpriteHeight()},
-                obj->GetAnimation()->GetFrameCount(),
-                obj->GetAnimation()->GetAnimationSpeed()
-            );
-        }
-        if (obj->GetCollider()) {
-            newObj->SetCollider(new Collider());
-            newObj->GetCollider()->Set(
-                obj->GetCollider()->Get().x,
-                obj->GetCollider()->Get().y,
-                obj->GetCollider()->Get().w,
-                obj->GetCollider()->Get().h
-            );
-        }
         objectCopies.push_back(newObj);
     }
     return objectCopies;
@@ -364,9 +342,31 @@ void Editor::ShowFileManager() {
             SaveProject();
         }
 
+        if (ImGui::Button("Create Room", ImVec2(150, 20))) {
+            ImGui::OpenPopup("create_room");
+        }
+
+        if (ImGui::BeginPopup("create_room")) {
+            static char room_name[128];
+            ImGui::InputText("Input room name", room_name, sizeof(room_name));
+            if (strcmp(room_name, "") != 0) {
+                if (ImGui::Button("Create room", ImVec2(100, 30))) {
+                    CleanLayers();
+                    m_CurrentRoomID = room_name;
+                    AddRoom();
+                    ImGui::CloseCurrentPopup();
+                }
+                ImGui::SameLine();
+                if (ImGui::Button("Close", ImVec2(100, 30))) {
+                    ImGui::CloseCurrentPopup();
+                }
+            }
+            ImGui::EndPopup();
+        }
+
         if (ImGui::Button("Save Room", ImVec2(150, 20))) {
             ImGui::OpenPopup("save_room");
-}
+        }
 
         if (ImGui::BeginPopup("save_room")) {
             static char room_name[128];
