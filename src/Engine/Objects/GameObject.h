@@ -72,8 +72,8 @@ class GameObject : public IObject {
 
         void Draw() override {
             if (m_Animation) {
-                
-                m_Animation->Draw({m_DstRect.x, m_DstRect.y, m_DstRect.w, m_DstRect.h}, m_Rotation);
+                SDL_Log("Drawing %s", m_ObjectID.c_str());
+                m_Animation->Draw(m_DstRect, m_Rotation);
             } else {
                 SDL_Rect src_rect = { m_TilePos.col * m_TilePos.w, m_TilePos.row * m_TilePos.h, m_TilePos.w, m_TilePos.h };
                 SDL_Rect dst_rect = { static_cast<int>(m_DstRect.x), static_cast<int>(m_DstRect.y), m_DstRect.w, m_DstRect.h };

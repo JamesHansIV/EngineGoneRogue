@@ -99,7 +99,30 @@ std::vector<GameObject*> CopyObjects(std::vector<GameObject*> objects) {
     std::vector<GameObject*> objectCopies;
 
     for (auto *obj: objects) {
-        objectCopies.push_back(new GameObject(obj));
+        GameObject* newObj = new GameObject(obj);
+        if (obj->GetAnimation()) {
+            newObj->SetAnimation(new Animation());
+
+            newObj->GetAnimation()->SetProps(
+                obj->GetAnimation()->GetTextureID(),
+                {obj->GetAnimation()->GetSpriteRow(),
+                obj->GetAnimation()->GetSpriteCol(),
+                obj->GetAnimation()->GetSpriteWidth(),
+                obj->GetAnimation()->GetSpriteHeight()},
+                obj->GetAnimation()->GetFrameCount(),
+                obj->GetAnimation()->GetAnimationSpeed()
+            );
+        }
+        if (obj->GetCollider()) {
+            newObj->SetCollider(new Collider());
+            newObj->GetCollider()->Set(
+                obj->GetCollider()->Get().x,
+                obj->GetCollider()->Get().y,
+                obj->GetCollider()->Get().w,
+                obj->GetCollider()->Get().h
+            );
+        }
+        objectCopies.push_back(newObj);
     }
     return objectCopies;
 }
@@ -443,7 +466,7 @@ void Editor::ShowAddAnimation() {
                 m_ObjectInfo.Animation.FrameCount,
                 m_ObjectInfo.Animation.AnimationSpeed
             );
-            showStatusTimer = 500;
+            showStatusTimer = 300;
         }
         ImGui::TreePop();
     }
