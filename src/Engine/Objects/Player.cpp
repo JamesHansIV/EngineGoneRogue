@@ -12,7 +12,7 @@ Player::Player(Properties& props): Character(props){
     m_Animation->SetProps(m_TextureID, m_TilePos, 2, 500);
     m_Collider = new Collider();
     // m_Collider->SetCorrection(-45, -20, 60, 80 )
-    m_Collider->Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
+    m_Collider->Set(this->GetX(), this->GetY(), GetWidth(), GetHeight());
     m_Health = new Health(100);
 
     Properties propsG("gun", {0, 0, 18, 16}, {0, 0, 18, 16}, 0.0);

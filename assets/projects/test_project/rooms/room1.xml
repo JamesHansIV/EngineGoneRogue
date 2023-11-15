@@ -9351,12 +9351,6 @@
             <Height>32</Height>
         </DstRect>
         <Rotation>-90.000000</Rotation>
-        <Collider>
-            <XPos>96</XPos>
-            <YPos>224</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
     </Object>
     <Object>
         <TextureID>background-tiles</TextureID>

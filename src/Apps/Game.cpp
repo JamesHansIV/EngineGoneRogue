@@ -41,7 +41,7 @@ Game::Game() {
         }
     }
 
-    Properties props_p("player", {0, 0, 18, 18}, {0, 0, 36, 36});
+    Properties props_p("player", {0, 0, 18, 18}, {0, 0, 30, 30});
     player = new Player(props_p);
 
     Properties props1("enemy5",{0, 0, 16, 16}, {200, 200, 36, 36});
