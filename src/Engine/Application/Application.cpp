@@ -143,6 +143,28 @@ bool Application::LoadObject(tinyxml2::XMLElement* xmlObj, const std::string& ro
         SDL_Log("collider h: %d", obj->GetCollider()->Get().h);
     }
 
+    tinyxml2::XMLElement* animation = xmlObj->FirstChildElement("Animation");
+
+    if (animation != nullptr) {
+        obj->SetAnimation(new Animation());
+        TilePos tilePos = {
+            atoi(animation->FirstChildElement("Row")->GetText()),
+            atoi(animation->FirstChildElement("Col")->GetText()),
+            atoi(animation->FirstChildElement("Width")->GetText()),
+            atoi(animation->FirstChildElement("Height")->GetText()),
+        };
+        obj->GetAnimation()->SetProps(
+            animation->FirstChildElement("TextureID")->GetText(),
+            tilePos,
+            atoi(animation->FirstChildElement("FrameCount")->GetText()),
+            atoi(animation->FirstChildElement("Speed")->GetText())
+        );
+        SDL_Log("Animation row: %d", obj->GetAnimation()->GetSpriteRow());
+        SDL_Log("Animation col: %d", obj->GetAnimation()->GetSpriteCol());
+        SDL_Log("Animation frameCount: %d", obj->GetAnimation()->GetFrameCount());
+        SDL_Log("Animation speed: %d", obj->GetAnimation()->GetAnimationSpeed());
+    }
+
     m_Rooms[roomID].push_back(obj);
     return true;
 }

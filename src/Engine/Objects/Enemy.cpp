@@ -21,7 +21,7 @@ DEVELOPING BASIC ENEMY BEHAVIOUR:
 Enemy::Enemy(Properties& props, int perceptionX, int perceptionY): 
     Character(props), m_PerceptionX(perceptionX), m_PerceptionY(perceptionY) {
     m_Animation = new Animation();
-    m_Animation->SetProps(m_TextureID, 1, 2, 500);
+    m_Animation->SetProps(m_TextureID, m_TilePos, 2, 500);
     m_RigidBody = new RigidBody();
     m_Collider = new Collider();
     m_Collider->Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
@@ -32,10 +32,10 @@ Enemy::Enemy(Properties& props, int perceptionX, int perceptionY):
 
 void Enemy::Draw(){
     if (m_TextureID == "boss") {
-        m_Animation->Draw(m_Transform->GetX(), m_Transform->GetY(), m_DstRect.w + 15, m_DstRect.h);
+        m_Animation->Draw({m_Transform->GetX(), m_Transform->GetY(), m_DstRect.w + 15, m_DstRect.h});
     }
     else {
-        m_Animation->Draw(m_Transform->GetX(), m_Transform->GetY(), m_DstRect.w, m_DstRect.h);
+        m_Animation->Draw({m_Transform->GetX(), m_Transform->GetY(), m_DstRect.w, m_DstRect.h});
     }
     
     if (m_MarkedForDeletion == false)
@@ -101,7 +101,7 @@ void Enemy::Update(float dt){
 
     if(m_Health->GetHealth() <= 0)
     {
-        m_Animation->SetProps("player_dead", 1, 6, 500);
+        m_Animation->SetProps("player_dead", {0, 0, 18, 18}, 6, 500);
         if (m_Animation->GetCurrentFrame() == 6-1) {
             m_MarkedForDeletion = true;
         }

@@ -7,12 +7,19 @@
 #include "Engine/Objects/Player.h"
 #include <set>
 
+struct AnimationInfo {
+    TilePos Tile;
+    int FrameCount;
+    int AnimationSpeed;
+};
+
 struct ObjectInfo {
     TilePos Tile;
     Rect DstRect;
     float Rotation = 0.0F;
     ObjectType type = ObjectType::kBase;
     SDL_Rect Collider;
+    AnimationInfo Animation;
     bool SnapToGrid = true;
 };
 
@@ -66,6 +73,7 @@ class Editor : public Application{
         // Player* CreatePlayer(Properties props);
         // Projectile* CreateProjectile(Properties props);
         void ShowAddCollider();
+        void ShowAddAnimation();
         void ShowObjectEditor();
         void ShowTextureIDs();
         void ShowObjectManager();

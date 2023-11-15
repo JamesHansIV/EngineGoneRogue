@@ -1,3 +1,5 @@
+#pragma once
+
 #define SCREEN_WIDTH 960
 #define SCREEN_HEIGHT 520
 
@@ -10,3 +12,10 @@
 
 #define FILEPATH_LEN 128
 #define LABEL_LEN 32
+
+struct Rect {
+    float x;
+    float y;
+    int w;
+    int h;
+};

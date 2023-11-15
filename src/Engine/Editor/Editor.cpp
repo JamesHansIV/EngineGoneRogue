@@ -210,6 +210,34 @@ void SaveBaseObject(tinyxml2::XMLDocument& doc, tinyxml2::XMLElement* xmlObj, Ga
         xmlObj->InsertEndChild(collider);
     }
 
+    if (obj->GetAnimation() != nullptr) {
+        tinyxml2::XMLElement* animation = doc.NewElement("Animation");
+        tinyxml2::XMLElement* animationTexID = doc.NewElement("TextureID");
+        tinyxml2::XMLElement* animationRow = doc.NewElement("Row");
+        tinyxml2::XMLElement* animationCol = doc.NewElement("Col");
+        tinyxml2::XMLElement* animationW = doc.NewElement("Width");
+        tinyxml2::XMLElement* animationH = doc.NewElement("Height");
+        tinyxml2::XMLElement* frameCount = doc.NewElement("FrameCount");
+        tinyxml2::XMLElement* speed = doc.NewElement("Speed");
+        animationTexID->SetText(obj->GetAnimation()->GetTextureID().c_str());
+        animationRow->SetText(std::to_string(obj->GetAnimation()->GetSpriteRow()).c_str());
+        animationCol->SetText(std::to_string(obj->GetAnimation()->GetSpriteCol()).c_str());
+        animationW->SetText(std::to_string(obj->GetAnimation()->GetSpriteWidth()).c_str());
+        animationH->SetText(std::to_string(obj->GetAnimation()->GetSpriteHeight()).c_str());
+        frameCount->SetText(std::to_string(obj->GetAnimation()->GetFrameCount()).c_str());
+        speed->SetText(std::to_string(obj->GetAnimation()->GetAnimationSpeed()).c_str());
+
+        animation->InsertEndChild(animationTexID);
+        animation->InsertEndChild(animationRow);
+        animation->InsertEndChild(animationCol);
+        animation->InsertEndChild(animationW);
+        animation->InsertEndChild(animationH);
+        animation->InsertEndChild(frameCount);
+        animation->InsertEndChild(speed);
+
+        xmlObj->InsertEndChild(animation);
+    }
+
 }
 
 void Editor::SaveRoom(const char* roomName) {
@@ -243,7 +271,6 @@ void Editor::SaveRoom(const char* roomName) {
     int const success = doc.SaveFile(file_path);
     SDL_Log("Saving room a success: %d", success);
 }
-
 
 void Editor::SaveProject() {
     CreateProjectFolder();
@@ -378,6 +405,55 @@ void Editor::ShowAddCollider() {
     }
 }
 
+void Editor::ShowAddAnimation() {
+    char animationLabel[LABEL_LEN+1];
+    char buttonLabel[LABEL_LEN+1];
+    char statusLabel[LABEL_LEN+1];
+
+    if (m_CurrentObject->GetAnimation() == nullptr) {
+        snprintf(animationLabel, LABEL_LEN, "%s idle animation", "Add");
+        snprintf(buttonLabel, LABEL_LEN, "%s animation", "Add");
+        snprintf(statusLabel, LABEL_LEN, "Successfully %s animation", "added");
+    } else {
+        snprintf(animationLabel, LABEL_LEN, "%s idle animation", "Change");
+        snprintf(buttonLabel, LABEL_LEN, "%s animation", "Change");
+        snprintf(statusLabel, LABEL_LEN, "Successfully %s animation", "changed");
+    }
+
+    static int showStatusTimer = 0;
+
+    if (ImGui::TreeNode(animationLabel)) {
+        
+        ImGui::InputInt("Set sprite row", &m_ObjectInfo.Animation.Tile.row);
+        ImGui::InputInt("Set sprite col", &m_ObjectInfo.Animation.Tile.col);
+        ImGui::InputInt("Set sprite width", &m_ObjectInfo.Animation.Tile.w);
+        ImGui::InputInt("Set sprite height", &m_ObjectInfo.Animation.Tile.h);
+
+        ImGui::InputInt("Set frame count", &m_ObjectInfo.Animation.FrameCount);
+        ImGui::InputInt("Set animation speed", &m_ObjectInfo.Animation.AnimationSpeed);
+
+        if (ImGui::Button(buttonLabel, ImVec2(100, 30))) {
+            if (m_CurrentObject->GetAnimation() == nullptr) {
+                m_CurrentObject->SetAnimation(new Animation());
+            }
+
+            m_CurrentObject->GetAnimation()->SetProps(
+                m_CurrentObject->GetTextureID(),
+                m_ObjectInfo.Animation.Tile,
+                m_ObjectInfo.Animation.FrameCount,
+                m_ObjectInfo.Animation.AnimationSpeed
+            );
+            showStatusTimer = 500;
+        }
+        ImGui::TreePop();
+    }
+    if (showStatusTimer > 0) {
+        ImGui::Text("%s", statusLabel);
+        showStatusTimer--;
+    }
+
+}
+
 void Editor::ShowObjectEditor() {
     if (ImGui::BeginTabItem("Object Editor")) {
         if (ImGui::TreeNode("Object list")) {
@@ -464,6 +540,7 @@ void Editor::ShowObjectEditor() {
             }
 
             ShowAddCollider();
+            ShowAddAnimation();
         }
 
         ImGui::Text("Snap to grid: ");
@@ -789,7 +866,7 @@ void Editor::Render() {
     for (int i = 0; i < m_Layers.size(); i++) {
         if (m_HiddenLayers.find(i) == m_HiddenLayers.end()) {
             for (auto *obj : m_Layers[i]) {
-                
+                obj->Update(0.0);
                 obj->Draw();
                 if (m_SelectedObjects.find(obj) != m_SelectedObjects.end()) {
                     std::vector<SDL_Rect> rects;

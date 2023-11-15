@@ -5,24 +5,20 @@
 #include "Engine/Renderer/Renderer.h"
 #include "Engine/Renderer/TileMap.h"
 #include "Health.h"
+#include "Engine/Animation/Animation.h"
 
 #include "Engine/Physics/Collider.h"
 #include <SDL2/SDL.h>
 #include <string>
 #include <utility>
 
+#include "Engine/utils/utils.h"
 
 enum class ObjectType {
     kNone = 0,
     kBase, kProjectile, kPlayer
 };
 
-struct Rect {
-    float x;
-    float y;
-    int w;
-    int h;
-};
 
 struct Properties{
     public:
@@ -55,7 +51,7 @@ class GameObject : public IObject {
             m_TilePos(props.TilePosition), m_DstRect(props.DstRect),
             m_Rotation(props.Rotation),
             m_Flip(props.Flip), m_ObjectID(props.ObjectID),
-            m_Collider(nullptr) {
+            m_Collider(nullptr), m_Animation(nullptr) {
 
             m_Transform = new Transform(&m_DstRect.x, &m_DstRect.y);
         }
@@ -75,12 +71,22 @@ class GameObject : public IObject {
         virtual ObjectType GetObjectType() { return ObjectType::kBase; }
 
         void Draw() override {
-            SDL_Rect src_rect = { m_TilePos.col * m_TilePos.w, m_TilePos.row * m_TilePos.h, m_TilePos.w, m_TilePos.h };
-            SDL_Rect dst_rect = { static_cast<int>(m_DstRect.x), static_cast<int>(m_DstRect.y), m_DstRect.w, m_DstRect.h };
-            Renderer::GetInstance()->Draw(m_TextureID, src_rect, dst_rect, m_Rotation, nullptr,m_Flip);
+            if (m_Animation) {
+                
+                m_Animation->Draw({m_DstRect.x, m_DstRect.y, m_DstRect.w, m_DstRect.h}, m_Rotation);
+            } else {
+                SDL_Rect src_rect = { m_TilePos.col * m_TilePos.w, m_TilePos.row * m_TilePos.h, m_TilePos.w, m_TilePos.h };
+                SDL_Rect dst_rect = { static_cast<int>(m_DstRect.x), static_cast<int>(m_DstRect.y), m_DstRect.w, m_DstRect.h };
+                Renderer::GetInstance()->Draw(m_TextureID, src_rect, dst_rect, m_Rotation, nullptr,m_Flip);
+
+            }
         };
         void Clean() override {};
-        void Update(float dt) override {};
+        void Update(float dt) override {
+            if (m_Animation) {
+                m_Animation->Update();
+            }
+        };
 
         TilePos& GetTilePos() { return m_TilePos; }
         Rect& GetDstRect() { return m_DstRect; }
@@ -113,6 +119,9 @@ class GameObject : public IObject {
         Collider* GetCollider(){return m_Collider;}
         Health* GetHealthObj(){return m_Health;}
 
+        Animation* GetAnimation() { return m_Animation; }
+        void SetAnimation(Animation* animation) { m_Animation = animation; }
+
     protected:
         Transform* m_Transform;
         TilePos m_TilePos;
@@ -123,4 +132,5 @@ class GameObject : public IObject {
         SDL_RendererFlip m_Flip;
         Collider* m_Collider;
         Health* m_Health;
+        Animation* m_Animation;
 };

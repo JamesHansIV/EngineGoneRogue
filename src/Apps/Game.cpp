@@ -41,25 +41,25 @@ Game::Game() {
         }
     }
 
-    Properties props_p("player", {0, 0, 18, 16}, {0, 0, 18, 16});
+    Properties props_p("player", {0, 0, 18, 18}, {0, 0, 36, 36});
     player = new Player(props_p);
 
-    Properties props1("enemy5",{0, 0, 18, 16}, {200, 200, 18, 16});
+    Properties props1("enemy5",{0, 0, 16, 16}, {200, 200, 36, 36});
     enemy1 = new Enemy(props1, 150, 150);
 
-    Properties props2("enemy5", {0, 0, 18, 16}, {300, 260, 18, 16});
+    Properties props2("enemy5", {0, 0, 16, 16}, {300, 260, 36, 36});
     enemy2 = new Enemy(props2,  150, 150);
 
-    Properties props3("enemy5", {0, 0, 18, 16}, {500, 200, 18, 16});
+    Properties props3("enemy5", {0, 0, 16, 16}, {500, 200, 36, 36});
     enemy3 = new Enemy(props3,  150, 150);
     
-    Properties props4("enemy5", {0, 0, 18, 16}, {600, 367, 18, 16});
+    Properties props4("enemy5", {0, 0, 16, 16}, {600, 367, 36, 36});
     enemy4 = new Enemy(props4,  150, 150);
 
-    Properties props5("enemy5", {0, 0, 18, 16}, {700, 300, 18, 16});
+    Properties props5("enemy5", {0, 0, 16, 16}, {700, 300, 36, 36});
     enemy5 = new Enemy(props5, 150, 150);
     
-    Properties props6("enemy5", {0, 0, 18, 16}, {600, 150, 18, 16});
+    Properties props6("enemy5", {0, 0, 16, 16}, {600, 150, 36, 36});
     enemy6 = new Enemy(props6,  150, 150);
 
     m_Objects.push_back(enemy1);

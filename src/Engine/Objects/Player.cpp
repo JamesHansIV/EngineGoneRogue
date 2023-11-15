@@ -7,11 +7,11 @@
 std::vector<Weapon*> weapons;
 
 Player::Player(Properties& props): Character(props){
-    m_Animation = new Animation();
-    m_Animation->SetProps(m_TextureID, 1, 2, 500);
     m_RigidBody = new RigidBody();
+    m_Animation = new Animation();
+    m_Animation->SetProps(m_TextureID, m_TilePos, 2, 500);
     m_Collider = new Collider();
-    // m_Collider->SetCorrection(-45, -20, 60, 80 );
+    // m_Collider->SetCorrection(-45, -20, 60, 80 )
     m_Collider->Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
     m_Health = new Health(100);
 
@@ -28,7 +28,7 @@ Player::Player(Properties& props): Character(props){
 
 
 void Player::Draw(){
-    m_Animation->Draw(m_Transform->GetX(), m_Transform->GetY(), m_DstRect.w, m_DstRect.h);
+    m_Animation->Draw({m_Transform->GetX(), m_Transform->GetY(), m_DstRect.w, m_DstRect.h});
     DrawPlayerHealth();
     for(auto *weapon: weapons)
     {
@@ -60,7 +60,7 @@ void Player::DrawPlayerHealth(){
 void Player::Update(float dt){
     if(m_Health->GetHealth() <= 0)
     {
-        m_Animation->SetProps("player_dead", 1, 6, 500);
+        m_Animation->SetProps("player_dead", {0, 0, 18, 18}, 6, 500);
         if (m_Animation->GetCurrentFrame() == 6-1) {
             m_MarkedForDeletion = true;
         }

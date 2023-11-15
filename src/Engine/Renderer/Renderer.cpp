@@ -211,8 +211,8 @@ void Renderer::Draw(const std::string& id, int x, int y, int width, int height, 
     SDL_RenderCopyEx(m_Renderer, m_TextureMap[id]->GetTexture(), &src_rect, &dst_rect, angle, center, flip);
 }
 
-void Renderer::DrawFrame(const std::string& id, int x, int y, int width, int height, int row, int frame, SDL_RendererFlip flip){
-  SDL_Rect const src_rect = {width*frame, height*(row-1), width, height};
+void Renderer::DrawFrame(const std::string& id, int x, int y, int width, int height, int row, int col, int frame, SDL_RendererFlip flip){
+  SDL_Rect const src_rect = {width*(frame + col), height*(row), width, height};
   // New sprite is small, has to be scaled larger to look right. Could cause trouble in the future.
   int const new_x = (x + width/2) - (width/2 * 2);
   int const new_y = (y + height/2) - (height/2 * 2);
@@ -227,8 +227,8 @@ void Renderer::DrawFrame(const std::string& id, int x, int y, int width, int hei
   SDL_RenderCopyEx(m_Renderer, m_TextureMap[id]->GetTexture(), &src_rect, &dst_rect, 0, nullptr, flip);
 }
 
-void Renderer::DrawFrame(const std::string& id, int x, int y, int width, int height, int row, int frame, double angle, const SDL_Point* center, SDL_RendererFlip flip){
-    SDL_Rect const src_rect = {width*frame, height*(row-1), width, height};
+void Renderer::DrawFrame(const std::string& id, int x, int y, int width, int height, int row, int col, int frame, double angle, const SDL_Point* center, SDL_RendererFlip flip){
+    SDL_Rect const src_rect = {width*(frame + col), height*(row), width, height};
     SDL_Rect dst_rect = {x, y, width, height};
 
     if (!CheckCollision(dst_rect, m_Camera)) {

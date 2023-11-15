@@ -8,13 +8,17 @@ void Animation::Update(){
     m_SpriteFrame = (SDL_GetTicks()/m_AnimSpeed) % m_FrameCount;
 }
 
-void Animation::Draw(float x, float y, int spritWidth, int spriteHeight){
-    Renderer::GetInstance()->DrawFrame(m_TextureID, x, y, spritWidth, spriteHeight, m_SpriteRow, m_SpriteFrame, m_Flip);
+void Animation::Draw(const Rect& dstRect, float angle){
+    SDL_Rect src_rect = { (m_TilePos.col + m_SpriteFrame) * m_TilePos.w, m_TilePos.row * m_TilePos.h, m_TilePos.w, m_TilePos.h };
+    SDL_Rect dst_rect = { static_cast<int>(dstRect.x), static_cast<int>(dstRect.y), dstRect.w, dstRect.h  };
+
+    Renderer::GetInstance()->Draw(m_TextureID, src_rect, dst_rect, angle, nullptr, m_Flip);
 }
 
-void Animation::SetProps(std::string textureID, int spriteRow, int frameCount, int animSpeed, SDL_RendererFlip flip){
+void Animation::SetProps(std::string textureID, TilePos tilePos, int frameCount, int animSpeed, SDL_RendererFlip flip){
     m_TextureID = std::move(textureID);
-    m_SpriteRow = spriteRow;
+    m_TilePos = { tilePos.row, tilePos.col, tilePos.w, tilePos.h };
+
     m_FrameCount = frameCount;
     m_AnimSpeed = animSpeed;
     m_Flip = flip;

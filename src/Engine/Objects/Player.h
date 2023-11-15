@@ -18,7 +18,6 @@ class Player: public Character, public EventListener{
         RigidBody* GetRigidBody() {return m_RigidBody;};
         bool IsMarkedForDeletion(){return m_MarkedForDeletion;};
     private:
-        Animation* m_Animation;
         RigidBody* m_RigidBody;
         void CanMoveThrough();
         void DrawPlayerHealth();
