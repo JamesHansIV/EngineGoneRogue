@@ -16,7 +16,8 @@ class Player: public Character, public EventListener{
         void UpdateColliders(const std::vector<GameObject*>& colliders){m_Colliders = colliders;}
         void OnEvent(Event& event) override;
         RigidBody* GetRigidBody() {return m_RigidBody;};
-        bool IsMarkedForDeletion(){return m_MarkedForDeletion;};
+        bool IsMarkedForDeletion(){return m_MarkedForDeletion;}
+        virtual ObjectType GetObjectType() override { return ObjectType::kBase; }
     private:
         RigidBody* m_RigidBody;
         void CanMoveThrough();

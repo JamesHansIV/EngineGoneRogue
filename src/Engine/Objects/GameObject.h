@@ -16,7 +16,7 @@
 
 enum class ObjectType {
     kNone = 0,
-    kBase, kProjectile, kPlayer
+    kBase, kProjectile, kPlayer, kEnemy, kWeapon
 };
 
 
@@ -95,7 +95,6 @@ class GameObject : public IObject {
 
         void Draw() override {
             if (m_Animation) {
-                SDL_Log("Drawing %s", m_ObjectID.c_str());
                 m_Animation->Draw(m_DstRect, m_Rotation);
             } else {
                 SDL_Rect src_rect = { m_TilePos.col * m_TilePos.w, m_TilePos.row * m_TilePos.h, m_TilePos.w, m_TilePos.h };

@@ -12,15 +12,16 @@ class Enemy: public Character, public EventListener{
         void Clean() override;
         void Update(float dt) override;
         void OnEvent(Event& event) override;
-        RigidBody* GetRigidBody() {return m_RigidBody;};
-        bool IsMarkedForDeletion(){return m_MarkedForDeletion;};
-        void SetPlayer(GameObject* pc) {m_Player = pc;};
-        void UpdateColliders(const std::vector<GameObject*>& colliders){m_Colliders = colliders;};
+        RigidBody* GetRigidBody() {return m_RigidBody;}
+        bool IsMarkedForDeletion(){return m_MarkedForDeletion;}
+        void SetPlayer(GameObject* pc) {m_Player = pc;}
+        void UpdateColliders(const std::vector<GameObject*>& colliders){m_Colliders = colliders;}
+        virtual ObjectType GetObjectType() override { return ObjectType::kEnemy; }
     private:
         Animation* m_Animation;
         RigidBody* m_RigidBody;
-        int m_PerceptionX;
-        int m_PerceptionY;
+        int m_PerceptionWidth;
+        int m_PerceptionHeight;
         SDL_Rect m_Perception;
         bool m_MarkedForDeletion;
         void CanMoveThrough();

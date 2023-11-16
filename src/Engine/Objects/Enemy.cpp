@@ -18,8 +18,8 @@ DEVELOPING BASIC ENEMY BEHAVIOUR:
 
 */
 
-Enemy::Enemy(Properties& props, int perceptionX, int perceptionY): 
-    Character(props), m_PerceptionX(perceptionX), m_PerceptionY(perceptionY) {
+Enemy::Enemy(Properties& props, int perceptionX, int perceptionY):
+    Character(props), m_PerceptionWidth(perceptionX), m_PerceptionHeight(perceptionY) {
     m_Animation = new Animation();
     m_Animation->SetProps(m_TextureID, m_TilePos, 2, 500);
     m_RigidBody = new RigidBody();
@@ -62,10 +62,10 @@ void Enemy::DrawEnemyHealth(){
 
 void Enemy::Update(float dt){
     m_RigidBody->UnSetForce();
-    int rectLeft = GetX() - m_PerceptionX;
-    int rectRight = GetX() + GetWidth() + m_PerceptionX;
-    int rectTop = GetY() - m_PerceptionY;
-    int rectBottom = GetY() + GetHeight() + m_PerceptionY;
+    int rectLeft = GetX() - m_PerceptionWidth;
+    int rectRight = GetX() + GetWidth() + m_PerceptionWidth;
+    int rectTop = GetY() - m_PerceptionHeight;
+    int rectBottom = GetY() + GetHeight() + m_PerceptionHeight;
 
     m_Perception = {rectLeft - Renderer::GetInstance()->GetCameraX(),rectTop - Renderer::GetInstance()->GetCameraY(),rectRight - rectLeft,rectBottom - rectTop };
 

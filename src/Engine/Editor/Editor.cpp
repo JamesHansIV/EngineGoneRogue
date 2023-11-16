@@ -58,7 +58,96 @@ x create/load/save rooms
 - add auto tiling
 - add file browser
 x change topmost tree nodes to tabs
-- delete objects
+x delete objects
+
+
+// Just spitting ideas, don't have to do all of this
+- screen shake
+- lighting
+    - dark levels
+    - torches
+- audio
+    - add music
+    - add audio to weapons, enemies, player, projectiles
+
+- weapons
+    - uzi
+    - shotgun
+    - sniper rifle
+    - sword
+    - pistol
+    - charge shot
+    - flamethrower
+    - plasma rifle
+    - ice ray
+    - bow and arrow
+    - laser beam weapon
+    - black hole gun
+    - rpg
+    - grenade launcher
+    - grenades
+    - molotov
+    - lightning weapon?
+    - throwable knives/shurikens
+
+- pickups
+    - health
+    - ammo
+    - explosives
+- shop items
+    - items/modifiers
+        - homing bullets
+        - ricochet
+        - speed
+        - spawn allies/friendlies
+        - max health upgrades
+        - bullet size
+        - damage
+        - air strike
+        - ammo supply drops
+        - dodge roll bombs
+        - decrease bullet spread
+        - snake's cardboard box
+        - double the amount of bullets
+        - damage resistance
+        - map foresight
+    - grenades
+    - weapons
+    - keys
+    - armor
+
+- animations
+    - firing animations
+    - melee animations
+    - better bullet sprites
+    - 2nd character
+    - explosions
+    - dodge
+    - reload
+    - bullet collision
+
+- enemies
+    - new enemies
+        - creatures e.g. dogs/insects
+        - snipers
+        - shield enemies
+        - pistol enemies
+        - rifle enemies
+        - shotgun enemies
+        - bullet hell spread
+        - kamikaze
+    - item drops
+    - ai
+
+- game ui
+    - health
+    - ammo
+    - minimap
+    - grenades
+    - current weapon
+    - character select screen
+    - loading screen
+    - game over screen
 */
 
 struct stat info;
@@ -663,7 +752,7 @@ void Editor::AddObject(float x, float y) {
         case ObjectType::kPlayer:
             new_object = new Player(props);
             break;
-        case ObjectType::kProjectile:
+        case ObjectType::kEnemy:
             //Make this work with projectiles
             new_object = new GameObject(props);
             break;
@@ -701,8 +790,11 @@ void Editor::ShowBuildPlayer() {
     ImGui::Text("Showing build player stuff");
 }
 
-void Editor::ShowBuildProjectile() {
-    ImGui::Text("Showing build projectile stuff");
+void Editor::ShowBuildEnemy() {
+
+    ImGui::InputInt("Input perception width", &m_EnemyInfo.PerceptionWidth);
+    ImGui::InputInt("Input perception height", &m_EnemyInfo.PerceptionHeight);
+
 }
 
 ObjectType Editor::ShowSelectObjectType() {
@@ -792,8 +884,8 @@ void Editor::ShowCreateObject() {
                 case ObjectType::kPlayer:
                     ShowBuildPlayer();
                     break;
-                case ObjectType::kProjectile:
-                    ShowBuildProjectile();
+                case ObjectType::kEnemy:
+                    ShowBuildEnemy();
                     break;
                 default:
                     SDL_LogError(0, "Invalid object type");

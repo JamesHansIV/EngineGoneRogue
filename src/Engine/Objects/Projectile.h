@@ -13,7 +13,8 @@ class Projectile: public GameObject{
         virtual void Draw();
         virtual void Clean();
         virtual void Update(float dt, const std::vector<GameObject*>& colliders);
-        bool IsMarkedForDeletion() {return m_MarkedForDeletion;};
+        bool IsMarkedForDeletion() {return m_MarkedForDeletion;}
+        virtual ObjectType GetObjectType() override { return ObjectType::kProjectile; }
     private:
         Animation* m_Animation;
         RigidBody* m_RigidBody;

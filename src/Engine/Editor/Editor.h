@@ -7,6 +7,11 @@
 #include "Engine/Objects/Player.h"
 #include <set>
 
+struct EnemyInfo {
+    int PerceptionWidth;
+    int PerceptionHeight;
+};
+
 struct AnimationInfo {
     TilePos Tile;
     int FrameCount;
@@ -65,8 +70,8 @@ class Editor : public Application{
         void ShowLoadTilemap();
         void ShowTiles(TileMap* tilemap);
         ObjectType ShowSelectObjectType();
-        static void ShowBuildProjectile();
-        static void ShowBuildPlayer();
+        void ShowBuildEnemy();
+        void ShowBuildPlayer();
         void ShowCreateObject();
         void DeleteObject(GameObject* obj);
         void CreateObject(ObjectType type);
@@ -89,6 +94,7 @@ class Editor : public Application{
         std::set<GameObject*> m_SelectedObjects;
         EditState m_DrawState;
         ObjectInfo m_ObjectInfo;
+        EnemyInfo m_EnemyInfo;
         std::vector< std::vector<GameObject*>> m_Layers;
         std::set<int> m_HiddenLayers;
         int m_CurrentLayer{0};

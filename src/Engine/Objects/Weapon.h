@@ -22,9 +22,10 @@ class Weapon : public GameObject {
         void Clean() override;
         void Update(float dt) override;
         void UpdateColliders(const std::vector<GameObject*>& colliders){m_Colliders = colliders;};
-        WeaponType GetType() {return m_Type;};
+        WeaponType GetType() {return m_Type;}
+
+        virtual ObjectType GetObjectType() override { return ObjectType::kWeapon; }
     private:
         WeaponType m_Type;
         std::vector<GameObject*> m_Colliders;
 };
-
