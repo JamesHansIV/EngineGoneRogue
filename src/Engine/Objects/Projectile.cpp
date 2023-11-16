@@ -49,6 +49,5 @@ void Projectile::CanMoveThrough(const std::vector<GameObject*>& colliders)
 }
 
 void Projectile::Clean(){
-    delete m_Animation;
     delete m_RigidBody;
 }

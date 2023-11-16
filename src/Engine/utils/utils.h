@@ -19,3 +19,5 @@ struct Rect {
     int w;
     int h;
 };
+
+const int HEALTH_BAR_HEIGHT = 10;

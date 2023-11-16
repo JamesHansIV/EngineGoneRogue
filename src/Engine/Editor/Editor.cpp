@@ -988,7 +988,7 @@ void Editor::Render() {
                     for (int i = 0; i < 4; i++) {
                         rects.push_back({ static_cast<int>(obj->GetX())+i, static_cast<int>(obj->GetY())+i, obj->GetWidth(), obj->GetHeight() });
                     }
-                    Renderer::GetInstance()->DrawRects(rects);
+                    Renderer::GetInstance()->DrawRects(rects, {0, 150, 255, 255});
                 }
             }
         }

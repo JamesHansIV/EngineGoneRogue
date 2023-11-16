@@ -10,8 +10,8 @@ class Projectile: public GameObject{
 
     public:
         Projectile(Properties& props, int speed, float mass, float angle);
-        virtual void Draw();
-        virtual void Clean();
+        virtual void Draw() override;
+        virtual void Clean() override;
         virtual void Update(float dt, const std::vector<GameObject*>& colliders);
         bool IsMarkedForDeletion() {return m_MarkedForDeletion;}
         virtual ObjectType GetObjectType() override { return ObjectType::kProjectile; }

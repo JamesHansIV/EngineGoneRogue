@@ -14,6 +14,13 @@
 
 class GameObject;
 
+struct DrawColor {
+    int r;
+    int g;
+    int b;
+    int a;
+};
+
 class Renderer{
     public:
         static Renderer* GetInstance()
@@ -36,9 +43,9 @@ class Renderer{
         Texture* GetTexture(const std::string& id) { return m_TextureMap.find(id) != m_TextureMap.end() ? m_TextureMap[id] : nullptr; }
         void Drop(const std::string& id);
         void Clean();
-        void DrawLine(int x1, int y1, int x2, int y2);
-        void DrawRect(SDL_Rect& rect);
-        void DrawRects(std::vector<SDL_Rect> rects);
+        void DrawLine(int x1, int y1, int x2, int y2, DrawColor color = {0, 0, 0, 255});
+        void DrawRect(SDL_Rect& rect, DrawColor color = {0, 0, 0, 255}, bool filled = false);
+        void DrawRects(std::vector<SDL_Rect> rects, DrawColor color = {0, 0, 0, 255}, bool filled = false);
         void Draw(const std::string& id, SDL_Rect& srcRect, SDL_Rect& dstRect, SDL_RendererFlip flip = SDL_FLIP_NONE);
         void Draw(const std::string& id, SDL_Rect& srcRect, SDL_Rect& dstRect, double angle, const SDL_Point* center, SDL_RendererFlip flip = SDL_FLIP_NONE);
         void Draw(const std::string& id, int x, int y, int width, int height, SDL_RendererFlip flip = SDL_FLIP_NONE);

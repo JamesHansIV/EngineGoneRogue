@@ -39,25 +39,7 @@ void Enemy::Draw(){
     }
     
     if (m_MarkedForDeletion == false)
-        DrawEnemyHealth();
-}
-
-void Enemy::DrawEnemyHealth(){
-    const int HEALTH_BAR_HEIGHT = 10;
-
-    int healthBarWidth = static_cast<int>((GetWidth() + 15) * (m_Health->GetHealth() / 100.0));
-    if (healthBarWidth <= 0) healthBarWidth = 0;
-    int healthBarX = GetX();
-    int healthBarY = GetY() - HEALTH_BAR_HEIGHT - 5;
-
-    SDL_Rect healthBarRect;
-    healthBarRect.x = healthBarX - Renderer::GetInstance()->GetCameraX() - 5;
-    healthBarRect.y = healthBarY - Renderer::GetInstance()->GetCameraY();
-    healthBarRect.w = healthBarWidth;
-    healthBarRect.h = HEALTH_BAR_HEIGHT;
-
-    SDL_SetRenderDrawColor(Renderer::GetInstance()->GetRenderer(), 0, 255, 0, 255);
-    SDL_RenderFillRect(Renderer::GetInstance()->GetRenderer(), &healthBarRect);
+        m_Health->Draw(GetX(), GetY(), GetWidth(), GetHeight());
 }
 
 void Enemy::Update(float dt){

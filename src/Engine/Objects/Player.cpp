@@ -29,7 +29,8 @@ Player::Player(Properties& props): Character(props){
 
 void Player::Draw(){
     m_Animation->Draw({m_Transform->GetX(), m_Transform->GetY(), m_DstRect.w, m_DstRect.h});
-    DrawPlayerHealth();
+    SDL_Log("player health: %d", m_Health->GetHealth());
+    m_Health->Draw(GetX(), GetY(), GetWidth(), GetHeight());
     for(auto *weapon: weapons)
     {
         if(weapon->GetType() == m_CurrentWeapon)
@@ -37,24 +38,6 @@ void Player::Draw(){
             weapon->Draw();
         }
     }
-}
-
-void Player::DrawPlayerHealth(){
-    const int HEALTH_BAR_HEIGHT = 10;
-
-    int healthBarWidth = static_cast<int>((GetWidth() + 15) * (m_Health->GetHealth() / 100.0));
-    if (healthBarWidth <= 0) healthBarWidth = 0;
-    int healthBarX = GetX();
-    int healthBarY = GetY() - HEALTH_BAR_HEIGHT - 5;
-
-    SDL_Rect healthBarRect;
-    healthBarRect.x = healthBarX - Renderer::GetInstance()->GetCameraX() - 5;
-    healthBarRect.y = healthBarY - Renderer::GetInstance()->GetCameraY();
-    healthBarRect.w = healthBarWidth;
-    healthBarRect.h = HEALTH_BAR_HEIGHT;
-    
-    SDL_SetRenderDrawColor(Renderer::GetInstance()->GetRenderer(), 0, 255, 0, 255);
-    SDL_RenderFillRect(Renderer::GetInstance()->GetRenderer(), &healthBarRect);
 }
 
 void Player::Update(float dt){
@@ -137,11 +120,6 @@ void Player::CanMoveThrough()
     }
     for (auto *collider : m_Colliders)
     {
-        SDL_Log("Checking collider: %s", collider->GetID().c_str());
-        SDL_Log("x: %d", collider->GetCollider()->Get().x);
-        SDL_Log("y: %d", collider->GetCollider()->Get().y);
-        SDL_Log("w: %d", collider->GetCollider()->Get().w);
-        SDL_Log("h: %d", collider->GetCollider()->Get().h);
         if (CollisionHandler::GetInstance()->CheckCollision(m_Collider->Get(), collider->GetCollider()->Get()))
         {
             m_Transform->TranslateX(-m_RigidBody->Velocity().X/2);

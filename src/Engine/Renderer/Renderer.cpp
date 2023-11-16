@@ -140,24 +140,28 @@ void Renderer::Clean()
     SDL_Log("Texture Manager cleaned");
 }
 
-void Renderer::DrawLine(int x1, int y1, int x2, int y2) {
-    SDL_SetRenderDrawColor(m_Renderer, 0, 0, 0, 100);
+void Renderer::DrawLine(int x1, int y1, int x2, int y2, DrawColor color) {
+    SDL_SetRenderDrawColor(m_Renderer, color.r, color.g, color.b, color.a);
     SDL_RenderDrawLine(m_Renderer, x1 - m_Camera.x, y1 - m_Camera.y, x2 - m_Camera.x, y2 - m_Camera.y);
 }
 
-void Renderer::DrawRect(SDL_Rect& rect) {
-    SDL_SetRenderDrawColor(m_Renderer, 0, 150, 255, 255);
+void Renderer::DrawRect(SDL_Rect& rect, DrawColor color, bool filled) {
+    SDL_SetRenderDrawColor(m_Renderer, color.r, color.g, color.b, color.a);
     if (!CheckCollision(rect, m_Camera)) {
         return;
     }
     rect.x -= m_Camera.x;
     rect.y -= m_Camera.y;
-    SDL_RenderDrawRect(m_Renderer, &rect);
+    if (filled) {
+        SDL_RenderFillRect(m_Renderer, &rect);
+    } else {
+        SDL_RenderDrawRect(m_Renderer, &rect);
+    }
 }
 
-void Renderer::DrawRects(std::vector<SDL_Rect> rects) {
+void Renderer::DrawRects(std::vector<SDL_Rect> rects, DrawColor color, bool filled) {
     for (auto& rect : rects) {
-        DrawRect(rect);
+        DrawRect(rect, color, filled);
     }
 }
 
