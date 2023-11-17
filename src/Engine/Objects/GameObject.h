@@ -7,7 +7,7 @@
 #include "Health.h"
 #include "Engine/Animation/Animation.h"
 
-#include "Engine/Physics/Collider.h"
+#include "Engine/Physics/CollisionBox.h"
 #include <SDL2/SDL.h>
 #include <string>
 #include <utility>
@@ -16,9 +16,9 @@
 
 enum class ObjectType {
     kNone = 0,
-    kBase, kProjectile, kPlayer, kEnemy, kWeapon
+    kBase, kCollider,
+    kProjectile, kPlayer, kEnemy, kWeapon
 };
-
 
 struct Properties{
     public:
@@ -51,7 +51,7 @@ class GameObject : public IObject {
             m_TilePos(props.TilePosition), m_DstRect(props.DstRect),
             m_Rotation(props.Rotation),
             m_Flip(props.Flip), m_ObjectID(props.ObjectID),
-            m_Collider(nullptr), m_Animation(nullptr) {
+            m_Animation(nullptr) {
 
             m_Transform = new Transform(&m_DstRect.x, &m_DstRect.y);
         }
@@ -59,9 +59,9 @@ class GameObject : public IObject {
         explicit GameObject(GameObject* rhs);
         virtual ~GameObject() = default;
 
-        void Draw() override;
-        void Clean() override {};
-        void Update(float dt) override;
+        virtual void Draw() override;
+        virtual void Clean() override {};
+        virtual void Update(float dt) override;
 
         virtual ObjectType GetObjectType() { return ObjectType::kBase; }
         TilePos& GetTilePos() { return m_TilePos; }
@@ -91,8 +91,6 @@ class GameObject : public IObject {
         SDL_RendererFlip GetFlip() {return m_Flip;}
         void SetFlip(SDL_RendererFlip flip) {m_Flip = flip;}
 
-        void SetCollider(Collider* collider) { m_Collider = collider; }
-        Collider* GetCollider(){return m_Collider;}
         Health* GetHealthObj(){return m_Health;}
 
         Animation* GetAnimation() { return m_Animation; }
@@ -106,7 +104,6 @@ class GameObject : public IObject {
         std::string m_TextureID;
         std::string m_ObjectID;
         SDL_RendererFlip m_Flip;
-        Collider* m_Collider;
         Health* m_Health;
         Animation* m_Animation;
 };

@@ -1,18 +1,16 @@
 #include "Player.h"
 #include "Engine/Renderer/Renderer.h"
 #include "Engine/Input/InputChecker.h"
-#include "Engine/Physics/CollisionHandler.h"
+#include "Engine/Objects/ColliderHandler.h"
+
 #include "Projectile.h"
 
 std::vector<Weapon*> weapons;
 
 Player::Player(Properties& props): Character(props){
-    m_RigidBody = new RigidBody();
     m_Animation = new Animation();
     m_Animation->SetProps(m_TextureID, m_TilePos, 2, 500);
-    m_Collider = new Collider();
     // m_Collider->SetCorrection(-45, -20, 60, 80 )
-    m_Collider->Set(this->GetX(), this->GetY(), GetWidth(), GetHeight());
     m_Health = new Health(100);
 
     Properties propsG("gun", {0, 0, 18, 16}, {0, 0, 18, 16}, 0.0);
@@ -30,7 +28,7 @@ Player::Player(Properties& props): Character(props){
 void Player::Draw(){
     m_Animation->Draw({m_Transform->GetX(), m_Transform->GetY(), m_DstRect.w, m_DstRect.h});
     SDL_Log("player health: %d", m_Health->GetHealth());
-    m_Health->Draw(GetX(), GetY(), GetWidth(), GetHeight());
+    m_Health->Draw(GetX(), GetY(), GetWidth());
     for(auto *weapon: weapons)
     {
         if(weapon->GetType() == m_CurrentWeapon)
@@ -49,27 +47,27 @@ void Player::Update(float dt){
         }
     }
     m_Animation->Update();
-    m_RigidBody->Update(dt);
-    m_RigidBody->UnSetForce();
+    m_RigidBody.Update(dt);
+    m_RigidBody.UnSetForce();
     if (InputChecker::IsKeyPressed(SDLK_w)) {
-        m_RigidBody->ApplyForceY(-13);
+        m_RigidBody.ApplyForceY(-13);
     }
     if (InputChecker::IsKeyPressed(SDLK_s)) {
-        m_RigidBody->ApplyForceY(13);
+        m_RigidBody.ApplyForceY(13);
     }
     if (InputChecker::IsKeyPressed(SDLK_a)) {
-        m_RigidBody->ApplyForceX(-13);
+        m_RigidBody.ApplyForceX(-13);
         // TODO: Add run animation
         //m_Animation->SetProps("player_run", 1, 8, 100, SDL_FLIP_HORIZONTAL);
         SetFlip(SDL_FLIP_HORIZONTAL);
     }
     if (InputChecker::IsKeyPressed(SDLK_d)) {
-        m_RigidBody->ApplyForceX(13);
+        m_RigidBody.ApplyForceX(13);
         //m_Animation->SetProps("player_run", 1, 8, 100);
         SetFlip(SDL_FLIP_NONE);
     }
-    m_Transform->Translate(m_RigidBody->Position());
-    m_Collider->Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
+    m_Transform->Translate(m_RigidBody.Position());
+    m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
     m_Animation->Update();
     CanMoveThrough();
 
@@ -114,17 +112,17 @@ void Player::CanMoveThrough()
         *m_Transform->X + this->GetWidth() > SCREEN_WIDTH ||
         *m_Transform->Y + this->GetHeight() > SCREEN_HEIGHT)
     {
-        m_Transform->TranslateX(-m_RigidBody->Velocity().X/2);
-        m_Transform->TranslateY(-m_RigidBody->Velocity().Y/2);
-        m_Collider->Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());    
+        m_Transform->TranslateX(-m_RigidBody.Velocity().X/2);
+        m_Transform->TranslateY(-m_RigidBody.Velocity().Y/2);
+        m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());    
     }
     for (auto *collider : m_Colliders)
     {
-        if (CollisionHandler::GetInstance()->CheckCollision(m_Collider->Get(), collider->GetCollider()->Get()))
+        if (ColliderHandler::GetInstance()->CheckCollision(m_CollisionBox.GetRect(), collider->GetCollisionBox().GetRect()))
         {
-            m_Transform->TranslateX(-m_RigidBody->Velocity().X/2);
-            m_Transform->TranslateY(-m_RigidBody->Velocity().Y/2);
-            m_Collider->Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());         
+            m_Transform->TranslateX(-m_RigidBody.Velocity().X/2);
+            m_Transform->TranslateY(-m_RigidBody.Velocity().Y/2);
+            m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());         
         }
     }
 }

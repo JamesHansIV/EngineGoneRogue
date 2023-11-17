@@ -9,16 +9,6 @@ GameObject::GameObject(GameObject* rhs) {
     m_Flip = rhs->m_Flip;
     m_ObjectID = rhs->m_ObjectID;
 
-    if (rhs->m_Collider) {
-        m_Collider = new Collider();
-        m_Collider->Set(
-            rhs->m_Collider->Get().x,
-            rhs->m_Collider->Get().y,
-            rhs->m_Collider->Get().w,
-            rhs->m_Collider->Get().h
-        );
-    }
-
     if (rhs->m_Animation) {
         m_Animation = new Animation();
         m_Animation->SetProps(

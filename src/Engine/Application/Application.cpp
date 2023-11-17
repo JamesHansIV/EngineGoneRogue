@@ -127,21 +127,21 @@ bool Application::LoadObject(tinyxml2::XMLElement* xmlObj, const std::string& ro
 
     GameObject* obj = new GameObject(props);
 
-    tinyxml2::XMLElement* collider = xmlObj->FirstChildElement("Collider");
-    SDL_Log("Collider exists: %d", collider != nullptr);
-    if (collider != nullptr) {
-        obj->SetCollider(new Collider());
-        obj->GetCollider()->Set(
-            atoi(collider->FirstChildElement("XPos")->GetText()),
-            atoi(collider->FirstChildElement("YPos")->GetText()),
-            atoi(collider->FirstChildElement("Width")->GetText()),
-            atoi(collider->FirstChildElement("Height")->GetText())
-        );
-        SDL_Log("collider x: %d", obj->GetCollider()->Get().x);
-        SDL_Log("collider y: %d", obj->GetCollider()->Get().y);
-        SDL_Log("collider w: %d", obj->GetCollider()->Get().w);
-        SDL_Log("collider h: %d", obj->GetCollider()->Get().h);
-    }
+    // tinyxml2::XMLElement* collider = xmlObj->FirstChildElement("CollisionBox");
+    // SDL_Log("CollisionBox exists: %d", collider != nullptr);
+    // if (collider != nullptr) {
+    //     obj->SetCollider(new CollisionBox());
+    //     obj->GetCollider()->Set(
+    //         atoi(collider->FirstChildElement("XPos")->GetText()),
+    //         atoi(collider->FirstChildElement("YPos")->GetText()),
+    //         atoi(collider->FirstChildElement("Width")->GetText()),
+    //         atoi(collider->FirstChildElement("Height")->GetText())
+    //     );
+    //     SDL_Log("collider x: %d", obj->GetCollider()->Get().x);
+    //     SDL_Log("collider y: %d", obj->GetCollider()->Get().y);
+    //     SDL_Log("collider w: %d", obj->GetCollider()->Get().w);
+    //     SDL_Log("collider h: %d", obj->GetCollider()->Get().h);
+    // }
 
     tinyxml2::XMLElement* animation = xmlObj->FirstChildElement("Animation");
 

@@ -1,7 +1,7 @@
 #include "Enemy.h"
 #include "Engine/Renderer/Renderer.h"
 #include "Engine/Input/InputChecker.h"
-#include "Engine/Physics/CollisionHandler.h"
+#include "Engine/Objects/ColliderHandler.h"
 
 /*
 DEVELOPING BASIC ENEMY BEHAVIOUR:
@@ -22,13 +22,9 @@ Enemy::Enemy(Properties& props, int perceptionX, int perceptionY):
     Character(props), m_PerceptionWidth(perceptionX), m_PerceptionHeight(perceptionY) {
     m_Animation = new Animation();
     m_Animation->SetProps(m_TextureID, m_TilePos, 2, 500);
-    m_RigidBody = new RigidBody();
-    m_Collider = new Collider();
-    m_Collider->Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
     m_Health = new Health(100);
     m_MarkedForDeletion = false;
 }
-
 
 void Enemy::Draw(){
     if (m_TextureID == "boss") {
@@ -39,11 +35,11 @@ void Enemy::Draw(){
     }
     
     if (m_MarkedForDeletion == false)
-        m_Health->Draw(GetX(), GetY(), GetWidth(), GetHeight());
+        m_Health->Draw(GetX(), GetY(), GetWidth());
 }
 
 void Enemy::Update(float dt){
-    m_RigidBody->UnSetForce();
+    m_RigidBody.UnSetForce();
     int rectLeft = GetX() - m_PerceptionWidth;
     int rectRight = GetX() + GetWidth() + m_PerceptionWidth;
     int rectTop = GetY() - m_PerceptionHeight;
@@ -51,11 +47,11 @@ void Enemy::Update(float dt){
 
     m_Perception = {rectLeft - Renderer::GetInstance()->GetCameraX(),rectTop - Renderer::GetInstance()->GetCameraY(),rectRight - rectLeft,rectBottom - rectTop };
 
-    SDL_Rect player = m_Player->GetCollider()->Get();
+    SDL_Rect player = m_Player->GetCollisionBox().GetRect();
     player.x = player.x - Renderer::GetInstance()->GetCameraX();
     player.y = player.y - Renderer::GetInstance()->GetCameraY();
 
-    if(CollisionHandler::GetInstance()->CheckCollision(m_Perception, player))
+    if(ColliderHandler::GetInstance()->CheckCollision(m_Perception, player))
     {
         float directionX = m_Player->GetMidPointX() - GetMidPointX();
         float directionY = m_Player->GetMidPointY() - GetMidPointY();
@@ -67,15 +63,15 @@ void Enemy::Update(float dt){
         }
 
         float forceMagnitude = 8.0f;
-        m_RigidBody->ApplyForce(Vector2D(directionX * forceMagnitude, directionY * forceMagnitude));
-        m_RigidBody->Update(dt);
-        m_Transform->Translate(m_RigidBody->Position());
-        m_Collider->Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
-        if (CollisionHandler::GetInstance()->CheckCollision(m_Collider->Get(), m_Player->GetCollider()->Get()))
+        m_RigidBody.ApplyForce(Vector2D(directionX * forceMagnitude, directionY * forceMagnitude));
+        m_RigidBody.Update(dt);
+        m_Transform->Translate(m_RigidBody.Position());
+        m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
+        if (ColliderHandler::GetInstance()->CheckCollision(m_CollisionBox.GetRect(), m_Player->GetCollisionBox().GetRect()))
         {
-            m_Transform->TranslateX(-m_RigidBody->Velocity().X/2);
-            m_Transform->TranslateY(-m_RigidBody->Velocity().Y/2);
-            m_Collider->Set(this->GetX(), this->GetY(), GetHeight(), GetWidth()); 
+            m_Transform->TranslateX(-m_RigidBody.Velocity().X/2);
+            m_Transform->TranslateY(-m_RigidBody.Velocity().Y/2);
+            m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth()); 
             m_Player->GetHealthObj()->SetDamage(1);           
         }
         CanMoveThrough();
@@ -98,28 +94,44 @@ void Enemy::CanMoveThrough()
         *m_Transform->X + this->GetWidth() > SCREEN_WIDTH ||
         *m_Transform->Y + this->GetHeight() > SCREEN_HEIGHT)
     {
-        m_Transform->TranslateX(-m_RigidBody->Velocity().X/2);
-        m_Transform->TranslateY(-m_RigidBody->Velocity().Y/2);
-        m_Collider->Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());    
+        m_Transform->TranslateX(-m_RigidBody.Velocity().X/2);
+        m_Transform->TranslateY(-m_RigidBody.Velocity().Y/2);
+        m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());    
     }
     for (auto *collider : m_Colliders)
     {
-        if (collider->GetCollider() == this->GetCollider()) continue;
-        if (CollisionHandler::GetInstance()->CheckCollision(m_Collider->Get(), collider->GetCollider()->Get()))
+        if (collider == this) continue;
+        if (ColliderHandler::GetInstance()->CheckCollision(m_CollisionBox.GetRect(), collider->GetCollisionBox().GetRect()))
         {
-            m_Transform->TranslateX(-m_RigidBody->Velocity().X/2);
-            m_Transform->TranslateY(-m_RigidBody->Velocity().Y/2);
-            m_Collider->Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());            
+            m_Transform->TranslateX(-m_RigidBody.Velocity().X/2);
+            m_Transform->TranslateY(-m_RigidBody.Velocity().Y/2);
+            m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
         }
     }
 }
 
+void Enemy::OnCollide(Collider* collidee) {
+    if (this == collidee) return;
+
+    switch(collidee->GetObjectType()) {
+        case ObjectType::kCollider:
+            SDL_Log("%s object collided with collider", GetID().c_str());
+            break;
+        case ObjectType::kProjectile:
+            SDL_Log("%s object collided with projectile", GetID().c_str());
+            break;
+
+        default:
+            SDL_LogError(0, "Invalid object type");
+            assert(false);
+            break;
+    }
+}
 
 void Enemy::OnEvent(Event& event) {
 }
 
 void Enemy::Clean(){
     delete m_Animation;
-    delete m_RigidBody;
 }
 

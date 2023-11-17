@@ -14,7 +14,7 @@ Enemy* enemy5 = nullptr;
 Enemy* enemy6 = nullptr;
 Enemy* enemy7 = nullptr;
 Enemy* enemy8 = nullptr;
-std::vector<GameObject*> colliders;
+std::vector<Collider*> colliders;
 
 Game::Game() {
     SDL_Renderer* renderer = Renderer::GetInstance()->GetRenderer();
@@ -35,11 +35,11 @@ Game::Game() {
 
     m_Objects = Application::m_Rooms["room1"];
 
-    for (auto& obj : m_Objects) {
-        if (obj->GetCollider() != nullptr) {
-            colliders.push_back(obj);
-        }
-    }
+    // for (auto& obj : m_Objects) {
+    //     if (obj->GetCollider() != nullptr) {
+    //         colliders.push_back(obj);
+    //     }
+    // }
 
     Properties props_p("player", {0, 0, 18, 18}, {0, 0, 30, 30});
     player = new Player(props_p);

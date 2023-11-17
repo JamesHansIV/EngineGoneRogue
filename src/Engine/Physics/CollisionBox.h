@@ -1,10 +1,11 @@
 #pragma once
 #include "SDL2/SDL.h"
 
-class Collider {
-
+class CollisionBox {
     public:
-        inline SDL_Rect Get(){return m_Box;}
+        CollisionBox() {}
+
+        inline SDL_Rect GetRect(){return m_Box;}
         inline void SetCorrection(int x, int y, int w, int h){m_Buffer = {x, y, w, h};}
 
         void Set(int x, int y, int w, int h){

@@ -1,15 +1,12 @@
 #include "Weapon.h"
 #include "Engine/Renderer/Renderer.h"
+#include "Engine/Objects/ColliderHandler.h"
 
 std::vector<Projectile*> projectiles;
 
-Weapon::Weapon(Properties& props, WeaponType weaponType) : GameObject(props), m_Type(weaponType)
-{
-    m_Collider = new Collider();
-    m_Collider->Set(GetX(), GetY(), GetHeight(), GetWidth());
-}
+Weapon::Weapon(Properties& props, WeaponType weaponType) : Collider(props), m_Type(weaponType) {}
 
-void Weapon:: Draw()
+void Weapon::Draw()
 {
     GameObject::Draw();
     for (auto *projectile : projectiles) {
@@ -19,7 +16,7 @@ void Weapon:: Draw()
 
 void Weapon::Update(float dt)
 {
-    m_Collider->Set(GetX(), GetY(), GetHeight(), GetWidth());
+    m_CollisionBox.Set(GetX(), GetY(), GetHeight(), GetWidth());
     if (m_Type == PROJECTILE)
     {
         SetFlip(SDL_FLIP_NONE);
@@ -51,7 +48,7 @@ void Weapon::Update(float dt)
         if(GetFlip() == SDL_FLIP_HORIZONTAL)
         {   
             SetX(GetX() - 12);
-            m_Collider->Set(GetX()-12, GetY()-12, GetHeight(), GetWidth());
+            m_CollisionBox.Set(GetX()-12, GetY()-12, GetHeight(), GetWidth());
         }
 
         if (InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT))
@@ -68,7 +65,7 @@ void Weapon::Update(float dt)
             SetRotation(swingAngle);
             for (auto collider : m_Colliders)
             {
-                if(CollisionHandler::GetInstance()->CheckCollision(GetCollider()->Get(), collider->GetCollider()->Get()))
+                if(ColliderHandler::GetInstance()->CheckCollision(m_CollisionBox.GetRect(), collider->GetCollisionBox().GetRect()))
                 {
                     collider->GetHealthObj()->SetDamage(10);
                 }

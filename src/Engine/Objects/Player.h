@@ -13,17 +13,15 @@ class Player: public Character, public EventListener{
         void Draw() override;
         void Clean() override;
         void Update(float dt) override;
-        void UpdateColliders(const std::vector<GameObject*>& colliders){m_Colliders = colliders;}
+        void UpdateColliders(const std::vector<Collider*>& colliders){m_Colliders = colliders;}
         void OnEvent(Event& event) override;
-        RigidBody* GetRigidBody() {return m_RigidBody;};
         bool IsMarkedForDeletion(){return m_MarkedForDeletion;}
         virtual ObjectType GetObjectType() override { return ObjectType::kBase; }
     private:
-        RigidBody* m_RigidBody;
         void CanMoveThrough();
         void DrawPlayerHealth();
         void DrawWeapon();
-        std::vector<GameObject*> m_Colliders;
+        std::vector<Collider*> m_Colliders;
         WeaponType m_CurrentWeapon;
         bool m_MarkedForDeletion;
 };

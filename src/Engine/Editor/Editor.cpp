@@ -10,7 +10,7 @@
 #include "Engine/Objects/Player.h"
 #include "Engine/Objects/Projectile.h"
 #include "Engine/Input/InputChecker.h"
-#include "Engine/Physics/Collider.h"
+#include "Engine/Objects/Collider.h"
 
 #include <cstdlib>
 #include <dirent.h>
@@ -231,7 +231,26 @@ void Editor::CleanLayers() {
     m_Layers.clear();
 }
 
-void SaveBaseObject(tinyxml2::XMLDocument& doc, tinyxml2::XMLElement* xmlObj, GameObject* obj) {
+void WriteCollider(tinyxml2::XMLDocument& doc, tinyxml2::XMLElement* xmlObj, Collider* obj) {
+    tinyxml2::XMLElement* collider = doc.NewElement("CollisionBox");
+    tinyxml2::XMLElement* colliderX = doc.NewElement("XPos");
+    tinyxml2::XMLElement* colliderY = doc.NewElement("YPos");
+    tinyxml2::XMLElement* colliderW = doc.NewElement("Width");
+    tinyxml2::XMLElement* colliderH = doc.NewElement("Height");
+    colliderX->SetText(std::to_string(obj->GetCollisionBox().GetRect().x).c_str());
+    colliderY->SetText(std::to_string(obj->GetCollisionBox().GetRect().y).c_str());
+    colliderW->SetText(std::to_string(obj->GetCollisionBox().GetRect().w).c_str());
+    colliderH->SetText(std::to_string(obj->GetCollisionBox().GetRect().h).c_str());
+
+    collider->InsertEndChild(colliderX);
+    collider->InsertEndChild(colliderY);
+    collider->InsertEndChild(colliderW);
+    collider->InsertEndChild(colliderH);
+
+    xmlObj->InsertEndChild(collider);
+}
+
+void WriteBaseObject(tinyxml2::XMLDocument& doc, tinyxml2::XMLElement* xmlObj, GameObject* obj) {
     tinyxml2::XMLElement* texture_id = doc.NewElement("TextureID");
     tinyxml2::XMLElement* object_id = doc.NewElement("ObjectID");
     tinyxml2::XMLElement* src_rect = doc.NewElement("SrcRect");
@@ -281,25 +300,6 @@ void SaveBaseObject(tinyxml2::XMLDocument& doc, tinyxml2::XMLElement* xmlObj, Ga
     xmlObj->InsertEndChild(dst_rect);
     xmlObj->InsertEndChild(rotation);
 
-    if (obj->GetCollider() != nullptr) {
-        tinyxml2::XMLElement* collider = doc.NewElement("Collider");
-        tinyxml2::XMLElement* colliderX = doc.NewElement("XPos");
-        tinyxml2::XMLElement* colliderY = doc.NewElement("YPos");
-        tinyxml2::XMLElement* colliderW = doc.NewElement("Width");
-        tinyxml2::XMLElement* colliderH = doc.NewElement("Height");
-        colliderX->SetText(std::to_string(obj->GetCollider()->Get().x).c_str());
-        colliderY->SetText(std::to_string(obj->GetCollider()->Get().y).c_str());
-        colliderW->SetText(std::to_string(obj->GetCollider()->Get().w).c_str());
-        colliderH->SetText(std::to_string(obj->GetCollider()->Get().h).c_str());
-
-        collider->InsertEndChild(colliderX);
-        collider->InsertEndChild(colliderY);
-        collider->InsertEndChild(colliderW);
-        collider->InsertEndChild(colliderH);
-
-        xmlObj->InsertEndChild(collider);
-    }
-
     if (obj->GetAnimation() != nullptr) {
         tinyxml2::XMLElement* animation = doc.NewElement("Animation");
         tinyxml2::XMLElement* animationTexID = doc.NewElement("TextureID");
@@ -341,7 +341,7 @@ void Editor::SaveRoom(const char* roomName) {
             curr_xml_object = doc.NewElement("Object");
             switch(obj->GetObjectType()) {
                 case ObjectType::kBase:
-                    SaveBaseObject(doc, curr_xml_object, obj);
+                    WriteBaseObject(doc, curr_xml_object, obj);
                     break;
                 case ObjectType::kProjectile:
                     break;
@@ -503,18 +503,18 @@ void Editor::ShowFileManager() {
 }
 
 void Editor::ShowAddCollider() {
-    if (m_CurrentObject->GetCollider() == nullptr && ImGui::TreeNode("Add Collider")) {
+    // if (m_CurrentObject->GetCollider() == nullptr && ImGui::TreeNode("Add CollisionBox")) {
         
-        ImGui::InputInt("Set collider width", &m_ObjectInfo.Collider.w);
+    //     ImGui::InputInt("Set collider width", &m_ObjectInfo.CollisionBox.w);
 
-        ImGui::InputInt("Set collider height", &m_ObjectInfo.Collider.h);
+    //     ImGui::InputInt("Set collider height", &m_ObjectInfo.CollisionBox.h);
 
-        if (ImGui::Button("Add collider", ImVec2(100, 30))) {
-            m_CurrentObject->SetCollider(new Collider());
-            m_CurrentObject->GetCollider()->Set(m_CurrentObject->GetX(), m_CurrentObject->GetY(), m_ObjectInfo.Collider.w, m_ObjectInfo.Collider.h);
-        }
-        ImGui::TreePop();
-    }
+    //     if (ImGui::Button("Add collider", ImVec2(100, 30))) {
+    //         m_CurrentObject->SetCollider(new CollisionBox());
+    //         m_CurrentObject->GetCollider()->Set(m_CurrentObject->GetX(), m_CurrentObject->GetY(), m_ObjectInfo.CollisionBox.w, m_ObjectInfo.CollisionBox.h);
+    //     }
+    //     ImGui::TreePop();
+    // }
 }
 
 void Editor::ShowAddAnimation() {

@@ -2,7 +2,7 @@
 #include "GameObject.h"
 #include "Engine/Input/InputChecker.h"
 #include "Projectile.h"
-#include "Engine/Physics/CollisionHandler.h"
+#include "Engine/Objects/Collider.h"
 
 /*
     notes:
@@ -15,17 +15,17 @@ enum WeaponType {
     MELEE
 };
 
-class Weapon : public GameObject {
+class Weapon : public Collider {
     public:
         Weapon(Properties& props, WeaponType weaponType);
         void Draw() override;
         void Clean() override;
         void Update(float dt) override;
-        void UpdateColliders(const std::vector<GameObject*>& colliders){m_Colliders = colliders;};
+        void UpdateColliders(const std::vector<Collider*>& colliders){m_Colliders = colliders;};
         WeaponType GetType() {return m_Type;}
 
         virtual ObjectType GetObjectType() override { return ObjectType::kWeapon; }
     private:
         WeaponType m_Type;
-        std::vector<GameObject*> m_Colliders;
+        std::vector<Collider*> m_Colliders;
 };

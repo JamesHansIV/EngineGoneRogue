@@ -23,7 +23,7 @@ struct ObjectInfo {
     Rect DstRect;
     float Rotation = 0.0F;
     ObjectType type = ObjectType::kBase;
-    SDL_Rect Collider;
+    SDL_Rect CollisionBox;
     AnimationInfo Animation;
     bool SnapToGrid = true;
 };

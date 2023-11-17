@@ -3,7 +3,7 @@
 #include "Engine/Renderer/Renderer.h"
 #include <SDL2/SDL.h>
 
-void Health::Draw(int objX, int objY, int objWidth, int objHeight) {
+void Health::Draw(int objX, int objY, int objWidth) {
     
     int healthBarWidth = static_cast<int>((objWidth + 15) * (m_Health / (float)m_TotalHealth));
     

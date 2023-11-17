@@ -22,7 +22,7 @@ class RigidBody {
         inline void ApplyFriction(Vector2D Fr){m_Friction = Fr;}
         inline void UnSetFriction(){m_Friction = Vector2D(0,0);}
 
-        inline float GetMass() const{return m_Mass;}
+        inline float GetMass() const {return m_Mass;}
         inline Vector2D Position(){return m_Position;}
         inline Vector2D Velocity(){return m_Velocity;}
         inline Vector2D Acceleration(){return m_Acceleration;}

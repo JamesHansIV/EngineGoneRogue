@@ -1,12 +1,13 @@
 #pragma once
 #include "GameObject.h"
 #include "Engine/Events/EventListener.h"
+#include "Engine/Objects/Collider.h"
 #include <string>
 
-class Character: public GameObject {
+class Character: public Collider {
 
     public:
-        explicit Character(Properties& props): GameObject(props) {}
+        explicit Character(Properties& props): Collider(props) {}
 
         void Draw() override =0;
         void Clean() override =0;
