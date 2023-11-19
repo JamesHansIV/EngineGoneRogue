@@ -48,21 +48,34 @@ void Player::Update(float dt){
     }
     m_Animation->Update();
     m_RigidBody.Update(dt);
+    float multiplier = 1;
     m_RigidBody.UnSetForce();
+    SDL_Log("able_to_dash: %d", m_able_to_dash);
+    if (InputChecker::IsKeyPressed(SDLK_q) || m_is_dashing) {
+        m_is_dashing = true;
+        if (m_able_to_dash % 50 == 0 || m_able_to_dash > 50) {
+          multiplier = 2;
+        }
+        if (m_able_to_dash == 75) {
+          m_able_to_dash = 0;
+          m_is_dashing = false;
+        }
+        m_able_to_dash++;
+    }
     if (InputChecker::IsKeyPressed(SDLK_w)) {
-        m_RigidBody.ApplyForceY(-13);
+        m_RigidBody.ApplyForceY(-13 * multiplier);
     }
     if (InputChecker::IsKeyPressed(SDLK_s)) {
-        m_RigidBody.ApplyForceY(13);
+        m_RigidBody.ApplyForceY(13* multiplier);
     }
     if (InputChecker::IsKeyPressed(SDLK_a)) {
-        m_RigidBody.ApplyForceX(-13);
+        m_RigidBody.ApplyForceX(-13 * multiplier);
         // TODO: Add run animation
         //m_Animation->SetProps("player_run", 1, 8, 100, SDL_FLIP_HORIZONTAL);
         SetFlip(SDL_FLIP_HORIZONTAL);
     }
     if (InputChecker::IsKeyPressed(SDLK_d)) {
-        m_RigidBody.ApplyForceX(13);
+        m_RigidBody.ApplyForceX(13 * multiplier);
         //m_Animation->SetProps("player_run", 1, 8, 100);
         SetFlip(SDL_FLIP_NONE);
     }
@@ -80,7 +93,7 @@ void Player::Update(float dt){
         }
         // Reset the mouse wheel direction to avoid toggling multiple times
         InputChecker::SetMouseWheelDirection(0);
-    }   
+    }
 
     int gunXX = GetMidPointX() - Renderer::GetInstance()->GetCameraX();
     int gunYY = GetMidPointY() - Renderer::GetInstance()->GetCameraY();
@@ -96,7 +109,7 @@ void Player::Update(float dt){
             int gunX = GetX() + GetWidth() / 2;
             int gunY = GetY() + GetHeight() / 3;
             weapon->SetX(gunX);
-            weapon->SetY(gunY); 
+            weapon->SetY(gunY);
             weapon->UpdateColliders(m_Colliders);
             weapon->SetRotation(angle);
             weapon->SetFlip(m_Flip);
@@ -114,7 +127,7 @@ void Player::CanMoveThrough()
     {
         m_Transform->TranslateX(-m_RigidBody.Velocity().X/2);
         m_Transform->TranslateY(-m_RigidBody.Velocity().Y/2);
-        m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());    
+        m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
     }
     for (auto *collider : m_Colliders)
     {
@@ -122,7 +135,7 @@ void Player::CanMoveThrough()
         {
             m_Transform->TranslateX(-m_RigidBody.Velocity().X/2);
             m_Transform->TranslateY(-m_RigidBody.Velocity().Y/2);
-            m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());         
+            m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
         }
     }
 }

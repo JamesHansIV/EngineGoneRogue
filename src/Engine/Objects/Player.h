@@ -24,5 +24,8 @@ class Player: public Character, public EventListener{
         std::vector<Collider*> m_Colliders;
         WeaponType m_CurrentWeapon;
         bool m_MarkedForDeletion;
+        // TODO: add this to player state when game state is added.
+        int m_able_to_dash = 0;
+        bool m_is_dashing = false;
 };
 
