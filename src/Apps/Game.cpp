@@ -41,25 +41,25 @@ Game::Game() {
     //     }
     // }
 
-    Properties props_p("player", {0, 0, 18, 18}, {0, 0, 30, 30});
+    Properties props_p("player", {0, 0, 18, 18}, {0, 0, 30, 30}, 0, "player");
     player = new Player(props_p);
 
-    Properties props1("enemy5",{0, 0, 16, 16}, {200, 200, 36, 36});
+    Properties props1("enemy5",{0, 0, 16, 16}, {200, 200, 36, 36}, 0, "enemy1");
     enemy1 = new Enemy(props1, 150, 150);
 
-    Properties props2("enemy5", {0, 0, 16, 16}, {300, 260, 36, 36});
+    Properties props2("enemy5", {0, 0, 16, 16}, {300, 260, 36, 36}, 0, "enemy2");
     enemy2 = new Enemy(props2,  150, 150);
 
-    Properties props3("enemy5", {0, 0, 16, 16}, {500, 200, 36, 36});
+    Properties props3("enemy5", {0, 0, 16, 16}, {500, 200, 36, 36}, 0, "enemy3");
     enemy3 = new Enemy(props3,  150, 150);
     
-    Properties props4("enemy5", {0, 0, 16, 16}, {600, 367, 36, 36});
+    Properties props4("enemy5", {0, 0, 16, 16}, {600, 367, 36, 36}, 0, "enemy4");
     enemy4 = new Enemy(props4,  150, 150);
 
-    Properties props5("enemy5", {0, 0, 16, 16}, {700, 300, 36, 36});
+    Properties props5("enemy5", {0, 0, 16, 16}, {700, 300, 36, 36}, 0, "enemy5");
     enemy5 = new Enemy(props5, 150, 150);
     
-    Properties props6("enemy5", {0, 0, 16, 16}, {600, 150, 36, 36});
+    Properties props6("enemy5", {0, 0, 16, 16}, {600, 150, 36, 36}, 0, "enemy6");
     enemy6 = new Enemy(props6,  150, 150);
 
     m_Objects.push_back(enemy1);
@@ -68,16 +68,47 @@ Game::Game() {
     m_Objects.push_back(enemy4);
     m_Objects.push_back(enemy5);
     m_Objects.push_back(enemy6);
-    colliders.push_back(enemy1);
-    colliders.push_back(enemy2);
-    colliders.push_back(enemy3);
-    colliders.push_back(enemy4);
-    colliders.push_back(enemy5);
-    colliders.push_back(enemy6);
+    ColliderHandler::GetInstance()->AddCollider(player);
+    ColliderHandler::GetInstance()->AddCollider(enemy1);
+    ColliderHandler::GetInstance()->AddCollider(enemy2);
+    ColliderHandler::GetInstance()->AddCollider(enemy3);
+    ColliderHandler::GetInstance()->AddCollider(enemy4);
+    ColliderHandler::GetInstance()->AddCollider(enemy5);
+    ColliderHandler::GetInstance()->AddCollider(enemy6);
 
-    GetEventManager().AddListener(*player);
 
     Renderer::GetInstance()->SetCameraTarget(player);
+}
+
+void Game::Events() {
+    SDL_Event event;
+    while (SDL_PollEvent(&event) != 0) {
+        switch (event.type) {
+            case SDL_QUIT:
+                Quit();
+                return;
+            case SDL_KEYDOWN:
+                InputChecker::SetKeyPressed(event.key.keysym.sym, true);
+                player->OnKeyPressed(event);
+                break;
+            case SDL_KEYUP:
+                InputChecker::SetKeyPressed(event.key.keysym.sym, false);
+                player->OnKeyReleased(event);
+                break;
+            case SDL_MOUSEBUTTONDOWN:
+                InputChecker::SetMouseButtonPressed(event.button.button, true);
+                break;
+            case SDL_MOUSEBUTTONUP:
+                InputChecker::SetMouseButtonPressed(event.button.button, false);
+                break;
+            case SDL_MOUSEMOTION:
+                InputChecker::UpdateMousePosition(event.motion.x, event.motion.y);
+                break;
+            case SDL_MOUSEWHEEL:
+                InputChecker::SetMouseWheelDirection(event.wheel.y);
+                break;
+        }
+    }
 }
 
 void Game::Update(float dt) {
@@ -86,32 +117,30 @@ void Game::Update(float dt) {
         player->Clean();
         delete player;
     }
-    player->UpdateColliders(colliders);
     player->Update(dt);
-    for (auto it = colliders.begin(); it != colliders.end();)
+    for (auto it = m_Objects.begin(); it != m_Objects.end();)
     {
         Enemy* enemy = dynamic_cast<Enemy*>(*it);  // Cast to Enemy type
         if (enemy)
         {
-            enemy->SetPlayer(player);
-            enemy->UpdateColliders(colliders);
+            enemy->SetTarget(player);
         }
         (*it)->Update(dt);
         if (enemy && enemy->IsMarkedForDeletion())  // Check if it's an Enemy and marked for deletion
         {
+            ColliderHandler::GetInstance()->RemoveCollider(enemy);
             DeleteObject(enemy);
-            it = colliders.erase(it);
         }
         else
         {
             ++it;
         }
     }
+    ColliderHandler::GetInstance()->HandleCollisions();
 }
 
 void Game::Render() {
     Renderer::GetInstance()->RenderClear();
-    // m_Map->Draw();
     for (auto *obj : m_Objects) {
         obj->Draw();
     }

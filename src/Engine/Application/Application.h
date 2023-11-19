@@ -4,7 +4,6 @@
 
 #include "Engine/Events/EventManager.h"
 #include "Engine/Layers/Layer.h"
-#include "Engine/Objects/Map.h"
 #include <unordered_map>
 #include <tinyxml2.h>
 
@@ -36,6 +35,7 @@ class Application{
     protected:
         std::string m_ProjectName;
         std::unordered_map<std::string, std::vector<GameObject*>> m_Rooms;
+        float m_LastTick;
     private:
         bool m_IsRunning;
         SDL_Window* m_Window;

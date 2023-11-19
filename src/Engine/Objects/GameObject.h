@@ -17,7 +17,16 @@
 enum class ObjectType {
     kNone = 0,
     kBase, kCollider,
-    kProjectile, kPlayer, kEnemy, kWeapon
+    kProjectile, kPlayer, kEnemy,
+    kWeapon, kRangedWeapon, kMeleeWeapon
+};
+
+enum class ObjectCategory {
+    None = 0,
+    Collider,
+    Projectile,
+    Character,
+    Weapon
 };
 
 struct Properties{
@@ -64,13 +73,17 @@ class GameObject : public IObject {
         virtual void Update(float dt) override;
 
         virtual ObjectType GetObjectType() { return ObjectType::kBase; }
+        virtual ObjectCategory GetObjectCategory() { return ObjectCategory::None; }
+
         TilePos& GetTilePos() { return m_TilePos; }
         Rect& GetDstRect() { return m_DstRect; }
 
         float& GetX() { return m_DstRect.x; }
         float& GetY() { return m_DstRect.y; }
-        void SetX(int x) { m_DstRect.x = x; }
-        void SetY(int y) { m_DstRect.y = y; }
+        void SetX(float x) { m_DstRect.x = x; }
+        void SetY(float y) { m_DstRect.y = y; }
+        void MoveX(float x) { m_DstRect.x += x; }
+        void MoveY(float y) { m_DstRect.y += y; }
         float GetMidPointX() const {
             return (m_DstRect.x + static_cast<float>(m_DstRect.w)/2);
         };
@@ -91,8 +104,6 @@ class GameObject : public IObject {
         SDL_RendererFlip GetFlip() {return m_Flip;}
         void SetFlip(SDL_RendererFlip flip) {m_Flip = flip;}
 
-        Health* GetHealthObj(){return m_Health;}
-
         Animation* GetAnimation() { return m_Animation; }
         void SetAnimation(Animation* animation) { m_Animation = animation; }
 
@@ -104,6 +115,5 @@ class GameObject : public IObject {
         std::string m_TextureID;
         std::string m_ObjectID;
         SDL_RendererFlip m_Flip;
-        Health* m_Health;
         Animation* m_Animation;
 };

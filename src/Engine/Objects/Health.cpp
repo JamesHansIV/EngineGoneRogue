@@ -5,7 +5,7 @@
 
 void Health::Draw(int objX, int objY, int objWidth) {
     
-    int healthBarWidth = static_cast<int>((objWidth + 15) * (m_Health / (float)m_TotalHealth));
+    int healthBarWidth = static_cast<int>((objWidth + 15) * (m_HP / (float)m_TotalHealth));
     
     if (healthBarWidth <= 0) healthBarWidth = 0;
     int healthBarX = objX - m_XOffset;

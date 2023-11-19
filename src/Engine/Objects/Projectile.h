@@ -10,16 +10,20 @@
 class Projectile: public Collider{
 
     public:
-        Projectile(Properties& props, int speed, float mass, float angle);
+        Projectile(Properties& props, float speed, float angle, bool playerOwned = false);
         virtual void Draw() override;
         virtual void Clean() override;
-        virtual void Update(float dt, const std::vector<Collider*>& colliders);
+        virtual void Update(float dt) override;
         bool IsMarkedForDeletion() {return m_MarkedForDeletion;}
+        void CheckOutOfBounds();
+
+        virtual void OnCollide(Collider* collidee) override;
+
         virtual ObjectType GetObjectType() override { return ObjectType::kProjectile; }
+        virtual ObjectCategory GetObjectCategory() override { return ObjectCategory::Projectile; }
     private:
-        Animation* m_Animation;
-        int m_Speed;
+        bool m_PlayerOwned;
+        float m_Speed;
         float m_Angle;
         bool m_MarkedForDeletion;
-        void CanMoveThrough(const std::vector<Collider*>& colliders);
 };

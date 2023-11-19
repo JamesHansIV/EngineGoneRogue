@@ -2,12 +2,15 @@
 #include "Engine/Renderer/Renderer.h"
 #include "Engine/Objects/ColliderHandler.h"
 #include "Character.h"
+#include "Enemy.h"
 #include <SDL2/SDL.h>
 
-Projectile::Projectile(Properties& props, int speed, float mass, float angle): Collider(props), m_Speed(speed), m_Angle(angle){
-    m_RigidBody.SetMass(mass);
-    m_CollisionBox.SetCorrection(0, 0, 10, 10 );
-    m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());   
+Projectile::Projectile(Properties& props, float speed, float angle, bool playerOwned)
+: Collider(props), m_Speed(speed), m_Angle(angle), m_PlayerOwned(playerOwned){
+    Vector2D direction = Vector2D(cos(m_Angle * M_PI / 180), sin(m_Angle * M_PI / 180));
+    Vector2D velocity = direction * m_Speed;
+    m_RigidBody->SetVelocity(velocity);
+
     m_MarkedForDeletion = false;
 }
 
@@ -15,35 +18,53 @@ void Projectile::Draw(){
     GameObject::Draw();
 }
 
-void Projectile::Update(float dt, const std::vector<Collider*>& colliders){
-    m_RigidBody.UpdateProjectile(dt);
-    m_RigidBody.UnSetForce();
-    m_RigidBody.ApplyForceX(m_Speed);
-    m_RigidBody.ApplyForceY(m_Angle);
-    m_Transform->TranslateX(m_RigidBody.Position().X);
-    m_Transform->TranslateY(m_RigidBody.Position().Y);
+void Projectile::Update(float dt){
+    m_RigidBody->Update(dt);
+    SetX(m_RigidBody->Position().X);
+    SetY(m_RigidBody->Position().Y);
+    
     m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
-    CanMoveThrough(colliders);
+    CheckOutOfBounds();
 }
 
-void Projectile::CanMoveThrough(const std::vector<Collider*>& colliders)
-{
-    if (*m_Transform->X < 0.0f ||
-        *m_Transform->Y < 0.0f ||
-        *m_Transform->X + this->GetWidth() > SCREEN_WIDTH ||
-        *m_Transform->Y + this->GetHeight() > SCREEN_HEIGHT)
+void Projectile::CheckOutOfBounds() {
+    if (GetX() < 0.0f ||
+        GetY() < 0.0f ||
+        GetX() + this->GetWidth() > SCREEN_WIDTH ||
+        GetY() + this->GetHeight() > SCREEN_HEIGHT)
     {
         m_MarkedForDeletion = true;
     }
-    for (auto& collider : colliders)
-    {
-        if(ColliderHandler::GetInstance()->CheckCollision(m_CollisionBox.GetRect(), collider->GetCollisionBox().GetRect()))
-        {
-            if (dynamic_cast<Character*>(collider)) {
-                collider->GetHealthObj()->SetDamage(10);
+}
+
+void Projectile::OnCollide(Collider* collidee) {
+    if (this == collidee) return;
+
+    switch(collidee->GetObjectType()) {
+        case ObjectType::kPlayer:
+            if (!m_PlayerOwned) {
+                m_MarkedForDeletion = true;
+                dynamic_cast<Character*>(collidee)->GetHealth()->SetDamage(10);
             }
+            break;
+        case ObjectType::kEnemy:
+            if (m_PlayerOwned) {
+                m_MarkedForDeletion = true;
+                dynamic_cast<Character*>(collidee)->GetHealth()->SetDamage(10);
+            }
+            break;
+        case ObjectType::kMeleeWeapon:
+            break;
+        case ObjectType::kProjectile:
+            SDL_Log("%s object collided with projectile", GetID().c_str());
+            break;
+        case ObjectType::kCollider:
             m_MarkedForDeletion = true;
-        }
+            break;
+        default:
+            SDL_LogError(0, "Invalid object type");
+            assert(false);
+            break;
     }
 }
 

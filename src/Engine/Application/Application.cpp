@@ -262,8 +262,11 @@ void Application::Events(){
 
 void Application::Run() {
     while (m_IsRunning) {
+        float currentTick = SDL_GetTicks();
+        float dt = currentTick - m_LastTick;
+        m_LastTick = currentTick;
         Events();
-        Update(0.5);
+        Update(dt/10);
         Render();
     }
     Clean();

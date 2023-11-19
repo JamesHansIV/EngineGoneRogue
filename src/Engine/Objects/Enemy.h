@@ -6,17 +6,17 @@
 #include "Engine/Objects/Collider.h"
 #include "functional"
 
-class Enemy: public Character, public EventListener{
+class Enemy: public Character{
     public:
         explicit Enemy(Properties& props, int perceptionX, int perceptionY);
         virtual void Draw() override;
         virtual void Clean() override;
         virtual void Update(float dt) override;
-        virtual void OnEvent(Event& event) override;
+
+        void MoveTowardsTarget(float dt);
 
         bool IsMarkedForDeletion(){return m_MarkedForDeletion;}
-        void SetPlayer(Collider* pc) {m_Player = pc;}
-        void UpdateColliders(const std::vector<Collider*>& colliders){m_Colliders = colliders;}
+        void SetTarget(Collider* target) {m_Target = target;}
 
         virtual void OnCollide(Collider* collidee) override;
         virtual ObjectType GetObjectType() override { return ObjectType::kEnemy; }
@@ -26,9 +26,6 @@ class Enemy: public Character, public EventListener{
         int m_PerceptionHeight;
         SDL_Rect m_Perception;
         bool m_MarkedForDeletion;
-        void CanMoveThrough();
-        void DrawEnemyHealth();
-        Collider* m_Player;
-        std::vector<Collider*> m_Colliders;
+        Collider* m_Target;
 };
 

@@ -4,28 +4,17 @@
 #include "Projectile.h"
 #include "Engine/Objects/Collider.h"
 
-/*
-    notes:
-    weapon type - enum?
-    texture
-*/
-
-enum WeaponType {
-    PROJECTILE,
-    MELEE
-};
 
 class Weapon : public Collider {
     public:
-        Weapon(Properties& props, WeaponType weaponType);
-        void Draw() override;
-        void Clean() override;
-        void Update(float dt) override;
-        void UpdateColliders(const std::vector<Collider*>& colliders){m_Colliders = colliders;};
-        WeaponType GetType() {return m_Type;}
+        Weapon(Properties& props, bool playerOwned = false) : Collider(props), m_PlayerOwned(playerOwned) {}
+        virtual void Draw() override = 0;
+        virtual void Clean() override = 0;
+        virtual void Update(float dt) override = 0;
 
-        virtual ObjectType GetObjectType() override { return ObjectType::kWeapon; }
+        inline bool GetPlayerOwned() { return m_PlayerOwned; }
+
+        virtual ObjectCategory GetObjectCategory() override { return ObjectCategory::Weapon; }
     private:
-        WeaponType m_Type;
-        std::vector<Collider*> m_Colliders;
+        bool m_PlayerOwned;
 };
