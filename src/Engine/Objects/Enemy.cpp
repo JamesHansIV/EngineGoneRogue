@@ -8,7 +8,7 @@ DEVELOPING BASIC ENEMY BEHAVIOUR:
 
 - define the enemy perception range
 - check for player detection in the enemy perception range
-- calculate the direction vector from enemy's position to the player's position 
+- calculate the direction vector from enemy's position to the player's position
 - apply behaviour like move towards the player, attack in perception,etc
 
 
@@ -33,7 +33,7 @@ void Enemy::Draw(){
     else {
         m_Animation->Draw({m_Transform->GetX(), m_Transform->GetY(), m_DstRect.w, m_DstRect.h});
     }
-    
+
     if (m_MarkedForDeletion == false)
         m_Health->Draw(GetX(), GetY(), GetWidth());
 }
@@ -62,7 +62,7 @@ void Enemy::Update(float dt){
             directionY /= directionLength;
         }
 
-        float forceMagnitude = 8.0f;
+        float forceMagnitude = 4.0f;
         m_RigidBody.ApplyForce(Vector2D(directionX * forceMagnitude, directionY * forceMagnitude));
         m_RigidBody.Update(dt);
         m_Transform->Translate(m_RigidBody.Position());
@@ -71,8 +71,8 @@ void Enemy::Update(float dt){
         {
             m_Transform->TranslateX(-m_RigidBody.Velocity().X/2);
             m_Transform->TranslateY(-m_RigidBody.Velocity().Y/2);
-            m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth()); 
-            m_Player->GetHealthObj()->SetDamage(1);           
+            m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
+            m_Player->GetHealthObj()->SetDamage(1);
         }
         CanMoveThrough();
     }
@@ -96,7 +96,7 @@ void Enemy::CanMoveThrough()
     {
         m_Transform->TranslateX(-m_RigidBody.Velocity().X/2);
         m_Transform->TranslateY(-m_RigidBody.Velocity().Y/2);
-        m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());    
+        m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
     }
     for (auto *collider : m_Colliders)
     {

@@ -21,7 +21,10 @@ void Weapon::Update(float dt)
     {
         SetFlip(SDL_FLIP_NONE);
         Properties projectile_props("projectile", {0, 0, 723, 724}, {GetMidPointX(), GetMidPointY(), 10, 10}, GetRotation());
-        if (InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT))
+        if (InputChecker::IsKeyPressed(SDLK_f)) {
+          m_auto_fire_enabled = !m_auto_fire_enabled;
+        }
+        if (InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT) || m_auto_fire_enabled)
         {
             Projectile* projectile = nullptr;
             projectile = new Projectile(projectile_props, 50, 1.0, GetRotation());
@@ -46,7 +49,7 @@ void Weapon::Update(float dt)
     else if(m_Type == MELEE)
     {
         if(GetFlip() == SDL_FLIP_HORIZONTAL)
-        {   
+        {
             SetX(GetX() - 12);
             m_CollisionBox.Set(GetX()-12, GetY()-12, GetHeight(), GetWidth());
         }
@@ -55,7 +58,7 @@ void Weapon::Update(float dt)
         {
             float swingAngle = 0.0f;
             if(GetFlip() == SDL_FLIP_HORIZONTAL)
-            {   
+            {
                 swingAngle = -45.0f;
             }
             else

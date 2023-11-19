@@ -7,7 +7,7 @@
 Projectile::Projectile(Properties& props, int speed, float mass, float angle): Collider(props), m_Speed(speed), m_Angle(angle){
     m_RigidBody.SetMass(mass);
     m_CollisionBox.SetCorrection(0, 0, 10, 10 );
-    m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());   
+    m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
     m_MarkedForDeletion = false;
 }
 
@@ -40,7 +40,7 @@ void Projectile::CanMoveThrough(const std::vector<Collider*>& colliders)
         if(ColliderHandler::GetInstance()->CheckCollision(m_CollisionBox.GetRect(), collider->GetCollisionBox().GetRect()))
         {
             if (dynamic_cast<Character*>(collider)) {
-                collider->GetHealthObj()->SetDamage(10);
+                collider->GetHealthObj()->SetDamage(22);
             }
             m_MarkedForDeletion = true;
         }

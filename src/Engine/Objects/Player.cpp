@@ -50,7 +50,6 @@ void Player::Update(float dt){
     m_RigidBody.Update(dt);
     float multiplier = 1;
     m_RigidBody.UnSetForce();
-    SDL_Log("able_to_dash: %d", m_able_to_dash);
     if (InputChecker::IsKeyPressed(SDLK_q) || m_is_dashing) {
         m_is_dashing = true;
         if (m_able_to_dash % 50 == 0 || m_able_to_dash > 50) {

@@ -27,5 +27,6 @@ class Weapon : public Collider {
         virtual ObjectType GetObjectType() override { return ObjectType::kWeapon; }
     private:
         WeaponType m_Type;
+        bool m_auto_fire_enabled = false;
         std::vector<Collider*> m_Colliders;
 };
