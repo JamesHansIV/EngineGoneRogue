@@ -17,7 +17,7 @@ Enemy* enemy7 = nullptr;
 Enemy* enemy8 = nullptr;
 std::vector<Collider*> colliders;
 
-int max_tick_interval = 250;
+int max_tick_interval = 100;
 int cur_enemy_generation_interval = 500;
 
 Game::Game() {
@@ -121,7 +121,7 @@ void Game::Update(float dt) {
       SDL_Log("Generated an Enemy");
       SDL_Log("---------------------\n");
       Properties generated_props("enemy5",{0, 0, 16, 16}, {generated_x+200, generated_y+20, 36, 36});
-      auto* generated_enemy = new Enemy(generated_props, 150, 150);
+      auto* generated_enemy = new Enemy(generated_props, 300, 300);
       colliders.push_back(generated_enemy);
       m_Objects.push_back(generated_enemy);
     }
