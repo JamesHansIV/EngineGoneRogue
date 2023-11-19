@@ -4,6 +4,7 @@
 #include "Engine/Objects/Enemy.h"
 #include "Engine/Events/EventListener.h"
 #include "Engine/Input/InputChecker.h"
+#include <cstdlib>
 
 Player* player = nullptr;
 Enemy* enemy1 = nullptr;
@@ -52,13 +53,13 @@ Game::Game() {
 
     Properties props3("enemy5", {0, 0, 16, 16}, {500, 200, 36, 36});
     enemy3 = new Enemy(props3,  150, 150);
-    
+
     Properties props4("enemy5", {0, 0, 16, 16}, {600, 367, 36, 36});
     enemy4 = new Enemy(props4,  150, 150);
 
     Properties props5("enemy5", {0, 0, 16, 16}, {700, 300, 36, 36});
     enemy5 = new Enemy(props5, 150, 150);
-    
+
     Properties props6("enemy5", {0, 0, 16, 16}, {600, 150, 36, 36});
     enemy6 = new Enemy(props6,  150, 150);
 
@@ -76,6 +77,8 @@ Game::Game() {
     colliders.push_back(enemy6);
 
     GetEventManager().AddListener(*player);
+
+    srand(time(nullptr));
 
     Renderer::GetInstance()->SetCameraTarget(player);
 }
@@ -106,6 +109,18 @@ void Game::Update(float dt) {
         {
             ++it;
         }
+    }
+    m_tick++;
+    if (m_tick % 500 == 0) {
+      float generated_x = rand() % 500;
+      float generated_y = rand() % 500;
+      SDL_Log("---------------------\n");
+      SDL_Log("Generated an Enemy");
+      SDL_Log("---------------------\n");
+      Properties generated_props("enemy5",{0, 0, 16, 16}, {generated_x, generated_y, 36, 36});
+      auto* generated_enemy = new Enemy(generated_props, 150, 150);
+      colliders.push_back(generated_enemy);
+      m_Objects.push_back(generated_enemy);
     }
 }
 

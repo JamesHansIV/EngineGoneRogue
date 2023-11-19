@@ -81,6 +81,7 @@ void Enemy::Update(float dt){
     if(m_Health->GetHealth() <= 0)
     {
         m_Animation->SetProps("player_dead", {0, 0, 18, 18}, 6, 500);
+        m_CollisionBox.clear();
         if (m_Animation->GetCurrentFrame() == 6-1) {
             m_MarkedForDeletion = true;
         }
