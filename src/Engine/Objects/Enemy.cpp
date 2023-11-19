@@ -51,7 +51,7 @@ void Enemy::Update(float dt){
     player.x = player.x - Renderer::GetInstance()->GetCameraX();
     player.y = player.y - Renderer::GetInstance()->GetCameraY();
 
-    if(ColliderHandler::GetInstance()->CheckCollision(m_Perception, player))
+    if(ColliderHandler::GetInstance()->CheckCollision(m_Perception, player) && m_Animation->GetTextureID() != "player_dead")
     {
         float directionX = m_Player->GetMidPointX() - GetMidPointX();
         float directionY = m_Player->GetMidPointY() - GetMidPointY();
