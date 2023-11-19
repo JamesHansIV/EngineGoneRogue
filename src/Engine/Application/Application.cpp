@@ -125,7 +125,7 @@ bool Application::LoadObject(tinyxml2::XMLElement* xmlObj, const std::string& ro
         dst_rect_val, angle, object_id_val
     );
 
-    GameObject* obj = new GameObject(props);
+    auto* obj = new GameObject(props);
 
     // tinyxml2::XMLElement* collider = xmlObj->FirstChildElement("CollisionBox");
     // SDL_Log("CollisionBox exists: %d", collider != nullptr);
@@ -147,7 +147,7 @@ bool Application::LoadObject(tinyxml2::XMLElement* xmlObj, const std::string& ro
 
     if (animation != nullptr) {
         obj->SetAnimation(new Animation());
-        TilePos tilePos = {
+        TilePos const tile_pos = {
             atoi(animation->FirstChildElement("Row")->GetText()),
             atoi(animation->FirstChildElement("Col")->GetText()),
             atoi(animation->FirstChildElement("Width")->GetText()),
@@ -155,7 +155,7 @@ bool Application::LoadObject(tinyxml2::XMLElement* xmlObj, const std::string& ro
         };
         obj->GetAnimation()->SetProps(
             animation->FirstChildElement("TextureID")->GetText(),
-            tilePos,
+            tile_pos,
             atoi(animation->FirstChildElement("FrameCount")->GetText()),
             atoi(animation->FirstChildElement("Speed")->GetText())
         );

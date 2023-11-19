@@ -13,12 +13,12 @@ Player::Player(Properties& props): Character(props){
     // m_Collider->SetCorrection(-45, -20, 60, 80 )
     m_Health = new Health(100);
 
-    Properties propsG("gun", {0, 0, 18, 16}, {0, 0, 18, 16}, 0.0);
-    Weapon* w1 = new Weapon(propsG, PROJECTILE);
+    Properties props_g("gun", {0, 0, 18, 16}, {0, 0, 18, 16}, 0.0);
+    auto* w1 = new Weapon(props_g, PROJECTILE);
     weapons.push_back(w1);
 
-    Properties propsM("melee", {0, 0, 18, 16}, {0, 0, 18, 16}, 0.0);
-    Weapon* w2 = new Weapon(propsM, MELEE);
+    Properties props_m("melee", {0, 0, 18, 16}, {0, 0, 18, 16}, 0.0);
+    auto* w2 = new Weapon(props_m, MELEE);
     weapons.push_back(w2);
     m_CurrentWeapon = PROJECTILE;
     m_MarkedForDeletion = false;
@@ -94,21 +94,21 @@ void Player::Update(float dt){
         InputChecker::SetMouseWheelDirection(0);
     }
 
-    int gunXX = GetMidPointX() - Renderer::GetInstance()->GetCameraX();
-    int gunYY = GetMidPointY() - Renderer::GetInstance()->GetCameraY();
+    int const gun_xx = GetMidPointX() - Renderer::GetInstance()->GetCameraX();
+    int const gun_yy = GetMidPointY() - Renderer::GetInstance()->GetCameraY();
 
-    float const delta_x = InputChecker::GetMouseX() - gunXX;
-    float const delta_y = InputChecker::GetMouseY() - gunYY;
+    float const delta_x = InputChecker::GetMouseX() - gun_xx;
+    float const delta_y = InputChecker::GetMouseY() - gun_yy;
     float angle = atan2(delta_y, delta_x) * (180.0 / M_PI);
     if (angle < 0) angle += 360.0F;
 
     for(auto *weapon: weapons){
         if(weapon->GetType() == m_CurrentWeapon)
         {
-            int gunX = GetX() + GetWidth() / 2;
-            int gunY = GetY() + GetHeight() / 3;
-            weapon->SetX(gunX);
-            weapon->SetY(gunY);
+            int const gun_x = GetX() + GetWidth() / 2;
+            int const gun_y = GetY() + GetHeight() / 3;
+            weapon->SetX(gun_x);
+            weapon->SetY(gun_y);
             weapon->UpdateColliders(m_Colliders);
             weapon->SetRotation(angle);
             weapon->SetFlip(m_Flip);

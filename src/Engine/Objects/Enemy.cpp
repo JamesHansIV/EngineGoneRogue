@@ -34,18 +34,19 @@ void Enemy::Draw(){
         m_Animation->Draw({m_Transform->GetX(), m_Transform->GetY(), m_DstRect.w, m_DstRect.h});
     }
 
-    if (m_MarkedForDeletion == false)
+    if (!m_MarkedForDeletion) {
         m_Health->Draw(GetX(), GetY(), GetWidth());
+}
 }
 
 void Enemy::Update(float dt){
     m_RigidBody.UnSetForce();
-    int rectLeft = GetX() - m_PerceptionWidth;
-    int rectRight = GetX() + GetWidth() + m_PerceptionWidth;
-    int rectTop = GetY() - m_PerceptionHeight;
-    int rectBottom = GetY() + GetHeight() + m_PerceptionHeight;
+    int const rect_left = GetX() - m_PerceptionWidth;
+    int const rect_right = GetX() + GetWidth() + m_PerceptionWidth;
+    int const rect_top = GetY() - m_PerceptionHeight;
+    int const rect_bottom = GetY() + GetHeight() + m_PerceptionHeight;
 
-    m_Perception = {rectLeft - Renderer::GetInstance()->GetCameraX(),rectTop - Renderer::GetInstance()->GetCameraY(),rectRight - rectLeft,rectBottom - rectTop };
+    m_Perception = {rect_left - Renderer::GetInstance()->GetCameraX(),rect_top - Renderer::GetInstance()->GetCameraY(),rect_right - rect_left,rect_bottom - rect_top };
 
     SDL_Rect player = m_Player->GetCollisionBox().GetRect();
     player.x = player.x - Renderer::GetInstance()->GetCameraX();
@@ -53,17 +54,17 @@ void Enemy::Update(float dt){
 
     if(ColliderHandler::GetInstance()->CheckCollision(m_Perception, player) && m_Animation->GetTextureID() != "player_dead")
     {
-        float directionX = m_Player->GetMidPointX() - GetMidPointX();
-        float directionY = m_Player->GetMidPointY() - GetMidPointY();
+        float direction_x = m_Player->GetMidPointX() - GetMidPointX();
+        float direction_y = m_Player->GetMidPointY() - GetMidPointY();
 
-        float directionLength = sqrt(directionX * directionX + directionY * directionY);
-        if (directionLength != 0) {
-            directionX /= directionLength;
-            directionY /= directionLength;
+        float const direction_length = sqrt(direction_x * direction_x + direction_y * direction_y);
+        if (direction_length != 0) {
+            direction_x /= direction_length;
+            direction_y /= direction_length;
         }
 
-        float forceMagnitude = 4.0f;
-        m_RigidBody.ApplyForce(Vector2D(directionX * forceMagnitude, directionY * forceMagnitude));
+        float const force_magnitude = 4.0F;
+        m_RigidBody.ApplyForce(Vector2D(direction_x * force_magnitude, direction_y * force_magnitude));
         m_RigidBody.Update(dt);
         m_Transform->Translate(m_RigidBody.Position());
         m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());

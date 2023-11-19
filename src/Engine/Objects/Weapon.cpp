@@ -57,17 +57,17 @@ void Weapon::Update(float dt)
 
         if (InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT))
         {
-            float swingAngle = 0.0f;
+            float swing_angle = 0.0F;
             if(GetFlip() == SDL_FLIP_HORIZONTAL)
             {
-                swingAngle = -45.0f;
+                swing_angle = -45.0F;
             }
             else
             {
-                swingAngle = 45.0f;
+                swing_angle = 45.0F;
             }
-            SetRotation(swingAngle);
-            for (auto collider : m_Colliders)
+            SetRotation(swing_angle);
+            for (auto *collider : m_Colliders)
             {
                 if(ColliderHandler::GetInstance()->CheckCollision(m_CollisionBox.GetRect(), collider->GetCollisionBox().GetRect()))
                 {

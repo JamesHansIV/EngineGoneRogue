@@ -90,14 +90,14 @@ void Game::Update(float dt) {
     player->Update(dt);
     for (auto it = colliders.begin(); it != colliders.end();)
     {
-        Enemy* enemy = dynamic_cast<Enemy*>(*it);  // Cast to Enemy type
-        if (enemy)
+        auto* enemy = dynamic_cast<Enemy*>(*it);  // Cast to Enemy type
+        if (enemy != nullptr)
         {
             enemy->SetPlayer(player);
             enemy->UpdateColliders(colliders);
         }
         (*it)->Update(dt);
-        if (enemy && enemy->IsMarkedForDeletion())  // Check if it's an Enemy and marked for deletion
+        if ((enemy != nullptr) && enemy->IsMarkedForDeletion())  // Check if it's an Enemy and marked for deletion
         {
             DeleteObject(enemy);
             it = colliders.erase(it);

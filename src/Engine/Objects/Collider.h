@@ -10,7 +10,7 @@ class Collider : public GameObject{
             m_CollisionBox.Set(GetX(), GetY(), GetWidth(), GetHeight());
         }
 
-        Collider(Collider* collider);
+        Collider(Collider* rhs);
 
         virtual void OnCollide(Collider* collider);
 

@@ -184,14 +184,14 @@ void MoveObject(GameObject* obj, int dx, int dy) {
     obj->SetY(next_y);
 }
 
-std::vector<GameObject*> CopyObjects(std::vector<GameObject*> objects) {
-    std::vector<GameObject*> objectCopies;
+std::vector<GameObject*> CopyObjects(const std::vector<GameObject*>& objects) {
+    std::vector<GameObject*> object_copies;
 
     for (auto *obj: objects) {
-        GameObject* newObj = new GameObject(obj);
-        objectCopies.push_back(newObj);
+        auto* new_obj = new GameObject(obj);
+        object_copies.push_back(new_obj);
     }
-    return objectCopies;
+    return object_copies;
 }
 
 Editor::Editor()  {
@@ -223,8 +223,8 @@ void Editor::CleanLayers() {
     m_HiddenLayers.clear();
     m_CurrentTexture = nullptr;
     m_CurrentObject = nullptr;
-    for (int i = 0; i < m_Layers.size(); i++) {
-        for (auto *obj : m_Layers[i]) {
+    for (auto & m_Layer : m_Layers) {
+        for (auto *obj : m_Layer) {
             delete obj;
         }
     }
@@ -233,19 +233,19 @@ void Editor::CleanLayers() {
 
 void WriteCollider(tinyxml2::XMLDocument& doc, tinyxml2::XMLElement* xmlObj, Collider* obj) {
     tinyxml2::XMLElement* collider = doc.NewElement("CollisionBox");
-    tinyxml2::XMLElement* colliderX = doc.NewElement("XPos");
-    tinyxml2::XMLElement* colliderY = doc.NewElement("YPos");
-    tinyxml2::XMLElement* colliderW = doc.NewElement("Width");
-    tinyxml2::XMLElement* colliderH = doc.NewElement("Height");
-    colliderX->SetText(std::to_string(obj->GetCollisionBox().GetRect().x).c_str());
-    colliderY->SetText(std::to_string(obj->GetCollisionBox().GetRect().y).c_str());
-    colliderW->SetText(std::to_string(obj->GetCollisionBox().GetRect().w).c_str());
-    colliderH->SetText(std::to_string(obj->GetCollisionBox().GetRect().h).c_str());
+    tinyxml2::XMLElement* collider_x = doc.NewElement("XPos");
+    tinyxml2::XMLElement* collider_y = doc.NewElement("YPos");
+    tinyxml2::XMLElement* collider_w = doc.NewElement("Width");
+    tinyxml2::XMLElement* collider_h = doc.NewElement("Height");
+    collider_x->SetText(std::to_string(obj->GetCollisionBox().GetRect().x).c_str());
+    collider_y->SetText(std::to_string(obj->GetCollisionBox().GetRect().y).c_str());
+    collider_w->SetText(std::to_string(obj->GetCollisionBox().GetRect().w).c_str());
+    collider_h->SetText(std::to_string(obj->GetCollisionBox().GetRect().h).c_str());
 
-    collider->InsertEndChild(colliderX);
-    collider->InsertEndChild(colliderY);
-    collider->InsertEndChild(colliderW);
-    collider->InsertEndChild(colliderH);
+    collider->InsertEndChild(collider_x);
+    collider->InsertEndChild(collider_y);
+    collider->InsertEndChild(collider_w);
+    collider->InsertEndChild(collider_h);
 
     xmlObj->InsertEndChild(collider);
 }
@@ -302,27 +302,27 @@ void WriteBaseObject(tinyxml2::XMLDocument& doc, tinyxml2::XMLElement* xmlObj, G
 
     if (obj->GetAnimation() != nullptr) {
         tinyxml2::XMLElement* animation = doc.NewElement("Animation");
-        tinyxml2::XMLElement* animationTexID = doc.NewElement("TextureID");
-        tinyxml2::XMLElement* animationRow = doc.NewElement("Row");
-        tinyxml2::XMLElement* animationCol = doc.NewElement("Col");
-        tinyxml2::XMLElement* animationW = doc.NewElement("Width");
-        tinyxml2::XMLElement* animationH = doc.NewElement("Height");
-        tinyxml2::XMLElement* frameCount = doc.NewElement("FrameCount");
+        tinyxml2::XMLElement* animation_tex_id = doc.NewElement("TextureID");
+        tinyxml2::XMLElement* animation_row = doc.NewElement("Row");
+        tinyxml2::XMLElement* animation_col = doc.NewElement("Col");
+        tinyxml2::XMLElement* animation_w = doc.NewElement("Width");
+        tinyxml2::XMLElement* animation_h = doc.NewElement("Height");
+        tinyxml2::XMLElement* frame_count = doc.NewElement("FrameCount");
         tinyxml2::XMLElement* speed = doc.NewElement("Speed");
-        animationTexID->SetText(obj->GetAnimation()->GetTextureID().c_str());
-        animationRow->SetText(std::to_string(obj->GetAnimation()->GetSpriteRow()).c_str());
-        animationCol->SetText(std::to_string(obj->GetAnimation()->GetSpriteCol()).c_str());
-        animationW->SetText(std::to_string(obj->GetAnimation()->GetSpriteWidth()).c_str());
-        animationH->SetText(std::to_string(obj->GetAnimation()->GetSpriteHeight()).c_str());
-        frameCount->SetText(std::to_string(obj->GetAnimation()->GetFrameCount()).c_str());
+        animation_tex_id->SetText(obj->GetAnimation()->GetTextureID().c_str());
+        animation_row->SetText(std::to_string(obj->GetAnimation()->GetSpriteRow()).c_str());
+        animation_col->SetText(std::to_string(obj->GetAnimation()->GetSpriteCol()).c_str());
+        animation_w->SetText(std::to_string(obj->GetAnimation()->GetSpriteWidth()).c_str());
+        animation_h->SetText(std::to_string(obj->GetAnimation()->GetSpriteHeight()).c_str());
+        frame_count->SetText(std::to_string(obj->GetAnimation()->GetFrameCount()).c_str());
         speed->SetText(std::to_string(obj->GetAnimation()->GetAnimationSpeed()).c_str());
 
-        animation->InsertEndChild(animationTexID);
-        animation->InsertEndChild(animationRow);
-        animation->InsertEndChild(animationCol);
-        animation->InsertEndChild(animationW);
-        animation->InsertEndChild(animationH);
-        animation->InsertEndChild(frameCount);
+        animation->InsertEndChild(animation_tex_id);
+        animation->InsertEndChild(animation_row);
+        animation->InsertEndChild(animation_col);
+        animation->InsertEndChild(animation_w);
+        animation->InsertEndChild(animation_h);
+        animation->InsertEndChild(frame_count);
         animation->InsertEndChild(speed);
 
         xmlObj->InsertEndChild(animation);
@@ -518,23 +518,23 @@ void Editor::ShowAddCollider() {
 }
 
 void Editor::ShowAddAnimation() {
-    char animationLabel[LABEL_LEN+1];
-    char buttonLabel[LABEL_LEN+1];
-    char statusLabel[LABEL_LEN+1];
+    char animation_label[LABEL_LEN+1];
+    char button_label[LABEL_LEN+1];
+    char status_label[LABEL_LEN+1];
 
     if (m_CurrentObject->GetAnimation() == nullptr) {
-        snprintf(animationLabel, LABEL_LEN, "%s idle animation", "Add");
-        snprintf(buttonLabel, LABEL_LEN, "%s animation", "Add");
-        snprintf(statusLabel, LABEL_LEN, "Successfully %s animation", "added");
+        snprintf(animation_label, LABEL_LEN, "%s idle animation", "Add");
+        snprintf(button_label, LABEL_LEN, "%s animation", "Add");
+        snprintf(status_label, LABEL_LEN, "Successfully %s animation", "added");
     } else {
-        snprintf(animationLabel, LABEL_LEN, "%s idle animation", "Change");
-        snprintf(buttonLabel, LABEL_LEN, "%s animation", "Change");
-        snprintf(statusLabel, LABEL_LEN, "Successfully %s animation", "changed");
+        snprintf(animation_label, LABEL_LEN, "%s idle animation", "Change");
+        snprintf(button_label, LABEL_LEN, "%s animation", "Change");
+        snprintf(status_label, LABEL_LEN, "Successfully %s animation", "changed");
     }
 
-    static int showStatusTimer = 0;
+    static int show_status_timer = 0;
 
-    if (ImGui::TreeNode(animationLabel)) {
+    if (ImGui::TreeNode(animation_label)) {
         
         ImGui::InputInt("Set sprite row", &m_ObjectInfo.Animation.Tile.row);
         ImGui::InputInt("Set sprite col", &m_ObjectInfo.Animation.Tile.col);
@@ -544,7 +544,7 @@ void Editor::ShowAddAnimation() {
         ImGui::InputInt("Set frame count", &m_ObjectInfo.Animation.FrameCount);
         ImGui::InputInt("Set animation speed", &m_ObjectInfo.Animation.AnimationSpeed);
 
-        if (ImGui::Button(buttonLabel, ImVec2(100, 30))) {
+        if (ImGui::Button(button_label, ImVec2(100, 30))) {
             if (m_CurrentObject->GetAnimation() == nullptr) {
                 m_CurrentObject->SetAnimation(new Animation());
             }
@@ -555,13 +555,13 @@ void Editor::ShowAddAnimation() {
                 m_ObjectInfo.Animation.FrameCount,
                 m_ObjectInfo.Animation.AnimationSpeed
             );
-            showStatusTimer = 300;
+            show_status_timer = 300;
         }
         ImGui::TreePop();
     }
-    if (showStatusTimer > 0) {
-        ImGui::Text("%s", statusLabel);
-        showStatusTimer--;
+    if (show_status_timer > 0) {
+        ImGui::Text("%s", status_label);
+        show_status_timer--;
     }
 
 }
@@ -579,9 +579,9 @@ void Editor::ShowObjectEditor() {
             ImGui::TreePop();
         }
 
-        if (m_SelectedObjects.size() > 0) {
+        if (!m_SelectedObjects.empty()) {
             if (ImGui::Button("Rotate left", ImVec2(100, 30))) {
-                for (auto& obj : m_SelectedObjects) {
+                for (const auto& obj : m_SelectedObjects) {
                     obj->GetRotation() -= 90.0F;
                     obj->SetRotation(static_cast<int>(obj->GetRotation()) % 360);
 
@@ -589,7 +589,7 @@ void Editor::ShowObjectEditor() {
             }
             ImGui::SameLine();
             if (ImGui::Button("Rotate right", ImVec2(100, 30))) {
-                for (auto& obj : m_SelectedObjects) {
+                for (const auto& obj : m_SelectedObjects) {
                     obj->GetRotation() += 90.0F;
                     obj->SetRotation(static_cast<int>(obj->GetRotation()) % 360);
 
@@ -598,7 +598,7 @@ void Editor::ShowObjectEditor() {
 
             if (ImGui::Button("Delete objects", ImVec2(100, 30))) {
 
-                for (auto& obj : m_SelectedObjects) {
+                for (const auto& obj : m_SelectedObjects) {
                     DeleteObject(obj);
                 }
                 m_SelectedObjects.clear();
@@ -985,7 +985,8 @@ void Editor::Render() {
                 obj->Draw();
                 if (m_SelectedObjects.find(obj) != m_SelectedObjects.end()) {
                     std::vector<SDL_Rect> rects;
-                    for (int i = 0; i < 4; i++) {
+                    rects.reserve(4);
+for (int i = 0; i < 4; i++) {
                         rects.push_back({ static_cast<int>(obj->GetX())+i, static_cast<int>(obj->GetY())+i, obj->GetWidth(), obj->GetHeight() });
                     }
                     Renderer::GetInstance()->DrawRects(rects, {0, 150, 255, 255});
@@ -1036,10 +1037,10 @@ void Editor::OnMouseClicked(SDL_Event&  /*event*/) {
         } else {
             GameObject* obj = GetObjectUnderMouse();
 
-            if (obj) {
+            if (obj != nullptr) {
                 m_SelectedObjects.insert(obj);
             }
-            for (auto& obj : m_SelectedObjects) {
+            for (const auto& obj : m_SelectedObjects) {
                 SDL_Log("%s", obj->GetID().c_str());
             }
             SDL_Log("\n");
@@ -1072,31 +1073,31 @@ void Editor::OnMouseMoved(SDL_Event& event) {
                 } else if (m_DrawState.EditMode == EditMode::ERASE) {
                     GameObject* obj = GetObjectUnderMouse();
 
-                    if (obj) {
+                    if (obj != nullptr) {
                         DeleteObject(obj);
                     }
                 } else {
                     GameObject* obj = GetObjectUnderMouse();
 
-                    if (obj) {
+                    if (obj != nullptr) {
                         m_SelectedObjects.insert(obj);
                     }
                 }
                 m_DrawState.PrevX = x;
                 m_DrawState.PrevY = y;
             }
-        } else if (m_SelectedObjects.size() > 0) {
-            bool mouseOverAny = false;
-            for (auto& obj : m_SelectedObjects) {
+        } else if (!m_SelectedObjects.empty()) {
+            bool mouse_over_any = false;
+            for (const auto& obj : m_SelectedObjects) {
                 if (CheckMouseOver(obj)) {
-                    mouseOverAny = true;
+                    mouse_over_any = true;
                 }
             }
-            if (mouseOverAny) {
+            if (mouse_over_any) {
                 float const dx =  event.button.x - InputChecker::GetMouseX();
                 float const dy =  event.button.y - InputChecker::GetMouseY();
 
-                for (auto& obj : m_SelectedObjects) {
+                for (const auto& obj : m_SelectedObjects) {
                     MoveObject(obj, dx, dy);
                 }
             }
@@ -1114,9 +1115,9 @@ void Editor::OnMouseUp(SDL_Event&  /*event*/) {
         if (m_DrawState.IsEditing) {
             m_DrawState.IsEditing = false;
 
-        } else if (m_SelectedObjects.size() > 0) {
+        } else if (!m_SelectedObjects.empty()) {
             if (m_ObjectInfo.SnapToGrid) {
-                for (auto& obj : m_SelectedObjects) {
+                for (const auto& obj : m_SelectedObjects) {
                     std::pair<float, float> const coords = SnapToGrid(obj->GetX(), obj->GetY());
                     obj->SetX(coords.first);
                     obj->SetY(coords.second);

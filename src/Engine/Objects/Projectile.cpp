@@ -28,18 +28,18 @@ void Projectile::Update(float dt, const std::vector<Collider*>& colliders){
 
 void Projectile::CanMoveThrough(const std::vector<Collider*>& colliders)
 {
-    if (*m_Transform->X < 0.0f ||
-        *m_Transform->Y < 0.0f ||
+    if (*m_Transform->X < 0.0F ||
+        *m_Transform->Y < 0.0F ||
         *m_Transform->X + this->GetWidth() > SCREEN_WIDTH ||
         *m_Transform->Y + this->GetHeight() > SCREEN_HEIGHT)
     {
         m_MarkedForDeletion = true;
     }
-    for (auto& collider : colliders)
+    for (const auto& collider : colliders)
     {
         if(ColliderHandler::GetInstance()->CheckCollision(m_CollisionBox.GetRect(), collider->GetCollisionBox().GetRect()))
         {
-            if (dynamic_cast<Character*>(collider)) {
+            if (dynamic_cast<Character*>(collider) != nullptr) {
                 collider->GetHealthObj()->SetDamage(22);
             }
             m_MarkedForDeletion = true;
