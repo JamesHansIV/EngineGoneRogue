@@ -15,13 +15,13 @@ class RigidBody {
         inline void SetMass(float mass){m_Mass = mass;}
         inline void SetGravity(float gravity){m_Gravity = gravity;}
 
-        inline void ApplyForce(Vector2D F){m_Force = m_Force + F;}
-        inline void ApplyForceX(float Fx){m_Force.X = m_Force.X + Fx;}
-        inline void ApplyForceY(float Fy){m_Force.Y = m_Force.Y + Fy;}
+        void ApplyForce(Vector2D F);
+        void ApplyForceX(float Fx);
+        void ApplyForceY(float Fy);
         inline void SetForce(Vector2D force) { m_Force = force; }
         inline void UnSetForce(){m_Force = Vector2D(0,0);}
 
-        inline void ApplyFriction(Vector2D Fr){m_Friction = Fr;}
+        inline void SetFriction(Vector2D Fr){m_Friction = Fr;}
         inline void UnSetFriction(){m_Friction = Vector2D(0,0);}
 
         inline void ApplyVelocity(Vector2D v) { m_Velocity = m_Velocity + v; }
@@ -34,9 +34,10 @@ class RigidBody {
 
         inline float GetMass() const {return m_Mass;}
         inline Vector2D GetForce() const { return m_Force; }
-        inline Vector2D Position(){return m_Position;}
-        inline Vector2D Velocity(){return m_Velocity;}
-        inline Vector2D Acceleration(){return m_Acceleration;}
+        inline Vector2D GetFriction() const { return m_Friction; }
+        inline Vector2D Position() const {return m_Position;}
+        inline Vector2D Velocity() const {return m_Velocity;}
+        inline Vector2D Acceleration() const {return m_Acceleration;}
 
         void Update(float dt);
 

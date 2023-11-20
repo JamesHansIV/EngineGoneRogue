@@ -27,7 +27,6 @@ void ColliderHandler::HandleCollisions() {
         for (auto it2 = m_Colliders.begin(); it2 != m_Colliders.end(); it2++) {
             Collider* c1 = *it1;
             Collider* c2 = *it2;
-            SDL_Log("colliders: %s, %s", c1->GetID().c_str(), c2->GetID().c_str());
             if (CheckCollision(c1->GetCollisionBox().GetRect(), c2->GetCollisionBox().GetRect())) {
                 c1->OnCollide(c2);
                 c2->OnCollide(c1);

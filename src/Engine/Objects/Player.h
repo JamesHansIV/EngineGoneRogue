@@ -17,6 +17,8 @@ class Player: public Character{
 
         void UpdateWeapon(float dt);
 
+        void CheckInput();
+
         void OnKeyPressed(SDL_Event& event);
         void OnKeyReleased(SDL_Event& event);
         virtual void OnCollide(Collider* collidee) override;
@@ -27,5 +29,9 @@ class Player: public Character{
         std::vector<Weapon*> m_Weapons;
         Weapon* m_CurrentWeapon;
         bool m_MarkedForDeletion;
+        // TODO: add this to player state when game state is added.
+        int m_able_to_dash = 0;
+        bool m_is_dashing = false;
+        int m_multiplier = 1;
 };
 

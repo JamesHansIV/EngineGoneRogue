@@ -71,7 +71,7 @@ class Editor : public Application{
         void ShowTiles(TileMap* tilemap);
         ObjectType ShowSelectObjectType();
         void ShowBuildEnemy();
-        void ShowBuildPlayer();
+        static void ShowBuildPlayer();
         void ShowCreateObject();
         void DeleteObject(GameObject* obj);
         void CreateObject(ObjectType type);

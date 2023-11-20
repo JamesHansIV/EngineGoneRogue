@@ -13,7 +13,7 @@ class Collider : public GameObject{
             m_CollisionBox.Set(GetX(), GetY(), GetWidth(), GetHeight());
         }
 
-        Collider(Collider* collider);
+        Collider(Collider* rhs);
 
         void UnCollide(Collider* collidee);
         virtual void OnCollide(Collider* collider) {}

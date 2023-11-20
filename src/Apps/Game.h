@@ -18,5 +18,6 @@ class Game : public Application{
 
     private:
         std::vector<GameObject*> m_Objects;
+        int m_tick;
 };
 

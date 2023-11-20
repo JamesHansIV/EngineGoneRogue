@@ -5,7 +5,7 @@ Collider::Collider(Collider* rhs) : GameObject(rhs) {
     m_RigidBody = new RigidBody(GetX(), GetY());
 
     m_Immovable = rhs->IsImmovable();
-    SDL_Rect rect = rhs->m_CollisionBox.GetRect();
+    SDL_Rect const rect = rhs->m_CollisionBox.GetRect();
     m_CollisionBox.Set(
         rect.x,
         rect.y,

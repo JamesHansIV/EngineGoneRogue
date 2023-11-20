@@ -9,7 +9,7 @@ GameObject::GameObject(GameObject* rhs) {
     m_Flip = rhs->m_Flip;
     m_ObjectID = rhs->m_ObjectID;
 
-    if (rhs->m_Animation) {
+    if (rhs->m_Animation != nullptr) {
         m_Animation = new Animation();
         m_Animation->SetProps(
             rhs->m_Animation->GetTextureID(),
@@ -26,7 +26,7 @@ GameObject::GameObject(GameObject* rhs) {
 }
 
 void GameObject::Draw() {
-    if (m_Animation) {
+    if (m_Animation != nullptr) {
         m_Animation->Draw(m_DstRect, m_Rotation);
     } else {
         SDL_Rect src_rect = { m_TilePos.col * m_TilePos.w, m_TilePos.row * m_TilePos.h, m_TilePos.w, m_TilePos.h };
@@ -36,8 +36,8 @@ void GameObject::Draw() {
     }
 };
 
-void GameObject::Update(float dt) {
-    if (m_Animation) {
+void GameObject::Update(float  /*dt*/) {
+    if (m_Animation != nullptr) {
         m_Animation->Update();
     }
 }

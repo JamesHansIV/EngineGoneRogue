@@ -17,4 +17,5 @@ class Weapon : public Collider {
         virtual ObjectCategory GetObjectCategory() override { return ObjectCategory::Weapon; }
     private:
         bool m_PlayerOwned;
+        bool m_auto_fire_enabled = false;
 };

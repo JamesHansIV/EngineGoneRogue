@@ -11,7 +11,7 @@ DEVELOPING BASIC ENEMY BEHAVIOUR:
 
 - define the enemy perception range
 - check for player detection in the enemy perception range
-- calculate the direction vector from enemy's position to the player's position 
+- calculate the direction vector from enemy's position to the player's position
 - apply behaviour like move towards the player, attack in perception,etc
 
 
@@ -36,9 +36,10 @@ void Enemy::Draw(){
     else {
         m_Animation->Draw({m_DstRect.x, m_DstRect.y, m_DstRect.w, m_DstRect.h});
     }
-    
-    if (m_MarkedForDeletion == false)
+
+    if (!m_MarkedForDeletion) {
         m_Health->Draw(GetX(), GetY(), GetWidth());
+}
 }
 
 void Enemy::Update(float dt){
@@ -51,6 +52,7 @@ void Enemy::Update(float dt){
     if(m_Health->GetHP() <= 0)
     {
         m_Animation->SetProps("player_dead", {0, 0, 18, 18}, 6, 500);
+        m_CollisionBox.clear();
         if (m_Animation->GetCurrentFrame() == 6-1) {
             m_MarkedForDeletion = true;
         }

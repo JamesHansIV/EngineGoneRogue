@@ -17,7 +17,11 @@ void RangedWeapon::Update(float dt)
 {
     m_CollisionBox.Set(GetX(), GetY(), GetHeight(), GetWidth());
     SetFlip(SDL_FLIP_NONE);
-    if (InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT))
+    if (InputChecker::IsKeyPressed(SDLK_f)) {
+          m_auto_fire_enabled = !m_auto_fire_enabled;
+          InputChecker::SetKeyPressed(SDLK_f, false);
+        }
+    if (InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT) || m_auto_fire_enabled)
     {
         Properties projectile_props("projectile", {0, 0, 723, 724}, {GetMidPointX(), GetMidPointY(), 10, 10}, GetRotation(), "bullet");
         Projectile* projectile = nullptr;

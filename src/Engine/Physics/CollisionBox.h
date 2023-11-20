@@ -19,6 +19,8 @@ class CollisionBox {
             };
         }
 
+        void clear() { m_Box = {};}
+
     private:
         SDL_Rect m_Box;
         SDL_Rect m_PrevBox;
