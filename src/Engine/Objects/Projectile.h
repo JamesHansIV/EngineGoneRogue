@@ -25,5 +25,6 @@ class Projectile: public Collider{
         bool m_PlayerOwned;
         float m_Speed;
         float m_Angle;
+        Vector2D m_Velocity;
         bool m_MarkedForDeletion;
 };

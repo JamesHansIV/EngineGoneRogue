@@ -9,7 +9,8 @@ Projectile::Projectile(Properties& props, float speed, float angle, bool playerO
 : Collider(props), m_Speed(speed), m_Angle(angle), m_PlayerOwned(playerOwned){
     Vector2D direction = Vector2D(cos(m_Angle * M_PI / 180), sin(m_Angle * M_PI / 180));
     Vector2D velocity = direction * m_Speed;
-    m_RigidBody->SetVelocity(velocity);
+    m_Velocity = velocity;
+    m_RigidBody->SetVelocity(m_Velocity);
 
     m_MarkedForDeletion = false;
 }
@@ -19,6 +20,7 @@ void Projectile::Draw(){
 }
 
 void Projectile::Update(float dt){
+    m_RigidBody->SetVelocity(m_Velocity);
     m_RigidBody->Update(dt);
     SetX(m_RigidBody->Position().X);
     SetY(m_RigidBody->Position().Y);
