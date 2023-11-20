@@ -40,7 +40,7 @@ void Projectile::CanMoveThrough(const std::vector<Collider*>& colliders)
         if(ColliderHandler::GetInstance()->CheckCollision(m_CollisionBox.GetRect(), collider->GetCollisionBox().GetRect()))
         {
             if (dynamic_cast<Character*>(collider) != nullptr) {
-                collider->GetHealthObj()->SetDamage(22);
+                collider->GetHealthObj()->SetDamage(2);
             }
             m_MarkedForDeletion = true;
         }
