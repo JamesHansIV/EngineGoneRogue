@@ -15,6 +15,18 @@ Collider::Collider(Collider* rhs) : GameObject(rhs) {
     );
 }
 
+Collider::Collider(GameObject* rhs) : GameObject(rhs) {
+    //needs testing
+    m_RigidBody = new RigidBody(GetX(), GetY());
+
+    m_CollisionBox.Set(
+        GetX(),
+        GetY(),
+        GetWidth(),
+        GetHeight()
+    );
+}
+
 void Collider::UnCollide(Collider* collidee) {
     while (ColliderHandler::CheckCollision(m_CollisionBox.GetRect(), collidee->GetCollisionBox().GetRect())) {
         Vector2D oppositeDirection = m_RigidBody->Position() - collidee->GetRigidBody()->Position();

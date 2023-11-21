@@ -189,7 +189,13 @@ std::vector<GameObject*> CopyObjects(const std::vector<GameObject*>& objects) {
     std::vector<GameObject*> object_copies;
 
     for (auto *obj: objects) {
-        auto* new_obj = new GameObject(obj);
+        GameObject* new_obj = nullptr;
+        if (Collider* collider = dynamic_cast<Collider*>(obj)) {
+            new_obj = new Collider(obj);
+        } else {
+            new_obj = new GameObject(obj);
+
+        }
         object_copies.push_back(new_obj);
     }
     return object_copies;
@@ -337,26 +343,22 @@ void Editor::SaveRoom(const char* roomName) {
     doc.InsertFirstChild(root);
 
     tinyxml2::XMLElement* curr_xml_object;
+    tinyxml2::XMLElement* types;
+    tinyxml2::XMLElement* type;
+
     for (const auto& layer : m_Layers) {
         for (auto *obj : layer) {
             curr_xml_object = doc.NewElement("Object");
+            types = doc.NewElement("Types");
+            curr_xml_object->InsertEndChild(types);
+
             WriteBaseObject(doc, curr_xml_object, obj);
 
             if (Collider* collider = dynamic_cast<Collider*>(obj)) {
                 WriteCollider(doc, curr_xml_object, collider);
-            }
-            switch(obj->GetObjectType()) {
-                
-                case ObjectType::Projectile:
-                    break;
-                case ObjectType::Player:
-                    break;
-                case ObjectType::Base:
-                    break;
-                default:
-                    SDL_LogError(0, "Invalid object type");
-                    assert(false);
-                    break;
+                type = doc.NewElement("Collider");
+                type->SetText("True");
+                types->InsertEndChild(type);
             }
             root->InsertEndChild(curr_xml_object);
         }
@@ -509,18 +511,22 @@ void Editor::ShowFileManager() {
 }
 
 void Editor::ShowAddCollider() {
-    // if (m_CurrentObject->GetCollider() == nullptr && ImGui::TreeNode("Add CollisionBox")) {
+    Collider* collider = dynamic_cast<Collider*>(m_CurrentObject);
+    if (collider == nullptr && ImGui::TreeNode("Add CollisionBox")) {
         
-    //     ImGui::InputInt("Set collider width", &m_ObjectInfo.CollisionBox.w);
+        ImGui::InputInt("Set collider width", &m_ObjectInfo.CollisionBox.w);
 
-    //     ImGui::InputInt("Set collider height", &m_ObjectInfo.CollisionBox.h);
+        ImGui::InputInt("Set collider height", &m_ObjectInfo.CollisionBox.h);
 
-    //     if (ImGui::Button("Add collider", ImVec2(100, 30))) {
-    //         m_CurrentObject->SetCollider(new CollisionBox());
-    //         m_CurrentObject->GetCollider()->Set(m_CurrentObject->GetX(), m_CurrentObject->GetY(), m_ObjectInfo.CollisionBox.w, m_ObjectInfo.CollisionBox.h);
-    //     }
-    //     ImGui::TreePop();
-    // }
+        if (ImGui::Button("Add collider", ImVec2(100, 30))) {
+            collider = new Collider(m_CurrentObject);
+            collider->GetCollisionBox().Set(m_CurrentObject->GetX(), m_CurrentObject->GetY(), m_ObjectInfo.CollisionBox.w, m_ObjectInfo.CollisionBox.h);
+            DeleteObject(m_CurrentObject);
+            m_Layers[m_CurrentLayer].push_back(collider);
+            m_CurrentObject = collider;
+        }
+        ImGui::TreePop();
+    }
 }
 
 void Editor::ShowAddAnimation() {

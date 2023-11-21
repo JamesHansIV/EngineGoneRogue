@@ -39,11 +39,11 @@ Game::Game() {
 
     m_Objects = Application::m_Rooms["room1"];
 
-    // for (auto& obj : m_Objects) {
-    //     if (obj->GetCollider() != nullptr) {
-    //         colliders.push_back(obj);
-    //     }
-    // }
+    for (auto& obj : m_Objects) {
+        if (Collider* collider = dynamic_cast<Collider*>(obj)) {
+            ColliderHandler::GetInstance()->AddCollider(collider);
+        }
+    }
 
     Properties props_p("player", {0, 0, 18, 18}, {0, 0, 30, 30}, 0, "player");
     player = new Player(props_p);

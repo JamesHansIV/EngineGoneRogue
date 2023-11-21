@@ -1,8 +1,8 @@
 
-- consider managing projectiles with projectile manager
-- the character class should own the health property
-- managing health should be done by the health class
-- why does each collider have their own separate list of colliders
+x consider managing projectiles with projectile manager
+x the character class should own the health property
+x managing health should be done by the health class
 - enemy objects should be handled by an enemy manager
 - remove hard coded animations/health bars/weapons
 - add enemy types
+- enemies are able to slip through walls somehow

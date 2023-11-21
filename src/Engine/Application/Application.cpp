@@ -3,6 +3,7 @@
 
 #include "Engine/Objects/Player.h"
 #include "Engine/Objects/GameObject.h"
+
 #include "Engine/Input/InputChecker.h"
 
 #include "backends/imgui_impl_sdl2.h"
@@ -85,7 +86,7 @@ bool Application::LoadTextures(char* projectPath) {
     return true;
 }
 
-bool Application::LoadObject(tinyxml2::XMLElement* xmlObj, const std::string& roomID) {
+GameObject* Application::LoadObject(tinyxml2::XMLElement* xmlObj) {
     tinyxml2::XMLElement* texture_id = xmlObj->FirstChildElement("TextureID");
     tinyxml2::XMLElement* object_id = xmlObj->FirstChildElement("ObjectID");
     tinyxml2::XMLElement* src_rect = xmlObj->FirstChildElement("SrcRect");
@@ -118,6 +119,8 @@ bool Application::LoadObject(tinyxml2::XMLElement* xmlObj, const std::string& ro
     SDL_Log("dst w: %d", dst_rect_val.w);
     SDL_Log("dst h: %d", dst_rect_val.h);
 
+    GameObject* obj = nullptr;
+
     float const angle = std::stof(rotation->GetText());
 
     Properties props(
@@ -125,7 +128,7 @@ bool Application::LoadObject(tinyxml2::XMLElement* xmlObj, const std::string& ro
         dst_rect_val, angle, object_id_val
     );
 
-    auto* obj = new GameObject(props);
+    obj = new GameObject(props);
 
     // tinyxml2::XMLElement* collider = xmlObj->FirstChildElement("CollisionBox");
     // SDL_Log("CollisionBox exists: %d", collider != nullptr);
@@ -165,8 +168,29 @@ bool Application::LoadObject(tinyxml2::XMLElement* xmlObj, const std::string& ro
         SDL_Log("Animation speed: %d", obj->GetAnimation()->GetAnimationSpeed());
     }
 
-    m_Rooms[roomID].push_back(obj);
-    return true;
+    return obj;
+}
+
+Collider* Application::LoadCollider(tinyxml2::XMLElement* xmlObj, GameObject* obj) {
+    Collider* collider = new Collider(obj);
+
+    if (!collider) {
+        SDL_Log("failed to create collider");
+        assert(false);
+    };
+    SDL_Log("Created collider");
+
+    tinyxml2::XMLElement* collisionBox = xmlObj->FirstChildElement("CollisionBox");
+
+    collider->GetCollisionBox().Set(
+        atoi(collisionBox->FirstChildElement("XPos")->GetText()),
+        atoi(collisionBox->FirstChildElement("YPos")->GetText()),
+        atoi(collisionBox->FirstChildElement("Width")->GetText()),
+        atoi(collisionBox->FirstChildElement("Height")->GetText())
+    );
+
+    delete obj;
+    return collider;
 }
 
 bool Application::LoadObjects(const std::string& roomPath, const std::string& roomID) {
@@ -181,9 +205,41 @@ bool Application::LoadObjects(const std::string& roomPath, const std::string& ro
 
     tinyxml2::XMLElement* root = doc.FirstChildElement("Root");
     tinyxml2::XMLElement* curr_object = root->FirstChildElement("Object");
+    tinyxml2::XMLElement* types = nullptr;
 
+    if (root == nullptr) {
+        SDL_Log("Root element does not exist for room %s", roomID.c_str());
+        assert(false);
+    }
+    if (curr_object == nullptr) {
+        SDL_Log("No objects exist in room %s", roomID.c_str());
+        return true;
+    }
+    
+    GameObject* createdObj = nullptr;
     while (curr_object != nullptr) {
-        if (!LoadObject(curr_object, roomID)) return false;
+        types = curr_object->FirstChildElement("Types");
+        if (types == nullptr) {
+            SDL_Log("Object does not contain types element");
+            assert(false);
+        }
+        
+        createdObj = LoadObject(curr_object);
+        SDL_Log("loaded object: %d", createdObj != nullptr);
+        if (!createdObj) return false;
+
+        if (types->FirstChildElement("Collider") != nullptr) {
+            createdObj = LoadCollider(curr_object, createdObj);
+            SDL_Log("loaded collider: %d aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", dynamic_cast<Collider*>(createdObj) == nullptr);
+        }
+
+        if (!createdObj) {
+            SDL_Log("maybe collider load failed?");
+            assert(false);
+        };
+
+        m_Rooms[roomID].push_back(createdObj);
+
         curr_object = curr_object->NextSiblingElement("Object");
     }
     return true;

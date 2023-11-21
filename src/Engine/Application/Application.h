@@ -4,6 +4,7 @@
 
 #include "Engine/Events/EventManager.h"
 #include "Engine/Layers/Layer.h"
+#include "Engine/Objects/Collider.h"
 #include <unordered_map>
 #include <tinyxml2.h>
 
@@ -13,7 +14,8 @@ class Application{
         virtual ~Application() = default;
 
         static bool LoadTextures(char* projectPath);
-        bool LoadObject(tinyxml2::XMLElement* xmlObj, const std::string& roomID);
+        GameObject* LoadObject(tinyxml2::XMLElement* xmlObj);
+        Collider* LoadCollider(tinyxml2::XMLElement* xmlObj, GameObject* obj);
         bool LoadObjects(const std::string& roomPath, const std::string& roomID);
         bool LoadRooms(const char* projectPath);
         bool LoadProject();

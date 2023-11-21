@@ -1,5 +1,6 @@
 <Root>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles0</ObjectID>
         <SrcRect>
@@ -17,6 +18,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles1</ObjectID>
         <SrcRect>
@@ -34,6 +36,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles2</ObjectID>
         <SrcRect>
@@ -51,6 +54,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles3</ObjectID>
         <SrcRect>
@@ -68,6 +72,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles4</ObjectID>
         <SrcRect>
@@ -85,6 +90,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles5</ObjectID>
         <SrcRect>
@@ -102,6 +108,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles6</ObjectID>
         <SrcRect>
@@ -119,6 +126,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles7</ObjectID>
         <SrcRect>
@@ -136,6 +144,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles8</ObjectID>
         <SrcRect>
@@ -153,6 +162,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles9</ObjectID>
         <SrcRect>
@@ -170,6 +180,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles10</ObjectID>
         <SrcRect>
@@ -187,6 +198,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles12</ObjectID>
         <SrcRect>
@@ -204,6 +216,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles13</ObjectID>
         <SrcRect>
@@ -221,6 +234,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles14</ObjectID>
         <SrcRect>
@@ -238,6 +252,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles15</ObjectID>
         <SrcRect>
@@ -255,6 +270,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles16</ObjectID>
         <SrcRect>
@@ -272,6 +288,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles17</ObjectID>
         <SrcRect>
@@ -289,6 +306,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles18</ObjectID>
         <SrcRect>
@@ -306,6 +324,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles19</ObjectID>
         <SrcRect>
@@ -323,6 +342,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles20</ObjectID>
         <SrcRect>
@@ -340,6 +360,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles21</ObjectID>
         <SrcRect>
@@ -357,6 +378,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles22</ObjectID>
         <SrcRect>
@@ -374,6 +396,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles23</ObjectID>
         <SrcRect>
@@ -391,6 +414,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles24</ObjectID>
         <SrcRect>
@@ -408,6 +432,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles25</ObjectID>
         <SrcRect>
@@ -425,6 +450,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles26</ObjectID>
         <SrcRect>
@@ -442,6 +468,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles27</ObjectID>
         <SrcRect>
@@ -459,6 +486,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles28</ObjectID>
         <SrcRect>
@@ -476,6 +504,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles29</ObjectID>
         <SrcRect>
@@ -493,6 +522,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles31</ObjectID>
         <SrcRect>
@@ -510,6 +540,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles32</ObjectID>
         <SrcRect>
@@ -527,6 +558,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles33</ObjectID>
         <SrcRect>
@@ -544,6 +576,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles34</ObjectID>
         <SrcRect>
@@ -561,6 +594,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles35</ObjectID>
         <SrcRect>
@@ -578,6 +612,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles36</ObjectID>
         <SrcRect>
@@ -595,6 +630,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles37</ObjectID>
         <SrcRect>
@@ -612,6 +648,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles38</ObjectID>
         <SrcRect>
@@ -629,6 +666,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles39</ObjectID>
         <SrcRect>
@@ -646,6 +684,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles40</ObjectID>
         <SrcRect>
@@ -663,6 +702,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles41</ObjectID>
         <SrcRect>
@@ -680,6 +720,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles42</ObjectID>
         <SrcRect>
@@ -697,6 +738,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles43</ObjectID>
         <SrcRect>
@@ -714,6 +756,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles44</ObjectID>
         <SrcRect>
@@ -731,6 +774,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles46</ObjectID>
         <SrcRect>
@@ -748,6 +792,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles47</ObjectID>
         <SrcRect>
@@ -765,6 +810,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles48</ObjectID>
         <SrcRect>
@@ -782,6 +828,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles50</ObjectID>
         <SrcRect>
@@ -799,6 +846,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles51</ObjectID>
         <SrcRect>
@@ -816,6 +864,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles52</ObjectID>
         <SrcRect>
@@ -833,6 +882,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles53</ObjectID>
         <SrcRect>
@@ -850,6 +900,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles54</ObjectID>
         <SrcRect>
@@ -867,6 +918,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles55</ObjectID>
         <SrcRect>
@@ -884,6 +936,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles56</ObjectID>
         <SrcRect>
@@ -901,6 +954,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles57</ObjectID>
         <SrcRect>
@@ -918,6 +972,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles58</ObjectID>
         <SrcRect>
@@ -935,6 +990,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles59</ObjectID>
         <SrcRect>
@@ -952,6 +1008,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles60</ObjectID>
         <SrcRect>
@@ -969,6 +1026,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles61</ObjectID>
         <SrcRect>
@@ -986,6 +1044,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles62</ObjectID>
         <SrcRect>
@@ -1003,6 +1062,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles63</ObjectID>
         <SrcRect>
@@ -1020,6 +1080,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles64</ObjectID>
         <SrcRect>
@@ -1037,6 +1098,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles65</ObjectID>
         <SrcRect>
@@ -1054,6 +1116,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles66</ObjectID>
         <SrcRect>
@@ -1071,6 +1134,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles67</ObjectID>
         <SrcRect>
@@ -1088,6 +1152,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles68</ObjectID>
         <SrcRect>
@@ -1105,6 +1170,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles69</ObjectID>
         <SrcRect>
@@ -1122,6 +1188,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles70</ObjectID>
         <SrcRect>
@@ -1139,6 +1206,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles71</ObjectID>
         <SrcRect>
@@ -1156,6 +1224,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles73</ObjectID>
         <SrcRect>
@@ -1173,6 +1242,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles74</ObjectID>
         <SrcRect>
@@ -1190,6 +1260,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles75</ObjectID>
         <SrcRect>
@@ -1207,6 +1278,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles76</ObjectID>
         <SrcRect>
@@ -1224,6 +1296,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles77</ObjectID>
         <SrcRect>
@@ -1241,6 +1314,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles78</ObjectID>
         <SrcRect>
@@ -1258,6 +1332,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles79</ObjectID>
         <SrcRect>
@@ -1275,6 +1350,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>door1</TextureID>
         <ObjectID>door12</ObjectID>
         <SrcRect>
@@ -1292,6 +1368,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>door1</TextureID>
         <ObjectID>door14</ObjectID>
         <SrcRect>
@@ -1309,6 +1386,7 @@
         <Rotation>180.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>door1</TextureID>
         <ObjectID>door17</ObjectID>
         <SrcRect>
@@ -1326,6 +1404,7 @@
         <Rotation>90.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>door1</TextureID>
         <ObjectID>door15</ObjectID>
         <SrcRect>
@@ -1343,6 +1422,7 @@
         <Rotation>270.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles80</ObjectID>
         <SrcRect>
@@ -1360,6 +1440,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles82</ObjectID>
         <SrcRect>
@@ -1377,6 +1458,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles83</ObjectID>
         <SrcRect>
@@ -1394,6 +1476,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles84</ObjectID>
         <SrcRect>
@@ -1411,6 +1494,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles85</ObjectID>
         <SrcRect>
@@ -1428,6 +1512,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles86</ObjectID>
         <SrcRect>
@@ -1445,6 +1530,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles87</ObjectID>
         <SrcRect>
@@ -1462,6 +1548,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles88</ObjectID>
         <SrcRect>
@@ -1479,6 +1566,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles89</ObjectID>
         <SrcRect>
@@ -1496,6 +1584,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles90</ObjectID>
         <SrcRect>
@@ -1513,6 +1602,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles91</ObjectID>
         <SrcRect>
@@ -1530,6 +1620,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles92</ObjectID>
         <SrcRect>
@@ -1547,6 +1638,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles93</ObjectID>
         <SrcRect>
@@ -1564,6 +1656,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles94</ObjectID>
         <SrcRect>
@@ -1581,6 +1674,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles95</ObjectID>
         <SrcRect>
@@ -1598,6 +1692,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles96</ObjectID>
         <SrcRect>
@@ -1615,6 +1710,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles97</ObjectID>
         <SrcRect>
@@ -1632,6 +1728,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles98</ObjectID>
         <SrcRect>
@@ -1649,6 +1746,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles101</ObjectID>
         <SrcRect>
@@ -1666,6 +1764,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles102</ObjectID>
         <SrcRect>
@@ -1683,6 +1782,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles103</ObjectID>
         <SrcRect>
@@ -1700,6 +1800,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles104</ObjectID>
         <SrcRect>
@@ -1717,6 +1818,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles105</ObjectID>
         <SrcRect>
@@ -1734,6 +1836,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles152</ObjectID>
         <SrcRect>
@@ -1751,6 +1854,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles164</ObjectID>
         <SrcRect>
@@ -1768,6 +1872,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles165</ObjectID>
         <SrcRect>
@@ -1785,6 +1890,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles166</ObjectID>
         <SrcRect>
@@ -1802,6 +1908,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles167</ObjectID>
         <SrcRect>
@@ -1819,6 +1926,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles168</ObjectID>
         <SrcRect>
@@ -1836,6 +1944,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles169</ObjectID>
         <SrcRect>
@@ -1853,6 +1962,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles170</ObjectID>
         <SrcRect>
@@ -1870,6 +1980,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles171</ObjectID>
         <SrcRect>
@@ -1887,6 +1998,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles172</ObjectID>
         <SrcRect>
@@ -1904,6 +2016,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles173</ObjectID>
         <SrcRect>
@@ -1921,6 +2034,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles174</ObjectID>
         <SrcRect>
@@ -1938,6 +2052,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles175</ObjectID>
         <SrcRect>
@@ -1955,6 +2070,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles176</ObjectID>
         <SrcRect>
@@ -1972,6 +2088,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles177</ObjectID>
         <SrcRect>
@@ -1989,6 +2106,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles178</ObjectID>
         <SrcRect>
@@ -2006,6 +2124,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles179</ObjectID>
         <SrcRect>
@@ -2023,6 +2142,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles180</ObjectID>
         <SrcRect>
@@ -2040,6 +2160,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles181</ObjectID>
         <SrcRect>
@@ -2057,6 +2178,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles182</ObjectID>
         <SrcRect>
@@ -2074,6 +2196,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles183</ObjectID>
         <SrcRect>
@@ -2091,6 +2214,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles184</ObjectID>
         <SrcRect>
@@ -2108,6 +2232,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles185</ObjectID>
         <SrcRect>
@@ -2125,6 +2250,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles186</ObjectID>
         <SrcRect>
@@ -2142,6 +2268,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles187</ObjectID>
         <SrcRect>
@@ -2159,6 +2286,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles188</ObjectID>
         <SrcRect>
@@ -2176,6 +2304,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles189</ObjectID>
         <SrcRect>
@@ -2193,6 +2322,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles190</ObjectID>
         <SrcRect>
@@ -2210,6 +2340,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles191</ObjectID>
         <SrcRect>
@@ -2227,6 +2358,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles192</ObjectID>
         <SrcRect>
@@ -2244,6 +2376,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles193</ObjectID>
         <SrcRect>
@@ -2261,6 +2394,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles194</ObjectID>
         <SrcRect>
@@ -2278,6 +2412,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles195</ObjectID>
         <SrcRect>
@@ -2295,6 +2430,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles196</ObjectID>
         <SrcRect>
@@ -2312,6 +2448,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles197</ObjectID>
         <SrcRect>
@@ -2329,6 +2466,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles198</ObjectID>
         <SrcRect>
@@ -2346,6 +2484,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles199</ObjectID>
         <SrcRect>
@@ -2363,6 +2502,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles200</ObjectID>
         <SrcRect>
@@ -2380,6 +2520,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles201</ObjectID>
         <SrcRect>
@@ -2397,6 +2538,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles202</ObjectID>
         <SrcRect>
@@ -2414,6 +2556,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles203</ObjectID>
         <SrcRect>
@@ -2431,6 +2574,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles204</ObjectID>
         <SrcRect>
@@ -2448,6 +2592,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles205</ObjectID>
         <SrcRect>
@@ -2465,6 +2610,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles206</ObjectID>
         <SrcRect>
@@ -2482,6 +2628,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles207</ObjectID>
         <SrcRect>
@@ -2499,6 +2646,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles208</ObjectID>
         <SrcRect>
@@ -2516,6 +2664,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles209</ObjectID>
         <SrcRect>
@@ -2533,6 +2682,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles210</ObjectID>
         <SrcRect>
@@ -2550,6 +2700,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles211</ObjectID>
         <SrcRect>
@@ -2567,6 +2718,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles212</ObjectID>
         <SrcRect>
@@ -2584,6 +2736,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles213</ObjectID>
         <SrcRect>
@@ -2601,6 +2754,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles214</ObjectID>
         <SrcRect>
@@ -2618,6 +2772,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles215</ObjectID>
         <SrcRect>
@@ -2635,6 +2790,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles216</ObjectID>
         <SrcRect>
@@ -2652,6 +2808,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles217</ObjectID>
         <SrcRect>
@@ -2669,6 +2826,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles218</ObjectID>
         <SrcRect>
@@ -2686,6 +2844,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles219</ObjectID>
         <SrcRect>
@@ -2703,6 +2862,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles220</ObjectID>
         <SrcRect>
@@ -2720,6 +2880,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles221</ObjectID>
         <SrcRect>
@@ -2737,6 +2898,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles222</ObjectID>
         <SrcRect>
@@ -2754,6 +2916,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles223</ObjectID>
         <SrcRect>
@@ -2771,6 +2934,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles224</ObjectID>
         <SrcRect>
@@ -2788,6 +2952,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles225</ObjectID>
         <SrcRect>
@@ -2805,6 +2970,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles226</ObjectID>
         <SrcRect>
@@ -2822,6 +2988,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles227</ObjectID>
         <SrcRect>
@@ -2839,6 +3006,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles228</ObjectID>
         <SrcRect>
@@ -2856,6 +3024,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles229</ObjectID>
         <SrcRect>
@@ -2873,6 +3042,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles230</ObjectID>
         <SrcRect>
@@ -2890,6 +3060,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles231</ObjectID>
         <SrcRect>
@@ -2907,6 +3078,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles232</ObjectID>
         <SrcRect>
@@ -2924,6 +3096,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles233</ObjectID>
         <SrcRect>
@@ -2941,6 +3114,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles234</ObjectID>
         <SrcRect>
@@ -2958,6 +3132,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles235</ObjectID>
         <SrcRect>
@@ -2975,6 +3150,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles236</ObjectID>
         <SrcRect>
@@ -2992,6 +3168,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles237</ObjectID>
         <SrcRect>
@@ -3009,6 +3186,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles238</ObjectID>
         <SrcRect>
@@ -3026,6 +3204,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles239</ObjectID>
         <SrcRect>
@@ -3043,6 +3222,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles240</ObjectID>
         <SrcRect>
@@ -3060,6 +3240,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles241</ObjectID>
         <SrcRect>
@@ -3077,6 +3258,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles242</ObjectID>
         <SrcRect>
@@ -3094,6 +3276,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles243</ObjectID>
         <SrcRect>
@@ -3111,6 +3294,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles244</ObjectID>
         <SrcRect>
@@ -3128,6 +3312,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles245</ObjectID>
         <SrcRect>
@@ -3145,6 +3330,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles246</ObjectID>
         <SrcRect>
@@ -3162,6 +3348,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles247</ObjectID>
         <SrcRect>
@@ -3179,6 +3366,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles248</ObjectID>
         <SrcRect>
@@ -3196,6 +3384,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles249</ObjectID>
         <SrcRect>
@@ -3213,6 +3402,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles250</ObjectID>
         <SrcRect>
@@ -3230,6 +3420,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles251</ObjectID>
         <SrcRect>
@@ -3247,6 +3438,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles252</ObjectID>
         <SrcRect>
@@ -3264,6 +3456,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles253</ObjectID>
         <SrcRect>
@@ -3281,6 +3474,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles254</ObjectID>
         <SrcRect>
@@ -3298,6 +3492,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles255</ObjectID>
         <SrcRect>
@@ -3315,6 +3510,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles256</ObjectID>
         <SrcRect>
@@ -3332,6 +3528,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles257</ObjectID>
         <SrcRect>
@@ -3349,6 +3546,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles258</ObjectID>
         <SrcRect>
@@ -3366,6 +3564,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles259</ObjectID>
         <SrcRect>
@@ -3383,6 +3582,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles260</ObjectID>
         <SrcRect>
@@ -3400,6 +3600,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles261</ObjectID>
         <SrcRect>
@@ -3417,6 +3618,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles262</ObjectID>
         <SrcRect>
@@ -3434,6 +3636,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles263</ObjectID>
         <SrcRect>
@@ -3451,6 +3654,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles264</ObjectID>
         <SrcRect>
@@ -3468,6 +3672,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles265</ObjectID>
         <SrcRect>
@@ -3485,6 +3690,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles266</ObjectID>
         <SrcRect>
@@ -3502,6 +3708,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles267</ObjectID>
         <SrcRect>
@@ -3519,6 +3726,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles268</ObjectID>
         <SrcRect>
@@ -3536,6 +3744,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles269</ObjectID>
         <SrcRect>
@@ -3553,6 +3762,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles270</ObjectID>
         <SrcRect>
@@ -3570,6 +3780,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles271</ObjectID>
         <SrcRect>
@@ -3587,6 +3798,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles272</ObjectID>
         <SrcRect>
@@ -3604,6 +3816,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles273</ObjectID>
         <SrcRect>
@@ -3621,6 +3834,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles81</ObjectID>
         <SrcRect>
@@ -3638,6 +3852,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles281</ObjectID>
         <SrcRect>
@@ -3655,6 +3870,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles297</ObjectID>
         <SrcRect>
@@ -3672,6 +3888,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles315</ObjectID>
         <SrcRect>
@@ -3689,6 +3906,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles348</ObjectID>
         <SrcRect>
@@ -3706,6 +3924,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles349</ObjectID>
         <SrcRect>
@@ -3723,6 +3942,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles350</ObjectID>
         <SrcRect>
@@ -3740,6 +3960,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles351</ObjectID>
         <SrcRect>
@@ -3757,6 +3978,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles352</ObjectID>
         <SrcRect>
@@ -3774,6 +3996,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles353</ObjectID>
         <SrcRect>
@@ -3791,6 +4014,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles354</ObjectID>
         <SrcRect>
@@ -3808,6 +4032,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles355</ObjectID>
         <SrcRect>
@@ -3825,6 +4050,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles356</ObjectID>
         <SrcRect>
@@ -3842,6 +4068,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles357</ObjectID>
         <SrcRect>
@@ -3859,6 +4086,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles358</ObjectID>
         <SrcRect>
@@ -3876,6 +4104,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles359</ObjectID>
         <SrcRect>
@@ -3893,6 +4122,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles360</ObjectID>
         <SrcRect>
@@ -3910,6 +4140,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles361</ObjectID>
         <SrcRect>
@@ -3927,6 +4158,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles362</ObjectID>
         <SrcRect>
@@ -3944,6 +4176,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles363</ObjectID>
         <SrcRect>
@@ -3961,6 +4194,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles364</ObjectID>
         <SrcRect>
@@ -3978,6 +4212,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles365</ObjectID>
         <SrcRect>
@@ -3995,6 +4230,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles366</ObjectID>
         <SrcRect>
@@ -4012,6 +4248,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles367</ObjectID>
         <SrcRect>
@@ -4029,6 +4266,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles368</ObjectID>
         <SrcRect>
@@ -4046,6 +4284,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles369</ObjectID>
         <SrcRect>
@@ -4063,6 +4302,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles370</ObjectID>
         <SrcRect>
@@ -4080,6 +4320,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles371</ObjectID>
         <SrcRect>
@@ -4097,6 +4338,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles372</ObjectID>
         <SrcRect>
@@ -4114,6 +4356,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles373</ObjectID>
         <SrcRect>
@@ -4131,6 +4374,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles374</ObjectID>
         <SrcRect>
@@ -4148,6 +4392,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles375</ObjectID>
         <SrcRect>
@@ -4165,6 +4410,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles376</ObjectID>
         <SrcRect>
@@ -4182,6 +4428,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles377</ObjectID>
         <SrcRect>
@@ -4199,6 +4446,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles378</ObjectID>
         <SrcRect>
@@ -4216,6 +4464,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles379</ObjectID>
         <SrcRect>
@@ -4233,6 +4482,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles380</ObjectID>
         <SrcRect>
@@ -4250,6 +4500,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles381</ObjectID>
         <SrcRect>
@@ -4267,6 +4518,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles382</ObjectID>
         <SrcRect>
@@ -4284,6 +4536,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles383</ObjectID>
         <SrcRect>
@@ -4301,6 +4554,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles384</ObjectID>
         <SrcRect>
@@ -4318,6 +4572,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles385</ObjectID>
         <SrcRect>
@@ -4335,6 +4590,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles386</ObjectID>
         <SrcRect>
@@ -4352,6 +4608,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles387</ObjectID>
         <SrcRect>
@@ -4369,6 +4626,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles388</ObjectID>
         <SrcRect>
@@ -4386,6 +4644,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles389</ObjectID>
         <SrcRect>
@@ -4403,6 +4662,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles390</ObjectID>
         <SrcRect>
@@ -4420,6 +4680,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles391</ObjectID>
         <SrcRect>
@@ -4437,6 +4698,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles392</ObjectID>
         <SrcRect>
@@ -4454,6 +4716,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles393</ObjectID>
         <SrcRect>
@@ -4471,6 +4734,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles394</ObjectID>
         <SrcRect>
@@ -4488,6 +4752,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles395</ObjectID>
         <SrcRect>
@@ -4505,6 +4770,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles396</ObjectID>
         <SrcRect>
@@ -4522,6 +4788,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles397</ObjectID>
         <SrcRect>
@@ -4539,6 +4806,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles398</ObjectID>
         <SrcRect>
@@ -4556,6 +4824,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles399</ObjectID>
         <SrcRect>
@@ -4573,6 +4842,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles400</ObjectID>
         <SrcRect>
@@ -4590,6 +4860,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles401</ObjectID>
         <SrcRect>
@@ -4607,6 +4878,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles402</ObjectID>
         <SrcRect>
@@ -4624,6 +4896,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles403</ObjectID>
         <SrcRect>
@@ -4641,6 +4914,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles404</ObjectID>
         <SrcRect>
@@ -4658,6 +4932,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles405</ObjectID>
         <SrcRect>
@@ -4675,6 +4950,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles406</ObjectID>
         <SrcRect>
@@ -4692,6 +4968,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles407</ObjectID>
         <SrcRect>
@@ -4709,6 +4986,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles408</ObjectID>
         <SrcRect>
@@ -4726,6 +5004,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles409</ObjectID>
         <SrcRect>
@@ -4743,6 +5022,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles410</ObjectID>
         <SrcRect>
@@ -4760,6 +5040,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles411</ObjectID>
         <SrcRect>
@@ -4777,6 +5058,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles412</ObjectID>
         <SrcRect>
@@ -4794,6 +5076,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles413</ObjectID>
         <SrcRect>
@@ -4811,6 +5094,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles414</ObjectID>
         <SrcRect>
@@ -4828,6 +5112,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles415</ObjectID>
         <SrcRect>
@@ -4845,6 +5130,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles416</ObjectID>
         <SrcRect>
@@ -4862,6 +5148,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles417</ObjectID>
         <SrcRect>
@@ -4879,6 +5166,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles418</ObjectID>
         <SrcRect>
@@ -4896,6 +5184,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles419</ObjectID>
         <SrcRect>
@@ -4913,6 +5202,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles420</ObjectID>
         <SrcRect>
@@ -4930,6 +5220,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles421</ObjectID>
         <SrcRect>
@@ -4947,6 +5238,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles422</ObjectID>
         <SrcRect>
@@ -4964,6 +5256,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles423</ObjectID>
         <SrcRect>
@@ -4981,6 +5274,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles424</ObjectID>
         <SrcRect>
@@ -4998,6 +5292,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles425</ObjectID>
         <SrcRect>
@@ -5015,6 +5310,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles426</ObjectID>
         <SrcRect>
@@ -5032,6 +5328,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles427</ObjectID>
         <SrcRect>
@@ -5049,6 +5346,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles428</ObjectID>
         <SrcRect>
@@ -5066,6 +5364,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles429</ObjectID>
         <SrcRect>
@@ -5083,6 +5382,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles430</ObjectID>
         <SrcRect>
@@ -5100,6 +5400,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles431</ObjectID>
         <SrcRect>
@@ -5117,6 +5418,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles432</ObjectID>
         <SrcRect>
@@ -5134,6 +5436,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles433</ObjectID>
         <SrcRect>
@@ -5151,6 +5454,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles434</ObjectID>
         <SrcRect>
@@ -5168,6 +5472,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles435</ObjectID>
         <SrcRect>
@@ -5185,6 +5490,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles436</ObjectID>
         <SrcRect>
@@ -5202,6 +5508,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles437</ObjectID>
         <SrcRect>
@@ -5219,6 +5526,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles438</ObjectID>
         <SrcRect>
@@ -5236,6 +5544,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles439</ObjectID>
         <SrcRect>
@@ -5253,6 +5562,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles440</ObjectID>
         <SrcRect>
@@ -5270,6 +5580,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles441</ObjectID>
         <SrcRect>
@@ -5287,6 +5598,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles442</ObjectID>
         <SrcRect>
@@ -5304,6 +5616,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles443</ObjectID>
         <SrcRect>
@@ -5321,6 +5634,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles444</ObjectID>
         <SrcRect>
@@ -5338,6 +5652,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles445</ObjectID>
         <SrcRect>
@@ -5355,6 +5670,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles446</ObjectID>
         <SrcRect>
@@ -5372,6 +5688,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles447</ObjectID>
         <SrcRect>
@@ -5389,6 +5706,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles448</ObjectID>
         <SrcRect>
@@ -5406,6 +5724,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles449</ObjectID>
         <SrcRect>
@@ -5423,6 +5742,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles450</ObjectID>
         <SrcRect>
@@ -5440,6 +5760,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles451</ObjectID>
         <SrcRect>
@@ -5457,6 +5778,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles452</ObjectID>
         <SrcRect>
@@ -5474,6 +5796,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles453</ObjectID>
         <SrcRect>
@@ -5491,6 +5814,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles454</ObjectID>
         <SrcRect>
@@ -5508,6 +5832,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles455</ObjectID>
         <SrcRect>
@@ -5525,6 +5850,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles456</ObjectID>
         <SrcRect>
@@ -5542,6 +5868,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles457</ObjectID>
         <SrcRect>
@@ -5559,6 +5886,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles458</ObjectID>
         <SrcRect>
@@ -5576,6 +5904,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles459</ObjectID>
         <SrcRect>
@@ -5593,6 +5922,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles460</ObjectID>
         <SrcRect>
@@ -5610,6 +5940,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles461</ObjectID>
         <SrcRect>
@@ -5627,6 +5958,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles462</ObjectID>
         <SrcRect>
@@ -5644,6 +5976,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles463</ObjectID>
         <SrcRect>
@@ -5661,6 +5994,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles464</ObjectID>
         <SrcRect>
@@ -5678,6 +6012,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles465</ObjectID>
         <SrcRect>
@@ -5695,6 +6030,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles466</ObjectID>
         <SrcRect>
@@ -5712,6 +6048,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles467</ObjectID>
         <SrcRect>
@@ -5729,6 +6066,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles468</ObjectID>
         <SrcRect>
@@ -5746,6 +6084,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles469</ObjectID>
         <SrcRect>
@@ -5763,6 +6102,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles470</ObjectID>
         <SrcRect>
@@ -5780,6 +6120,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles471</ObjectID>
         <SrcRect>
@@ -5797,6 +6138,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles472</ObjectID>
         <SrcRect>
@@ -5814,6 +6156,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles473</ObjectID>
         <SrcRect>
@@ -5831,6 +6174,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles474</ObjectID>
         <SrcRect>
@@ -5848,6 +6192,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles475</ObjectID>
         <SrcRect>
@@ -5865,6 +6210,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles476</ObjectID>
         <SrcRect>
@@ -5882,6 +6228,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles477</ObjectID>
         <SrcRect>
@@ -5899,6 +6246,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles478</ObjectID>
         <SrcRect>
@@ -5916,6 +6264,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles479</ObjectID>
         <SrcRect>
@@ -5933,6 +6282,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles480</ObjectID>
         <SrcRect>
@@ -5950,6 +6300,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles481</ObjectID>
         <SrcRect>
@@ -5967,6 +6318,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles482</ObjectID>
         <SrcRect>
@@ -5984,6 +6336,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles483</ObjectID>
         <SrcRect>
@@ -6001,6 +6354,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles484</ObjectID>
         <SrcRect>
@@ -6018,6 +6372,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles485</ObjectID>
         <SrcRect>
@@ -6035,6 +6390,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles486</ObjectID>
         <SrcRect>
@@ -6052,6 +6408,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles487</ObjectID>
         <SrcRect>
@@ -6069,6 +6426,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles488</ObjectID>
         <SrcRect>
@@ -6086,6 +6444,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles489</ObjectID>
         <SrcRect>
@@ -6103,6 +6462,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles490</ObjectID>
         <SrcRect>
@@ -6120,6 +6480,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles491</ObjectID>
         <SrcRect>
@@ -6137,6 +6498,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles492</ObjectID>
         <SrcRect>
@@ -6154,6 +6516,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles493</ObjectID>
         <SrcRect>
@@ -6171,6 +6534,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles494</ObjectID>
         <SrcRect>
@@ -6188,6 +6552,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles495</ObjectID>
         <SrcRect>
@@ -6205,6 +6570,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles496</ObjectID>
         <SrcRect>
@@ -6222,6 +6588,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles497</ObjectID>
         <SrcRect>
@@ -6239,6 +6606,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles498</ObjectID>
         <SrcRect>
@@ -6256,6 +6624,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles499</ObjectID>
         <SrcRect>
@@ -6273,6 +6642,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles500</ObjectID>
         <SrcRect>
@@ -6290,6 +6660,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles501</ObjectID>
         <SrcRect>
@@ -6307,6 +6678,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles502</ObjectID>
         <SrcRect>
@@ -6324,6 +6696,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles503</ObjectID>
         <SrcRect>
@@ -6341,6 +6714,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles504</ObjectID>
         <SrcRect>
@@ -6358,6 +6732,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles505</ObjectID>
         <SrcRect>
@@ -6375,6 +6750,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles506</ObjectID>
         <SrcRect>
@@ -6392,6 +6768,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles507</ObjectID>
         <SrcRect>
@@ -6409,6 +6786,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles508</ObjectID>
         <SrcRect>
@@ -6426,6 +6804,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles509</ObjectID>
         <SrcRect>
@@ -6443,6 +6822,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles510</ObjectID>
         <SrcRect>
@@ -6460,6 +6840,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles511</ObjectID>
         <SrcRect>
@@ -6477,6 +6858,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles512</ObjectID>
         <SrcRect>
@@ -6494,6 +6876,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles513</ObjectID>
         <SrcRect>
@@ -6511,6 +6894,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles514</ObjectID>
         <SrcRect>
@@ -6528,6 +6912,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles515</ObjectID>
         <SrcRect>
@@ -6545,6 +6930,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles516</ObjectID>
         <SrcRect>
@@ -6562,6 +6948,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles517</ObjectID>
         <SrcRect>
@@ -6579,6 +6966,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles518</ObjectID>
         <SrcRect>
@@ -6596,6 +6984,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles519</ObjectID>
         <SrcRect>
@@ -6613,6 +7002,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles520</ObjectID>
         <SrcRect>
@@ -6630,6 +7020,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles521</ObjectID>
         <SrcRect>
@@ -6647,6 +7038,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles522</ObjectID>
         <SrcRect>
@@ -6664,6 +7056,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles523</ObjectID>
         <SrcRect>
@@ -6681,6 +7074,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles524</ObjectID>
         <SrcRect>
@@ -6698,6 +7092,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles525</ObjectID>
         <SrcRect>
@@ -6715,6 +7110,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles526</ObjectID>
         <SrcRect>
@@ -6732,6 +7128,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles527</ObjectID>
         <SrcRect>
@@ -6749,6 +7146,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles528</ObjectID>
         <SrcRect>
@@ -6766,6 +7164,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles529</ObjectID>
         <SrcRect>
@@ -6783,6 +7182,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles530</ObjectID>
         <SrcRect>
@@ -6800,6 +7200,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles531</ObjectID>
         <SrcRect>
@@ -6817,6 +7218,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles532</ObjectID>
         <SrcRect>
@@ -6834,6 +7236,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles533</ObjectID>
         <SrcRect>
@@ -6851,6 +7254,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles534</ObjectID>
         <SrcRect>
@@ -6868,6 +7272,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles535</ObjectID>
         <SrcRect>
@@ -6885,6 +7290,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles536</ObjectID>
         <SrcRect>
@@ -6902,6 +7308,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles537</ObjectID>
         <SrcRect>
@@ -6919,6 +7326,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles538</ObjectID>
         <SrcRect>
@@ -6936,6 +7344,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles539</ObjectID>
         <SrcRect>
@@ -6953,6 +7362,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles540</ObjectID>
         <SrcRect>
@@ -6970,6 +7380,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles541</ObjectID>
         <SrcRect>
@@ -6987,6 +7398,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles542</ObjectID>
         <SrcRect>
@@ -7004,6 +7416,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles543</ObjectID>
         <SrcRect>
@@ -7021,6 +7434,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles544</ObjectID>
         <SrcRect>
@@ -7038,6 +7452,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles545</ObjectID>
         <SrcRect>
@@ -7055,6 +7470,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles546</ObjectID>
         <SrcRect>
@@ -7072,6 +7488,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles547</ObjectID>
         <SrcRect>
@@ -7089,6 +7506,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles548</ObjectID>
         <SrcRect>
@@ -7106,6 +7524,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles549</ObjectID>
         <SrcRect>
@@ -7123,6 +7542,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles550</ObjectID>
         <SrcRect>
@@ -7140,6 +7560,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles551</ObjectID>
         <SrcRect>
@@ -7157,6 +7578,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles552</ObjectID>
         <SrcRect>
@@ -7174,6 +7596,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles553</ObjectID>
         <SrcRect>
@@ -7191,6 +7614,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles554</ObjectID>
         <SrcRect>
@@ -7208,6 +7632,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles555</ObjectID>
         <SrcRect>
@@ -7225,6 +7650,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles556</ObjectID>
         <SrcRect>
@@ -7242,6 +7668,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles557</ObjectID>
         <SrcRect>
@@ -7259,6 +7686,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles558</ObjectID>
         <SrcRect>
@@ -7276,6 +7704,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles559</ObjectID>
         <SrcRect>
@@ -7293,6 +7722,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles560</ObjectID>
         <SrcRect>
@@ -7310,6 +7740,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles561</ObjectID>
         <SrcRect>
@@ -7327,6 +7758,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles562</ObjectID>
         <SrcRect>
@@ -7344,6 +7776,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles563</ObjectID>
         <SrcRect>
@@ -7361,6 +7794,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles564</ObjectID>
         <SrcRect>
@@ -7378,6 +7812,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles565</ObjectID>
         <SrcRect>
@@ -7395,6 +7830,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles566</ObjectID>
         <SrcRect>
@@ -7412,6 +7848,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles567</ObjectID>
         <SrcRect>
@@ -7429,6 +7866,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles568</ObjectID>
         <SrcRect>
@@ -7446,6 +7884,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles569</ObjectID>
         <SrcRect>
@@ -7463,6 +7902,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles570</ObjectID>
         <SrcRect>
@@ -7480,6 +7920,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles571</ObjectID>
         <SrcRect>
@@ -7497,6 +7938,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles572</ObjectID>
         <SrcRect>
@@ -7514,6 +7956,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles573</ObjectID>
         <SrcRect>
@@ -7531,6 +7974,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles574</ObjectID>
         <SrcRect>
@@ -7548,6 +7992,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles575</ObjectID>
         <SrcRect>
@@ -7565,6 +8010,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles576</ObjectID>
         <SrcRect>
@@ -7582,6 +8028,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles577</ObjectID>
         <SrcRect>
@@ -7599,6 +8046,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles578</ObjectID>
         <SrcRect>
@@ -7616,6 +8064,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles579</ObjectID>
         <SrcRect>
@@ -7633,6 +8082,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles581</ObjectID>
         <SrcRect>
@@ -7650,6 +8100,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles582</ObjectID>
         <SrcRect>
@@ -7667,6 +8118,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles585</ObjectID>
         <SrcRect>
@@ -7684,6 +8136,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles586</ObjectID>
         <SrcRect>
@@ -7701,6 +8154,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles587</ObjectID>
         <SrcRect>
@@ -7718,6 +8172,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles588</ObjectID>
         <SrcRect>
@@ -7735,6 +8190,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles589</ObjectID>
         <SrcRect>
@@ -7752,6 +8208,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles312</ObjectID>
         <SrcRect>
@@ -7769,6 +8226,7 @@
         <Rotation>-90.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles316</ObjectID>
         <SrcRect>
@@ -7786,23 +8244,7 @@
         <Rotation>-90.000000</Rotation>
     </Object>
     <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles303</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>3</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>768.000000</XPos>
-            <YPos>448.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>180.000000</Rotation>
-    </Object>
-    <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles310</ObjectID>
         <SrcRect>
@@ -7820,6 +8262,7 @@
         <Rotation>90.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles319</ObjectID>
         <SrcRect>
@@ -7837,6 +8280,7 @@
         <Rotation>90.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles284</ObjectID>
         <SrcRect>
@@ -7854,6 +8298,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles294</ObjectID>
         <SrcRect>
@@ -7871,222 +8316,7 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles279</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>1</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>128.000000</XPos>
-            <YPos>64.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>0.000000</Rotation>
-        <Collider>
-            <XPos>128</XPos>
-            <YPos>64</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles280</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>1</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>160.000000</XPos>
-            <YPos>64.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>0.000000</Rotation>
-        <Collider>
-            <XPos>160</XPos>
-            <YPos>64</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles583</ObjectID>
-        <SrcRect>
-            <Row>20</Row>
-            <Column>2</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>192.000000</XPos>
-            <YPos>64.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>0.000000</Rotation>
-        <Collider>
-            <XPos>192</XPos>
-            <YPos>64</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles282</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>1</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>224.000000</XPos>
-            <YPos>64.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>0.000000</Rotation>
-        <Collider>
-            <XPos>224</XPos>
-            <YPos>64</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles283</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>1</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>256.000000</XPos>
-            <YPos>64.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>0.000000</Rotation>
-        <Collider>
-            <XPos>256</XPos>
-            <YPos>64</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles0</ObjectID>
-        <SrcRect>
-            <Row>23</Row>
-            <Column>2</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>288.000000</XPos>
-            <YPos>64.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>0.000000</Rotation>
-        <Collider>
-            <XPos>288</XPos>
-            <YPos>64</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-        <Animation>
-            <TextureID>background-tiles</TextureID>
-            <Row>23</Row>
-            <Col>2</Col>
-            <Width>16</Width>
-            <Height>16</Height>
-            <FrameCount>4</FrameCount>
-            <Speed>100</Speed>
-        </Animation>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles285</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>1</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>320.000000</XPos>
-            <YPos>64.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>0.000000</Rotation>
-        <Collider>
-            <XPos>320</XPos>
-            <YPos>64</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles286</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>1</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>352.000000</XPos>
-            <YPos>64.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>0.000000</Rotation>
-        <Collider>
-            <XPos>352</XPos>
-            <YPos>64</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles287</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>1</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>384.000000</XPos>
-            <YPos>64.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>0.000000</Rotation>
-        <Collider>
-            <XPos>384</XPos>
-            <YPos>64</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles288</ObjectID>
         <SrcRect>
@@ -8102,892 +8332,9 @@
             <Height>32</Height>
         </DstRect>
         <Rotation>0.000000</Rotation>
-        <Collider>
-            <XPos>416</XPos>
-            <YPos>64</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
     </Object>
     <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles289</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>1</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>448.000000</XPos>
-            <YPos>64.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>0.000000</Rotation>
-        <Collider>
-            <XPos>448</XPos>
-            <YPos>64</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles290</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>1</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>512.000000</XPos>
-            <YPos>64.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>0.000000</Rotation>
-        <Collider>
-            <XPos>512</XPos>
-            <YPos>64</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles291</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>1</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>544.000000</XPos>
-            <YPos>64.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>0.000000</Rotation>
-        <Collider>
-            <XPos>544</XPos>
-            <YPos>64</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles292</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>1</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>576.000000</XPos>
-            <YPos>64.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>0.000000</Rotation>
-        <Collider>
-            <XPos>576</XPos>
-            <YPos>64</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles293</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>1</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>608.000000</XPos>
-            <YPos>64.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>0.000000</Rotation>
-        <Collider>
-            <XPos>608</XPos>
-            <YPos>64</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles1</ObjectID>
-        <SrcRect>
-            <Row>23</Row>
-            <Column>2</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>640.000000</XPos>
-            <YPos>64.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>0.000000</Rotation>
-        <Collider>
-            <XPos>640</XPos>
-            <YPos>64</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-        <Animation>
-            <TextureID>background-tiles</TextureID>
-            <Row>23</Row>
-            <Col>2</Col>
-            <Width>16</Width>
-            <Height>16</Height>
-            <FrameCount>4</FrameCount>
-            <Speed>100</Speed>
-        </Animation>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles295</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>1</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>672.000000</XPos>
-            <YPos>64.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>0.000000</Rotation>
-        <Collider>
-            <XPos>672</XPos>
-            <YPos>64</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles296</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>1</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>704.000000</XPos>
-            <YPos>64.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>0.000000</Rotation>
-        <Collider>
-            <XPos>704</XPos>
-            <YPos>64</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles580</ObjectID>
-        <SrcRect>
-            <Row>20</Row>
-            <Column>4</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>736.000000</XPos>
-            <YPos>64.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>0.000000</Rotation>
-        <Collider>
-            <XPos>736</XPos>
-            <YPos>64</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles298</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>1</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>768.000000</XPos>
-            <YPos>64.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>0.000000</Rotation>
-        <Collider>
-            <XPos>768</XPos>
-            <YPos>64</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles299</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>1</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>800.000000</XPos>
-            <YPos>64.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>0.000000</Rotation>
-        <Collider>
-            <XPos>800</XPos>
-            <YPos>64</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles300</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>1</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>832.000000</XPos>
-            <YPos>64.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>0.000000</Rotation>
-        <Collider>
-            <XPos>832</XPos>
-            <YPos>64</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles347</ObjectID>
-        <SrcRect>
-            <Row>1</Row>
-            <Column>6</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>864.000000</XPos>
-            <YPos>64.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>0.000000</Rotation>
-        <Collider>
-            <XPos>864</XPos>
-            <YPos>64</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles301</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>2</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>864.000000</XPos>
-            <YPos>96.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>90.000000</Rotation>
-        <Collider>
-            <XPos>864</XPos>
-            <YPos>96</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles324</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>2</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>864.000000</XPos>
-            <YPos>128.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>90.000000</Rotation>
-        <Collider>
-            <XPos>864</XPos>
-            <YPos>128</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles302</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>3</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>864.000000</XPos>
-            <YPos>160.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>90.000000</Rotation>
-        <Collider>
-            <XPos>864</XPos>
-            <YPos>160</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles3</ObjectID>
-        <SrcRect>
-            <Row>23</Row>
-            <Column>2</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>864.000000</XPos>
-            <YPos>192.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>90.000000</Rotation>
-        <Collider>
-            <XPos>864</XPos>
-            <YPos>192</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-        <Animation>
-            <TextureID>background-tiles</TextureID>
-            <Row>23</Row>
-            <Col>2</Col>
-            <Width>16</Width>
-            <Height>16</Height>
-            <FrameCount>4</FrameCount>
-            <Speed>100</Speed>
-        </Animation>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles584</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>2</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>864.000000</XPos>
-            <YPos>224.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>90.000000</Rotation>
-        <Collider>
-            <XPos>864</XPos>
-            <YPos>224</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles322</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>2</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>864.000000</XPos>
-            <YPos>288.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>90.000000</Rotation>
-        <Collider>
-            <XPos>864</XPos>
-            <YPos>288</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles309</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>5</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>864.000000</XPos>
-            <YPos>320.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>90.000000</Rotation>
-        <Collider>
-            <XPos>864</XPos>
-            <YPos>320</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles320</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>2</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>864.000000</XPos>
-            <YPos>352.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>90.000000</Rotation>
-        <Collider>
-            <XPos>864</XPos>
-            <YPos>352</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles5</ObjectID>
-        <SrcRect>
-            <Row>23</Row>
-            <Column>2</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>864.000000</XPos>
-            <YPos>384.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>90.000000</Rotation>
-        <Collider>
-            <XPos>864</XPos>
-            <YPos>384</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-        <Animation>
-            <TextureID>background-tiles</TextureID>
-            <Row>23</Row>
-            <Col>2</Col>
-            <Width>16</Width>
-            <Height>16</Height>
-            <FrameCount>4</FrameCount>
-            <Speed>100</Speed>
-        </Animation>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles321</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>2</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>864.000000</XPos>
-            <YPos>416.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>90.000000</Rotation>
-        <Collider>
-            <XPos>864</XPos>
-            <YPos>416</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles344</ObjectID>
-        <SrcRect>
-            <Row>2</Row>
-            <Column>6</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>864.000000</XPos>
-            <YPos>448.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>0.000000</Rotation>
-        <Collider>
-            <XPos>864</XPos>
-            <YPos>448</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles343</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>1</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>832.000000</XPos>
-            <YPos>448.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>180.000000</Rotation>
-        <Collider>
-            <XPos>832</XPos>
-            <YPos>448</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles342</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>1</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>800.000000</XPos>
-            <YPos>448.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>180.000000</Rotation>
-        <Collider>
-            <XPos>800</XPos>
-            <YPos>448</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles341</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>1</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>736.000000</XPos>
-            <YPos>448.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>180.000000</Rotation>
-        <Collider>
-            <XPos>736</XPos>
-            <YPos>448</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles317</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>2</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>704.000000</XPos>
-            <YPos>448.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>180.000000</Rotation>
-        <Collider>
-            <XPos>704</XPos>
-            <YPos>448</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles318</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>2</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>672.000000</XPos>
-            <YPos>448.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>180.000000</Rotation>
-        <Collider>
-            <XPos>672</XPos>
-            <YPos>448</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles340</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>1</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>640.000000</XPos>
-            <YPos>448.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>180.000000</Rotation>
-        <Collider>
-            <XPos>640</XPos>
-            <YPos>448</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles339</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>1</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>608.000000</XPos>
-            <YPos>448.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>180.000000</Rotation>
-        <Collider>
-            <XPos>608</XPos>
-            <YPos>448</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles338</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>1</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>576.000000</XPos>
-            <YPos>448.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>180.000000</Rotation>
-        <Collider>
-            <XPos>576</XPos>
-            <YPos>448</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles337</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>1</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>544.000000</XPos>
-            <YPos>448.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>180.000000</Rotation>
-        <Collider>
-            <XPos>544</XPos>
-            <YPos>448</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles336</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>1</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>512.000000</XPos>
-            <YPos>448.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>180.000000</Rotation>
-        <Collider>
-            <XPos>512</XPos>
-            <YPos>448</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles335</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>1</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>448.000000</XPos>
-            <YPos>448.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>-180.000000</Rotation>
-        <Collider>
-            <XPos>448</XPos>
-            <YPos>448</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles334</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>1</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>416.000000</XPos>
-            <YPos>448.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>-180.000000</Rotation>
-        <Collider>
-            <XPos>416</XPos>
-            <YPos>448</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles305</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>3</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>384.000000</XPos>
-            <YPos>448.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>-180.000000</Rotation>
-        <Collider>
-            <XPos>384</XPos>
-            <YPos>448</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles45</ObjectID>
         <SrcRect>
@@ -9005,238 +8352,89 @@
         <Rotation>0.000000</Rotation>
     </Object>
     <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
         <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles333</ObjectID>
+        <ObjectID>background-tiles311</ObjectID>
         <SrcRect>
             <Row>13</Row>
-            <Column>1</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>352.000000</XPos>
-            <YPos>448.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>-180.000000</Rotation>
-        <Collider>
-            <XPos>352</XPos>
-            <YPos>448</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles332</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>1</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>320.000000</XPos>
-            <YPos>448.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>-180.000000</Rotation>
-        <Collider>
-            <XPos>320</XPos>
-            <YPos>448</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles331</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>1</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>288.000000</XPos>
-            <YPos>448.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>-180.000000</Rotation>
-        <Collider>
-            <XPos>288</XPos>
-            <YPos>448</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles304</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>3</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>256.000000</XPos>
-            <YPos>448.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>-180.000000</Rotation>
-        <Collider>
-            <XPos>256</XPos>
-            <YPos>448</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles330</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>1</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>224.000000</XPos>
-            <YPos>448.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>-180.000000</Rotation>
-        <Collider>
-            <XPos>224</XPos>
-            <YPos>448</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles329</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>1</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>192.000000</XPos>
-            <YPos>448.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>-180.000000</Rotation>
-        <Collider>
-            <XPos>192</XPos>
-            <YPos>448</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles306</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>3</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>160.000000</XPos>
-            <YPos>448.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>-180.000000</Rotation>
-        <Collider>
-            <XPos>160</XPos>
-            <YPos>448</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles328</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>1</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>128.000000</XPos>
-            <YPos>448.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>-180.000000</Rotation>
-        <Collider>
-            <XPos>128</XPos>
-            <YPos>448</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles345</ObjectID>
-        <SrcRect>
-            <Row>2</Row>
-            <Column>5</Column>
+            <Column>2</Column>
             <Width>16</Width>
             <Height>16</Height>
         </SrcRect>
         <DstRect>
             <XPos>96.000000</XPos>
-            <YPos>448.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>0.000000</Rotation>
-        <Collider>
-            <XPos>96</XPos>
-            <YPos>448</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles327</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>1</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>96.000000</XPos>
-            <YPos>416.000000</YPos>
+            <YPos>96.000000</YPos>
             <Width>32</Width>
             <Height>32</Height>
         </DstRect>
         <Rotation>-90.000000</Rotation>
-        <Collider>
+        <CollisionBox>
             <XPos>96</XPos>
-            <YPos>416</YPos>
+            <YPos>96</YPos>
             <Width>32</Width>
             <Height>32</Height>
-        </Collider>
+        </CollisionBox>
     </Object>
     <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
         <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles4</ObjectID>
+        <ObjectID>background-tiles325</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>2</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>96.000000</XPos>
+            <YPos>128.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>-90.000000</Rotation>
+        <CollisionBox>
+            <XPos>96</XPos>
+            <YPos>128</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles307</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>6</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>96.000000</XPos>
+            <YPos>160.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>-90.000000</Rotation>
+        <CollisionBox>
+            <XPos>96</XPos>
+            <YPos>160</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles2</ObjectID>
         <SrcRect>
             <Row>23</Row>
             <Column>2</Column>
@@ -9245,17 +8443,11 @@
         </SrcRect>
         <DstRect>
             <XPos>96.000000</XPos>
-            <YPos>384.000000</YPos>
+            <YPos>192.000000</YPos>
             <Width>32</Width>
             <Height>32</Height>
         </DstRect>
         <Rotation>-90.000000</Rotation>
-        <Collider>
-            <XPos>96</XPos>
-            <YPos>384</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
         <Animation>
             <TextureID>background-tiles</TextureID>
             <Row>23</Row>
@@ -9265,77 +8457,15 @@
             <FrameCount>4</FrameCount>
             <Speed>100</Speed>
         </Animation>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles308</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>6</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>96.000000</XPos>
-            <YPos>352.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>-90.000000</Rotation>
-        <Collider>
+        <CollisionBox>
             <XPos>96</XPos>
-            <YPos>352</YPos>
+            <YPos>192</YPos>
             <Width>32</Width>
             <Height>32</Height>
-        </Collider>
+        </CollisionBox>
     </Object>
     <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles314</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>2</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>96.000000</XPos>
-            <YPos>320.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>-90.000000</Rotation>
-        <Collider>
-            <XPos>96</XPos>
-            <YPos>320</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
-        <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles326</ObjectID>
-        <SrcRect>
-            <Row>13</Row>
-            <Column>2</Column>
-            <Width>16</Width>
-            <Height>16</Height>
-        </SrcRect>
-        <DstRect>
-            <XPos>96.000000</XPos>
-            <YPos>288.000000</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </DstRect>
-        <Rotation>-90.000000</Rotation>
-        <Collider>
-            <XPos>96</XPos>
-            <YPos>288</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
-    </Object>
-    <Object>
+        <Types/>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles313</ObjectID>
         <SrcRect>
@@ -9353,8 +8483,89 @@
         <Rotation>-90.000000</Rotation>
     </Object>
     <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
         <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles2</ObjectID>
+        <ObjectID>background-tiles326</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>2</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>96.000000</XPos>
+            <YPos>288.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>-90.000000</Rotation>
+        <CollisionBox>
+            <XPos>96</XPos>
+            <YPos>288</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles314</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>2</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>96.000000</XPos>
+            <YPos>320.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>-90.000000</Rotation>
+        <CollisionBox>
+            <XPos>96</XPos>
+            <YPos>320</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles308</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>6</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>96.000000</XPos>
+            <YPos>352.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>-90.000000</Rotation>
+        <CollisionBox>
+            <XPos>96</XPos>
+            <YPos>352</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles4</ObjectID>
         <SrcRect>
             <Row>23</Row>
             <Column>2</Column>
@@ -9363,17 +8574,11 @@
         </SrcRect>
         <DstRect>
             <XPos>96.000000</XPos>
-            <YPos>192.000000</YPos>
+            <YPos>384.000000</YPos>
             <Width>32</Width>
             <Height>32</Height>
         </DstRect>
         <Rotation>-90.000000</Rotation>
-        <Collider>
-            <XPos>96</XPos>
-            <YPos>192</YPos>
-            <Width>32</Width>
-            <Height>32</Height>
-        </Collider>
         <Animation>
             <TextureID>background-tiles</TextureID>
             <Row>23</Row>
@@ -9383,33 +8588,895 @@
             <FrameCount>4</FrameCount>
             <Speed>100</Speed>
         </Animation>
+        <CollisionBox>
+            <XPos>96</XPos>
+            <YPos>384</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
     </Object>
     <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
         <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles307</ObjectID>
+        <ObjectID>background-tiles327</ObjectID>
         <SrcRect>
             <Row>13</Row>
+            <Column>1</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>96.000000</XPos>
+            <YPos>416.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>-90.000000</Rotation>
+        <CollisionBox>
+            <XPos>96</XPos>
+            <YPos>416</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles345</ObjectID>
+        <SrcRect>
+            <Row>2</Row>
+            <Column>5</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>96.000000</XPos>
+            <YPos>448.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>0.000000</Rotation>
+        <CollisionBox>
+            <XPos>96</XPos>
+            <YPos>448</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles328</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>1</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>128.000000</XPos>
+            <YPos>448.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>-180.000000</Rotation>
+        <CollisionBox>
+            <XPos>128</XPos>
+            <YPos>448</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles306</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>3</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>160.000000</XPos>
+            <YPos>448.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>-180.000000</Rotation>
+        <CollisionBox>
+            <XPos>160</XPos>
+            <YPos>448</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles329</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>1</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>192.000000</XPos>
+            <YPos>448.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>-180.000000</Rotation>
+        <CollisionBox>
+            <XPos>192</XPos>
+            <YPos>448</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles330</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>1</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>224.000000</XPos>
+            <YPos>448.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>-180.000000</Rotation>
+        <CollisionBox>
+            <XPos>224</XPos>
+            <YPos>448</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles304</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>3</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>256.000000</XPos>
+            <YPos>448.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>-180.000000</Rotation>
+        <CollisionBox>
+            <XPos>256</XPos>
+            <YPos>448</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles331</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>1</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>288.000000</XPos>
+            <YPos>448.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>-180.000000</Rotation>
+        <CollisionBox>
+            <XPos>288</XPos>
+            <YPos>448</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles332</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>1</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>320.000000</XPos>
+            <YPos>448.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>-180.000000</Rotation>
+        <CollisionBox>
+            <XPos>320</XPos>
+            <YPos>448</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles333</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>1</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>352.000000</XPos>
+            <YPos>448.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>-180.000000</Rotation>
+        <CollisionBox>
+            <XPos>352</XPos>
+            <YPos>448</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles305</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>3</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>384.000000</XPos>
+            <YPos>448.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>-180.000000</Rotation>
+        <CollisionBox>
+            <XPos>384</XPos>
+            <YPos>448</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles334</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>1</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>416.000000</XPos>
+            <YPos>448.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>-180.000000</Rotation>
+        <CollisionBox>
+            <XPos>416</XPos>
+            <YPos>448</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles335</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>1</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>448.000000</XPos>
+            <YPos>448.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>-180.000000</Rotation>
+        <CollisionBox>
+            <XPos>448</XPos>
+            <YPos>448</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles336</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>1</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>512.000000</XPos>
+            <YPos>448.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>180.000000</Rotation>
+        <CollisionBox>
+            <XPos>512</XPos>
+            <YPos>448</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles337</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>1</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>544.000000</XPos>
+            <YPos>448.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>180.000000</Rotation>
+        <CollisionBox>
+            <XPos>544</XPos>
+            <YPos>448</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles338</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>1</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>576.000000</XPos>
+            <YPos>448.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>180.000000</Rotation>
+        <CollisionBox>
+            <XPos>576</XPos>
+            <YPos>448</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles339</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>1</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>608.000000</XPos>
+            <YPos>448.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>180.000000</Rotation>
+        <CollisionBox>
+            <XPos>608</XPos>
+            <YPos>448</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles340</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>1</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>640.000000</XPos>
+            <YPos>448.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>180.000000</Rotation>
+        <CollisionBox>
+            <XPos>640</XPos>
+            <YPos>448</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles318</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>2</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>672.000000</XPos>
+            <YPos>448.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>180.000000</Rotation>
+        <CollisionBox>
+            <XPos>672</XPos>
+            <YPos>448</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles317</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>2</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>704.000000</XPos>
+            <YPos>448.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>180.000000</Rotation>
+        <CollisionBox>
+            <XPos>704</XPos>
+            <YPos>448</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles341</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>1</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>736.000000</XPos>
+            <YPos>448.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>180.000000</Rotation>
+        <CollisionBox>
+            <XPos>736</XPos>
+            <YPos>448</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles303</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>3</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>768.000000</XPos>
+            <YPos>448.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>180.000000</Rotation>
+        <CollisionBox>
+            <XPos>768</XPos>
+            <YPos>448</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles342</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>1</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>800.000000</XPos>
+            <YPos>448.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>180.000000</Rotation>
+        <CollisionBox>
+            <XPos>800</XPos>
+            <YPos>448</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles343</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>1</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>832.000000</XPos>
+            <YPos>448.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>180.000000</Rotation>
+        <CollisionBox>
+            <XPos>832</XPos>
+            <YPos>448</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles344</ObjectID>
+        <SrcRect>
+            <Row>2</Row>
             <Column>6</Column>
             <Width>16</Width>
             <Height>16</Height>
         </SrcRect>
         <DstRect>
-            <XPos>96.000000</XPos>
+            <XPos>864.000000</XPos>
+            <YPos>448.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>0.000000</Rotation>
+        <CollisionBox>
+            <XPos>864</XPos>
+            <YPos>448</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles321</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>2</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>864.000000</XPos>
+            <YPos>416.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>90.000000</Rotation>
+        <CollisionBox>
+            <XPos>864</XPos>
+            <YPos>416</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles5</ObjectID>
+        <SrcRect>
+            <Row>23</Row>
+            <Column>2</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>864.000000</XPos>
+            <YPos>384.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>90.000000</Rotation>
+        <Animation>
+            <TextureID>background-tiles</TextureID>
+            <Row>23</Row>
+            <Col>2</Col>
+            <Width>16</Width>
+            <Height>16</Height>
+            <FrameCount>4</FrameCount>
+            <Speed>100</Speed>
+        </Animation>
+        <CollisionBox>
+            <XPos>864</XPos>
+            <YPos>384</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles320</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>2</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>864.000000</XPos>
+            <YPos>352.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>90.000000</Rotation>
+        <CollisionBox>
+            <XPos>864</XPos>
+            <YPos>352</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles309</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>5</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>864.000000</XPos>
+            <YPos>320.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>90.000000</Rotation>
+        <CollisionBox>
+            <XPos>864</XPos>
+            <YPos>320</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles322</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>2</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>864.000000</XPos>
+            <YPos>288.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>90.000000</Rotation>
+        <CollisionBox>
+            <XPos>864</XPos>
+            <YPos>288</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles584</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>2</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>864.000000</XPos>
+            <YPos>224.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>90.000000</Rotation>
+        <CollisionBox>
+            <XPos>864</XPos>
+            <YPos>224</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles3</ObjectID>
+        <SrcRect>
+            <Row>23</Row>
+            <Column>2</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>864.000000</XPos>
+            <YPos>192.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>90.000000</Rotation>
+        <Animation>
+            <TextureID>background-tiles</TextureID>
+            <Row>23</Row>
+            <Col>2</Col>
+            <Width>16</Width>
+            <Height>16</Height>
+            <FrameCount>4</FrameCount>
+            <Speed>100</Speed>
+        </Animation>
+        <CollisionBox>
+            <XPos>864</XPos>
+            <YPos>192</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles302</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>3</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>864.000000</XPos>
             <YPos>160.000000</YPos>
             <Width>32</Width>
             <Height>32</Height>
         </DstRect>
-        <Rotation>-90.000000</Rotation>
-        <Collider>
-            <XPos>96</XPos>
+        <Rotation>90.000000</Rotation>
+        <CollisionBox>
+            <XPos>864</XPos>
             <YPos>160</YPos>
             <Width>32</Width>
             <Height>32</Height>
-        </Collider>
+        </CollisionBox>
     </Object>
     <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
         <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles325</ObjectID>
+        <ObjectID>background-tiles324</ObjectID>
         <SrcRect>
             <Row>13</Row>
             <Column>2</Column>
@@ -9417,22 +9484,25 @@
             <Height>16</Height>
         </SrcRect>
         <DstRect>
-            <XPos>96.000000</XPos>
+            <XPos>864.000000</XPos>
             <YPos>128.000000</YPos>
             <Width>32</Width>
             <Height>32</Height>
         </DstRect>
-        <Rotation>-90.000000</Rotation>
-        <Collider>
-            <XPos>96</XPos>
+        <Rotation>90.000000</Rotation>
+        <CollisionBox>
+            <XPos>864</XPos>
             <YPos>128</YPos>
             <Width>32</Width>
             <Height>32</Height>
-        </Collider>
+        </CollisionBox>
     </Object>
     <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
         <TextureID>background-tiles</TextureID>
-        <ObjectID>background-tiles311</ObjectID>
+        <ObjectID>background-tiles301</ObjectID>
         <SrcRect>
             <Row>13</Row>
             <Column>2</Column>
@@ -9440,20 +9510,613 @@
             <Height>16</Height>
         </SrcRect>
         <DstRect>
-            <XPos>96.000000</XPos>
+            <XPos>864.000000</XPos>
             <YPos>96.000000</YPos>
             <Width>32</Width>
             <Height>32</Height>
         </DstRect>
-        <Rotation>-90.000000</Rotation>
-        <Collider>
-            <XPos>96</XPos>
+        <Rotation>90.000000</Rotation>
+        <CollisionBox>
+            <XPos>864</XPos>
             <YPos>96</YPos>
             <Width>32</Width>
             <Height>32</Height>
-        </Collider>
+        </CollisionBox>
     </Object>
     <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles347</ObjectID>
+        <SrcRect>
+            <Row>1</Row>
+            <Column>6</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>864.000000</XPos>
+            <YPos>64.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>0.000000</Rotation>
+        <CollisionBox>
+            <XPos>864</XPos>
+            <YPos>64</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles300</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>1</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>832.000000</XPos>
+            <YPos>64.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>0.000000</Rotation>
+        <CollisionBox>
+            <XPos>832</XPos>
+            <YPos>64</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles299</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>1</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>800.000000</XPos>
+            <YPos>64.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>0.000000</Rotation>
+        <CollisionBox>
+            <XPos>800</XPos>
+            <YPos>64</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles298</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>1</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>768.000000</XPos>
+            <YPos>64.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>0.000000</Rotation>
+        <CollisionBox>
+            <XPos>768</XPos>
+            <YPos>64</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles580</ObjectID>
+        <SrcRect>
+            <Row>20</Row>
+            <Column>4</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>736.000000</XPos>
+            <YPos>64.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>0.000000</Rotation>
+        <CollisionBox>
+            <XPos>736</XPos>
+            <YPos>64</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles296</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>1</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>704.000000</XPos>
+            <YPos>64.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>0.000000</Rotation>
+        <CollisionBox>
+            <XPos>704</XPos>
+            <YPos>64</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles295</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>1</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>672.000000</XPos>
+            <YPos>64.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>0.000000</Rotation>
+        <CollisionBox>
+            <XPos>672</XPos>
+            <YPos>64</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles1</ObjectID>
+        <SrcRect>
+            <Row>23</Row>
+            <Column>2</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>640.000000</XPos>
+            <YPos>64.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>0.000000</Rotation>
+        <Animation>
+            <TextureID>background-tiles</TextureID>
+            <Row>23</Row>
+            <Col>2</Col>
+            <Width>16</Width>
+            <Height>16</Height>
+            <FrameCount>4</FrameCount>
+            <Speed>100</Speed>
+        </Animation>
+        <CollisionBox>
+            <XPos>640</XPos>
+            <YPos>64</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles293</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>1</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>608.000000</XPos>
+            <YPos>64.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>0.000000</Rotation>
+        <CollisionBox>
+            <XPos>608</XPos>
+            <YPos>64</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles292</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>1</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>576.000000</XPos>
+            <YPos>64.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>0.000000</Rotation>
+        <CollisionBox>
+            <XPos>576</XPos>
+            <YPos>64</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles291</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>1</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>544.000000</XPos>
+            <YPos>64.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>0.000000</Rotation>
+        <CollisionBox>
+            <XPos>544</XPos>
+            <YPos>64</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles290</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>1</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>512.000000</XPos>
+            <YPos>64.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>0.000000</Rotation>
+        <CollisionBox>
+            <XPos>512</XPos>
+            <YPos>64</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles289</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>1</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>448.000000</XPos>
+            <YPos>64.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>0.000000</Rotation>
+        <CollisionBox>
+            <XPos>448</XPos>
+            <YPos>64</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles287</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>1</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>384.000000</XPos>
+            <YPos>64.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>0.000000</Rotation>
+        <CollisionBox>
+            <XPos>384</XPos>
+            <YPos>64</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles286</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>1</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>352.000000</XPos>
+            <YPos>64.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>0.000000</Rotation>
+        <CollisionBox>
+            <XPos>352</XPos>
+            <YPos>64</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles285</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>1</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>320.000000</XPos>
+            <YPos>64.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>0.000000</Rotation>
+        <CollisionBox>
+            <XPos>320</XPos>
+            <YPos>64</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles0</ObjectID>
+        <SrcRect>
+            <Row>23</Row>
+            <Column>2</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>288.000000</XPos>
+            <YPos>64.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>0.000000</Rotation>
+        <Animation>
+            <TextureID>background-tiles</TextureID>
+            <Row>23</Row>
+            <Col>2</Col>
+            <Width>16</Width>
+            <Height>16</Height>
+            <FrameCount>4</FrameCount>
+            <Speed>100</Speed>
+        </Animation>
+        <CollisionBox>
+            <XPos>288</XPos>
+            <YPos>64</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles283</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>1</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>256.000000</XPos>
+            <YPos>64.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>0.000000</Rotation>
+        <CollisionBox>
+            <XPos>256</XPos>
+            <YPos>64</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles282</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>1</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>224.000000</XPos>
+            <YPos>64.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>0.000000</Rotation>
+        <CollisionBox>
+            <XPos>224</XPos>
+            <YPos>64</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles583</ObjectID>
+        <SrcRect>
+            <Row>20</Row>
+            <Column>2</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>192.000000</XPos>
+            <YPos>64.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>0.000000</Rotation>
+        <CollisionBox>
+            <XPos>192</XPos>
+            <YPos>64</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles280</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>1</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>160.000000</XPos>
+            <YPos>64.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>0.000000</Rotation>
+        <CollisionBox>
+            <XPos>160</XPos>
+            <YPos>64</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
+        <TextureID>background-tiles</TextureID>
+        <ObjectID>background-tiles279</ObjectID>
+        <SrcRect>
+            <Row>13</Row>
+            <Column>1</Column>
+            <Width>16</Width>
+            <Height>16</Height>
+        </SrcRect>
+        <DstRect>
+            <XPos>128.000000</XPos>
+            <YPos>64.000000</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </DstRect>
+        <Rotation>0.000000</Rotation>
+        <CollisionBox>
+            <XPos>128</XPos>
+            <YPos>64</YPos>
+            <Width>32</Width>
+            <Height>32</Height>
+        </CollisionBox>
+    </Object>
+    <Object>
+        <Types>
+            <Collider>True</Collider>
+        </Types>
         <TextureID>background-tiles</TextureID>
         <ObjectID>background-tiles346</ObjectID>
         <SrcRect>
@@ -9469,11 +10132,11 @@
             <Height>32</Height>
         </DstRect>
         <Rotation>0.000000</Rotation>
-        <Collider>
+        <CollisionBox>
             <XPos>96</XPos>
             <YPos>64</YPos>
             <Width>32</Width>
             <Height>32</Height>
-        </Collider>
+        </CollisionBox>
     </Object>
 </Root>

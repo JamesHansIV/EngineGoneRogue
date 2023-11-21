@@ -15,6 +15,7 @@ class Collider : public GameObject{
         }
 
         Collider(Collider* rhs);
+        Collider(GameObject* rhs);
 
         void UnCollide(Collider* collidee);
         virtual void OnCollide(Collider* collider) {}
