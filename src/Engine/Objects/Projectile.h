@@ -19,8 +19,7 @@ class Projectile: public Collider{
 
         virtual void OnCollide(Collider* collidee) override;
 
-        virtual ObjectType GetObjectType() override { return ObjectType::kProjectile; }
-        virtual ObjectCategory GetObjectCategory() override { return ObjectCategory::Projectile; }
+        virtual ObjectType GetObjectType() override { return ObjectType::Projectile; }
     private:
         bool m_PlayerOwned;
         float m_Speed;

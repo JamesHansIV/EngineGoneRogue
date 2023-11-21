@@ -11,7 +11,7 @@ class RangedWeapon : public Weapon {
 
         void UpdateProjectiles(float dt);
 
-        virtual ObjectType GetObjectType() override { return ObjectType::kRangedWeapon; }
+        virtual ObjectType GetObjectType() override { return ObjectType::RangedWeapon; }
     private:
         std::vector<Projectile*> m_Projectiles;
         bool m_auto_fire_enabled = false;

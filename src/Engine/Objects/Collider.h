@@ -8,7 +8,8 @@
 
 class Collider : public GameObject{
     public:
-        Collider(Properties& props, bool immovable = false) : GameObject(props), m_Immovable(immovable) {
+        Collider(Properties& props, bool immovable = false)
+        : GameObject(props), m_Immovable(immovable) {
             m_RigidBody = new RigidBody(GetX(), GetY());
             m_CollisionBox.Set(GetX(), GetY(), GetWidth(), GetHeight());
         }
@@ -23,8 +24,7 @@ class Collider : public GameObject{
 
         bool IsImmovable() { return m_Immovable;}
 
-        virtual ObjectType GetObjectType() override { return ObjectType::kCollider; }
-        virtual ObjectCategory GetObjectCategory() override { return ObjectCategory::Collider; }
+        virtual ObjectType GetObjectType() override { return ObjectType::Collider; }
     protected:
         RigidBody* m_RigidBody;
         CollisionBox m_CollisionBox;

@@ -24,7 +24,7 @@ class Player: public Character{
         virtual void OnCollide(Collider* collidee) override;
 
         bool IsMarkedForDeletion(){return m_MarkedForDeletion;}
-        virtual ObjectType GetObjectType() override { return ObjectType::kPlayer; }
+        virtual ObjectType GetObjectType() override { return ObjectType::Player; }
     private:
         std::vector<Weapon*> m_Weapons;
         Weapon* m_CurrentWeapon;

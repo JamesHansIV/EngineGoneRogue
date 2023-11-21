@@ -11,5 +11,5 @@ class MeleeWeapon : public Weapon {
 
         virtual void OnCollide(Collider* collidee) override;
 
-        virtual ObjectType GetObjectType() override { return ObjectType::kMeleeWeapon; }
+        virtual ObjectType GetObjectType() override { return ObjectType::MeleeWeapon; }
 };

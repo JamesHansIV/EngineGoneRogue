@@ -15,19 +15,19 @@
 #include "Engine/utils/utils.h"
 
 enum class ObjectType {
-    kNone = 0,
-    kBase, kCollider,
-    kProjectile, kPlayer, kEnemy,
-    kWeapon, kRangedWeapon, kMeleeWeapon
+    None = 0,
+    Base, Collider,
+    Projectile, Player, Enemy,
+    Weapon, RangedWeapon, MeleeWeapon
 };
 
-enum class ObjectCategory {
-    None = 0,
-    Collider,
-    Projectile,
-    Character,
-    Weapon
-};
+// enum ObjectCategory {
+//     kNone = 0,
+//     kCollider = 1 << 0,
+//     kProjectile = 1 << 1,
+//     kCharacter = 1 << 2,
+//     kWeapon = 1 << 3
+// };
 
 struct Properties{
     public:
@@ -72,8 +72,7 @@ class GameObject : public IObject {
         virtual void Clean() override {};
         virtual void Update(float dt) override;
 
-        virtual ObjectType GetObjectType() { return ObjectType::kBase; }
-        virtual ObjectCategory GetObjectCategory() { return ObjectCategory::None; }
+        virtual ObjectType GetObjectType() { return ObjectType::Base; }
 
         TilePos& GetTilePos() { return m_TilePos; }
         Rect& GetDstRect() { return m_DstRect; }

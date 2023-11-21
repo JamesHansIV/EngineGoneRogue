@@ -22,7 +22,7 @@ struct ObjectInfo {
     TilePos Tile;
     Rect DstRect;
     float Rotation = 0.0F;
-    ObjectType type = ObjectType::kBase;
+    ObjectType type = ObjectType::Base;
     SDL_Rect CollisionBox;
     AnimationInfo Animation;
     bool SnapToGrid = true;

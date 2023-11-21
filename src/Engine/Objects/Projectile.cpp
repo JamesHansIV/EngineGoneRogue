@@ -43,24 +43,24 @@ void Projectile::OnCollide(Collider* collidee) {
     if (this == collidee) return;
 
     switch(collidee->GetObjectType()) {
-        case ObjectType::kPlayer:
+        case ObjectType::Player:
             if (!m_PlayerOwned) {
                 m_MarkedForDeletion = true;
                 dynamic_cast<Character*>(collidee)->GetHealth()->SetDamage(10);
             }
             break;
-        case ObjectType::kEnemy:
+        case ObjectType::Enemy:
             if (m_PlayerOwned) {
                 m_MarkedForDeletion = true;
                 dynamic_cast<Character*>(collidee)->GetHealth()->SetDamage(10);
             }
             break;
-        case ObjectType::kMeleeWeapon:
+        case ObjectType::MeleeWeapon:
             break;
-        case ObjectType::kProjectile:
+        case ObjectType::Projectile:
             SDL_Log("%s object collided with projectile", GetID().c_str());
             break;
-        case ObjectType::kCollider:
+        case ObjectType::Collider:
             m_MarkedForDeletion = true;
             break;
         default:

@@ -44,6 +44,7 @@ void Enemy::Draw(){
 
 void Enemy::Update(float dt){
     MoveTowardsTarget(dt);
+    m_RigidBody->Update(dt);
 
     SetX(m_RigidBody->Position().X);
     SetY(m_RigidBody->Position().Y);
@@ -81,7 +82,6 @@ void Enemy::MoveTowardsTarget(float dt) {
             directionY /= directionLength;
         }
 
-        m_RigidBody->Update(dt);
         m_RigidBody->SetVelocity(Vector2D(directionX, directionY));
     }
 }
@@ -89,21 +89,20 @@ void Enemy::MoveTowardsTarget(float dt) {
 void Enemy::OnCollide(Collider* collidee) {
     if (this == collidee) return;
     
-
     switch(collidee->GetObjectType()) {
-        case ObjectType::kPlayer:
+        case ObjectType::Player:
             UnCollide(collidee);
             dynamic_cast<Player*>(collidee)->GetHealth()->SetDamage(1);
             break;
-        case ObjectType::kEnemy:
+        case ObjectType::Enemy:
             UnCollide(collidee);
             break;
-        case ObjectType::kMeleeWeapon:
+        case ObjectType::MeleeWeapon:
             UnCollide(collidee);
             break;
-        case ObjectType::kProjectile:
+        case ObjectType::Projectile:
             break;
-        case ObjectType::kCollider:
+        case ObjectType::Collider:
             UnCollide(collidee);
             break;
         default:
@@ -116,4 +115,3 @@ void Enemy::OnCollide(Collider* collidee) {
 void Enemy::Clean(){
     delete m_Animation;
 }
-

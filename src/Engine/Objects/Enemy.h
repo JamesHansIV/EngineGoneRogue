@@ -19,7 +19,7 @@ class Enemy: public Character{
         void SetTarget(Collider* target) {m_Target = target;}
 
         virtual void OnCollide(Collider* collidee) override;
-        virtual ObjectType GetObjectType() override { return ObjectType::kEnemy; }
+        virtual ObjectType GetObjectType() override { return ObjectType::Enemy; }
     private:
         Animation* m_Animation;
         int m_PerceptionWidth;

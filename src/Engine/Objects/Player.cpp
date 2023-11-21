@@ -34,7 +34,6 @@ Player::~Player() {
     }
 }
 
-
 void Player::Draw(){
     m_Animation->Draw({GetX(), GetY(), m_DstRect.w, m_DstRect.h});
     m_Health->Draw(GetX(), GetY(), GetWidth());
@@ -132,19 +131,19 @@ void Player::OnCollide(Collider* collidee) {
     if (this == collidee) return;
 
     switch(collidee->GetObjectType()) {
-        case ObjectType::kPlayer:
+        case ObjectType::Player:
             SDL_Log("%s object collided with player", GetID().c_str());
             break;
-        case ObjectType::kEnemy:
+        case ObjectType::Enemy:
             UnCollide(collidee);
             break;
-        case ObjectType::kMeleeWeapon:
+        case ObjectType::MeleeWeapon:
             UnCollide(collidee);
             break;
-        case ObjectType::kProjectile:
+        case ObjectType::Projectile:
             SDL_Log("%s object collided with projectile", GetID().c_str());
             break;
-        case ObjectType::kCollider:
+        case ObjectType::Collider:
             UnCollide(collidee);
             break;
         default:

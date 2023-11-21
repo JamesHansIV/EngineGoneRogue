@@ -15,7 +15,7 @@ class Character: public Collider {
 
         Health* GetHealth() { return m_Health; }
         void SetHealth(Health* health) { m_Health = health; }
-        virtual ObjectCategory GetObjectCategory() override { return ObjectCategory::Character; }
+
     protected:
         Health* m_Health;
         std::string m_Name;

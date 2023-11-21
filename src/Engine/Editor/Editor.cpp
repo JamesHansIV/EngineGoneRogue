@@ -59,6 +59,7 @@ x create/load/save rooms
 - add file browser
 x change topmost tree nodes to tabs
 x delete objects
+- Add tool box containing all the editor tools
 
 
 // Just spitting ideas, don't have to do all of this
@@ -339,13 +340,18 @@ void Editor::SaveRoom(const char* roomName) {
     for (const auto& layer : m_Layers) {
         for (auto *obj : layer) {
             curr_xml_object = doc.NewElement("Object");
+            WriteBaseObject(doc, curr_xml_object, obj);
+
+            if (Collider* collider = dynamic_cast<Collider*>(obj)) {
+                WriteCollider(doc, curr_xml_object, collider);
+            }
             switch(obj->GetObjectType()) {
-                case ObjectType::kBase:
-                    WriteBaseObject(doc, curr_xml_object, obj);
+                
+                case ObjectType::Projectile:
                     break;
-                case ObjectType::kProjectile:
+                case ObjectType::Player:
                     break;
-                case ObjectType::kPlayer:
+                case ObjectType::Base:
                     break;
                 default:
                     SDL_LogError(0, "Invalid object type");
@@ -746,13 +752,13 @@ void Editor::AddObject(float x, float y) {
     );
 
     switch (m_ObjectInfo.type) {
-        case ObjectType::kBase:
+        case ObjectType::Base:
             new_object = new GameObject(props);
             break;
-        case ObjectType::kPlayer:
+        case ObjectType::Player:
             new_object = new Player(props);
             break;
-        case ObjectType::kEnemy:
+        case ObjectType::Enemy:
             //Make this work with projectiles
             new_object = new GameObject(props);
             break;
@@ -879,12 +885,12 @@ void Editor::ShowCreateObject() {
 
             ObjectType const type = ShowSelectObjectType();
             switch(type) {
-                case ObjectType::kBase:
+                case ObjectType::Base:
                     break;
-                case ObjectType::kPlayer:
+                case ObjectType::Player:
                     ShowBuildPlayer();
                     break;
-                case ObjectType::kEnemy:
+                case ObjectType::Enemy:
                     ShowBuildEnemy();
                     break;
                 default:

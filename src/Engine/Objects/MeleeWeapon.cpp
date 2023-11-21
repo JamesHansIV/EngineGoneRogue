@@ -48,21 +48,21 @@ void MeleeWeapon::OnCollide(Collider* collidee) {
     }
 
     switch(collidee->GetObjectType()) {
-        case ObjectType::kPlayer:
+        case ObjectType::Player:
             if (!GetPlayerOwned()) {
                 dynamic_cast<Character*>(collidee)->GetHealth()->SetDamage(10);
             }
             break;
-        case ObjectType::kEnemy:
+        case ObjectType::Enemy:
             if (GetPlayerOwned()) {
                 dynamic_cast<Character*>(collidee)->GetHealth()->SetDamage(10);
             }
             break;
-        case ObjectType::kMeleeWeapon:
+        case ObjectType::MeleeWeapon:
             break;
-        case ObjectType::kProjectile:
+        case ObjectType::Projectile:
             break;
-        case ObjectType::kCollider:
+        case ObjectType::Collider:
             break;
         default:
             SDL_LogError(0, "Invalid object type");

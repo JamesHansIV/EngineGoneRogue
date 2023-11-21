@@ -144,7 +144,6 @@ void Game::Update(float dt) {
     }
     ColliderHandler::GetInstance()->HandleCollisions();
 
-
     m_tick++;
     if (m_tick % cur_enemy_generation_interval == 0) {
       float generated_x = rand() % 500 + 200;

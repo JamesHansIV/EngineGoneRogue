@@ -2,6 +2,7 @@
 #include "ColliderHandler.h"
 
 Collider::Collider(Collider* rhs) : GameObject(rhs) {
+    //needs testing
     m_RigidBody = new RigidBody(GetX(), GetY());
 
     m_Immovable = rhs->IsImmovable();
