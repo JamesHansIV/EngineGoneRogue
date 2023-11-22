@@ -39,7 +39,7 @@ void Enemy::Draw(){
 
     if (!m_MarkedForDeletion) {
         m_Health->Draw(GetX(), GetY(), GetWidth());
-}
+    }
 }
 
 void Enemy::Update(float dt){

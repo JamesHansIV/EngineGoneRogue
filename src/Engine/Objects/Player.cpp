@@ -51,9 +51,6 @@ void Player::Update(float dt){
     m_Animation->Update();
     m_RigidBody->Update(dt);
 
-    SDL_Log("force: (%f, %f)", m_RigidBody->GetForce().X, m_RigidBody->GetForce().Y);
-        SDL_Log("friction: (%f, %f)", m_RigidBody->GetFriction().X, m_RigidBody->GetFriction().Y);
-
     SetX(m_RigidBody->Position().X);
     SetY(m_RigidBody->Position().Y);
 
@@ -72,24 +69,6 @@ void Player::Update(float dt){
     //     }
     //     m_able_to_dash++;
     // }
-    // if (InputChecker::IsKeyPressed(SDLK_w)) {
-    //     m_RigidBody.ApplyForceY(-13 * multiplier);
-    // }
-    // if (InputChecker::IsKeyPressed(SDLK_s)) {
-    //     m_RigidBody.ApplyForceY(13* multiplier);
-    // }
-    // if (InputChecker::IsKeyPressed(SDLK_a)) {
-    //     m_RigidBody.ApplyForceX(-13 * multiplier);
-    //     // TODO: Add run animation
-    //     //m_Animation->SetProps("player_run", 1, 8, 100, SDL_FLIP_HORIZONTAL);
-    //     SetFlip(SDL_FLIP_HORIZONTAL);
-    // }
-    // if (InputChecker::IsKeyPressed(SDLK_d)) {
-    //     m_RigidBody.ApplyForceX(13 * multiplier);
-    //     //m_Animation->SetProps("player_run", 1, 8, 100);
-    //     SetFlip(SDL_FLIP_NONE);
-    // }
-    // m_Transform->Translate(m_RigidBody.Position());
 
     m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
     m_Animation->Update();

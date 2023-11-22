@@ -18,7 +18,8 @@ enum class ObjectType {
     None = 0,
     Base, Collider,
     Projectile, Player, Enemy,
-    Weapon, RangedWeapon, MeleeWeapon
+    Weapon, RangedWeapon, MeleeWeapon,
+    Entrance
 };
 
 // enum ObjectCategory {
