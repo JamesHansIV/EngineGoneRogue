@@ -9,13 +9,16 @@ void Animation::Update(){
     // SDL_Log("global frame: %d", Application::Get()->GetFrame());
 
 
+    if (!m_Stopped && m_SpriteFrame + 1 == m_Info.FrameCount && !m_Info.Loop) {
+        StopAnimation();
+        return;
+    }
+
     if (!m_Stopped && Application::Get()->GetFrame() % m_Info.AnimationSpeed == 0) {
-        SDL_Log("current frame: %d", m_SpriteFrame);
-        if (m_SpriteFrame + 1 == m_Info.FrameCount && !m_Info.Loop) {
-            StopAnimation();
-        }
+        // SDL_Log("current frame: %d", m_SpriteFrame);
+        
         m_SpriteFrame = (m_SpriteFrame + 1) % m_Info.FrameCount;
-        SDL_Log("Updating animation frame: %d", m_SpriteFrame);
+        // SDL_Log("Updating animation frame: %d", m_SpriteFrame);
     }
 }
 
@@ -28,7 +31,6 @@ void Animation::Draw(const Rect& dstRect, float angle){
 
 void Animation::StopAnimation() {
     m_Stopped = true;
-    m_SpriteFrame = 0;
 }
 
 void Animation::SelectAnimation(std::string id) {

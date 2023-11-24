@@ -4,6 +4,7 @@
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Objects/RangedWeapon.h"
 #include "Engine/Objects/MeleeWeapon.h"
+#include "Engine/Objects/Entrance.h"
 
 #include "Projectile.h"
 
@@ -113,7 +114,7 @@ void Player::UpdateWeapon(float dt) {
 }
 
 void Player::ChangeAnimation() {
-    SDL_Log("Change animation is being called");
+    // SDL_Log("Change animation is being called");
     if (m_State.HasState(CharacterState::Dead)) {
         m_Animation->SelectAnimation("Dead");
         return;
@@ -126,7 +127,7 @@ void Player::ChangeAnimation() {
     bool movingLeft = !idleX && m_State.HasState(CharacterState::MoveLeft);
     bool movingRight = !idleX && m_State.HasState(CharacterState::MoveRight);
 
-    SDL_Log("up: %d, down: %d, left: %d, right: %d", movingUp, movingDown, movingLeft, movingRight);
+    // SDL_Log("up: %d, down: %d, left: %d, right: %d", movingUp, movingDown, movingLeft, movingRight);
     
     if (movingUp && movingRight) {
         m_Animation->SelectAnimation("move-right-up");
@@ -166,12 +167,17 @@ void Player::OnCollide(Collider* collidee) {
         case ObjectType::Projectile:
             SDL_Log("%s object collided with projectile", GetID().c_str());
             break;
+        case ObjectType::Entrance: {
+            Entrance* entrance = dynamic_cast<Entrance*>(collidee);
+            if (!entrance->GetState().HasState(EntranceState::Open)) {
+                UnCollide(collidee);
+            }
+            break;
+        }
         case ObjectType::Collider:
             UnCollide(collidee);
             break;
         default:
-            SDL_LogError(0, "Invalid object type");
-            assert(false);
             break;
     }
 }
@@ -223,26 +229,17 @@ void Player::OnKeyPressed(SDL_Event& event) {
 }
 
 void Player::OnKeyReleased(SDL_Event& event) {
-    //Need a better way to do this... this does not work if outside forces affect velocity
 
     if (event.key.keysym.sym == SDLK_w) {
-        Vector2D adjust = Vector2D(0, 3);
-        //adjust.Y = m_RigidBody->Velocity().Y != 0 ? adjust.Y : 0;
         m_State.RemoveState(CharacterState::MoveUp);
         ChangeAnimation();
     } else if (event.key.keysym.sym == SDLK_s) {
-        Vector2D adjust = Vector2D(0, -3);
-        //adjust.Y = m_RigidBody->Velocity().Y != 0 ? adjust.Y : 0;
         m_State.RemoveState(CharacterState::MoveDown);
         ChangeAnimation();
     } else if (event.key.keysym.sym == SDLK_a) {
-        Vector2D adjust = Vector2D(3, 0);
-        //adjust.X = m_RigidBody->Velocity().X != 0 ? adjust.X : 0;
         m_State.RemoveState(CharacterState::MoveLeft);
         ChangeAnimation();
     } else if (event.key.keysym.sym == SDLK_d) {
-        Vector2D adjust = Vector2D(-3, 0);
-        //adjust.X = m_RigidBody->Velocity().X != 0 ? adjust.X : 0;
         m_State.RemoveState(CharacterState::MoveRight);
         ChangeAnimation();
     }

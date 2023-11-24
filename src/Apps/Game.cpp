@@ -4,6 +4,7 @@
 #include "Engine/Objects/Enemy.h"
 #include "Engine/Events/EventListener.h"
 #include "Engine/Input/InputChecker.h"
+#include "Engine/Objects/Entrance.h"
 #include <cstdlib>
 
 Player* player = nullptr;
@@ -40,6 +41,9 @@ Game::Game() {
     Renderer::GetInstance()->AddTexture("projectile", "../assets/textures/BulletHell/PURPLE/Weapons/weapons/Firearms/Bullets/spr_bullet3.png");
     Renderer::GetInstance()->AddTexture("melee", "../assets/textures/BulletHell/PURPLE/Weapons/weapons/Melee/spr_sword_03.png");
     Renderer::GetInstance()->AddTexture("gun", "../assets/textures/BulletHell/PURPLE/Weapons/weapons/Firearms/spr_weapon06.png");
+    Renderer::GetInstance()->AddTexture("door-open", "../assets/textures/spritesheets/door2-open.png");
+    Renderer::GetInstance()->AddTexture("door-close", "../assets/textures/spritesheets/door2-close.png");
+
 
     m_Objects = Application::m_Rooms["room1"];
 
@@ -48,6 +52,9 @@ Game::Game() {
             ColliderHandler::GetInstance()->AddCollider(collider);
         }
     }
+
+    Properties props_e("open", {0, 0, 16, 32}, {300, 300, 16, 32}, 0, "entrance");
+    Entrance* entrance = new Entrance(props_e);
 
     Properties props_p("player_move_down", {0, 0, 18, 18}, {0, 0, 30, 30}, 0, "player");
     player = new Player(props_p);
@@ -76,6 +83,7 @@ Game::Game() {
     m_Objects.push_back(enemy4);
     m_Objects.push_back(enemy5);
     m_Objects.push_back(enemy6);
+    m_Objects.push_back(entrance);
     ColliderHandler::GetInstance()->AddCollider(player);
     ColliderHandler::GetInstance()->AddCollider(enemy1);
     ColliderHandler::GetInstance()->AddCollider(enemy2);
@@ -83,7 +91,7 @@ Game::Game() {
     ColliderHandler::GetInstance()->AddCollider(enemy4);
     ColliderHandler::GetInstance()->AddCollider(enemy5);
     ColliderHandler::GetInstance()->AddCollider(enemy6);
-
+    ColliderHandler::GetInstance()->AddCollider(entrance);
 
     srand(time(nullptr));
 

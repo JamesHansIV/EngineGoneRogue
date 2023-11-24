@@ -3,6 +3,7 @@
 #include "Engine/Input/InputChecker.h"
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Objects/Player.h"
+#include "Engine/Objects/Entrance.h"
 
 #include <math.h>
 
@@ -110,12 +111,18 @@ void Enemy::OnCollide(Collider* collidee) {
             break;
         case ObjectType::Projectile:
             break;
+        case ObjectType::Entrance: {
+            Entrance* entrance = dynamic_cast<Entrance*>(collidee);
+            assert(entrance != nullptr);
+            if (!entrance->GetState().HasState(EntranceState::Open)) {
+                UnCollide(collidee);
+            }
+            break;
+        }
         case ObjectType::Collider:
             UnCollide(collidee);
             break;
         default:
-            SDL_LogError(0, "Invalid object type");
-            assert(false);
             break;
     }
 }
