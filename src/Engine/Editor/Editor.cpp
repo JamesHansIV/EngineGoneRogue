@@ -1,23 +1,22 @@
 #define IMGUI_IMPL_API
 
 #include "Editor.h"
-#include "imgui.h"
 #include "Engine/Renderer/Renderer.h"
 #include "backends/imgui_impl_sdl2.h"
 #include "backends/imgui_impl_sdlrenderer2.h"
+#include "imgui.h"
 
+#include "Engine/Input/InputChecker.h"
+#include "Engine/Objects/Collider.h"
 #include "Engine/Objects/GameObject.h"
 #include "Engine/Objects/Player.h"
 #include "Engine/Objects/Projectile.h"
-#include "Engine/Input/InputChecker.h"
-#include "Engine/Objects/Collider.h"
 
-#include <cstdlib>
 #include <dirent.h>
-#include <memory>
 #include <sys/stat.h>
 #include <tinyxml2.h>
-
+#include <cstdlib>
+#include <memory>
 
 /*
 TODO list
@@ -165,10 +164,14 @@ void DrawGrid() {
 }
 
 bool CheckMouseOver(GameObject* obj) {
-    return ((obj)->GetX() <= InputChecker::GetMouseX() + Renderer::GetInstance()->GetCameraX() &&
-            InputChecker::GetMouseX() + Renderer::GetInstance()->GetCameraX() <= (obj)->GetX() + (obj)->GetWidth() &&
-            (obj)->GetY() <= InputChecker::GetMouseY() + Renderer::GetInstance()->GetCameraY()&&
-            InputChecker::GetMouseY() + Renderer::GetInstance()->GetCameraY() <= (obj)->GetY() + (obj)->GetHeight());
+    return ((obj)->GetX() <= InputChecker::GetMouseX() +
+                                 Renderer::GetInstance()->GetCameraX() &&
+            InputChecker::GetMouseX() + Renderer::GetInstance()->GetCameraX() <=
+                (obj)->GetX() + (obj)->GetWidth() &&
+            (obj)->GetY() <= InputChecker::GetMouseY() +
+                                 Renderer::GetInstance()->GetCameraY() &&
+            InputChecker::GetMouseY() + Renderer::GetInstance()->GetCameraY() <=
+                (obj)->GetY() + (obj)->GetHeight());
 }
 
 void MoveObject(GameObject* obj, int dx, int dy) {
@@ -180,7 +183,7 @@ void MoveObject(GameObject* obj, int dx, int dy) {
 
     next_x = x + dx;
     next_y = y + dy;
-    
+
     obj->SetX(next_x);
     obj->SetY(next_y);
 }
@@ -188,20 +191,19 @@ void MoveObject(GameObject* obj, int dx, int dy) {
 std::vector<GameObject*> CopyObjects(const std::vector<GameObject*>& objects) {
     std::vector<GameObject*> object_copies;
 
-    for (auto *obj: objects) {
+    for (auto* obj : objects) {
         GameObject* new_obj = nullptr;
-        if (Collider* collider = dynamic_cast<Collider*>(obj)) {
+        if (auto* collider = dynamic_cast<Collider*>(obj)) {
             new_obj = new Collider(obj);
         } else {
             new_obj = new GameObject(obj);
-
         }
         object_copies.push_back(new_obj);
     }
     return object_copies;
 }
 
-Editor::Editor()  {
+Editor::Editor() {
     ImGui::CreateContext();
     SDL_Renderer* renderer = Renderer::GetInstance()->GetRenderer();
 
@@ -218,7 +220,7 @@ Editor::Editor()  {
 }
 
 Editor::~Editor() {
-        //TODO: check if cleanup is successful
+    //TODO: check if cleanup is successful
     ImGui_ImplSDLRenderer2_Shutdown();
     ImGui_ImplSDL2_Shutdown();
     ImGui::DestroyContext();
@@ -230,24 +232,29 @@ void Editor::CleanLayers() {
     m_HiddenLayers.clear();
     m_CurrentTexture = nullptr;
     m_CurrentObject = nullptr;
-    for (auto & m_Layer : m_Layers) {
-        for (auto *obj : m_Layer) {
+    for (auto& m_layer : m_Layers) {
+        for (auto* obj : m_layer) {
             delete obj;
         }
     }
     m_Layers.clear();
 }
 
-void WriteCollider(tinyxml2::XMLDocument& doc, tinyxml2::XMLElement* xmlObj, Collider* obj) {
+void WriteCollider(tinyxml2::XMLDocument& doc, tinyxml2::XMLElement* xmlObj,
+                   Collider* obj) {
     tinyxml2::XMLElement* collider = doc.NewElement("CollisionBox");
     tinyxml2::XMLElement* collider_x = doc.NewElement("XPos");
     tinyxml2::XMLElement* collider_y = doc.NewElement("YPos");
     tinyxml2::XMLElement* collider_w = doc.NewElement("Width");
     tinyxml2::XMLElement* collider_h = doc.NewElement("Height");
-    collider_x->SetText(std::to_string(obj->GetCollisionBox().GetRect().x).c_str());
-    collider_y->SetText(std::to_string(obj->GetCollisionBox().GetRect().y).c_str());
-    collider_w->SetText(std::to_string(obj->GetCollisionBox().GetRect().w).c_str());
-    collider_h->SetText(std::to_string(obj->GetCollisionBox().GetRect().h).c_str());
+    collider_x->SetText(
+        std::to_string(obj->GetCollisionBox().GetRect().x).c_str());
+    collider_y->SetText(
+        std::to_string(obj->GetCollisionBox().GetRect().y).c_str());
+    collider_w->SetText(
+        std::to_string(obj->GetCollisionBox().GetRect().w).c_str());
+    collider_h->SetText(
+        std::to_string(obj->GetCollisionBox().GetRect().h).c_str());
 
     collider->InsertEndChild(collider_x);
     collider->InsertEndChild(collider_y);
@@ -257,7 +264,8 @@ void WriteCollider(tinyxml2::XMLDocument& doc, tinyxml2::XMLElement* xmlObj, Col
     xmlObj->InsertEndChild(collider);
 }
 
-void WriteBaseObject(tinyxml2::XMLDocument& doc, tinyxml2::XMLElement* xmlObj, GameObject* obj) {
+void WriteBaseObject(tinyxml2::XMLDocument& doc, tinyxml2::XMLElement* xmlObj,
+                     GameObject* obj) {
     tinyxml2::XMLElement* texture_id = doc.NewElement("TextureID");
     tinyxml2::XMLElement* object_id = doc.NewElement("ObjectID");
     tinyxml2::XMLElement* src_rect = doc.NewElement("SrcRect");
@@ -317,12 +325,18 @@ void WriteBaseObject(tinyxml2::XMLDocument& doc, tinyxml2::XMLElement* xmlObj, G
         tinyxml2::XMLElement* frame_count = doc.NewElement("FrameCount");
         tinyxml2::XMLElement* speed = doc.NewElement("Speed");
         animation_tex_id->SetText(obj->GetAnimation()->GetTextureID().c_str());
-        animation_row->SetText(std::to_string(obj->GetAnimation()->GetSpriteRow()).c_str());
-        animation_col->SetText(std::to_string(obj->GetAnimation()->GetSpriteCol()).c_str());
-        animation_w->SetText(std::to_string(obj->GetAnimation()->GetSpriteWidth()).c_str());
-        animation_h->SetText(std::to_string(obj->GetAnimation()->GetSpriteHeight()).c_str());
-        frame_count->SetText(std::to_string(obj->GetAnimation()->GetFrameCount()).c_str());
-        speed->SetText(std::to_string(obj->GetAnimation()->GetAnimationSpeed()).c_str());
+        animation_row->SetText(
+            std::to_string(obj->GetAnimation()->GetSpriteRow()).c_str());
+        animation_col->SetText(
+            std::to_string(obj->GetAnimation()->GetSpriteCol()).c_str());
+        animation_w->SetText(
+            std::to_string(obj->GetAnimation()->GetSpriteWidth()).c_str());
+        animation_h->SetText(
+            std::to_string(obj->GetAnimation()->GetSpriteHeight()).c_str());
+        frame_count->SetText(
+            std::to_string(obj->GetAnimation()->GetFrameCount()).c_str());
+        speed->SetText(
+            std::to_string(obj->GetAnimation()->GetAnimationSpeed()).c_str());
 
         animation->InsertEndChild(animation_tex_id);
         animation->InsertEndChild(animation_row);
@@ -334,7 +348,6 @@ void WriteBaseObject(tinyxml2::XMLDocument& doc, tinyxml2::XMLElement* xmlObj, G
 
         xmlObj->InsertEndChild(animation);
     }
-
 }
 
 void Editor::SaveRoom(const char* roomName) {
@@ -347,14 +360,14 @@ void Editor::SaveRoom(const char* roomName) {
     tinyxml2::XMLElement* type;
 
     for (const auto& layer : m_Layers) {
-        for (auto *obj : layer) {
+        for (auto* obj : layer) {
             curr_xml_object = doc.NewElement("Object");
             types = doc.NewElement("Types");
             curr_xml_object->InsertEndChild(types);
 
             WriteBaseObject(doc, curr_xml_object, obj);
 
-            if (Collider* collider = dynamic_cast<Collider*>(obj)) {
+            if (auto* collider = dynamic_cast<Collider*>(obj)) {
                 WriteCollider(doc, curr_xml_object, collider);
                 type = doc.NewElement("Collider");
                 type->SetText("True");
@@ -364,8 +377,9 @@ void Editor::SaveRoom(const char* roomName) {
         }
     }
 
-    char file_path[FILEPATH_LEN+1];
-    snprintf(file_path, FILEPATH_LEN, "../assets/projects/%s/rooms/%s.xml", m_ProjectName.c_str(), roomName);
+    char file_path[FILEPATH_LEN + 1];
+    snprintf(file_path, FILEPATH_LEN, "../assets/projects/%s/rooms/%s.xml",
+             m_ProjectName.c_str(), roomName);
     int const success = doc.SaveFile(file_path);
     SDL_Log("Saving room a success: %d", success);
 }
@@ -382,11 +396,12 @@ void Editor::CreateProjectFolder() {
     struct dirent* entry;
     DIR* dp;
 
-    char project_path[FILEPATH_LEN+1];
-    snprintf(project_path, FILEPATH_LEN, "../assets/projects/%s", m_ProjectName.c_str());
+    char project_path[FILEPATH_LEN + 1];
+    snprintf(project_path, FILEPATH_LEN, "../assets/projects/%s",
+             m_ProjectName.c_str());
     dp = opendir(project_path);
     if (dp == nullptr) {
-        char command[FILEPATH_LEN+1];
+        char command[FILEPATH_LEN + 1];
         snprintf(command, FILEPATH_LEN, "mkdir %s", project_path);
         system(command);
     }
@@ -396,16 +411,20 @@ void Editor::CreateProjectFolder() {
 void Editor::SetObjectInfo() {
     auto* tile_map = dynamic_cast<TileMap*>(m_CurrentTexture);
     if (tile_map != nullptr) {
-        m_ObjectInfo.Tile = { 0, 0, tile_map->GetTileSize(), tile_map->GetTileSize() };
-        m_ObjectInfo.DstRect = { 0, 0, TILE_SIZE, TILE_SIZE };
+        m_ObjectInfo.Tile = {0, 0, tile_map->GetTileSize(),
+                             tile_map->GetTileSize()};
+        m_ObjectInfo.DstRect = {0, 0, TILE_SIZE, TILE_SIZE};
     } else {
-        m_ObjectInfo.Tile = { 0, 0, m_CurrentTexture->GetWidth(), m_CurrentTexture->GetHeight() };
-        m_ObjectInfo.DstRect = { 0, 0, m_CurrentTexture->GetWidth(), m_CurrentTexture->GetHeight() };
+        m_ObjectInfo.Tile = {0, 0, m_CurrentTexture->GetWidth(),
+                             m_CurrentTexture->GetHeight()};
+        m_ObjectInfo.DstRect = {0, 0, m_CurrentTexture->GetWidth(),
+                                m_CurrentTexture->GetHeight()};
     }
 }
 
 void Editor::ShowTextureIDs() {
-    std::vector<std::string> const& texture_i_ds = Renderer::GetInstance()->GetTextureIDs();
+    std::vector<std::string> const& texture_i_ds =
+        Renderer::GetInstance()->GetTextureIDs();
     if (texture_i_ds.empty()) {
         ImGui::Text("No loaded textures");
     } else {
@@ -424,7 +443,7 @@ void Editor::ShowTextureIDs() {
 void Editor::AddRoom() {
     std::vector<GameObject*> objects;
     for (const auto& row : m_Layers) {
-        for (auto *obj: row) {
+        for (auto* obj : row) {
             objects.push_back(new GameObject(obj));
         }
     }
@@ -493,14 +512,13 @@ void Editor::ShowFileManager() {
                 SDL_Log("Room: %s", id.c_str());
                 if (strcmp(id.c_str(), "") != 0) {
                     if (ImGui::Button(id.c_str(), ImVec2(100, 30))) {
-                        
+
                         CleanLayers();
-                        
+
                         m_Layers.push_back(CopyObjects(m_Rooms[id]));
                         m_CurrentRoomID = id;
                         ImGui::CloseCurrentPopup();
                     }
-
                 }
             }
             ImGui::EndPopup();
@@ -511,16 +529,18 @@ void Editor::ShowFileManager() {
 }
 
 void Editor::ShowAddCollider() {
-    Collider* collider = dynamic_cast<Collider*>(m_CurrentObject);
+    auto* collider = dynamic_cast<Collider*>(m_CurrentObject);
     if (collider == nullptr && ImGui::TreeNode("Add CollisionBox")) {
-        
+
         ImGui::InputInt("Set collider width", &m_ObjectInfo.CollisionBox.w);
 
         ImGui::InputInt("Set collider height", &m_ObjectInfo.CollisionBox.h);
 
         if (ImGui::Button("Add collider", ImVec2(100, 30))) {
             collider = new Collider(m_CurrentObject);
-            collider->GetCollisionBox().Set(m_CurrentObject->GetX(), m_CurrentObject->GetY(), m_ObjectInfo.CollisionBox.w, m_ObjectInfo.CollisionBox.h);
+            collider->GetCollisionBox().Set(
+                m_CurrentObject->GetX(), m_CurrentObject->GetY(),
+                m_ObjectInfo.CollisionBox.w, m_ObjectInfo.CollisionBox.h);
             DeleteObject(m_CurrentObject);
             m_Layers[m_CurrentLayer].push_back(collider);
             m_CurrentObject = collider;
@@ -530,9 +550,9 @@ void Editor::ShowAddCollider() {
 }
 
 void Editor::ShowAddAnimation() {
-    char animation_label[LABEL_LEN+1];
-    char button_label[LABEL_LEN+1];
-    char status_label[LABEL_LEN+1];
+    char animation_label[LABEL_LEN + 1];
+    char button_label[LABEL_LEN + 1];
+    char status_label[LABEL_LEN + 1];
 
     if (m_CurrentObject->GetAnimation() == nullptr) {
         snprintf(animation_label, LABEL_LEN, "%s idle animation", "Add");
@@ -541,32 +561,32 @@ void Editor::ShowAddAnimation() {
     } else {
         snprintf(animation_label, LABEL_LEN, "%s idle animation", "Change");
         snprintf(button_label, LABEL_LEN, "%s animation", "Change");
-        snprintf(status_label, LABEL_LEN, "Successfully %s animation", "changed");
+        snprintf(status_label, LABEL_LEN, "Successfully %s animation",
+                 "changed");
     }
 
     static int show_status_timer = 0;
 
     if (ImGui::TreeNode(animation_label)) {
-        
+
         ImGui::InputInt("Set sprite row", &m_ObjectInfo.Animation.Tile.row);
         ImGui::InputInt("Set sprite col", &m_ObjectInfo.Animation.Tile.col);
         ImGui::InputInt("Set sprite width", &m_ObjectInfo.Animation.Tile.w);
         ImGui::InputInt("Set sprite height", &m_ObjectInfo.Animation.Tile.h);
 
         ImGui::InputInt("Set frame count", &m_ObjectInfo.Animation.FrameCount);
-        ImGui::InputInt("Set animation speed", &m_ObjectInfo.Animation.AnimationSpeed);
+        ImGui::InputInt("Set animation speed",
+                        &m_ObjectInfo.Animation.AnimationSpeed);
 
         if (ImGui::Button(button_label, ImVec2(100, 30))) {
             if (m_CurrentObject->GetAnimation() == nullptr) {
                 m_CurrentObject->SetAnimation(new Animation());
             }
 
-            m_CurrentObject->GetAnimation()->SetProps({
-                m_CurrentObject->GetTextureID(),
-                m_ObjectInfo.Animation.Tile,
-                m_ObjectInfo.Animation.FrameCount,
-                m_ObjectInfo.Animation.AnimationSpeed
-            });
+            m_CurrentObject->GetAnimation()->SetProps(
+                {m_CurrentObject->GetTextureID(), m_ObjectInfo.Animation.Tile,
+                 m_ObjectInfo.Animation.FrameCount,
+                 m_ObjectInfo.Animation.AnimationSpeed});
             show_status_timer = 300;
         }
         ImGui::TreePop();
@@ -575,17 +595,18 @@ void Editor::ShowAddAnimation() {
         ImGui::Text("%s", status_label);
         show_status_timer--;
     }
-
 }
 
 void Editor::ShowObjectEditor() {
     if (ImGui::BeginTabItem("Object Editor")) {
         if (ImGui::TreeNode("Object list")) {
-            for (auto it = m_Layers[m_CurrentLayer].begin(); it != m_Layers[m_CurrentLayer].end(); it++) {
+            for (auto it = m_Layers[m_CurrentLayer].begin();
+                 it != m_Layers[m_CurrentLayer].end(); it++) {
                 if (ImGui::Button((*it)->GetID().c_str(), ImVec2(100, 30))) {
                     m_CurrentObject = *it;
                     m_Layers[m_CurrentLayer].erase(it);
-                    m_Layers[m_CurrentLayer].insert(m_Layers[m_CurrentLayer].end(), m_CurrentObject);
+                    m_Layers[m_CurrentLayer].insert(
+                        m_Layers[m_CurrentLayer].end(), m_CurrentObject);
                 }
             }
             ImGui::TreePop();
@@ -595,16 +616,16 @@ void Editor::ShowObjectEditor() {
             if (ImGui::Button("Rotate left", ImVec2(100, 30))) {
                 for (const auto& obj : m_SelectedObjects) {
                     obj->GetRotation() -= 90.0F;
-                    obj->SetRotation(static_cast<int>(obj->GetRotation()) % 360);
-
+                    obj->SetRotation(static_cast<int>(obj->GetRotation()) %
+                                     360);
                 }
             }
             ImGui::SameLine();
             if (ImGui::Button("Rotate right", ImVec2(100, 30))) {
                 for (const auto& obj : m_SelectedObjects) {
                     obj->GetRotation() += 90.0F;
-                    obj->SetRotation(static_cast<int>(obj->GetRotation()) % 360);
-
+                    obj->SetRotation(static_cast<int>(obj->GetRotation()) %
+                                     360);
                 }
             }
 
@@ -617,46 +638,56 @@ void Editor::ShowObjectEditor() {
             }
 
         } else if (m_CurrentObject != nullptr) {
-            ImGui::Text("Selected object: %s", m_CurrentObject->GetID().c_str());
+            ImGui::Text("Selected object: %s",
+                        m_CurrentObject->GetID().c_str());
             ImGui::Text("Texture:");
-            Texture* obj_texture = Renderer::GetInstance()->GetTexture(m_CurrentObject->GetTextureID());
+            Texture* obj_texture = Renderer::GetInstance()->GetTexture(
+                m_CurrentObject->GetTextureID());
 
             ImVec2 size;
             ImVec2 uv0;
             ImVec2 uv1;
 
             if (auto* tile_map = dynamic_cast<TileMap*>(obj_texture)) {
-                size = { static_cast<float>(tile_map->GetTileSize()) * 10, static_cast<float>(tile_map->GetTileSize()) * 10 };
-                uv0 = ImVec2(
-                    m_CurrentObject->GetTilePos().col / static_cast<float>(tile_map->GetCols()),
-                    m_CurrentObject->GetTilePos().row / static_cast<float>(tile_map->GetRows())
-                );
-                uv1 = ImVec2(
-                    (m_CurrentObject->GetTilePos().col + 1) / static_cast<float>(tile_map->GetCols()),
-                    (m_CurrentObject->GetTilePos().row + 1) / static_cast<float>(tile_map->GetRows())
-                );
+                size = {static_cast<float>(tile_map->GetTileSize()) * 10,
+                        static_cast<float>(tile_map->GetTileSize()) * 10};
+                uv0 = ImVec2(m_CurrentObject->GetTilePos().col /
+                                 static_cast<float>(tile_map->GetCols()),
+                             m_CurrentObject->GetTilePos().row /
+                                 static_cast<float>(tile_map->GetRows()));
+                uv1 = ImVec2((m_CurrentObject->GetTilePos().col + 1) /
+                                 static_cast<float>(tile_map->GetCols()),
+                             (m_CurrentObject->GetTilePos().row + 1) /
+                                 static_cast<float>(tile_map->GetRows()));
             } else {
-                size = ImVec2(obj_texture->GetWidth(), obj_texture->GetHeight());
-                uv0 = { 0, 0 };
-                uv1 = { 1, 1 };
+                size =
+                    ImVec2(obj_texture->GetWidth(), obj_texture->GetHeight());
+                uv0 = {0, 0};
+                uv1 = {1, 1};
             }
-            
-            ImGui::Image((void*) obj_texture->GetTexture(), size, uv0, uv1);
 
-            ImGui::SliderFloat("X position", &m_CurrentObject->GetX(), 0, LEVEL_WIDTH - m_CurrentObject->GetWidth());
-            ImGui::SliderFloat("Y position", &m_CurrentObject->GetY(), 0, LEVEL_HEIGHT - m_CurrentObject->GetHeight());
+            ImGui::Image((void*)obj_texture->GetTexture(), size, uv0, uv1);
 
-            ImGui::SliderInt("Width", &m_CurrentObject->GetWidth(), 0, LEVEL_WIDTH);
-            ImGui::SliderInt("Height", &m_CurrentObject->GetHeight(), 0, LEVEL_HEIGHT);
+            ImGui::SliderFloat("X position", &m_CurrentObject->GetX(), 0,
+                               LEVEL_WIDTH - m_CurrentObject->GetWidth());
+            ImGui::SliderFloat("Y position", &m_CurrentObject->GetY(), 0,
+                               LEVEL_HEIGHT - m_CurrentObject->GetHeight());
+
+            ImGui::SliderInt("Width", &m_CurrentObject->GetWidth(), 0,
+                             LEVEL_WIDTH);
+            ImGui::SliderInt("Height", &m_CurrentObject->GetHeight(), 0,
+                             LEVEL_HEIGHT);
 
             if (ImGui::Button("Rotate left", ImVec2(100, 30))) {
                 m_CurrentObject->GetRotation() -= 90.0F;
-                m_CurrentObject->GetRotation() = static_cast<int>(m_CurrentObject->GetRotation()) % 360;
+                m_CurrentObject->GetRotation() =
+                    static_cast<int>(m_CurrentObject->GetRotation()) % 360;
             }
             ImGui::SameLine();
             if (ImGui::Button("Rotate right", ImVec2(100, 30))) {
                 m_CurrentObject->GetRotation() += 90.0F;
-                m_CurrentObject->GetRotation() = static_cast<int>(m_CurrentObject->GetRotation()) % 360;
+                m_CurrentObject->GetRotation() =
+                    static_cast<int>(m_CurrentObject->GetRotation()) % 360;
             }
 
             if (ImGui::Button("Delete object", ImVec2(100, 30))) {
@@ -674,10 +705,14 @@ void Editor::ShowObjectEditor() {
             m_ObjectInfo.SnapToGrid = !m_ObjectInfo.SnapToGrid;
         }
 
-        std::string const select_label = m_DrawState.EditMode == EditMode::SELECT ? "Stop Select" : "Begin Select";
+        std::string const select_label =
+            m_DrawState.EditMode == EditMode::SELECT ? "Stop Select"
+                                                     : "Begin Select";
         if (ImGui::Button(select_label.c_str())) {
             m_CurrentObject = nullptr;
-            m_DrawState.EditMode = m_DrawState.EditMode == EditMode::SELECT ? EditMode::NONE : EditMode::SELECT;
+            m_DrawState.EditMode = m_DrawState.EditMode == EditMode::SELECT
+                                       ? EditMode::NONE
+                                       : EditMode::SELECT;
         }
 
         if (ImGui::Button("Deselect")) {
@@ -685,9 +720,13 @@ void Editor::ShowObjectEditor() {
             m_DrawState.EditMode = EditMode::NONE;
         }
 
-        std::string const erase_label = m_DrawState.EditMode == EditMode::ERASE ? "Stop Erase" : "Begin Erase";
+        std::string const erase_label = m_DrawState.EditMode == EditMode::ERASE
+                                            ? "Stop Erase"
+                                            : "Begin Erase";
         if (ImGui::Button(erase_label.c_str())) {
-            m_DrawState.EditMode = m_DrawState.EditMode == EditMode::ERASE ? EditMode::NONE : EditMode::ERASE;
+            m_DrawState.EditMode = m_DrawState.EditMode == EditMode::ERASE
+                                       ? EditMode::NONE
+                                       : EditMode::ERASE;
         }
 
         ImGui::EndTabItem();
@@ -716,10 +755,13 @@ void Editor::ShowLoadTexture() {
         if (strcmp(filepath, "") != 0 && strcmp(texture_id, "") != 0) {
             if (ImGui::Button("Load texture", ImVec2(100, 30))) {
 
-                m_CurrentTexture = (is_tile_map) ?
-                    Renderer::GetInstance()->AddTileMap(texture_id, filepath, tile_size, rows, cols) :
-                    Renderer::GetInstance()->AddTexture(texture_id, filepath);
-                
+                m_CurrentTexture =
+                    (is_tile_map)
+                        ? Renderer::GetInstance()->AddTileMap(
+                              texture_id, filepath, tile_size, rows, cols)
+                        : Renderer::GetInstance()->AddTexture(texture_id,
+                                                              filepath);
+
                 if (m_CurrentTexture == nullptr) {
                     strcpy(invalid_filepath, filepath);
                 } else {
@@ -736,8 +778,9 @@ void Editor::ShowLoadTexture() {
         }
 
         if (strcmp(invalid_filepath, "") != 0) {
-            ImGui::Text("ERROR: failed to load texture from %s", invalid_filepath);
-}
+            ImGui::Text("ERROR: failed to load texture from %s",
+                        invalid_filepath);
+        }
 
         ImGui::EndTabItem();
     }
@@ -752,10 +795,8 @@ void Editor::AddObject(float x, float y) {
     m_ObjectInfo.DstRect.x = x;
     m_ObjectInfo.DstRect.y = y;
 
-    Properties props(
-        m_CurrentTexture->GetID(), m_ObjectInfo.Tile,
-        m_ObjectInfo.DstRect, m_ObjectInfo.Rotation, obj_id
-    );
+    Properties props(m_CurrentTexture->GetID(), m_ObjectInfo.Tile,
+                     m_ObjectInfo.DstRect, m_ObjectInfo.Rotation, obj_id);
 
     switch (m_ObjectInfo.type) {
         case ObjectType::Base:
@@ -806,16 +847,14 @@ void Editor::ShowBuildEnemy() {
 
     ImGui::InputInt("Input perception width", &m_EnemyInfo.PerceptionWidth);
     ImGui::InputInt("Input perception height", &m_EnemyInfo.PerceptionHeight);
-
 }
 
 ObjectType Editor::ShowSelectObjectType() {
-    static int current_index = 0; // Here we store our selection data as an index.
+    static int current_index =
+        0;  // Here we store our selection data as an index.
     const char* preview_value = object_type_strs[current_index];
-    if (ImGui::BeginCombo("Select object type", preview_value, 0))
-    {
-        for (int i = 0; i < IM_ARRAYSIZE(object_type_strs); i++)
-        {
+    if (ImGui::BeginCombo("Select object type", preview_value, 0)) {
+        for (int i = 0; i < IM_ARRAYSIZE(object_type_strs); i++) {
             const bool is_selected = (current_index == i);
             if (ImGui::Selectable(object_type_strs[i], is_selected)) {
                 current_index = i;
@@ -828,8 +867,8 @@ ObjectType Editor::ShowSelectObjectType() {
         }
         ImGui::EndCombo();
     }
-    m_ObjectInfo.type = static_cast<ObjectType>(current_index+1);
-    return static_cast<ObjectType>(current_index+1);
+    m_ObjectInfo.type = static_cast<ObjectType>(current_index + 1);
+    return static_cast<ObjectType>(current_index + 1);
 }
 
 void Editor::ShowTiles(TileMap* tileMap) {
@@ -839,22 +878,26 @@ void Editor::ShowTiles(TileMap* tileMap) {
         for (int j = 0; j < tileMap->GetCols(); j++) {
             if (j != 0) {
                 ImGui::SameLine();
-}
-            
-            ImVec2 const uv0 = ImVec2(j / static_cast<float>(tileMap->GetCols()), i / static_cast<float>(tileMap->GetRows()));
-            ImVec2 const uv1 = ImVec2(
-                (j + 1) / static_cast<float>(tileMap->GetCols()),
-                (i + 1) / static_cast<float>(tileMap->GetRows())
-            );
+            }
+
+            ImVec2 const uv0 =
+                ImVec2(j / static_cast<float>(tileMap->GetCols()),
+                       i / static_cast<float>(tileMap->GetRows()));
+            ImVec2 const uv1 =
+                ImVec2((j + 1) / static_cast<float>(tileMap->GetCols()),
+                       (i + 1) / static_cast<float>(tileMap->GetRows()));
 
             bool const is_active = tileMap->GetActiveButtons()[i][j];
             if (is_active) {
                 ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(23, 30, 57, 255));
-}
-            
-            ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(23, 30, 57, 255));
+            }
 
-            if (ImGui::ImageButton("", (ImTextureID) tileMap->GetTexture(), size, uv0, uv1) || ImGui::IsItemClicked()) {
+            ImGui::PushStyleColor(ImGuiCol_ButtonActive,
+                                  ImVec4(23, 30, 57, 255));
+
+            if (ImGui::ImageButton("", (ImTextureID)tileMap->GetTexture(), size,
+                                   uv0, uv1) ||
+                ImGui::IsItemClicked()) {
                 tileMap->ClearButtons();
                 m_ObjectInfo.Tile.row = i;
                 m_ObjectInfo.Tile.col = j;
@@ -862,7 +905,9 @@ void Editor::ShowTiles(TileMap* tileMap) {
             }
 
             ImGui::PopStyleColor();
-            if (is_active) ImGui::PopStyleColor();
+            if (is_active) {
+                ImGui::PopStyleColor();
+}
         }
     }
 }
@@ -874,9 +919,13 @@ void Editor::ShowCreateObject() {
         if (m_CurrentTexture == nullptr) {
             ImGui::Text("Please select a texture to create an object");
         } else {
-            ImGui::Text("Selected texture: %s", m_CurrentTexture->GetID().c_str());
-            ImGui::Image((void*) m_CurrentTexture->GetTexture(), ImVec2(m_CurrentTexture->GetWidth(), m_CurrentTexture->GetHeight()));
-            ImGui::Text("size = %d x %d", m_CurrentTexture->GetWidth(), m_CurrentTexture->GetHeight());
+            ImGui::Text("Selected texture: %s",
+                        m_CurrentTexture->GetID().c_str());
+            ImGui::Image((void*)m_CurrentTexture->GetTexture(),
+                         ImVec2(m_CurrentTexture->GetWidth(),
+                                m_CurrentTexture->GetHeight()));
+            ImGui::Text("size = %d x %d", m_CurrentTexture->GetWidth(),
+                        m_CurrentTexture->GetHeight());
 
             auto* tile_map = dynamic_cast<TileMap*>(m_CurrentTexture);
             if (tile_map != nullptr) {
@@ -886,11 +935,13 @@ void Editor::ShowCreateObject() {
             }
 
             ImGui::SeparatorText("Select dimensions");
-            ImGui::SliderInt("Select destination width: ", &m_ObjectInfo.DstRect.w, 0, LEVEL_WIDTH);
-            ImGui::SliderInt("Select destination height: ", &m_ObjectInfo.DstRect.h, 0, LEVEL_HEIGHT);
+            ImGui::SliderInt("Select destination width: ",
+                             &m_ObjectInfo.DstRect.w, 0, LEVEL_WIDTH);
+            ImGui::SliderInt("Select destination height: ",
+                             &m_ObjectInfo.DstRect.h, 0, LEVEL_HEIGHT);
 
             ObjectType const type = ShowSelectObjectType();
-            switch(type) {
+            switch (type) {
                 case ObjectType::Base:
                     break;
                 case ObjectType::Player:
@@ -903,10 +954,14 @@ void Editor::ShowCreateObject() {
                     SDL_LogError(0, "Invalid object type");
                     assert(false);
             }
-            std::string const draw_label = m_DrawState.EditMode == EditMode::DRAW ? "Stop Draw" : "Begin Draw";
+            std::string const draw_label =
+                m_DrawState.EditMode == EditMode::DRAW ? "Stop Draw"
+                                                       : "Begin Draw";
 
             if (ImGui::Button(draw_label.c_str())) {
-                m_DrawState.EditMode = m_DrawState.EditMode == EditMode::DRAW ? EditMode::NONE : EditMode::DRAW;
+                m_DrawState.EditMode = m_DrawState.EditMode == EditMode::DRAW
+                                           ? EditMode::NONE
+                                           : EditMode::DRAW;
             }
         }
         ImGui::EndTabItem();
@@ -920,14 +975,14 @@ void Editor::ShowChooseLayer() {
         }
         ImGui::SeparatorText("Select Layer");
         for (int i = 0; i < m_Layers.size(); i++) {
-            char layer_label[LABEL_LEN+1];
+            char layer_label[LABEL_LEN + 1];
             snprintf(layer_label, LABEL_LEN, "Layer %d", i);
             if (ImGui::Selectable(layer_label, m_CurrentLayer == i)) {
                 m_CurrentLayer = i;
                 m_CurrentObject = nullptr;
             }
 
-            char button_label[LABEL_LEN+1];
+            char button_label[LABEL_LEN + 1];
             if (m_HiddenLayers.find(i) == m_HiddenLayers.end()) {
                 snprintf(button_label, LABEL_LEN, "Hide %d", i);
                 if (ImGui::Button(button_label, ImVec2(60, 20))) {
@@ -965,19 +1020,19 @@ void Editor::ShowObjectManager() {
     ImGui::End();
 }
 
-void Editor::Update(float  /*dt*/) {
+void Editor::Update(float /*dt*/) {
     if (InputChecker::IsKeyPressed(SDLK_UP)) {
         Renderer::GetInstance()->MoveCameraY(-10.0F);
-}
+    }
     if (InputChecker::IsKeyPressed(SDLK_DOWN)) {
         Renderer::GetInstance()->MoveCameraY(10.0F);
-}
+    }
     if (InputChecker::IsKeyPressed(SDLK_LEFT)) {
         Renderer::GetInstance()->MoveCameraX(-10.0F);
-}
+    }
     if (InputChecker::IsKeyPressed(SDLK_RIGHT)) {
         Renderer::GetInstance()->MoveCameraX(10.0F);
-}
+    }
 
     ImGui_ImplSDLRenderer2_NewFrame();
     ImGui_ImplSDL2_NewFrame();
@@ -992,16 +1047,19 @@ void Editor::Render() {
     Renderer::GetInstance()->RenderClear();
     for (int i = 0; i < m_Layers.size(); i++) {
         if (m_HiddenLayers.find(i) == m_HiddenLayers.end()) {
-            for (auto *obj : m_Layers[i]) {
+            for (auto* obj : m_Layers[i]) {
                 obj->Update(0.0);
                 obj->Draw();
                 if (m_SelectedObjects.find(obj) != m_SelectedObjects.end()) {
                     std::vector<SDL_Rect> rects;
                     rects.reserve(4);
-                for (int i = 0; i < 4; i++) {
-                        rects.push_back({ static_cast<int>(obj->GetX())+i, static_cast<int>(obj->GetY())+i, obj->GetWidth(), obj->GetHeight() });
+                    for (int i = 0; i < 4; i++) {
+                        rects.push_back({static_cast<int>(obj->GetX()) + i,
+                                         static_cast<int>(obj->GetY()) + i,
+                                         obj->GetWidth(), obj->GetHeight()});
                     }
-                    Renderer::GetInstance()->DrawRects(rects, {0, 150, 255, 255});
+                    Renderer::GetInstance()->DrawRects(rects,
+                                                       {0, 150, 255, 255});
                 }
             }
         }
@@ -1010,8 +1068,7 @@ void Editor::Render() {
     DrawGrid();
     ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
 
-    if ((ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable) != 0)
-    {
+    if ((ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable) != 0) {
         ImGui::UpdatePlatformWindows();
         ImGui::RenderPlatformWindowsDefault();
     }
@@ -1032,12 +1089,18 @@ GameObject* Editor::GetObjectUnderMouse() {
     return obj;
 }
 
-void Editor::OnMouseClicked(SDL_Event&  /*event*/) {
+void Editor::OnMouseClicked(SDL_Event& /*event*/) {
     if (m_DrawState.EditMode != EditMode::NONE) {
         m_DrawState.IsEditing = true;
 
-        float const x = ((InputChecker::GetMouseX() + Renderer::GetInstance()->GetCameraX()) / TILE_SIZE) * TILE_SIZE;
-        float const y = ((InputChecker::GetMouseY() + Renderer::GetInstance()->GetCameraY()) / TILE_SIZE) * TILE_SIZE;
+        float const x = ((InputChecker::GetMouseX() +
+                          Renderer::GetInstance()->GetCameraX()) /
+                         TILE_SIZE) *
+                        TILE_SIZE;
+        float const y = ((InputChecker::GetMouseY() +
+                          Renderer::GetInstance()->GetCameraY()) /
+                         TILE_SIZE) *
+                        TILE_SIZE;
 
         if (m_DrawState.EditMode == EditMode::DRAW) {
             AddObject(x, y);
@@ -1063,7 +1126,8 @@ void Editor::OnMouseClicked(SDL_Event&  /*event*/) {
     } else {
         GameObject* obj = GetObjectUnderMouse();
         if (obj != nullptr) {
-            auto it = std::find(m_Layers[m_CurrentLayer].begin(), m_Layers[m_CurrentLayer].end(), obj);
+            auto it = std::find(m_Layers[m_CurrentLayer].begin(),
+                                m_Layers[m_CurrentLayer].end(), obj);
             m_Layers[m_CurrentLayer].erase(it);
             m_Layers[m_CurrentLayer].push_back(obj);
             m_CurrentObject = obj;
@@ -1075,13 +1139,19 @@ void Editor::OnMouseMoved(SDL_Event& event) {
     if (InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT)) {
 
         if (m_DrawState.IsEditing) {
-            float const x = ((InputChecker::GetMouseX() + Renderer::GetInstance()->GetCameraX()) / TILE_SIZE) * TILE_SIZE;
-            float const y = ((InputChecker::GetMouseY() + Renderer::GetInstance()->GetCameraY()) / TILE_SIZE) * TILE_SIZE;
+            float const x = ((InputChecker::GetMouseX() +
+                              Renderer::GetInstance()->GetCameraX()) /
+                             TILE_SIZE) *
+                            TILE_SIZE;
+            float const y = ((InputChecker::GetMouseY() +
+                              Renderer::GetInstance()->GetCameraY()) /
+                             TILE_SIZE) *
+                            TILE_SIZE;
 
             if ((x != m_DrawState.PrevX || y != m_DrawState.PrevY)) {
                 if (m_DrawState.EditMode == EditMode::DRAW) {
                     AddObject(x, y);
-                    
+
                 } else if (m_DrawState.EditMode == EditMode::ERASE) {
                     GameObject* obj = GetObjectUnderMouse();
 
@@ -1106,23 +1176,24 @@ void Editor::OnMouseMoved(SDL_Event& event) {
                 }
             }
             if (mouse_over_any) {
-                float const dx =  event.button.x - InputChecker::GetMouseX();
-                float const dy =  event.button.y - InputChecker::GetMouseY();
+                float const dx = event.button.x - InputChecker::GetMouseX();
+                float const dy = event.button.y - InputChecker::GetMouseY();
 
                 for (const auto& obj : m_SelectedObjects) {
                     MoveObject(obj, dx, dy);
                 }
             }
 
-        } else if (m_CurrentObject != nullptr && CheckMouseOver(m_CurrentObject)) {
-            float const dx =  event.button.x - InputChecker::GetMouseX();
-            float const dy =  event.button.y - InputChecker::GetMouseY();
+        } else if (m_CurrentObject != nullptr &&
+                   CheckMouseOver(m_CurrentObject)) {
+            float const dx = event.button.x - InputChecker::GetMouseX();
+            float const dy = event.button.y - InputChecker::GetMouseY();
             MoveObject(m_CurrentObject, dx, dy);
         }
     }
 }
 
-void Editor::OnMouseUp(SDL_Event&  /*event*/) {
+void Editor::OnMouseUp(SDL_Event& /*event*/) {
     if (InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT)) {
         if (m_DrawState.IsEditing) {
             m_DrawState.IsEditing = false;
@@ -1130,16 +1201,19 @@ void Editor::OnMouseUp(SDL_Event&  /*event*/) {
         } else if (!m_SelectedObjects.empty()) {
             if (m_ObjectInfo.SnapToGrid) {
                 for (const auto& obj : m_SelectedObjects) {
-                    std::pair<float, float> const coords = SnapToGrid(obj->GetX(), obj->GetY());
+                    std::pair<float, float> const coords =
+                        SnapToGrid(obj->GetX(), obj->GetY());
                     obj->SetX(coords.first);
                     obj->SetY(coords.second);
                 }
             }
 
-        } else if (m_CurrentObject != nullptr && CheckMouseOver(m_CurrentObject)) {
-        
+        } else if (m_CurrentObject != nullptr &&
+                   CheckMouseOver(m_CurrentObject)) {
+
             if (m_ObjectInfo.SnapToGrid) {
-                std::pair<float, float> const coords = SnapToGrid(m_CurrentObject->GetX(), m_CurrentObject->GetY());
+                std::pair<float, float> const coords = SnapToGrid(
+                    m_CurrentObject->GetX(), m_CurrentObject->GetY());
                 m_CurrentObject->SetX(coords.first);
                 m_CurrentObject->SetY(coords.second);
             }
@@ -1153,7 +1227,7 @@ std::pair<float, float> Editor::SnapToGrid(float x, float y) {
     next_x = (static_cast<int>(x + TILE_SIZE / 2) / TILE_SIZE) * TILE_SIZE;
     next_y = (static_cast<int>(y + TILE_SIZE / 2) / TILE_SIZE) * TILE_SIZE;
 
-    return { next_x, next_y };
+    return {next_x, next_y};
 }
 
 void Editor::Events() {
@@ -1185,7 +1259,8 @@ void Editor::Events() {
                 break;
             case SDL_MOUSEMOTION:
                 OnMouseMoved(event);
-                InputChecker::UpdateMousePosition(event.motion.x, event.motion.y);
+                InputChecker::UpdateMousePosition(event.motion.x,
+                                                  event.motion.y);
                 break;
         }
     }

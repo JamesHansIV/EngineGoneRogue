@@ -1,7 +1,7 @@
 #include "InputChecker.h"
+#include <SDL2/SDL.h>
 #include <cmath>
 #include <iostream>
-#include <SDL2/SDL.h>
 
 const int kNumkeys = 322;
 const int kNummousebuttons = 3;

@@ -1,8 +1,8 @@
 #include "Application.h"
 #include "Engine/Renderer/Renderer.h"
 
-#include "Engine/Objects/Player.h"
 #include "Engine/Objects/GameObject.h"
+#include "Engine/Objects/Player.h"
 
 #include "Engine/Input/InputChecker.h"
 
@@ -11,20 +11,23 @@
 
 #include "Engine/utils/utils.h"
 
-#include <unistd.h>
 #include <dirent.h>
+#include <unistd.h>
 
 Application* Application::m_instance = nullptr;
 
 Application::Application() : m_ProjectName("test_project"), m_Frame(0) {
 
-    if(SDL_Init(SDL_INIT_VIDEO)!=0 && IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG)!= 0){
+    if (SDL_Init(SDL_INIT_VIDEO) != 0 &&
+        IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG) != 0) {
         SDL_Log("Failed to initialize SDL: %s", SDL_GetError());
         assert(false);
     }
 
-    m_Window = SDL_CreateWindow("Engine Gone Rogue", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
-    if(m_Window == nullptr){
+    m_Window = SDL_CreateWindow("Engine Gone Rogue", SDL_WINDOWPOS_CENTERED,
+                                SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH,
+                                SCREEN_HEIGHT, 0);
+    if (m_Window == nullptr) {
         SDL_Log("Failed to create Window: %s", SDL_GetError());
         assert(false);
     }
@@ -41,7 +44,7 @@ Application::Application() : m_ProjectName("test_project"), m_Frame(0) {
             assert(false);
         }
     }
-    
+
     m_IsRunning = true;
 }
 
@@ -73,10 +76,12 @@ bool Application::LoadTextures(char* projectPath) {
         texture_path = curr_texture->FirstChildElement("FilePath")->GetText();
         if (type == "tileMap") {
             SDL_Log("texture filepath: %s", texture_path.c_str());
-            tile_size = atoi(curr_texture->FirstChildElement("TileSize")->GetText());
+            tile_size =
+                atoi(curr_texture->FirstChildElement("TileSize")->GetText());
             rows = atoi(curr_texture->FirstChildElement("Rows")->GetText());
             cols = atoi(curr_texture->FirstChildElement("Cols")->GetText());
-            Renderer::GetInstance()->AddTileMap(id, texture_path, tile_size, rows, cols);
+            Renderer::GetInstance()->AddTileMap(id, texture_path, tile_size,
+                                                rows, cols);
         } else {
             Renderer::GetInstance()->AddTexture(id, texture_path);
         }
@@ -123,10 +128,8 @@ GameObject* Application::LoadObject(tinyxml2::XMLElement* xmlObj) {
 
     float const angle = std::stof(rotation->GetText());
 
-    Properties props(
-        texture_id_val, tile_pos,
-        dst_rect_val, angle, object_id_val
-    );
+    Properties props(texture_id_val, tile_pos, dst_rect_val, angle,
+                     object_id_val);
 
     obj = new GameObject(props);
 
@@ -156,44 +159,46 @@ GameObject* Application::LoadObject(tinyxml2::XMLElement* xmlObj) {
             atoi(animation->FirstChildElement("Width")->GetText()),
             atoi(animation->FirstChildElement("Height")->GetText()),
         };
-        obj->GetAnimation()->SetProps({
-            animation->FirstChildElement("TextureID")->GetText(),
-            tile_pos,
-            atoi(animation->FirstChildElement("FrameCount")->GetText()),
-            atoi(animation->FirstChildElement("Speed")->GetText())
-    });
+        obj->GetAnimation()->SetProps(
+            {animation->FirstChildElement("TextureID")->GetText(), tile_pos,
+             atoi(animation->FirstChildElement("FrameCount")->GetText()),
+             atoi(animation->FirstChildElement("Speed")->GetText())});
         SDL_Log("Animation row: %d", obj->GetAnimation()->GetSpriteRow());
         SDL_Log("Animation col: %d", obj->GetAnimation()->GetSpriteCol());
-        SDL_Log("Animation frameCount: %d", obj->GetAnimation()->GetFrameCount());
-        SDL_Log("Animation speed: %d", obj->GetAnimation()->GetAnimationSpeed());
+        SDL_Log("Animation frameCount: %d",
+                obj->GetAnimation()->GetFrameCount());
+        SDL_Log("Animation speed: %d",
+                obj->GetAnimation()->GetAnimationSpeed());
     }
 
     return obj;
 }
 
-Collider* Application::LoadCollider(tinyxml2::XMLElement* xmlObj, GameObject* obj) {
-    Collider* collider = new Collider(obj);
+Collider* Application::LoadCollider(tinyxml2::XMLElement* xmlObj,
+                                    GameObject* obj) {
+    auto* collider = new Collider(obj);
 
-    if (!collider) {
+    if (collider == nullptr) {
         SDL_Log("failed to create collider");
         assert(false);
     };
     SDL_Log("Created collider");
 
-    tinyxml2::XMLElement* collisionBox = xmlObj->FirstChildElement("CollisionBox");
+    tinyxml2::XMLElement* collision_box =
+        xmlObj->FirstChildElement("CollisionBox");
 
     collider->GetCollisionBox().Set(
-        atoi(collisionBox->FirstChildElement("XPos")->GetText()),
-        atoi(collisionBox->FirstChildElement("YPos")->GetText()),
-        atoi(collisionBox->FirstChildElement("Width")->GetText()),
-        atoi(collisionBox->FirstChildElement("Height")->GetText())
-    );
+        atoi(collision_box->FirstChildElement("XPos")->GetText()),
+        atoi(collision_box->FirstChildElement("YPos")->GetText()),
+        atoi(collision_box->FirstChildElement("Width")->GetText()),
+        atoi(collision_box->FirstChildElement("Height")->GetText()));
 
     delete obj;
     return collider;
 }
 
-bool Application::LoadObjects(const std::string& roomPath, const std::string& roomID) {
+bool Application::LoadObjects(const std::string& roomPath,
+                              const std::string& roomID) {
     tinyxml2::XMLDocument doc;
 
     SDL_Log("%s", roomPath.c_str());
@@ -215,8 +220,8 @@ bool Application::LoadObjects(const std::string& roomPath, const std::string& ro
         SDL_Log("No objects exist in room %s", roomID.c_str());
         return true;
     }
-    
-    GameObject* createdObj = nullptr;
+
+    GameObject* created_obj = nullptr;
     while (curr_object != nullptr) {
         types = curr_object->FirstChildElement("Types");
         if (types == nullptr) {
@@ -224,26 +229,28 @@ bool Application::LoadObjects(const std::string& roomPath, const std::string& ro
             assert(false);
         }
 
-        createdObj = LoadObject(curr_object);
-        SDL_Log("loaded object: %d", createdObj != nullptr);
-        if (!createdObj) return false;
+        created_obj = LoadObject(curr_object);
+        SDL_Log("loaded object: %d", static_cast<int>(created_obj != nullptr));
+        if (created_obj == nullptr) {
+            return false;
+}
 
         if (types->FirstChildElement("Collider") != nullptr) {
-            createdObj = LoadCollider(curr_object, createdObj);
-            SDL_Log("loaded collider: %d aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", dynamic_cast<Collider*>(createdObj) == nullptr);
+            created_obj = LoadCollider(curr_object, created_obj);
+            SDL_Log("loaded collider: %d aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    static_cast<int>(dynamic_cast<Collider*>(created_obj) == nullptr));
         }
 
-        if (!createdObj) {
+        if (created_obj == nullptr) {
             SDL_Log("maybe collider load failed?");
             assert(false);
         };
 
-        m_Rooms[roomID].push_back(createdObj);
+        m_Rooms[roomID].push_back(created_obj);
 
         curr_object = curr_object->NextSiblingElement("Object");
     }
     return true;
-
 }
 
 bool Application::LoadRooms(const char* projectPath) {
@@ -257,18 +264,21 @@ bool Application::LoadRooms(const char* projectPath) {
         perror("Rooms path does not exist");
         return false;
     }
-    
+
     std::string room_path = rooms_path;
     std::string room_id;
     int const index = 0;
     while ((entry = readdir(dp)) != nullptr) {
-        if (strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0) {
+        if (strcmp(entry->d_name, ".") != 0 &&
+            strcmp(entry->d_name, "..") != 0) {
             std::string const file_name = entry->d_name;
             room_path += "/";
             room_path += entry->d_name;
             room_id = file_name.substr(0, file_name.rfind('.'));
             m_Rooms[room_id] = std::vector<GameObject*>();
-            if (!LoadObjects(room_path, room_id)) return false;
+            if (!LoadObjects(room_path, room_id)) {
+                return false;
+}
             room_path = rooms_path;
         }
     }
@@ -278,15 +288,18 @@ bool Application::LoadRooms(const char* projectPath) {
 }
 
 bool Application::LoadProject() {
-    char project_path[FILEPATH_LEN+1];
-    snprintf(project_path, FILEPATH_LEN, "../assets/projects/%s", m_ProjectName.c_str());
-    if (!LoadTextures(project_path)) return false;
+    char project_path[FILEPATH_LEN + 1];
+    snprintf(project_path, FILEPATH_LEN, "../assets/projects/%s",
+             m_ProjectName.c_str());
+    if (!LoadTextures(project_path)) {
+        return false;
+}
     SDL_Log("Textures are fine");
     SDL_Log("%s", project_path);
     return LoadRooms(project_path);
 }
 
-void Application::Events(){
+void Application::Events() {
     SDL_Event event;
     while (SDL_PollEvent(&event) != 0) {
         m_EventManager.HandleEvent(event);
@@ -307,7 +320,8 @@ void Application::Events(){
                 InputChecker::SetMouseButtonPressed(event.button.button, false);
                 break;
             case SDL_MOUSEMOTION:
-                InputChecker::UpdateMousePosition(event.motion.x, event.motion.y);
+                InputChecker::UpdateMousePosition(event.motion.x,
+                                                  event.motion.y);
                 break;
             case SDL_MOUSEWHEEL:
                 InputChecker::SetMouseWheelDirection(event.wheel.y);
@@ -319,17 +333,17 @@ void Application::Events(){
 void Application::Run() {
     while (m_IsRunning) {
         m_Frame++;
-        float currentTick = SDL_GetTicks();
-        float dt = currentTick - m_LastTick;
-        m_LastTick = currentTick;
+        float const current_tick = SDL_GetTicks();
+        float const dt = current_tick - m_LastTick;
+        m_LastTick = current_tick;
         Events();
-        Update(dt/10);
+        Update(dt / 10);
         Render();
     }
     Clean();
 }
 
-bool Application::Clean(){
+bool Application::Clean() {
     Renderer::GetInstance()->Destroy();
 
     SDL_DestroyWindow(m_Window);
@@ -338,7 +352,6 @@ bool Application::Clean(){
     return true;
 }
 
-void Application::Quit(){
+void Application::Quit() {
     m_IsRunning = false;
 }
-

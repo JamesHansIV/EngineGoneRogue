@@ -1,6 +1,6 @@
 #pragma once
-#include <string>
 #include <SDL2/SDL.h>
+#include <string>
 #include "Engine/Renderer/TileMap.h"
 #include "Engine/utils/utils.h"
 
@@ -32,10 +32,9 @@ class Animation{
         int GetAnimationSpeed() { return m_Info.AnimationSpeed; }
         std::string GetAnimationID() { return m_CurrentAnimationID; }
 
-        bool Stopped() { return m_Stopped; }
         void StopAnimation();
-
-        void SelectAnimation(std::string id);
+        bool Stopped() { return m_Stopped; }
+        void SelectAnimation(const std::string& id);
         void AddAnimation(std::string id, AnimationInfo info) { m_Animations[id] = info; m_CurrentAnimationID = id; }
     private:
         std::unordered_map<std::string, AnimationInfo> m_Animations;

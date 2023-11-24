@@ -1,11 +1,11 @@
 #include "Game.h"
-#include "Engine/Renderer/Renderer.h"
-#include "Engine/Objects/Player.h"
-#include "Engine/Objects/Enemy.h"
+#include <cstdlib>
 #include "Engine/Events/EventListener.h"
 #include "Engine/Input/InputChecker.h"
+#include "Engine/Objects/Enemy.h"
 #include "Engine/Objects/Entrance.h"
-#include <cstdlib>
+#include "Engine/Objects/Player.h"
+#include "Engine/Renderer/Renderer.h"
 
 Player* player = nullptr;
 Enemy* enemy1 = nullptr;
@@ -24,58 +24,95 @@ int cur_enemy_generation_interval = 500;
 Game::Game() {
     SDL_Renderer* renderer = Renderer::GetInstance()->GetRenderer();
 
-    Renderer::GetInstance()->AddTexture("player_move_up", "../assets/textures/spritesheets/player-move-up.png");
+    Renderer::GetInstance()->AddTexture(
+        "player_move_up", "../assets/textures/spritesheets/player-move-up.png");
 
-    Renderer::GetInstance()->AddTexture("player_move_down", "../assets/textures/spritesheets/player-move-down.png");
-    Renderer::GetInstance()->AddTexture("player_move_right", "../assets/textures/spritesheets/player-move-right.png");
-    Renderer::GetInstance()->AddTexture("player_move_right2", "../assets/textures/spritesheets/player-move-right2.png");
-    Renderer::GetInstance()->AddTexture("enemy1", "../assets/textures/spritesheets/enemy1_idle_spritesheet.png");
-    Renderer::GetInstance()->AddTexture("enemy2", "../assets/textures/spritesheets/enemy2_idle_spritesheet.png");
-    Renderer::GetInstance()->AddTexture("enemy3", "../assets/textures/spritesheets/enemy3_idle_spritesheet.png");
-    Renderer::GetInstance()->AddTexture("enemy4", "../assets/textures/spritesheets/enemy4_idle_spritesheet.png");
-    Renderer::GetInstance()->AddTexture("enemy5", "../assets/textures/spritesheets/enemy5_idle_spritesheet.png");
-    Renderer::GetInstance()->AddTexture("boss", "../assets/textures/spritesheets/boss_idle_spritesheet.png" );
-    Renderer::GetInstance()->AddTexture("tilemap", "../assets/textures/kenney_tiny-dungeon/Tilemap/tilemap_packed.png");
-    Renderer::GetInstance()->AddTexture("player_run", "../assets/textures/Run.png");
-    Renderer::GetInstance()->AddTexture("player_dead", "../assets/textures/spritesheets/player-dead.png");
-    Renderer::GetInstance()->AddTexture("projectile", "../assets/textures/BulletHell/PURPLE/Weapons/weapons/Firearms/Bullets/spr_bullet3.png");
-    Renderer::GetInstance()->AddTexture("melee", "../assets/textures/BulletHell/PURPLE/Weapons/weapons/Melee/spr_sword_03.png");
-    Renderer::GetInstance()->AddTexture("gun", "../assets/textures/BulletHell/PURPLE/Weapons/weapons/Firearms/spr_weapon06.png");
     Renderer::GetInstance()->AddTexture("door-open", "../assets/textures/spritesheets/door2-open.png");
     Renderer::GetInstance()->AddTexture("door-close", "../assets/textures/spritesheets/door2-close.png");
 
+    Renderer::GetInstance()->AddTexture(
+        "player_move_down",
+        "../assets/textures/spritesheets/player-move-down.png");
+    Renderer::GetInstance()->AddTexture(
+        "player_move_right",
+        "../assets/textures/spritesheets/player-move-right.png");
+    Renderer::GetInstance()->AddTexture(
+        "player_move_right2",
+        "../assets/textures/spritesheets/player-move-right2.png");
+    Renderer::GetInstance()->AddTexture(
+        "enemy1",
+        "../assets/textures/spritesheets/enemy1_idle_spritesheet.png");
+    Renderer::GetInstance()->AddTexture(
+        "enemy2",
+        "../assets/textures/spritesheets/enemy2_idle_spritesheet.png");
+    Renderer::GetInstance()->AddTexture(
+        "enemy3",
+        "../assets/textures/spritesheets/enemy3_idle_spritesheet.png");
+    Renderer::GetInstance()->AddTexture(
+        "enemy4",
+        "../assets/textures/spritesheets/enemy4_idle_spritesheet.png");
+    Renderer::GetInstance()->AddTexture(
+        "enemy5",
+        "../assets/textures/spritesheets/enemy5_idle_spritesheet.png");
+    Renderer::GetInstance()->AddTexture(
+        "boss", "../assets/textures/spritesheets/boss_idle_spritesheet.png");
+    Renderer::GetInstance()->AddTexture(
+        "tilemap",
+        "../assets/textures/kenney_tiny-dungeon/Tilemap/tilemap_packed.png");
+    Renderer::GetInstance()->AddTexture("player_run",
+                                        "../assets/textures/Run.png");
+    Renderer::GetInstance()->AddTexture(
+        "player_dead", "../assets/textures/spritesheets/player-dead.png");
+    Renderer::GetInstance()->AddTexture(
+        "projectile",
+        "../assets/textures/BulletHell/PURPLE/Weapons/weapons/Firearms/Bullets/"
+        "spr_bullet3.png");
+    Renderer::GetInstance()->AddTexture(
+        "melee",
+        "../assets/textures/BulletHell/PURPLE/Weapons/weapons/Melee/"
+        "spr_sword_03.png");
+    Renderer::GetInstance()->AddTexture(
+        "gun",
+        "../assets/textures/BulletHell/PURPLE/Weapons/weapons/Firearms/"
+        "spr_weapon06.png");
 
     m_Objects = Application::m_Rooms["room1"];
 
     for (auto& obj : m_Objects) {
-        if (Collider* collider = dynamic_cast<Collider*>(obj)) {
+        if (auto* collider = dynamic_cast<Collider*>(obj)) {
             ColliderHandler::GetInstance()->AddCollider(collider);
         }
     }
 
     Properties props_e("open", {0, 0, 16, 32}, {300, 300, 16, 32}, 0, "entrance");
-    Entrance* entrance = new Entrance(props_e);
+    auto* entrance = new Entrance(props_e);
 
     Properties props_p("player_move_down", {0, 0, 18, 18}, {0, 0, 30, 30}, 0, "player");
     player = new Player(props_p);
 
-    Properties props1("enemy5",{0, 0, 16, 16}, {200, 200, 36, 36}, 0, "enemy1");
+    Properties props1("enemy5", {0, 0, 16, 16}, {200, 200, 36, 36}, 0,
+                      "enemy1");
     enemy1 = new Enemy(props1, 150, 150);
 
-    Properties props2("enemy5", {0, 0, 16, 16}, {300, 260, 36, 36}, 0, "enemy2");
-    enemy2 = new Enemy(props2,  150, 150);
+    Properties props2("enemy5", {0, 0, 16, 16}, {300, 260, 36, 36}, 0,
+                      "enemy2");
+    enemy2 = new Enemy(props2, 150, 150);
 
-    Properties props3("enemy5", {0, 0, 16, 16}, {500, 200, 36, 36}, 0, "enemy3");
-    enemy3 = new Enemy(props3,  150, 150);
-    
-    Properties props4("enemy5", {0, 0, 16, 16}, {600, 367, 36, 36}, 0, "enemy4");
-    enemy4 = new Enemy(props4,  150, 150);
+    Properties props3("enemy5", {0, 0, 16, 16}, {500, 200, 36, 36}, 0,
+                      "enemy3");
+    enemy3 = new Enemy(props3, 150, 150);
 
-    Properties props5("enemy5", {0, 0, 16, 16}, {700, 300, 36, 36}, 0, "enemy5");
+    Properties props4("enemy5", {0, 0, 16, 16}, {600, 367, 36, 36}, 0,
+                      "enemy4");
+    enemy4 = new Enemy(props4, 150, 150);
+
+    Properties props5("enemy5", {0, 0, 16, 16}, {700, 300, 36, 36}, 0,
+                      "enemy5");
     enemy5 = new Enemy(props5, 150, 150);
-    
-    Properties props6("enemy5", {0, 0, 16, 16}, {600, 150, 36, 36}, 0, "enemy6");
-    enemy6 = new Enemy(props6,  150, 150);
+
+    Properties props6("enemy5", {0, 0, 16, 16}, {600, 150, 36, 36}, 0,
+                      "enemy6");
+    enemy6 = new Enemy(props6, 150, 150);
 
     m_Objects.push_back(enemy1);
     m_Objects.push_back(enemy2);
@@ -120,7 +157,8 @@ void Game::Events() {
                 InputChecker::SetMouseButtonPressed(event.button.button, false);
                 break;
             case SDL_MOUSEMOTION:
-                InputChecker::UpdateMousePosition(event.motion.x, event.motion.y);
+                InputChecker::UpdateMousePosition(event.motion.x,
+                                                  event.motion.y);
                 break;
             case SDL_MOUSEWHEEL:
                 InputChecker::SetMouseWheelDirection(event.wheel.y);
@@ -130,8 +168,7 @@ void Game::Events() {
 }
 
 void Game::Update(float dt) {
-    if(player->IsMarkedForDeletion())
-    {
+    if (player->IsMarkedForDeletion()) {
         player->Clean();
         delete player;
     }
@@ -139,20 +176,18 @@ void Game::Update(float dt) {
     if (player->GetState().HasState(ObjectState::ToBeDestroyed)) {
         DeleteObject(player);
     }
-    for (auto it = m_Objects.begin(); it != m_Objects.end();)
-    {
+    for (auto it = m_Objects.begin(); it != m_Objects.end();) {
         auto* enemy = dynamic_cast<Enemy*>(*it);  // Cast to Enemy type
-        if (enemy != nullptr)
-        {
+        if (enemy != nullptr) {
             enemy->SetTarget(player);
         }
         (*it)->Update(dt);
-        if ((*it)->GetState().HasState(ObjectState::ToBeDestroyed))  // Check if it's an Enemy and marked for deletion
+        if ((*it)->GetState().HasState(
+                ObjectState::
+                    ToBeDestroyed))  // Check if it's an Enemy and marked for deletion
         {
             DeleteObject(*it);
-        }
-        else
-        {
+        } else {
             ++it;
         }
     }
@@ -174,7 +209,7 @@ void Game::Update(float dt) {
 
 void Game::Render() {
     Renderer::GetInstance()->RenderClear();
-    for (auto *obj : m_Objects) {
+    for (auto* obj : m_Objects) {
         obj->Draw();
     }
     player->Draw();

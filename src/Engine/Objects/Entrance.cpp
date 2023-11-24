@@ -14,7 +14,7 @@ void Entrance::Draw() {
     m_Animation->Draw(GetDstRect());
 }
 
-void Entrance::Update(float dt) {
+void Entrance::Update(float  /*dt*/) {
     if (!m_State.HasState(EntranceState::Idle) && m_Animation->Stopped()) {
         m_State.ToggleState(EntranceState::Open);
         m_State.AddState(EntranceState::Idle);
@@ -42,6 +42,4 @@ void Entrance::OnCollide(Collider* collidee) {
     }
 }
 
-void Entrance::Clean() {
-
-}
+void Entrance::Clean() {}

@@ -4,13 +4,13 @@
 #include <vector>
 
 class Room {
-public:
-private:
-  std::string m_TextureID;
-  int m_room_id;
-  int m_Height;
-  int m_SrcTileSize;
-  int m_DestTileSize;
+   public:
+   private:
+    std::string m_TextureID;
+    int m_room_id;
+    int m_Height;
+    int m_SrcTileSize;
+    int m_DestTileSize;
 };
 
 // # start Rooms, # normal rooms, # end rooms -> Graph of Rooms with a max of 4

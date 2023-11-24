@@ -1,13 +1,16 @@
 #include "Health.h"
-#include "Engine/utils/utils.h"
-#include "Engine/Renderer/Renderer.h"
 #include <SDL2/SDL.h>
+#include "Engine/Renderer/Renderer.h"
+#include "Engine/utils/utils.h"
 
 void Health::Draw(int objX, int objY, int objWidth) const {
-    
-    int health_bar_width = static_cast<int>((objWidth + 15) * (m_HP / (float)m_TotalHealth));
-    
-    if (health_bar_width <= 0) health_bar_width = 0;
+
+    int health_bar_width =
+        static_cast<int>((objWidth + 15) * (m_HP / static_cast<float>(m_TotalHealth)));
+
+    if (health_bar_width <= 0) {
+        health_bar_width = 0;
+}
     int const health_bar_x = objX - m_XOffset;
     int const health_bar_y = objY - HEALTH_BAR_HEIGHT - m_YOffset;
 
