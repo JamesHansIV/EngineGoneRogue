@@ -10,7 +10,7 @@
 Player::Player(Properties& props): Character(props){
     m_Animation = new Animation();
     m_Animation->AddAnimation("Idle", {m_TextureID, m_TilePos, 2, 20, SDL_FLIP_NONE, true});
-    m_Animation->AddAnimation("Dead", {"player_dead", {0, 0, 18, 18}, 8, 10});
+    m_Animation->AddAnimation("Dead", {"player_dead", {0, 0, 18, 18}, 6, 8});
     m_Animation->AddAnimation("move-right", {"player_move_right", {0, 0, 18, 18}, 6, 8, SDL_FLIP_NONE, true});
     m_Animation->AddAnimation("move-left", {"player_move_right", {0, 0, 18, 18}, 6, 8, SDL_FLIP_HORIZONTAL, true});
     m_Animation->AddAnimation("move-right-up", {"player_move_right2", {0, 0, 18, 18}, 6, 8, SDL_FLIP_NONE, true});
@@ -52,6 +52,9 @@ void Player::Draw(){
 }
 
 void Player::Update(float dt){
+    if (m_State.HasState(CharacterState::Dead) && m_Animation->Stopped()) {
+        m_State.SetState(CharacterState::ToBeDestroyed);
+    }
     m_Animation->Update();
     m_RigidBody->Update(dt);
 
@@ -152,7 +155,7 @@ void Player::OnCollide(Collider* collidee) {
         case ObjectType::Enemy:
             UnCollide(collidee);
             m_Health->SetDamage(1);
-            if (m_Health->GetHP() <= 0) {
+            if (!m_State.HasState(CharacterState::Dead) && m_Health->GetHP() <= 0) {
                 m_State.SetState(CharacterState::Dead);
                 ChangeAnimation();
             }

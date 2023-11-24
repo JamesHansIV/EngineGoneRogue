@@ -70,19 +70,19 @@ Game::Game() {
     Properties props6("enemy5", {0, 0, 16, 16}, {600, 150, 36, 36}, 0, "enemy6");
     enemy6 = new Enemy(props6,  150, 150);
 
-    // m_Objects.push_back(enemy1);
-    // m_Objects.push_back(enemy2);
-    // m_Objects.push_back(enemy3);
-    // m_Objects.push_back(enemy4);
-    // m_Objects.push_back(enemy5);
-    // m_Objects.push_back(enemy6);
+    m_Objects.push_back(enemy1);
+    m_Objects.push_back(enemy2);
+    m_Objects.push_back(enemy3);
+    m_Objects.push_back(enemy4);
+    m_Objects.push_back(enemy5);
+    m_Objects.push_back(enemy6);
     ColliderHandler::GetInstance()->AddCollider(player);
-    // ColliderHandler::GetInstance()->AddCollider(enemy1);
-    // ColliderHandler::GetInstance()->AddCollider(enemy2);
-    // ColliderHandler::GetInstance()->AddCollider(enemy3);
-    // ColliderHandler::GetInstance()->AddCollider(enemy4);
-    // ColliderHandler::GetInstance()->AddCollider(enemy5);
-    // ColliderHandler::GetInstance()->AddCollider(enemy6);
+    ColliderHandler::GetInstance()->AddCollider(enemy1);
+    ColliderHandler::GetInstance()->AddCollider(enemy2);
+    ColliderHandler::GetInstance()->AddCollider(enemy3);
+    ColliderHandler::GetInstance()->AddCollider(enemy4);
+    ColliderHandler::GetInstance()->AddCollider(enemy5);
+    ColliderHandler::GetInstance()->AddCollider(enemy6);
 
 
     srand(time(nullptr));
@@ -128,6 +128,9 @@ void Game::Update(float dt) {
         delete player;
     }
     player->Update(dt);
+    if (player->GetState().HasState(ObjectState::ToBeDestroyed)) {
+        DeleteObject(player);
+    }
     for (auto it = m_Objects.begin(); it != m_Objects.end();)
     {
         auto* enemy = dynamic_cast<Enemy*>(*it);  // Cast to Enemy type
@@ -136,9 +139,9 @@ void Game::Update(float dt) {
             enemy->SetTarget(player);
         }
         (*it)->Update(dt);
-        if ((enemy != nullptr) && enemy->GetState().HasState(ObjectState::ToBeDestroyed))  // Check if it's an Enemy and marked for deletion
+        if ((*it)->GetState().HasState(ObjectState::ToBeDestroyed))  // Check if it's an Enemy and marked for deletion
         {
-            DeleteObject(enemy);
+            DeleteObject(*it);
         }
         else
         {

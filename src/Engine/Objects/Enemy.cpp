@@ -22,8 +22,8 @@ DEVELOPING BASIC ENEMY BEHAVIOUR:
 Enemy::Enemy(Properties& props, int perceptionX, int perceptionY):
     Character(props), m_PerceptionWidth(perceptionX), m_PerceptionHeight(perceptionY) {
     m_Animation = new Animation();
-    m_Animation->AddAnimation("Idle", {m_TextureID, m_TilePos, 2, 50, SDL_FLIP_NONE, true});
-    m_Animation->AddAnimation("Dead", {"player_dead", {0, 0, 18, 18}, 6, 50});
+    m_Animation->AddAnimation("Idle", {m_TextureID, m_TilePos, 2, 15, SDL_FLIP_NONE, true});
+    m_Animation->AddAnimation("Dead", {"player_dead", {0, 0, 18, 18}, 6, 8});
     m_Animation->SelectAnimation("Idle");
     SetHealth(new Health(100));
     m_MarkedForDeletion = false;
@@ -52,7 +52,7 @@ void Enemy::Update(float dt){
         }
         return;
     }
-
+    m_Animation->Update();
     MoveTowardsTarget(dt);
     m_RigidBody->Update(dt);
 
