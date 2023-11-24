@@ -6,11 +6,14 @@
 #include "Engine/Renderer/TileMap.h"
 #include "Health.h"
 #include "Engine/Animation/Animation.h"
+#include "Engine/State/State.h"
 
 #include "Engine/Physics/CollisionBox.h"
+#include "Engine/State/State.h"
 #include <SDL2/SDL.h>
 #include <string>
 #include <utility>
+#include <unordered_map>
 
 #include "Engine/utils/utils.h"
 
@@ -107,6 +110,8 @@ class GameObject : public IObject {
         Animation* GetAnimation() { return m_Animation; }
         void SetAnimation(Animation* animation) { m_Animation = animation; }
 
+        State& GetState() { return m_State; }
+
     protected:
         Transform* m_Transform;
         TilePos m_TilePos;
@@ -116,4 +121,5 @@ class GameObject : public IObject {
         std::string m_ObjectID;
         SDL_RendererFlip m_Flip;
         Animation* m_Animation;
+        State m_State;
 };

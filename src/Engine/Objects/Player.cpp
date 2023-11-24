@@ -9,7 +9,18 @@
 
 Player::Player(Properties& props): Character(props){
     m_Animation = new Animation();
-    m_Animation->SetProps(m_TextureID, m_TilePos, 2, 500);
+    m_Animation->AddAnimation("Idle", {m_TextureID, m_TilePos, 2, 20, SDL_FLIP_NONE, true});
+    m_Animation->AddAnimation("Dead", {"player_dead", {0, 0, 18, 18}, 8, 10});
+    m_Animation->AddAnimation("move-right", {"player_move_right", {0, 0, 18, 18}, 6, 8, SDL_FLIP_NONE, true});
+    m_Animation->AddAnimation("move-left", {"player_move_right", {0, 0, 18, 18}, 6, 8, SDL_FLIP_HORIZONTAL, true});
+    m_Animation->AddAnimation("move-right-up", {"player_move_right2", {0, 0, 18, 18}, 6, 8, SDL_FLIP_NONE, true});
+
+    m_Animation->AddAnimation("move-left-up", {"player_move_right2", {0, 0, 18, 18}, 6, 8, SDL_FLIP_HORIZONTAL, true});
+    m_Animation->AddAnimation("move-up", {"player_move_up", {0, 0, 18, 18}, 6, 8, SDL_FLIP_NONE, true});
+    m_Animation->AddAnimation("move-down", {"player_move_down", {0, 0, 18, 18}, 6, 8, SDL_FLIP_NONE, true});
+
+    m_Animation->SelectAnimation("move-down");
+    m_Animation->StopAnimation();
     // m_Collider->SetCorrection(-45, -20, 60, 80 )
     m_Health = new Health(100);
 
@@ -35,19 +46,12 @@ Player::~Player() {
 }
 
 void Player::Draw(){
-    m_Animation->Draw({GetX(), GetY(), m_DstRect.w, m_DstRect.h});
+    m_Animation->Draw({GetX(), GetY(), GetWidth(), GetHeight()});
     m_Health->Draw(GetX(), GetY(), GetWidth());
     m_CurrentWeapon->Draw();
 }
 
 void Player::Update(float dt){
-    if(m_Health->GetHP() <= 0)
-    {
-        m_Animation->SetProps("player_dead", {0, 0, 18, 18}, 6, 500);
-        if (m_Animation->GetCurrentFrame() == 6-1) {
-            m_MarkedForDeletion = true;
-        }
-    }
     m_Animation->Update();
     m_RigidBody->Update(dt);
 
@@ -71,7 +75,6 @@ void Player::Update(float dt){
     // }
 
     m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
-    m_Animation->Update();
 
     UpdateWeapon(dt);
 }
@@ -106,6 +109,39 @@ void Player::UpdateWeapon(float dt) {
     m_CurrentWeapon->Update(dt);
 }
 
+void Player::ChangeAnimation() {
+    SDL_Log("Change animation is being called");
+    if (m_State.HasState(CharacterState::Dead)) {
+        m_Animation->SelectAnimation("Dead");
+        return;
+    }
+
+    bool idleY = m_State.HasState(CharacterState::MoveUp) && m_State.HasState(CharacterState::MoveDown);
+    bool idleX = m_State.HasState(CharacterState::MoveLeft) && m_State.HasState(CharacterState::MoveRight);
+    bool movingUp = !idleY && m_State.HasState(CharacterState::MoveUp);
+    bool movingDown = !idleY && m_State.HasState(CharacterState::MoveDown);
+    bool movingLeft = !idleX && m_State.HasState(CharacterState::MoveLeft);
+    bool movingRight = !idleX && m_State.HasState(CharacterState::MoveRight);
+
+    SDL_Log("up: %d, down: %d, left: %d, right: %d", movingUp, movingDown, movingLeft, movingRight);
+    
+    if (movingUp && movingRight) {
+        m_Animation->SelectAnimation("move-right-up");
+    } else if (movingUp && movingLeft) {
+        m_Animation->SelectAnimation("move-left-up");
+    } else if (movingUp) {
+        m_Animation->SelectAnimation("move-up");
+    } else if (movingRight) {
+        m_Animation->SelectAnimation("move-right");
+    } else if (movingLeft) {
+        m_Animation->SelectAnimation("move-left");
+    } else if (movingDown) {
+        m_Animation->SelectAnimation("move-down");
+    } else {
+        m_Animation->StopAnimation();
+    }
+}
+
 void Player::OnCollide(Collider* collidee) {
     if (this == collidee) return;
 
@@ -115,6 +151,11 @@ void Player::OnCollide(Collider* collidee) {
             break;
         case ObjectType::Enemy:
             UnCollide(collidee);
+            m_Health->SetDamage(1);
+            if (m_Health->GetHP() <= 0) {
+                m_State.SetState(CharacterState::Dead);
+                ChangeAnimation();
+            }
             break;
         case ObjectType::MeleeWeapon:
             UnCollide(collidee);
@@ -162,38 +203,46 @@ void Player::CheckInput() {
 }
 
 void Player::OnKeyPressed(SDL_Event& event) {
-    // if (event.key.repeat != 0) return;
-    // if (event.key.keysym.sym == SDLK_w) {
-    //     m_RigidBody->ApplyForce(Vector2D(0, -3));
-    // } else if (event.key.keysym.sym == SDLK_s) {
-    //     m_RigidBody->ApplyForce(Vector2D(0, 3));
-    // } else if (event.key.keysym.sym == SDLK_a) {
-    //     m_RigidBody->ApplyForce(Vector2D(-3, 0));
-    // } else if (event.key.keysym.sym == SDLK_d) {
-    //     m_RigidBody->ApplyForce(Vector2D(3, 0));
-    // }
+    if (event.key.repeat != 0) return;
+    if (event.key.keysym.sym == SDLK_w) {
+        m_State.AddState(CharacterState::MoveUp);
+        ChangeAnimation();
+    } else if (event.key.keysym.sym == SDLK_s) {
+        m_State.AddState(CharacterState::MoveDown);
+        ChangeAnimation();
+    } else if (event.key.keysym.sym == SDLK_a) {
+        m_State.AddState(CharacterState::MoveLeft);
+        ChangeAnimation();
+    } else if (event.key.keysym.sym == SDLK_d) {
+        m_State.AddState(CharacterState::MoveRight);
+        ChangeAnimation();
+    }
 }
 
 void Player::OnKeyReleased(SDL_Event& event) {
     //Need a better way to do this... this does not work if outside forces affect velocity
 
-    // if (event.key.keysym.sym == SDLK_w) {
-    //     Vector2D adjust = Vector2D(0, 3);
-    //     //adjust.Y = m_RigidBody->Velocity().Y != 0 ? adjust.Y : 0;
-    //     m_RigidBody->ApplyVelocity(adjust);
-    // } else if (event.key.keysym.sym == SDLK_s) {
-    //     Vector2D adjust = Vector2D(0, -3);
-    //     //adjust.Y = m_RigidBody->Velocity().Y != 0 ? adjust.Y : 0;
-    //     m_RigidBody->ApplyVelocity(Vector2D(adjust));
-    // } else if (event.key.keysym.sym == SDLK_a) {
-    //     Vector2D adjust = Vector2D(3, 0);
-    //     //adjust.X = m_RigidBody->Velocity().X != 0 ? adjust.X : 0;
-    //     m_RigidBody->ApplyVelocity(Vector2D(adjust));
-    // } else if (event.key.keysym.sym == SDLK_d) {
-    //     Vector2D adjust = Vector2D(-3, 0);
-    //     //adjust.X = m_RigidBody->Velocity().X != 0 ? adjust.X : 0;
-    //     m_RigidBody->ApplyVelocity(Vector2D(adjust));
-    // }
+    if (event.key.keysym.sym == SDLK_w) {
+        Vector2D adjust = Vector2D(0, 3);
+        //adjust.Y = m_RigidBody->Velocity().Y != 0 ? adjust.Y : 0;
+        m_State.RemoveState(CharacterState::MoveUp);
+        ChangeAnimation();
+    } else if (event.key.keysym.sym == SDLK_s) {
+        Vector2D adjust = Vector2D(0, -3);
+        //adjust.Y = m_RigidBody->Velocity().Y != 0 ? adjust.Y : 0;
+        m_State.RemoveState(CharacterState::MoveDown);
+        ChangeAnimation();
+    } else if (event.key.keysym.sym == SDLK_a) {
+        Vector2D adjust = Vector2D(3, 0);
+        //adjust.X = m_RigidBody->Velocity().X != 0 ? adjust.X : 0;
+        m_State.RemoveState(CharacterState::MoveLeft);
+        ChangeAnimation();
+    } else if (event.key.keysym.sym == SDLK_d) {
+        Vector2D adjust = Vector2D(-3, 0);
+        //adjust.X = m_RigidBody->Velocity().X != 0 ? adjust.X : 0;
+        m_State.RemoveState(CharacterState::MoveRight);
+        ChangeAnimation();
+    }
 }
 
 void Player::Clean(){

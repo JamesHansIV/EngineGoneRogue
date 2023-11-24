@@ -1,25 +1,41 @@
 #include "Animation.h"
 
 #include "Engine/Renderer/Renderer.h"
+#include "Engine/Application/Application.h"
 #include <utility>
 
 void Animation::Update(){
     // need to work on how to get the animation to start from frame 0 when a new animation is played
-    m_SpriteFrame = (SDL_GetTicks()/m_AnimSpeed) % m_FrameCount;
+    // SDL_Log("global frame: %d", Application::Get()->GetFrame());
+
+
+    if (!m_Stopped && Application::Get()->GetFrame() % m_Info.AnimationSpeed == 0) {
+        SDL_Log("current frame: %d", m_SpriteFrame);
+        if (m_SpriteFrame + 1 == m_Info.FrameCount && !m_Info.Loop) {
+            StopAnimation();
+        }
+        m_SpriteFrame = (m_SpriteFrame + 1) % m_Info.FrameCount;
+        SDL_Log("Updating animation frame: %d", m_SpriteFrame);
+    }
 }
 
 void Animation::Draw(const Rect& dstRect, float angle){
-    SDL_Rect src_rect = { (m_TilePos.col + m_SpriteFrame) * m_TilePos.w, m_TilePos.row * m_TilePos.h, m_TilePos.w, m_TilePos.h };
+    SDL_Rect src_rect = { (m_Info.Tile.col + m_SpriteFrame) * m_Info.Tile.w, m_Info.Tile.row * m_Info.Tile.h, m_Info.Tile.w, m_Info.Tile.h };
     SDL_Rect dst_rect = { static_cast<int>(dstRect.x), static_cast<int>(dstRect.y), dstRect.w, dstRect.h  };
 
-    Renderer::GetInstance()->Draw(m_TextureID, src_rect, dst_rect, angle, nullptr, m_Flip);
+    Renderer::GetInstance()->Draw(m_Info.TextureID, src_rect, dst_rect, angle, nullptr, m_Info.Flip);
 }
 
-void Animation::SetProps(std::string textureID, TilePos tilePos, int frameCount, int animSpeed, SDL_RendererFlip flip){
-    m_TextureID = std::move(textureID);
-    m_TilePos = { tilePos.row, tilePos.col, tilePos.w, tilePos.h };
+void Animation::StopAnimation() {
+    m_Stopped = true;
+    m_SpriteFrame = 0;
+}
 
-    m_FrameCount = frameCount;
-    m_AnimSpeed = animSpeed;
-    m_Flip = flip;
+void Animation::SelectAnimation(std::string id) {
+    if (m_Animations.find(id) == m_Animations.end()) {
+        SDL_LogError(0, "Animation does not exist");
+    }
+    m_SpriteFrame = 0;
+    m_Stopped = false;
+    SetProps(m_Animations[id]);
 }

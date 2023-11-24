@@ -28,6 +28,7 @@ class Application{
         virtual void Render() {}
         virtual void Events();
 
+        inline int GetFrame() { return m_Frame; }
         inline bool IsRunning() const{return m_IsRunning;}
         inline SDL_Window* GetWindow() { return m_Window; }
         inline EventManager& GetEventManager() { return m_EventManager; }
@@ -38,6 +39,7 @@ class Application{
         std::string m_ProjectName;
         std::unordered_map<std::string, std::vector<GameObject*>> m_Rooms;
         float m_LastTick;
+        int m_Frame;
     private:
         bool m_IsRunning;
         SDL_Window* m_Window;

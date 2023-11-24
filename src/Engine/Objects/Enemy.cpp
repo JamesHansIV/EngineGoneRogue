@@ -14,17 +14,17 @@ DEVELOPING BASIC ENEMY BEHAVIOUR:
 - calculate the direction vector from enemy's position to the player's position
 - apply behaviour like move towards the player, attack in perception,etc
 
-
 - collision detection between the perception and player
 - collision detection between the enemy and the player
 - collision detection between the enemies (might need to add offset - but this might cause problems)
-
 */
 
 Enemy::Enemy(Properties& props, int perceptionX, int perceptionY):
     Character(props), m_PerceptionWidth(perceptionX), m_PerceptionHeight(perceptionY) {
     m_Animation = new Animation();
-    m_Animation->SetProps(m_TextureID, m_TilePos, 2, 500);
+    m_Animation->AddAnimation("Idle", {m_TextureID, m_TilePos, 2, 50, SDL_FLIP_NONE, true});
+    m_Animation->AddAnimation("Dead", {"player_dead", {0, 0, 18, 18}, 6, 50});
+    m_Animation->SelectAnimation("Idle");
     SetHealth(new Health(100));
     m_MarkedForDeletion = false;
 }
@@ -37,12 +37,22 @@ void Enemy::Draw(){
         m_Animation->Draw({m_DstRect.x, m_DstRect.y, m_DstRect.w, m_DstRect.h});
     }
 
-    if (!m_MarkedForDeletion) {
+    if (!m_State.HasState(CharacterState::Dead)) {
         m_Health->Draw(GetX(), GetY(), GetWidth());
     }
 }
 
 void Enemy::Update(float dt){
+    if (GetState().HasState(CharacterState::Dead)) {
+        m_Animation->Update();
+        SDL_Log("enemy deadd");
+        if (m_Animation->Stopped()) {
+            SDL_Log("animation ended");
+            GetState().SetState(CharacterState::ToBeDestroyed);
+        }
+        return;
+    }
+
     MoveTowardsTarget(dt);
     m_RigidBody->Update(dt);
 
@@ -52,13 +62,12 @@ void Enemy::Update(float dt){
 
     if(m_Health->GetHP() <= 0)
     {
-        m_Animation->SetProps("player_dead", {0, 0, 18, 18}, 6, 500);
+        GetState().SetState(CharacterState::Dead);
+        m_Animation->SelectAnimation("Dead");
+        ColliderHandler::GetInstance()->RemoveCollider(this);
         m_CollisionBox.clear();
-        if (m_Animation->GetCurrentFrame() == 6-1) {
-            m_MarkedForDeletion = true;
-        }
     }
-    m_Animation->Update();
+    
 }
 
 void Enemy::MoveTowardsTarget(float dt) {
@@ -92,7 +101,6 @@ void Enemy::OnCollide(Collider* collidee) {
     switch(collidee->GetObjectType()) {
         case ObjectType::Player:
             UnCollide(collidee);
-            dynamic_cast<Player*>(collidee)->GetHealth()->SetDamage(1);
             break;
         case ObjectType::Enemy:
             UnCollide(collidee);

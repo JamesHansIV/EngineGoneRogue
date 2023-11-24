@@ -16,7 +16,7 @@
 
 Application* Application::m_instance = nullptr;
 
-Application::Application() : m_ProjectName("test_project") {
+Application::Application() : m_ProjectName("test_project"), m_Frame(0) {
 
     if(SDL_Init(SDL_INIT_VIDEO)!=0 && IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG)!= 0){
         SDL_Log("Failed to initialize SDL: %s", SDL_GetError());
@@ -156,12 +156,12 @@ GameObject* Application::LoadObject(tinyxml2::XMLElement* xmlObj) {
             atoi(animation->FirstChildElement("Width")->GetText()),
             atoi(animation->FirstChildElement("Height")->GetText()),
         };
-        obj->GetAnimation()->SetProps(
+        obj->GetAnimation()->SetProps({
             animation->FirstChildElement("TextureID")->GetText(),
             tile_pos,
             atoi(animation->FirstChildElement("FrameCount")->GetText()),
             atoi(animation->FirstChildElement("Speed")->GetText())
-        );
+    });
         SDL_Log("Animation row: %d", obj->GetAnimation()->GetSpriteRow());
         SDL_Log("Animation col: %d", obj->GetAnimation()->GetSpriteCol());
         SDL_Log("Animation frameCount: %d", obj->GetAnimation()->GetFrameCount());
@@ -223,7 +223,7 @@ bool Application::LoadObjects(const std::string& roomPath, const std::string& ro
             SDL_Log("Object does not contain types element");
             assert(false);
         }
-        
+
         createdObj = LoadObject(curr_object);
         SDL_Log("loaded object: %d", createdObj != nullptr);
         if (!createdObj) return false;
@@ -318,6 +318,7 @@ void Application::Events(){
 
 void Application::Run() {
     while (m_IsRunning) {
+        m_Frame++;
         float currentTick = SDL_GetTicks();
         float dt = currentTick - m_LastTick;
         m_LastTick = currentTick;

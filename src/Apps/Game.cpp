@@ -23,7 +23,11 @@ int cur_enemy_generation_interval = 500;
 Game::Game() {
     SDL_Renderer* renderer = Renderer::GetInstance()->GetRenderer();
 
-    Renderer::GetInstance()->AddTexture("player", "../assets/textures/spritesheets/player-front-idle.png");
+    Renderer::GetInstance()->AddTexture("player_move_up", "../assets/textures/spritesheets/player-move-up.png");
+
+    Renderer::GetInstance()->AddTexture("player_move_down", "../assets/textures/spritesheets/player-move-down.png");
+    Renderer::GetInstance()->AddTexture("player_move_right", "../assets/textures/spritesheets/player-move-right.png");
+    Renderer::GetInstance()->AddTexture("player_move_right2", "../assets/textures/spritesheets/player-move-right2.png");
     Renderer::GetInstance()->AddTexture("enemy1", "../assets/textures/spritesheets/enemy1_idle_spritesheet.png");
     Renderer::GetInstance()->AddTexture("enemy2", "../assets/textures/spritesheets/enemy2_idle_spritesheet.png");
     Renderer::GetInstance()->AddTexture("enemy3", "../assets/textures/spritesheets/enemy3_idle_spritesheet.png");
@@ -45,7 +49,7 @@ Game::Game() {
         }
     }
 
-    Properties props_p("player", {0, 0, 18, 18}, {0, 0, 30, 30}, 0, "player");
+    Properties props_p("player_move_down", {0, 0, 18, 18}, {0, 0, 30, 30}, 0, "player");
     player = new Player(props_p);
 
     Properties props1("enemy5",{0, 0, 16, 16}, {200, 200, 36, 36}, 0, "enemy1");
@@ -66,19 +70,19 @@ Game::Game() {
     Properties props6("enemy5", {0, 0, 16, 16}, {600, 150, 36, 36}, 0, "enemy6");
     enemy6 = new Enemy(props6,  150, 150);
 
-    m_Objects.push_back(enemy1);
-    m_Objects.push_back(enemy2);
-    m_Objects.push_back(enemy3);
-    m_Objects.push_back(enemy4);
-    m_Objects.push_back(enemy5);
-    m_Objects.push_back(enemy6);
+    // m_Objects.push_back(enemy1);
+    // m_Objects.push_back(enemy2);
+    // m_Objects.push_back(enemy3);
+    // m_Objects.push_back(enemy4);
+    // m_Objects.push_back(enemy5);
+    // m_Objects.push_back(enemy6);
     ColliderHandler::GetInstance()->AddCollider(player);
-    ColliderHandler::GetInstance()->AddCollider(enemy1);
-    ColliderHandler::GetInstance()->AddCollider(enemy2);
-    ColliderHandler::GetInstance()->AddCollider(enemy3);
-    ColliderHandler::GetInstance()->AddCollider(enemy4);
-    ColliderHandler::GetInstance()->AddCollider(enemy5);
-    ColliderHandler::GetInstance()->AddCollider(enemy6);
+    // ColliderHandler::GetInstance()->AddCollider(enemy1);
+    // ColliderHandler::GetInstance()->AddCollider(enemy2);
+    // ColliderHandler::GetInstance()->AddCollider(enemy3);
+    // ColliderHandler::GetInstance()->AddCollider(enemy4);
+    // ColliderHandler::GetInstance()->AddCollider(enemy5);
+    // ColliderHandler::GetInstance()->AddCollider(enemy6);
 
 
     srand(time(nullptr));
@@ -132,9 +136,8 @@ void Game::Update(float dt) {
             enemy->SetTarget(player);
         }
         (*it)->Update(dt);
-        if ((enemy != nullptr) && enemy->IsMarkedForDeletion())  // Check if it's an Enemy and marked for deletion
+        if ((enemy != nullptr) && enemy->GetState().HasState(ObjectState::ToBeDestroyed))  // Check if it's an Enemy and marked for deletion
         {
-            ColliderHandler::GetInstance()->RemoveCollider(enemy);
             DeleteObject(enemy);
         }
         else
@@ -145,17 +148,17 @@ void Game::Update(float dt) {
     ColliderHandler::GetInstance()->HandleCollisions();
 
     m_tick++;
-    if (m_tick % cur_enemy_generation_interval == 0) {
-      float generated_x = rand() % 500 + 200;
-      float generated_y = rand() % 300 + 20;
-      Properties generated_props("enemy5",{0, 0, 16, 16}, {generated_x, generated_y, 36, 36});
-      auto* generated_enemy = new Enemy(generated_props, 300, 300);
-      ColliderHandler::GetInstance()->AddCollider(generated_enemy);
-      m_Objects.push_back(generated_enemy);
-    }
-    if (max_tick_interval < cur_enemy_generation_interval) {
-      cur_enemy_generation_interval -= 20;
-    }
+    // if (m_tick % cur_enemy_generation_interval == 0) {
+    //   float generated_x = rand() % 500 + 200;
+    //   float generated_y = rand() % 300 + 20;
+    //   Properties generated_props("enemy5",{0, 0, 16, 16}, {generated_x, generated_y, 36, 36});
+    //   auto* generated_enemy = new Enemy(generated_props, 300, 300);
+    //   ColliderHandler::GetInstance()->AddCollider(generated_enemy);
+    //   m_Objects.push_back(generated_enemy);
+    // }
+    // if (max_tick_interval < cur_enemy_generation_interval) {
+    //   cur_enemy_generation_interval -= 20;
+    // }
 }
 
 void Game::Render() {

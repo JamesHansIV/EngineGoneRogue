@@ -11,7 +11,7 @@ GameObject::GameObject(GameObject* rhs) {
 
     if (rhs->m_Animation != nullptr) {
         m_Animation = new Animation();
-        m_Animation->SetProps(
+        m_Animation->SetProps({
             rhs->m_Animation->GetTextureID(),
             {rhs->m_Animation->GetSpriteRow(),
             rhs->m_Animation->GetSpriteCol(),
@@ -19,7 +19,7 @@ GameObject::GameObject(GameObject* rhs) {
             rhs->m_Animation->GetSpriteHeight()},
             rhs->m_Animation->GetFrameCount(),
             rhs->m_Animation->GetAnimationSpeed()
-        );
+        });
     }
 
     m_Transform = new Transform(&m_DstRect.x, &m_DstRect.y);
@@ -32,7 +32,6 @@ void GameObject::Draw() {
         SDL_Rect src_rect = { m_TilePos.col * m_TilePos.w, m_TilePos.row * m_TilePos.h, m_TilePos.w, m_TilePos.h };
         SDL_Rect dst_rect = { static_cast<int>(m_DstRect.x), static_cast<int>(m_DstRect.y), m_DstRect.w, m_DstRect.h };
         Renderer::GetInstance()->Draw(m_TextureID, src_rect, dst_rect, m_Rotation, nullptr,m_Flip);
-
     }
 };
 

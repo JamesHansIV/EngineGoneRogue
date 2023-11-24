@@ -7,24 +7,24 @@
 #include "Engine/Objects/Player.h"
 #include <set>
 
-struct EnemyInfo {
+struct E_EnemyInfo {
     int PerceptionWidth;
     int PerceptionHeight;
 };
 
-struct AnimationInfo {
+struct E_AnimationInfo {
     TilePos Tile;
     int FrameCount;
     int AnimationSpeed;
 };
 
-struct ObjectInfo {
+struct E_ObjectInfo {
     TilePos Tile;
     Rect DstRect;
     float Rotation = 0.0F;
     ObjectType type = ObjectType::Base;
     SDL_Rect CollisionBox;
-    AnimationInfo Animation;
+    E_AnimationInfo Animation;
     bool SnapToGrid = true;
 };
 
@@ -93,8 +93,8 @@ class Editor : public Application{
         GameObject* m_CurrentObject;
         std::set<GameObject*> m_SelectedObjects;
         EditState m_DrawState;
-        ObjectInfo m_ObjectInfo;
-        EnemyInfo m_EnemyInfo;
+        E_ObjectInfo m_ObjectInfo;
+        E_EnemyInfo m_EnemyInfo;
         std::vector< std::vector<GameObject*>> m_Layers;
         std::set<int> m_HiddenLayers;
         int m_CurrentLayer{0};

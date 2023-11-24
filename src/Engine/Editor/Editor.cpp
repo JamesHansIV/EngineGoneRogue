@@ -561,12 +561,12 @@ void Editor::ShowAddAnimation() {
                 m_CurrentObject->SetAnimation(new Animation());
             }
 
-            m_CurrentObject->GetAnimation()->SetProps(
+            m_CurrentObject->GetAnimation()->SetProps({
                 m_CurrentObject->GetTextureID(),
                 m_ObjectInfo.Animation.Tile,
                 m_ObjectInfo.Animation.FrameCount,
                 m_ObjectInfo.Animation.AnimationSpeed
-            );
+            });
             show_status_timer = 300;
         }
         ImGui::TreePop();
@@ -998,7 +998,7 @@ void Editor::Render() {
                 if (m_SelectedObjects.find(obj) != m_SelectedObjects.end()) {
                     std::vector<SDL_Rect> rects;
                     rects.reserve(4);
-for (int i = 0; i < 4; i++) {
+                for (int i = 0; i < 4; i++) {
                         rects.push_back({ static_cast<int>(obj->GetX())+i, static_cast<int>(obj->GetY())+i, obj->GetWidth(), obj->GetHeight() });
                     }
                     Renderer::GetInstance()->DrawRects(rects, {0, 150, 255, 255});

@@ -6,7 +6,6 @@
 class Entrance: public Collider{
     public:
         explicit Entrance(Properties& props);
-        virtual ~Entrance() override;
         virtual void Draw() override;
         virtual void Clean() override;
         virtual void Update(float dt) override;

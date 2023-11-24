@@ -16,6 +16,7 @@ class Player: public Character{
         virtual void Update(float dt) override;
 
         void UpdateWeapon(float dt);
+        void ChangeAnimation();
 
         void CheckInput();
 

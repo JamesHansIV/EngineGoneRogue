@@ -4,25 +4,43 @@
 #include "Engine/Renderer/TileMap.h"
 #include "Engine/utils/utils.h"
 
+struct AnimationInfo {
+    std::string TextureID;
+    TilePos Tile;
+    int FrameCount;
+    int AnimationSpeed;
+    SDL_RendererFlip Flip = SDL_FLIP_NONE;
+    bool Loop = false;
+};
+
 class Animation{
     public:
-        Animation()= default;
+        Animation() {
+            m_Info = { "", {0, 0, 0, 0}, 0, 0, SDL_FLIP_NONE, false};
+            m_Stopped = false;
+            m_SpriteFrame = 0;
+        }
 
         void Update();
         void Draw(const Rect& dstRect, float angle = 0.0f);
-        void SetProps(std::string textureID, TilePos tilePos, int frameCount, int animSpeed, SDL_RendererFlip flip=SDL_FLIP_NONE);
-        std::string GetTextureID() { return m_TextureID; }
+        void SetProps(AnimationInfo info) { m_Info = info; }
+        std::string GetTextureID() { return m_Info.TextureID; }
         int GetCurrentFrame(){return m_SpriteFrame;}
-        int GetSpriteRow() { return m_TilePos.row; }
-        int GetSpriteCol() { return m_TilePos.col; }
-        int GetSpriteWidth() { return m_TilePos.w; }
-        int GetSpriteHeight() { return m_TilePos.h; }
-        int GetFrameCount() { return m_FrameCount; }
-        int GetAnimationSpeed() { return m_AnimSpeed; }
+        int GetSpriteRow() { return m_Info.Tile.row; }
+        int GetSpriteCol() { return m_Info.Tile.col; }
+        int GetSpriteWidth() { return m_Info.Tile.w; }
+        int GetSpriteHeight() { return m_Info.Tile.h; }
+        int GetFrameCount() { return m_Info.FrameCount; }
+        int GetAnimationSpeed() { return m_Info.AnimationSpeed; }
+
+        bool Stopped() { return m_Stopped; }
+        void StopAnimation();
+
+        void SelectAnimation(std::string id);
+        void AddAnimation(std::string id, AnimationInfo info) { m_Animations[id] = info; }
     private:
-        int m_SpriteRow, m_SpriteCol, m_SpriteTileSize, m_SpriteFrame;
-        int m_AnimSpeed, m_FrameCount;
-        TilePos m_TilePos {0, 0, 0, 0};
-        std::string m_TextureID;
-        SDL_RendererFlip m_Flip;
+        std::unordered_map<std::string, AnimationInfo> m_Animations;
+        AnimationInfo m_Info;
+        int m_SpriteFrame;
+        bool m_Stopped;
 };
