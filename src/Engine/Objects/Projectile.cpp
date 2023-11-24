@@ -1,13 +1,18 @@
 #include "Projectile.h"
-#include "Engine/Renderer/Renderer.h"
-#include "Engine/Objects/ColliderHandler.h"
+#include <SDL2/SDL.h>
 #include "Character.h"
 #include "Enemy.h"
-#include <SDL2/SDL.h>
+#include "Engine/Objects/ColliderHandler.h"
+#include "Engine/Renderer/Renderer.h"
 
-Projectile::Projectile(Properties& props, float speed, float angle, bool playerOwned)
-: Collider(props), m_Speed(speed), m_Angle(angle), m_PlayerOwned(playerOwned){
-    Vector2D direction = Vector2D(cos(m_Angle * M_PI / 180), sin(m_Angle * M_PI / 180));
+Projectile::Projectile(Properties& props, float speed, float angle,
+                       bool playerOwned)
+    : Collider(props),
+      m_Speed(speed),
+      m_Angle(angle),
+      m_PlayerOwned(playerOwned) {
+    Vector2D direction =
+        Vector2D(cos(m_Angle * M_PI / 180), sin(m_Angle * M_PI / 180));
     Vector2D velocity = direction * m_Speed;
     m_Velocity = velocity;
     m_RigidBody->SetVelocity(m_Velocity);
@@ -15,34 +20,33 @@ Projectile::Projectile(Properties& props, float speed, float angle, bool playerO
     m_MarkedForDeletion = false;
 }
 
-void Projectile::Draw(){
+void Projectile::Draw() {
     GameObject::Draw();
 }
 
-void Projectile::Update(float dt){
+void Projectile::Update(float dt) {
     m_RigidBody->SetVelocity(m_Velocity);
     m_RigidBody->Update(dt);
     SetX(m_RigidBody->Position().X);
     SetY(m_RigidBody->Position().Y);
-    
+
     m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
     CheckOutOfBounds();
 }
 
 void Projectile::CheckOutOfBounds() {
-    if (GetX() < 0.0f ||
-        GetY() < 0.0f ||
+    if (GetX() < 0.0f || GetY() < 0.0f ||
         GetX() + this->GetWidth() > SCREEN_WIDTH ||
-        GetY() + this->GetHeight() > SCREEN_HEIGHT)
-    {
+        GetY() + this->GetHeight() > SCREEN_HEIGHT) {
         m_MarkedForDeletion = true;
     }
 }
 
 void Projectile::OnCollide(Collider* collidee) {
-    if (this == collidee) return;
+    if (this == collidee)
+        return;
 
-    switch(collidee->GetObjectType()) {
+    switch (collidee->GetObjectType()) {
         case ObjectType::Player:
             if (!m_PlayerOwned) {
                 m_MarkedForDeletion = true;
@@ -70,5 +74,4 @@ void Projectile::OnCollide(Collider* collidee) {
     }
 }
 
-void Projectile::Clean(){
-}
+void Projectile::Clean() {}

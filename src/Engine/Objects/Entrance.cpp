@@ -12,12 +12,10 @@ void Entrance::Draw() {
     }
 }
 
-void Entrance::Update(float dt) {
-
-}
+void Entrance::Update(float dt) {}
 
 void Entrance::OnCollide(Collider* collidee) {
-    
+
     switch (collidee->GetObjectType()) {
         case ObjectType::Player:
             m_State.SetState(EntranceState::Open);
@@ -28,6 +26,4 @@ void Entrance::OnCollide(Collider* collidee) {
     }
 }
 
-void Entrance::Clean() {
-
-}
+void Entrance::Clean() {}

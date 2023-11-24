@@ -1,43 +1,34 @@
 #include "MeleeWeapon.h"
-#include "Engine/Renderer/Renderer.h"
 #include "Engine/Objects/ColliderHandler.h"
+#include "Engine/Renderer/Renderer.h"
 
 #include "Engine/Objects/Character.h"
 
+MeleeWeapon::MeleeWeapon(Properties& props, bool playerOwned)
+    : Weapon(props, playerOwned) {}
 
-MeleeWeapon::MeleeWeapon(Properties& props, bool playerOwned) : Weapon(props, playerOwned) {}
-
-void MeleeWeapon::Draw()
-{
+void MeleeWeapon::Draw() {
     GameObject::Draw();
 }
 
-void MeleeWeapon::Update(float dt)
-{
+void MeleeWeapon::Update(float dt) {
     m_CollisionBox.Set(GetX(), GetY(), GetHeight(), GetWidth());
 
-    if(GetFlip() == SDL_FLIP_HORIZONTAL)
-    {   
+    if (GetFlip() == SDL_FLIP_HORIZONTAL) {
         SetX(GetX() - 12);
-        m_CollisionBox.Set(GetX()-12, GetY()-12, GetHeight(), GetWidth());
+        m_CollisionBox.Set(GetX() - 12, GetY() - 12, GetHeight(), GetWidth());
     }
 
-    if (InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT))
-    {
+    if (InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT)) {
         float swingAngle = 0.0f;
-        if(GetFlip() == SDL_FLIP_HORIZONTAL)
-        {   
+        if (GetFlip() == SDL_FLIP_HORIZONTAL) {
             swingAngle = -45.0f;
-        }
-        else
-        {
+        } else {
             swingAngle = 45.0f;
         }
         SetRotation(swingAngle);
         InputChecker::SetMouseButtonPressed(SDL_BUTTON_LEFT, false);
-    }
-    else
-    {
+    } else {
         SetRotation(0.0);
     }
 }
@@ -47,7 +38,7 @@ void MeleeWeapon::OnCollide(Collider* collidee) {
         return;
     }
 
-    switch(collidee->GetObjectType()) {
+    switch (collidee->GetObjectType()) {
         case ObjectType::Player:
             if (!GetPlayerOwned()) {
                 dynamic_cast<Character*>(collidee)->GetHealth()->SetDamage(10);
@@ -71,7 +62,4 @@ void MeleeWeapon::OnCollide(Collider* collidee) {
     }
 }
 
-void MeleeWeapon::Clean()
-{
-
-}
+void MeleeWeapon::Clean() {}

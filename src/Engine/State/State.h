@@ -24,10 +24,7 @@ struct ObjectState {
 };
 
 struct EntranceState : ObjectState {
-    enum {
-        Open = 1 << 5,
-        Close = 1 << 6
-    };
+    enum { Open = 1 << 5, Close = 1 << 6 };
 };
 
 struct CharacterState : ObjectState {
@@ -42,19 +39,23 @@ struct CharacterState : ObjectState {
     };
 };
 
-
 class State {
-    public:
-        State() : m_CurrentStates(0) {}
+   public:
+    State() : m_CurrentStates(0) {}
 
-        int GetCurrentStates() { return m_CurrentStates; }
+    int GetCurrentStates() { return m_CurrentStates; }
 
-        void SetState(int state) { m_CurrentStates = state; }
-        void ToggleState(int state) { m_CurrentStates ^= state; }
-        void AddState(int state) { m_CurrentStates |= state; }
-        void RemoveState(int state) { m_CurrentStates &= ~state; }
-        bool HasState(int state) { return m_CurrentStates & state; }
-    private:
-        int m_CurrentStates;
-        std::vector<int> m_StateOrder;
+    void SetState(int state) { m_CurrentStates = state; }
+
+    void ToggleState(int state) { m_CurrentStates ^= state; }
+
+    void AddState(int state) { m_CurrentStates |= state; }
+
+    void RemoveState(int state) { m_CurrentStates &= ~state; }
+
+    bool HasState(int state) { return m_CurrentStates & state; }
+
+   private:
+    int m_CurrentStates;
+    std::vector<int> m_StateOrder;
 };

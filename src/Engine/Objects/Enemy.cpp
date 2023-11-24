@@ -1,8 +1,8 @@
 #include "Enemy.h"
-#include "Engine/Renderer/Renderer.h"
 #include "Engine/Input/InputChecker.h"
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Objects/Player.h"
+#include "Engine/Renderer/Renderer.h"
 
 #include <math.h>
 
@@ -19,21 +19,24 @@ DEVELOPING BASIC ENEMY BEHAVIOUR:
 - collision detection between the enemies (might need to add offset - but this might cause problems)
 */
 
-Enemy::Enemy(Properties& props, int perceptionX, int perceptionY):
-    Character(props), m_PerceptionWidth(perceptionX), m_PerceptionHeight(perceptionY) {
+Enemy::Enemy(Properties& props, int perceptionX, int perceptionY)
+    : Character(props),
+      m_PerceptionWidth(perceptionX),
+      m_PerceptionHeight(perceptionY) {
     m_Animation = new Animation();
-    m_Animation->AddAnimation("Idle", {m_TextureID, m_TilePos, 2, 15, SDL_FLIP_NONE, true});
+    m_Animation->AddAnimation(
+        "Idle", {m_TextureID, m_TilePos, 2, 15, SDL_FLIP_NONE, true});
     m_Animation->AddAnimation("Dead", {"player_dead", {0, 0, 18, 18}, 6, 8});
     m_Animation->SelectAnimation("Idle");
     SetHealth(new Health(100));
     m_MarkedForDeletion = false;
 }
 
-void Enemy::Draw(){
+void Enemy::Draw() {
     if (m_TextureID == "boss") {
-        m_Animation->Draw({m_DstRect.x, m_DstRect.y, m_DstRect.w + 15, m_DstRect.h});
-    }
-    else {
+        m_Animation->Draw(
+            {m_DstRect.x, m_DstRect.y, m_DstRect.w + 15, m_DstRect.h});
+    } else {
         m_Animation->Draw({m_DstRect.x, m_DstRect.y, m_DstRect.w, m_DstRect.h});
     }
 
@@ -42,7 +45,7 @@ void Enemy::Draw(){
     }
 }
 
-void Enemy::Update(float dt){
+void Enemy::Update(float dt) {
     if (GetState().HasState(CharacterState::Dead)) {
         m_Animation->Update();
         SDL_Log("enemy deadd");
@@ -60,14 +63,12 @@ void Enemy::Update(float dt){
     SetY(m_RigidBody->Position().Y);
     m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
 
-    if(m_Health->GetHP() <= 0)
-    {
+    if (m_Health->GetHP() <= 0) {
         GetState().SetState(CharacterState::Dead);
         m_Animation->SelectAnimation("Dead");
         ColliderHandler::GetInstance()->RemoveCollider(this);
         m_CollisionBox.clear();
     }
-    
 }
 
 void Enemy::MoveTowardsTarget(float dt) {
@@ -76,16 +77,17 @@ void Enemy::MoveTowardsTarget(float dt) {
     int rectTop = GetY() - m_PerceptionHeight;
     int rectBottom = GetY() + GetHeight() + m_PerceptionHeight;
 
-    m_Perception = {rectLeft, rectTop, rectRight - rectLeft, rectBottom - rectTop };
+    m_Perception = {rectLeft, rectTop, rectRight - rectLeft,
+                    rectBottom - rectTop};
 
     SDL_Rect target = m_Target->GetCollisionBox().GetRect();
 
-    if(ColliderHandler::GetInstance()->CheckCollision(m_Perception, target))
-    {
+    if (ColliderHandler::GetInstance()->CheckCollision(m_Perception, target)) {
         float directionX = m_Target->GetMidPointX() - GetMidPointX();
         float directionY = m_Target->GetMidPointY() - GetMidPointY();
 
-        float directionLength = sqrt(directionX * directionX + directionY * directionY);
+        float directionLength =
+            sqrt(directionX * directionX + directionY * directionY);
         if (directionLength != 0) {
             directionX /= directionLength;
             directionY /= directionLength;
@@ -96,9 +98,10 @@ void Enemy::MoveTowardsTarget(float dt) {
 }
 
 void Enemy::OnCollide(Collider* collidee) {
-    if (this == collidee) return;
-    
-    switch(collidee->GetObjectType()) {
+    if (this == collidee)
+        return;
+
+    switch (collidee->GetObjectType()) {
         case ObjectType::Player:
             UnCollide(collidee);
             break;
@@ -120,6 +123,6 @@ void Enemy::OnCollide(Collider* collidee) {
     }
 }
 
-void Enemy::Clean(){
+void Enemy::Clean() {
     delete m_Animation;
 }

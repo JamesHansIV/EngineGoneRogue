@@ -1,19 +1,18 @@
 #include "Texture.h"
 
-#include "Renderer.h"
 #include <utility>
+#include "Renderer.h"
 
 Texture::Texture(const std::string& filename, std::string id) {
     m_FilePath = filename;
     SDL_Surface* surface = IMG_Load(filename.c_str());
-    if(surface == nullptr)
-    {
+    if (surface == nullptr) {
         throw std::runtime_error("Failed to load texture");
     }
 
-    SDL_Texture* texture = SDL_CreateTextureFromSurface(Renderer::GetInstance()->GetRenderer(), surface);
-    if(texture == nullptr)
-    {
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(
+        Renderer::GetInstance()->GetRenderer(), surface);
+    if (texture == nullptr) {
         throw std::runtime_error("Failed to create texture from surface");
     }
 
@@ -27,14 +26,13 @@ Texture::Texture(const std::string& filename, std::string id) {
 Texture::Texture(const char* filename, std::string id) {
     m_FilePath = filename;
     SDL_Surface* surface = IMG_Load(filename);
-    if(surface == nullptr)
-    {
+    if (surface == nullptr) {
         throw std::runtime_error("Failed to load texture");
     }
 
-    SDL_Texture* texture = SDL_CreateTextureFromSurface(Renderer::GetInstance()->GetRenderer(), surface);
-    if(texture == nullptr)
-    {
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(
+        Renderer::GetInstance()->GetRenderer(), surface);
+    if (texture == nullptr) {
         throw std::runtime_error("Failed to load texture");
     }
 
@@ -44,8 +42,6 @@ Texture::Texture(const char* filename, std::string id) {
     m_Height = surface->h;
     m_ObjectCount = 0;
 }
-
-
 
 Texture::~Texture() {
     SDL_DestroyTexture(m_Texture);
