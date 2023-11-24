@@ -2,7 +2,7 @@
 
 # Engine Build and Run Script in build/ directory
 
-rm -rf build
+# rm -rf build
 if [[ $1 == "editor" ]]
   then
     cmake -DEDITOR=ON -B build

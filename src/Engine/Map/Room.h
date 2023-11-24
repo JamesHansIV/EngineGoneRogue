@@ -1,10 +1,44 @@
 #pragma once
 
+#include <bitset>
 #include <string>
 #include <vector>
 
+enum Entrance {
+    UP = 1 << 0,
+    RIGHT = 1 << 1,
+    DOWN = 1 << 2,
+    LEFT = 1 << 3,
+};
+
+class Entrances {
+   public:
+    Entrances(std::initializer_list<Entrance> entrances) {
+        for (Entrance entrance : entrances) {
+            m_entrances.set(static_cast<unsigned>(entrance));
+        }
+    }
+
+    template <typename H>
+    friend H AbslHashValue(H h, const Entrances& e) {
+        return H::combine(std::move(h), e.m_entrances);
+    }
+
+    friend bool operator==(const Entrances& lhs, const Entrances& rhs) {
+        // return true if the objects are equal, false otherwise
+        return lhs.m_entrances == rhs.m_entrances;
+    }
+
+    bool test(Entrance e) { return m_entrances.test(static_cast<unsigned>(e)); }
+
+    std::bitset<4> m_entrances;  // see below
+   private:
+};
+
 class Room {
    public:
+    Entrances m_entrances;
+
    private:
     std::string m_TextureID;
     int m_room_id;
