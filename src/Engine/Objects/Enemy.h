@@ -13,11 +13,15 @@ class Enemy : public Character {
     virtual void Clean() override;
     virtual void Update(float dt) override;
 
-    void MoveTowardsTarget(float dt);
+    void MoveTowardsTarget(float dt, float minDistance);
+
+    bool TargetDetected();
 
     bool IsMarkedForDeletion() { return m_MarkedForDeletion; }
 
     void SetTarget(Collider* target) { m_Target = target; }
+
+    inline Collider* GetTarget() { return m_Target; }
 
     virtual void OnCollide(Collider* collidee) override;
 

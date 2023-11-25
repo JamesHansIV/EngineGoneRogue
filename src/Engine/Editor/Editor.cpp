@@ -70,6 +70,11 @@ x delete objects
     - add music
     - add audio to weapons, enemies, player, projectiles
 
+- environment
+    - traps
+    - trap doors
+    - falling
+    - chests and keys
 - weapons
     - uzi
     - shotgun

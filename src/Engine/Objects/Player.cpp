@@ -87,7 +87,6 @@ Player::~Player() {
 
 void Player::Draw() {
     if (m_State.HasState(CharacterState::Idle) && !m_State.HasState(CharacterState::IsHit)) {
-        SDL_Log("Drawing idle frame");
         GameObject::DrawRect();
     } else {
         m_Animation->Draw({GetX(), GetY(), GetWidth(), GetHeight()});
@@ -152,7 +151,9 @@ void Player::UpdateWeapon(float dt) {
     float angle = atan2(delta_y, delta_x) * (180.0 / M_PI);
     if (angle < 0) {
         angle += 360.0F;
-}
+    } else if (angle > 360) {
+        angle -= 360.0F;
+    }
 
     int const weapon_x = GetX() + GetWidth() / 2;
     int const weapon_y = GetY() + GetHeight() / 3;

@@ -24,24 +24,12 @@ int cur_enemy_generation_interval = 500;
 Game::Game() {
     SDL_Renderer* renderer = Renderer::GetInstance()->GetRenderer();
 
-    Renderer::GetInstance()->AddTexture(
-        "player_move_up", "../assets/textures/spritesheets/player-move-up.png");
-
     Renderer::GetInstance()->AddTexture("door-open", "../assets/textures/spritesheets/door2-open.png");
     Renderer::GetInstance()->AddTexture("door-close", "../assets/textures/spritesheets/door2-close.png");
 
     Renderer::GetInstance()->AddTexture(
         "player",
         "../assets/textures/spritesheets/player-sheet.png");
-    Renderer::GetInstance()->AddTexture(
-        "player_move_down",
-        "../assets/textures/spritesheets/player-move-down.png");
-    Renderer::GetInstance()->AddTexture(
-        "player_move_right",
-        "../assets/textures/spritesheets/player-move-right.png");
-    Renderer::GetInstance()->AddTexture(
-        "player_move_right2",
-        "../assets/textures/spritesheets/player-move-right2.png");
     Renderer::GetInstance()->AddTexture(
         "enemy1",
         "../assets/textures/spritesheets/enemy1_idle_spritesheet.png");
@@ -64,8 +52,6 @@ Game::Game() {
         "../assets/textures/kenney_tiny-dungeon/Tilemap/tilemap_packed.png");
     Renderer::GetInstance()->AddTexture("player_run",
                                         "../assets/textures/Run.png");
-    Renderer::GetInstance()->AddTexture(
-        "player_dead", "../assets/textures/spritesheets/player-dead.png");
     Renderer::GetInstance()->AddTexture(
         "projectile",
         "../assets/textures/BulletHell/PURPLE/Weapons/weapons/Firearms/Bullets/"
@@ -189,6 +175,7 @@ void Game::Update(float dt) {
                 ObjectState::
                     ToBeDestroyed))  // Check if it's an Enemy and marked for deletion
         {
+            SDL_Log("deleted obj: %s", (*it)->GetID().c_str());
             DeleteObject(*it);
         } else {
             ++it;

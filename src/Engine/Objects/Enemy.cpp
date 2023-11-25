@@ -27,7 +27,7 @@ Enemy::Enemy(Properties& props, int perceptionX, int perceptionY)
     m_Animation = new Animation();
     m_Animation->AddAnimation(
         "Idle", {m_TextureID, m_CurrentTilePos, 2, 15, SDL_FLIP_NONE, true});
-    m_Animation->AddAnimation("Dead", {"player_dead", {0, 0, 18, 18}, 6, 8});
+    m_Animation->AddAnimation("Dead", {"player", {0, 0, 18, 18}, 6, 8});
     m_Animation->SelectAnimation("Idle");
     SetHealth(new Health(100));
     m_MarkedForDeletion = false;
@@ -53,11 +53,12 @@ void Enemy::Update(float dt) {
         if (m_Animation->Stopped()) {
             SDL_Log("animation ended");
             GetState().SetState(CharacterState::ToBeDestroyed);
+
         }
         return;
     }
     m_Animation->Update();
-    MoveTowardsTarget(dt);
+    MoveTowardsTarget(dt, 0);
     m_RigidBody->Update(dt);
 
     SetX(m_RigidBody->Position().X);
@@ -69,10 +70,11 @@ void Enemy::Update(float dt) {
         m_Animation->SelectAnimation("Dead");
         ColliderHandler::GetInstance()->RemoveCollider(this);
         m_CollisionBox.clear();
+        SDL_Log("Set enemy death animation and removed collider");
     }
 }
 
-void Enemy::MoveTowardsTarget(float  /*dt*/) {
+bool Enemy::TargetDetected() {
     int const rect_left = GetX() - m_PerceptionWidth;
     int const rect_right = GetX() + GetWidth() + m_PerceptionWidth;
     int const rect_top = GetY() - m_PerceptionHeight;
@@ -86,9 +88,23 @@ void Enemy::MoveTowardsTarget(float  /*dt*/) {
     if (ColliderHandler::GetInstance()->CheckCollision(m_Perception, target)) {
         float direction_x = m_Target->GetMidPointX() - GetMidPointX();
         float direction_y = m_Target->GetMidPointY() - GetMidPointY();
+        return true;
+    }
+    return false;
+}
+
+void Enemy::MoveTowardsTarget(float  /*dt*/, float minDistance) {
+    if (TargetDetected()) {
+        float direction_x = m_Target->GetMidPointX() - GetMidPointX();
+        float direction_y = m_Target->GetMidPointY() - GetMidPointY();
 
         float const direction_length =
             sqrt(direction_x * direction_x + direction_y * direction_y);
+        
+        if (direction_length <= minDistance) {
+            return;
+        }
+
         if (direction_length != 0) {
             direction_x /= direction_length;
             direction_y /= direction_length;

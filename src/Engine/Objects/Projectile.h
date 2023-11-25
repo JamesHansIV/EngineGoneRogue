@@ -22,6 +22,8 @@ class Projectile : public Collider {
 
     virtual void OnCollide(Collider* collidee) override;
 
+    bool GetPlayerOwned() { return m_PlayerOwned; }
+
     virtual ObjectType GetObjectType() override {
         return ObjectType::Projectile;
     }
