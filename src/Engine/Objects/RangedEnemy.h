@@ -2,6 +2,7 @@
 
 #include "Engine/Objects/Enemy.h"
 #include "Engine/Objects/Projectile.h"
+#include "Engine/Objects/ProjectileManager.h"
 
 class RangedEnemy : public Enemy {
    public:
@@ -19,5 +20,6 @@ class RangedEnemy : public Enemy {
 
    private:
     Animation* m_Animation;
+    ProjectileManager m_ProjectileManager;
     std::vector<Projectile*> m_Projectiles;
 };

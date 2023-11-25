@@ -7,9 +7,7 @@ RangedWeapon::RangedWeapon(Properties& props, bool playerOwned)
 
 void RangedWeapon::Draw() {
     GameObject::Draw();
-    for (auto* projectile : m_Projectiles) {
-        projectile->Draw();
-    }
+    m_ProjectileManager.Draw();
 }
 
 void RangedWeapon::Update(float dt) {
@@ -27,27 +25,11 @@ void RangedWeapon::Update(float dt) {
         Projectile* projectile = nullptr;
         projectile = new Projectile(projectile_props, 10, GetRotation(),
                                     GetPlayerOwned());
-        m_Projectiles.push_back(projectile);
+        m_ProjectileManager.AddProjectile(projectile);
         ColliderHandler::GetInstance()->AddCollider(projectile);
         InputChecker::SetMouseButtonPressed(SDL_BUTTON_LEFT, false);
     }
-
-    UpdateProjectiles(dt);
-}
-
-void RangedWeapon::UpdateProjectiles(float dt) {
-    for (auto it = m_Projectiles.begin(); it != m_Projectiles.end();) {
-        Projectile* projectile = *it;
-        (projectile)->Update(dt);
-        if ((projectile)->IsMarkedForDeletion()) {
-            ColliderHandler::GetInstance()->RemoveCollider(projectile);
-            (projectile)->Clean();
-            delete projectile;
-            it = m_Projectiles.erase(it);
-        } else {
-            ++it;
-        }
-    }
+    m_ProjectileManager.UpdateProjectiles(dt);
 }
 
 void RangedWeapon::Clean() {}

@@ -51,7 +51,6 @@ void Enemy::Update(float dt) {
         m_Animation->Update();
         SDL_Log("enemy deadd");
         if (m_Animation->Stopped()) {
-            SDL_Log("animation ended");
             GetState().SetState(CharacterState::ToBeDestroyed);
 
         }
@@ -70,7 +69,6 @@ void Enemy::Update(float dt) {
         m_Animation->SelectAnimation("Dead");
         ColliderHandler::GetInstance()->RemoveCollider(this);
         m_CollisionBox.clear();
-        SDL_Log("Set enemy death animation and removed collider");
     }
 }
 

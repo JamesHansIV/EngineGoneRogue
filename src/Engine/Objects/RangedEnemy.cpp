@@ -1,18 +1,17 @@
 #include "RangedEnemy.h"
 
 RangedEnemy::RangedEnemy(Properties& props, int perceptionWidth, int perceptionHeight)
-    : Enemy(props, perceptionWidth, perceptionHeight) {}
+    : Enemy(props, perceptionWidth, perceptionHeight) {
+        
+    }
 
 
 void RangedEnemy::Draw() {
-    for (auto* projectile : m_Projectiles) {
-        projectile->Draw();
-    }
-    
+   m_ProjectileManager.Draw(); 
 }
 
 void RangedEnemy::Update(float dt) {
-
+    m_ProjectileManager.UpdateProjectiles(dt);
 }
 
 void RangedEnemy::Shoot() {
@@ -30,7 +29,7 @@ void RangedEnemy::Shoot() {
         angle};
 
     Projectile* bullet = new Projectile(props, 3, angle);
-    m_Projectiles.push_back(bullet);
+    m_ProjectileManager.AddProjectile(bullet);
 }
 
 void RangedEnemy::OnCollide(Collider* collidee) {
@@ -38,5 +37,5 @@ void RangedEnemy::OnCollide(Collider* collidee) {
 }
 
 void RangedEnemy::Clean() {
-    
+
 }
