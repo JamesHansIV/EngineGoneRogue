@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Engine/Animation/Animation.h"
-#include "Engine/Physics/Transform.h"
 #include "Engine/Renderer/Renderer.h"
 #include "Engine/Renderer/TileMap.h"
 #include "Engine/State/State.h"
@@ -63,14 +62,13 @@ class GameObject : public IObject {
    public:
     explicit GameObject(Properties& props)
         : m_TextureID(props.TextureID),
-          m_TilePos(props.TilePosition),
+          m_CurrentTilePos(props.TilePosition),
           m_DstRect(props.DstRect),
           m_Rotation(props.Rotation),
           m_Flip(props.Flip),
           m_ObjectID(props.ObjectID),
           m_Animation(nullptr) {
 
-        m_Transform = new Transform(&m_DstRect.x, &m_DstRect.y);
     }
 
     explicit GameObject(GameObject* rhs);
@@ -80,9 +78,15 @@ class GameObject : public IObject {
     virtual void Clean() override{};
     virtual void Update(float dt) override;
 
+    void DrawRect();
+
     virtual ObjectType GetObjectType() { return ObjectType::Base; }
 
-    TilePos& GetTilePos() { return m_TilePos; }
+    TilePos& GetTilePos() { return m_CurrentTilePos; }
+
+    void AddIdleFrame(std::string id, TilePos tilePos);
+
+    void SelectIdleFrame(std::string id);
 
     Rect& GetDstRect() { return m_DstRect; }
 
@@ -135,8 +139,8 @@ class GameObject : public IObject {
     State& GetState() { return m_State; }
 
    protected:
-    Transform* m_Transform;
-    TilePos m_TilePos;
+    TilePos m_CurrentTilePos;
+    std::unordered_map<std::string, TilePos> m_IdleFrames;
     Rect m_DstRect;
     float m_Rotation;
     std::string m_TextureID;

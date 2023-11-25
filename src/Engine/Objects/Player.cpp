@@ -9,35 +9,58 @@
 #include "Projectile.h"
 
 Player::Player(Properties& props) : Character(props) {
+    AddIdleFrame("face-down", {1, 0, 18, 16});
+    AddIdleFrame("face-right", {2, 0, 18, 16});
+    AddIdleFrame("face-right-up", {3, 0, 18, 16});
+    AddIdleFrame("face-up", {4, 0, 18, 16});
+    
     m_Animation = new Animation();
-    m_Animation->AddAnimation(
-        "Idle", {m_TextureID, m_TilePos, 2, 20, SDL_FLIP_NONE, true});
-    m_Animation->AddAnimation("Dead", {"player_dead", {0, 0, 18, 18}, 6, 8});
+    m_Animation->AddAnimation("Dead", {m_TextureID, {0, 0, 18, 16}, 6, 5});
     m_Animation->AddAnimation(
         "move-right",
-        {"player_move_right", {0, 0, 18, 18}, 6, 8, SDL_FLIP_NONE, true});
+        {m_TextureID, m_IdleFrames["face-right"], 6, 5, SDL_FLIP_NONE, true});
     m_Animation->AddAnimation(
         "move-left",
-        {"player_move_right", {0, 0, 18, 18}, 6, 8, SDL_FLIP_HORIZONTAL, true});
+        {m_TextureID, m_IdleFrames["face-right"], 6, 5, SDL_FLIP_HORIZONTAL, true});
     m_Animation->AddAnimation(
         "move-right-up",
-        {"player_move_right2", {0, 0, 18, 18}, 6, 8, SDL_FLIP_NONE, true});
+        {m_TextureID, m_IdleFrames["face-right-up"], 6, 5, SDL_FLIP_NONE, true});
 
-    m_Animation->AddAnimation("move-left-up", {"player_move_right2",
-                                               {0, 0, 18, 18},
+    m_Animation->AddAnimation("move-left-up", {m_TextureID,
+                                               m_IdleFrames["face-right-up"],
                                                6,
-                                               8,
+                                               5,
                                                SDL_FLIP_HORIZONTAL,
                                                true});
     m_Animation->AddAnimation(
         "move-up",
-        {"player_move_up", {0, 0, 18, 18}, 6, 8, SDL_FLIP_NONE, true});
+        {m_TextureID, m_IdleFrames["face-up"], 6, 5, SDL_FLIP_NONE});
     m_Animation->AddAnimation(
         "move-down",
-        {"player_move_down", {0, 0, 18, 18}, 6, 8, SDL_FLIP_NONE, true});
+        {m_TextureID, m_IdleFrames["face-down"], 6, 5, SDL_FLIP_NONE});
+    m_Animation->AddAnimation(
+        "front-hit",
+        {m_TextureID, {5, 0, 18, 16}, 2, 20, SDL_FLIP_NONE});
+    m_Animation->AddAnimation(
+        "right-hit",
+        {m_TextureID, {5, 2, 18, 16}, 2, 8, SDL_FLIP_NONE});
+    m_Animation->AddAnimation(
+        "left-hit",
+        {m_TextureID, {5, 2, 18, 16}, 2, 8, SDL_FLIP_HORIZONTAL});
+    m_Animation->AddAnimation(
+        "right-up-hit",
+        {m_TextureID, {5, 4, 18, 16}, 2, 8, SDL_FLIP_NONE});
+    m_Animation->AddAnimation(
+        "left-up-hit",
+        {m_TextureID, {5, 4, 18, 16}, 2, 8, SDL_FLIP_HORIZONTAL});
+    m_Animation->AddAnimation(
+        "back-hit",
+        {m_TextureID, {6, 0, 18, 16}, 2, 8, SDL_FLIP_NONE});
 
-    m_Animation->SelectAnimation("move-down");
-    m_Animation->StopAnimation();
+
+    m_CurrentTilePos = m_IdleFrames["face-down"];    
+
+    m_State.AddState(CharacterState::Idle);
     // m_Collider->SetCorrection(-45, -20, 60, 80 )
     m_Health = new Health(100);
 
@@ -63,7 +86,12 @@ Player::~Player() {
 }
 
 void Player::Draw() {
-    m_Animation->Draw({GetX(), GetY(), GetWidth(), GetHeight()});
+    if (m_State.HasState(CharacterState::Idle) && !m_State.HasState(CharacterState::IsHit)) {
+        SDL_Log("Drawing idle frame");
+        GameObject::DrawRect();
+    } else {
+        m_Animation->Draw({GetX(), GetY(), GetWidth(), GetHeight()});
+    }
     m_Health->Draw(GetX(), GetY(), GetWidth());
     m_CurrentWeapon->Draw();
 }
@@ -71,6 +99,9 @@ void Player::Draw() {
 void Player::Update(float dt) {
     if (m_State.HasState(CharacterState::Dead) && m_Animation->Stopped()) {
         m_State.SetState(CharacterState::ToBeDestroyed);
+    }
+    if (m_State.HasState(CharacterState::IsHit) && m_Animation->Stopped()) {
+        m_State.RemoveState(CharacterState::IsHit);
     }
     m_Animation->Update();
     m_RigidBody->Update(dt);
@@ -138,6 +169,9 @@ void Player::ChangeAnimation() {
         m_Animation->SelectAnimation("Dead");
         return;
     }
+    if (m_State.HasState(CharacterState::IsHit)) {
+        return;
+    }
 
     bool const idle_y = m_State.HasState(CharacterState::MoveUp) &&
                  m_State.HasState(CharacterState::MoveDown);
@@ -149,19 +183,36 @@ void Player::ChangeAnimation() {
     bool const moving_right = !idle_x && m_State.HasState(CharacterState::MoveRight);
 
     // SDL_Log("up: %d, down: %d, left: %d, right: %d", movingUp, movingDown, movingLeft, movingRight);
-    
+    if (moving_up || moving_down || moving_left || moving_right) {
+        m_State.RemoveState(CharacterState::Idle);
+    } else {
+        m_State.AddState(CharacterState::Idle);
+    }
+
     if (moving_up && moving_right) {
         m_Animation->SelectAnimation("move-right-up");
+        m_CurrentTilePos = m_IdleFrames["face-right-up"];
+        SetFlip(SDL_FLIP_NONE);
     } else if (moving_up && moving_left) {
         m_Animation->SelectAnimation("move-left-up");
+        m_CurrentTilePos = m_IdleFrames["face-right-up"];
+        SetFlip(SDL_FLIP_HORIZONTAL);
     } else if (moving_up) {
         m_Animation->SelectAnimation("move-up");
+        m_CurrentTilePos = m_IdleFrames["face-up"];
+        SetFlip(SDL_FLIP_NONE);
     } else if (moving_right) {
         m_Animation->SelectAnimation("move-right");
+        m_CurrentTilePos = m_IdleFrames["face-right"];
+        SetFlip(SDL_FLIP_NONE);
     } else if (moving_left) {
         m_Animation->SelectAnimation("move-left");
+        m_CurrentTilePos = m_IdleFrames["face-right"];
+        SetFlip(SDL_FLIP_HORIZONTAL);
     } else if (moving_down) {
         m_Animation->SelectAnimation("move-down");
+        m_CurrentTilePos = m_IdleFrames["face-down"];
+        SetFlip(SDL_FLIP_NONE);
     } else {
         m_Animation->StopAnimation();
     }
@@ -183,6 +234,10 @@ void Player::OnCollide(Collider* collidee) {
                 m_Health->GetHP() <= 0) {
                 m_State.SetState(CharacterState::Dead);
                 ChangeAnimation();
+            } else if (!m_State.HasState(CharacterState::IsHit)) {
+                m_State.AddState(CharacterState::IsHit);
+                m_Animation->SelectAnimation("front-hit");
+                SDL_Log("hit animation selected");
             }
             break;
         case ObjectType::MeleeWeapon:

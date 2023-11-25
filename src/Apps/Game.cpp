@@ -31,6 +31,9 @@ Game::Game() {
     Renderer::GetInstance()->AddTexture("door-close", "../assets/textures/spritesheets/door2-close.png");
 
     Renderer::GetInstance()->AddTexture(
+        "player",
+        "../assets/textures/spritesheets/player-sheet.png");
+    Renderer::GetInstance()->AddTexture(
         "player_move_down",
         "../assets/textures/spritesheets/player-move-down.png");
     Renderer::GetInstance()->AddTexture(
@@ -87,7 +90,7 @@ Game::Game() {
     Properties props_e("open", {0, 0, 16, 32}, {300, 300, 16, 32}, 0, "entrance");
     auto* entrance = new Entrance(props_e);
 
-    Properties props_p("player_move_down", {0, 0, 18, 18}, {0, 0, 30, 30}, 0, "player");
+    Properties props_p("player", {0, 0, 18, 18}, {0, 0, 30, 30}, 0, "player");
     player = new Player(props_p);
 
     Properties props1("enemy5", {0, 0, 16, 16}, {200, 200, 36, 36}, 0,

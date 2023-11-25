@@ -26,7 +26,7 @@ Enemy::Enemy(Properties& props, int perceptionX, int perceptionY)
       m_PerceptionHeight(perceptionY) {
     m_Animation = new Animation();
     m_Animation->AddAnimation(
-        "Idle", {m_TextureID, m_TilePos, 2, 15, SDL_FLIP_NONE, true});
+        "Idle", {m_TextureID, m_CurrentTilePos, 2, 15, SDL_FLIP_NONE, true});
     m_Animation->AddAnimation("Dead", {"player_dead", {0, 0, 18, 18}, 6, 8});
     m_Animation->SelectAnimation("Idle");
     SetHealth(new Health(100));
