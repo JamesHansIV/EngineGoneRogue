@@ -20,10 +20,11 @@ DEVELOPING BASIC ENEMY BEHAVIOUR:
 - collision detection between the enemies (might need to add offset - but this might cause problems)
 */
 
-Enemy::Enemy(Properties& props, int perceptionX, int perceptionY)
+Enemy::Enemy(Properties& props, int perceptionWidth, int perceptionHeight, float range)
     : Character(props),
-      m_PerceptionWidth(perceptionX),
-      m_PerceptionHeight(perceptionY) {
+      m_PerceptionWidth(perceptionWidth),
+      m_PerceptionHeight(perceptionHeight),
+      m_Range(range) {
 }
 
 bool Enemy::TargetDetected() {

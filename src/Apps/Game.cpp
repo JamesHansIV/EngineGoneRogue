@@ -3,6 +3,7 @@
 #include "Engine/Events/EventListener.h"
 #include "Engine/Input/InputChecker.h"
 #include "Engine/Objects/MeleeEnemy.h"
+#include "Engine/Objects/RangedEnemy.h"
 #include "Engine/Objects/Entrance.h"
 #include "Engine/Objects/Player.h"
 #include "Engine/Renderer/Renderer.h"
@@ -106,12 +107,17 @@ Game::Game() {
                       "enemy6");
     enemy6 = new MeleeEnemy(props6, 150, 150);
 
+    Properties props7("enemies", {6, 2, 16, 16}, {500, 300, 36, 36}, 0,
+                      "enemy7");
+    enemy7 = new RangedEnemy(props7, 150, 150);
+
     m_Objects.push_back(enemy1);
     m_Objects.push_back(enemy2);
     m_Objects.push_back(enemy3);
     m_Objects.push_back(enemy4);
     m_Objects.push_back(enemy5);
     m_Objects.push_back(enemy6);
+    m_Objects.push_back(enemy7);
     m_Objects.push_back(entrance);
     ColliderHandler::GetInstance()->AddCollider(player);
     ColliderHandler::GetInstance()->AddCollider(enemy1);
@@ -120,6 +126,7 @@ Game::Game() {
     ColliderHandler::GetInstance()->AddCollider(enemy4);
     ColliderHandler::GetInstance()->AddCollider(enemy5);
     ColliderHandler::GetInstance()->AddCollider(enemy6);
+    ColliderHandler::GetInstance()->AddCollider(enemy7);
     ColliderHandler::GetInstance()->AddCollider(entrance);
 
     srand(time(nullptr));

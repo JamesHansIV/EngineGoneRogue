@@ -8,7 +8,7 @@
 
 class Enemy : public Character {
    public:
-    explicit Enemy(Properties& props, int perceptionWidth, int perceptionHeight);
+    explicit Enemy(Properties& props, int perceptionWidth, int perceptionHeight, float range);
     virtual void Draw() override = 0;
     virtual void Clean() override = 0;
     virtual void Update(float dt) override = 0;
@@ -17,6 +17,8 @@ class Enemy : public Character {
 
     bool TargetDetected();
 
+    float GetRange() { return m_Range; }
+    
     SDL_Rect& GetPerception() { return m_Perception; }
 
     void SetTarget(Collider* target) { m_Target = target; }
@@ -30,6 +32,7 @@ class Enemy : public Character {
    private:
     int m_PerceptionWidth;
     int m_PerceptionHeight;
+    float m_Range;
     SDL_Rect m_Perception;
     Collider* m_Target;
 };

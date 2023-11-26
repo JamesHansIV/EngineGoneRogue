@@ -7,8 +7,8 @@
 
 #include <cmath>
 
-MeleeEnemy::MeleeEnemy(Properties& props, int perceptionWidth, int perceptionHeight)
-    : Enemy(props, perceptionWidth, perceptionHeight) {
+MeleeEnemy::MeleeEnemy(Properties& props, int perceptionWidth, int perceptionHeight, float range)
+    : Enemy(props, perceptionWidth, perceptionHeight, range) {
     m_Animation = new Animation();
     m_Animation->AddAnimation(
         "Idle", {m_TextureID, {0, 2, 16, 16}, 2, 15, SDL_FLIP_NONE, true});

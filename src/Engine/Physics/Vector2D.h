@@ -22,6 +22,10 @@ class Vector2D {
         return Vector2D(X * scalar, Y * scalar);
     }
 
+    inline float GetMagnitude() const {
+        return sqrt(X * X + Y * Y);
+    }
+
     void Log(const std::string& msg = "") const {
         std::cout << msg << "(X Y) = (" << X << " " << Y << ")" << '\n';
     }
