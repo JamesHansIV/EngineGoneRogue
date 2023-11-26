@@ -13,7 +13,7 @@ class RangedEnemy : public Enemy {
     virtual void Update(float dt) override;
 
     void SelectMoveAnimation();
-    void HandleState(float dt);
+    bool ManageState(float dt);
     void Shoot();
 
     virtual void OnCollide(Collider* collidee) override;

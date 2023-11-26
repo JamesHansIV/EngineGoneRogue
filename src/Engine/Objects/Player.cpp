@@ -230,7 +230,7 @@ void Player::OnCollide(Collider* collidee) {
         case ObjectType::Enemy: {
             UnCollide(collidee);
             SDL_Log("player oncollide with enemy");
-            int frame = collidee->GetAnimation()->GetCurrentFrame(); 
+            int frame = collidee->GetAnimation()->GetCurrentFrame();
             if (collidee->GetState().HasState(CharacterState::Attack) &&
                 2 <= frame && frame <= 4) {
                 m_Health->SetDamage(1);
@@ -251,6 +251,18 @@ void Player::OnCollide(Collider* collidee) {
             UnCollide(collidee);
             break;
         case ObjectType::Projectile:
+            if (dynamic_cast<Projectile*>(collidee)->PlayerOwned()) {
+                break;
+            }
+            if (!m_State.HasState(CharacterState::Dead) && !m_State.HasState(CharacterState::IsHit)) {
+                m_State.AddState(CharacterState::IsHit);
+                m_Animation->SelectAnimation("front-hit");
+            }
+            if (!m_State.HasState(CharacterState::Dead) &&
+                m_Health->GetHP() <= 0) {
+                m_State.SetState(CharacterState::Dead);
+                ChangeAnimation();
+            }
             break;
         case ObjectType::Entrance: {
             auto* entrance = dynamic_cast<Entrance*>(collidee);

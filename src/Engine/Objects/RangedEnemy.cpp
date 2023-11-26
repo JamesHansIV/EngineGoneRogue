@@ -32,13 +32,33 @@ void RangedEnemy::Draw() {
 void RangedEnemy::Update(float dt) {
     m_Animation->Update();
 
-    HandleState(dt);
+    bool cont = ManageState(dt);
+    if (!cont) {
+        return;
+    }
 
+    m_RigidBody->Update(dt);
+    SetX(m_RigidBody->Position().X);
+    SetY(m_RigidBody->Position().Y);
+    m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
 
+    if (m_Health->GetHP() <= 0) {
+        GetState().SetState(CharacterState::Dead);
+        m_Animation->SelectAnimation("Dead");
+        ColliderHandler::GetInstance()->RemoveCollider(this);
+        m_CollisionBox.clear();
+    }
     m_ProjectileManager.UpdateProjectiles(dt);
 }
 
-void RangedEnemy::HandleState(float dt) {
+bool RangedEnemy::ManageState(float dt) {
+    if (GetState().HasState(CharacterState::Dead)) {
+        if (m_Animation->Ended()) {
+            GetState().SetState(CharacterState::ToBeDestroyed);
+        }
+        return false;
+    }
+
     if (m_State.HasState(CharacterState::Attack)) {
         if (Application::Get()->GetFrame() % m_FireRate == 0) {
             Shoot();
@@ -46,12 +66,15 @@ void RangedEnemy::HandleState(float dt) {
         if (!TargetDetected()) {
             m_State.RemoveState(CharacterState::Attack);
         }
-        return;
+        return true;
     }
 
     if (TargetDetected()) {
         SelectMoveAnimation();
+        SDL_Log("ranged enemy vel before move (%f, %f)", GetRigidBody()->Velocity().X, GetRigidBody()->Velocity().Y);
         bool inRange = MoveTowardsTarget(dt, GetRange());
+        SDL_Log("ranged enemy pos after move (%f, %f)", GetRigidBody()->Velocity().X, GetRigidBody()->Velocity().Y); 
+
         if (inRange) {
             m_State.AddState(CharacterState::Attack);
         }
@@ -59,6 +82,7 @@ void RangedEnemy::HandleState(float dt) {
         m_State.AddState(CharacterState::Idle);
         m_Animation->SelectAnimation("Idle");
     } 
+    return true;
 }
 
 void RangedEnemy::SelectMoveAnimation() {
