@@ -71,9 +71,7 @@ bool RangedEnemy::ManageState(float dt) {
 
     if (TargetDetected()) {
         SelectMoveAnimation();
-        SDL_Log("ranged enemy vel before move (%f, %f)", GetRigidBody()->Velocity().X, GetRigidBody()->Velocity().Y);
         bool inRange = MoveTowardsTarget(dt, GetRange());
-        SDL_Log("ranged enemy pos after move (%f, %f)", GetRigidBody()->Velocity().X, GetRigidBody()->Velocity().Y); 
 
         if (inRange) {
             m_State.AddState(CharacterState::Attack);

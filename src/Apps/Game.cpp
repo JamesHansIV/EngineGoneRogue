@@ -109,7 +109,7 @@ Game::Game() {
 
     Properties props7("enemies", {6, 2, 16, 16}, {500, 300, 36, 36}, 0,
                       "enemy7");
-    enemy7 = new RangedEnemy(props7, 150, 150);
+    enemy7 = new RangedEnemy(props7, 200, 200);
 
     m_Objects.push_back(enemy1);
     m_Objects.push_back(enemy2);
