@@ -96,10 +96,10 @@ void Player::Draw() {
 }
 
 void Player::Update(float dt) {
-    if (m_State.HasState(CharacterState::Dead) && m_Animation->Stopped()) {
+    if (m_State.HasState(CharacterState::Dead) && m_Animation->Ended()) {
         m_State.SetState(CharacterState::ToBeDestroyed);
     }
-    if (m_State.HasState(CharacterState::IsHit) && m_Animation->Stopped()) {
+    if (m_State.HasState(CharacterState::IsHit) && m_Animation->Ended()) {
         m_State.RemoveState(CharacterState::IsHit);
     }
     m_Animation->Update();
@@ -226,26 +226,31 @@ void Player::OnCollide(Collider* collidee) {
 
     switch (collidee->GetObjectType()) {
         case ObjectType::Player:
-            SDL_Log("%s object collided with player", GetID().c_str());
             break;
-        case ObjectType::Enemy:
+        case ObjectType::Enemy: {
             UnCollide(collidee);
-            m_Health->SetDamage(1);
+            SDL_Log("player oncollide with enemy");
+            int frame = collidee->GetAnimation()->GetCurrentFrame(); 
+            if (collidee->GetState().HasState(CharacterState::Attack) &&
+                2 <= frame && frame <= 4) {
+                m_Health->SetDamage(1);
+                if (!m_State.HasState(CharacterState::Dead) && !m_State.HasState(CharacterState::IsHit)) {
+                    m_State.AddState(CharacterState::IsHit);
+                    m_Animation->SelectAnimation("front-hit");
+                }
+            }
             if (!m_State.HasState(CharacterState::Dead) &&
                 m_Health->GetHP() <= 0) {
                 m_State.SetState(CharacterState::Dead);
                 ChangeAnimation();
-            } else if (!m_State.HasState(CharacterState::IsHit)) {
-                m_State.AddState(CharacterState::IsHit);
-                m_Animation->SelectAnimation("front-hit");
-                SDL_Log("hit animation selected");
             }
+            
             break;
+        }
         case ObjectType::MeleeWeapon:
             UnCollide(collidee);
             break;
         case ObjectType::Projectile:
-            SDL_Log("%s object collided with projectile", GetID().c_str());
             break;
         case ObjectType::Entrance: {
             auto* entrance = dynamic_cast<Entrance*>(collidee);

@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include "Engine/Events/EventListener.h"
 #include "Engine/Input/InputChecker.h"
-#include "Engine/Objects/Enemy.h"
+#include "Engine/Objects/MeleeEnemy.h"
 #include "Engine/Objects/Entrance.h"
 #include "Engine/Objects/Player.h"
 #include "Engine/Renderer/Renderer.h"
@@ -30,6 +30,9 @@ Game::Game() {
     Renderer::GetInstance()->AddTexture(
         "player",
         "../assets/textures/spritesheets/player-sheet.png");
+    Renderer::GetInstance()->AddTexture(
+        "enemies",
+        "../assets/textures/spritesheets/enemies.png");
     Renderer::GetInstance()->AddTexture(
         "enemy1",
         "../assets/textures/spritesheets/enemy1_idle_spritesheet.png");
@@ -79,29 +82,29 @@ Game::Game() {
     Properties props_p("player", {0, 0, 18, 18}, {0, 0, 30, 30}, 0, "player");
     player = new Player(props_p);
 
-    Properties props1("enemy5", {0, 0, 16, 16}, {200, 200, 36, 36}, 0,
+    Properties props1("enemies", {0, 1, 16, 16}, {200, 200, 36, 36}, 0,
                       "enemy1");
-    enemy1 = new Enemy(props1, 150, 150);
+    enemy1 = new MeleeEnemy(props1, 150, 150);
 
-    Properties props2("enemy5", {0, 0, 16, 16}, {300, 260, 36, 36}, 0,
+    Properties props2("enemies", {0, 1, 16, 16}, {300, 260, 36, 36}, 0,
                       "enemy2");
-    enemy2 = new Enemy(props2, 150, 150);
+    enemy2 = new MeleeEnemy(props2, 150, 150);
 
-    Properties props3("enemy5", {0, 0, 16, 16}, {500, 200, 36, 36}, 0,
+    Properties props3("enemies", {0, 1, 16, 16}, {500, 200, 36, 36}, 0,
                       "enemy3");
-    enemy3 = new Enemy(props3, 150, 150);
+    enemy3 = new MeleeEnemy(props3, 150, 150);
 
-    Properties props4("enemy5", {0, 0, 16, 16}, {600, 367, 36, 36}, 0,
+    Properties props4("enemies", {0, 1, 16, 16}, {600, 367, 36, 36}, 0,
                       "enemy4");
-    enemy4 = new Enemy(props4, 150, 150);
+    enemy4 = new MeleeEnemy(props4, 150, 150);
 
-    Properties props5("enemy5", {0, 0, 16, 16}, {700, 300, 36, 36}, 0,
+    Properties props5("enemies", {0, 1, 16, 16}, {700, 300, 36, 36}, 0,
                       "enemy5");
-    enemy5 = new Enemy(props5, 150, 150);
+    enemy5 = new MeleeEnemy(props5, 150, 150);
 
-    Properties props6("enemy5", {0, 0, 16, 16}, {600, 150, 36, 36}, 0,
+    Properties props6("enemies", {0, 1, 16, 16}, {600, 150, 36, 36}, 0,
                       "enemy6");
-    enemy6 = new Enemy(props6, 150, 150);
+    enemy6 = new MeleeEnemy(props6, 150, 150);
 
     m_Objects.push_back(enemy1);
     m_Objects.push_back(enemy2);

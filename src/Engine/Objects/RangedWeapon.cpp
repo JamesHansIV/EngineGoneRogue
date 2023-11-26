@@ -24,7 +24,7 @@ void RangedWeapon::Update(float dt) {
                                     GetRotation(), "bullet");
         Projectile* projectile = nullptr;
         projectile = new Projectile(projectile_props, 10, GetRotation(),
-                                    GetPlayerOwned());
+                                    PlayerOwned());
         m_ProjectileManager.AddProjectile(projectile);
         ColliderHandler::GetInstance()->AddCollider(projectile);
         InputChecker::SetMouseButtonPressed(SDL_BUTTON_LEFT, false);

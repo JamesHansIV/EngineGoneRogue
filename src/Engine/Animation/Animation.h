@@ -17,7 +17,7 @@ class Animation{
     public:
         Animation()
         : m_Info({"", {0, 0, 0, 0}, 0, 0, SDL_FLIP_NONE, false }),
-        m_Stopped(false), m_SpriteFrame(0), m_CurrentAnimationID("") {}
+        m_Ended(false), m_SpriteFrame(0), m_CurrentAnimationID("") {}
 
         void Update();
         void Draw(const Rect& dstRect, float angle = 0.0f);
@@ -31,9 +31,10 @@ class Animation{
         int GetFrameCount() { return m_Info.FrameCount; }
         int GetAnimationSpeed() { return m_Info.AnimationSpeed; }
         std::string GetAnimationID() { return m_CurrentAnimationID; }
+        bool Ended() { return m_Ended; }
 
         void StopAnimation();
-        bool Stopped() { return m_Stopped; }
+        bool LastFrame() { return m_SpriteFrame + 1 == m_Info.FrameCount; }
         void SelectAnimation(const std::string& id);
         void AddAnimation(std::string id, AnimationInfo info) { m_Animations[id] = info; m_CurrentAnimationID = id; }
     private:
@@ -41,5 +42,5 @@ class Animation{
         AnimationInfo m_Info;
         std::string m_CurrentAnimationID;
         int m_SpriteFrame;
-        bool m_Stopped;
+        bool m_Ended;
 };

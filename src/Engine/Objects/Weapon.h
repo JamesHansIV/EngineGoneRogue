@@ -13,7 +13,7 @@ class Weapon : public Collider {
     virtual void Clean() override = 0;
     virtual void Update(float dt) override = 0;
 
-    inline bool GetPlayerOwned() { return m_PlayerOwned; }
+    inline bool PlayerOwned() { return m_PlayerOwned; }
 
    private:
     bool m_PlayerOwned;

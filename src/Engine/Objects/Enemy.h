@@ -8,16 +8,16 @@
 
 class Enemy : public Character {
    public:
-    explicit Enemy(Properties& props, int perceptionX, int perceptionY);
-    virtual void Draw() override;
-    virtual void Clean() override;
-    virtual void Update(float dt) override;
+    explicit Enemy(Properties& props, int perceptionWidth, int perceptionHeight);
+    virtual void Draw() override = 0;
+    virtual void Clean() override = 0;
+    virtual void Update(float dt) override = 0;
 
-    void MoveTowardsTarget(float dt, float minDistance);
+    bool MoveTowardsTarget(float dt, float range);
 
     bool TargetDetected();
 
-    bool IsMarkedForDeletion() { return m_MarkedForDeletion; }
+    SDL_Rect& GetPerception() { return m_Perception; }
 
     void SetTarget(Collider* target) { m_Target = target; }
 
@@ -28,10 +28,8 @@ class Enemy : public Character {
     virtual ObjectType GetObjectType() override { return ObjectType::Enemy; }
 
    private:
-    Animation* m_Animation;
     int m_PerceptionWidth;
     int m_PerceptionHeight;
     SDL_Rect m_Perception;
-    bool m_MarkedForDeletion;
     Collider* m_Target;
 };

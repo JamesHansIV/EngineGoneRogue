@@ -5,16 +5,15 @@
 #include "Engine/Renderer/Renderer.h"
 
 void Animation::Update() {
-    // need to work on how to get the animation to start from frame 0 when a new animation is played
-    // SDL_Log("global frame: %d", Application::Get()->GetFrame());
 
+    bool const no_update = LastFrame() && !m_Info.Loop;
 
-    if (!m_Stopped && m_SpriteFrame + 1 == m_Info.FrameCount && !m_Info.Loop) {
-        StopAnimation();
+    if (no_update) {
+        m_Ended = true;
         return;
     }
 
-    if (!m_Stopped && Application::Get()->GetFrame() % m_Info.AnimationSpeed == 0) {
+    if (Application::Get()->GetFrame() % m_Info.AnimationSpeed == 0) {
         // SDL_Log("current frame: %d", m_SpriteFrame);
         
         m_SpriteFrame = (m_SpriteFrame + 1) % m_Info.FrameCount;
@@ -34,7 +33,7 @@ void Animation::Draw(const Rect& dstRect, float angle) {
 }
 
 void Animation::StopAnimation() {
-    m_Stopped = true;
+    m_SpriteFrame = m_Info.FrameCount - 1;
 }
 
 void Animation::SelectAnimation(const std::string& id) {
@@ -42,6 +41,6 @@ void Animation::SelectAnimation(const std::string& id) {
         SDL_LogError(0, "Animation does not exist");
     }
     m_SpriteFrame = 0;
-    m_Stopped = false;
+    m_Ended = false;
     SetProps(m_Animations[id]);
 }

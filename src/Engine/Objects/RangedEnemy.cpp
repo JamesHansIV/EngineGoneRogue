@@ -2,9 +2,8 @@
 
 RangedEnemy::RangedEnemy(Properties& props, int perceptionWidth, int perceptionHeight)
     : Enemy(props, perceptionWidth, perceptionHeight) {
-        
-    }
 
+}
 
 void RangedEnemy::Draw() {
    m_ProjectileManager.Draw(); 

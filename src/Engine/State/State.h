@@ -34,8 +34,7 @@ struct CharacterState : ObjectState {
         MoveDown = 1 << 9,
         MoveRight = 1 << 10,
         MoveLeft = 1 << 11,
-        IdleX = 1 << 12,
-        IdleY = 1 << 13
+        Attack = 1 << 12
     };
 };
 

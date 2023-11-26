@@ -18,6 +18,5 @@ class RangedWeapon : public Weapon {
 
    private:
     ProjectileManager m_ProjectileManager;
-    std::vector<Projectile*> m_Projectiles;
     bool m_auto_fire_enabled = false;
 };
