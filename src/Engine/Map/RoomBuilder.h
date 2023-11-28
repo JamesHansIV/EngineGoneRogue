@@ -7,10 +7,10 @@
 
 class MapBuilder {
    public:
-    std::array<std::array<Room, 10>, 10>* BuildMap(std::vector<Room> rooms,
+    static std::array<std::array<Room, 10>, 10>* BuildMap(const std::vector<Room>& rooms,
                                                    int room_limit);
-    absl::flat_hash_map<Entrances, std::vector<Room>*> MapRoomsToEntrances(
-        std::vector<Room> rooms);
+    static absl::flat_hash_map<Entrances, std::vector<Room>*> MapRoomsToEntrances(
+        const std::vector<Room>& rooms);
 
    private:
     Entrance GetOppositeEntrance(Entrance entrance);

@@ -84,9 +84,9 @@ class GameObject : public IObject {
 
     TilePos& GetTilePos() { return m_CurrentTilePos; }
 
-    void AddIdleFrame(std::string id, TilePos tilePos);
+    void AddIdleFrame(const std::string& id, TilePos tilePos);
 
-    void SelectIdleFrame(std::string id);
+    void SelectIdleFrame(const std::string& id);
 
     Rect& GetDstRect() { return m_DstRect; }
 

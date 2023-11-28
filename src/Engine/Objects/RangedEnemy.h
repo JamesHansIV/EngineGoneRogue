@@ -21,6 +21,6 @@ class RangedEnemy : public Enemy {
     virtual ObjectType GetObjectType() override { return ObjectType::Enemy; }
 
    private:
-    ProjectileManager m_ProjectileManager;
+    ProjectileManager* m_ProjectileManager;
     int m_FireRate;
 };

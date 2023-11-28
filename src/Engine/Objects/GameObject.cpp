@@ -47,7 +47,7 @@ void GameObject::Update(float /*dt*/) {
 }
 
 
-void GameObject::AddIdleFrame(std::string id, TilePos tilePos) {
+void GameObject::AddIdleFrame(const std::string& id, TilePos tilePos) {
     if (m_IdleFrames.find(id) != m_IdleFrames.end()) {
         SDL_Log("TilePos with id %s already exists for object %s", id.c_str(), GetID().c_str());
         assert(false);
@@ -55,7 +55,7 @@ void GameObject::AddIdleFrame(std::string id, TilePos tilePos) {
     m_IdleFrames[id] = tilePos;
 }
 
-void GameObject::SelectIdleFrame(std::string id) {
+void GameObject::SelectIdleFrame(const std::string& id) {
     if (m_IdleFrames.find(id) == m_IdleFrames.end()) {
         SDL_Log("TilePos with id=%s does not exist for object %s", id.c_str(), GetID().c_str());
         assert(false);

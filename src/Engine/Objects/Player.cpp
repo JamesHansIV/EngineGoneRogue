@@ -224,12 +224,12 @@ void Player::OnCollide(Collider* collidee) {
         case ObjectType::Player:
             break;
         case ObjectType::Enemy: {
-            UnCollide(collidee);
+            //UnCollide(collidee);
             SDL_Log("player oncollide with enemy");
-            int frame = collidee->GetAnimation()->GetCurrentFrame();
+            int const frame = collidee->GetAnimation()->GetCurrentFrame();
             if (collidee->GetState().HasState(CharacterState::Attack) &&
                 2 <= frame && frame <= 4) {
-                m_Health->SetDamage(1);
+                //m_Health->SetDamage(1);
                 if (!m_State.HasState(CharacterState::Dead) &&
                     !m_State.HasState(CharacterState::IsHit)) {
                     m_State.AddState(CharacterState::IsHit);
@@ -245,7 +245,7 @@ void Player::OnCollide(Collider* collidee) {
             break;
         }
         case ObjectType::MeleeWeapon:
-            UnCollide(collidee);
+            //UnCollide(collidee);
             break;
         case ObjectType::Projectile:
             if (dynamic_cast<Projectile*>(collidee)->PlayerOwned()) {

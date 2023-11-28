@@ -19,6 +19,7 @@ RangedEnemy::RangedEnemy(Properties& props, int perceptionWidth, int perceptionH
     m_Animation->SelectAnimation("Idle");
     m_State.AddState(CharacterState::Idle);
     SetHealth(new Health(100));
+    m_ProjectileManager = new ProjectileManager();
 }
 
 void RangedEnemy::Draw() {
@@ -26,13 +27,13 @@ void RangedEnemy::Draw() {
     if (!m_State.HasState(CharacterState::Dead)) {
         m_Health->Draw(GetX(), GetY(), GetWidth());
     }
-    m_ProjectileManager.Draw(); 
+    m_ProjectileManager->Draw(); 
 }
 
 void RangedEnemy::Update(float dt) {
     m_Animation->Update();
 
-    bool cont = ManageState(dt);
+    bool const cont = ManageState(dt);
     if (!cont) {
         return;
     }
@@ -48,7 +49,7 @@ void RangedEnemy::Update(float dt) {
         ColliderHandler::GetInstance()->RemoveCollider(this);
         m_CollisionBox.clear();
     }
-    m_ProjectileManager.UpdateProjectiles(dt);
+    m_ProjectileManager->UpdateProjectiles(dt);
 }
 
 bool RangedEnemy::ManageState(float dt) {
@@ -71,9 +72,9 @@ bool RangedEnemy::ManageState(float dt) {
 
     if (TargetDetected()) {
         SelectMoveAnimation();
-        bool inRange = MoveTowardsTarget(dt, GetRange());
+        bool const in_range = MoveTowardsTarget(dt, GetRange());
 
-        if (inRange) {
+        if (in_range) {
             m_State.AddState(CharacterState::Attack);
         }
     } else {
@@ -85,7 +86,7 @@ bool RangedEnemy::ManageState(float dt) {
 
 void RangedEnemy::SelectMoveAnimation() {
     if (m_State.HasState(CharacterState::Idle)) {
-        float dy = GetY() - GetTarget()->GetY();
+        float const dy = GetY() - GetTarget()->GetY();
         if (dy < 0) {
             m_Animation->SelectAnimation("Move-down");
         } else {
@@ -96,12 +97,12 @@ void RangedEnemy::SelectMoveAnimation() {
 }
 
 void RangedEnemy::Shoot() {
-    float target_x = GetTarget()->GetMidPointX(); 
-    float target_y = GetTarget()->GetMidPointY(); 
-    float delta_y = target_y - GetY();
-    float delta_x = target_x - GetX();
+    float const target_x = GetTarget()->GetMidPointX(); 
+    float const target_y = GetTarget()->GetMidPointY(); 
+    float const delta_y = target_y - GetY();
+    float const delta_x = target_x - GetX();
 
-    float angle = atan2(delta_y, delta_x) * (180.0 / M_PI);
+    float const angle = atan2(delta_y, delta_x) * (180.0 / M_PI);
 
     Properties props = {
         "enemies",
@@ -109,8 +110,8 @@ void RangedEnemy::Shoot() {
         { GetX(), GetY(), 10, 10 },
         angle};
 
-    Projectile* bullet = new Projectile(props, 3, angle);
-    m_ProjectileManager.AddProjectile(bullet);
+    auto* bullet = new Projectile(props, 3, angle);
+    m_ProjectileManager->AddProjectile(bullet);
     ColliderHandler::GetInstance()->AddCollider(bullet);
 }
 

@@ -44,8 +44,8 @@ bool Enemy::TargetDetected() {
     SDL_Rect const target = m_Target->GetCollisionBox().GetRect();
 
     if (ColliderHandler::GetInstance()->CheckCollision(m_Perception, target)) {
-        float direction_x = m_Target->GetMidPointX() - GetMidPointX();
-        float direction_y = m_Target->GetMidPointY() - GetMidPointY();
+        float const direction_x = m_Target->GetMidPointX() - GetMidPointX();
+        float const direction_y = m_Target->GetMidPointY() - GetMidPointY();
         return true;
     }
     return false;

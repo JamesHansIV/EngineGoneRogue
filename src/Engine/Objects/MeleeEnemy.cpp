@@ -65,8 +65,8 @@ bool MeleeEnemy::ManageState(float dt) {
         return true;
     }
     
-    bool inRange = MoveTowardsTarget(dt, 45.0f);
-    if (!GetState().HasState(CharacterState::Attack) && inRange) {
+    bool const in_range = MoveTowardsTarget(dt, 45.0F);
+    if (!GetState().HasState(CharacterState::Attack) && in_range) {
         SDL_Log("Adding attack state");
         GetState().AddState(CharacterState::Attack);
         m_Animation->SelectAnimation("Attack");
