@@ -23,9 +23,10 @@ bool ColliderHandler::CheckCollision(SDL_Rect a, SDL_Rect b) {
 }
 
 void ColliderHandler::HandleCollisions() {
-    for (auto it1 = m_Colliders.begin(); it1 != m_Colliders.end(); it1++) {
-        for (auto c2 : m_Colliders) {
-            Collider* c1 = *it1;
+    for (int i = 0; i < m_Colliders.size(); i++) {
+        for (int j = i; j < m_Colliders.size(); j++) {
+            Collider* c1 = m_Colliders[i];
+            Collider* c2 = m_Colliders[j];
             if (CheckCollision(c1->GetCollisionBox().GetRect(),
                                c2->GetCollisionBox().GetRect())) {
                 c1->OnCollide(c2);

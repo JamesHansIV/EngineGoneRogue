@@ -18,10 +18,19 @@ Collider::Collider(GameObject* rhs) : GameObject(rhs) {
 }
 
 void Collider::UnCollide(Collider* collidee) {
+    Vector2D positionDiff =
+            collidee->GetRigidBody()->Position() - m_RigidBody->Position();
+    Vector2D velocityDiff =
+            m_RigidBody->Velocity() - collidee->GetRigidBody()->Velocity();
+
+    if (positionDiff * velocityDiff < 0) {
+        return;
+    }
+
     while (ColliderHandler::CheckCollision(
         m_CollisionBox.GetRect(), collidee->GetCollisionBox().GetRect())) {
         Vector2D const opposite_direction =
-            m_RigidBody->Position() - collidee->GetRigidBody()->Position();
+                m_RigidBody->Position() - collidee->GetRigidBody()->Position();
         m_RigidBody->MovePosition(opposite_direction * 0.01);
         SetX(m_RigidBody->Position().X);
         SetY(m_RigidBody->Position().Y);

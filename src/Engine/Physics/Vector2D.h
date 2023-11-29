@@ -22,6 +22,10 @@ class Vector2D {
         return Vector2D(X * scalar, Y * scalar);
     }
 
+    inline float operator*(const Vector2D& v2) const {
+        return X * v2.X + Y * v2.Y;
+    }
+
     inline float GetMagnitude() const {
         return sqrt(X * X + Y * Y);
     }

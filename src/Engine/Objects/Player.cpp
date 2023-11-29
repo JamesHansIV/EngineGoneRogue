@@ -100,6 +100,7 @@ void Player::Update(float dt) {
     SetY(m_RigidBody->Position().Y);
 
     CheckInput();
+    SDL_Log("player velocity: (%f, %f)", m_RigidBody->Velocity().X, m_RigidBody->Velocity().Y);
     // m_RigidBody.Update(dt);
     // float multiplier = 1;
     // m_RigidBody.UnSetForce();
@@ -292,17 +293,17 @@ void Player::CheckInput() {
     }
 
     if (InputChecker::IsKeyPressed(SDLK_w)) {
-        m_RigidBody->ApplyVelocity(Vector2D(0, -2) * m_multiplier);
+        m_RigidBody->ApplyVelocity(Vector2D(0, -1.5) * m_multiplier);
     }
     if (InputChecker::IsKeyPressed(SDLK_s)) {
-        m_RigidBody->ApplyVelocity(Vector2D(0, 2) * m_multiplier);
+        m_RigidBody->ApplyVelocity(Vector2D(0, 1.5) * m_multiplier);
     }
     if (InputChecker::IsKeyPressed(SDLK_a)) {
-        m_RigidBody->ApplyVelocity(Vector2D(-2, 0) * m_multiplier);
+        m_RigidBody->ApplyVelocity(Vector2D(-1.5, 0) * m_multiplier);
         SetFlip(SDL_FLIP_HORIZONTAL);
     }
     if (InputChecker::IsKeyPressed(SDLK_d)) {
-        m_RigidBody->ApplyVelocity(Vector2D(2, 0) * m_multiplier);
+        m_RigidBody->ApplyVelocity(Vector2D(1.5, 0) * m_multiplier);
         SetFlip(SDL_FLIP_NONE);
     }
 }
