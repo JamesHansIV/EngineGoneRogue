@@ -171,6 +171,8 @@ void Game::Update(float dt) {
         player->Clean();
         delete player;
     }
+    ColliderHandler::GetInstance()->HandleCollisions();
+
     player->Update(dt);
     if (player->GetState().HasState(ObjectState::ToBeDestroyed)) {
         DeleteObject(player);
@@ -191,7 +193,6 @@ void Game::Update(float dt) {
             ++it;
         }
     }
-    ColliderHandler::GetInstance()->HandleCollisions();
 
     m_tick++;
     // if (m_tick % cur_enemy_generation_interval == 0) {

@@ -98,9 +98,10 @@ void Player::Update(float dt) {
 
     SetX(m_RigidBody->Position().X);
     SetY(m_RigidBody->Position().Y);
-
+    m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
+    
     CheckInput();
-    // m_RigidBody.Update(dt);
+    //SDL_Log("player velocity: (%f, %f)", m_RigidBody->Velocity().X, m_RigidBody->Velocity().Y);
     // float multiplier = 1;
     // m_RigidBody.UnSetForce();
     // if (InputChecker::IsKeyPressed(SDLK_q) || m_is_dashing) {
@@ -115,7 +116,7 @@ void Player::Update(float dt) {
     //     m_able_to_dash++;
     // }
 
-    m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
+   
 
     UpdateWeapon(dt);
 }
@@ -224,12 +225,11 @@ void Player::OnCollide(Collider* collidee) {
         case ObjectType::Player:
             break;
         case ObjectType::Enemy: {
-            //UnCollide(collidee);
-            SDL_Log("player oncollide with enemy");
+            UnCollide(collidee);
             int const frame = collidee->GetAnimation()->GetCurrentFrame();
             if (collidee->GetState().HasState(CharacterState::Attack) &&
                 2 <= frame && frame <= 4) {
-                //m_Health->SetDamage(1);
+                m_Health->SetDamage(1);
                 if (!m_State.HasState(CharacterState::Dead) &&
                     !m_State.HasState(CharacterState::IsHit)) {
                     m_State.AddState(CharacterState::IsHit);
@@ -292,17 +292,17 @@ void Player::CheckInput() {
     }
 
     if (InputChecker::IsKeyPressed(SDLK_w)) {
-        m_RigidBody->ApplyVelocity(Vector2D(0, -2) * m_multiplier);
+        m_RigidBody->ApplyVelocity(Vector2D(0, -1.5) * m_multiplier);
     }
     if (InputChecker::IsKeyPressed(SDLK_s)) {
-        m_RigidBody->ApplyVelocity(Vector2D(0, 2) * m_multiplier);
+        m_RigidBody->ApplyVelocity(Vector2D(0, 1.5) * m_multiplier);
     }
     if (InputChecker::IsKeyPressed(SDLK_a)) {
-        m_RigidBody->ApplyVelocity(Vector2D(-2, 0) * m_multiplier);
+        m_RigidBody->ApplyVelocity(Vector2D(-1.5, 0) * m_multiplier);
         SetFlip(SDL_FLIP_HORIZONTAL);
     }
     if (InputChecker::IsKeyPressed(SDLK_d)) {
-        m_RigidBody->ApplyVelocity(Vector2D(2, 0) * m_multiplier);
+        m_RigidBody->ApplyVelocity(Vector2D(1.5, 0) * m_multiplier);
         SetFlip(SDL_FLIP_NONE);
     }
 }

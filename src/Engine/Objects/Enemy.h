@@ -19,7 +19,7 @@ class Enemy : public Character {
 
     float GetRange() { return m_Range; }
     
-    SDL_Rect& GetPerception() { return m_Perception; }
+    Rect& GetPerception() { return m_Perception; }
 
     void SetTarget(Collider* target) { m_Target = target; }
 
@@ -33,6 +33,6 @@ class Enemy : public Character {
     int m_PerceptionWidth;
     int m_PerceptionHeight;
     float m_Range;
-    SDL_Rect m_Perception;
+    Rect m_Perception;
     Collider* m_Target;
 };

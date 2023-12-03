@@ -50,7 +50,6 @@ void Projectile::OnCollide(Collider* collidee) {
     switch (collidee->GetObjectType()) {
         case ObjectType::Player:
             if (!m_PlayerOwned) {
-                SDL_Log("enemy projectile collided with player");
                 m_MarkedForDeletion = true;
                 dynamic_cast<Character*>(collidee)->GetHealth()->SetDamage(10);
             }

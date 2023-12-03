@@ -31,13 +31,14 @@ void MeleeEnemy::Draw() {
 }
 
 void MeleeEnemy::Update(float dt) {
+    m_RigidBody->Update(dt);
     if (!ManageState(dt)) {
         return;
     }
     
     m_Animation->Update();
 
-    m_RigidBody->Update(dt);
+    
     SetX(m_RigidBody->Position().X);
     SetY(m_RigidBody->Position().Y);
     m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
@@ -67,11 +68,9 @@ bool MeleeEnemy::ManageState(float dt) {
     
     bool const in_range = MoveTowardsTarget(dt, 45.0F);
     if (!GetState().HasState(CharacterState::Attack) && in_range) {
-        SDL_Log("Adding attack state");
         GetState().AddState(CharacterState::Attack);
         m_Animation->SelectAnimation("Attack");
     } else if (m_Animation->Ended()) {
-        SDL_Log("removing attack state");
         GetState().RemoveState(CharacterState::Attack);
         m_Animation->SelectAnimation("Idle");
     }
@@ -87,7 +86,7 @@ void MeleeEnemy::OnCollide(Collider* collidee) {
     switch (collidee->GetObjectType()) {
         case ObjectType::Player:
             UnCollide(collidee);
-            SDL_Log("enemy collide with player");
+            //SDL_Log("enemy collide with player");
             break;
         case ObjectType::Enemy:
             UnCollide(collidee);
