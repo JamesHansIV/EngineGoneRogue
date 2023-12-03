@@ -31,13 +31,14 @@ void MeleeEnemy::Draw() {
 }
 
 void MeleeEnemy::Update(float dt) {
+    m_RigidBody->Update(dt);
     if (!ManageState(dt)) {
         return;
     }
     
     m_Animation->Update();
 
-    m_RigidBody->Update(dt);
+    
     SetX(m_RigidBody->Position().X);
     SetY(m_RigidBody->Position().Y);
     m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
@@ -87,7 +88,7 @@ void MeleeEnemy::OnCollide(Collider* collidee) {
     switch (collidee->GetObjectType()) {
         case ObjectType::Player:
             UnCollide(collidee);
-            SDL_Log("enemy collide with player");
+            //SDL_Log("enemy collide with player");
             break;
         case ObjectType::Enemy:
             UnCollide(collidee);

@@ -132,6 +132,33 @@ Game::Game() {
     srand(time(nullptr));
 
     Renderer::GetInstance()->SetCameraTarget(player);
+
+
+
+    //Testing new collision resolution
+    // Matrix2D A { -20, 1, -20, 0 };
+    // Matrix2D iA = A.Inverse();
+    // SDL_Log("%f", A.Determinant());
+    // iA.Log();
+
+    // Vector2D t = iA * Vector2D(-10, -10);
+    // t.Log();
+    
+    // Vector2D p1 { 55, 55 };
+    // Vector2D p2 { 45, 45 };
+    // Vector2D d1 { -20, -20 };
+    // Vector2D d2 { -1, 0 };
+
+    // float finalT = ColliderHandler::GetInstance()->FindIntersection(p1, d1, p2, d2);
+    // SDL_Log("t: %f", finalT);
+    Properties props_a("player", {0, 0, 18, 18}, {40, 40, 30, 30}, 0, "box1");
+    Properties props_b("player", {0, 0, 18, 18}, {0, 0, 30, 30}, 0, "box2"); 
+    Collider* a = new Collider(props_a);
+    Collider* b = new Collider(props_b);
+
+    a->GetRigidBody()->SetVelocity(Vector2D(-20, -20));
+    // Vector2D cPoint = ColliderHandler::GetInstance()->FindCollisionPoint(a, b);
+    // cPoint.Log();
 }
 
 void Game::Events() {
@@ -171,6 +198,8 @@ void Game::Update(float dt) {
         player->Clean();
         delete player;
     }
+    ColliderHandler::GetInstance()->HandleCollisions();
+
     player->Update(dt);
     if (player->GetState().HasState(ObjectState::ToBeDestroyed)) {
         DeleteObject(player);
@@ -191,7 +220,6 @@ void Game::Update(float dt) {
             ++it;
         }
     }
-    ColliderHandler::GetInstance()->HandleCollisions();
 
     m_tick++;
     // if (m_tick % cur_enemy_generation_interval == 0) {

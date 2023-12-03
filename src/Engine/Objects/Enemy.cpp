@@ -28,20 +28,19 @@ Enemy::Enemy(Properties& props, int perceptionWidth, int perceptionHeight, float
 }
 
 bool Enemy::TargetDetected() {
-    int const rect_left = GetX() - m_PerceptionWidth;
-    int const rect_right = GetX() + GetWidth() + m_PerceptionWidth;
-    int const rect_top = GetY() - m_PerceptionHeight;
-    int const rect_bottom = GetY() + GetHeight() + m_PerceptionHeight;
+    float const rect_x = GetX() - m_PerceptionWidth;
+    int const rect_w = GetWidth() + 2 * m_PerceptionWidth;
+    float const rect_y = GetY() - m_PerceptionHeight;
+    int const rect_h = GetHeight() + 2 * m_PerceptionHeight;
 
-    m_Perception = {rect_left, rect_top, rect_right - rect_left,
-                    rect_bottom - rect_top};
+    m_Perception = {rect_x, rect_y, rect_w, rect_h};
 
     if (m_Target == nullptr) {
         SDL_Log("Target is null for object %s", GetID().c_str());
         assert(false);
     }
 
-    SDL_Rect const target = m_Target->GetCollisionBox().GetRect();
+    Rect const target = m_Target->GetDstRect();
 
     if (ColliderHandler::GetInstance()->CheckCollision(m_Perception, target)) {
         float direction_x = m_Target->GetMidPointX() - GetMidPointX();
