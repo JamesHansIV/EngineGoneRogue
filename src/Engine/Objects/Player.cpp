@@ -102,7 +102,6 @@ void Player::Update(float dt) {
     
     CheckInput();
     //SDL_Log("player velocity: (%f, %f)", m_RigidBody->Velocity().X, m_RigidBody->Velocity().Y);
-    // m_RigidBody.Update(dt);
     // float multiplier = 1;
     // m_RigidBody.UnSetForce();
     // if (InputChecker::IsKeyPressed(SDLK_q) || m_is_dashing) {
