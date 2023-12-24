@@ -1,11 +1,10 @@
 #include "Game.h"
 #include <cstdlib>
-#include "Engine/Events/EventListener.h"
 #include "Engine/Input/InputChecker.h"
-#include "Engine/Objects/MeleeEnemy.h"
-#include "Engine/Objects/RangedEnemy.h"
 #include "Engine/Objects/Entrance.h"
+#include "Engine/Objects/MeleeEnemy.h"
 #include "Engine/Objects/Player.h"
+#include "Engine/Objects/RangedEnemy.h"
 #include "Engine/Renderer/Renderer.h"
 
 Player* player = nullptr;
@@ -25,15 +24,15 @@ int cur_enemy_generation_interval = 500;
 Game::Game() {
     SDL_Renderer* renderer = Renderer::GetInstance()->GetRenderer();
 
-    Renderer::GetInstance()->AddTexture("door-open", "../assets/textures/spritesheets/door2-open.png");
-    Renderer::GetInstance()->AddTexture("door-close", "../assets/textures/spritesheets/door2-close.png");
+    Renderer::GetInstance()->AddTexture(
+        "door-open", "../assets/textures/spritesheets/door2-open.png");
+    Renderer::GetInstance()->AddTexture(
+        "door-close", "../assets/textures/spritesheets/door2-close.png");
 
     Renderer::GetInstance()->AddTexture(
-        "player",
-        "../assets/textures/spritesheets/player-sheet.png");
+        "player", "../assets/textures/spritesheets/player-sheet.png");
     Renderer::GetInstance()->AddTexture(
-        "enemies",
-        "../assets/textures/spritesheets/enemies.png");
+        "enemies", "../assets/textures/spritesheets/enemies.png");
     Renderer::GetInstance()->AddTexture(
         "enemy1",
         "../assets/textures/spritesheets/enemy1_idle_spritesheet.png");
@@ -77,7 +76,8 @@ Game::Game() {
         }
     }
 
-    Properties props_e("open", {0, 0, 16, 32}, {300, 300, 16, 32}, 0, "entrance");
+    Properties props_e("open", {0, 0, 16, 32}, {300, 300, 16, 32}, 0,
+                       "entrance");
     auto* entrance = new Entrance(props_e);
 
     Properties props_p("player", {0, 0, 18, 18}, {0, 0, 30, 30}, 0, "player");
@@ -136,6 +136,8 @@ Game::Game() {
 
 void Game::Events() {
     SDL_Event event;
+    UserEvent event_wrapper;
+    event_wrapper.SetSDLEvent(&event);
     while (SDL_PollEvent(&event) != 0) {
         switch (event.type) {
             case SDL_QUIT:
@@ -143,11 +145,11 @@ void Game::Events() {
                 return;
             case SDL_KEYDOWN:
                 InputChecker::SetKeyPressed(event.key.keysym.sym, true);
-                player->OnKeyPressed(event);
+                //player->OnKeyPressed(event);
                 break;
             case SDL_KEYUP:
                 InputChecker::SetKeyPressed(event.key.keysym.sym, false);
-                player->OnKeyReleased(event);
+                //player->OnKeyReleased(event);
                 break;
             case SDL_MOUSEBUTTONDOWN:
                 InputChecker::SetMouseButtonPressed(event.button.button, true);
@@ -162,19 +164,22 @@ void Game::Events() {
             case SDL_MOUSEWHEEL:
                 InputChecker::SetMouseWheelDirection(event.wheel.y);
                 break;
+            default:
+                break;
         }
+        player->HandleEvent(&event_wrapper);
     }
 }
 
 void Game::Update(float dt) {
-    if (player->IsMarkedForDeletion()) {
+    if (player->MarkedForDeletion()) {
         player->Clean();
         delete player;
     }
     ColliderHandler::GetInstance()->HandleCollisions();
 
     player->Update(dt);
-    if (player->GetState().HasState(ObjectState::ToBeDestroyed)) {
+    if (player->MarkedForDeletion()) {
         DeleteObject(player);
     }
     for (auto it = m_Objects.begin(); it != m_Objects.end();) {
@@ -183,9 +188,8 @@ void Game::Update(float dt) {
             enemy->SetTarget(player);
         }
         (*it)->Update(dt);
-        if ((*it)->GetState().HasState(
-                ObjectState::
-                    ToBeDestroyed))  // Check if it's an Enemy and marked for deletion
+        if ((*it)
+                ->MarkedForDeletion())  // Check if it's an Enemy and marked for deletion
         {
             SDL_Log("deleted obj: %s", (*it)->GetID().c_str());
             DeleteObject(*it);

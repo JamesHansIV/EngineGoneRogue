@@ -233,12 +233,13 @@ bool Application::LoadObjects(const std::string& roomPath,
         SDL_Log("loaded object: %d", static_cast<int>(created_obj != nullptr));
         if (created_obj == nullptr) {
             return false;
-}
+        }
 
         if (types->FirstChildElement("Collider") != nullptr) {
             created_obj = LoadCollider(curr_object, created_obj);
             SDL_Log("loaded collider: %d aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                    static_cast<int>(dynamic_cast<Collider*>(created_obj) == nullptr));
+                    static_cast<int>(dynamic_cast<Collider*>(created_obj) ==
+                                     nullptr));
         }
 
         if (created_obj == nullptr) {
@@ -278,7 +279,7 @@ bool Application::LoadRooms(const char* projectPath) {
             m_Rooms[room_id] = std::vector<GameObject*>();
             if (!LoadObjects(room_path, room_id)) {
                 return false;
-}
+            }
             room_path = rooms_path;
         }
     }
@@ -293,7 +294,7 @@ bool Application::LoadProject() {
              m_ProjectName.c_str());
     if (!LoadTextures(project_path)) {
         return false;
-}
+    }
     SDL_Log("Textures are fine");
     SDL_Log("%s", project_path);
     return LoadRooms(project_path);
@@ -302,7 +303,6 @@ bool Application::LoadProject() {
 void Application::Events() {
     SDL_Event event;
     while (SDL_PollEvent(&event) != 0) {
-        m_EventManager.HandleEvent(event);
         switch (event.type) {
             case SDL_QUIT:
                 Quit();

@@ -4,7 +4,6 @@
 
 #include <tinyxml2.h>
 #include <unordered_map>
-#include "Engine/Events/EventManager.h"
 #include "Engine/Layers/Layer.h"
 #include "Engine/Objects/Collider.h"
 
@@ -15,7 +14,8 @@ class Application {
 
     static bool LoadTextures(char* projectPath);
     static GameObject* LoadObject(tinyxml2::XMLElement* xmlObj);
-    static Collider* LoadCollider(tinyxml2::XMLElement* xmlObj, GameObject* obj);
+    static Collider* LoadCollider(tinyxml2::XMLElement* xmlObj,
+                                  GameObject* obj);
     bool LoadObjects(const std::string& roomPath, const std::string& roomID);
     bool LoadRooms(const char* projectPath);
     bool LoadProject();
@@ -37,8 +37,6 @@ class Application {
 
     inline SDL_Window* GetWindow() { return m_Window; }
 
-    inline EventManager& GetEventManager() { return m_EventManager; }
-
     inline std::string GetProjectName() { return m_ProjectName; }
 
     inline static Application* Get() { return m_instance; }
@@ -52,6 +50,5 @@ class Application {
    private:
     bool m_IsRunning;
     SDL_Window* m_Window;
-    EventManager m_EventManager;
     static Application* m_instance;
 };

@@ -1,13 +1,10 @@
 #include "MeleeEnemy.h"
-#include "Engine/Input/InputChecker.h"
-#include "Engine/Objects/ColliderHandler.h"
-#include "Engine/Objects/Player.h"
 #include "Engine/Objects/Entrance.h"
-#include "Engine/Renderer/Renderer.h"
+#include "Engine/Objects/Projectile.h"
+#include "Engine/State/MeleeEnemyState.h"
 
-#include <cmath>
-
-MeleeEnemy::MeleeEnemy(Properties& props, int perceptionWidth, int perceptionHeight, float range)
+MeleeEnemy::MeleeEnemy(Properties& props, int perceptionWidth,
+                       int perceptionHeight, float range)
     : Enemy(props, perceptionWidth, perceptionHeight, range) {
     m_Animation = new Animation();
     m_Animation->AddAnimation(
@@ -18,104 +15,43 @@ MeleeEnemy::MeleeEnemy(Properties& props, int perceptionWidth, int perceptionHei
         "Attack", {m_TextureID, {2, 0, 16, 16}, 8, 15, SDL_FLIP_NONE});
     m_Animation->AddAnimation(
         "Dead", {m_TextureID, {0, 0, 16, 16}, 2, 50, SDL_FLIP_NONE});
-    m_Animation->SelectAnimation("Idle");
     SetHealth(new Health(100));
+
+    ChangeState(new MeleeEnemyIdle(this));
 }
 
 void MeleeEnemy::Draw() {
-    m_Animation->Draw(GetDstRect());
+    m_CurrentState->Draw();
 
-    if (!m_State.HasState(CharacterState::Dead)) {
-        m_Health->Draw(GetX(), GetY(), GetWidth());
-    }
+    m_Health->Draw(GetX(), GetY(), GetWidth());
 }
 
 void MeleeEnemy::Update(float dt) {
-    m_RigidBody->Update(dt);
-    if (!ManageState(dt)) {
-        return;
+    State* state = m_CurrentState->Update(dt);
+    if (state != nullptr) {
+        ChangeState(state);
     }
-    
+
+    m_RigidBody->Update(dt);
     m_Animation->Update();
 
-    
     SetX(m_RigidBody->Position().X);
     SetY(m_RigidBody->Position().Y);
     m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
-
-    if (m_Health->GetHP() <= 0) {
-        GetState().SetState(CharacterState::Dead);
-        m_Animation->SelectAnimation("Dead");
-        ColliderHandler::GetInstance()->RemoveCollider(this);
-        m_CollisionBox.clear();
-    }
-}
-
-bool MeleeEnemy::ManageState(float dt) {
-    if (GetState().HasState(CharacterState::Dead)) {
-        if (m_Animation->Ended()) {
-            GetState().SetState(CharacterState::ToBeDestroyed);
-        }
-        m_Animation->Update();
-        return false;
-    }
-   
-    if (GetState().HasState(CharacterState::IsHit) && m_Animation->Ended()) {
-        GetState().RemoveState(CharacterState::IsHit);
-        m_Animation->SelectAnimation("Idle");
-        return true;
-    }
-    
-    bool const in_range = MoveTowardsTarget(dt, 45.0F);
-    if (!GetState().HasState(CharacterState::Attack) && in_range) {
-        GetState().AddState(CharacterState::Attack);
-        m_Animation->SelectAnimation("Attack");
-    } else if (m_Animation->Ended()) {
-        GetState().RemoveState(CharacterState::Attack);
-        m_Animation->SelectAnimation("Idle");
-    }
-
-    return true;
 }
 
 void MeleeEnemy::OnCollide(Collider* collidee) {
     if (this == collidee) {
         return;
-}
-
-    switch (collidee->GetObjectType()) {
-        case ObjectType::Player:
-            UnCollide(collidee);
-            //SDL_Log("enemy collide with player");
-            break;
-        case ObjectType::Enemy:
-            UnCollide(collidee);
-            break;
-        case ObjectType::MeleeWeapon:
-            UnCollide(collidee);
-            break;
-        case ObjectType::Projectile: {
-            auto* projectile = dynamic_cast<Projectile*>(collidee);
-            if (projectile->PlayerOwned() && !GetState().HasState(CharacterState::IsHit)) {
-                GetState().AddState(CharacterState::IsHit);
-                m_Animation->SelectAnimation("Hit");
-            }
-            break;
-        }
-        case ObjectType::Entrance: {
-            auto* entrance = dynamic_cast<Entrance*>(collidee);
-            assert(entrance != nullptr);
-            if (!entrance->GetState().HasState(EntranceState::Open)) {
-                UnCollide(collidee);
-            }
-            break;
-        }
-        case ObjectType::Collider:
-            UnCollide(collidee);
-            break;
-        default:
-            break;
     }
+
+    CollideEvent event(collidee);
+    State* state = m_CurrentState->HandleEvent(&event);
+    if (state != nullptr) {
+        ChangeState(state);
+    }
+
+    return;
 }
 
 void MeleeEnemy::Clean() {

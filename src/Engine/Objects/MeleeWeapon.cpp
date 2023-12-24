@@ -11,7 +11,7 @@ void MeleeWeapon::Draw() {
     GameObject::Draw();
 }
 
-void MeleeWeapon::Update(float  /*dt*/) {
+void MeleeWeapon::Update(float /*dt*/) {
     m_CollisionBox.Set(GetX(), GetY(), GetHeight(), GetWidth());
 
     if (GetFlip() == SDL_FLIP_HORIZONTAL) {

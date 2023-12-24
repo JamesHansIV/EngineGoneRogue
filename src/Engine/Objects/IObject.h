@@ -1,5 +1,18 @@
 #pragma once
 
+enum class ObjectType {
+    None = 0,
+    Base,
+    Collider,
+    Projectile,
+    Player,
+    Enemy,
+    Weapon,
+    RangedWeapon,
+    MeleeWeapon,
+    Entrance
+};
+
 class IObject {
    public:
     virtual void Draw() = 0;

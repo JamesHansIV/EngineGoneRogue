@@ -9,13 +9,17 @@
 class Collider : public GameObject {
    public:
     Collider(Properties& props, bool immovable = false)
-        : GameObject(props), m_Immovable(immovable) {
+        : GameObject(props), m_Immovable(immovable), m_DoUnCollide(false) {
         m_RigidBody = new RigidBody(GetX(), GetY());
         m_CollisionBox.Set(GetX(), GetY(), GetWidth(), GetHeight());
     }
 
     Collider(Collider* rhs);
     Collider(GameObject* rhs);
+
+    void SetDoUnCollide(bool doUnCollide) { m_DoUnCollide = doUnCollide; }
+
+    bool GetDoUnCollide() { return m_DoUnCollide; }
 
     void UnCollide(Collider* collidee);
 
@@ -33,4 +37,6 @@ class Collider : public GameObject {
     RigidBody* m_RigidBody;
     CollisionBox m_CollisionBox;
     bool m_Immovable;
+    //This indicates if a collider should call UnCollide in the OnCollide method
+    bool m_DoUnCollide;
 };

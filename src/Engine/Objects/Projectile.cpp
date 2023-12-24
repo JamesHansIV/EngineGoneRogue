@@ -16,8 +16,6 @@ Projectile::Projectile(Properties& props, float speed, float angle,
     Vector2D const velocity = direction * m_Speed;
     m_Velocity = velocity;
     m_RigidBody->SetVelocity(m_Velocity);
-
-    m_MarkedForDeletion = false;
 }
 
 void Projectile::Draw() {
@@ -45,7 +43,7 @@ void Projectile::CheckOutOfBounds() {
 void Projectile::OnCollide(Collider* collidee) {
     if (this == collidee) {
         return;
-}
+    }
 
     switch (collidee->GetObjectType()) {
         case ObjectType::Player:

@@ -12,22 +12,8 @@
 #include <unordered_map>
 #include <utility>
 #include "Engine/Physics/CollisionBox.h"
-#include "Engine/State/State.h"
 
 #include "Engine/utils/utils.h"
-
-enum class ObjectType {
-    None = 0,
-    Base,
-    Collider,
-    Projectile,
-    Player,
-    Enemy,
-    Weapon,
-    RangedWeapon,
-    MeleeWeapon,
-    Entrance
-};
 
 // enum ObjectCategory {
 //     kNone = 0,
@@ -67,9 +53,8 @@ class GameObject : public IObject {
           m_Rotation(props.Rotation),
           m_Flip(props.Flip),
           m_ObjectID(props.ObjectID),
-          m_Animation(nullptr) {
-
-    }
+          m_Animation(nullptr),
+          m_MarkedForDeletion(false) {}
 
     explicit GameObject(GameObject* rhs);
     virtual ~GameObject() = default;
@@ -79,14 +64,18 @@ class GameObject : public IObject {
     virtual void Update(float dt) override;
 
     void DrawRect();
+    void DrawAnimation();
+    void ChangeState(State* state);
 
     virtual ObjectType GetObjectType() { return ObjectType::Base; }
 
     TilePos& GetTilePos() { return m_CurrentTilePos; }
 
-    void AddIdleFrame(const std::string& id, TilePos tilePos);
+    void SetTilePos(TilePos tilePos) { m_CurrentTilePos = tilePos; }
 
-    void SelectIdleFrame(const std::string& id);
+    void AddStillFrame(const std::string& id, TilePos tilePos);
+
+    void SelectStillFrame(const std::string& id);
 
     Rect& GetDstRect() { return m_DstRect; }
 
@@ -136,16 +125,26 @@ class GameObject : public IObject {
 
     void SetAnimation(Animation* animation) { m_Animation = animation; }
 
-    State& GetState() { return m_State; }
+    BitFieldState& GetState() { return m_State; }
+
+    State* GetCurrentState() { return m_CurrentState; }
+
+    StateType GetStateType() { return m_CurrentState->GetType(); }
+
+    bool MarkedForDeletion() { return m_MarkedForDeletion; }
+
+    void MarkForDeletion() { m_MarkedForDeletion = true; }
 
    protected:
     TilePos m_CurrentTilePos;
-    std::unordered_map<std::string, TilePos> m_IdleFrames;
+    std::unordered_map<std::string, TilePos> m_StillFrames;
     Rect m_DstRect;
     float m_Rotation;
     std::string m_TextureID;
     std::string m_ObjectID;
     SDL_RendererFlip m_Flip;
     Animation* m_Animation;
-    State m_State;
+    BitFieldState m_State;
+    State* m_CurrentState;
+    bool m_MarkedForDeletion;
 };

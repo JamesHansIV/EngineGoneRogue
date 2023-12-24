@@ -6,7 +6,9 @@
 
 class RangedEnemy : public Enemy {
    public:
-    explicit RangedEnemy(Properties& props, int perceptionWidth, int perceptionHeight, float range = 150.0f, int fireRate = 20);
+    explicit RangedEnemy(Properties& props, int perceptionWidth,
+                         int perceptionHeight, float range = 150.0f,
+                         int fireRate = 20);
 
     virtual void Draw() override;
     virtual void Clean() override;
@@ -15,6 +17,8 @@ class RangedEnemy : public Enemy {
     void SelectMoveAnimation();
     bool ManageState(float dt);
     void Shoot();
+
+    int GetFireRate() { return m_FireRate; }
 
     virtual void OnCollide(Collider* collidee) override;
 

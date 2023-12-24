@@ -1,6 +1,6 @@
 #pragma once
 
-#include <list>
+#include "Engine/Events/Event.h"
 
 enum class GlobalState {
     None = 0,
@@ -38,11 +38,25 @@ struct CharacterState : ObjectState {
     };
 };
 
-class State {
-   public:
-    State() : m_CurrentStates(0) {}
+enum class StateType {
+    //General state
+    Idle,
+    IsHit,
+    Moving,
 
-    int GetCurrentStates() { return m_CurrentStates; }
+    //Character state
+    Dead,
+    Attack,
+
+    //Entrance state
+    Open,
+};
+
+class BitFieldState {
+   public:
+    BitFieldState() : m_CurrentStates(0) {}
+
+    int GetCurrentStates() const { return m_CurrentStates; }
 
     void SetState(int state) { m_CurrentStates = state; }
 
@@ -52,9 +66,20 @@ class State {
 
     void RemoveState(int state) { m_CurrentStates &= ~state; }
 
-    bool HasState(int state) { return m_CurrentStates & state; }
+    bool HasState(int state) const { return m_CurrentStates & state; }
 
    private:
     int m_CurrentStates;
-    std::vector<int> m_StateOrder;
+};
+
+class State {
+   public:
+    virtual ~State() = default;
+
+    virtual void Enter() = 0;
+    virtual void Exit() = 0;
+    virtual State* Update(float dt) = 0;
+    virtual void Draw() = 0;
+    virtual State* HandleEvent(Event* event) = 0;
+    virtual StateType GetType() = 0;
 };

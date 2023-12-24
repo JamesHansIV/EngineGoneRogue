@@ -912,7 +912,7 @@ void Editor::ShowTiles(TileMap* tileMap) {
             ImGui::PopStyleColor();
             if (is_active) {
                 ImGui::PopStyleColor();
-}
+            }
         }
     }
 }
@@ -1243,7 +1243,6 @@ void Editor::Events() {
         if (io.WantCaptureKeyboard || io.WantCaptureMouse) {
             return;
         }
-        GetEventManager().HandleEvent(event);
         switch (event.type) {
             case SDL_QUIT:
                 Quit();

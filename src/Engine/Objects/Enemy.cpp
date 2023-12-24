@@ -1,8 +1,8 @@
 #include "Enemy.h"
 #include "Engine/Input/InputChecker.h"
 #include "Engine/Objects/ColliderHandler.h"
-#include "Engine/Objects/Player.h"
 #include "Engine/Objects/Entrance.h"
+#include "Engine/Objects/Player.h"
 #include "Engine/Renderer/Renderer.h"
 
 #include <cmath>
@@ -20,11 +20,19 @@ DEVELOPING BASIC ENEMY BEHAVIOUR:
 - collision detection between the enemies (might need to add offset - but this might cause problems)
 */
 
-Enemy::Enemy(Properties& props, int perceptionWidth, int perceptionHeight, float range)
+Enemy::Enemy(Properties& props, int perceptionWidth, int perceptionHeight,
+             float range)
     : Character(props),
       m_PerceptionWidth(perceptionWidth),
       m_PerceptionHeight(perceptionHeight),
-      m_Range(range) {
+      m_Range(range) {}
+
+bool Enemy::TargetInRange() {
+    Rect range = {GetMidPointX() - m_Range, GetMidPointY() - m_Range,
+                  (int)m_Range * 2, (int)m_Range * 2};
+    if (ColliderHandler::CheckCollision(GetTarget()->GetDstRect(), range)) {
+        return true;
+    }
 }
 
 bool Enemy::TargetDetected() {
@@ -51,7 +59,7 @@ bool Enemy::TargetDetected() {
 }
 
 // Returns true if in target is in range
-bool Enemy::MoveTowardsTarget(float  /*dt*/, float range) {
+bool Enemy::MoveTowardsTarget(float /*dt*/) {
     if (TargetDetected()) {
         float direction_x = m_Target->GetMidPointX() - GetMidPointX();
         float direction_y = m_Target->GetMidPointY() - GetMidPointY();
@@ -64,8 +72,9 @@ bool Enemy::MoveTowardsTarget(float  /*dt*/, float range) {
             direction_y /= direction_length;
         }
 
-        m_RigidBody->ApplyVelocity(Vector2D(direction_x * 0.5, direction_y * 0.5));
-        if (direction_length <= range) {
+        m_RigidBody->ApplyVelocity(
+            Vector2D(direction_x * 0.5, direction_y * 0.5));
+        if (direction_length <= m_Range) {
             return true;
         }
     }
@@ -75,7 +84,7 @@ bool Enemy::MoveTowardsTarget(float  /*dt*/, float range) {
 void Enemy::OnCollide(Collider* collidee) {
     if (this == collidee) {
         return;
-}
+    }
 
     switch (collidee->GetObjectType()) {
         case ObjectType::Player:

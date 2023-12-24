@@ -18,12 +18,11 @@ GameObject::GameObject(GameObject* rhs) {
                                rhs->m_Animation->GetFrameCount(),
                                rhs->m_Animation->GetAnimationSpeed()});
     }
-
 }
 
 void GameObject::Draw() {
     if (m_Animation != nullptr) {
-        m_Animation->Draw(m_DstRect, m_Rotation);
+        DrawAnimation();
     } else {
         DrawRect();
     }
@@ -31,13 +30,17 @@ void GameObject::Draw() {
 
 void GameObject::DrawRect() {
     SDL_Rect src_rect = {m_CurrentTilePos.col * m_CurrentTilePos.w,
-                            m_CurrentTilePos.row * m_CurrentTilePos.h, m_CurrentTilePos.w,
-                            m_CurrentTilePos.h};
+                         m_CurrentTilePos.row * m_CurrentTilePos.h,
+                         m_CurrentTilePos.w, m_CurrentTilePos.h};
     SDL_Rect dst_rect = {static_cast<int>(m_DstRect.x),
-                            static_cast<int>(m_DstRect.y), m_DstRect.w,
-                            m_DstRect.h};
-    Renderer::GetInstance()->Draw(m_TextureID, src_rect, dst_rect,
-                                    m_Rotation, nullptr, m_Flip);
+                         static_cast<int>(m_DstRect.y), m_DstRect.w,
+                         m_DstRect.h};
+    Renderer::GetInstance()->Draw(m_TextureID, src_rect, dst_rect, m_Rotation,
+                                  nullptr, m_Flip);
+}
+
+void GameObject::DrawAnimation() {
+    m_Animation->Draw(m_DstRect, m_Rotation);
 }
 
 void GameObject::Update(float /*dt*/) {
@@ -46,19 +49,30 @@ void GameObject::Update(float /*dt*/) {
     }
 }
 
-
-void GameObject::AddIdleFrame(const std::string& id, TilePos tilePos) {
-    if (m_IdleFrames.find(id) != m_IdleFrames.end()) {
-        SDL_Log("TilePos with id %s already exists for object %s", id.c_str(), GetID().c_str());
+void GameObject::AddStillFrame(const std::string& id, TilePos tilePos) {
+    if (m_StillFrames.find(id) != m_StillFrames.end()) {
+        SDL_Log("TilePos with id %s already exists for object %s", id.c_str(),
+                GetID().c_str());
         assert(false);
     }
-    m_IdleFrames[id] = tilePos;
+    m_StillFrames[id] = tilePos;
 }
 
-void GameObject::SelectIdleFrame(const std::string& id) {
-    if (m_IdleFrames.find(id) == m_IdleFrames.end()) {
-        SDL_Log("TilePos with id=%s does not exist for object %s", id.c_str(), GetID().c_str());
+void GameObject::SelectStillFrame(const std::string& id) {
+    if (m_StillFrames.find(id) == m_StillFrames.end()) {
+        SDL_Log("TilePos with id=%s does not exist for object %s", id.c_str(),
+                GetID().c_str());
         assert(false);
     }
-    m_CurrentTilePos = m_IdleFrames[id];
+    m_CurrentTilePos = m_StillFrames[id];
+}
+
+void GameObject::ChangeState(State* state) {
+    if (m_CurrentState != nullptr) {
+        m_CurrentState->Exit();
+        delete m_CurrentState;
+    }
+
+    m_CurrentState = state;
+    m_CurrentState->Enter();
 }
