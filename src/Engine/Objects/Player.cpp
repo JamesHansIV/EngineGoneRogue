@@ -50,7 +50,6 @@ Player::Player(Properties& props) : Character(props) {
 
     m_CurrentTilePos = m_StillFrames["face-down"];
 
-    m_State.AddState(CharacterState::Idle);
     m_CurrentState = new PlayerIdle(this);
     // m_Collider->SetCorrection(-45, -20, 60, 80 )
     m_Health = new Health(100);

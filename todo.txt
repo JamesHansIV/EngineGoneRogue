@@ -5,4 +5,57 @@ x managing health should be done by the health class
 - enemy objects should be handled by an enemy manager
 - remove hard coded animations/health bars/weapons
 - add enemy types
-- enemies are able to slip through walls somehow
+x enemies are able to slip through walls somehow
+
+enemy types
+- enemy that shoots a projectile that explodes into other projectiles
+- enemy that surrounds itself with projectiles and shoots in all directions
+- enemy that can dash at the player
+- enemy that can shoot homing projectiles
+- enemy that shoots laser beam
+- enemy that shoots spread of bullets
+- enemy that shoots stream of bullets
+- enemy that emits projectiles that hover in a fixed location
+- enemy that spawns smaller enemies on death
+- enemy that has a shield and a dash
+- enemy that shoots split shot
+- enemy that spins lasers shot out in all directions
+- enemy that lobs projectiles
+
+player stats
+- ranged damage
+- melee damage
+- dodge roll cooldown
+- ability cooldown
+- health
+- speed
+- piercing
+- armor
+- ability power
+- knockback
+- attack speed
+- crit chance
+- life steal
+- hp regen
+- explosion size
+- range
+- luck
+- projectile spread
+- projectile size
+
+status effects
+- poison/bleed
+- burning
+- slowdown
+- stun
+- freeze
+
+
+player abilities
+- dodge roll
+- chain lightning
+- rotating projectiles that surround player
+- 
+
+weapons
+- melee weapon that deflects bullets

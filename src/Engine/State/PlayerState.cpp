@@ -75,14 +75,15 @@ State* handleProjectileCollide(Player* player, Projectile* projectile) {
 }
 
 State* handleEntranceCollide(Player* player, Entrance* entrance) {
-    if (!entrance->GetState().HasState(EntranceState::Open)) {
+    if (entrance->GetCurrentState()->GetType() == StateType::Closed ||
+        entrance->GetCurrentState()->GetType() == StateType::Opening) {
+        SDL_Log("player uncollide with entrance");
         player->UnCollide(entrance);
     }
     return nullptr;
 }
 
 State* handleCollide(Player* player, CollideEvent* event) {
-
     Collider* collidee = event->GetCollidee();
 
     if (collidee == nullptr) {

@@ -21,7 +21,6 @@ RangedEnemy::RangedEnemy(Properties& props, int perceptionWidth,
         "Dead", {m_TextureID, {6, 0, 16, 16}, 2, 50, SDL_FLIP_NONE});
 
     ChangeState(new RangedEnemyIdle(this));
-    m_State.AddState(CharacterState::Idle);
     SetHealth(new Health(100));
     m_ProjectileManager = new ProjectileManager();
 }
@@ -46,57 +45,7 @@ void RangedEnemy::Update(float dt) {
     SetY(m_RigidBody->Position().Y);
     m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
 
-    //if (m_Health->GetHP() <= 0) {
-    //    GetState().SetState(CharacterState::Dead);
-    //    m_Animation->SelectAnimation("Dead");
-    //    ColliderHandler::GetInstance()->RemoveCollider(this);
-    //    m_CollisionBox.clear();
-    //}
     m_ProjectileManager->UpdateProjectiles(dt);
-}
-
-bool RangedEnemy::ManageState(float dt) {
-    if (GetState().HasState(CharacterState::Dead)) {
-        if (m_Animation->Ended()) {
-            GetState().SetState(CharacterState::ToBeDestroyed);
-        }
-        return false;
-    }
-
-    if (m_State.HasState(CharacterState::Attack)) {
-        if (Application::Get()->GetFrame() % m_FireRate == 0) {
-            Shoot();
-        }
-        if (!TargetDetected()) {
-            m_State.RemoveState(CharacterState::Attack);
-        }
-        return true;
-    }
-
-    if (TargetDetected()) {
-        SelectMoveAnimation();
-        bool const in_range = MoveTowardsTarget(dt);
-
-        if (in_range) {
-            m_State.AddState(CharacterState::Attack);
-        }
-    } else {
-        m_State.AddState(CharacterState::Idle);
-        m_Animation->SelectAnimation("Idle");
-    }
-    return true;
-}
-
-void RangedEnemy::SelectMoveAnimation() {
-    if (m_State.HasState(CharacterState::Idle)) {
-        float const dy = GetY() - GetTarget()->GetY();
-        if (dy < 0) {
-            m_Animation->SelectAnimation("Move-down");
-        } else {
-            m_Animation->SelectAnimation("Move-up");
-        }
-        m_State.RemoveState(CharacterState::Idle);
-    }
 }
 
 void RangedEnemy::Shoot() {
@@ -128,40 +77,6 @@ void RangedEnemy::OnCollide(Collider* collidee) {
     }
 
     return;
-
-    switch (collidee->GetObjectType()) {
-        case ObjectType::Player:
-            UnCollide(collidee);
-            break;
-        case ObjectType::Enemy:
-            UnCollide(collidee);
-            break;
-        case ObjectType::MeleeWeapon:
-            UnCollide(collidee);
-            break;
-        case ObjectType::Projectile: {
-            auto* projectile = dynamic_cast<Projectile*>(collidee);
-            if (projectile->PlayerOwned() &&
-                !GetState().HasState(CharacterState::IsHit)) {
-                GetState().AddState(CharacterState::IsHit);
-                m_Animation->SelectAnimation("Hit");
-            }
-            break;
-        }
-        case ObjectType::Entrance: {
-            auto* entrance = dynamic_cast<Entrance*>(collidee);
-            assert(entrance != nullptr);
-            if (!entrance->GetState().HasState(EntranceState::Open)) {
-                UnCollide(collidee);
-            }
-            break;
-        }
-        case ObjectType::Collider:
-            UnCollide(collidee);
-            break;
-        default:
-            break;
-    }
 }
 
 void RangedEnemy::Clean() {}

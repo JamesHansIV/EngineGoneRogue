@@ -101,7 +101,7 @@ void Enemy::OnCollide(Collider* collidee) {
         case ObjectType::Entrance: {
             auto* entrance = dynamic_cast<Entrance*>(collidee);
             assert(entrance != nullptr);
-            if (!entrance->GetState().HasState(EntranceState::Open)) {
+            if (entrance->GetCurrentState()->GetType() != StateType::Opened) {
                 UnCollide(collidee);
             }
             break;

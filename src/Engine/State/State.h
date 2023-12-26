@@ -12,32 +12,6 @@ enum class GlobalState {
     ClearedRoom
 };
 
-struct ObjectState {
-    enum {
-        None = 0,
-        Colliding = 1 << 0,
-        ToBeDestroyed = 1 << 1,
-        Damaged = 1 << 2,
-        IsHit = 1 << 3,
-        Idle = 1 << 4
-    };
-};
-
-struct EntranceState : ObjectState {
-    enum { Open = 1 << 5, Close = 1 << 6 };
-};
-
-struct CharacterState : ObjectState {
-    enum {
-        Dead = 1 << 7,
-        MoveUp = 1 << 8,
-        MoveDown = 1 << 9,
-        MoveRight = 1 << 10,
-        MoveLeft = 1 << 11,
-        Attack = 1 << 12
-    };
-};
-
 enum class StateType {
     //General state
     Idle,
@@ -49,7 +23,10 @@ enum class StateType {
     Attack,
 
     //Entrance state
-    Open,
+    Closed,
+    Opened,
+    Closing,
+    Opening
 };
 
 class BitFieldState {

@@ -13,8 +13,4 @@ class Entrance : public Collider {
     virtual void OnCollide(Collider* collidee) override;
 
     virtual ObjectType GetObjectType() override { return ObjectType::Entrance; }
-
-   private:
-    Animation* m_Open;
-    Animation* m_Close;
 };

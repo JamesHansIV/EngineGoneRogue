@@ -11,10 +11,12 @@ State* meleeEnemyHandleCollide(MeleeEnemy* enemy, Collider* collidee) {
             }
             break;
         case ObjectType::Entrance: {
-            if (dynamic_cast<Entrance*>(collidee)->GetState().HasState(
-                    EntranceState::Open)) {
-                break;
+            Entrance* entrance = dynamic_cast<Entrance*>(collidee);
+            if (entrance->GetCurrentState()->GetType() == StateType::Closed ||
+                entrance->GetCurrentState()->GetType() == StateType::Opening) {
+                enemy->UnCollide(collidee);
             }
+            break;
         }
         case ObjectType::Player:
         case ObjectType::Enemy:
@@ -199,10 +201,12 @@ State* MeleeEnemyIsHit::OnCollideEvent(CollideEvent* event) {
             }
             break;
         case ObjectType::Entrance: {
-            if (dynamic_cast<Entrance*>(collidee)->GetState().HasState(
-                    EntranceState::Open)) {
-                break;
+            if (dynamic_cast<Entrance*>(collidee)
+                    ->GetCurrentState()
+                    ->GetType() != StateType::Opened) {
+                GetEnemy()->UnCollide(collidee);
             }
+            break;
         }
         case ObjectType::Player:
         case ObjectType::Enemy:

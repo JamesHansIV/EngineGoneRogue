@@ -125,8 +125,6 @@ class GameObject : public IObject {
 
     void SetAnimation(Animation* animation) { m_Animation = animation; }
 
-    BitFieldState& GetState() { return m_State; }
-
     State* GetCurrentState() { return m_CurrentState; }
 
     StateType GetStateType() { return m_CurrentState->GetType(); }
@@ -144,7 +142,6 @@ class GameObject : public IObject {
     std::string m_ObjectID;
     SDL_RendererFlip m_Flip;
     Animation* m_Animation;
-    BitFieldState m_State;
     State* m_CurrentState;
     bool m_MarkedForDeletion;
 };

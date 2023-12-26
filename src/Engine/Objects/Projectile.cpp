@@ -59,9 +59,7 @@ void Projectile::OnCollide(Collider* collidee) {
             }
             break;
         case ObjectType::MeleeWeapon:
-            break;
         case ObjectType::Projectile:
-            SDL_Log("%s object collided with projectile", GetID().c_str());
             break;
         case ObjectType::Collider:
             m_MarkedForDeletion = true;
