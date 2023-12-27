@@ -4,12 +4,33 @@
 #include "Engine/Objects/Entrance.h"
 #include "Engine/Objects/Player.h"
 #include "SDL2/SDL_events.h"
+#include "SDL2/SDL_keycode.h"
 
 bool IsPlayerDead(Player* player) {
     return (player->GetHealth()->GetHP() < 0);
 }
 
-State* updateDirection(Player* player) {
+void MovePlayer(Player* player, float dt) {
+    float speed = 0;
+    if (InputChecker::IsKeyPressed(SDLK_w)) {
+        speed = player->GetStats().Speed;
+        player->GetRigidBody()->ApplyVelocity(Vector2D(0, -speed * dt));
+    }
+    if (InputChecker::IsKeyPressed(SDLK_s)) {
+        speed = player->GetStats().Speed;
+        player->GetRigidBody()->ApplyVelocity(Vector2D(0, speed * dt));
+    }
+    if (InputChecker::IsKeyPressed(SDLK_a)) {
+        speed = player->GetStats().Speed;
+        player->GetRigidBody()->ApplyVelocity(Vector2D(-speed * dt, 0));
+    }
+    if (InputChecker::IsKeyPressed(SDLK_d)) {
+        speed = player->GetStats().Speed;
+        player->GetRigidBody()->ApplyVelocity(Vector2D(speed * dt, 0));
+    }
+}
+
+State* UpdateAnimationDirection(Player* player, AnimationIDs animationIDs) {
     bool const key_up = InputChecker::IsKeyPressed(SDLK_w);
     bool const key_down = InputChecker::IsKeyPressed(SDLK_s);
     bool const key_left = InputChecker::IsKeyPressed(SDLK_a);
@@ -28,27 +49,27 @@ State* updateDirection(Player* player) {
     }
 
     if (moving_up && moving_right) {
-        player->GetAnimation()->SelectAnimation("move-right-up");
+        player->GetAnimation()->SelectAnimation(animationIDs.RightUp);
         player->SelectStillFrame("face-right-up");
         player->SetFlip(SDL_FLIP_NONE);
     } else if (moving_up && moving_left) {
-        player->GetAnimation()->SelectAnimation("move-left-up");
+        player->GetAnimation()->SelectAnimation(animationIDs.LeftUp);
         player->SelectStillFrame("face-right-up");
         player->SetFlip(SDL_FLIP_HORIZONTAL);
     } else if (moving_up) {
-        player->GetAnimation()->SelectAnimation("move-up");
+        player->GetAnimation()->SelectAnimation(animationIDs.Up);
         player->SelectStillFrame("face-up");
         player->SetFlip(SDL_FLIP_NONE);
     } else if (moving_right) {
-        player->GetAnimation()->SelectAnimation("move-right");
+        player->GetAnimation()->SelectAnimation(animationIDs.Right);
         player->SelectStillFrame("face-right");
         player->SetFlip(SDL_FLIP_NONE);
     } else if (moving_left) {
-        player->GetAnimation()->SelectAnimation("move-left");
+        player->GetAnimation()->SelectAnimation(animationIDs.Left);
         player->SelectStillFrame("face-right");
         player->SetFlip(SDL_FLIP_HORIZONTAL);
     } else if (moving_down) {
-        player->GetAnimation()->SelectAnimation("move-down");
+        player->GetAnimation()->SelectAnimation(animationIDs.Down);
         player->SelectStillFrame("face-down");
         player->SetFlip(SDL_FLIP_NONE);
     } else {
@@ -57,33 +78,31 @@ State* updateDirection(Player* player) {
     return nullptr;
 }
 
-State* handleEnemyCollide(Player* player, Enemy* enemy) {
+State* HandleEnemyCollide(Player* player, Enemy* enemy) {
     player->UnCollide(enemy);
-    int const frame = enemy->GetAnimation()->GetCurrentFrame();
     if (enemy->GetCurrentState()->GetType() == StateType::Attack &&
-        2 <= frame && frame <= 4) {
+        enemy->GetAnimation()->OnKeyFrame()) {
         return new PlayerIsHit(player, 1);
     }
     return nullptr;
 }
 
-State* handleProjectileCollide(Player* player, Projectile* projectile) {
+State* HandleProjectileCollide(Player* player, Projectile* projectile) {
     if (projectile->PlayerOwned()) {
         return nullptr;
     }
     return new PlayerIsHit(player, 10);
 }
 
-State* handleEntranceCollide(Player* player, Entrance* entrance) {
+State* HandleEntranceCollide(Player* player, Entrance* entrance) {
     if (entrance->GetCurrentState()->GetType() == StateType::Closed ||
         entrance->GetCurrentState()->GetType() == StateType::Opening) {
-        SDL_Log("player uncollide with entrance");
         player->UnCollide(entrance);
     }
     return nullptr;
 }
 
-State* handleCollide(Player* player, CollideEvent* event) {
+State* HandleCollide(Player* player, CollideEvent* event) {
     Collider* collidee = event->GetCollidee();
 
     if (collidee == nullptr) {
@@ -92,15 +111,15 @@ State* handleCollide(Player* player, CollideEvent* event) {
 
     switch (collidee->GetObjectType()) {
         case ObjectType::Enemy: {
-            return handleEnemyCollide(player, dynamic_cast<Enemy*>(collidee));
+            return HandleEnemyCollide(player, dynamic_cast<Enemy*>(collidee));
             break;
         }
         case ObjectType::Projectile:
-            return handleProjectileCollide(player,
+            return HandleProjectileCollide(player,
                                            dynamic_cast<Projectile*>(collidee));
             break;
         case ObjectType::Entrance: {
-            return handleEntranceCollide(player,
+            return HandleEntranceCollide(player,
                                          dynamic_cast<Entrance*>(collidee));
             break;
         }
@@ -113,12 +132,16 @@ State* handleCollide(Player* player, CollideEvent* event) {
     return nullptr;
 }
 
-void PlayerIdle::Enter() {}
+void PlayerIdle::Enter() {
+    SDL_Log("enter idle state");
+}
 
 void PlayerIdle::Exit() {}
 
 State* PlayerIdle::Update(float dt) {
-    return nullptr;
+    GetPlayer()->GetStats().DodgeCD > 0 ? GetPlayer()->GetStats().DodgeCD--
+                                        : GetPlayer()->GetStats().DodgeCD;
+    return PollInput(dt);
 }
 
 void PlayerIdle::Draw() {
@@ -163,16 +186,30 @@ State* PlayerIdle::OnUserEvent(UserEvent* event) {
 }
 
 State* PlayerIdle::OnCollideEvent(CollideEvent* event) {
-    return handleCollide(GetPlayer(), event);
+    return HandleCollide(GetPlayer(), event);
+}
+
+State* PlayerIdle::PollInput(float dt) {
+    if (InputChecker::IsKeyPressed(SDLK_w) ||
+        InputChecker::IsKeyPressed(SDLK_s) ||
+        InputChecker::IsKeyPressed(SDLK_a) ||
+        InputChecker::IsKeyPressed(SDLK_d)) {
+        return new PlayerMoving(GetPlayer());
+    }
+    return nullptr;
 }
 
 void PlayerMoving::Enter() {
-    updateDirection(GetPlayer());
+    SDL_Log("enter moving state");
+    UpdateAnimationDirection(GetPlayer(), GetMoveAnimationIDs());
 }
 
 void PlayerMoving::Exit() {}
 
 State* PlayerMoving::Update(float dt) {
+    GetPlayer()->GetStats().DodgeCD > 0 ? GetPlayer()->GetStats().DodgeCD--
+                                        : GetPlayer()->GetStats().DodgeCD;
+    PollInput(dt);
     return nullptr;
 }
 
@@ -210,7 +247,13 @@ State* PlayerMoving::OnUserEvent(UserEvent* event) {
         case SDLK_s:
         case SDLK_a:
         case SDLK_d:
-            return updateDirection(GetPlayer());
+            return UpdateAnimationDirection(GetPlayer(), GetMoveAnimationIDs());
+            break;
+        case SDLK_LSHIFT:
+            if (e->type == SDL_KEYDOWN &&
+                GetPlayer()->GetStats().DodgeCD <= 0) {
+                return new PlayerDodge(GetPlayer());
+            }
             break;
         default:
             break;
@@ -219,7 +262,69 @@ State* PlayerMoving::OnUserEvent(UserEvent* event) {
 }
 
 State* PlayerMoving::OnCollideEvent(CollideEvent* event) {
-    return handleCollide(GetPlayer(), event);
+    return HandleCollide(GetPlayer(), event);
+}
+
+void PlayerMoving::PollInput(float dt) {
+    MovePlayer(GetPlayer(), dt);
+}
+
+void PlayerDodge::Enter() {
+    SDL_Log("enter dodge state");
+    GetPlayer()->GetStats().DodgeCD = m_DodgeCD;
+    UpdateAnimationDirection(GetPlayer(), GetDodgeAnimationIDs());
+    Vector2D velocity = GetPlayer()->GetRigidBody()->Velocity();
+    float dodge_speed = GetPlayer()->GetStats().DodgeSpeed;
+
+    m_Velocity = velocity * dodge_speed;
+}
+
+void PlayerDodge::Exit() {}
+
+State* PlayerDodge::Update(float dt) {
+    if (GetPlayer()->GetAnimation()->Ended()) {
+        return new PlayerIdle(GetPlayer());
+    }
+    GetPlayer()->GetRigidBody()->ApplyVelocity(m_Velocity);
+    return nullptr;
+}
+
+void PlayerDodge::Draw() {
+    GetPlayer()->DrawAnimation();
+}
+
+State* PlayerDodge::HandleEvent(Event* event) {
+    EventType e_type = event->GetEventType();
+
+    switch (e_type) {
+        case EventType::CollideEvent:
+            return OnCollideEvent(dynamic_cast<CollideEvent*>(event));
+        default:
+            break;
+    }
+    return nullptr;
+}
+
+State* PlayerDodge::OnCollideEvent(CollideEvent* event) {
+    Collider* collidee = event->GetCollidee();
+
+    if (collidee == nullptr) {
+        return nullptr;
+    }
+
+    switch (collidee->GetObjectType()) {
+        case ObjectType::Entrance: {
+            return HandleEntranceCollide(GetPlayer(),
+                                         dynamic_cast<Entrance*>(collidee));
+            break;
+        }
+        case ObjectType::Collider:
+            GetPlayer()->UnCollide(collidee);
+            break;
+        default:
+            break;
+    }
+    return nullptr;
 }
 
 void PlayerIsHit::Enter() {
@@ -236,6 +341,7 @@ State* PlayerIsHit::Update(float dt) {
     if (GetPlayer()->GetAnimation()->Ended()) {
         return new PlayerIdle(GetPlayer());
     }
+    PollInput(dt);
     return nullptr;
 }
 
@@ -288,6 +394,10 @@ State* PlayerIsHit::OnCollideEvent(CollideEvent* event) {
             break;
     }
     return nullptr;
+}
+
+void PlayerIsHit::PollInput(float dt) {
+    MovePlayer(GetPlayer(), dt);
 }
 
 void PlayerIsHit::ApplyDamage() {

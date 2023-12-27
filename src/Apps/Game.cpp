@@ -32,27 +32,11 @@ Game::Game() {
     Renderer::GetInstance()->AddTexture(
         "player", "../assets/textures/spritesheets/player-sheet.png");
     Renderer::GetInstance()->AddTexture(
+        "player-dodge", "../assets/textures/spritesheets/player-dodge.png");
+    Renderer::GetInstance()->AddTexture(
         "enemies", "../assets/textures/spritesheets/enemies.png");
     Renderer::GetInstance()->AddTexture(
-        "enemy1",
-        "../assets/textures/spritesheets/enemy1_idle_spritesheet.png");
-    Renderer::GetInstance()->AddTexture(
-        "enemy2",
-        "../assets/textures/spritesheets/enemy2_idle_spritesheet.png");
-    Renderer::GetInstance()->AddTexture(
-        "enemy3",
-        "../assets/textures/spritesheets/enemy3_idle_spritesheet.png");
-    Renderer::GetInstance()->AddTexture(
-        "enemy4",
-        "../assets/textures/spritesheets/enemy4_idle_spritesheet.png");
-    Renderer::GetInstance()->AddTexture(
-        "enemy5",
-        "../assets/textures/spritesheets/enemy5_idle_spritesheet.png");
-    Renderer::GetInstance()->AddTexture(
         "boss", "../assets/textures/spritesheets/boss_idle_spritesheet.png");
-    Renderer::GetInstance()->AddTexture(
-        "tilemap",
-        "../assets/textures/kenney_tiny-dungeon/Tilemap/tilemap_packed.png");
     Renderer::GetInstance()->AddTexture("player_run",
                                         "../assets/textures/Run.png");
     Renderer::GetInstance()->AddTexture(

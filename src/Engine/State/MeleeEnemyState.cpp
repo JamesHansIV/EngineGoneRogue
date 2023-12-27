@@ -1,6 +1,7 @@
 #include "MeleeEnemyState.h"
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Objects/Entrance.h"
+#include "Engine/Objects/Player.h"
 #include "Engine/Objects/Projectile.h"
 
 State* meleeEnemyHandleCollide(MeleeEnemy* enemy, Collider* collidee) {
@@ -19,6 +20,10 @@ State* meleeEnemyHandleCollide(MeleeEnemy* enemy, Collider* collidee) {
             break;
         }
         case ObjectType::Player:
+            if (dynamic_cast<Player*>(collidee)->GetCurrentState()->GetType() ==
+                StateType::Dodge) {
+                break;
+            }
         case ObjectType::Enemy:
         case ObjectType::Collider:
             enemy->UnCollide(collidee);

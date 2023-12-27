@@ -21,6 +21,7 @@ enum class StateType {
     //Character state
     Dead,
     Attack,
+    Dodge,
 
     //Entrance state
     Closed,

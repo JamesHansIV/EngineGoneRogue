@@ -12,7 +12,8 @@ MeleeEnemy::MeleeEnemy(Properties& props, int perceptionWidth,
     m_Animation->AddAnimation(
         "Hit", {m_TextureID, {1, 0, 16, 16}, 3, 8, SDL_FLIP_NONE});
     m_Animation->AddAnimation(
-        "Attack", {m_TextureID, {2, 0, 16, 16}, 8, 15, SDL_FLIP_NONE});
+        "Attack",
+        {m_TextureID, {2, 0, 16, 16}, 8, 15, SDL_FLIP_NONE, false, 2, 5});
     m_Animation->AddAnimation(
         "Dead", {m_TextureID, {0, 0, 16, 16}, 2, 50, SDL_FLIP_NONE});
     SetHealth(new Health(100));

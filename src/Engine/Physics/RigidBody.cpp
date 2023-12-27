@@ -14,10 +14,10 @@ void RigidBody::Update(float dt) {
     // m_Acceleration.Y = m_Force.Y/m_Mass;
     m_Acceleration = m_Velocity * -0.2;
     m_Velocity = m_Velocity + m_Acceleration * dt;
-    if (-0.1 < m_Velocity.X && m_Velocity.X < 0.1) {
+    if (-0.01 < m_Velocity.X && m_Velocity.X < 0.01) {
         m_Velocity.X = 0;
     }
-    if (-0.1 < m_Velocity.Y && m_Velocity.Y < 0.1) {
+    if (-0.01 < m_Velocity.Y && m_Velocity.Y < 0.01) {
         m_Velocity.Y = 0;
     }
     m_Position = m_Position + m_Velocity * dt;

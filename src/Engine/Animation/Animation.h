@@ -12,6 +12,8 @@ struct AnimationInfo {
     int AnimationSpeed;
     SDL_RendererFlip Flip = SDL_FLIP_NONE;
     bool Loop = false;
+    int KeyFramesStart = 0;
+    int KeyFramesEnd = 0;
 };
 
 class Animation {
@@ -27,25 +29,40 @@ class Animation {
 
     void SetProps(AnimationInfo info) { m_Info = info; }
 
-    std::string GetTextureID() { return m_Info.TextureID; }
+    std::string GetTextureID() const { return m_Info.TextureID; }
 
-    int GetCurrentFrame() { return m_SpriteFrame; }
+    int GetCurrentFrame() const { return m_SpriteFrame; }
 
-    int GetSpriteRow() { return m_Info.Tile.row; }
+    int GetSpriteRow() const { return m_Info.Tile.row; }
 
-    int GetSpriteCol() { return m_Info.Tile.col; }
+    int GetSpriteCol() const { return m_Info.Tile.col; }
 
-    int GetSpriteWidth() { return m_Info.Tile.w; }
+    int GetSpriteWidth() const { return m_Info.Tile.w; }
 
-    int GetSpriteHeight() { return m_Info.Tile.h; }
+    int GetSpriteHeight() const { return m_Info.Tile.h; }
 
-    int GetFrameCount() { return m_Info.FrameCount; }
+    int GetFrameCount() const { return m_Info.FrameCount; }
 
-    int GetAnimationSpeed() { return m_Info.AnimationSpeed; }
+    int GetAnimationSpeed() const { return m_Info.AnimationSpeed; }
 
     std::string GetAnimationID() { return m_CurrentAnimationID; }
 
-    bool Ended() { return m_Ended; }
+    void GetKeyFrameRange(int& start, int& end) const {
+        start = m_Info.KeyFramesStart;
+        end = m_Info.KeyFramesEnd;
+    }
+
+    void SetKeyFrameRange(int start, int end) {
+        m_Info.KeyFramesStart = start;
+        m_Info.KeyFramesEnd = end;
+    }
+
+    bool OnKeyFrame() const {
+        return m_Info.KeyFramesStart <= m_SpriteFrame &&
+               m_SpriteFrame < m_Info.KeyFramesEnd;
+    }
+
+    bool Ended() const { return m_Ended; }
 
     void StopAnimation();
 

@@ -8,6 +8,12 @@
 #include "Engine/State/State.h"
 #include "Projectile.h"
 
+void PlayerStats::Init() {
+    Speed = 1.3;
+    DodgeCD = 0;
+    DodgeSpeed = 1.1;
+}
+
 Player::Player(Properties& props) : Character(props) {
     AddStillFrame("face-down", {1, 0, 18, 16});
     AddStillFrame("face-right", {2, 0, 18, 16});
@@ -16,6 +22,7 @@ Player::Player(Properties& props) : Character(props) {
 
     m_Animation = new Animation();
     m_Animation->AddAnimation("Dead", {m_TextureID, {0, 0, 18, 16}, 6, 5});
+
     m_Animation->AddAnimation(
         "move-right",
         {m_TextureID, m_StillFrames["face-right"], 6, 5, SDL_FLIP_NONE, true});
@@ -34,6 +41,21 @@ Player::Player(Properties& props) : Character(props) {
     m_Animation->AddAnimation(
         "move-down",
         {m_TextureID, m_StillFrames["face-down"], 6, 5, SDL_FLIP_NONE});
+
+    m_Animation->AddAnimation(
+        "dodge-down", {"player-dodge", {0, 0, 20, 20}, 6, 2, SDL_FLIP_NONE});
+    m_Animation->AddAnimation(
+        "dodge-right", {"player-dodge", {1, 0, 20, 20}, 6, 2, SDL_FLIP_NONE});
+    m_Animation->AddAnimation(
+        "dodge-right-up",
+        {"player-dodge", {2, 0, 20, 20}, 6, 2, SDL_FLIP_NONE});
+    m_Animation->AddAnimation(
+        "dodge-up", {"player-dodge", {3, 0, 20, 20}, 6, 2, SDL_FLIP_NONE});
+    m_Animation->AddAnimation(
+        "dodge-left-up", {"player-dodge", {4, 0, 20, 20}, 6, 2, SDL_FLIP_NONE});
+    m_Animation->AddAnimation(
+        "dodge-left", {"player-dodge", {5, 0, 20, 20}, 6, 2, SDL_FLIP_NONE});
+
     m_Animation->AddAnimation(
         "front-hit", {m_TextureID, {5, 0, 18, 16}, 2, 20, SDL_FLIP_NONE});
     m_Animation->AddAnimation(
@@ -50,7 +72,9 @@ Player::Player(Properties& props) : Character(props) {
 
     m_CurrentTilePos = m_StillFrames["face-down"];
 
-    m_CurrentState = new PlayerIdle(this);
+    m_Stats.Init();
+
+    ChangeState(new PlayerIdle(this));
     // m_Collider->SetCorrection(-45, -20, 60, 80 )
     m_Health = new Health(100);
 
@@ -94,8 +118,6 @@ void Player::Update(float dt) {
     SetX(m_RigidBody->Position().X);
     SetY(m_RigidBody->Position().Y);
     m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
-
-    CheckInput();
 
     UpdateWeapon(dt);
 }
@@ -147,36 +169,6 @@ void Player::OnCollide(Collider* collidee) {
 
     if (state != nullptr) {
         ChangeState(state);
-    }
-}
-
-void Player::CheckInput() {
-    if (InputChecker::IsKeyPressed(SDLK_q) || m_is_dashing) {
-        m_is_dashing = true;
-        if (m_able_to_dash % 50 == 0 || m_able_to_dash > 50) {
-            m_multiplier = 2;
-        }
-        if (m_able_to_dash == 75) {
-            m_able_to_dash = 0;
-            m_is_dashing = false;
-            m_multiplier = 1;
-        }
-        m_able_to_dash++;
-    }
-
-    if (InputChecker::IsKeyPressed(SDLK_w)) {
-        m_RigidBody->ApplyVelocity(Vector2D(0, -1.5) * m_multiplier);
-    }
-    if (InputChecker::IsKeyPressed(SDLK_s)) {
-        m_RigidBody->ApplyVelocity(Vector2D(0, 1.5) * m_multiplier);
-    }
-    if (InputChecker::IsKeyPressed(SDLK_a)) {
-        m_RigidBody->ApplyVelocity(Vector2D(-1.5, 0) * m_multiplier);
-        SetFlip(SDL_FLIP_HORIZONTAL);
-    }
-    if (InputChecker::IsKeyPressed(SDLK_d)) {
-        m_RigidBody->ApplyVelocity(Vector2D(1.5, 0) * m_multiplier);
-        SetFlip(SDL_FLIP_NONE);
     }
 }
 
