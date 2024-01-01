@@ -5,6 +5,7 @@
 #include "Engine/Objects/MeleeEnemy.h"
 #include "Engine/Objects/Player.h"
 #include "Engine/Objects/RangedEnemy.h"
+#include "Engine/Objects/Slime.h"
 #include "Engine/Renderer/Renderer.h"
 
 Player* player = nullptr;
@@ -69,27 +70,27 @@ Game::Game() {
 
     Properties props1("enemies", {0, 1, 16, 16}, {200, 200, 36, 36}, 0,
                       "enemy1");
-    enemy1 = new MeleeEnemy(props1, 150, 150);
+    enemy1 = new Slime(props1, 150, 150);
 
     Properties props2("enemies", {0, 1, 16, 16}, {300, 260, 36, 36}, 0,
                       "enemy2");
-    enemy2 = new MeleeEnemy(props2, 150, 150);
+    enemy2 = new Slime(props2, 150, 150);
 
     Properties props3("enemies", {0, 1, 16, 16}, {500, 200, 36, 36}, 0,
                       "enemy3");
-    enemy3 = new MeleeEnemy(props3, 150, 150);
+    enemy3 = new Slime(props3, 150, 150);
 
     Properties props4("enemies", {0, 1, 16, 16}, {600, 367, 36, 36}, 0,
                       "enemy4");
-    enemy4 = new MeleeEnemy(props4, 150, 150);
+    enemy4 = new Slime(props4, 150, 150);
 
     Properties props5("enemies", {0, 1, 16, 16}, {700, 300, 36, 36}, 0,
                       "enemy5");
-    enemy5 = new MeleeEnemy(props5, 150, 150);
+    enemy5 = new Slime(props5, 150, 150);
 
     Properties props6("enemies", {0, 1, 16, 16}, {600, 150, 36, 36}, 0,
                       "enemy6");
-    enemy6 = new MeleeEnemy(props6, 150, 150);
+    enemy6 = new Slime(props6, 150, 150);
 
     Properties props7("enemies", {6, 2, 16, 16}, {500, 300, 36, 36}, 0,
                       "enemy7");
@@ -203,6 +204,11 @@ void Game::Render() {
     }
     player->Draw();
     Renderer::GetInstance()->Render();
+}
+
+void Game::AddObject(GameObject* obj) {
+    SDL_Log("Adding object: %s", obj->GetID().c_str());
+    m_Objects.push_back(obj);
 }
 
 void Game::DeleteObject(GameObject* obj) {

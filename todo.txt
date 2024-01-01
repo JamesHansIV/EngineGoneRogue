@@ -10,17 +10,19 @@ x enemies are able to slip through walls somehow
 enemy types
 - enemy that shoots a projectile that explodes into other projectiles
 - enemy that surrounds itself with projectiles and shoots in all directions
-- enemy that can dash at the player
-- enemy that can shoot homing projectiles
-- enemy that shoots laser beam
-- enemy that shoots spread of bullets
-- enemy that shoots stream of bullets
+* enemy that can dash at the player
+* enemy that can shoot homing projectiles
+* enemy that shoots laser beam
+* enemy that shoots spread of bullets
+* enemy that shoots stream of bullets
 - enemy that emits projectiles that hover in a fixed location
-- enemy that spawns smaller enemies on death
+* enemy that spawns smaller enemies on death
 - enemy that has a shield and a dash
 - enemy that shoots split shot
 - enemy that spins lasers shot out in all directions
-- enemy that lobs projectiles
+* enemy that lobs projectiles
+* enemy that jumps and creates ring of damage on landing
+* chest mimics
 
 player stats
 - ranged damage

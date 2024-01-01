@@ -14,6 +14,7 @@ class Game : public Application {
     void Update(float dt) override;
     void Render() override;
 
+    void AddObject(GameObject* obj);
     void DeleteObject(GameObject* obj);
 
    private:

@@ -11,7 +11,7 @@
 void PlayerStats::Init() {
     Speed = 1.3;
     DodgeCD = 0;
-    DodgeSpeed = 1.1;
+    DodgeSpeed = 1.3;
 }
 
 Player::Player(Properties& props) : Character(props) {
