@@ -16,8 +16,6 @@ class Projectile : public Collider {
     virtual void Clean() override;
     virtual void Update(float dt) override;
 
-    bool IsMarkedForDeletion() { return m_MarkedForDeletion; }
-
     void CheckOutOfBounds();
 
     virtual void OnCollide(Collider* collidee) override;
@@ -33,5 +31,4 @@ class Projectile : public Collider {
     float m_Speed;
     float m_Angle;
     Vector2D m_Velocity;
-    bool m_MarkedForDeletion;
 };

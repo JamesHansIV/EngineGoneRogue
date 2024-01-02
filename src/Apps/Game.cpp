@@ -2,7 +2,6 @@
 #include <cstdlib>
 #include "Engine/Input/InputChecker.h"
 #include "Engine/Objects/Entrance.h"
-#include "Engine/Objects/MeleeEnemy.h"
 #include "Engine/Objects/Player.h"
 #include "Engine/Objects/RangedEnemy.h"
 #include "Engine/Objects/Slime.h"

@@ -1,7 +1,6 @@
 #include "Engine/Objects/ProjectileManager.h"
 #include "Engine/Objects/ColliderHandler.h"
 
-
 ProjectileManager::~ProjectileManager() {
     for (auto it = m_Projectiles.begin(); it != m_Projectiles.end();) {
         it = RemoveProjectile(*it, it);
@@ -17,7 +16,8 @@ void ProjectileManager::AddProjectile(Projectile* projectile) {
     m_Projectiles.push_back(projectile);
 }
 
-p_iterator ProjectileManager::RemoveProjectile(Projectile* projectile, p_iterator it) {
+p_iterator ProjectileManager::RemoveProjectile(Projectile* projectile,
+                                               p_iterator it) {
     ColliderHandler::GetInstance()->RemoveCollider(projectile);
     (projectile)->Clean();
     delete projectile;
@@ -34,7 +34,7 @@ void ProjectileManager::UpdateProjectiles(float dt) {
     for (auto it = m_Projectiles.begin(); it != m_Projectiles.end();) {
         Projectile* projectile = *it;
         (projectile)->Update(dt);
-        if ((projectile)->IsMarkedForDeletion()) {
+        if ((projectile)->MarkedForDeletion()) {
             it = RemoveProjectile(projectile, it);
         } else {
             it++;
