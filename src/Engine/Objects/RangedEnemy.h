@@ -7,18 +7,24 @@
 class RangedEnemy : public Enemy {
    public:
     explicit RangedEnemy(Properties& props, int perceptionWidth,
-                         int perceptionHeight, float range = 150.0f,
-                         int fireRate = 20);
+                         int perceptionHeight, float range, int fireInterval)
+        : Enemy(props, perceptionWidth, perceptionHeight, range),
+          m_FireInterval(fireInterval) {
+        m_Animation = new Animation();
+        m_ProjectileManager = new ProjectileManager();
+    }
+
+    ~RangedEnemy();
 
     virtual void Draw() override;
     virtual void Clean() override;
     virtual void Update(float dt) override;
 
-    void SelectMoveAnimation();
-    bool ManageState(float dt);
-    void Shoot();
+    virtual void Shoot() = 0;
 
-    int GetFireRate() { return m_FireRate; }
+    int GetFireInterval() { return m_FireInterval; }
+
+    ProjectileManager* GetProjectileManager() { return m_ProjectileManager; }
 
     virtual void OnCollide(Collider* collidee) override;
 
@@ -26,5 +32,5 @@ class RangedEnemy : public Enemy {
 
    private:
     ProjectileManager* m_ProjectileManager;
-    int m_FireRate;
+    int m_FireInterval;
 };

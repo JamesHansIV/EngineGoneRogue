@@ -49,7 +49,7 @@ void Projectile::OnCollide(Collider* collidee) {
         case ObjectType::Player:
             if (!m_PlayerOwned) {
                 m_MarkedForDeletion = true;
-                dynamic_cast<Character*>(collidee)->GetHealth()->SetDamage(10);
+                //dynamic_cast<Character*>(collidee)->GetHealth()->SetDamage(10);
             }
             break;
         case ObjectType::Enemy:

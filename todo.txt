@@ -9,19 +9,25 @@ x enemies are able to slip through walls somehow
 
 enemy types
 - enemy that shoots a projectile that explodes into other projectiles
-- enemy that surrounds itself with projectiles and shoots in all directions
-* enemy that can dash at the player
-* enemy that can shoot homing projectiles
-* enemy that shoots laser beam
-* enemy that shoots spread of bullets
-* enemy that shoots stream of bullets
+- enemy that surrounds itself with rotating projectiles
+* enemy that can dash at the player (red slime)
+* enemy that can shoot homing projectiles (wizard)
+* enemy that shoots laser beam (dark wizard)
+x enemy that shoots spread of bullets (skeleton)
+* enemy that shoots stream of bullets (dog)
+- enemy that shoots stream of bullets with machine gun spread
+- enemy that shoots circle of bullets in all directions
+- enemy that shoot projectiles that follow a helix pattern
+- enemy that shoot projectiles following a rotating circle shape
+- enemy that shoots projectiles following a snake pattern
+- enemy that shoots a sniper
 - enemy that emits projectiles that hover in a fixed location
-* enemy that spawns smaller enemies on death
+x enemy that spawns smaller enemies on death (purple slime)
 - enemy that has a shield and a dash
 - enemy that shoots split shot
 - enemy that spins lasers shot out in all directions
-* enemy that lobs projectiles
-* enemy that jumps and creates ring of damage on landing
+* enemy that lobs projectiles (goblin)
+* enemy that jumps and creates ring of damage on landing (rat boss)
 * chest mimics
 
 player stats

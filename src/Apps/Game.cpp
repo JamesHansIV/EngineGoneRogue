@@ -1,9 +1,11 @@
 #include "Game.h"
 #include <cstdlib>
 #include "Engine/Input/InputChecker.h"
+#include "Engine/Objects/Dog.h"
 #include "Engine/Objects/Entrance.h"
+#include "Engine/Objects/Goblin.h"
 #include "Engine/Objects/Player.h"
-#include "Engine/Objects/RangedEnemy.h"
+#include "Engine/Objects/Skeleton.h"
 #include "Engine/Objects/Slime.h"
 #include "Engine/Renderer/Renderer.h"
 
@@ -16,6 +18,7 @@ Enemy* enemy5 = nullptr;
 Enemy* enemy6 = nullptr;
 Enemy* enemy7 = nullptr;
 Enemy* enemy8 = nullptr;
+Enemy* enemy9 = nullptr;
 std::vector<Collider*> colliders;
 
 int max_tick_interval = 100;
@@ -29,6 +32,8 @@ Game::Game() {
     Renderer::GetInstance()->AddTexture(
         "door-close", "../assets/textures/spritesheets/door2-close.png");
 
+    Renderer::GetInstance()->AddTexture(
+        "weapons", "../assets/textures/spritesheets/weapons.png");
     Renderer::GetInstance()->AddTexture(
         "player", "../assets/textures/spritesheets/player-sheet.png");
     Renderer::GetInstance()->AddTexture(
@@ -93,7 +98,15 @@ Game::Game() {
 
     Properties props7("enemies", {6, 2, 16, 16}, {500, 300, 36, 36}, 0,
                       "enemy7");
-    enemy7 = new RangedEnemy(props7, 200, 200);
+    enemy7 = new Dog(props7, 200, 200);
+
+    Properties props8("enemies", {9, 2, 16, 16}, {600, 300, 36, 36}, 0,
+                      "enemy8");
+    enemy8 = new Skeleton(props8, 175, 175);
+
+    Properties props9("enemies", {9, 2, 16, 16}, {550, 300, 36, 36}, 0,
+                      "enemy9");
+    enemy9 = new Goblin(props9, 200, 200);
 
     m_Objects.push_back(enemy1);
     m_Objects.push_back(enemy2);
@@ -102,6 +115,8 @@ Game::Game() {
     m_Objects.push_back(enemy5);
     m_Objects.push_back(enemy6);
     m_Objects.push_back(enemy7);
+    m_Objects.push_back(enemy8);
+    m_Objects.push_back(enemy9);
     m_Objects.push_back(entrance);
     ColliderHandler::GetInstance()->AddCollider(player);
     ColliderHandler::GetInstance()->AddCollider(enemy1);
@@ -111,6 +126,8 @@ Game::Game() {
     ColliderHandler::GetInstance()->AddCollider(enemy5);
     ColliderHandler::GetInstance()->AddCollider(enemy6);
     ColliderHandler::GetInstance()->AddCollider(enemy7);
+    ColliderHandler::GetInstance()->AddCollider(enemy8);
+    ColliderHandler::GetInstance()->AddCollider(enemy9);
     ColliderHandler::GetInstance()->AddCollider(entrance);
 
     srand(time(nullptr));

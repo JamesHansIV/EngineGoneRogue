@@ -401,7 +401,7 @@ void PlayerIsHit::PollInput(float dt) {
 }
 
 void PlayerIsHit::ApplyDamage() {
-    GetPlayer()->GetHealth()->SetDamage(m_Damage);
+    //GetPlayer()->GetHealth()->SetDamage(m_Damage);
 }
 
 void PlayerDead::Enter() {

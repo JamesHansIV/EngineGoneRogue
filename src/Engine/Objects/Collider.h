@@ -19,7 +19,7 @@ class Collider : public GameObject {
 
     void SetDoUnCollide(bool doUnCollide) { m_DoUnCollide = doUnCollide; }
 
-    bool GetDoUnCollide() { return m_DoUnCollide; }
+    bool GetDoUnCollide() const { return m_DoUnCollide; }
 
     void UnCollide(Collider* collidee);
 

@@ -5,7 +5,7 @@
 #include "Engine/Objects/Player.h"
 #include "Engine/Objects/Projectile.h"
 
-State* rangedEnemyHandleCollide(RangedEnemy* enemy, Collider* collidee) {
+State* RangedEnemyHandleCollide(RangedEnemy* enemy, Collider* collidee) {
     switch (collidee->GetObjectType()) {
         case ObjectType::Projectile:
             if (dynamic_cast<Projectile*>(collidee)->PlayerOwned()) {
@@ -78,7 +78,7 @@ State* RangedEnemyIdle::OnCollideEvent(CollideEvent* event) {
         return nullptr;
     }
 
-    return rangedEnemyHandleCollide(GetEnemy(), collidee);
+    return RangedEnemyHandleCollide(GetEnemy(), collidee);
 }
 
 void RangedEnemyMoving::Enter() {
@@ -139,7 +139,7 @@ State* RangedEnemyMoving::OnCollideEvent(CollideEvent* event) {
         return nullptr;
     }
 
-    return rangedEnemyHandleCollide(GetEnemy(), collidee);
+    return RangedEnemyHandleCollide(GetEnemy(), collidee);
 }
 
 void RangedEnemyAttack::Enter() {
@@ -153,9 +153,7 @@ State* RangedEnemyAttack::Update(float dt) {
     if (!GetEnemy()->TargetInRange()) {
         return new RangedEnemyIdle(GetEnemy());
     }
-    if (Application::Get()->GetFrame() % GetEnemy()->GetFireRate() == 0) {
-        GetEnemy()->Shoot();
-    }
+    GetEnemy()->Shoot();
 
     return nullptr;
 }
@@ -184,7 +182,7 @@ State* RangedEnemyAttack::OnCollideEvent(CollideEvent* event) {
         return nullptr;
     }
 
-    return rangedEnemyHandleCollide(GetEnemy(), collidee);
+    return RangedEnemyHandleCollide(GetEnemy(), collidee);
 }
 
 void RangedEnemyIsHit::Enter() {
