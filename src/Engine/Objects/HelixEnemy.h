@@ -2,11 +2,11 @@
 
 #include "Engine/Objects/RangedEnemy.h"
 
-class Goblin : public RangedEnemy {
+class HelixEnemy : public RangedEnemy {
    public:
-    explicit Goblin(Properties& props, int perceptionWidth,
-                    int perceptionHeight, float range = 150.0f,
-                    int fireInterval = 7, float spread = 60.0F);
+    explicit HelixEnemy(Properties& props, int perceptionWidth,
+                        int perceptionHeight, float range = 150.0f,
+                        int fireInterval = 20);
 
     virtual void Draw() override;
     virtual void Clean() override;
@@ -16,10 +16,7 @@ class Goblin : public RangedEnemy {
 
     virtual void OnCollide(Collider* collidee) override;
 
-    float GetSpread() const { return m_Spread; }
-
     virtual ObjectType GetObjectType() override { return ObjectType::Enemy; }
 
    private:
-    float m_Spread;
 };

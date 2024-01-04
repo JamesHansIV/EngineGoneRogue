@@ -6,8 +6,8 @@
 
 Skeleton::Skeleton(Properties& props, int perceptionWidth, int perceptionHeight,
                    float range, int fireInterval, float spread, int spreadCount)
-    : RangedEnemy(props, perceptionWidth, perceptionHeight, range,
-                  fireInterval),
+    : RangedEnemy(props, perceptionWidth, perceptionHeight, range, fireInterval,
+                  nullptr),
       m_Spread(spread),
       m_SpreadCount(spreadCount) {
     m_Animation->AddAnimation(
@@ -35,9 +35,6 @@ void Skeleton::Update(float dt) {
 }
 
 void Skeleton::Shoot() {
-    if (Application::Get()->GetFrame() % GetFireInterval() != 0) {
-        return;
-    }
     float const target_x = GetTarget()->GetMidPointX();
     float const target_y = GetTarget()->GetMidPointY();
     float const delta_y = target_y - GetY();

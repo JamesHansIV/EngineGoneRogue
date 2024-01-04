@@ -4,6 +4,8 @@
 #include "Engine/Objects/Dog.h"
 #include "Engine/Objects/Entrance.h"
 #include "Engine/Objects/Goblin.h"
+#include "Engine/Objects/HelixEnemy.h"
+#include "Engine/Objects/Mage.h"
 #include "Engine/Objects/Player.h"
 #include "Engine/Objects/Skeleton.h"
 #include "Engine/Objects/Slime.h"
@@ -19,6 +21,8 @@ Enemy* enemy6 = nullptr;
 Enemy* enemy7 = nullptr;
 Enemy* enemy8 = nullptr;
 Enemy* enemy9 = nullptr;
+Enemy* enemy10 = nullptr;
+
 std::vector<Collider*> colliders;
 
 int max_tick_interval = 100;
@@ -92,9 +96,9 @@ Game::Game() {
                       "enemy5");
     enemy5 = new Slime(props5, 150, 150);
 
-    Properties props6("enemies", {0, 1, 16, 16}, {600, 150, 36, 36}, 0,
+    Properties props6("enemies", {6, 2, 16, 16}, {600, 150, 36, 36}, 0,
                       "enemy6");
-    enemy6 = new Slime(props6, 150, 150);
+    enemy6 = new Mage(props6, 150, 150);
 
     Properties props7("enemies", {6, 2, 16, 16}, {500, 300, 36, 36}, 0,
                       "enemy7");
@@ -108,6 +112,10 @@ Game::Game() {
                       "enemy9");
     enemy9 = new Goblin(props9, 200, 200);
 
+    Properties props10("enemies", {9, 2, 16, 16}, {400, 300, 36, 36}, 0,
+                       "enemy10");
+    enemy10 = new HelixEnemy(props10, 200, 200);
+
     m_Objects.push_back(enemy1);
     m_Objects.push_back(enemy2);
     m_Objects.push_back(enemy3);
@@ -117,6 +125,7 @@ Game::Game() {
     m_Objects.push_back(enemy7);
     m_Objects.push_back(enemy8);
     m_Objects.push_back(enemy9);
+    m_Objects.push_back(enemy10);
     m_Objects.push_back(entrance);
     ColliderHandler::GetInstance()->AddCollider(player);
     ColliderHandler::GetInstance()->AddCollider(enemy1);
@@ -128,6 +137,7 @@ Game::Game() {
     ColliderHandler::GetInstance()->AddCollider(enemy7);
     ColliderHandler::GetInstance()->AddCollider(enemy8);
     ColliderHandler::GetInstance()->AddCollider(enemy9);
+    ColliderHandler::GetInstance()->AddCollider(enemy10);
     ColliderHandler::GetInstance()->AddCollider(entrance);
 
     srand(time(nullptr));

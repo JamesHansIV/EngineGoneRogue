@@ -1,13 +1,13 @@
-#include "Goblin.h"
+#include "HelixEnemy.h"
 #include "Engine/Application/Application.h"
 #include "Engine/Objects/ColliderHandler.h"
+#include "Engine/Objects/WaveBullet.h"
 #include "Engine/State/RangedEnemyState.h"
 
-Goblin::Goblin(Properties& props, int perceptionWidth, int perceptionHeight,
-               float range, int fireInterval, float spread)
+HelixEnemy::HelixEnemy(Properties& props, int perceptionWidth,
+                       int perceptionHeight, float range, int fireInterval)
     : RangedEnemy(props, perceptionWidth, perceptionHeight, range, fireInterval,
-                  new Burst(5, 70)),
-      m_Spread(spread) {
+                  new Burst(3, 50)) {
     m_Animation->AddAnimation(
         "Idle", {m_TextureID, {12, 2, 16, 16}, 2, 15, SDL_FLIP_NONE, true});
     m_Animation->AddAnimation(
@@ -24,36 +24,36 @@ Goblin::Goblin(Properties& props, int perceptionWidth, int perceptionHeight,
     SetHealth(new Health(100));
 }
 
-void Goblin::Draw() {
+void HelixEnemy::Draw() {
     RangedEnemy::Draw();
 }
 
-void Goblin::Update(float dt) {
+void HelixEnemy::Update(float dt) {
     GetBurst()->Update(dt);
     RangedEnemy::Update(dt);
 }
 
-void Goblin::Shoot() {
-    float const delta_y = GetTarget()->GetMidPointY() - GetY();
-    float const delta_x = GetTarget()->GetMidPointX() - GetX();
+void HelixEnemy::Shoot() {
+    float const target_x = GetTarget()->GetMidPointX();
+    float const target_y = GetTarget()->GetMidPointY();
+    float const delta_y = target_y - GetY();
+    float const delta_x = target_x - GetX();
 
-    float const center_angle = atan2(delta_y, delta_x) * (180.0 / M_PI);
-    float const range_start = center_angle - m_Spread / 2;
-
-    float const offset = rand() % (int)m_Spread;
-
-    float const angle = range_start + offset;
+    float const angle = atan2(delta_y, delta_x) * (180.0 / M_PI);
 
     Properties props = {
         "weapons", {6, 1, 16, 16}, {GetX(), GetY(), 12, 12}, angle};
 
-    auto* bullet = new Projectile(props, 3, angle);
-    GetProjectileManager()->AddProjectile(bullet);
-    ColliderHandler::GetInstance()->AddCollider(bullet);
+    auto* bullet1 = new WaveBullet(props, 3, angle, false, false);
+    auto* bullet2 = new WaveBullet(props, 3, angle, false, true);
+    GetProjectileManager()->AddProjectile(bullet1);
+    GetProjectileManager()->AddProjectile(bullet2);
+    ColliderHandler::GetInstance()->AddCollider(bullet1);
+    ColliderHandler::GetInstance()->AddCollider(bullet2);
 }
 
-void Goblin::OnCollide(Collider* collidee) {
+void HelixEnemy::OnCollide(Collider* collidee) {
     RangedEnemy::OnCollide(collidee);
 }
 
-void Goblin::Clean() {}
+void HelixEnemy::Clean() {}

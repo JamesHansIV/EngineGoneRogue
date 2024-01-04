@@ -22,6 +22,18 @@ class Projectile : public Collider {
 
     bool PlayerOwned() { return m_PlayerOwned; }
 
+    float GetSpeed() { return m_Speed; }
+
+    void SetSpeed(float speed) { m_Speed = speed; }
+
+    float GetAngle() { return m_Angle; }
+
+    void SetAngle(float angle) { m_Angle = angle; }
+
+    Vector2D GetVelocity() { return m_Velocity; }
+
+    void SetVelocity(Vector2D velocity) { m_Velocity = velocity; }
+
     virtual ObjectType GetObjectType() override {
         return ObjectType::Projectile;
     }

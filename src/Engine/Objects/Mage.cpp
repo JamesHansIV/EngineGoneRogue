@@ -1,12 +1,14 @@
-#include "Dog.h"
+#include "Mage.h"
 #include "Engine/Application/Application.h"
 #include "Engine/Objects/ColliderHandler.h"
+#include "Engine/Objects/RotatingBullet.h"
 #include "Engine/State/RangedEnemyState.h"
 
-Dog::Dog(Properties& props, int perceptionWidth, int perceptionHeight,
-         float range, int fireInterval)
+Mage::Mage(Properties& props, int perceptionWidth, int perceptionHeight,
+           float range, int fireInterval, int bulletCount)
     : RangedEnemy(props, perceptionWidth, perceptionHeight, range, fireInterval,
-                  nullptr) {
+                  nullptr),
+      m_BulletCount(bulletCount) {
     m_Animation->AddAnimation(
         "Idle", {m_TextureID, {6, 2, 16, 16}, 2, 15, SDL_FLIP_NONE, true});
     m_Animation->AddAnimation(
@@ -22,15 +24,15 @@ Dog::Dog(Properties& props, int perceptionWidth, int perceptionHeight,
     SetHealth(new Health(100));
 }
 
-void Dog::Draw() {
+void Mage::Draw() {
     RangedEnemy::Draw();
 }
 
-void Dog::Update(float dt) {
+void Mage::Update(float dt) {
     RangedEnemy::Update(dt);
 }
 
-void Dog::Shoot() {
+void Mage::Shoot() {
     float const target_x = GetTarget()->GetMidPointX();
     float const target_y = GetTarget()->GetMidPointY();
     float const delta_y = target_y - GetY();
@@ -38,16 +40,21 @@ void Dog::Shoot() {
 
     float const angle = atan2(delta_y, delta_x) * (180.0 / M_PI);
 
-    Properties props = {
-        "enemies", {6, 4, 16, 16}, {GetX(), GetY(), 12, 12}, angle};
+    float const bullet_separation = 2 * M_PI / m_BulletCount;
+    RotatingBullet* bullet;
 
-    auto* bullet = new Projectile(props, 3, angle);
-    GetProjectileManager()->AddProjectile(bullet);
-    ColliderHandler::GetInstance()->AddCollider(bullet);
+    for (float i = 0; i < 2 * M_PI; i += bullet_separation) {
+        Properties props = {
+            "weapons", {6, 1, 16, 16}, {GetX(), GetY(), 12, 12}, angle};
+
+        bullet = new RotatingBullet(props, 3, angle, false, i);
+        GetProjectileManager()->AddProjectile(bullet);
+        ColliderHandler::GetInstance()->AddCollider(bullet);
+    }
 }
 
-void Dog::OnCollide(Collider* collidee) {
+void Mage::OnCollide(Collider* collidee) {
     RangedEnemy::OnCollide(collidee);
 }
 
-void Dog::Clean() {}
+void Mage::Clean() {}

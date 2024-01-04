@@ -147,13 +147,23 @@ void RangedEnemyAttack::Enter() {
     GetEnemy()->GetAnimation()->SelectAnimation("Idle");
 }
 
-void RangedEnemyAttack::Exit() {}
+void RangedEnemyAttack::Exit() {
+    if (GetEnemy()->GetBurst() != nullptr) {
+        GetEnemy()->GetBurst()->Reset();
+    }
+}
 
 State* RangedEnemyAttack::Update(float dt) {
     if (!GetEnemy()->TargetInRange()) {
         return new RangedEnemyIdle(GetEnemy());
     }
-    GetEnemy()->Shoot();
+    if (Application::Get()->GetFrame() % GetEnemy()->GetFireInterval() == 0) {
+        if (GetEnemy()->GetBurst() == nullptr ||
+            (GetEnemy()->GetBurst() != nullptr &&
+             GetEnemy()->GetBurst()->Fire())) {
+            GetEnemy()->Shoot();
+        }
+    }
 
     return nullptr;
 }
