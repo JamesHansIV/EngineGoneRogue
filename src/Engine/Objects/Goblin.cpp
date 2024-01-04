@@ -37,10 +37,11 @@ void Goblin::Shoot() {
     float const delta_y = GetTarget()->GetMidPointY() - GetY();
     float const delta_x = GetTarget()->GetMidPointX() - GetX();
 
-    float const center_angle = atan2(delta_y, delta_x) * (180.0 / M_PI);
+    float const center_angle = atan2(delta_y, delta_x);
     float const range_start = center_angle - m_Spread / 2;
 
-    float const offset = rand() % (int)m_Spread;
+    float const offset =
+        (float)(rand() % static_cast<int>(m_Spread * 100)) / 100;
 
     float const angle = range_start + offset;
 

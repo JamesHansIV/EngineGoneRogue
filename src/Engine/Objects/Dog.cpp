@@ -36,7 +36,7 @@ void Dog::Shoot() {
     float const delta_y = target_y - GetY();
     float const delta_x = target_x - GetX();
 
-    float const angle = atan2(delta_y, delta_x) * (180.0 / M_PI);
+    float const angle = atan2(delta_y, delta_x);
 
     Properties props = {
         "enemies", {6, 4, 16, 16}, {GetX(), GetY(), 12, 12}, angle};

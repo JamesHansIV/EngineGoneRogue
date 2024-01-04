@@ -40,7 +40,7 @@ void Skeleton::Shoot() {
     float const delta_y = target_y - GetY();
     float const delta_x = target_x - GetX();
 
-    float const centerAngle = atan2(delta_y, delta_x) * (180.0 / M_PI);
+    float const centerAngle = atan2(delta_y, delta_x);
     float const spreadStart = centerAngle - m_Spread / 2;
     float const interval = m_Spread / m_SpreadCount;
 

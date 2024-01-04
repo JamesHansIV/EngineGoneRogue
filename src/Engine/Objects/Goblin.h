@@ -6,7 +6,7 @@ class Goblin : public RangedEnemy {
    public:
     explicit Goblin(Properties& props, int perceptionWidth,
                     int perceptionHeight, float range = 150.0f,
-                    int fireInterval = 7, float spread = 60.0F);
+                    int fireInterval = 7, float spread = M_PI / 3);
 
     virtual void Draw() override;
     virtual void Clean() override;

@@ -1,6 +1,7 @@
 #include "Game.h"
 #include <cstdlib>
 #include "Engine/Input/InputChecker.h"
+#include "Engine/Objects/CircleShotEnemy.h"
 #include "Engine/Objects/Dog.h"
 #include "Engine/Objects/Entrance.h"
 #include "Engine/Objects/Goblin.h"
@@ -94,7 +95,7 @@ Game::Game() {
 
     Properties props5("enemies", {0, 1, 16, 16}, {700, 300, 36, 36}, 0,
                       "enemy5");
-    enemy5 = new Slime(props5, 150, 150);
+    enemy5 = new CircleShotEnemy(props5, 150, 150);
 
     Properties props6("enemies", {6, 2, 16, 16}, {600, 150, 36, 36}, 0,
                       "enemy6");

@@ -38,7 +38,7 @@ void Mage::Shoot() {
     float const delta_y = target_y - GetY();
     float const delta_x = target_x - GetX();
 
-    float const angle = atan2(delta_y, delta_x) * (180.0 / M_PI);
+    float const angle = atan2(delta_y, delta_x);
 
     float const bullet_separation = 2 * M_PI / m_BulletCount;
     RotatingBullet* bullet;

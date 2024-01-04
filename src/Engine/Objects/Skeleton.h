@@ -5,7 +5,7 @@ class Skeleton : public RangedEnemy {
    public:
     explicit Skeleton(Properties& props, int perceptionWidth,
                       int perceptionHeight, float range = 150.0F,
-                      int fireInterval = 50, float spread = 60.0F,
+                      int fireInterval = 50, float spread = M_PI / 4,
                       int spreadCount = 4);
 
     virtual void Draw() override;

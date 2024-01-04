@@ -28,9 +28,10 @@ void WaveBullet::Update(float dt) {
     const float scaled_x = m_TPos.X * m_Scale;
     const float scaled_y = m_TPos.Y * m_Scale;
 
-    const float radians = GetAngle() * M_PI / 180;
-    const float rotated_x = scaled_x * cos(radians) - scaled_y * sin(radians);
-    const float rotated_y = scaled_x * sin(radians) + scaled_y * cos(radians);
+    const float rotated_x =
+        scaled_x * cos(GetAngle()) - scaled_y * sin(GetAngle());
+    const float rotated_y =
+        scaled_x * sin(GetAngle()) + scaled_y * cos(GetAngle());
 
     SetX(rotated_x + m_Origin.X);
     SetY(rotated_y + m_Origin.Y);

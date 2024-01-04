@@ -143,11 +143,11 @@ void Player::UpdateWeapon(float dt) {
 
     float const delta_x = InputChecker::GetMouseX() - weapon_xx;
     float const delta_y = InputChecker::GetMouseY() - weapon_yy;
-    float angle = atan2(delta_y, delta_x) * (180.0 / M_PI);
+    float angle = atan2(delta_y, delta_x);
     if (angle < 0) {
-        angle += 360.0F;
-    } else if (angle > 360) {
-        angle -= 360.0F;
+        angle += 2 * M_PI;
+    } else if (angle > 2 * M_PI) {
+        angle -= 2 * M_PI;
     }
 
     int const weapon_x = GetX() + GetWidth() / 2;

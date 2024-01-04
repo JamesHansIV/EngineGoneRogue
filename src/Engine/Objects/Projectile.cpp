@@ -11,8 +11,7 @@ Projectile::Projectile(Properties& props, float speed, float angle,
       m_Speed(speed),
       m_Angle(angle),
       m_PlayerOwned(playerOwned) {
-    Vector2D const direction =
-        Vector2D(cos(m_Angle * M_PI / 180), sin(m_Angle * M_PI / 180));
+    Vector2D const direction = Vector2D(cos(m_Angle), sin(m_Angle));
     Vector2D const velocity = direction * m_Speed;
     m_Velocity = velocity;
     m_RigidBody->SetVelocity(m_Velocity);
