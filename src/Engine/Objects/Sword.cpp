@@ -1,17 +1,36 @@
-#include "MeleeWeapon.h"
+#include "Sword.h"
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Renderer/Renderer.h"
 
 #include "Engine/Objects/Character.h"
+#include "SDL2/SDL_render.h"
 
-MeleeWeapon::MeleeWeapon(Properties& props, bool playerOwned)
+void UpdatePosition(Sword* sword) {
+    const float mouse_x =
+        InputChecker::GetMouseX() - Renderer::GetInstance()->GetCameraX();
+    const float mouse_y =
+        InputChecker::GetMouseX() - Renderer::GetInstance()->GetCameraY();
+
+    const float dx = mouse_x - sword->GetX();
+    const float dy = mouse_y - sword->GetY();
+
+    const float angle = atan2(dx, dy);
+    if (angle > M_PI / 2 && angle <= 3 * M_PI / 2) {
+        //right side
+        sword->SetFlip(SDL_FLIP_HORIZONTAL);
+    } else {
+        //left side
+    }
+}
+
+Sword::Sword(Properties& props, bool playerOwned)
     : Weapon(props, playerOwned) {}
 
-void MeleeWeapon::Draw() {
+void Sword::Draw() {
     GameObject::Draw();
 }
 
-void MeleeWeapon::Update(float /*dt*/) {
+void Sword::Update(float /*dt*/) {
     m_CollisionBox.Set(GetX(), GetY(), GetHeight(), GetWidth());
 
     if (GetFlip() == SDL_FLIP_HORIZONTAL) {
@@ -29,12 +48,11 @@ void MeleeWeapon::Update(float /*dt*/) {
         SetRotation(swing_angle);
         InputChecker::SetMouseButtonPressed(SDL_BUTTON_LEFT, false);
     } else {
-        //SetRotation(0.0);
+        SetRotation(0.0);
     }
-    SDL_Log("sword angle: %f", GetRotation());
 }
 
-void MeleeWeapon::OnCollide(Collider* collidee) {
+void Sword::OnCollide(Collider* collidee) {
     if (this == collidee) {
         return;
     }
@@ -63,4 +81,4 @@ void MeleeWeapon::OnCollide(Collider* collidee) {
     }
 }
 
-void MeleeWeapon::Clean() {}
+void Sword::Clean() {}

@@ -109,6 +109,8 @@ class GameObject : public IObject {
 
     float& GetRotation() { return m_Rotation; }
 
+    float GetRadians() { return m_Rotation * (M_PI / 180); }
+
     void SetRotation(float rotation) { m_Rotation = rotation; }
 
     std::string GetTextureID() { return m_TextureID; }

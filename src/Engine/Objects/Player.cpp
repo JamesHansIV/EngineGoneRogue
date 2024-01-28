@@ -82,8 +82,9 @@ Player::Player(Properties& props) : Character(props) {
     Weapon* w1 = new RangedWeapon(props_g, true);
     m_Weapons.push_back(w1);
 
-    Properties props_m("melee", {0, 0, 18, 16}, {0, 0, 18, 16}, 0.0);
+    Properties props_m("weapons", {4, 6, 16, 16}, {0, 0, 16, 20}, 0.0);
     Weapon* w2 = new MeleeWeapon(props_m, true);
+    w2->SetRotation(50);
     m_Weapons.push_back(w2);
 
     //ColliderHandler::GetInstance()->AddCollider(w2);
@@ -150,11 +151,13 @@ void Player::UpdateWeapon(float dt) {
         angle -= 2 * M_PI;
     }
 
+    SDL_Log("weapon angle: %f", angle);
+
     int const weapon_x = GetX() + GetWidth() / 2;
     int const weapon_y = GetY() + GetHeight() / 3;
     m_CurrentWeapon->SetX(weapon_x);
     m_CurrentWeapon->SetY(weapon_y);
-    m_CurrentWeapon->SetRotation(angle);
+    m_CurrentWeapon->SetRotation(angle * (180 / M_PI));
     m_CurrentWeapon->SetFlip(m_Flip);
     m_CurrentWeapon->Update(dt);
 }

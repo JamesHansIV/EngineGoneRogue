@@ -19,12 +19,16 @@ void RangedWeapon::Update(float dt) {
     }
     if (InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT) ||
         m_auto_fire_enabled) {
+
+        SDL_Log("weapon rotation: %f", GetRotation());
+        SDL_Log("weapon radians: %f", GetRadians());
+
         Properties projectile_props("projectile", {0, 0, 723, 724},
                                     {GetMidPointX(), GetMidPointY(), 10, 10},
-                                    GetRotation(), "bullet");
+                                    GetRadians(), "bullet");
         Projectile* projectile = nullptr;
-        projectile = new Projectile(projectile_props, 10, GetRotation(),
-                                    PlayerOwned());
+        projectile =
+            new Projectile(projectile_props, 10, GetRotation(), PlayerOwned());
         m_ProjectileManager.AddProjectile(projectile);
         ColliderHandler::GetInstance()->AddCollider(projectile);
         InputChecker::SetMouseButtonPressed(SDL_BUTTON_LEFT, false);
