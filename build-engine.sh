@@ -10,5 +10,12 @@ else
   cmake -B build
 fi
 cd build
-make
+
+if [[ $* == *--ninja* ]]
+  then
+    ninja
+else
+  make
+fi
+
 ./Engine

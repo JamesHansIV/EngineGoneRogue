@@ -17,12 +17,13 @@ void RangedWeapon::Update(float dt) {
         m_auto_fire_enabled = !m_auto_fire_enabled;
         InputChecker::SetKeyPressed(SDLK_f, false);
     }
-    if (InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT) ||
-        m_auto_fire_enabled) {
 
+    if ((InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT) ||
+         m_auto_fire_enabled) &&
+        SDL_GetTicks() - m_last_fired > m_fire_rate) {
         SDL_Log("weapon rotation: %f", GetRotation());
         SDL_Log("weapon radians: %f", GetRadians());
-
+        m_last_fired = SDL_GetTicks();
         Properties projectile_props("projectile", {0, 0, 723, 724},
                                     {GetMidPointX(), GetMidPointY(), 10, 10},
                                     GetRadians(), "bullet");
