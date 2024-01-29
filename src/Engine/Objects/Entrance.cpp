@@ -28,7 +28,6 @@ void Entrance::OnCollide(Collider* collidee) {
     if (state != nullptr) {
         ChangeState(state);
     }
-    return;
-}
+    }
 
 void Entrance::Clean() {}

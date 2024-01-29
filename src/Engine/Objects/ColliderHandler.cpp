@@ -5,17 +5,21 @@ ColliderHandler* ColliderHandler::s_instance = nullptr;
 ColliderHandler::ColliderHandler() = default;
 
 bool ColliderHandler::CheckCollision(Rect a, Rect b) {
-    if (a.x + a.w < b.x) {
+    const int a_x = static_cast<int>(a.x);
+    const int a_y = static_cast<int>(a.y);
+    const int b_x = static_cast<int>(b.x);
+    const int b_y = static_cast<int>(b.y);
+    if (a_x + a.w < b_x) {
         return false;
     }
-    if (b.x + b.w < a.x) {
+    if (b_x + b.w < a_x) {
         return false;
     }
 
-    if (a.y + a.h < b.y) {
+    if (a_y + a.h < b_y) {
         return false;
     }
-    if (b.y + b.h < a.y) {
+    if (b_y + b.h < a_y) {
         return false;
     }
 
@@ -76,8 +80,9 @@ void ColliderHandler::MoveToEdge(Collider* c1, Collider* c2) {
         SDL_Log("d2: (%f, %f)", directions[i].X, directions[i].Y);
         const float t =
             FindIntersection(pos, direction, positions[i], directions[i]);
-        if (t <= 0.0F)
+        if (t <= 0.0F) {
             continue;
+}
         min_t = t < min_t ? t : min_t;
     }
 

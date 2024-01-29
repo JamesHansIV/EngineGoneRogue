@@ -28,11 +28,14 @@ Enemy::Enemy(Properties& props, int perceptionWidth, int perceptionHeight,
       m_Range(range) {}
 
 bool Enemy::TargetInRange() {
-    Rect range = {GetMidPointX() - m_Range, GetMidPointY() - m_Range,
-                  (int)m_Range * 2, (int)m_Range * 2};
-    if (ColliderHandler::CheckCollision(GetTarget()->GetDstRect(), range)) {
-        return true;
-    }
+    const Rect range = {GetMidPointX() - m_Range, GetMidPointY() - m_Range,
+                        static_cast<int>(m_Range) * 2,
+                        static_cast<int>(m_Range) * 2};
+    const Rect rect1 = GetTarget()->GetDstRect();
+    // TODO: crashes on Ahmni's Laptop
+    // if (ColliderHandler::CheckCollision(rect1, range)) {
+    // return true;
+    // }
 }
 
 bool Enemy::TargetDetected() {

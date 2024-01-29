@@ -40,15 +40,15 @@ void Skeleton::Shoot() {
     float const delta_y = target_y - GetY();
     float const delta_x = target_x - GetX();
 
-    float const centerAngle = atan2(delta_y, delta_x);
-    float const spreadStart = centerAngle - m_Spread / 2;
+    float const center_angle = atan2(delta_y, delta_x);
+    float const spread_start = center_angle - m_Spread / 2;
     float const interval = m_Spread / m_SpreadCount;
 
     Projectile* bullet;
     float angle = 0;
 
     for (int i = 0; i < m_SpreadCount; i++) {
-        angle = spreadStart + interval * i;
+        angle = spread_start + interval * i;
 
         Properties props = {
             "weapons", {6, 3, 16, 16}, {GetX(), GetY(), 16, 16}, angle};

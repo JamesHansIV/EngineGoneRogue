@@ -41,7 +41,7 @@ void Goblin::Shoot() {
     float const range_start = center_angle - m_Spread / 2;
 
     float const offset =
-        (float)(rand() % static_cast<int>(m_Spread * 100)) / 100;
+        static_cast<float>(rand() % static_cast<int>(m_Spread * 100)) / 100;
 
     float const angle = range_start + offset;
 

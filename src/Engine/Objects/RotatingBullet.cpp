@@ -12,10 +12,10 @@ RotatingBullet::RotatingBullet(Properties& props, float speed, float angle,
       m_Radius(radius) {}
 
 void RotatingBullet::Draw() {
-    GameObject::Draw();
+    Projectile::Draw();
 }
 
-void RotatingBullet::Update(float dt) {
+void RotatingBullet::Update(float  /*dt*/) {
     m_Center = m_Center + GetVelocity();
     m_RotationAngle += m_RotationSpeed;
 

@@ -41,7 +41,7 @@ void RangedEnemyIdle::Enter() {
 
 void RangedEnemyIdle::Exit() {}
 
-State* RangedEnemyIdle::Update(float dt) {
+State* RangedEnemyIdle::Update(float  /*dt*/) {
     if (GetEnemy()->TargetDetected()) {
         return new RangedEnemyMoving(GetEnemy());
     }
@@ -53,7 +53,7 @@ void RangedEnemyIdle::Draw() {
 }
 
 State* RangedEnemyIdle::HandleEvent(Event* event) {
-    EventType e_type = event->GetEventType();
+    EventType const e_type = event->GetEventType();
 
     switch (e_type) {
         case EventType::TargetFoundEvent:
@@ -67,7 +67,7 @@ State* RangedEnemyIdle::HandleEvent(Event* event) {
     return nullptr;
 }
 
-State* RangedEnemyIdle::OnTargetFoundEvent(TargetFoundEvent* event) {
+State* RangedEnemyIdle::OnTargetFoundEvent(TargetFoundEvent*  /*event*/) {
     return new RangedEnemyMoving(GetEnemy());
 }
 
@@ -120,7 +120,7 @@ void RangedEnemyMoving::SelectDirection() {
 }
 
 State* RangedEnemyMoving::HandleEvent(Event* event) {
-    EventType e_type = event->GetEventType();
+    EventType const e_type = event->GetEventType();
 
     switch (e_type) {
         case EventType::CollideEvent:
@@ -153,8 +153,8 @@ void RangedEnemyAttack::Exit() {
     }
 }
 
-State* RangedEnemyAttack::Update(float dt) {
-    if (!GetEnemy()->TargetInRange()) {
+State* RangedEnemyAttack::Update(float  /*dt*/) {
+    if (GetEnemy()->TargetInRange()) {
         return new RangedEnemyIdle(GetEnemy());
     }
     if (Application::Get()->GetFrame() % GetEnemy()->GetFireInterval() == 0) {
@@ -173,7 +173,7 @@ void RangedEnemyAttack::Draw() {
 }
 
 State* RangedEnemyAttack::HandleEvent(Event* event) {
-    EventType e_type = event->GetEventType();
+    EventType const e_type = event->GetEventType();
 
     switch (e_type) {
         case EventType::CollideEvent:
@@ -201,7 +201,7 @@ void RangedEnemyIsHit::Enter() {
 
 void RangedEnemyIsHit::Exit() {}
 
-State* RangedEnemyIsHit::Update(float dt) {
+State* RangedEnemyIsHit::Update(float  /*dt*/) {
     if (GetEnemy()->GetAnimation()->Ended()) {
         return new RangedEnemyIdle(GetEnemy());
     }
@@ -216,7 +216,7 @@ void RangedEnemyIsHit::Draw() {
 }
 
 State* RangedEnemyIsHit::HandleEvent(Event* event) {
-    EventType e_type = event->GetEventType();
+    EventType const e_type = event->GetEventType();
 
     switch (e_type) {
         case EventType::CollideEvent:
@@ -263,7 +263,7 @@ void RangedEnemyDead::Enter() {
 
 void RangedEnemyDead::Exit() {}
 
-State* RangedEnemyDead::Update(float dt) {
+State* RangedEnemyDead::Update(float  /*dt*/) {
     if (GetEnemy()->GetAnimation()->Ended()) {
         ColliderHandler::GetInstance()->RemoveCollider(GetEnemy());
         GetEnemy()->MarkForDeletion();
@@ -275,6 +275,6 @@ void RangedEnemyDead::Draw() {
     GetEnemy()->DrawAnimation();
 }
 
-State* RangedEnemyDead::HandleEvent(Event* event) {
+State* RangedEnemyDead::HandleEvent(Event*  /*event*/) {
     return nullptr;
 }

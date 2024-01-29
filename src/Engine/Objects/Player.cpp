@@ -151,8 +151,6 @@ void Player::UpdateWeapon(float dt) {
         angle -= 2 * M_PI;
     }
 
-    SDL_Log("weapon angle: %f", angle);
-
     int const weapon_x = GetX() + GetWidth() / 2;
     int const weapon_y = GetY() + GetHeight() / 3;
     m_CurrentWeapon->SetX(weapon_x);

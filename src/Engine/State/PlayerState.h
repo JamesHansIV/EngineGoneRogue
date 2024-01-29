@@ -120,7 +120,7 @@ class PlayerIsHit : public PlayerState {
     virtual void Draw() override;
     virtual State* HandleEvent(Event* event) override;
 
-    State* OnUserEvent(UserEvent* event);
+    static State* OnUserEvent(UserEvent* event);
     State* OnCollideEvent(CollideEvent* event);
 
     void PollInput(float dt);

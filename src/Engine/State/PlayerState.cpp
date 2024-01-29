@@ -30,7 +30,7 @@ void MovePlayer(Player* player, float dt) {
     }
 }
 
-State* UpdateAnimationDirection(Player* player, AnimationIDs animationIDs) {
+State* UpdateAnimationDirection(Player* player, const AnimationIDs& animationIDs) {
     bool const key_up = InputChecker::IsKeyPressed(SDLK_w);
     bool const key_down = InputChecker::IsKeyPressed(SDLK_s);
     bool const key_left = InputChecker::IsKeyPressed(SDLK_a);
@@ -149,7 +149,7 @@ void PlayerIdle::Draw() {
 }
 
 State* PlayerIdle::HandleEvent(Event* event) {
-    EventType e_type = event->GetEventType();
+    EventType const e_type = event->GetEventType();
 
     switch (e_type) {
         case EventType::UserEvent:
@@ -189,7 +189,7 @@ State* PlayerIdle::OnCollideEvent(CollideEvent* event) {
     return HandleCollide(GetPlayer(), event);
 }
 
-State* PlayerIdle::PollInput(float dt) {
+State* PlayerIdle::PollInput(float  /*dt*/) {
     if (InputChecker::IsKeyPressed(SDLK_w) ||
         InputChecker::IsKeyPressed(SDLK_s) ||
         InputChecker::IsKeyPressed(SDLK_a) ||
@@ -218,7 +218,7 @@ void PlayerMoving::Draw() {
 }
 
 State* PlayerMoving::HandleEvent(Event* event) {
-    EventType e_type = event->GetEventType();
+    EventType const e_type = event->GetEventType();
 
     switch (e_type) {
         case EventType::UserEvent:
@@ -273,15 +273,15 @@ void PlayerDodge::Enter() {
     SDL_Log("enter dodge state");
     GetPlayer()->GetStats().DodgeCD = m_DodgeCD;
     UpdateAnimationDirection(GetPlayer(), GetDodgeAnimationIDs());
-    Vector2D velocity = GetPlayer()->GetRigidBody()->Velocity();
-    float dodge_speed = GetPlayer()->GetStats().DodgeSpeed;
+    Vector2D const velocity = GetPlayer()->GetRigidBody()->Velocity();
+    float const dodge_speed = GetPlayer()->GetStats().DodgeSpeed;
 
     m_Velocity = velocity * dodge_speed;
 }
 
 void PlayerDodge::Exit() {}
 
-State* PlayerDodge::Update(float dt) {
+State* PlayerDodge::Update(float  /*dt*/) {
     if (GetPlayer()->GetAnimation()->Ended()) {
         return new PlayerIdle(GetPlayer());
     }
@@ -294,7 +294,7 @@ void PlayerDodge::Draw() {
 }
 
 State* PlayerDodge::HandleEvent(Event* event) {
-    EventType e_type = event->GetEventType();
+    EventType const e_type = event->GetEventType();
 
     switch (e_type) {
         case EventType::CollideEvent:
@@ -350,7 +350,7 @@ void PlayerIsHit::Draw() {
 }
 
 State* PlayerIsHit::HandleEvent(Event* event) {
-    EventType e_type = event->GetEventType();
+    EventType const e_type = event->GetEventType();
 
     switch (e_type) {
         case EventType::UserEvent:
@@ -364,7 +364,7 @@ State* PlayerIsHit::HandleEvent(Event* event) {
     return nullptr;
 }
 
-State* PlayerIsHit::OnUserEvent(UserEvent* event) {
+State* PlayerIsHit::OnUserEvent(UserEvent*  /*event*/) {
     return nullptr;
 }
 
@@ -411,7 +411,7 @@ void PlayerDead::Enter() {
 
 void PlayerDead::Exit() {}
 
-State* PlayerDead::Update(float dt) {
+State* PlayerDead::Update(float  /*dt*/) {
     if (GetPlayer()->GetAnimation()->Ended()) {
         GetPlayer()->MarkForDeletion();
     }
@@ -422,6 +422,6 @@ void PlayerDead::Draw() {
     GetPlayer()->DrawAnimation();
 }
 
-State* PlayerDead::HandleEvent(Event* event) {
+State* PlayerDead::HandleEvent(Event*  /*event*/) {
     return nullptr;
 }

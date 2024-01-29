@@ -6,7 +6,7 @@ void EntranceOpened::Enter() {
 
 void EntranceOpened::Exit() {}
 
-State* EntranceOpened::Update(float dt) {
+State* EntranceOpened::Update(float  /*dt*/) {
     return nullptr;
 }
 
@@ -15,7 +15,7 @@ void EntranceOpened::Draw() {
 }
 
 State* EntranceOpened::HandleEvent(Event* event) {
-    EventType e_type = event->GetEventType();
+    EventType const e_type = event->GetEventType();
 
     switch (e_type) {
         case EventType::CollideEvent:
@@ -48,7 +48,7 @@ void EntranceClosed::Enter() {
 
 void EntranceClosed::Exit() {}
 
-State* EntranceClosed::Update(float dt) {
+State* EntranceClosed::Update(float  /*dt*/) {
     return nullptr;
 }
 
@@ -57,7 +57,7 @@ void EntranceClosed::Draw() {
 }
 
 State* EntranceClosed::HandleEvent(Event* event) {
-    EventType e_type = event->GetEventType();
+    EventType const e_type = event->GetEventType();
 
     switch (e_type) {
         case EventType::CollideEvent:
@@ -93,7 +93,7 @@ void EntranceOpening::Enter() {
 
 void EntranceOpening::Exit() {}
 
-State* EntranceOpening::Update(float dt) {
+State* EntranceOpening::Update(float  /*dt*/) {
     GetEntrance()->GetAnimation()->Update();
 
     if (GetEntrance()->GetAnimation()->Ended()) {
@@ -106,7 +106,7 @@ void EntranceOpening::Draw() {
     GetEntrance()->DrawAnimation();
 }
 
-State* EntranceOpening::HandleEvent(Event* event) {
+State* EntranceOpening::HandleEvent(Event*  /*event*/) {
     return nullptr;
 }
 
@@ -116,7 +116,7 @@ void EntranceClosing::Enter() {
 
 void EntranceClosing::Exit() {}
 
-State* EntranceClosing::Update(float dt) {
+State* EntranceClosing::Update(float  /*dt*/) {
     GetEntrance()->GetAnimation()->Update();
 
     if (GetEntrance()->GetAnimation()->Ended()) {
@@ -129,6 +129,6 @@ void EntranceClosing::Draw() {
     GetEntrance()->DrawAnimation();
 }
 
-State* EntranceClosing::HandleEvent(Event* event) {
+State* EntranceClosing::HandleEvent(Event*  /*event*/) {
     return nullptr;
 }
