@@ -144,13 +144,6 @@ Game::Game() {
     srand(time(nullptr));
 
     Renderer::GetInstance()->SetCameraTarget(player);
-    LoadSounds();
-    soundSystem.PlaySound("background");
-}
-
-void Game::LoadSounds() {
-    soundSystem.LoadSound("background", "../assets/music/game_music.mp3");
-    soundSystem.LoadSound("hit", "../../assets/music/enemy_grunt.mp3");
 }
 
 void Game::Events() {
@@ -182,7 +175,6 @@ void Game::Events() {
                 break;
             case SDL_MOUSEWHEEL:
                 InputChecker::SetMouseWheelDirection(event.wheel.y);
-                soundSystem.PlaySound("background");
                 break;
             default:
                 break;

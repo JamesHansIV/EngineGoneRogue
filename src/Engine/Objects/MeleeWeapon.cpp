@@ -41,10 +41,14 @@ void MeleeWeapon::OnCollide(Collider* collidee) {
 
     switch (collidee->GetObjectType()) {
         case ObjectType::Player:
-            dynamic_cast<Character*>(collidee)->GetHealth()->SetDamage(100);
+            if (!PlayerOwned()) {
+                dynamic_cast<Character*>(collidee)->GetHealth()->SetDamage(10);
+            }
             break;
         case ObjectType::Enemy:
-            dynamic_cast<Character*>(collidee)->GetHealth()->SetDamage(100);
+            if (PlayerOwned()) {
+                dynamic_cast<Character*>(collidee)->GetHealth()->SetDamage(10);
+            }
             break;
         case ObjectType::MeleeWeapon:
             break;
