@@ -36,6 +36,8 @@ bool Enemy::TargetInRange() {
     // if (ColliderHandler::CheckCollision(rect1, range)) {
     // return true;
     // }
+
+    return true;
 }
 
 bool Enemy::TargetDetected() {
