@@ -26,10 +26,10 @@ void RangedWeapon::Update(float dt) {
         m_last_fired = SDL_GetTicks();
         Properties projectile_props("projectile", {0, 0, 723, 724},
                                     {GetMidPointX(), GetMidPointY(), 10, 10},
-                                    GetRadians(), "bullet");
+                                    GetRotation(), "bullet");
         Projectile* projectile = nullptr;
         projectile =
-            new Projectile(projectile_props, 10, GetRotation(), PlayerOwned());
+            new Projectile(projectile_props, 10, GetRadians(), PlayerOwned());
         m_ProjectileManager.AddProjectile(projectile);
         ColliderHandler::GetInstance()->AddCollider(projectile);
         InputChecker::SetMouseButtonPressed(SDL_BUTTON_LEFT, false);
