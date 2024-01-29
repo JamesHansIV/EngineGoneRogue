@@ -8,7 +8,7 @@
 WaveBullet::WaveBullet(Properties& props, float speed, float angle,
                        bool playerOwned, bool flipped)
     : Projectile(props, speed, angle, playerOwned),
-      m_Flipped(flipped),
+      m_Flipped(static_cast<int>(flipped)),
       m_Origin(Vector2D(GetX(), GetY())),
       m_TPos(0, 0),
       m_WaveMagnitude(1),
@@ -18,12 +18,12 @@ WaveBullet::WaveBullet(Properties& props, float speed, float angle,
 }
 
 void WaveBullet::Draw() {
-    GameObject::Draw();
+    Projectile::Draw();
 }
 
-void WaveBullet::Update(float dt) {
+void WaveBullet::Update(float  /*dt*/) {
     m_TPos.X += GetSpeed();
-    m_TPos.Y = m_Flipped ? sin(m_TPos.X + M_PI) : sin(m_TPos.X);
+    m_TPos.Y = m_Flipped != 0 ? sin(m_TPos.X + M_PI) : sin(m_TPos.X);
 
     const float scaled_x = m_TPos.X * m_Scale;
     const float scaled_y = m_TPos.Y * m_Scale;

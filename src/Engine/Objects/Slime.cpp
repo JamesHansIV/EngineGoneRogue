@@ -63,8 +63,7 @@ void Slime::OnCollide(Collider* collidee) {
         ChangeState(state);
     }
 
-    return;
-}
+    }
 
 void Slime::Clean() {
     delete m_Animation;

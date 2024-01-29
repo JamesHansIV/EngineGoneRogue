@@ -14,7 +14,7 @@ State* SlimeHandleCollide(Slime* enemy, Collider* collidee) {
             }
             break;
         case ObjectType::Entrance: {
-            Entrance* entrance = dynamic_cast<Entrance*>(collidee);
+            auto* entrance = dynamic_cast<Entrance*>(collidee);
             if (entrance->GetCurrentState()->GetType() == StateType::Closed ||
                 entrance->GetCurrentState()->GetType() == StateType::Opening) {
                 enemy->UnCollide(collidee);
@@ -37,19 +37,19 @@ State* SlimeHandleCollide(Slime* enemy, Collider* collidee) {
 }
 
 void SlimeSplit(Slime* enemy) {
-    std::string id1 = enemy->GetID() + "1";
-    std::string id2 = enemy->GetID() + "2";
+    std::string const id1 = enemy->GetID() + "1";
+    std::string const id2 = enemy->GetID() + "2";
     Properties props1 = {enemy->GetTextureID(),
                          enemy->GetTilePos(),
                          enemy->GetDstRect(),
                          enemy->GetRotation(),
                          id1,
                          enemy->GetFlip()};
-    props1.DstRect.x -= (float)enemy->GetWidth() / 2;
+    props1.DstRect.x -= static_cast<float>(enemy->GetWidth()) / 2;
 
     Properties props2 = props1;
     props2.ObjectID = id2;
-    props1.DstRect.x += (float)enemy->GetWidth() / 2;
+    props1.DstRect.x += static_cast<float>(enemy->GetWidth()) / 2;
 
     auto* slime1 = new Slime(props1, enemy->GetPerception().w,
                              enemy->GetPerception().h, enemy->GetRange(), true);
@@ -115,7 +115,7 @@ void SlimeIdle::Enter() {
 
 void SlimeIdle::Exit() {}
 
-State* SlimeIdle::Update(float dt) {
+State* SlimeIdle::Update(float  /*dt*/) {
     if (GetEnemy()->TargetDetected()) {
         return new SlimeMoving(GetEnemy());
     }
@@ -127,7 +127,7 @@ void SlimeIdle::Draw() {
 }
 
 State* SlimeIdle::HandleEvent(Event* event) {
-    EventType e_type = event->GetEventType();
+    EventType const e_type = event->GetEventType();
 
     switch (e_type) {
         case EventType::TargetFoundEvent:
@@ -141,7 +141,7 @@ State* SlimeIdle::HandleEvent(Event* event) {
     return nullptr;
 }
 
-State* SlimeIdle::OnTargetFoundEvent(TargetFoundEvent* event) {
+State* SlimeIdle::OnTargetFoundEvent(TargetFoundEvent*  /*event*/) {
     return new SlimeMoving(GetEnemy());
 }
 
@@ -174,7 +174,7 @@ void SlimeMoving::Draw() {
 }
 
 State* SlimeMoving::HandleEvent(Event* event) {
-    EventType e_type = event->GetEventType();
+    EventType const e_type = event->GetEventType();
 
     switch (e_type) {
         case EventType::CollideEvent:
@@ -215,7 +215,7 @@ void SlimeAttack::Draw() {
 }
 
 State* SlimeAttack::HandleEvent(Event* event) {
-    EventType e_type = event->GetEventType();
+    EventType const e_type = event->GetEventType();
 
     switch (e_type) {
         case EventType::CollideEvent:
@@ -243,7 +243,7 @@ void SlimeIsHit::Enter() {
 
 void SlimeIsHit::Exit() {}
 
-State* SlimeIsHit::Update(float dt) {
+State* SlimeIsHit::Update(float  /*dt*/) {
     if (GetEnemy()->GetAnimation()->Ended()) {
         return new SlimeIdle(GetEnemy());
     }
@@ -258,7 +258,7 @@ void SlimeIsHit::Draw() {
 }
 
 State* SlimeIsHit::HandleEvent(Event* event) {
-    EventType e_type = event->GetEventType();
+    EventType const e_type = event->GetEventType();
 
     switch (e_type) {
         case EventType::CollideEvent:
@@ -305,7 +305,7 @@ void SlimeDead::Enter() {
 
 void SlimeDead::Exit() {}
 
-State* SlimeDead::Update(float dt) {
+State* SlimeDead::Update(float  /*dt*/) {
     if (GetEnemy()->GetAnimation()->Ended()) {
         if (!GetEnemy()->IsSplit()) {
             SlimeSplit(GetEnemy());
@@ -320,6 +320,6 @@ void SlimeDead::Draw() {
     GetEnemy()->DrawAnimation();
 }
 
-State* SlimeDead::HandleEvent(Event* event) {
+State* SlimeDead::HandleEvent(Event*  /*event*/) {
     return nullptr;
 }

@@ -2,9 +2,9 @@
 
 RangedEnemy::~RangedEnemy() {
     delete m_ProjectileManager;
-    if (m_Burst != nullptr) {
+    
         delete m_Burst;
-    }
+    
 }
 
 void RangedEnemy::Draw() {

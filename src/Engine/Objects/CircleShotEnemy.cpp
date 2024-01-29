@@ -43,7 +43,7 @@ void CircleShotEnemy::Shoot() {
     float const delta_x = target_x - GetX();
 
     float angle = 0;
-    float bullet_separation = 2 * M_PI / m_ShotCount;
+    float const bullet_separation = 2 * M_PI / m_ShotCount;
     Projectile* bullet;
     Vector2D bullet_pos;
 
