@@ -3,6 +3,13 @@
 # Engine Build and Run Script in build/ directory
 
 # rm -rf build
+if [[ $* == *--clean* ]]
+  then
+    rm -rf build 
+else
+  make
+fi
+
 if [[ $1 == "editor" ]]
   then
     cmake -DEDITOR=ON -B build

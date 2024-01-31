@@ -89,11 +89,7 @@ void Enemy::OnCollide(Collider* collidee) {
 
     switch (collidee->GetObjectType()) {
         case ObjectType::Player:
-            UnCollide(collidee);
-            break;
         case ObjectType::Enemy:
-            UnCollide(collidee);
-            break;
         case ObjectType::MeleeWeapon:
             UnCollide(collidee);
             break;
