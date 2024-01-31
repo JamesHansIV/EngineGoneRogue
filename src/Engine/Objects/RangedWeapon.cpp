@@ -6,7 +6,7 @@ RangedWeapon::RangedWeapon(Properties& props, bool playerOwned)
     : Weapon(props, playerOwned) {}
 
 void RangedWeapon::Draw() {
-    GameObject::Draw();
+    Weapon::Draw();
     m_ProjectileManager.Draw();
 }
 

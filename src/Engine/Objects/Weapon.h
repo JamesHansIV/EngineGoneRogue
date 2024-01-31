@@ -6,10 +6,11 @@
 
 class Weapon : public Collider {
    public:
-    Weapon(Properties& props, bool playerOwned = false)
+    explicit Weapon(Properties& props, bool playerOwned = false)
         : Collider(props), m_PlayerOwned(playerOwned) {}
 
-    virtual void Draw() override = 0;
+    void Draw() override { GameObject::Draw(); }
+
     virtual void Clean() override = 0;
     virtual void Update(float dt) override = 0;
 

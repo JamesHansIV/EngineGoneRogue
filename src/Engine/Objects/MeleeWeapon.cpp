@@ -8,7 +8,7 @@ MeleeWeapon::MeleeWeapon(Properties& props, bool playerOwned)
     : Weapon(props, playerOwned) {}
 
 void MeleeWeapon::Draw() {
-    GameObject::Draw();
+    Weapon::Draw();
 }
 
 void MeleeWeapon::Update(float /*dt*/) {

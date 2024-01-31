@@ -32,12 +32,8 @@ bool Enemy::TargetInRange() {
                         static_cast<int>(m_Range) * 2,
                         static_cast<int>(m_Range) * 2};
     const Rect rect1 = GetTarget()->GetDstRect();
-    // TODO: crashes on Ahmni's Laptop
-    // if (ColliderHandler::CheckCollision(rect1, range)) {
-    // return true;
-    // }
 
-    return true;
+    return ColliderHandler::CheckCollision(rect1, range);
 }
 
 bool Enemy::TargetDetected() {

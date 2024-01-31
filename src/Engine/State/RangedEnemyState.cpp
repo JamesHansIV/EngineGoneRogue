@@ -41,7 +41,7 @@ void RangedEnemyIdle::Enter() {
 
 void RangedEnemyIdle::Exit() {}
 
-State* RangedEnemyIdle::Update(float  /*dt*/) {
+State* RangedEnemyIdle::Update(float /*dt*/) {
     if (GetEnemy()->TargetDetected()) {
         return new RangedEnemyMoving(GetEnemy());
     }
@@ -67,7 +67,7 @@ State* RangedEnemyIdle::HandleEvent(Event* event) {
     return nullptr;
 }
 
-State* RangedEnemyIdle::OnTargetFoundEvent(TargetFoundEvent*  /*event*/) {
+State* RangedEnemyIdle::OnTargetFoundEvent(TargetFoundEvent* /*event*/) {
     return new RangedEnemyMoving(GetEnemy());
 }
 
@@ -153,10 +153,12 @@ void RangedEnemyAttack::Exit() {
     }
 }
 
-State* RangedEnemyAttack::Update(float  /*dt*/) {
-    if (GetEnemy()->TargetInRange()) {
+State* RangedEnemyAttack::Update(float /*dt*/) {
+    if (!GetEnemy()->TargetInRange()) {
         return new RangedEnemyIdle(GetEnemy());
     }
+    SDL_Log("Enemy fire interval: %d", GetEnemy()->GetFireInterval());
+    SDL_Log("Enemy frame: %d", Application::Get()->GetFrame());
     if (Application::Get()->GetFrame() % GetEnemy()->GetFireInterval() == 0) {
         if (GetEnemy()->GetBurst() == nullptr ||
             (GetEnemy()->GetBurst() != nullptr &&
@@ -201,7 +203,7 @@ void RangedEnemyIsHit::Enter() {
 
 void RangedEnemyIsHit::Exit() {}
 
-State* RangedEnemyIsHit::Update(float  /*dt*/) {
+State* RangedEnemyIsHit::Update(float /*dt*/) {
     if (GetEnemy()->GetAnimation()->Ended()) {
         return new RangedEnemyIdle(GetEnemy());
     }
@@ -263,7 +265,7 @@ void RangedEnemyDead::Enter() {
 
 void RangedEnemyDead::Exit() {}
 
-State* RangedEnemyDead::Update(float  /*dt*/) {
+State* RangedEnemyDead::Update(float /*dt*/) {
     if (GetEnemy()->GetAnimation()->Ended()) {
         ColliderHandler::GetInstance()->RemoveCollider(GetEnemy());
         GetEnemy()->MarkForDeletion();
@@ -275,6 +277,6 @@ void RangedEnemyDead::Draw() {
     GetEnemy()->DrawAnimation();
 }
 
-State* RangedEnemyDead::HandleEvent(Event*  /*event*/) {
+State* RangedEnemyDead::HandleEvent(Event* /*event*/) {
     return nullptr;
 }
