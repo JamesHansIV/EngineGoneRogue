@@ -2,7 +2,7 @@
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Renderer/Renderer.h"
 
-#include "Engine/Objects/Character.h"
+#include "Engine/Objects/Characters/Character.h"
 
 MeleeWeapon::MeleeWeapon(Properties& props, bool playerOwned)
     : Weapon(props, playerOwned) {}

@@ -1,12 +1,12 @@
 #include "Player.h"
 #include "Engine/Input/InputChecker.h"
-#include "Engine/Objects/Entrance.h"
-#include "Engine/Objects/MeleeWeapon.h"
-#include "Engine/Objects/RangedWeapon.h"
+#include "Engine/Objects/Environment/Entrance.h"
+#include "Engine/Objects/Weapons/MeleeWeapon.h"
+#include "Engine/Objects/Weapons/RangedWeapon.h"
 #include "Engine/Renderer/Renderer.h"
 
+#include "Engine/Objects/Projectiles/Projectile.h"
 #include "Engine/State/State.h"
-#include "Projectile.h"
 
 void PlayerStats::Init() {
     Speed = 1.3;

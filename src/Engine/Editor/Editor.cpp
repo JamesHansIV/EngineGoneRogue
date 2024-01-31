@@ -9,8 +9,6 @@
 #include "Engine/Input/InputChecker.h"
 #include "Engine/Objects/Collider.h"
 #include "Engine/Objects/GameObject.h"
-#include "Engine/Objects/Player.h"
-#include "Engine/Objects/Projectile.h"
 
 #include <dirent.h>
 #include <sys/stat.h>

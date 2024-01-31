@@ -1,4 +1,4 @@
-#include "Engine/Objects/Dog.h"
+#include "Engine/Objects/Characters/Dog.h"
 #include "State.h"
 
 class DogState : public State {

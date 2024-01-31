@@ -2,8 +2,8 @@
 
 #include "Engine/Animation/Animation.h"
 #include "Engine/Objects/Collider.h"
+#include "Engine/Objects/GameObject.h"
 #include "Engine/Physics/RigidBody.h"
-#include "GameObject.h"
 #include "SDL2/SDL.h"
 #include "functional"
 

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Engine/Objects/Enemy.h"
-#include "Engine/Objects/Projectile.h"
-#include "Engine/Objects/ProjectileManager.h"
+#include "Enemy.h"
+#include "Engine/Objects/Projectiles/Projectile.h"
+#include "Engine/Objects/Projectiles/ProjectileManager.h"
 
 struct Burst {
     int _Count;

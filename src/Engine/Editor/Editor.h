@@ -3,8 +3,8 @@
 #include <set>
 #include "Engine/Application/Application.h"
 #include "Engine/Events/Event.h"
-#include "Engine/Objects/Player.h"
-#include "Engine/Objects/Projectile.h"
+#include "Engine/Objects/Characters/Player.h"
+#include "Engine/Objects/Projectiles/Projectile.h"
 #include "Engine/Renderer/Texture.h"
 
 struct E_EnemyInfo {

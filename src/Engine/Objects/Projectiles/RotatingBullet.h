@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Engine/Objects/Projectile.h"
-#include "GameObject.h"
+#include "Engine/Objects/GameObject.h"
+#include "Engine/Objects/Projectiles/Projectile.h"
 
 class RotatingBullet : public Projectile {
 

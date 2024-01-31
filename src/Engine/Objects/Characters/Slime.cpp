@@ -1,6 +1,6 @@
 #include "Slime.h"
-#include "Engine/Objects/Entrance.h"
-#include "Engine/Objects/Projectile.h"
+#include "Engine/Objects/Environment/Entrance.h"
+#include "Engine/Objects/Projectiles/Projectile.h"
 #include "Engine/State/SlimeState.h"
 
 Slime::Slime(Properties& props, int perceptionWidth, int perceptionHeight,
@@ -62,8 +62,7 @@ void Slime::OnCollide(Collider* collidee) {
     if (state != nullptr) {
         ChangeState(state);
     }
-
-    }
+}
 
 void Slime::Clean() {
     delete m_Animation;

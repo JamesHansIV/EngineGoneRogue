@@ -1,7 +1,7 @@
 #include "Projectile.h"
 #include <SDL2/SDL.h>
-#include "Character.h"
-#include "Enemy.h"
+#include "Engine/Objects/Characters/Character.h"
+#include "Engine/Objects/Characters/Enemy.h"
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Renderer/Renderer.h"
 

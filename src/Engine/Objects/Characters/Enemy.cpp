@@ -1,9 +1,9 @@
 #include "Enemy.h"
 #include "Engine/Input/InputChecker.h"
 #include "Engine/Objects/ColliderHandler.h"
-#include "Engine/Objects/Entrance.h"
-#include "Engine/Objects/Player.h"
+#include "Engine/Objects/Environment/Entrance.h"
 #include "Engine/Renderer/Renderer.h"
+#include "Player.h"
 
 #include <cmath>
 

@@ -1,7 +1,7 @@
 #include "Mage.h"
 #include "Engine/Application/Application.h"
 #include "Engine/Objects/ColliderHandler.h"
-#include "Engine/Objects/RotatingBullet.h"
+#include "Engine/Objects/Projectiles/RotatingBullet.h"
 #include "Engine/State/RangedEnemyState.h"
 
 Mage::Mage(Properties& props, int perceptionWidth, int perceptionHeight,

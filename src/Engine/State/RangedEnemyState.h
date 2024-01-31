@@ -1,5 +1,5 @@
 
-#include "Engine/Objects/RangedEnemy.h"
+#include "Engine/Objects/Characters/RangedEnemy.h"
 #include "State.h"
 
 class RangedEnemyState : public State {

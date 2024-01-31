@@ -1,8 +1,8 @@
 #include "PlayerState.h"
 #include "Engine/Input/InputChecker.h"
-#include "Engine/Objects/Enemy.h"
-#include "Engine/Objects/Entrance.h"
-#include "Engine/Objects/Player.h"
+#include "Engine/Objects/Characters/Enemy.h"
+#include "Engine/Objects/Characters/Player.h"
+#include "Engine/Objects/Environment/Entrance.h"
 #include "SDL2/SDL_events.h"
 #include "SDL2/SDL_keycode.h"
 
@@ -30,7 +30,8 @@ void MovePlayer(Player* player, float dt) {
     }
 }
 
-State* UpdateAnimationDirection(Player* player, const AnimationIDs& animationIDs) {
+State* UpdateAnimationDirection(Player* player,
+                                const AnimationIDs& animationIDs) {
     bool const key_up = InputChecker::IsKeyPressed(SDLK_w);
     bool const key_down = InputChecker::IsKeyPressed(SDLK_s);
     bool const key_left = InputChecker::IsKeyPressed(SDLK_a);
@@ -189,7 +190,7 @@ State* PlayerIdle::OnCollideEvent(CollideEvent* event) {
     return HandleCollide(GetPlayer(), event);
 }
 
-State* PlayerIdle::PollInput(float  /*dt*/) {
+State* PlayerIdle::PollInput(float /*dt*/) {
     if (InputChecker::IsKeyPressed(SDLK_w) ||
         InputChecker::IsKeyPressed(SDLK_s) ||
         InputChecker::IsKeyPressed(SDLK_a) ||
@@ -281,7 +282,7 @@ void PlayerDodge::Enter() {
 
 void PlayerDodge::Exit() {}
 
-State* PlayerDodge::Update(float  /*dt*/) {
+State* PlayerDodge::Update(float /*dt*/) {
     if (GetPlayer()->GetAnimation()->Ended()) {
         return new PlayerIdle(GetPlayer());
     }
@@ -364,7 +365,7 @@ State* PlayerIsHit::HandleEvent(Event* event) {
     return nullptr;
 }
 
-State* PlayerIsHit::OnUserEvent(UserEvent*  /*event*/) {
+State* PlayerIsHit::OnUserEvent(UserEvent* /*event*/) {
     return nullptr;
 }
 
@@ -411,7 +412,7 @@ void PlayerDead::Enter() {
 
 void PlayerDead::Exit() {}
 
-State* PlayerDead::Update(float  /*dt*/) {
+State* PlayerDead::Update(float /*dt*/) {
     if (GetPlayer()->GetAnimation()->Ended()) {
         GetPlayer()->MarkForDeletion();
     }
@@ -422,6 +423,6 @@ void PlayerDead::Draw() {
     GetPlayer()->DrawAnimation();
 }
 
-State* PlayerDead::HandleEvent(Event*  /*event*/) {
+State* PlayerDead::HandleEvent(Event* /*event*/) {
     return nullptr;
 }

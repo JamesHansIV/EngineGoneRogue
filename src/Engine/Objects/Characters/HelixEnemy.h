@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Engine/Objects/RangedEnemy.h"
+#include "RangedEnemy.h"
 
-class Mage : public RangedEnemy {
+class HelixEnemy : public RangedEnemy {
    public:
-    explicit Mage(Properties& props, int perceptionWidth, int perceptionHeight,
-                  float range = 150.0f, int fireInterval = 60,
-                  int bulletCount = 6);
+    explicit HelixEnemy(Properties& props, int perceptionWidth,
+                        int perceptionHeight, float range = 150.0f,
+                        int fireInterval = 20);
 
     virtual void Draw() override;
     virtual void Clean() override;
@@ -19,5 +19,4 @@ class Mage : public RangedEnemy {
     virtual ObjectType GetObjectType() override { return ObjectType::Enemy; }
 
    private:
-    int m_BulletCount;
 };

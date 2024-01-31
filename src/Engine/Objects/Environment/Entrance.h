@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Collider.h"
 #include "Engine/Animation/Animation.h"
+#include "Engine/Objects/Collider.h"
 
 class Entrance : public Collider {
    public:

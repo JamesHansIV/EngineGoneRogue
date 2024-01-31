@@ -3,9 +3,9 @@
 #include <stack>
 #include "Character.h"
 #include "Engine/Animation/Animation.h"
+#include "Engine/Objects/Weapons/Weapon.h"
 #include "Engine/Physics/RigidBody.h"
 #include "Engine/State/PlayerState.h"
-#include "Weapon.h"
 #include "functional"
 
 struct PlayerStats {

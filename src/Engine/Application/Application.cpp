@@ -1,8 +1,8 @@
 #include "Application.h"
 #include "Engine/Renderer/Renderer.h"
 
+#include "Engine/Objects/Characters/Player.h"
 #include "Engine/Objects/GameObject.h"
-#include "Engine/Objects/Player.h"
 
 #include "Engine/Input/InputChecker.h"
 

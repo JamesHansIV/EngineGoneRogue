@@ -2,7 +2,7 @@
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Renderer/Renderer.h"
 
-#include "Engine/Objects/Character.h"
+#include "Engine/Objects/Characters/Character.h"
 #include "SDL2/SDL_render.h"
 
 void UpdatePosition(Sword* sword) {

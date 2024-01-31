@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include "Engine/Objects/Collider.h"
-#include "GameObject.h"
+#include "Engine/Objects/GameObject.h"
 
 class Character : public Collider {
 

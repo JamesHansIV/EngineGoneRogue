@@ -1,4 +1,4 @@
-#include "Engine/Objects/Sword.h"
+#include "Engine/Objects/Weapons/Sword.h"
 #include "State.h"
 
 class SwordState : public State {

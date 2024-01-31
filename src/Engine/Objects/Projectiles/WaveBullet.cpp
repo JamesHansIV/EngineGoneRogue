@@ -1,7 +1,7 @@
 #include "WaveBullet.h"
 #include <SDL2/SDL.h>
-#include "Character.h"
-#include "Enemy.h"
+#include "Engine/Objects/Characters/Character.h"
+#include "Engine/Objects/Characters/Enemy.h"
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Renderer/Renderer.h"
 
@@ -21,7 +21,7 @@ void WaveBullet::Draw() {
     Projectile::Draw();
 }
 
-void WaveBullet::Update(float  /*dt*/) {
+void WaveBullet::Update(float /*dt*/) {
     m_TPos.X += GetSpeed();
     m_TPos.Y = m_Flipped != 0 ? sin(m_TPos.X + M_PI) : sin(m_TPos.X);
 

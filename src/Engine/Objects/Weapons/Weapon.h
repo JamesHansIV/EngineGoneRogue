@@ -1,8 +1,8 @@
 #pragma once
 #include "Engine/Input/InputChecker.h"
 #include "Engine/Objects/Collider.h"
-#include "GameObject.h"
-#include "Projectile.h"
+#include "Engine/Objects/GameObject.h"
+#include "Engine/Objects/Projectiles/Projectile.h"
 
 class Weapon : public Collider {
    public:

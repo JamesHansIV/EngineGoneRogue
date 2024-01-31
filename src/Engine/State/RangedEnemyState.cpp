@@ -1,9 +1,9 @@
 #include "RangedEnemyState.h"
 #include "Engine/Application/Application.h"
+#include "Engine/Objects/Characters/Player.h"
 #include "Engine/Objects/ColliderHandler.h"
-#include "Engine/Objects/Entrance.h"
-#include "Engine/Objects/Player.h"
-#include "Engine/Objects/Projectile.h"
+#include "Engine/Objects/Environment/Entrance.h"
+#include "Engine/Objects/Projectiles/Projectile.h"
 
 State* RangedEnemyHandleCollide(RangedEnemy* enemy, Collider* collidee) {
     switch (collidee->GetObjectType()) {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Engine/Objects/RangedEnemy.h"
+#include "RangedEnemy.h"
 
 class Goblin : public RangedEnemy {
    public:

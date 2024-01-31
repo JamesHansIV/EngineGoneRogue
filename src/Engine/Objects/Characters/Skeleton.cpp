@@ -1,8 +1,8 @@
 #include "Skeleton.h"
 #include "Engine/Application/Application.h"
 #include "Engine/Objects/ColliderHandler.h"
+#include "Engine/Objects/Environment/Entrance.h"
 #include "Engine/State/RangedEnemyState.h"
-#include "Entrance.h"
 
 Skeleton::Skeleton(Properties& props, int perceptionWidth, int perceptionHeight,
                    float range, int fireInterval, float spread, int spreadCount)

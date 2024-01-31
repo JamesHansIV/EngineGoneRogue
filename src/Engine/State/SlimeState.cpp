@@ -1,10 +1,10 @@
 #include "Engine/State/SlimeState.h"
 #include "Apps/Game.h"
 #include "Engine/Application/Application.h"
+#include "Engine/Objects/Characters/Player.h"
 #include "Engine/Objects/ColliderHandler.h"
-#include "Engine/Objects/Entrance.h"
-#include "Engine/Objects/Player.h"
-#include "Engine/Objects/Projectile.h"
+#include "Engine/Objects/Environment/Entrance.h"
+#include "Engine/Objects/Projectiles/Projectile.h"
 
 State* SlimeHandleCollide(Slime* enemy, Collider* collidee) {
     switch (collidee->GetObjectType()) {
@@ -115,7 +115,7 @@ void SlimeIdle::Enter() {
 
 void SlimeIdle::Exit() {}
 
-State* SlimeIdle::Update(float  /*dt*/) {
+State* SlimeIdle::Update(float /*dt*/) {
     if (GetEnemy()->TargetDetected()) {
         return new SlimeMoving(GetEnemy());
     }
@@ -141,7 +141,7 @@ State* SlimeIdle::HandleEvent(Event* event) {
     return nullptr;
 }
 
-State* SlimeIdle::OnTargetFoundEvent(TargetFoundEvent*  /*event*/) {
+State* SlimeIdle::OnTargetFoundEvent(TargetFoundEvent* /*event*/) {
     return new SlimeMoving(GetEnemy());
 }
 
@@ -243,7 +243,7 @@ void SlimeIsHit::Enter() {
 
 void SlimeIsHit::Exit() {}
 
-State* SlimeIsHit::Update(float  /*dt*/) {
+State* SlimeIsHit::Update(float /*dt*/) {
     if (GetEnemy()->GetAnimation()->Ended()) {
         return new SlimeIdle(GetEnemy());
     }
@@ -305,7 +305,7 @@ void SlimeDead::Enter() {
 
 void SlimeDead::Exit() {}
 
-State* SlimeDead::Update(float  /*dt*/) {
+State* SlimeDead::Update(float /*dt*/) {
     if (GetEnemy()->GetAnimation()->Ended()) {
         if (!GetEnemy()->IsSplit()) {
             SlimeSplit(GetEnemy());
@@ -320,6 +320,6 @@ void SlimeDead::Draw() {
     GetEnemy()->DrawAnimation();
 }
 
-State* SlimeDead::HandleEvent(Event*  /*event*/) {
+State* SlimeDead::HandleEvent(Event* /*event*/) {
     return nullptr;
 }

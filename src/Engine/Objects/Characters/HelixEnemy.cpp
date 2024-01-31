@@ -1,7 +1,7 @@
 #include "HelixEnemy.h"
 #include "Engine/Application/Application.h"
 #include "Engine/Objects/ColliderHandler.h"
-#include "Engine/Objects/WaveBullet.h"
+#include "Engine/Objects/Projectiles/WaveBullet.h"
 #include "Engine/State/RangedEnemyState.h"
 
 HelixEnemy::HelixEnemy(Properties& props, int perceptionWidth,
