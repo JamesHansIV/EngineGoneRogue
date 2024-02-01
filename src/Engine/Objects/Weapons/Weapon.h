@@ -15,6 +15,7 @@ class WeaponStats {
         m_fire_rate = fireRate;
         m_projectile_speed = projectileSpeed;
         m_damage = damage;
+        SDL_Log("WeaponStats Damage: %d", m_damage);
     }
 
     WeaponStats(const WeaponStats& prop) = default;
@@ -61,7 +62,7 @@ class Weapon : public Collider {
 
     WeaponStats GetStats() { return m_stats; };
 
-    inline bool PlayerOwned() { return m_stats.IsPlayerOwned(); }
+    inline bool IsPlayerOwned() { return m_stats.IsPlayerOwned(); }
 
    private:
     WeaponStats m_stats;
