@@ -8,7 +8,7 @@
 State* RangedEnemyHandleCollide(RangedEnemy* enemy, Collider* collidee) {
     switch (collidee->GetObjectType()) {
         case ObjectType::Projectile:
-            if (dynamic_cast<Projectile*>(collidee)->PlayerOwned()) {
+            if (dynamic_cast<Projectile*>(collidee)->IsPlayerOwned()) {
                 return new RangedEnemyIsHit(enemy, 10);
             }
             break;
@@ -235,7 +235,7 @@ State* RangedEnemyIsHit::OnCollideEvent(CollideEvent* event) {
 
     switch (collidee->GetObjectType()) {
         case ObjectType::Projectile:
-            if (dynamic_cast<Projectile*>(collidee)->PlayerOwned()) {
+            if (dynamic_cast<Projectile*>(collidee)->IsPlayerOwned()) {
                 SetDamage(10);
                 ApplyDamage();
             }

@@ -11,22 +11,22 @@ class Projectile : public Collider {
 
    public:
     Projectile(Properties& props, float speed, float angle,
-               bool playerOwned = false);
-    virtual void Draw() override;
-    virtual void Clean() override;
-    virtual void Update(float dt) override;
+               bool playerOwned = false, int damage = 10);
+    void Draw() override;
+    void Clean() override;
+    void Update(float dt) override;
 
     void CheckOutOfBounds();
 
-    virtual void OnCollide(Collider* collidee) override;
+    void OnCollide(Collider* collidee) override;
 
-    bool PlayerOwned() { return m_PlayerOwned; }
+    [[nodiscard]] bool IsPlayerOwned() const { return m_PlayerOwned; }
 
-    float GetSpeed() { return m_Speed; }
+    [[nodiscard]] float GetSpeed() const { return m_Speed; }
 
     void SetSpeed(float speed) { m_Speed = speed; }
 
-    float GetAngle() { return m_Angle; }
+    [[nodiscard]] float GetAngle() const { return m_Angle; }
 
     void SetAngle(float angle) { m_Angle = angle; }
 
@@ -34,13 +34,16 @@ class Projectile : public Collider {
 
     void SetVelocity(Vector2D velocity) { m_Velocity = velocity; }
 
-    virtual ObjectType GetObjectType() override {
-        return ObjectType::Projectile;
-    }
+    [[nodiscard]] int GetDamage() const { return m_Damage; }
+
+    void SetDamage(int damage) { m_Damage = damage; }
+
+    ObjectType GetObjectType() override { return ObjectType::Projectile; }
 
    private:
     bool m_PlayerOwned;
     float m_Speed;
     float m_Angle;
     Vector2D m_Velocity;
+    int m_Damage;
 };

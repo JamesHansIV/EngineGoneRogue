@@ -89,7 +89,7 @@ State* HandleEnemyCollide(Player* player, Enemy* enemy) {
 }
 
 State* HandleProjectileCollide(Player* player, Projectile* projectile) {
-    if (projectile->PlayerOwned()) {
+    if (projectile->IsPlayerOwned()) {
         return nullptr;
     }
     return new PlayerIsHit(player, 10);
@@ -377,12 +377,14 @@ State* PlayerIsHit::OnCollideEvent(CollideEvent* event) {
     }
 
     switch (collidee->GetObjectType()) {
-        case ObjectType::Projectile:
-            if (!dynamic_cast<Projectile*>(collidee)->PlayerOwned()) {
-                SetDamage(10);
+        case ObjectType::Projectile: {
+            auto* projectile = dynamic_cast<Projectile*>(collidee);
+            if (!projectile->IsPlayerOwned()) {
+                SetDamage(projectile->GetDamage());
                 ApplyDamage();
             }
             break;
+        }
         case ObjectType::Enemy:
             GetPlayer()->UnCollide(collidee);
             SetDamage(1);

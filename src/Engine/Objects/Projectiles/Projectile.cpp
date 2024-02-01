@@ -6,7 +6,7 @@
 #include "Engine/Renderer/Renderer.h"
 
 Projectile::Projectile(Properties& props, float speed, float angle,
-                       bool playerOwned)
+                       bool playerOwned, int damage)
     : Collider(props),
       m_Speed(speed),
       m_Angle(angle),
@@ -15,6 +15,7 @@ Projectile::Projectile(Properties& props, float speed, float angle,
     Vector2D const velocity = direction * m_Speed;
     m_Velocity = velocity;
     m_RigidBody->SetVelocity(m_Velocity);
+    damage = damage;
 }
 
 void Projectile::Draw() {

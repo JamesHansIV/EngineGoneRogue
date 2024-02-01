@@ -30,10 +30,12 @@ class RangedWeapon : public Weapon {
 
     ~RangedWeapon() override;
 
+    Projectile* BuildProjectile();
+
    private:
     ProjectileManager m_ProjectileManager;
     bool m_auto_fire_enabled = false;
     RangedWeaponStats m_stats;
     Uint32 m_last_fired = 0;
-    const Properties* m_projectile_props = nullptr;
+    Properties* m_projectile_props = nullptr;
 };

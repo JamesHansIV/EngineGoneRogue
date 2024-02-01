@@ -45,6 +45,15 @@ class Properties {
         ObjectID = prop.ObjectID;
     }
 
+    Properties(const Properties& prop, Rect rect, float rotation) {
+        TilePosition = prop.TilePosition;
+        DstRect = rect;
+        Flip = prop.Flip;
+        Rotation = rotation;
+        TextureID = prop.TextureID;
+        ObjectID = prop.ObjectID;
+    }
+
     Properties& operator=(const Properties& prop) = default;
 
     std::string ObjectID;

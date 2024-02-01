@@ -50,8 +50,8 @@ class Weapon : public Collider {
 
     void Draw() override { GameObject::Draw(); }
 
-    virtual void Clean() override = 0;
-    virtual void Update(float dt) override = 0;
+    void Clean() override = 0;
+    void Update(float dt) override = 0;
 
     WeaponStats GetStats() { return m_stats; };
 

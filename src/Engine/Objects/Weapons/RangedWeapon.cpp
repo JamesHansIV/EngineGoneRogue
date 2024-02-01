@@ -26,14 +26,14 @@ void RangedWeapon::Update(float dt) {
         SDL_GetTicks() - m_last_fired > m_stats.GetFireRate()) {
         m_last_fired = SDL_GetTicks();
 
-        auto* projectile_props = new Properties(*m_projectile_props);
-        projectile_props->DstRect.x = GetMidPointX();
-        projectile_props->DstRect.y = GetMidPointY();
-        projectile_props->Rotation = GetRadians();
+        m_projectile_props->DstRect.x = GetMidPointX();
+        m_projectile_props->DstRect.y = GetMidPointY();
+        m_projectile_props->Rotation = GetRadians();
 
-        Projectile* projectile = nullptr;
-        projectile =
-            new Projectile(*projectile_props, 10, GetRadians(), PlayerOwned());
+        auto* projectile =
+            new Projectile(*m_projectile_props,
+                           static_cast<float>(m_stats.GetProjectileSpeed()),
+                           GetRadians(), PlayerOwned());
         m_ProjectileManager.AddProjectile(projectile);
         ColliderHandler::GetInstance()->AddCollider(projectile);
         InputChecker::SetMouseButtonPressed(SDL_BUTTON_LEFT, false);
