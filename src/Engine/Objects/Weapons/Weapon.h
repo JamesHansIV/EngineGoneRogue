@@ -10,10 +10,11 @@
 class WeaponStats {
    public:
     explicit WeaponStats(bool playerOwned = false, Uint32 fireRate = 200,
-                         Uint32 projectileSpeed = 10) {
+                         Uint32 projectileSpeed = 10, int damage = 10) {
         m_player_owned = playerOwned;
         m_fire_rate = fireRate;
         m_projectile_speed = projectileSpeed;
+        m_damage = damage;
     }
 
     WeaponStats(const WeaponStats& prop) = default;
@@ -36,10 +37,15 @@ class WeaponStats {
         m_projectile_speed = projectileSpeed;
     }
 
+    [[nodiscard]] int GetDamage() const { return m_damage; }
+
+    void SetDamage(int damage) { m_damage = damage; }
+
    protected:
     bool m_player_owned;
     Uint32 m_fire_rate;
     Uint32 m_projectile_speed;
+    int m_damage;
 };
 
 class Weapon : public Collider {
