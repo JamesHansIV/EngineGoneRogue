@@ -1,26 +1,39 @@
 #pragma once
 
+#include "Engine/Objects/GameObject.h"
 #include "Engine/Objects/Projectiles/ProjectileManager.h"
 #include "Weapon.h"
 
+class RangedWeaponStats : public WeaponStats {
+   public:
+    RangedWeaponStats(bool player_owned, Uint32 fire_rate,
+                      Uint32 projectile_speed)
+        : WeaponStats(player_owned, fire_rate, projectile_speed) {}
+
+    RangedWeaponStats(const RangedWeaponStats& prop) = default;
+
+    RangedWeaponStats& operator=(const RangedWeaponStats& prop) = default;
+
+    ~RangedWeaponStats() = default;
+};
+
 class RangedWeapon : public Weapon {
    public:
-    RangedWeapon(Properties& props, bool playerOwned);
+    RangedWeapon(Properties& props, RangedWeaponStats& stats);
     void Draw() override;
     void Clean() override;
     void Update(float dt) override;
 
     void UpdateProjectiles(float dt);
 
-    void SetFireRate(Uint32 fire_rate) { m_fire_rate = fire_rate; }
+    ObjectType GetObjectType() override { return ObjectType::RangedWeapon; }
 
-    virtual ObjectType GetObjectType() override {
-        return ObjectType::RangedWeapon;
-    }
+    ~RangedWeapon() override;
 
    private:
     ProjectileManager m_ProjectileManager;
     bool m_auto_fire_enabled = false;
-    Uint32 m_fire_rate = 200;
+    RangedWeaponStats m_stats;
     Uint32 m_last_fired = 0;
+    const Properties* m_projectile_props = nullptr;
 };

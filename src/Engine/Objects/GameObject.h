@@ -23,7 +23,7 @@
 //     kWeapon = 1 << 3
 // };
 
-struct Properties {
+class Properties {
    public:
     Properties(std::string textureID, TilePos tilePos, Rect dstRect,
                float rotation = 0.0F, std::string objectID = "",
@@ -35,6 +35,17 @@ struct Properties {
         TextureID = std::move(textureID);
         ObjectID = std::move(objectID);
     }
+
+    Properties(const Properties& prop) {
+        TilePosition = prop.TilePosition;
+        DstRect = prop.DstRect;
+        Flip = prop.Flip;
+        Rotation = prop.Rotation;
+        TextureID = prop.TextureID;
+        ObjectID = prop.ObjectID;
+    }
+
+    Properties& operator=(const Properties& prop) = default;
 
     std::string ObjectID;
     std::string TextureID;

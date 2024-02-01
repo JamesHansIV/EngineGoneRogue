@@ -79,15 +79,17 @@ Player::Player(Properties& props) : Character(props) {
     m_Health = new Health(100);
 
     Properties props_g("gun", {0, 0, 18, 16}, {0, 0, 18, 16}, 0.0);
-    Weapon* w1 = new RangedWeapon(props_g, true);
+    RangedWeaponStats stats_g = {true, 200, 10};
+    Weapon* w1 = new RangedWeapon(props_g, stats_g);
     m_Weapons.push_back(w1);
 
     Properties props_m("weapons", {4, 6, 16, 16}, {0, 0, 16, 20}, 0.0);
-    Weapon* w2 = new MeleeWeapon(props_m, true);
+    MeleeWeaponStats stats_m = {true, 200, 10};
+    Weapon* w2 = new MeleeWeapon(props_m, stats_m);
     w2->SetRotation(50);
     m_Weapons.push_back(w2);
 
-    //ColliderHandler::GetInstance()->AddCollider(w2);
+    ColliderHandler::GetInstance()->AddCollider(w2);
 
     m_CurrentWeapon = w1;
 }
