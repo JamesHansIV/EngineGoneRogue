@@ -151,7 +151,7 @@ void RangedEnemyAttack::Exit() {
     GetEnemy()->GetAttack()->Reset();
 }
 
-State* RangedEnemyAttack::Update(float /*dt*/) {
+State* RangedEnemyAttack::Update(float dt) {
     if (!GetEnemy()->TargetInRange()) {
         return new RangedEnemyIdle(GetEnemy());
     }

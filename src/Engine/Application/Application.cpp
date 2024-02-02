@@ -333,8 +333,14 @@ void Application::Events() {
 void Application::Run() {
     while (m_IsRunning) {
         m_Frame++;
-        float const current_tick = SDL_GetTicks();
-        float const dt = current_tick - m_LastTick;
+        Uint32 const current_tick = SDL_GetTicks();
+        float dt = static_cast<float>(current_tick) - m_LastTick;
+        // TODO: temporary fix for teleporting issue. Need to fix delta time as
+        // it becomes massively large when alt tabbed.
+        if (dt > 200) {
+            dt = 1;
+        }
+        SDL_Log("Delta time: %f", dt);
         m_LastTick = current_tick;
         Events();
         Update(dt / 10);
