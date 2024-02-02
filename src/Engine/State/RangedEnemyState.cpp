@@ -148,9 +148,7 @@ void RangedEnemyAttack::Enter() {
 }
 
 void RangedEnemyAttack::Exit() {
-    if (GetEnemy()->GetBurst() != nullptr) {
-        GetEnemy()->GetBurst()->Reset();
-    }
+    GetEnemy()->GetAttack()->Reset();
 }
 
 State* RangedEnemyAttack::Update(float /*dt*/) {
@@ -159,13 +157,7 @@ State* RangedEnemyAttack::Update(float /*dt*/) {
     }
     SDL_Log("Enemy fire interval: %d", GetEnemy()->GetFireInterval());
     SDL_Log("Enemy frame: %d", Application::Get()->GetFrame());
-    if (Application::Get()->GetFrame() % GetEnemy()->GetFireInterval() == 0) {
-        if (GetEnemy()->GetBurst() == nullptr ||
-            (GetEnemy()->GetBurst() != nullptr &&
-             GetEnemy()->GetBurst()->Fire())) {
-            GetEnemy()->Shoot();
-        }
-    }
+    GetEnemy()->Shoot();
 
     return nullptr;
 }

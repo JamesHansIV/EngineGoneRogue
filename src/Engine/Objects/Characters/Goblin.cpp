@@ -5,8 +5,8 @@
 
 Goblin::Goblin(Properties& props, int perceptionWidth, int perceptionHeight,
                float range, int fireInterval, float spread)
-    : RangedEnemy(props, perceptionWidth, perceptionHeight, range, fireInterval,
-                  new Burst(5, 70)),
+    : RangedEnemy(props, perceptionWidth, perceptionHeight, range,
+                  fireInterval),
       m_Spread(spread) {
     m_Animation->AddAnimation(
         "Idle", {m_TextureID, {12, 2, 16, 16}, 2, 15, SDL_FLIP_NONE, true});
@@ -22,35 +22,26 @@ Goblin::Goblin(Properties& props, int perceptionWidth, int perceptionHeight,
 
     ChangeState(new RangedEnemyIdle(this));
     SetHealth(new Health(100));
+    SetAttack(new RangedAttack(CreateSpreadBullet, GetFireInterval(),
+                               new Burst(5, 70)));
 }
 
 void Goblin::Draw() {
     RangedEnemy::Draw();
+    GetAttack()->Draw();
 }
 
 void Goblin::Update(float dt) {
-    GetBurst()->Update(dt);
     RangedEnemy::Update(dt);
+    GetAttack()->Update(dt);
 }
 
 void Goblin::Shoot() {
-    float const delta_y = GetTarget()->GetMidPointY() - GetY();
-    float const delta_x = GetTarget()->GetMidPointX() - GetX();
+    Properties props = {"weapons", {6, 1, 16, 16}, {GetX(), GetY(), 12, 12}};
 
-    float const center_angle = atan2(delta_y, delta_x);
-    float const range_start = center_angle - m_Spread / 2;
-
-    float const offset =
-        static_cast<float>(rand() % static_cast<int>(m_Spread * 100)) / 100;
-
-    float const angle = range_start + offset;
-
-    Properties props = {
-        "weapons", {6, 1, 16, 16}, {GetX(), GetY(), 12, 12}, angle};
-
-    auto* bullet = new Projectile(props, 3, angle);
-    GetProjectileManager()->AddProjectile(bullet);
-    ColliderHandler::GetInstance()->AddCollider(bullet);
+    GetAttack()->Shoot({GetMidPointX(), GetMidPointY(),
+                        GetTarget()->GetMidPointX(),
+                        GetTarget()->GetMidPointY(), props, 3, 1, m_Spread});
 }
 
 void Goblin::OnCollide(Collider* collidee) {

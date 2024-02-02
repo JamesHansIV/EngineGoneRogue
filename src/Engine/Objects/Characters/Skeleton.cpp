@@ -6,8 +6,8 @@
 
 Skeleton::Skeleton(Properties& props, int perceptionWidth, int perceptionHeight,
                    float range, int fireInterval, float spread, int spreadCount)
-    : RangedEnemy(props, perceptionWidth, perceptionHeight, range, fireInterval,
-                  nullptr),
+    : RangedEnemy(props, perceptionWidth, perceptionHeight, range,
+                  fireInterval),
       m_Spread(spread),
       m_SpreadCount(spreadCount) {
     m_Animation->AddAnimation(
@@ -24,39 +24,25 @@ Skeleton::Skeleton(Properties& props, int perceptionWidth, int perceptionHeight,
 
     ChangeState(new RangedEnemyIdle(this));
     SetHealth(new Health(100));
+    SetAttack(new RangedAttack(CreateSpreadBullets, GetFireInterval()));
 }
 
 void Skeleton::Draw() {
     RangedEnemy::Draw();
+    GetAttack()->Draw();
 }
 
 void Skeleton::Update(float dt) {
     RangedEnemy::Update(dt);
+    GetAttack()->Update(dt);
 }
 
 void Skeleton::Shoot() {
-    float const target_x = GetTarget()->GetMidPointX();
-    float const target_y = GetTarget()->GetMidPointY();
-    float const delta_y = target_y - GetY();
-    float const delta_x = target_x - GetX();
+    Properties props = {"weapons", {6, 3, 16, 16}, {GetX(), GetY(), 16, 16}};
 
-    float const center_angle = atan2(delta_y, delta_x);
-    float const spread_start = center_angle - m_Spread / 2;
-    float const interval = m_Spread / m_SpreadCount;
-
-    Projectile* bullet;
-    float angle = 0;
-
-    for (int i = 0; i < m_SpreadCount; i++) {
-        angle = spread_start + interval * i;
-
-        Properties props = {
-            "weapons", {6, 3, 16, 16}, {GetX(), GetY(), 16, 16}, angle};
-
-        bullet = new Projectile(props, 3, angle);
-        GetProjectileManager()->AddProjectile(bullet);
-        ColliderHandler::GetInstance()->AddCollider(bullet);
-    }
+    GetAttack()->Shoot(
+        {GetMidPointX(), GetMidPointY(), GetTarget()->GetMidPointX(),
+         GetTarget()->GetMidPointY(), props, 3, m_SpreadCount, m_Spread});
 }
 
 void Skeleton::OnCollide(Collider* collidee) {

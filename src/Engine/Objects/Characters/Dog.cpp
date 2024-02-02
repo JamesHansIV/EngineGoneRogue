@@ -5,8 +5,8 @@
 
 Dog::Dog(Properties& props, int perceptionWidth, int perceptionHeight,
          float range, int fireInterval)
-    : RangedEnemy(props, perceptionWidth, perceptionHeight, range, fireInterval,
-                  nullptr) {
+    : RangedEnemy(props, perceptionWidth, perceptionHeight, range,
+                  fireInterval) {
     m_Animation->AddAnimation(
         "Idle", {m_TextureID, {6, 2, 16, 16}, 2, 15, SDL_FLIP_NONE, true});
     m_Animation->AddAnimation(
@@ -20,30 +20,25 @@ Dog::Dog(Properties& props, int perceptionWidth, int perceptionHeight,
 
     ChangeState(new RangedEnemyIdle(this));
     SetHealth(new Health(100));
+    SetAttack(new RangedAttack(CreateBullet, GetFireInterval()));
 }
 
 void Dog::Draw() {
     RangedEnemy::Draw();
+    GetAttack()->Draw();
 }
 
 void Dog::Update(float dt) {
     RangedEnemy::Update(dt);
+    GetAttack()->Update(dt);
 }
 
 void Dog::Shoot() {
-    float const target_x = GetTarget()->GetMidPointX();
-    float const target_y = GetTarget()->GetMidPointY();
-    float const delta_y = target_y - GetY();
-    float const delta_x = target_x - GetX();
+    Properties props = {"enemies", {6, 4, 16, 16}, {GetX(), GetY(), 12, 12}};
 
-    float const angle = atan2(delta_y, delta_x);
-
-    Properties props = {
-        "enemies", {6, 4, 16, 16}, {GetX(), GetY(), 12, 12}, angle};
-
-    auto* bullet = new Projectile(props, 3, angle);
-    GetProjectileManager()->AddProjectile(bullet);
-    ColliderHandler::GetInstance()->AddCollider(bullet);
+    GetAttack()->Shoot({GetMidPointX(), GetMidPointY(),
+                        GetTarget()->GetMidPointX(),
+                        GetTarget()->GetMidPointY(), props});
 }
 
 void Dog::OnCollide(Collider* collidee) {

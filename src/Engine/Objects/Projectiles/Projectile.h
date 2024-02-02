@@ -7,6 +7,8 @@
 #include "SDL2/SDL.h"
 #include "functional"
 
+enum class ProjectileType { Standard, Rotating, Helix };
+
 class Projectile : public Collider {
 
    public:
@@ -36,6 +38,10 @@ class Projectile : public Collider {
 
     virtual ObjectType GetObjectType() override {
         return ObjectType::Projectile;
+    }
+
+    virtual ProjectileType GetProjectileType() {
+        return ProjectileType::Standard;
     }
 
    private:

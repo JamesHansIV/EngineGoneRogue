@@ -1,12 +1,12 @@
-#include "WaveBullet.h"
+#include "HelixBullet.h"
 #include <SDL2/SDL.h>
 #include "Engine/Objects/Characters/Character.h"
 #include "Engine/Objects/Characters/Enemy.h"
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Renderer/Renderer.h"
 
-WaveBullet::WaveBullet(Properties& props, float speed, float angle,
-                       bool playerOwned, bool flipped)
+HelixBullet::HelixBullet(Properties& props, float speed, float angle,
+                         bool playerOwned, bool flipped)
     : Projectile(props, speed, angle, playerOwned),
       m_Flipped(static_cast<int>(flipped)),
       m_Origin(Vector2D(GetX(), GetY())),
@@ -17,11 +17,11 @@ WaveBullet::WaveBullet(Properties& props, float speed, float angle,
     SetSpeed(speed / 25);
 }
 
-void WaveBullet::Draw() {
+void HelixBullet::Draw() {
     Projectile::Draw();
 }
 
-void WaveBullet::Update(float /*dt*/) {
+void HelixBullet::Update(float /*dt*/) {
     m_TPos.X += GetSpeed();
     m_TPos.Y = m_Flipped != 0 ? sin(m_TPos.X + M_PI) : sin(m_TPos.X);
 
@@ -40,7 +40,7 @@ void WaveBullet::Update(float /*dt*/) {
     CheckOutOfBounds();
 }
 
-void WaveBullet::OnCollide(Collider* collidee) {
+void HelixBullet::OnCollide(Collider* collidee) {
     if (this == collidee) {
         return;
     }
@@ -67,4 +67,4 @@ void WaveBullet::OnCollide(Collider* collidee) {
     }
 }
 
-void WaveBullet::Clean() {}
+void HelixBullet::Clean() {}

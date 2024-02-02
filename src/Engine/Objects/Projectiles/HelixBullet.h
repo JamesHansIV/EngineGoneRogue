@@ -10,10 +10,10 @@
 
 #define PI4 (M_PI / 4)
 
-class WaveBullet : public Projectile {
+class HelixBullet : public Projectile {
    public:
-    WaveBullet(Properties& props, float speed, float angle,
-               bool playerOwned = false, bool flipped = false);
+    HelixBullet(Properties& props, float speed, float angle,
+                bool playerOwned = false, bool flipped = false);
     virtual void Draw() override;
     virtual void Clean() override;
     virtual void Update(float dt) override;
@@ -22,6 +22,10 @@ class WaveBullet : public Projectile {
 
     virtual ObjectType GetObjectType() override {
         return ObjectType::Projectile;
+    }
+
+    virtual ProjectileType GetProjectileType() override {
+        return ProjectileType::Helix;
     }
 
    private:

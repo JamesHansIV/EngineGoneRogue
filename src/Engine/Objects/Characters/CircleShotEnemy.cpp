@@ -7,8 +7,8 @@ CircleShotEnemy::CircleShotEnemy(Properties& props, int perceptionWidth,
                                  int perceptionHeight, float range,
                                  int fireInterval, float outerRadius,
                                  float innerRadius, int shotCount)
-    : RangedEnemy(props, perceptionWidth, perceptionHeight, range, fireInterval,
-                  nullptr),
+    : RangedEnemy(props, perceptionWidth, perceptionHeight, range,
+                  fireInterval),
       m_OuterRadius(outerRadius),
       m_InnerRadius(innerRadius),
       m_ShotCount(shotCount) {
@@ -26,59 +26,25 @@ CircleShotEnemy::CircleShotEnemy(Properties& props, int perceptionWidth,
 
     ChangeState(new RangedEnemyIdle(this));
     SetHealth(new Health(100));
+    SetAttack(new RangedAttack(CreateRingBullets, GetFireInterval()));
 }
 
 void CircleShotEnemy::Draw() {
     RangedEnemy::Draw();
+    GetAttack()->Draw();
 }
 
 void CircleShotEnemy::Update(float dt) {
     RangedEnemy::Update(dt);
+    GetAttack()->Update(dt);
 }
 
 void CircleShotEnemy::Shoot() {
-    float const target_x = GetTarget()->GetMidPointX();
-    float const target_y = GetTarget()->GetMidPointY();
-    float const delta_y = target_y - GetY();
-    float const delta_x = target_x - GetX();
+    Properties props = {"weapons", {6, 0, 16, 16}, {GetX(), GetY(), 12, 12}};
 
-    float angle = 0;
-    float const bullet_separation = 2 * M_PI / m_ShotCount;
-    Projectile* bullet;
-    Vector2D bullet_pos;
-
-    for (float i = 0; i < 2 * M_PI; i += bullet_separation) {
-        angle = i * 180 / M_PI;
-
-        bullet_pos.X = m_OuterRadius * cos(i) + GetX();
-        bullet_pos.Y = m_OuterRadius * sin(i) + GetY();
-
-        Properties props = {"weapons",
-                            {6, 0, 16, 16},
-                            {bullet_pos.X, bullet_pos.Y, 12, 12},
-                            angle};
-
-        bullet = new Projectile(props, 3, i);
-        GetProjectileManager()->AddProjectile(bullet);
-        ColliderHandler::GetInstance()->AddCollider(bullet);
-    }
-
-    for (float i = bullet_separation / 2; i < 2 * M_PI;
-         i += bullet_separation) {
-        angle = i * 180 / M_PI;
-
-        bullet_pos.X = m_InnerRadius * cos(i) + GetX();
-        bullet_pos.Y = m_InnerRadius * sin(i) + GetY();
-
-        Properties props = {"weapons",
-                            {6, 0, 16, 16},
-                            {bullet_pos.X, bullet_pos.Y, 12, 12},
-                            angle};
-
-        bullet = new Projectile(props, 3, i);
-        GetProjectileManager()->AddProjectile(bullet);
-        ColliderHandler::GetInstance()->AddCollider(bullet);
-    }
+    GetAttack()->Shoot({GetMidPointX(), GetMidPointY(),
+                        GetTarget()->GetMidPointX(),
+                        GetTarget()->GetMidPointY(), props, 3, m_ShotCount});
 }
 
 void CircleShotEnemy::OnCollide(Collider* collidee) {

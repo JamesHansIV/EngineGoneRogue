@@ -26,6 +26,7 @@ x enemy that spawns smaller enemies on death (purple slime)
 - enemy that has a shield and a dash
 - enemy that shoots split shot
 - enemy that spins lasers shot out in all directions
+- stream of bullets that surround player and move inwards
 * enemy that lobs projectiles (goblin)
 * enemy that jumps and creates ring of damage on landing (rat boss)
 * chest mimics

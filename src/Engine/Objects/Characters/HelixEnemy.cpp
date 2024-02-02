@@ -1,13 +1,13 @@
 #include "HelixEnemy.h"
 #include "Engine/Application/Application.h"
 #include "Engine/Objects/ColliderHandler.h"
-#include "Engine/Objects/Projectiles/WaveBullet.h"
+#include "Engine/Objects/Projectiles/HelixBullet.h"
 #include "Engine/State/RangedEnemyState.h"
 
 HelixEnemy::HelixEnemy(Properties& props, int perceptionWidth,
                        int perceptionHeight, float range, int fireInterval)
-    : RangedEnemy(props, perceptionWidth, perceptionHeight, range, fireInterval,
-                  new Burst(3, 50)) {
+    : RangedEnemy(props, perceptionWidth, perceptionHeight, range,
+                  fireInterval) {
     m_Animation->AddAnimation(
         "Idle", {m_TextureID, {12, 2, 16, 16}, 2, 15, SDL_FLIP_NONE, true});
     m_Animation->AddAnimation(
@@ -22,34 +22,26 @@ HelixEnemy::HelixEnemy(Properties& props, int perceptionWidth,
 
     ChangeState(new RangedEnemyIdle(this));
     SetHealth(new Health(100));
+    SetAttack(new RangedAttack(CreateHelixBullets, GetFireInterval(),
+                               new Burst(3, 50)));
 }
 
 void HelixEnemy::Draw() {
     RangedEnemy::Draw();
+    GetAttack()->Draw();
 }
 
 void HelixEnemy::Update(float dt) {
-    GetBurst()->Update(dt);
+    GetAttack()->Update(dt);
     RangedEnemy::Update(dt);
 }
 
 void HelixEnemy::Shoot() {
-    float const target_x = GetTarget()->GetMidPointX();
-    float const target_y = GetTarget()->GetMidPointY();
-    float const delta_y = target_y - GetY();
-    float const delta_x = target_x - GetX();
+    Properties props("weapons", {6, 1, 16, 16}, {GetX(), GetY(), 12, 12});
 
-    float const angle = atan2(delta_y, delta_x);
-
-    Properties props = {
-        "weapons", {6, 1, 16, 16}, {GetX(), GetY(), 12, 12}, angle};
-
-    auto* bullet1 = new WaveBullet(props, 3, angle, false, false);
-    auto* bullet2 = new WaveBullet(props, 3, angle, false, true);
-    GetProjectileManager()->AddProjectile(bullet1);
-    GetProjectileManager()->AddProjectile(bullet2);
-    ColliderHandler::GetInstance()->AddCollider(bullet1);
-    ColliderHandler::GetInstance()->AddCollider(bullet2);
+    GetAttack()->Shoot({GetMidPointX(), GetMidPointY(),
+                        GetTarget()->GetMidPointX(),
+                        GetTarget()->GetMidPointY(), props});
 }
 
 void HelixEnemy::OnCollide(Collider* collidee) {

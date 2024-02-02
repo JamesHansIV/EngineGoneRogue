@@ -19,6 +19,10 @@ class RotatingBullet : public Projectile {
         return ObjectType::Projectile;
     }
 
+    virtual ProjectileType GetProjectileType() override {
+        return ProjectileType::Rotating;
+    }
+
    private:
     Vector2D m_Center;
     float m_RotationSpeed;

@@ -6,8 +6,8 @@
 
 Mage::Mage(Properties& props, int perceptionWidth, int perceptionHeight,
            float range, int fireInterval, int bulletCount)
-    : RangedEnemy(props, perceptionWidth, perceptionHeight, range, fireInterval,
-                  nullptr),
+    : RangedEnemy(props, perceptionWidth, perceptionHeight, range,
+                  fireInterval),
       m_BulletCount(bulletCount) {
     m_Animation->AddAnimation(
         "Idle", {m_TextureID, {6, 2, 16, 16}, 2, 15, SDL_FLIP_NONE, true});
@@ -22,35 +22,27 @@ Mage::Mage(Properties& props, int perceptionWidth, int perceptionHeight,
 
     ChangeState(new RangedEnemyIdle(this));
     SetHealth(new Health(100));
+    SetAttack(new RangedAttack(CreateRotatingBullets, GetFireInterval()));
 }
 
 void Mage::Draw() {
     RangedEnemy::Draw();
+    GetAttack()->Draw();
 }
 
 void Mage::Update(float dt) {
     RangedEnemy::Update(dt);
+    GetAttack()->Update(dt);
 }
 
 void Mage::Shoot() {
-    float const target_x = GetTarget()->GetMidPointX();
-    float const target_y = GetTarget()->GetMidPointY();
-    float const delta_y = target_y - GetY();
-    float const delta_x = target_x - GetX();
-
-    float const angle = atan2(delta_y, delta_x);
-
-    float const bullet_separation = 2 * M_PI / m_BulletCount;
     RotatingBullet* bullet;
 
-    for (float i = 0; i < 2 * M_PI; i += bullet_separation) {
-        Properties props = {
-            "weapons", {6, 1, 16, 16}, {GetX(), GetY(), 12, 12}, angle};
+    Properties props = {"weapons", {6, 1, 16, 16}, {GetX(), GetY(), 12, 12}};
 
-        bullet = new RotatingBullet(props, 3, angle, false, i);
-        GetProjectileManager()->AddProjectile(bullet);
-        ColliderHandler::GetInstance()->AddCollider(bullet);
-    }
+    GetAttack()->Shoot({GetMidPointX(), GetMidPointY(),
+                        GetTarget()->GetMidPointX(),
+                        GetTarget()->GetMidPointY(), props, 3, m_BulletCount});
 }
 
 void Mage::OnCollide(Collider* collidee) {
