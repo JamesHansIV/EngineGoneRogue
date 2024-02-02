@@ -6,7 +6,7 @@
 #include "Engine/Renderer/Renderer.h"
 
 Projectile::Projectile(Properties& props, float speed, float angle,
-                       bool playerOwned)
+                       bool playerOwned, int damage)
     : Collider(props),
       m_Speed(speed),
       m_Angle(angle),
@@ -15,6 +15,7 @@ Projectile::Projectile(Properties& props, float speed, float angle,
     Vector2D const velocity = direction * m_Speed;
     m_Velocity = velocity;
     m_RigidBody->SetVelocity(m_Velocity);
+    m_Damage = damage;
 }
 
 void Projectile::Draw() {
@@ -54,7 +55,9 @@ void Projectile::OnCollide(Collider* collidee) {
         case ObjectType::Enemy:
             if (m_PlayerOwned) {
                 m_MarkedForDeletion = true;
-                dynamic_cast<Character*>(collidee)->GetHealth()->SetDamage(10);
+                SDL_Log("Damage: %d", m_Damage);
+                dynamic_cast<Character*>(collidee)->GetHealth()->SetDamage(
+                    m_Damage);
             }
             break;
         case ObjectType::MeleeWeapon:

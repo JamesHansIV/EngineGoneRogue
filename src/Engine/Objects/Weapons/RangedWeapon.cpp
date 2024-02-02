@@ -1,9 +1,17 @@
 #include "RangedWeapon.h"
 #include "Engine/Objects/ColliderHandler.h"
-#include "Engine/Renderer/Renderer.h"
 
-RangedWeapon::RangedWeapon(Properties& props, bool playerOwned)
-    : Weapon(props, playerOwned) {}
+int k_projectile_width = 10;
+int k_projectile_height = 10;
+
+RangedWeapon::RangedWeapon(Properties& props, RangedWeaponStats& stats)
+    : Weapon(props, stats), m_stats(stats) {
+    m_projectile_props =
+        new Properties("projectile", {0, 0, 723, 724},
+                       {GetMidPointX(), GetMidPointY(), k_projectile_width,
+                        k_projectile_height},
+                       GetRotation(), "bullet");
+}
 
 void RangedWeapon::Draw() {
     Weapon::Draw();
@@ -20,16 +28,18 @@ void RangedWeapon::Update(float dt) {
 
     if ((InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT) ||
          m_auto_fire_enabled) &&
-        SDL_GetTicks() - m_last_fired > m_fire_rate) {
-        SDL_Log("weapon rotation: %f", GetRotation());
-        SDL_Log("weapon radians: %f", GetRadians());
+        SDL_GetTicks() - m_last_fired > m_stats.GetFireRate()) {
         m_last_fired = SDL_GetTicks();
-        Properties projectile_props("projectile", {0, 0, 723, 724},
-                                    {GetMidPointX(), GetMidPointY(), 10, 10},
-                                    GetRotation(), "bullet");
-        Projectile* projectile = nullptr;
-        projectile =
-            new Projectile(projectile_props, 10, GetRadians(), PlayerOwned());
+
+        m_projectile_props->DstRect.x = GetMidPointX();
+        m_projectile_props->DstRect.y = GetMidPointY();
+        m_projectile_props->Rotation = GetRadians();
+
+        SDL_Log("Ranged Weapon Damage: %d", m_stats.GetDamage());
+        auto* projectile =
+            new Projectile(*m_projectile_props,
+                           static_cast<float>(m_stats.GetProjectileSpeed()),
+                           GetRadians(), IsPlayerOwned(), m_stats.GetDamage());
         m_ProjectileManager.AddProjectile(projectile);
         ColliderHandler::GetInstance()->AddCollider(projectile);
         InputChecker::SetMouseButtonPressed(SDL_BUTTON_LEFT, false);
@@ -38,3 +48,7 @@ void RangedWeapon::Update(float dt) {
 }
 
 void RangedWeapon::Clean() {}
+
+RangedWeapon::~RangedWeapon() {
+    delete m_projectile_props;
+}

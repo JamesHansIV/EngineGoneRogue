@@ -78,18 +78,30 @@ Player::Player(Properties& props) : Character(props) {
     // m_Collider->SetCorrection(-45, -20, 60, 80 )
     m_Health = new Health(100);
 
-    Properties props_g("gun", {0, 0, 18, 16}, {0, 0, 18, 16}, 0.0);
-    Weapon* w1 = new RangedWeapon(props_g, true);
-    m_Weapons.push_back(w1);
+    Properties props_rifle("gun", {0, 0, 18, 16}, {0, 0, 18, 16}, 0.0);
+    RangedWeaponStats stats_rifle = {true, 200, 10, 16};
+    Weapon* rifle = new RangedWeapon(props_rifle, stats_rifle);
+    m_Weapons.push_back(rifle);
+
+    Properties props_pistol("gun", {0, 0, 18, 16}, {0, 0, 18, 16}, 0.0);
+    RangedWeaponStats stats_pistol = {true, 400, 7, 34};
+    Weapon* pistol = new RangedWeapon(props_pistol, stats_pistol);
+    m_Weapons.push_back(pistol);
+
+    Properties props_sniper("gun", {0, 0, 18, 16}, {0, 0, 18, 16}, 0.0);
+    RangedWeaponStats stats_sniper = {true, 1000, 10, 100};
+    Weapon* sniper = new RangedWeapon(props_sniper, stats_sniper);
+    m_Weapons.push_back(sniper);
 
     Properties props_m("weapons", {4, 6, 16, 16}, {0, 0, 16, 20}, 0.0);
-    Weapon* w2 = new MeleeWeapon(props_m, true);
+    MeleeWeaponStats stats_m = {true, 200, 10};
+    Weapon* w2 = new MeleeWeapon(props_m, stats_m);
     w2->SetRotation(50);
     m_Weapons.push_back(w2);
 
-    //ColliderHandler::GetInstance()->AddCollider(w2);
+    ColliderHandler::GetInstance()->AddCollider(w2);
 
-    m_CurrentWeapon = w1;
+    m_CurrentWeapon = m_Weapons[0];
 }
 
 Player::~Player() {

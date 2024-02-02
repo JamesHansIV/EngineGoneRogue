@@ -4,8 +4,8 @@
 
 #include "Engine/Objects/Characters/Character.h"
 
-MeleeWeapon::MeleeWeapon(Properties& props, bool playerOwned)
-    : Weapon(props, playerOwned) {}
+MeleeWeapon::MeleeWeapon(Properties& props, MeleeWeaponStats& stats)
+    : Weapon(props, stats) {}
 
 void MeleeWeapon::Draw() {
     Weapon::Draw();
@@ -41,19 +41,17 @@ void MeleeWeapon::OnCollide(Collider* collidee) {
 
     switch (collidee->GetObjectType()) {
         case ObjectType::Player:
-            if (!PlayerOwned()) {
+            if (!IsPlayerOwned()) {
                 dynamic_cast<Character*>(collidee)->GetHealth()->SetDamage(10);
             }
             break;
         case ObjectType::Enemy:
-            if (PlayerOwned()) {
+            if (IsPlayerOwned()) {
                 dynamic_cast<Character*>(collidee)->GetHealth()->SetDamage(10);
             }
             break;
         case ObjectType::MeleeWeapon:
-            break;
         case ObjectType::Projectile:
-            break;
         case ObjectType::Collider:
             break;
         default:

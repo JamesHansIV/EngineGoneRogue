@@ -2,16 +2,29 @@
 
 #include "Weapon.h"
 
+class MeleeWeaponStats : public WeaponStats {
+   public:
+    MeleeWeaponStats(bool playerOwned, Uint32 fireRate, Uint32 projectileSpeed)
+        : WeaponStats(playerOwned, fireRate, projectileSpeed) {}
+
+    MeleeWeaponStats(const MeleeWeaponStats& prop) = default;
+
+    MeleeWeaponStats& operator=(const MeleeWeaponStats& prop) = default;
+
+    ~MeleeWeaponStats() = default;
+};
+
 class MeleeWeapon : public Weapon {
    public:
-    MeleeWeapon(Properties& props, bool playerOwned);
-    virtual void Draw() override;
-    virtual void Clean() override;
-    virtual void Update(float dt) override;
+    MeleeWeapon(Properties& props, MeleeWeaponStats& stats);
 
-    virtual void OnCollide(Collider* collidee) override;
+    void Draw() override;
+    void Clean() override;
+    void Update(float dt) override;
 
-    virtual ObjectType GetObjectType() override {
-        return ObjectType::MeleeWeapon;
-    }
+    void OnCollide(Collider* collidee) override;
+
+    ObjectType GetObjectType() override { return ObjectType::MeleeWeapon; }
+
+    ~MeleeWeapon() override = default;
 };

@@ -36,13 +36,13 @@ void RotatingBullet::OnCollide(Collider* collidee) {
 
     switch (collidee->GetObjectType()) {
         case ObjectType::Player:
-            if (!PlayerOwned()) {
+            if (!IsPlayerOwned()) {
                 MarkForDeletion();
                 //dynamic_cast<Character*>(collidee)->GetHealth()->SetDamage(10);
             }
             break;
         case ObjectType::Enemy:
-            if (PlayerOwned()) {
+            if (IsPlayerOwned()) {
                 MarkForDeletion();
                 dynamic_cast<Character*>(collidee)->GetHealth()->SetDamage(10);
             }
