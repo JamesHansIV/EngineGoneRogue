@@ -6,13 +6,14 @@
 if [[ $* == *--clean* ]]
   then
     rm -rf build 
-else
-  make
 fi
 
 if [[ $1 == "editor" ]]
   then
     cmake -DEDITOR=ON -B build
+elif [[ $* == *--debug* ]]
+  then
+    cmake -DCMAKE_BUILD_TYPE=Debug -B build
 else
   cmake -B build
 fi
