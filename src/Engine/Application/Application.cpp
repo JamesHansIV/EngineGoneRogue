@@ -340,7 +340,6 @@ void Application::Run() {
         if (dt > 200) {
             dt = 1;
         }
-        SDL_Log("Delta time: %f", dt);
         m_LastTick = current_tick;
         Events();
         Update(dt / 10);
