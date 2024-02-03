@@ -27,7 +27,7 @@ Enemy* enemy10 = nullptr;
 std::vector<Collider*> colliders;
 
 int max_tick_interval = 100;
-int cur_enemy_generation_interval = 500;
+int cur_enemy_generation_interval = 800;
 
 Game::Game() {
     SDL_Renderer* renderer = Renderer::GetInstance()->GetRenderer();
@@ -211,17 +211,20 @@ void Game::Update(float dt) {
     }
 
     m_tick++;
-    // if (m_tick % cur_enemy_generation_interval == 0) {
-    //   float generated_x = rand() % 500 + 200;
-    //   float generated_y = rand() % 300 + 20;
-    //   Properties generated_props("enemy5",{0, 0, 16, 16}, {generated_x, generated_y, 36, 36});
-    //   auto* generated_enemy = new Enemy(generated_props, 300, 300);
-    //   ColliderHandler::GetInstance()->AddCollider(generated_enemy);
-    //   m_Objects.push_back(generated_enemy);
-    // }
-    // if (max_tick_interval < cur_enemy_generation_interval) {
-    //   cur_enemy_generation_interval -= 20;
-    // }
+    // Auto generate enemies
+    //if (m_tick % cur_enemy_generation_interval == 0) {
+    //    float const generated_x = rand() % 500 + 200;
+    //    float const generated_y = rand() % 300 + 20;
+    //    Properties generated_props("enemies", {0, 1, 16, 16},
+    //                               {generated_x, generated_y, 36, 36}, 0,
+    //                               "enemy1");
+    //    auto* generated_enemy = new Slime(generated_props, 300, 300);
+    //    ColliderHandler::GetInstance()->AddCollider(generated_enemy);
+    //    m_Objects.push_back(generated_enemy);
+    //}
+    //if (max_tick_interval < cur_enemy_generation_interval) {
+    //    cur_enemy_generation_interval -= 20;
+    //}
 }
 
 void Game::Render() {
