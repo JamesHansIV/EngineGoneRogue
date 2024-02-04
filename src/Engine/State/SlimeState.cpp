@@ -51,10 +51,10 @@ void SlimeSplit(Slime* enemy) {
     props2.ObjectID = id2;
     props1.DstRect.x += static_cast<float>(enemy->GetWidth()) / 2;
 
-    auto* slime1 = new Slime(props1, enemy->GetPerception().w,
-                             enemy->GetPerception().h, enemy->GetRange(), true);
-    auto* slime2 = new Slime(props2, enemy->GetPerception().w,
-                             enemy->GetPerception().h, enemy->GetRange(), true);
+    // TODO: When Health et cetra are integrated with EnemyStats, change this
+    // to use modified health values.
+    auto* slime1 = new Slime(props1, enemy->GetEnemyStats(), true);
+    auto* slime2 = new Slime(props2, enemy->GetEnemyStats(), true);
 
     dynamic_cast<Game*>(Application::Get())->AddObject(slime1);
     dynamic_cast<Game*>(Application::Get())->AddObject(slime2);

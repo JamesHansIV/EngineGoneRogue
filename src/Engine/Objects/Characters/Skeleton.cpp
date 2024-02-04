@@ -4,12 +4,8 @@
 #include "Engine/Objects/Environment/Entrance.h"
 #include "Engine/State/RangedEnemyState.h"
 
-Skeleton::Skeleton(Properties& props, int perceptionWidth, int perceptionHeight,
-                   float range, int fireInterval, float spread, int spreadCount)
-    : RangedEnemy(props, perceptionWidth, perceptionHeight, range,
-                  fireInterval),
-      m_Spread(spread),
-      m_SpreadCount(spreadCount) {
+Skeleton::Skeleton(Properties& props, const RangedEnemyStats& stats)
+    : RangedEnemy(props, stats) {
     m_Animation->AddAnimation(
         "Idle", {m_TextureID, {9, 2, 16, 16}, 2, 15, SDL_FLIP_NONE, true});
     m_Animation->AddAnimation(
@@ -40,9 +36,10 @@ void Skeleton::Update(float dt) {
 void Skeleton::Shoot() {
     Properties props = {"weapons", {6, 3, 16, 16}, {GetX(), GetY(), 16, 16}};
 
-    GetAttack()->Shoot(
-        {GetMidPointX(), GetMidPointY(), GetTarget()->GetMidPointX(),
-         GetTarget()->GetMidPointY(), props, 3, m_SpreadCount, m_Spread});
+    GetAttack()->Shoot({GetMidPointX(), GetMidPointY(),
+                        GetTarget()->GetMidPointX(),
+                        GetTarget()->GetMidPointY(), props, 3,
+                        m_stats.spreadCount, m_stats.spread});
 }
 
 void Skeleton::OnCollide(Collider* collidee) {

@@ -20,27 +20,24 @@ DEVELOPING BASIC ENEMY BEHAVIOUR:
 - collision detection between the enemies (might need to add offset - but this might cause problems)
 */
 
-Enemy::Enemy(Properties& props, int perceptionWidth, int perceptionHeight,
-             float range)
-    : Character(props),
-      m_PerceptionWidth(perceptionWidth),
-      m_PerceptionHeight(perceptionHeight),
-      m_Range(range) {}
+Enemy::Enemy(Properties& props, EnemyStats const& stats)
+    : Character(props), m_stats(stats) {}
 
 bool Enemy::TargetInRange() {
-    const Rect range = {GetMidPointX() - m_Range, GetMidPointY() - m_Range,
-                        static_cast<int>(m_Range) * 2,
-                        static_cast<int>(m_Range) * 2};
+    const Rect range = {GetMidPointX() - m_stats.range,
+                        GetMidPointY() - m_stats.range,
+                        static_cast<int>(m_stats.range) * 2,
+                        static_cast<int>(m_stats.range) * 2};
     const Rect rect1 = GetTarget()->GetDstRect();
 
     return ColliderHandler::CheckCollision(rect1, range);
 }
 
 bool Enemy::TargetDetected() {
-    float const rect_x = GetX() - m_PerceptionWidth;
-    int const rect_w = GetWidth() + 2 * m_PerceptionWidth;
-    float const rect_y = GetY() - m_PerceptionHeight;
-    int const rect_h = GetHeight() + 2 * m_PerceptionHeight;
+    float const rect_x = GetX() - m_stats.perceptionWidth;
+    int const rect_w = GetWidth() + 2 * m_stats.perceptionWidth;
+    float const rect_y = GetY() - m_stats.perceptionHeight;
+    int const rect_h = GetHeight() + 2 * m_stats.perceptionHeight;
 
     m_Perception = {rect_x, rect_y, rect_w, rect_h};
 
@@ -75,7 +72,7 @@ bool Enemy::MoveTowardsTarget(float /*dt*/) {
 
         m_RigidBody->ApplyVelocity(
             Vector2D(direction_x * 0.5, direction_y * 0.5));
-        if (direction_length <= m_Range) {
+        if (direction_length <= m_stats.range) {
             return true;
         }
     }

@@ -3,10 +3,8 @@
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/State/RangedEnemyState.h"
 
-Dog::Dog(Properties& props, int perceptionWidth, int perceptionHeight,
-         float range, int fireInterval)
-    : RangedEnemy(props, perceptionWidth, perceptionHeight, range,
-                  fireInterval) {
+Dog::Dog(Properties& props, const RangedEnemyStats& stats)
+    : RangedEnemy(props, stats) {
     m_Animation->AddAnimation(
         "Idle", {m_TextureID, {6, 2, 16, 16}, 2, 15, SDL_FLIP_NONE, true});
     m_Animation->AddAnimation(

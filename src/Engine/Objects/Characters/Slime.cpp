@@ -3,9 +3,8 @@
 #include "Engine/Objects/Projectiles/Projectile.h"
 #include "Engine/State/SlimeState.h"
 
-Slime::Slime(Properties& props, int perceptionWidth, int perceptionHeight,
-             float range, bool split)
-    : Enemy(props, perceptionWidth, perceptionHeight, range), m_Split(split) {
+Slime::Slime(Properties& props, const EnemyStats& stats, bool split)
+    : Enemy(props, stats), m_Split(split) {
     m_Animation = new Animation();
     m_Animation->AddAnimation(
         "MiniSlimeIdle",

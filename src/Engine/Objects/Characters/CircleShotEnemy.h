@@ -4,9 +4,8 @@
 
 class CircleShotEnemy : public RangedEnemy {
    public:
-    explicit CircleShotEnemy(Properties& props, int perceptionWidth,
-                             int perceptionHeight, float range = 150.0f,
-                             int fireInterval = 80, float outerRadius = 40.0f,
+    explicit CircleShotEnemy(Properties& props, RangedEnemyStats stats,
+                             float outerRadius = 40.0f,
                              float innerRadius = 20.0f, int shotCount = 24);
 
     virtual void Draw() override;

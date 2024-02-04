@@ -4,8 +4,7 @@
 
 class Mage : public RangedEnemy {
    public:
-    explicit Mage(Properties& props, int perceptionWidth, int perceptionHeight,
-                  float range = 150.0f, int fireInterval = 60,
+    explicit Mage(Properties& props, const RangedEnemyStats& stats,
                   int bulletCount = 6);
 
     virtual void Draw() override;

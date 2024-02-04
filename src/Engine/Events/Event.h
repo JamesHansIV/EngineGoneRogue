@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SDL2/SDL.h>
+#include "Engine/Objects/Characters/EnemyStats.h"
 
 class Collider;
 
@@ -8,7 +9,8 @@ enum class EventType {
     UserEvent = 0,
     CollideEvent,
     TargetFoundEvent,
-    TargetLostEvent
+    TargetLostEvent,
+    EnemyDeathEvent,
 };
 
 class Event {
@@ -56,6 +58,20 @@ class TargetFoundEvent : public Event {
    private:
     float m_TargetX;
     float m_TargetY;
+};
+
+class EnemyDeathEvent : public Event {
+   public:
+    explicit EnemyDeathEvent(const EnemyStats& enemy_stats) {
+        m_stats = EnemyStats(enemy_stats);
+    }
+
+    EnemyStats* GetEnemyStats();
+
+    EventType GetEventType() override { return EventType::EnemyDeathEvent; }
+
+   private:
+    EnemyStats m_stats;
 };
 
 class TargetLostEvent : public Event {

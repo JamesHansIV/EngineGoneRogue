@@ -4,9 +4,7 @@
 
 class HelixEnemy : public RangedEnemy {
    public:
-    explicit HelixEnemy(Properties& props, int perceptionWidth,
-                        int perceptionHeight, float range = 150.0f,
-                        int fireInterval = 20);
+    explicit HelixEnemy(Properties& props, RangedEnemyStats const& stats);
 
     virtual void Draw() override;
     virtual void Clean() override;

@@ -3,6 +3,7 @@
 #include "Engine/Input/InputChecker.h"
 #include "Engine/Objects/Characters/CircleShotEnemy.h"
 #include "Engine/Objects/Characters/Dog.h"
+#include "Engine/Objects/Characters/EnemyStats.h"
 #include "Engine/Objects/Characters/Goblin.h"
 #include "Engine/Objects/Characters/HelixEnemy.h"
 #include "Engine/Objects/Characters/Mage.h"
@@ -79,43 +80,60 @@ Game::Game() {
 
     Properties props1("enemies", {0, 1, 16, 16}, {200, 200, 36, 36}, 0,
                       "enemy1");
-    enemy1 = new Slime(props1, 150, 150);
+    EnemyStats default_enemy_stats = {
+        100,  // health
+        1,    // damage
+        10,   // speed
+        150,  // range
+        160,  // perception width
+        150,  // perception height
+        15,   // xp
+    };
+    enemy1 = new Slime(props1, default_enemy_stats);
 
     Properties props2("enemies", {0, 1, 16, 16}, {300, 260, 36, 36}, 0,
                       "enemy2");
-    enemy2 = new Slime(props2, 150, 150);
+    enemy2 = new Slime(props2, default_enemy_stats);
 
     Properties props3("enemies", {0, 1, 16, 16}, {500, 200, 36, 36}, 0,
                       "enemy3");
-    enemy3 = new Slime(props3, 150, 150);
+    enemy3 = new Slime(props3, default_enemy_stats);
 
     Properties props4("enemies", {0, 1, 16, 16}, {600, 367, 36, 36}, 0,
                       "enemy4");
-    enemy4 = new Slime(props4, 150, 150);
+    enemy4 = new Slime(props4, default_enemy_stats);
+
+    const RangedEnemyStats default_ranged_enemy_stats = {
+        default_enemy_stats,  // enemy stats
+        20,                   // fireInterval
+        4                     // spread};
+    };
 
     Properties props5("enemies", {0, 1, 16, 16}, {700, 300, 36, 36}, 0,
                       "enemy5");
-    enemy5 = new CircleShotEnemy(props5, 150, 150);
+    // specific stats replaced with defaults for easy refactor. can be changed later
+    // specific enemy stats changed in commit on 2/4.
+    enemy5 = new CircleShotEnemy(props5, default_ranged_enemy_stats);
 
     Properties props6("enemies", {6, 2, 16, 16}, {600, 150, 36, 36}, 0,
                       "enemy6");
-    enemy6 = new Mage(props6, 150, 150);
+    enemy6 = new Mage(props6, default_ranged_enemy_stats);
 
     Properties props7("enemies", {6, 2, 16, 16}, {500, 300, 36, 36}, 0,
                       "enemy7");
-    enemy7 = new Dog(props7, 200, 200);
+    enemy7 = new Dog(props7, default_ranged_enemy_stats);
 
     Properties props8("enemies", {9, 2, 16, 16}, {600, 300, 36, 36}, 0,
                       "enemy8");
-    enemy8 = new Skeleton(props8, 175, 175);
+    enemy8 = new Skeleton(props8, default_ranged_enemy_stats);
 
     Properties props9("enemies", {9, 2, 16, 16}, {550, 300, 36, 36}, 0,
                       "enemy9");
-    enemy9 = new Goblin(props9, 200, 200);
+    enemy9 = new Goblin(props9, default_ranged_enemy_stats);
 
     Properties props10("enemies", {9, 2, 16, 16}, {400, 300, 36, 36}, 0,
                        "enemy10");
-    enemy10 = new HelixEnemy(props10, 200, 200);
+    enemy10 = new HelixEnemy(props10, default_ranged_enemy_stats);
 
     m_Objects.push_back(enemy1);
     m_Objects.push_back(enemy2);

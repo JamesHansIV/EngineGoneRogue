@@ -4,9 +4,7 @@
 
 class Goblin : public RangedEnemy {
    public:
-    explicit Goblin(Properties& props, int perceptionWidth,
-                    int perceptionHeight, float range = 150.0f,
-                    int fireInterval = 7, float spread = M_PI / 3);
+    explicit Goblin(Properties& props, const RangedEnemyStats& enemyStats);
 
     virtual void Draw() override;
     virtual void Clean() override;
@@ -16,10 +14,7 @@ class Goblin : public RangedEnemy {
 
     virtual void OnCollide(Collider* collidee) override;
 
-    float GetSpread() const { return m_Spread; }
+    float GetSpread() const { return m_stats.spread; }
 
     virtual ObjectType GetObjectType() override { return ObjectType::Enemy; }
-
-   private:
-    float m_Spread;
 };

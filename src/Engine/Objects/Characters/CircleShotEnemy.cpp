@@ -3,12 +3,10 @@
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/State/RangedEnemyState.h"
 
-CircleShotEnemy::CircleShotEnemy(Properties& props, int perceptionWidth,
-                                 int perceptionHeight, float range,
-                                 int fireInterval, float outerRadius,
-                                 float innerRadius, int shotCount)
-    : RangedEnemy(props, perceptionWidth, perceptionHeight, range,
-                  fireInterval),
+CircleShotEnemy::CircleShotEnemy(Properties& props, RangedEnemyStats stats,
+                                 float outerRadius, float innerRadius,
+                                 int shotCount)
+    : RangedEnemy(props, stats),
       m_OuterRadius(outerRadius),
       m_InnerRadius(innerRadius),
       m_ShotCount(shotCount) {

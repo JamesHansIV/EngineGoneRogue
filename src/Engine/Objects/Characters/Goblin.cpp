@@ -3,11 +3,8 @@
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/State/RangedEnemyState.h"
 
-Goblin::Goblin(Properties& props, int perceptionWidth, int perceptionHeight,
-               float range, int fireInterval, float spread)
-    : RangedEnemy(props, perceptionWidth, perceptionHeight, range,
-                  fireInterval),
-      m_Spread(spread) {
+Goblin::Goblin(Properties& props, const RangedEnemyStats& stats)
+    : RangedEnemy(props, stats) {
     m_Animation->AddAnimation(
         "Idle", {m_TextureID, {12, 2, 16, 16}, 2, 15, SDL_FLIP_NONE, true});
     m_Animation->AddAnimation(
@@ -39,9 +36,9 @@ void Goblin::Update(float dt) {
 void Goblin::Shoot() {
     Properties props = {"weapons", {6, 1, 16, 16}, {GetX(), GetY(), 12, 12}};
 
-    GetAttack()->Shoot({GetMidPointX(), GetMidPointY(),
-                        GetTarget()->GetMidPointX(),
-                        GetTarget()->GetMidPointY(), props, 3, 1, m_Spread});
+    GetAttack()->Shoot(
+        {GetMidPointX(), GetMidPointY(), GetTarget()->GetMidPointX(),
+         GetTarget()->GetMidPointY(), props, 3, 1, m_stats.spread});
 }
 
 void Goblin::OnCollide(Collider* collidee) {

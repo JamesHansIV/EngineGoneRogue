@@ -5,10 +5,8 @@
 
 class RangedEnemy : public Enemy {
    public:
-    explicit RangedEnemy(Properties& props, int perceptionWidth,
-                         int perceptionHeight, float range, int fireInterval)
-        : Enemy(props, perceptionWidth, perceptionHeight, range),
-          m_FireInterval(fireInterval) {
+    explicit RangedEnemy(Properties& props, const RangedEnemyStats& enemyStats)
+        : Enemy(props, enemyStats), m_stats(enemyStats) {
         m_Animation = new Animation();
     }
 
@@ -20,7 +18,7 @@ class RangedEnemy : public Enemy {
 
     virtual void Shoot() = 0;
 
-    int GetFireInterval() { return m_FireInterval; }
+    int GetFireInterval() { return m_stats.fireInterval; }
 
     RangedAttack* GetAttack() { return m_Attack; }
 
@@ -30,7 +28,7 @@ class RangedEnemy : public Enemy {
 
     virtual ObjectType GetObjectType() override { return ObjectType::Enemy; }
 
-   private:
+   protected:
     RangedAttack* m_Attack;
-    int m_FireInterval;
+    RangedEnemyStats m_stats;
 };

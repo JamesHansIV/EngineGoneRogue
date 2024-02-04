@@ -4,8 +4,8 @@
 
 class Slime : public Enemy {
    public:
-    explicit Slime(Properties& props, int perceptionWidth, int perceptionHeight,
-                   float range = 45.0F, bool split = false);
+    explicit Slime(Properties& props, const EnemyStats& stats,
+                   bool split = false);
     virtual void Draw() override;
     virtual void Clean() override;
     virtual void Update(float dt) override;

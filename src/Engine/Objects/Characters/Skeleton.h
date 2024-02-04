@@ -3,10 +3,7 @@
 
 class Skeleton : public RangedEnemy {
    public:
-    explicit Skeleton(Properties& props, int perceptionWidth,
-                      int perceptionHeight, float range = 150.0F,
-                      int fireInterval = 50, float spread = M_PI / 4,
-                      int spreadCount = 4);
+    explicit Skeleton(Properties& props, const RangedEnemyStats& stats);
 
     virtual void Draw() override;
     virtual void Clean() override;
@@ -19,6 +16,4 @@ class Skeleton : public RangedEnemy {
     virtual ObjectType GetObjectType() override { return ObjectType::Enemy; }
 
    private:
-    float m_Spread;
-    int m_SpreadCount;
 };

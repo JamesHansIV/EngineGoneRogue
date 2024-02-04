@@ -4,11 +4,8 @@
 #include "Engine/Objects/Projectiles/RotatingBullet.h"
 #include "Engine/State/RangedEnemyState.h"
 
-Mage::Mage(Properties& props, int perceptionWidth, int perceptionHeight,
-           float range, int fireInterval, int bulletCount)
-    : RangedEnemy(props, perceptionWidth, perceptionHeight, range,
-                  fireInterval),
-      m_BulletCount(bulletCount) {
+Mage::Mage(Properties& props, const RangedEnemyStats& stats, int bulletCount)
+    : RangedEnemy(props, stats), m_BulletCount(bulletCount) {
     m_Animation->AddAnimation(
         "Idle", {m_TextureID, {6, 2, 16, 16}, 2, 15, SDL_FLIP_NONE, true});
     m_Animation->AddAnimation(
