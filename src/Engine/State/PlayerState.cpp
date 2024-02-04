@@ -13,19 +13,19 @@ bool IsPlayerDead(Player* player) {
 void MovePlayer(Player* player, float dt) {
     float speed = 0;
     if (InputChecker::IsKeyPressed(SDLK_w)) {
-        speed = player->GetStats().Speed;
+        speed = player->GetStats().getSpeed();
         player->GetRigidBody()->ApplyVelocity(Vector2D(0, -speed * dt));
     }
     if (InputChecker::IsKeyPressed(SDLK_s)) {
-        speed = player->GetStats().Speed;
+        speed = player->GetStats().getSpeed();
         player->GetRigidBody()->ApplyVelocity(Vector2D(0, speed * dt));
     }
     if (InputChecker::IsKeyPressed(SDLK_a)) {
-        speed = player->GetStats().Speed;
+        speed = player->GetStats().getSpeed();
         player->GetRigidBody()->ApplyVelocity(Vector2D(-speed * dt, 0));
     }
     if (InputChecker::IsKeyPressed(SDLK_d)) {
-        speed = player->GetStats().Speed;
+        speed = player->GetStats().getSpeed();
         player->GetRigidBody()->ApplyVelocity(Vector2D(speed * dt, 0));
     }
 }
@@ -140,8 +140,8 @@ void PlayerIdle::Enter() {
 void PlayerIdle::Exit() {}
 
 State* PlayerIdle::Update(float dt) {
-    GetPlayer()->GetStats().DodgeCD > 0 ? GetPlayer()->GetStats().DodgeCD--
-                                        : GetPlayer()->GetStats().DodgeCD;
+    int dodgeCD = GetPlayer()->GetStats().getDodgeCD(); 
+    if (dodgeCD > 0) GetPlayer()->GetStats().setDodgeCD(dodgeCD - 1);
     return PollInput(dt);
 }
 
@@ -208,8 +208,8 @@ void PlayerMoving::Enter() {
 void PlayerMoving::Exit() {}
 
 State* PlayerMoving::Update(float dt) {
-    GetPlayer()->GetStats().DodgeCD > 0 ? GetPlayer()->GetStats().DodgeCD--
-                                        : GetPlayer()->GetStats().DodgeCD;
+    int dodgeCD = GetPlayer()->GetStats().getDodgeCD(); 
+    if (dodgeCD > 0) GetPlayer()->GetStats().setDodgeCD(dodgeCD - 1);
     PollInput(dt);
     return nullptr;
 }
@@ -252,7 +252,7 @@ State* PlayerMoving::OnUserEvent(UserEvent* event) {
             break;
         case SDLK_LSHIFT:
             if (e->type == SDL_KEYDOWN &&
-                GetPlayer()->GetStats().DodgeCD <= 0) {
+                GetPlayer()->GetStats().getDodgeCD() <= 0) {
                 return new PlayerDodge(GetPlayer());
             }
             break;
@@ -272,10 +272,10 @@ void PlayerMoving::PollInput(float dt) {
 
 void PlayerDodge::Enter() {
     SDL_Log("enter dodge state");
-    GetPlayer()->GetStats().DodgeCD = m_DodgeCD;
+    GetPlayer()->GetStats().setDodgeCD(m_DodgeCD);
     UpdateAnimationDirection(GetPlayer(), GetDodgeAnimationIDs());
     Vector2D const velocity = GetPlayer()->GetRigidBody()->Velocity();
-    float const dodge_speed = GetPlayer()->GetStats().DodgeSpeed;
+    float const dodge_speed = GetPlayer()->GetStats().getDodgeSpeed();
 
     m_Velocity = velocity * dodge_speed;
 }

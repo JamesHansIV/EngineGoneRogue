@@ -1,5 +1,6 @@
 #include "RangedWeapon.h"
 #include "Engine/Objects/ColliderHandler.h"
+#include "Engine/Objects/Characters/Player.h"
 
 int k_projectile_width = 10;
 int k_projectile_height = 10;
@@ -39,7 +40,7 @@ void RangedWeapon::Update(float dt) {
         auto* projectile =
             new Projectile(*m_projectile_props,
                            static_cast<float>(m_stats.GetProjectileSpeed()),
-                           GetRadians(), IsPlayerOwned(), m_stats.GetDamage());
+                           GetRadians(), IsPlayerOwned(), m_stats.GetDamage() + m_stats.GetOwnerStats()->getRangedDamage());
         m_ProjectileManager.AddProjectile(projectile);
         ColliderHandler::GetInstance()->AddCollider(projectile);
         InputChecker::SetMouseButtonPressed(SDL_BUTTON_LEFT, false);

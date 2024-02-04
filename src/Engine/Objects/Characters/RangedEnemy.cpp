@@ -1,5 +1,6 @@
 #include "RangedEnemy.h"
 
+
 RangedEnemy::~RangedEnemy() {}
 
 void RangedEnemy::Draw() {

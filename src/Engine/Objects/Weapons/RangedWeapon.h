@@ -4,11 +4,13 @@
 #include "Engine/Objects/Projectiles/ProjectileManager.h"
 #include "Weapon.h"
 
+class PlayerStats;
+
 class RangedWeaponStats : public WeaponStats {
    public:
     RangedWeaponStats(bool player_owned, Uint32 fire_rate,
-                      Uint32 projectile_speed, int damage)
-        : WeaponStats(player_owned, fire_rate, projectile_speed, damage) {}
+                      Uint32 projectile_speed, int damage, PlayerStats* ownerStats)
+        : WeaponStats(player_owned, fire_rate, projectile_speed, damage, ownerStats) {}
 
     RangedWeaponStats(const RangedWeaponStats& prop) = default;
 

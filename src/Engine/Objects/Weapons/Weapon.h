@@ -4,17 +4,19 @@
 #include "Engine/Objects/GameObject.h"
 #include "Engine/Objects/Projectiles/Projectile.h"
 
+class PlayerStats;
 // Potential stats:
 // Damage, Accuracy, Pattern?, spread?, range, knockback, elemental, status effect, armor penetration, reload, switching speed,
 
 class WeaponStats {
    public:
     explicit WeaponStats(bool playerOwned = false, Uint32 fireRate = 200,
-                         Uint32 projectileSpeed = 10, int damage = 10) {
+                         Uint32 projectileSpeed = 10, int damage = 10, PlayerStats* ownerStats = nullptr) {
         m_player_owned = playerOwned;
         m_fire_rate = fireRate;
         m_projectile_speed = projectileSpeed;
         m_damage = damage;
+        m_ownerStats = ownerStats;
         SDL_Log("WeaponStats Damage: %d", m_damage);
     }
 
@@ -32,7 +34,7 @@ class WeaponStats {
 
     [[nodiscard]] Uint32 GetProjectileSpeed() const {
         return m_projectile_speed;
-    }
+    }  
 
     void SetProjectileSpeed(Uint32 projectileSpeed) {
         m_projectile_speed = projectileSpeed;
@@ -42,11 +44,14 @@ class WeaponStats {
 
     void SetDamage(int damage) { m_damage = damage; }
 
+    PlayerStats* GetOwnerStats() {return m_ownerStats;};
+
    protected:
     bool m_player_owned;
     Uint32 m_fire_rate;
     Uint32 m_projectile_speed;
     int m_damage;
+    PlayerStats* m_ownerStats;
 };
 
 class Weapon : public Collider {
