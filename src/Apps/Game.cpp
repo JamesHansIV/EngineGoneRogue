@@ -218,14 +218,16 @@ void Game::Update(float dt) {
             enemy->SetTarget(player);
         }
         (*it)->Update(dt);
-        // TODO: Remove this hack for experience. It should be handled by the
-        // player by either a global event or global state
-        if (enemy != nullptr && enemy->GetHealth()->GetHP() <= 0) {
-            player->GetStats().AddExperience(enemy->GetEnemyStats().xpGiven);
-        }
         if ((*it)
                 ->MarkedForDeletion())  // Check if it's an Enemy and marked for deletion
         {
+            // TODO: Remove this hack for experience. It should be handled by the
+            // player by either a global event or global state
+            if (enemy != nullptr && enemy->GetHealth()->GetHP() <= 0) {
+                player->GetStats().AddExperience(
+                    enemy->GetEnemyStats().xpGiven);
+            }
+
             SDL_Log("deleted obj: %s", (*it)->GetID().c_str());
             DeleteObject(*it);
         } else {
