@@ -35,7 +35,7 @@ void Mage::Update(float dt) {
 void Mage::Shoot() {
     RotatingBullet* bullet;
 
-    Properties props = {"weapons", {6, 1, 16, 16}, {GetX(), GetY(), 12, 12}};
+    Properties const props = {"weapons", {6, 1, 16, 16}, {GetX(), GetY(), 12, 12}};
 
     GetAttack()->Shoot({GetMidPointX(), GetMidPointY(),
                         GetTarget()->GetMidPointX(),

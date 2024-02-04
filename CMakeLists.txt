@@ -32,6 +32,9 @@ add_subdirectory(vendor/abseil-cpp)
 add_subdirectory(vendor/imgui)
 add_subdirectory(vendor/tinyxml2/tinyxml2)
 
+
+set(CMAKE_CXX_COMPILER "/usr/bin/clang++")
+
 target_link_libraries(Engine imgui tinyxml2)
 target_link_libraries(Engine absl::strings absl::hash absl::flat_hash_map)
 target_link_libraries(Engine "${CMAKE_SOURCE_DIR}/lib/SDL2/libSDL2-2.0.0.dylib")

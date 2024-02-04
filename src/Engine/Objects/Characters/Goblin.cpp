@@ -34,7 +34,7 @@ void Goblin::Update(float dt) {
 }
 
 void Goblin::Shoot() {
-    Properties props = {"weapons", {6, 1, 16, 16}, {GetX(), GetY(), 12, 12}};
+    Properties const props = {"weapons", {6, 1, 16, 16}, {GetX(), GetY(), 12, 12}};
 
     GetAttack()->Shoot(
         {GetMidPointX(), GetMidPointY(), GetTarget()->GetMidPointX(),

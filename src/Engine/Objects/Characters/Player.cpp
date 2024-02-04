@@ -192,7 +192,6 @@ void Player::HandleEvent(Event* event) {
         default:
             state = m_CurrentState->HandleEvent(event);
     }
-    SDL_Log("Player xp: %d", m_stats->getExperience());
     if (state != nullptr) {
         ChangeState(state);
     }

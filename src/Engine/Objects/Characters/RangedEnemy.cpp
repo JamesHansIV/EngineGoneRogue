@@ -1,7 +1,7 @@
 #include "RangedEnemy.h"
 
 
-RangedEnemy::~RangedEnemy() {}
+RangedEnemy::~RangedEnemy() = default;
 
 void RangedEnemy::Draw() {
     m_CurrentState->Draw();

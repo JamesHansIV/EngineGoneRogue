@@ -6,7 +6,7 @@ float CalculateAngle(RangedAttackInfo& info) {
     float const delta_y = info.TargetY - info.Y;
     float const delta_x = info.TargetX - info.X;
 
-    float angle = atan2(delta_y, delta_x);
+    float const angle = atan2(delta_y, delta_x);
 
     info.ProjProps.Rotation = angle * 180 / M_PI;
 
@@ -16,7 +16,7 @@ float CalculateAngle(RangedAttackInfo& info) {
 std::vector<Projectile*> CreateBullet(RangedAttackInfo info) {
     std::vector<Projectile*> bullets;
 
-    float angle = CalculateAngle(info);
+    float const angle = CalculateAngle(info);
 
     auto* bullet = new Projectile(info.ProjProps, info.ProjSpeed, angle,
                                   info.IsPlayerOwned);
@@ -49,7 +49,7 @@ std::vector<Projectile*> CreateSpreadBullet(RangedAttackInfo info) {
 std::vector<Projectile*> CreateHelixBullets(RangedAttackInfo info) {
     std::vector<Projectile*> bullets;
 
-    float angle = CalculateAngle(info);
+    float const angle = CalculateAngle(info);
 
     auto* bullet1 = new HelixBullet(info.ProjProps, info.ProjSpeed, angle,
                                     info.IsPlayerOwned, false);
@@ -65,7 +65,7 @@ std::vector<Projectile*> CreateHelixBullets(RangedAttackInfo info) {
 std::vector<Projectile*> CreateRotatingBullets(RangedAttackInfo info) {
     std::vector<Projectile*> bullets;
 
-    float angle = CalculateAngle(info);
+    float const angle = CalculateAngle(info);
 
     float const bullet_separation = 2 * M_PI / info.ProjCount;
     RotatingBullet* bullet;
@@ -113,7 +113,7 @@ std::vector<Projectile*> CreateRingBullets(RangedAttackInfo info) {
 
     float const bullet_separation = 2 * M_PI / info.ProjCount;
     Projectile* bullet;
-    Vector2D bullet_pos;
+    Vector2D const bullet_pos;
 
     for (float i = 0; i < 2 * M_PI; i += bullet_separation) {
         angle = i * 180 / M_PI;

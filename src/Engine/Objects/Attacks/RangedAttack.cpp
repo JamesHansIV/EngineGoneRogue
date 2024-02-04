@@ -1,4 +1,6 @@
 #include "Attack.h"
+
+#include <utility>
 #include "Engine/Application/Application.h"
 #include "Engine/Objects/ColliderHandler.h"
 
@@ -28,7 +30,7 @@ void RangedAttack::Shoot(RangedAttackInfo info) {
     if (m_AttackPattern != nullptr && !m_AttackPattern->Attack()) {
         return;
     }
-    std::vector<Projectile*> bullets = m_CreateBullets(info);
+    std::vector<Projectile*> const bullets = m_CreateBullets(std::move(info));
     for (auto* bullet : bullets) {
         m_ProjectileManager.AddProjectile(bullet);
         ColliderHandler::GetInstance()->AddCollider(bullet);

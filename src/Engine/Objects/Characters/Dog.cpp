@@ -32,7 +32,7 @@ void Dog::Update(float dt) {
 }
 
 void Dog::Shoot() {
-    Properties props = {"enemies", {6, 4, 16, 16}, {GetX(), GetY(), 12, 12}};
+    Properties const props = {"enemies", {6, 4, 16, 16}, {GetX(), GetY(), 12, 12}};
 
     GetAttack()->Shoot({GetMidPointX(), GetMidPointY(),
                         GetTarget()->GetMidPointX(),

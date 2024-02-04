@@ -38,7 +38,7 @@ void CircleShotEnemy::Update(float dt) {
 }
 
 void CircleShotEnemy::Shoot() {
-    Properties props = {"weapons", {6, 0, 16, 16}, {GetX(), GetY(), 12, 12}};
+    Properties const props = {"weapons", {6, 0, 16, 16}, {GetX(), GetY(), 12, 12}};
 
     GetAttack()->Shoot({GetMidPointX(), GetMidPointY(),
                         GetTarget()->GetMidPointX(),

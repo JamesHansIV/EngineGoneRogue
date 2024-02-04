@@ -140,8 +140,8 @@ void PlayerIdle::Enter() {
 void PlayerIdle::Exit() {}
 
 State* PlayerIdle::Update(float dt) {
-    int dodgeCD = GetPlayer()->GetStats().getDodgeCD(); 
-    if (dodgeCD > 0) GetPlayer()->GetStats().setDodgeCD(dodgeCD - 1);
+    int const dodge_cd = GetPlayer()->GetStats().getDodgeCD(); 
+    if (dodge_cd > 0) GetPlayer()->GetStats().setDodgeCD(dodge_cd - 1);
     return PollInput(dt);
 }
 
@@ -208,8 +208,8 @@ void PlayerMoving::Enter() {
 void PlayerMoving::Exit() {}
 
 State* PlayerMoving::Update(float dt) {
-    int dodgeCD = GetPlayer()->GetStats().getDodgeCD(); 
-    if (dodgeCD > 0) GetPlayer()->GetStats().setDodgeCD(dodgeCD - 1);
+    int const dodge_cd = GetPlayer()->GetStats().getDodgeCD(); 
+    if (dodge_cd > 0) GetPlayer()->GetStats().setDodgeCD(dodge_cd - 1);
     PollInput(dt);
     return nullptr;
 }
