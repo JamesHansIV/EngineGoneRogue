@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stack>
+#include "../../Events/Event.h"
 #include "Character.h"
 #include "Engine/Animation/Animation.h"
 #include "Engine/Objects/ColliderHandler.h"
@@ -31,6 +32,8 @@ class PlayerStats {
 
     int getMeleeDamage() const { return m_MeleeDamage; }
 
+    int getExperience() const { return m_experience; }
+
     void setSpeed(float speed) { m_Speed = speed; };
 
     void setDodgeCD(int dodgeCD) { m_DodgeCD = dodgeCD; };
@@ -40,6 +43,12 @@ class PlayerStats {
     void setMeleeDamage(int meleeDamage) { m_MeleeDamage = meleeDamage; }
 
     void setRangedDamage(int rangedDamage) { m_RangedDamage = rangedDamage; }
+
+    void setExperience(int experience) { m_experience = experience; }
+
+    void AddExperience(int experience) {
+        m_experience = m_experience + experience;
+    }
 
     ~PlayerStats();
 

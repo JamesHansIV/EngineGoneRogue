@@ -80,7 +80,7 @@ Game::Game() {
 
     Properties props1("enemies", {0, 1, 16, 16}, {200, 200, 36, 36}, 0,
                       "enemy1");
-    EnemyStats default_enemy_stats = {
+    const EnemyStats default_enemy_stats = {
         100,  // health
         1,    // damage
         10,   // speed
@@ -218,6 +218,11 @@ void Game::Update(float dt) {
             enemy->SetTarget(player);
         }
         (*it)->Update(dt);
+        // TODO: Remove this hack for experience. It should be handled by the
+        // player by either a global event or global state
+        if (enemy != nullptr && enemy->GetHealth()->GetHP() <= 0) {
+            player->GetStats().AddExperience(enemy->GetEnemyStats().xpGiven);
+        }
         if ((*it)
                 ->MarkedForDeletion())  // Check if it's an Enemy and marked for deletion
         {

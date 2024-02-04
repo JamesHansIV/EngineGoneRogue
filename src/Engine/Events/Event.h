@@ -66,7 +66,7 @@ class EnemyDeathEvent : public Event {
         m_stats = EnemyStats(enemy_stats);
     }
 
-    EnemyStats* GetEnemyStats();
+    [[nodiscard]] EnemyStats GetEnemyStats() const { return m_stats; }
 
     EventType GetEventType() override { return EventType::EnemyDeathEvent; }
 

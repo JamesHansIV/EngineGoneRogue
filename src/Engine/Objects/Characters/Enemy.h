@@ -24,6 +24,8 @@ class Enemy : public Character {
 
     [[nodiscard]] EnemyStats GetEnemyStats() const { return m_stats; }
 
+    void setEnemyStats(const EnemyStats& stats) { m_stats = stats; }
+
     virtual void OnCollide(Collider* collidee) override;
 
     virtual ObjectType GetObjectType() override { return ObjectType::Enemy; }

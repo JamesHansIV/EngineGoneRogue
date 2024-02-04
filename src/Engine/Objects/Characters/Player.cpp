@@ -179,7 +179,20 @@ void Player::OnCollide(Collider* collidee) {
 }
 
 void Player::HandleEvent(Event* event) {
-    State* state = m_CurrentState->HandleEvent(event);
+    EventType const e_type = event->GetEventType();
+
+    State* state = nullptr;
+
+    switch (e_type) {
+        case EventType::EnemyDeathEvent: {
+            auto* death_event = dynamic_cast<EnemyDeathEvent*>(event);
+            m_stats->AddExperience(death_event->GetEnemyStats().xpGiven);
+            break;
+        }
+        default:
+            state = m_CurrentState->HandleEvent(event);
+    }
+    SDL_Log("Player xp: %d", m_stats->getExperience());
     if (state != nullptr) {
         ChangeState(state);
     }
