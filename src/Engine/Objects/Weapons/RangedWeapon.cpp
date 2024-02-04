@@ -36,7 +36,6 @@ void RangedWeapon::Update(float dt) {
         m_projectile_props->DstRect.y = GetMidPointY();
         m_projectile_props->Rotation = GetRadians();
 
-        SDL_Log("Ranged Weapon Damage: %d", m_stats.GetDamage());
         auto* projectile =
             new Projectile(*m_projectile_props,
                            static_cast<float>(m_stats.GetProjectileSpeed()),

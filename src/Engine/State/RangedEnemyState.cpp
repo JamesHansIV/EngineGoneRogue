@@ -155,8 +155,6 @@ State* RangedEnemyAttack::Update(float dt) {
     if (!GetEnemy()->TargetInRange()) {
         return new RangedEnemyIdle(GetEnemy());
     }
-    SDL_Log("Enemy fire interval: %d", GetEnemy()->GetFireInterval());
-    SDL_Log("Enemy frame: %d", Application::Get()->GetFrame());
     GetEnemy()->Shoot();
 
     return nullptr;

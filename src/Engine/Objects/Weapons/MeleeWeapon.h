@@ -4,8 +4,10 @@
 
 class MeleeWeaponStats : public WeaponStats {
    public:
-    MeleeWeaponStats(bool playerOwned, Uint32 fireRate, Uint32 projectileSpeed, int damage, PlayerStats* ownerStats)
-        : WeaponStats(playerOwned, fireRate, projectileSpeed, damage, ownerStats) {}
+    MeleeWeaponStats(bool playerOwned, Uint32 fireRate, Uint32 projectileSpeed,
+                     int damage, PlayerStats* ownerStats)
+        : WeaponStats(playerOwned, fireRate, projectileSpeed, damage,
+                      ownerStats) {}
 
     MeleeWeaponStats(const MeleeWeaponStats& prop) = default;
 

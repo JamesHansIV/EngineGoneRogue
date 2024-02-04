@@ -1,10 +1,10 @@
 #include "Player.h"
 #include "Engine/Input/InputChecker.h"
 #include "Engine/Objects/Environment/Entrance.h"
+#include "Engine/Objects/Projectiles/Projectile.h"
 #include "Engine/Objects/Weapons/MeleeWeapon.h"
 #include "Engine/Objects/Weapons/RangedWeapon.h"
 #include "Engine/Renderer/Renderer.h"
-#include "Engine/Objects/Projectiles/Projectile.h"
 #include "Engine/State/State.h"
 
 Player::Player(Properties& props) : Character(props) {
@@ -65,7 +65,7 @@ Player::Player(Properties& props) : Character(props) {
 
     m_CurrentTilePos = m_StillFrames["face-down"];
 
-    m_Stats = new PlayerStats(1.3, 0, 1.3, 100, 100);
+    m_Stats = new PlayerStats(1, 0, 1.3, 1, 1);
 
     ChangeState(new PlayerIdle(this));
     // m_Collider->SetCorrection(-45, -20, 60, 80 )
