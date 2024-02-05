@@ -188,6 +188,7 @@ State* RangedEnemyAttack::OnCollideEvent(CollideEvent* event) {
 }
 
 void RangedEnemyIsHit::Enter() {
+    ApplyDamage();
     GetEnemy()->GetAnimation()->SelectAnimation("Hit");
 }
 
