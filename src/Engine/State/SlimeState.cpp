@@ -128,7 +128,6 @@ void SlimeIdle::Draw() {
 
 State* SlimeIdle::HandleEvent(Event* event) {
     EventType const e_type = event->GetEventType();
-
     switch (e_type) {
         case EventType::TargetFoundEvent:
             return OnTargetFoundEvent(dynamic_cast<TargetFoundEvent*>(event));
@@ -175,7 +174,6 @@ void SlimeMoving::Draw() {
 
 State* SlimeMoving::HandleEvent(Event* event) {
     EventType const e_type = event->GetEventType();
-
     switch (e_type) {
         case EventType::CollideEvent:
             return OnCollideEvent(dynamic_cast<CollideEvent*>(event));
@@ -238,6 +236,7 @@ State* SlimeAttack::OnCollideEvent(CollideEvent* event) {
 }
 
 void SlimeIsHit::Enter() {
+    ApplyDamage();
     SlimeSelectAnimation(GetEnemy(), GetType());
 }
 

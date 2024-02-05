@@ -34,7 +34,7 @@ void RangedWeapon::Update(float dt) {
 
         m_projectile_props->DstRect.x = GetMidPointX();
         m_projectile_props->DstRect.y = GetMidPointY();
-        m_projectile_props->Rotation = GetRadians();
+        m_projectile_props->Rotation = GetRotation();
 
         auto* projectile =
             new Projectile(*m_projectile_props,

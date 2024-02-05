@@ -56,8 +56,6 @@ void Projectile::OnCollide(Collider* collidee) {
             if (m_PlayerOwned) {
                 m_MarkedForDeletion = true;
                 SDL_Log("Damage: %d", m_Damage);
-                dynamic_cast<Character*>(collidee)->GetHealth()->SetDamage(
-                    m_Damage);
             }
             break;
         case ObjectType::MeleeWeapon:
