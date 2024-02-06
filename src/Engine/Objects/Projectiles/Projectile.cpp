@@ -6,11 +6,12 @@
 #include "Engine/Renderer/Renderer.h"
 
 Projectile::Projectile(Properties& props, float speed, float angle,
-                       bool playerOwned, int damage)
+                       bool playerOwned, int damage, int piercing)
     : Collider(props),
       m_Speed(speed),
       m_Angle(angle),
-      m_PlayerOwned(playerOwned) {
+      m_PlayerOwned(playerOwned),
+      m_Piercing(piercing) {
     Vector2D const direction = Vector2D(cos(m_Angle), sin(m_Angle));
     Vector2D const velocity = direction * m_Speed;
     m_Velocity = velocity;
@@ -54,8 +55,11 @@ void Projectile::OnCollide(Collider* collidee) {
             break;
         case ObjectType::Enemy:
             if (m_PlayerOwned) {
-                m_MarkedForDeletion = true;
+                if(m_NumberofEnemiesHit == m_Piercing + 1){
+                    m_MarkedForDeletion = true;
+                }
                 SDL_Log("Damage: %d", m_Damage);
+                SDL_Log("Piercing %d", m_Piercing);
             }
             break;
         case ObjectType::MeleeWeapon:

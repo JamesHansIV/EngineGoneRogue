@@ -65,7 +65,7 @@ Player::Player(Properties& props) : Character(props) {
 
     m_CurrentTilePos = m_StillFrames["face-down"];
 
-    m_stats = new PlayerStats(1, 0, 1.3, 1, 1);
+    m_stats = new PlayerStats(1, 0, 1.3, 1, 1, 1, 50);
 
     ChangeState(new PlayerIdle(this));
     // m_Collider->SetCorrection(-45, -20, 60, 80 )

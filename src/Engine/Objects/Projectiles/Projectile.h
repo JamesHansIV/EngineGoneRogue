@@ -12,8 +12,9 @@ enum class ProjectileType { Standard, Rotating, Helix };
 class Projectile : public Collider {
 
    public:
+    bool m_Active = true;
     Projectile(Properties& props, float speed, float angle,
-               bool playerOwned = false, int damage = 10);
+               bool playerOwned = false, int damage = 10, int piercing = 0);
     void Draw() override;
     void Clean() override;
     void Update(float dt) override;
@@ -46,10 +47,20 @@ class Projectile : public Collider {
         return ProjectileType::Standard;
     }
 
+    void SetPiercing(int piercing){ m_Piercing = piercing; }
+
+    int GetPiercing() const { return m_Piercing; }
+
+    void AddNumberofEnemiesHit(){ m_NumberofEnemiesHit++; }
+
+    int GetNumberofEnemiesHit() const {return m_NumberofEnemiesHit;};
+
    private:
     bool m_PlayerOwned;
     float m_Speed;
     float m_Angle;
     Vector2D m_Velocity;
     int m_Damage;
+    int m_Piercing;
+    int m_NumberofEnemiesHit = 0;
 };

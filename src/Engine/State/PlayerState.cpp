@@ -380,15 +380,15 @@ State* PlayerIsHit::OnCollideEvent(CollideEvent* event) {
         case ObjectType::Projectile: {
             auto* projectile = dynamic_cast<Projectile*>(collidee);
             if (!projectile->IsPlayerOwned()) {
-                SetDamage(projectile->GetDamage());
-                ApplyDamage();
+                // SetDamage(projectile->GetDamage());
+                // ApplyDamage();
             }
             break;
         }
         case ObjectType::Enemy:
             GetPlayer()->UnCollide(collidee);
-            SetDamage(1);
-            ApplyDamage();
+            // SetDamage(1);
+            // ApplyDamage();
             break;
         case ObjectType::Collider:
             GetPlayer()->UnCollide(collidee);
@@ -404,7 +404,11 @@ void PlayerIsHit::PollInput(float dt) {
 }
 
 void PlayerIsHit::ApplyDamage() {
-    //GetPlayer()->GetHealth()->SetDamage(m_Damage);
+    int armorPercentage = GetPlayer()->GetStats().getArmorPercentage();
+    float damageMultiplier = 1.0f - (static_cast<float>(armorPercentage) / 100.0f);
+    int modifiedDamage = m_Damage * damageMultiplier;
+
+    GetPlayer()->GetHealth()->SetDamage(modifiedDamage);
 }
 
 void PlayerDead::Enter() {

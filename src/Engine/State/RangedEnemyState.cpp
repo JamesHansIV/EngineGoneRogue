@@ -9,7 +9,8 @@ State* RangedEnemyHandleCollide(RangedEnemy* enemy, Collider* collidee) {
     switch (collidee->GetObjectType()) {
         case ObjectType::Projectile:
             if (dynamic_cast<Projectile*>(collidee)->IsPlayerOwned()) {
-                return new RangedEnemyIsHit(enemy, 10);
+                dynamic_cast<Projectile*>(collidee)->AddNumberofEnemiesHit();
+                return new RangedEnemyIsHit(enemy, dynamic_cast<Projectile*>(collidee)->GetDamage());
             }
             break;
         case ObjectType::Entrance: {
@@ -228,9 +229,9 @@ State* RangedEnemyIsHit::OnCollideEvent(CollideEvent* event) {
         case ObjectType::Projectile: {
             auto* projectile = dynamic_cast<Projectile*>(collidee);
             if (projectile->IsPlayerOwned()) {
-                SetDamage(projectile->GetDamage());
-                SDL_Log("Enemy hit: %d", projectile->GetDamage());
-                ApplyDamage();
+                // SetDamage(projectile->GetDamage());
+                // SDL_Log("Enemy hit: %d", projectile->GetDamage());
+                // ApplyDamage();
             }
 
             SDL_Log("Enemy hit: %d", projectile->GetDamage());

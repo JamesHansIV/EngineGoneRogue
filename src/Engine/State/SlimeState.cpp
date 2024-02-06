@@ -10,7 +10,8 @@ State* SlimeHandleCollide(Slime* enemy, Collider* collidee) {
     switch (collidee->GetObjectType()) {
         case ObjectType::Projectile:
             if (dynamic_cast<Projectile*>(collidee)->IsPlayerOwned()) {
-                return new SlimeIsHit(enemy, 10);
+                dynamic_cast<Projectile*>(collidee)->AddNumberofEnemiesHit();
+                return new SlimeIsHit(enemy, dynamic_cast<Projectile*>(collidee)->GetDamage());
             }
             break;
         case ObjectType::Entrance: {
@@ -276,8 +277,8 @@ State* SlimeIsHit::OnCollideEvent(CollideEvent* event) {
         case ObjectType::Projectile: {
             auto* projectile = dynamic_cast<Projectile*>(collidee);
             if (projectile->IsPlayerOwned()) {
-                SetDamage(projectile->GetDamage());
-                ApplyDamage();
+                // SetDamage(projectile->GetDamage());
+                // ApplyDamage();
             }
             break;
         }

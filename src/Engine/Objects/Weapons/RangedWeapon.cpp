@@ -39,7 +39,7 @@ void RangedWeapon::Update(float dt) {
         auto* projectile =
             new Projectile(*m_projectile_props,
                            static_cast<float>(m_stats.GetProjectileSpeed()),
-                           GetRadians(), IsPlayerOwned(), m_stats.GetDamage() + m_stats.GetOwnerStats()->getRangedDamage());
+                           GetRadians(), IsPlayerOwned(), m_stats.GetDamage() + m_stats.GetOwnerStats()->getRangedDamage(), m_stats.GetOwnerStats()->getPiercing());
         m_ProjectileManager.AddProjectile(projectile);
         ColliderHandler::GetInstance()->AddCollider(projectile);
         InputChecker::SetMouseButtonPressed(SDL_BUTTON_LEFT, false);
