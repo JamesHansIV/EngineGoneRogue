@@ -12,6 +12,8 @@ class Health {
 
     void SetDamage(int damage) { m_HP = m_HP - damage; }
 
+    void IncreaseHealth(int amount);
+
     void Draw(int objX, int objY, int objWidth) const;
 
    private:

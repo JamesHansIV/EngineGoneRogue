@@ -22,3 +22,10 @@ void Health::Draw(int objX, int objY, int objWidth) const {
 
     Renderer::GetInstance()->DrawRect(health_bar_rect, {0, 255, 0, 255}, true);
 }
+
+void Health::IncreaseHealth(int amount) {
+    m_HP += amount;
+    if (m_HP > m_TotalHealth) {
+        m_HP = m_TotalHealth;
+    }
+}

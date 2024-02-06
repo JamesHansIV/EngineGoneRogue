@@ -1,4 +1,5 @@
 #include "Player.h"
+#include <thread>
 #include "Engine/Input/InputChecker.h"
 #include "Engine/Objects/Environment/Entrance.h"
 #include "Engine/Objects/Projectiles/Projectile.h"
@@ -65,7 +66,7 @@ Player::Player(Properties& props) : Character(props) {
 
     m_CurrentTilePos = m_StillFrames["face-down"];
 
-    m_stats = new PlayerStats(1, 0, 1.3, 1, 1, 1, 50);
+    m_stats = new PlayerStats(1, 0, 1.3, 1, 1, 1, 50, 5);
 
     ChangeState(new PlayerIdle(this));
     // m_Collider->SetCorrection(-45, -20, 60, 80 )
@@ -95,6 +96,18 @@ Player::Player(Properties& props) : Character(props) {
     ColliderHandler::GetInstance()->AddCollider(w2);
 
     m_CurrentWeapon = m_Weapons[0];
+
+    std::thread health_regen_thread([this]() {
+        while (true) {
+            SDL_Log("Cur health: %d", m_Health->GetHP());
+            m_Health->IncreaseHealth(m_stats->getHPRegenRate());
+            SDL_Log("Health regen done to: %d", m_Health->GetHP());
+            // Sleep for one second
+            std::this_thread::sleep_for(std::chrono::seconds(1));
+        }
+    });
+    // Detach the health regeneration thread so it can run independently
+    health_regen_thread.detach();
 }
 
 Player::~Player() {
