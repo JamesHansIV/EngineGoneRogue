@@ -194,6 +194,19 @@ void Game::Events() {
             case SDL_MOUSEWHEEL:
                 InputChecker::SetMouseWheelDirection(event.wheel.y);
                 break;
+            case SDL_WINDOWEVENT:
+                // TODO: Add pause menu to render when focus is lost
+                // Also add hotkey (esc) to pause game
+                if (event.window.event == SDL_WINDOWEVENT_FOCUS_GAINED) {
+                    m_has_focus = true;
+                    m_is_paused = false;
+                    m_LastTick = static_cast<float>(SDL_GetTicks());
+                }
+                if (event.window.event == SDL_WINDOWEVENT_FOCUS_LOST) {
+                    m_has_focus = false;
+                    m_is_paused = true;
+                }
+                break;
             default:
                 break;
         }

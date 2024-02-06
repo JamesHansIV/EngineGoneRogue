@@ -302,8 +302,10 @@ bool Application::LoadProject() {
 
 void Application::Events() {
     SDL_Event event;
+    SDL_Log("Event");
     while (SDL_PollEvent(&event) != 0) {
         switch (event.type) {
+            SDL_Log("Event type: %d", event.type);
             case SDL_QUIT:
                 Quit();
                 return;
@@ -326,6 +328,17 @@ void Application::Events() {
             case SDL_MOUSEWHEEL:
                 InputChecker::SetMouseWheelDirection(event.wheel.y);
                 break;
+            case SDL_WINDOWEVENT:
+                if (event.window.event == SDL_WINDOWEVENT_FOCUS_GAINED) {
+                    m_has_focus = true;
+                    m_is_paused = false;
+                    m_LastTick = SDL_GetTicks();
+                }
+                if (event.window.event == SDL_WINDOWEVENT_FOCUS_LOST) {
+                    m_has_focus = false;
+                    m_is_paused = true;
+                }
+                break;
         }
     }
 }
@@ -333,16 +346,16 @@ void Application::Events() {
 void Application::Run() {
     while (m_IsRunning) {
         m_Frame++;
-        Uint32 const current_tick = SDL_GetTicks();
-        float dt = static_cast<float>(current_tick) - m_LastTick;
-        // TODO: temporary fix for teleporting issue. Need to fix delta time as
-        // it becomes massively large when alt tabbed.
-        if (dt > 200) {
-            dt = 1;
-        }
-        m_LastTick = current_tick;
         Events();
-        Update(dt / 10);
+        if (!m_is_paused) {
+            Uint32 const current_tick = SDL_GetTicks();
+            float dt = static_cast<float>(current_tick) - m_LastTick;
+            // TODO: temporary fix for teleporting issue. Need to fix delta time as
+            // it becomes massively large when alt tabbed.
+
+            m_LastTick = current_tick;
+            Update(dt / 10);
+        }
         Render();
     }
     Clean();
