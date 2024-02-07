@@ -1,4 +1,5 @@
 #pragma once
+#include "Engine/utils/utils.h"
 #include "SDL2/SDL.h"
 
 class CollisionBox {

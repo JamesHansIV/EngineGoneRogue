@@ -106,6 +106,8 @@ Player::Player(Properties& props) : Character(props) {
             std::this_thread::sleep_for(std::chrono::seconds(1));
         }
     });
+
+    m_ExperienceBar = new ExperienceBar(100, 0);
     // Detach the health regeneration thread so it can run independently
     health_regen_thread.detach();
 }
@@ -113,6 +115,7 @@ Player::Player(Properties& props) : Character(props) {
 Player::~Player() {
     delete m_Health;
     delete m_CurrentState;
+    delete m_ExperienceBar;
     for (auto& weapon : m_Weapons) {
         delete weapon;
     }
@@ -120,6 +123,7 @@ Player::~Player() {
 
 void Player::Draw() {
     m_CurrentState->Draw();
+    m_ExperienceBar->Draw();
 
     m_Health->Draw(GetX(), GetY(), GetWidth());
     m_CurrentWeapon->Draw();
@@ -130,6 +134,8 @@ void Player::Update(float dt) {
     if (state != nullptr) {
         ChangeState(state);
     }
+
+    m_ExperienceBar->SetExperience(m_stats->getExperience());
 
     m_Animation->Update();
     m_RigidBody->Update(dt);

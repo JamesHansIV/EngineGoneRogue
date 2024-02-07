@@ -31,9 +31,9 @@ class Application {
 
     virtual void Events();
 
-    inline int GetFrame() { return m_Frame; }
+    [[nodiscard]] inline int GetFrame() const { return m_Frame; }
 
-    inline bool IsRunning() const { return m_IsRunning; }
+    [[nodiscard]] inline bool IsRunning() const { return m_IsRunning; }
 
     inline SDL_Window* GetWindow() { return m_Window; }
 

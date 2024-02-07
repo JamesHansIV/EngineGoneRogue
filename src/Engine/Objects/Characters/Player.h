@@ -5,6 +5,7 @@
 #include "Character.h"
 #include "Engine/Animation/Animation.h"
 #include "Engine/Objects/ColliderHandler.h"
+#include "Engine/Objects/ExperienceBar.h"
 #include "Engine/Objects/Weapons/Weapon.h"
 #include "Engine/Physics/RigidBody.h"
 #include "Engine/State/PlayerState.h"
@@ -13,7 +14,9 @@
 class PlayerStats {
    public:
     explicit PlayerStats(float speed, int dodgeCD, float dodgeSpeed,
-                         int rangedDamage, int meleeDamage, int piercing, int armorPercentage, int HPRegenRate, int lifeStealPercentage) {
+                         int rangedDamage, int meleeDamage, int piercing,
+                         int armorPercentage, int HPRegenRate,
+                         int lifeStealPercentage) {
         m_Speed = speed;
         m_DodgeCD = dodgeCD;
         m_DodgeSpeed = dodgeSpeed;
@@ -38,8 +41,8 @@ class PlayerStats {
 
     int getExperience() const { return m_experience; }
 
-    int getPiercing() const { return m_Piercing;};
-    
+    int getPiercing() const { return m_Piercing; };
+
     int getArmorPercentage() const { return m_ArmorPercentage; }
 
     int getHPRegenRate() const { return m_HPRegenRate; }
@@ -58,16 +61,20 @@ class PlayerStats {
 
     void setExperience(int experience) { m_experience = experience; }
 
-    void setPiercing(int piercing) { m_Piercing = piercing;}
+    void setPiercing(int piercing) { m_Piercing = piercing; }
 
-    void setArmorPercentage(int armorPercentage) { m_ArmorPercentage = armorPercentage;}
+    void setArmorPercentage(int armorPercentage) {
+        m_ArmorPercentage = armorPercentage;
+    }
 
     void setHPRegenRate(int regenRate) { m_HPRegenRate = regenRate; }
 
-    void setLifeStealPercentage(int lifeSteal) {m_LifeStealPercentage = lifeSteal; }
+    void setLifeStealPercentage(int lifeSteal) {
+        m_LifeStealPercentage = lifeSteal;
+    }
 
     void AddExperience(int experience) {
-        m_experience = m_experience + experience;
+        m_experience = (m_experience + experience) % 100;
     };
 
     ~PlayerStats();
@@ -89,26 +96,27 @@ class Player : public Character {
 
    public:
     explicit Player(Properties& props);
-    virtual ~Player() override;
-    virtual void Draw() override;
-    virtual void Clean() override;
-    virtual void Update(float dt) override;
+    ~Player() override;
+    void Draw() override;
+    void Clean() override;
+    void Update(float dt) override;
 
     void UpdateWeapon(float dt);
 
     void HandleEvent(Event* event);
     void OnKeyPressed(SDL_Event& event);
     void OnKeyReleased(SDL_Event& event);
-    virtual void OnCollide(Collider* collidee) override;
+    void OnCollide(Collider* collidee) override;
 
     PlayerStats& GetStats() { return *m_stats; }
 
-    virtual ObjectType GetObjectType() override { return ObjectType::Player; }
+    ObjectType GetObjectType() override { return ObjectType::Player; }
 
    private:
     std::vector<Weapon*> m_Weapons;
     PlayerStats* m_stats;
     Weapon* m_CurrentWeapon;
+    ExperienceBar* m_ExperienceBar;
     // TODO: add this to player state when game state is added.
     int m_able_to_dash = 0;
     bool m_is_dashing = false;
