@@ -13,7 +13,7 @@
 class PlayerStats {
    public:
     explicit PlayerStats(float speed, int dodgeCD, float dodgeSpeed,
-                         int rangedDamage, int meleeDamage, int piercing, int armorPercentage, int HPRegenRate) {
+                         int rangedDamage, int meleeDamage, int piercing, int armorPercentage, int HPRegenRate, int lifeStealPercentage) {
         m_Speed = speed;
         m_DodgeCD = dodgeCD;
         m_DodgeSpeed = dodgeSpeed;
@@ -23,6 +23,7 @@ class PlayerStats {
         m_Piercing = piercing;
         m_ArmorPercentage = armorPercentage;
         m_HPRegenRate = HPRegenRate;
+        m_LifeStealPercentage = lifeStealPercentage;
     }
 
     float getSpeed() { return m_Speed; };
@@ -43,6 +44,8 @@ class PlayerStats {
 
     int getHPRegenRate() const { return m_HPRegenRate; }
 
+    int getLifeStealPercentage() const { return m_LifeStealPercentage; }
+
     void setSpeed(float speed) { m_Speed = speed; };
 
     void setDodgeCD(int dodgeCD) { m_DodgeCD = dodgeCD; };
@@ -61,6 +64,8 @@ class PlayerStats {
 
     void setHPRegenRate(int regenRate) { m_HPRegenRate = regenRate; }
 
+    void setLifeStealPercentage(int lifeSteal) {m_LifeStealPercentage = lifeSteal; }
+
     void AddExperience(int experience) {
         m_experience = m_experience + experience;
     };
@@ -77,6 +82,7 @@ class PlayerStats {
     int m_Piercing;
     int m_ArmorPercentage;
     int m_HPRegenRate;
+    int m_LifeStealPercentage;
 };
 
 class Player : public Character {

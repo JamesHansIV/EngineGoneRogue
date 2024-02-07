@@ -66,7 +66,7 @@ Player::Player(Properties& props) : Character(props) {
 
     m_CurrentTilePos = m_StillFrames["face-down"];
 
-    m_stats = new PlayerStats(1, 0, 1.3, 1, 1, 1, 50, 5);
+    m_stats = new PlayerStats(1, 0, 1.3, 1, 1, 1, 50, 1, 20);
 
     ChangeState(new PlayerIdle(this));
     // m_Collider->SetCorrection(-45, -20, 60, 80 )
@@ -74,22 +74,22 @@ Player::Player(Properties& props) : Character(props) {
 
     Properties props_rifle("gun", {0, 0, 18, 16}, {0, 0, 18, 16}, 0.0);
     RangedWeaponStats stats_rifle = {true, 200, 10, 16, m_stats};
-    Weapon* rifle = new RangedWeapon(props_rifle, stats_rifle);
+    Weapon* rifle = new RangedWeapon(props_rifle, stats_rifle, this);
     m_Weapons.push_back(rifle);
 
     Properties props_pistol("gun", {0, 0, 18, 16}, {0, 0, 18, 16}, 0.0);
     RangedWeaponStats stats_pistol = {true, 400, 7, 34, m_stats};
-    Weapon* pistol = new RangedWeapon(props_pistol, stats_pistol);
+    Weapon* pistol = new RangedWeapon(props_pistol, stats_pistol, this);
     m_Weapons.push_back(pistol);
 
     Properties props_sniper("gun", {0, 0, 18, 16}, {0, 0, 18, 16}, 0.0);
     RangedWeaponStats stats_sniper = {true, 1000, 10, 100, m_stats};
-    Weapon* sniper = new RangedWeapon(props_sniper, stats_sniper);
+    Weapon* sniper = new RangedWeapon(props_sniper, stats_sniper, this);
     m_Weapons.push_back(sniper);
 
     Properties props_m("weapons", {4, 6, 16, 16}, {0, 0, 16, 20}, 0.0);
     MeleeWeaponStats stats_m = {true, 200, 10, 10, m_stats};
-    Weapon* w2 = new MeleeWeapon(props_m, stats_m);
+    Weapon* w2 = new MeleeWeapon(props_m, stats_m, this);
     w2->SetRotation(50);
     m_Weapons.push_back(w2);
 

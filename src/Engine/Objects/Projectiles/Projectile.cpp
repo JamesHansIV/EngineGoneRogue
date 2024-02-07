@@ -1,17 +1,21 @@
 #include "Projectile.h"
 #include <SDL2/SDL.h>
+#include <cstddef>
 #include "Engine/Objects/Characters/Character.h"
 #include "Engine/Objects/Characters/Enemy.h"
 #include "Engine/Objects/ColliderHandler.h"
+#include "Engine/Objects/Weapons/Weapon.h"
 #include "Engine/Renderer/Renderer.h"
+#include "Engine/Objects/Characters/Player.h"
 
 Projectile::Projectile(Properties& props, float speed, float angle,
-                       bool playerOwned, int damage, int piercing)
+                       bool playerOwned, int damage, int piercing, Player* owner)
     : Collider(props),
       m_Speed(speed),
       m_Angle(angle),
       m_PlayerOwned(playerOwned),
-      m_Piercing(piercing) {
+      m_Piercing(piercing),
+      m_Owner(owner) {
     Vector2D const direction = Vector2D(cos(m_Angle), sin(m_Angle));
     Vector2D const velocity = direction * m_Speed;
     m_Velocity = velocity;
@@ -58,8 +62,9 @@ void Projectile::OnCollide(Collider* collidee) {
                 if(m_NumberofEnemiesHit == m_Piercing + 1){
                     m_MarkedForDeletion = true;
                 }
-                SDL_Log("Damage: %d", m_Damage);
-                SDL_Log("Piercing %d", m_Piercing);
+                double const life_steal_multiplier = m_Owner->GetStats().getLifeStealPercentage()/100.0;
+                int const increase_health_amount = static_cast<float>(m_Damage) * life_steal_multiplier;
+                m_Owner->GetHealth()->IncreaseHealth(increase_health_amount);
             }
             break;
         case ObjectType::MeleeWeapon:

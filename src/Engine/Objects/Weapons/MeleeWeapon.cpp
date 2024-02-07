@@ -4,8 +4,8 @@
 
 #include "Engine/Objects/Characters/Character.h"
 
-MeleeWeapon::MeleeWeapon(Properties& props, MeleeWeaponStats& stats)
-    : Weapon(props, stats) {}
+MeleeWeapon::MeleeWeapon(Properties& props, MeleeWeaponStats& stats, Player* owner)
+    : Weapon(props, stats, owner) {}
 
 void MeleeWeapon::Draw() {
     Weapon::Draw();

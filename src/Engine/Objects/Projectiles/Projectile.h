@@ -7,6 +7,8 @@
 #include "SDL2/SDL.h"
 #include "functional"
 
+class Player;
+
 enum class ProjectileType { Standard, Rotating, Helix };
 
 class Projectile : public Collider {
@@ -14,7 +16,7 @@ class Projectile : public Collider {
    public:
     bool m_Active = true;
     Projectile(Properties& props, float speed, float angle,
-               bool playerOwned = false, int damage = 10, int piercing = 0);
+               bool playerOwned = false, int damage = 10, int piercing = 0, Player* owner = nullptr);
     void Draw() override;
     void Clean() override;
     void Update(float dt) override;
@@ -55,6 +57,8 @@ class Projectile : public Collider {
 
     int GetNumberofEnemiesHit() const {return m_NumberofEnemiesHit;};
 
+    Player* GetOwner() { return m_Owner; };
+
    private:
     bool m_PlayerOwned;
     float m_Speed;
@@ -63,4 +67,5 @@ class Projectile : public Collider {
     int m_Damage;
     int m_Piercing;
     int m_NumberofEnemiesHit = 0;
+    Player* m_Owner;
 };

@@ -5,7 +5,7 @@
 #include "Engine/Objects/Projectiles/Projectile.h"
 
 class PlayerStats;
-
+class Player;
 // Potential stats:
 // Damage, Accuracy, Pattern?, spread?, range, knockback, elemental, status effect, armor penetration, reload, switching speed,
 
@@ -57,8 +57,9 @@ class WeaponStats {
 
 class Weapon : public Collider {
    public:
-    explicit Weapon(Properties& props, WeaponStats& stats) : Collider(props) {
+    explicit Weapon(Properties& props, WeaponStats& stats, Player* owner) : Collider(props) {
         m_stats = stats;
+        m_owner = owner;
     }
 
     void Draw() override { GameObject::Draw(); }
@@ -70,7 +71,10 @@ class Weapon : public Collider {
 
     inline bool IsPlayerOwned() { return m_stats.IsPlayerOwned(); }
 
+    Player* GetOwner() { return m_owner; };
+
    private:
     WeaponStats m_stats;
     bool m_auto_fire_enabled = false;
+    Player* m_owner;
 };

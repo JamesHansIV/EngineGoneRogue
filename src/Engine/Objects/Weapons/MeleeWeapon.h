@@ -18,7 +18,7 @@ class MeleeWeaponStats : public WeaponStats {
 
 class MeleeWeapon : public Weapon {
    public:
-    MeleeWeapon(Properties& props, MeleeWeaponStats& stats);
+    MeleeWeapon(Properties& props, MeleeWeaponStats& stats, Player* owner);
 
     void Draw() override;
     void Clean() override;

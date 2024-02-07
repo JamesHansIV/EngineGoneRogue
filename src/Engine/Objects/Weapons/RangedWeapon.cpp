@@ -5,8 +5,8 @@
 int k_projectile_width = 10;
 int k_projectile_height = 10;
 
-RangedWeapon::RangedWeapon(Properties& props, RangedWeaponStats& stats)
-    : Weapon(props, stats), m_stats(stats) {
+RangedWeapon::RangedWeapon(Properties& props, RangedWeaponStats& stats, Player* owner)
+    : Weapon(props, stats, owner), m_stats(stats) {
     m_projectile_props =
         new Properties("projectile", {0, 0, 723, 724},
                        {GetMidPointX(), GetMidPointY(), k_projectile_width,
@@ -39,7 +39,7 @@ void RangedWeapon::Update(float dt) {
         auto* projectile =
             new Projectile(*m_projectile_props,
                            static_cast<float>(m_stats.GetProjectileSpeed()),
-                           GetRadians(), IsPlayerOwned(), m_stats.GetDamage() + m_stats.GetOwnerStats()->getRangedDamage(), m_stats.GetOwnerStats()->getPiercing());
+                           GetRadians(), IsPlayerOwned(), m_stats.GetDamage() + m_stats.GetOwnerStats()->getRangedDamage(), m_stats.GetOwnerStats()->getPiercing(), GetOwner());
         m_ProjectileManager.AddProjectile(projectile);
         ColliderHandler::GetInstance()->AddCollider(projectile);
         InputChecker::SetMouseButtonPressed(SDL_BUTTON_LEFT, false);

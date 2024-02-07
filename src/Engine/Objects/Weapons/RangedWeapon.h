@@ -5,6 +5,7 @@
 #include "Weapon.h"
 
 class PlayerStats;
+class Player;
 
 class RangedWeaponStats : public WeaponStats {
    public:
@@ -21,7 +22,7 @@ class RangedWeaponStats : public WeaponStats {
 
 class RangedWeapon : public Weapon {
    public:
-    RangedWeapon(Properties& props, RangedWeaponStats& stats);
+    RangedWeapon(Properties& props, RangedWeaponStats& stats, Player* owner);
     void Draw() override;
     void Clean() override;
     void Update(float dt) override;
