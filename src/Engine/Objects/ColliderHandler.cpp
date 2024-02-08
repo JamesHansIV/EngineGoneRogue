@@ -82,7 +82,7 @@ void ColliderHandler::MoveToEdge(Collider* c1, Collider* c2) {
             FindIntersection(pos, direction, positions[i], directions[i]);
         if (t <= 0.0F) {
             continue;
-}
+        }
         min_t = t < min_t ? t : min_t;
     }
 
@@ -116,13 +116,13 @@ void ColliderHandler::HandleCollisions() {
                                     c2->GetWidth(), c2->GetHeight()};
 
             if (!r1->Velocity().IsZero() &&
-                CheckCollision(next_pos1, c2->GetDstRect())) {
+                CheckCollision(next_pos1, c2->GetCollisionBox().GetRect())) {
                 c1->SetDoUnCollide(true);
                 c1->OnCollide(c2);
                 c2->OnCollide(c1);
             }
             if (!r2->Velocity().IsZero() &&
-                CheckCollision(next_pos2, c1->GetDstRect())) {
+                CheckCollision(next_pos2, c1->GetCollisionBox().GetRect())) {
                 c2->SetDoUnCollide(true);
                 c2->OnCollide(c1);
                 c1->OnCollide(c2);

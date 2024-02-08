@@ -1,11 +1,12 @@
 #include "RangedWeapon.h"
-#include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Objects/Characters/Player.h"
+#include "Engine/Objects/ColliderHandler.h"
 
 int k_projectile_width = 10;
 int k_projectile_height = 10;
 
-RangedWeapon::RangedWeapon(Properties& props, RangedWeaponStats& stats, Player* owner)
+RangedWeapon::RangedWeapon(Properties& props, RangedWeaponStats& stats,
+                           Player* owner)
     : Weapon(props, stats, owner), m_stats(stats) {
     m_projectile_props =
         new Properties("projectile", {0, 0, 723, 724},
@@ -36,10 +37,12 @@ void RangedWeapon::Update(float dt) {
         m_projectile_props->DstRect.y = GetMidPointY();
         m_projectile_props->Rotation = GetRotation();
 
-        auto* projectile =
-            new Projectile(*m_projectile_props,
-                           static_cast<float>(m_stats.GetProjectileSpeed()),
-                           GetRadians(), IsPlayerOwned(), m_stats.GetDamage() + m_stats.GetOwnerStats()->getRangedDamage(), m_stats.GetOwnerStats()->getPiercing(), GetOwner());
+        auto* projectile = new Projectile(
+            *m_projectile_props,
+            static_cast<float>(m_stats.GetProjectileSpeed()), GetRadians(),
+            IsPlayerOwned(),
+            m_stats.GetDamage() + m_stats.GetOwnerStats()->getRangedDamage(),
+            m_stats.GetOwnerStats()->getPiercing(), GetOwner());
         m_ProjectileManager.AddProjectile(projectile);
         ColliderHandler::GetInstance()->AddCollider(projectile);
         InputChecker::SetMouseButtonPressed(SDL_BUTTON_LEFT, false);
