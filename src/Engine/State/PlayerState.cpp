@@ -140,8 +140,9 @@ void PlayerIdle::Enter() {
 void PlayerIdle::Exit() {}
 
 State* PlayerIdle::Update(float dt) {
-    int const dodge_cd = GetPlayer()->GetStats().getDodgeCD(); 
-    if (dodge_cd > 0) GetPlayer()->GetStats().setDodgeCD(dodge_cd - 1);
+    int const dodge_cd = GetPlayer()->GetStats().getDodgeCD();
+    if (dodge_cd > 0)
+        GetPlayer()->GetStats().setDodgeCD(dodge_cd - 1);
     return PollInput(dt);
 }
 
@@ -208,8 +209,9 @@ void PlayerMoving::Enter() {
 void PlayerMoving::Exit() {}
 
 State* PlayerMoving::Update(float dt) {
-    int const dodge_cd = GetPlayer()->GetStats().getDodgeCD(); 
-    if (dodge_cd > 0) GetPlayer()->GetStats().setDodgeCD(dodge_cd - 1);
+    int const dodge_cd = GetPlayer()->GetStats().getDodgeCD();
+    if (dodge_cd > 0)
+        GetPlayer()->GetStats().setDodgeCD(dodge_cd - 1);
     PollInput(dt);
     return nullptr;
 }
@@ -405,7 +407,8 @@ void PlayerIsHit::PollInput(float dt) {
 
 void PlayerIsHit::ApplyDamage() {
     int armorPercentage = GetPlayer()->GetStats().getArmorPercentage();
-    float damageMultiplier = 1.0f - (static_cast<float>(armorPercentage) / 100.0f);
+    float damageMultiplier =
+        1.0f - (static_cast<float>(armorPercentage) / 100.0f);
     int modifiedDamage = m_Damage * damageMultiplier;
 
     GetPlayer()->GetHealth()->SetDamage(modifiedDamage);

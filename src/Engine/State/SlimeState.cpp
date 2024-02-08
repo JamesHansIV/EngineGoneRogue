@@ -5,13 +5,15 @@
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Objects/Environment/Entrance.h"
 #include "Engine/Objects/Projectiles/Projectile.h"
+#include "Engine/Objects/Weapons/MeleeWeapon.h"
 
 State* SlimeHandleCollide(Slime* enemy, Collider* collidee) {
     switch (collidee->GetObjectType()) {
         case ObjectType::Projectile:
             if (dynamic_cast<Projectile*>(collidee)->IsPlayerOwned()) {
                 dynamic_cast<Projectile*>(collidee)->AddNumberofEnemiesHit();
-                return new SlimeIsHit(enemy, dynamic_cast<Projectile*>(collidee)->GetDamage());
+                return new SlimeIsHit(
+                    enemy, dynamic_cast<Projectile*>(collidee)->GetDamage());
             }
             break;
         case ObjectType::Entrance: {
@@ -27,6 +29,16 @@ State* SlimeHandleCollide(Slime* enemy, Collider* collidee) {
                 StateType::Dodge) {
                 break;
             }
+            enemy->UnCollide(collidee);
+            break;
+        case ObjectType::MeleeWeapon: {
+            auto* melee_weapon = dynamic_cast<class MeleeWeapon*>(collidee);
+            if (melee_weapon->IsPlayerOwned()) {
+                return new SlimeIsHit(enemy,
+                                      melee_weapon->GetStats().GetDamage());
+            }
+            break;
+        }
         case ObjectType::Enemy:
         case ObjectType::Collider:
             enemy->UnCollide(collidee);

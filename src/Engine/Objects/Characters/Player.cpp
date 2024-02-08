@@ -72,19 +72,17 @@ Player::Player(Properties& props) : Character(props) {
     // m_Collider->SetCorrection(-45, -20, 60, 80 )
     m_Health = new Health(100);
 
-    Properties props_rifle("gun", {0, 0, 18, 16}, {0, 0, 18, 16}, 0.0);
+    Properties props_gun("gun", {0, 0, 18, 16}, {0, 0, 18, 16}, 0.0);
     RangedWeaponStats stats_rifle = {true, 200, 10, 16, m_stats};
-    Weapon* rifle = new RangedWeapon(props_rifle, stats_rifle, this);
+    Weapon* rifle = new RangedWeapon(props_gun, stats_rifle, this);
     m_Weapons.push_back(rifle);
 
-    Properties props_pistol("gun", {0, 0, 18, 16}, {0, 0, 18, 16}, 0.0);
     RangedWeaponStats stats_pistol = {true, 400, 7, 34, m_stats};
-    Weapon* pistol = new RangedWeapon(props_pistol, stats_pistol, this);
+    Weapon* pistol = new RangedWeapon(props_gun, stats_pistol, this);
     m_Weapons.push_back(pistol);
 
-    Properties props_sniper("gun", {0, 0, 18, 16}, {0, 0, 18, 16}, 0.0);
     RangedWeaponStats stats_sniper = {true, 1000, 10, 100, m_stats};
-    Weapon* sniper = new RangedWeapon(props_sniper, stats_sniper, this);
+    Weapon* sniper = new RangedWeapon(props_gun, stats_sniper, this);
     m_Weapons.push_back(sniper);
 
     Properties props_m("weapons", {4, 6, 16, 16}, {0, 0, 16, 20}, 0.0);

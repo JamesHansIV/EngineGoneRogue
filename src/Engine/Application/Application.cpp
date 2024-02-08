@@ -335,6 +335,7 @@ void Application::Events() {
                     m_LastTick = SDL_GetTicks();
                 }
                 if (event.window.event == SDL_WINDOWEVENT_FOCUS_LOST) {
+                    SDL_Log("Lost focus");
                     m_has_focus = false;
                     m_is_paused = true;
                 }
@@ -350,8 +351,13 @@ void Application::Run() {
         if (!m_is_paused) {
             Uint32 const current_tick = SDL_GetTicks();
             float dt = static_cast<float>(current_tick) - m_LastTick;
-            // TODO: temporary fix for teleporting issue. Need to fix delta time as
-            // it becomes massively large when alt tabbed.
+            // TODO: Pausing fixed the need for this hack, but for some reason
+            // when running a debugger it will pause after one game loop,
+            // so this check is still needed.
+            if (dt > 200) {
+                SDL_Log("dt: %f", dt);
+                dt = 1;
+            }
 
             m_LastTick = current_tick;
             Update(dt / 10);
