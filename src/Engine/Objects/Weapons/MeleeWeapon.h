@@ -29,4 +29,9 @@ class MeleeWeapon : public Weapon {
     ObjectType GetObjectType() override { return ObjectType::MeleeWeapon; }
 
     ~MeleeWeapon() override = default;
+
+   private:
+    MeleeWeaponStats m_stats;
+    Uint32 m_duration = 100;
+    Uint32 m_LastAttackTime = 0;
 };

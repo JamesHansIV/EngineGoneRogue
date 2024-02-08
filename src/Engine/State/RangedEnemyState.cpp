@@ -4,6 +4,7 @@
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Objects/Environment/Entrance.h"
 #include "Engine/Objects/Projectiles/Projectile.h"
+#include "Engine/Objects/Weapons/MeleeWeapon.h"
 
 State* RangedEnemyHandleCollide(RangedEnemy* enemy, Collider* collidee) {
     switch (collidee->GetObjectType()) {
@@ -14,6 +15,12 @@ State* RangedEnemyHandleCollide(RangedEnemy* enemy, Collider* collidee) {
                     enemy, dynamic_cast<Projectile*>(collidee)->GetDamage());
             }
             break;
+        case ObjectType::MeleeWeapon: {
+            auto* melee_weapon = dynamic_cast<class MeleeWeapon*>(collidee);
+            return new RangedEnemyIsHit(enemy,
+                                        melee_weapon->GetStats().GetDamage());
+            break;
+        }
         case ObjectType::Entrance: {
             auto* entrance = dynamic_cast<Entrance*>(collidee);
             if (entrance->GetCurrentState()->GetType() == StateType::Closed ||

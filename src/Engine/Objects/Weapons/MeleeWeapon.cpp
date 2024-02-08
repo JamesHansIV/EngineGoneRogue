@@ -6,7 +6,7 @@
 
 MeleeWeapon::MeleeWeapon(Properties& props, MeleeWeaponStats& stats,
                          Player* owner)
-    : Weapon(props, stats, owner) {}
+    : Weapon(props, stats, owner), m_stats(stats) {}
 
 void MeleeWeapon::Draw() {
     Weapon::Draw();
@@ -19,21 +19,26 @@ void MeleeWeapon::Update(float dt) {
         m_CollisionBox.Set(GetX() - 12, GetY() - 12, GetHeight(), GetWidth());
     }
 
-    if (InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT)) {
-        //float swing_angle = 0.0F;
-        //if (GetFlip() == SDL_FLIP_HORIZONTAL) {
-        //    swing_angle = -45.0F;
-        //} else {
-        //    swing_angle = 45.0F;
-        //}
-        // SetRotation(swing_angle);
+    Uint32 const time_since_last_attack = SDL_GetTicks() - m_LastAttackTime;
 
+    if ((InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT) ||
+         (time_since_last_attack) < m_duration)) {
+        float swing_angle = 0.0F;
+        if (GetFlip() == SDL_FLIP_HORIZONTAL) {
+            swing_angle = -45.0F;
+        } else {
+            swing_angle = 45.0F;
+        }
+        const auto radians = GetRadians();
+        SetRotation(swing_angle);
+        if (InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT)) {
+            m_LastAttackTime = SDL_GetTicks();
+        }
         m_CollisionBox.Set(GetX(), GetY(), GetHeight(), GetWidth());
         m_RigidBody->SetPosition(Vector2D{GetX(), GetY()});
         // move weapon
-        Vector2D const direction =
-            Vector2D(cos(GetRadians()), sin(GetRadians()));
-        m_RigidBody->SetVelocity(direction * 50.0F);
+        Vector2D const direction = Vector2D(cos(radians), sin(radians));
+        m_RigidBody->SetVelocity(direction * 10.0F);
         m_RigidBody->Update(dt);
         SetX(m_RigidBody->Position().X);
         SetY(m_RigidBody->Position().Y);
