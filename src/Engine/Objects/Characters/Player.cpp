@@ -7,6 +7,7 @@
 #include "Engine/Objects/Weapons/RangedWeapon.h"
 #include "Engine/Renderer/Renderer.h"
 #include "Engine/State/State.h"
+#include "SDL2/SDL_render.h"
 
 Player::Player(Properties& props) : Character(props) {
     AddStillFrame("face-down", {1, 0, 18, 16});
@@ -173,12 +174,21 @@ void Player::UpdateWeapon(float dt) {
         angle -= 2 * M_PI;
     }
 
-    int const weapon_x = GetX() + GetWidth() / 2;
-    int const weapon_y = GetY() + GetHeight() / 3;
+    const float two_hundred_twenty_five = (4 * M_PI) / 3;
+    const float three_hundred_thirty = 2 * M_PI / 3;
+
+    SDL_RendererFlip weapon_flip = SDL_FLIP_NONE;
+    if (angle < two_hundred_twenty_five && angle > three_hundred_thirty) {
+        SDL_Log("Flipping");
+        weapon_flip = SDL_FLIP_VERTICAL;
+    }
+
+    double const weapon_x = GetX() + GetWidth() / 2.0;
+    double const weapon_y = GetY() + GetHeight() / 3.0;
     m_CurrentWeapon->SetX(weapon_x);
     m_CurrentWeapon->SetY(weapon_y);
     m_CurrentWeapon->SetRotation(angle * (180 / M_PI));
-    m_CurrentWeapon->SetFlip(m_Flip);
+    m_CurrentWeapon->SetFlip(weapon_flip);
     m_CurrentWeapon->Update(dt);
 }
 

@@ -14,7 +14,7 @@ void MeleeWeapon::Draw() {
 
 void MeleeWeapon::Update(float dt) {
 
-    if (GetFlip() == SDL_FLIP_HORIZONTAL) {
+    if (m_Flip == SDL_FLIP_VERTICAL) {
         SetX(GetX() - 12);
         m_CollisionBox.Set(GetX() - 12, GetY() - 12, GetHeight(), GetWidth());
     }
@@ -23,13 +23,13 @@ void MeleeWeapon::Update(float dt) {
 
     if ((InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT) ||
          (time_since_last_attack) < m_duration)) {
-        float swing_angle = 0.0F;
-        if (GetFlip() == SDL_FLIP_HORIZONTAL) {
-            swing_angle = -45.0F;
+        float swing_angle = GetRotation();
+        if (m_Flip == SDL_FLIP_VERTICAL) {
+            swing_angle -= 45;
         } else {
-            swing_angle = 45.0F;
+            swing_angle += 45;
         }
-        const auto radians = GetRadians();
+        const float radians = GetRadians();
         SetRotation(swing_angle);
         if (InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT)) {
             m_LastAttackTime = SDL_GetTicks();
