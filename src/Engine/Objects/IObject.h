@@ -10,7 +10,8 @@ enum class ObjectType {
     Weapon,
     RangedWeapon,
     MeleeWeapon,
-    Entrance
+    Entrance,
+    HealthPotion
 };
 
 class IObject {

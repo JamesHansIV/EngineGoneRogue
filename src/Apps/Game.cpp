@@ -10,8 +10,11 @@
 #include "Engine/Objects/Characters/Player.h"
 #include "Engine/Objects/Characters/Skeleton.h"
 #include "Engine/Objects/Characters/Slime.h"
+#include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Objects/Environment/Entrance.h"
+#include "Engine/Objects/GameObject.h"
 #include "Engine/Renderer/Renderer.h"
+#include "Engine/Objects/HealthPotion.h"
 
 Player* player = nullptr;
 Enemy* enemy1 = nullptr;
@@ -62,6 +65,10 @@ Game::Game() {
         "gun",
         "../assets/textures/BulletHell/PURPLE/Weapons/weapons/Firearms/"
         "spr_weapon06.png");
+    
+    Renderer::GetInstance()->AddTexture(
+        "healthpotion",
+        "../assets/textures/spritesheets/lifepotion.png");
 
     m_Objects = Application::m_Rooms["room1"];
 
@@ -135,6 +142,14 @@ Game::Game() {
                        "enemy10");
     enemy10 = new HelixEnemy(props10, default_ranged_enemy_stats);
 
+    Properties props11("healthpotion", {1, 1, 16, 16}, {250, 150, 25, 25}, 0,
+                       "healthpotion");
+    auto* healthpotion = new HealthPotion(props11, 20); 
+
+    Properties props12("healthpotion", {1, 1, 16, 16}, {550, 400, 25, 25}, 0,
+                       "healthpotion2");
+    auto* healthpotion2 = new HealthPotion(props12,20); 
+
     m_Objects.push_back(enemy1);
     m_Objects.push_back(enemy2);
     m_Objects.push_back(enemy3);
@@ -146,6 +161,8 @@ Game::Game() {
     m_Objects.push_back(enemy9);
     m_Objects.push_back(enemy10);
     m_Objects.push_back(entrance);
+    m_Objects.push_back(healthpotion);
+    m_Objects.push_back(healthpotion2);
     ColliderHandler::GetInstance()->AddCollider(player);
     ColliderHandler::GetInstance()->AddCollider(enemy1);
     ColliderHandler::GetInstance()->AddCollider(enemy2);
@@ -158,6 +175,8 @@ Game::Game() {
     ColliderHandler::GetInstance()->AddCollider(enemy9);
     ColliderHandler::GetInstance()->AddCollider(enemy10);
     ColliderHandler::GetInstance()->AddCollider(entrance);
+    ColliderHandler::GetInstance()->AddCollider(healthpotion);
+    ColliderHandler::GetInstance()->AddCollider(healthpotion2);
 
     srand(time(nullptr));
 
@@ -220,7 +239,6 @@ void Game::Update(float dt) {
         delete player;
     }
     ColliderHandler::GetInstance()->HandleCollisions();
-
     player->Update(dt);
     if (player->MarkedForDeletion()) {
         DeleteObject(player);
@@ -240,8 +258,6 @@ void Game::Update(float dt) {
                 player->GetStats().AddExperience(
                     enemy->GetEnemyStats().xpGiven);
             }
-
-            SDL_Log("deleted obj: %s", (*it)->GetID().c_str());
             DeleteObject(*it);
         } else {
             ++it;
@@ -266,6 +282,7 @@ void Game::Update(float dt) {
 }
 
 void Game::Render() {
+    SDL_Log("Hello3");
     Renderer::GetInstance()->RenderClear();
     for (auto* obj : m_Objects) {
         obj->Draw();
