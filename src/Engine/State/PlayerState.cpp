@@ -3,6 +3,7 @@
 #include "Engine/Objects/Characters/Enemy.h"
 #include "Engine/Objects/Characters/Player.h"
 #include "Engine/Objects/Environment/Entrance.h"
+#include "Engine/Objects/IObject.h"
 #include "SDL2/SDL_events.h"
 #include "SDL2/SDL_keycode.h"
 
@@ -124,6 +125,7 @@ State* HandleCollide(Player* player, CollideEvent* event) {
                                          dynamic_cast<Entrance*>(collidee));
             break;
         }
+        case ObjectType::Chest: 
         case ObjectType::Collider:
             player->UnCollide(collidee);
             break;

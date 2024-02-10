@@ -4,6 +4,7 @@
 #include "Engine/Objects/Characters/Player.h"
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Objects/Environment/Entrance.h"
+#include "Engine/Objects/IObject.h"
 #include "Engine/Objects/Projectiles/Projectile.h"
 #include "Engine/Objects/Weapons/MeleeWeapon.h"
 
@@ -39,6 +40,7 @@ State* SlimeHandleCollide(Slime* enemy, Collider* collidee) {
             }
             break;
         }
+        case ObjectType::Chest:
         case ObjectType::Enemy:
         case ObjectType::Collider:
             enemy->UnCollide(collidee);

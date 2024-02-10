@@ -253,6 +253,7 @@ State* RangedEnemyIsHit::OnCollideEvent(CollideEvent* event) {
             }
             break;
         }
+        case ObjectType::Chest: 
         case ObjectType::Player:
         case ObjectType::Enemy:
         case ObjectType::Collider:

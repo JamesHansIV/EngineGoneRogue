@@ -24,7 +24,6 @@ void HealthPotion::OnCollide(Collider* collidee) {
 
     switch (collidee->GetObjectType()) {
         case ObjectType::Player:
-            SDL_Log("Collided with a health potion");
             dynamic_cast<Character*>(collidee)->GetHealth()->IncreaseHealth(GetHealth());
             m_MarkedForDeletion = true;
             ColliderHandler::GetInstance()->RemoveCollider(this);
