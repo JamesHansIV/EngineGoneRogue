@@ -10,8 +10,10 @@ class Player;
 class RangedWeaponStats : public WeaponStats {
    public:
     RangedWeaponStats(bool player_owned, Uint32 fire_rate,
-                      Uint32 projectile_speed, int damage, PlayerStats* ownerStats)
-        : WeaponStats(player_owned, fire_rate, projectile_speed, damage, ownerStats) {}
+                      Uint32 projectile_speed, int damage,
+                      PlayerStats* ownerStats)
+        : WeaponStats(player_owned, fire_rate, projectile_speed, damage,
+                      ownerStats) {}
 
     RangedWeaponStats(const RangedWeaponStats& prop) = default;
 
@@ -35,7 +37,7 @@ class RangedWeapon : public Weapon {
 
     Projectile* BuildProjectile();
 
-   private:
+   protected:
     ProjectileManager m_ProjectileManager;
     bool m_auto_fire_enabled = false;
     RangedWeaponStats m_stats;

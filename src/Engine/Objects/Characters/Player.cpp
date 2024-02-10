@@ -3,6 +3,7 @@
 #include "Engine/Input/InputChecker.h"
 #include "Engine/Objects/Environment/Entrance.h"
 #include "Engine/Objects/Projectiles/Projectile.h"
+#include "Engine/Objects/Weapons/Bow.h"
 #include "Engine/Objects/Weapons/MeleeWeapon.h"
 #include "Engine/Objects/Weapons/RangedWeapon.h"
 #include "Engine/Renderer/Renderer.h"
@@ -73,17 +74,19 @@ Player::Player(Properties& props) : Character(props) {
     // m_Collider->SetCorrection(-45, -20, 60, 80 )
     m_Health = new Health(100);
 
-    Properties props_gun("gun", {0, 0, 18, 16}, {0, 0, 18, 16}, 0.0);
-    RangedWeaponStats stats_rifle = {true, 200, 10, 16, m_stats};
-    Weapon* rifle = new RangedWeapon(props_gun, stats_rifle, this);
-    m_Weapons.push_back(rifle);
+    Properties props_uzi("uzi", {0, 0, 18, 16}, {0, 0, 18, 16}, 0.0);
+    RangedWeaponStats stats_uzi = {true, 200, 10, 16, m_stats};
+    Weapon* uzi = new RangedWeapon(props_uzi, stats_uzi, this);
+    m_Weapons.push_back(uzi);
 
+    Properties props_pistol("pistol", {0, 0, 18, 16}, {0, 0, 18, 16}, 0.0);
     RangedWeaponStats stats_pistol = {true, 400, 7, 34, m_stats};
-    Weapon* pistol = new RangedWeapon(props_gun, stats_pistol, this);
+    Weapon* pistol = new RangedWeapon(props_pistol, stats_pistol, this);
     m_Weapons.push_back(pistol);
 
+    Properties props_sniper("sniper", {0, 0, 35, 16}, {0, 0, 35, 16}, 0.0);
     RangedWeaponStats stats_sniper = {true, 1000, 10, 100, m_stats};
-    Weapon* sniper = new RangedWeapon(props_gun, stats_sniper, this);
+    Weapon* sniper = new RangedWeapon(props_sniper, stats_sniper, this);
     m_Weapons.push_back(sniper);
 
     Properties props_m("weapons", {4, 6, 16, 16}, {0, 0, 16, 20}, 0.0);
@@ -91,6 +94,11 @@ Player::Player(Properties& props) : Character(props) {
     Weapon* w2 = new MeleeWeapon(props_m, stats_m, this);
     w2->SetRotation(50);
     m_Weapons.push_back(w2);
+
+    Properties props_bow("bow", {0, 0, 16, 18}, {0, 0, 16, 18}, 90.0);
+    RangedWeaponStats stats_bow = {true, 750, 10, 75, m_stats};
+    Weapon* bow = new Bow(props_bow, stats_bow, this);
+    m_Weapons.push_back(bow);
 
     ColliderHandler::GetInstance()->AddCollider(w2);
 
@@ -146,6 +154,12 @@ void Player::Update(float dt) {
     UpdateWeapon(dt);
 }
 
+bool IsLookingBehind(float angle) {
+    const float upper_bound = 4 * M_PI / 3;
+    const float lower_bound = 2 * M_PI / 3;
+    return angle < upper_bound && angle > lower_bound;
+}
+
 void Player::UpdateWeapon(float dt) {
     if (InputChecker::GetMouseWheelDirection() != 0) {
         auto it =
@@ -174,17 +188,13 @@ void Player::UpdateWeapon(float dt) {
         angle -= 2 * M_PI;
     }
 
-    const float two_hundred_twenty_five = (4 * M_PI) / 3;
-    const float three_hundred_thirty = 2 * M_PI / 3;
-
     SDL_RendererFlip weapon_flip = SDL_FLIP_NONE;
-    if (angle < two_hundred_twenty_five && angle > three_hundred_thirty) {
-        SDL_Log("Flipping");
+    if (IsLookingBehind(angle)) {
         weapon_flip = SDL_FLIP_VERTICAL;
     }
 
-    double const weapon_x = GetX() + GetWidth() / 2.0;
-    double const weapon_y = GetY() + GetHeight() / 3.0;
+    double const weapon_x = GetX() + GetWidth() / 2.5;
+    double const weapon_y = GetY() + GetHeight() / 2.5;
     m_CurrentWeapon->SetX(weapon_x);
     m_CurrentWeapon->SetY(weapon_y);
     m_CurrentWeapon->SetRotation(angle * (180 / M_PI));

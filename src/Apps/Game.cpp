@@ -13,8 +13,8 @@
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Objects/Environment/Entrance.h"
 #include "Engine/Objects/GameObject.h"
-#include "Engine/Renderer/Renderer.h"
 #include "Engine/Objects/HealthPotion.h"
+#include "Engine/Renderer/Renderer.h"
 
 Player* player = nullptr;
 Enemy* enemy1 = nullptr;
@@ -57,18 +57,33 @@ Game::Game() {
         "projectile",
         "../assets/textures/BulletHell/PURPLE/Weapons/weapons/Firearms/Bullets/"
         "spr_bullet3.png");
+    Renderer::GetInstance()->AddTexture("arrow",
+                                        "../assets/textures/BulletHell/PURPLE/"
+                                        "Weapons/weapons/Bow-Arrow/"
+                                        "spr_arrow1.png");
+    Renderer::GetInstance()->AddTexture(
+        "bow",
+        "../assets/textures/BulletHell/PURPLE/Weapons/weapons/Bow-Arrow/"
+        "spr_bow41.png");
     Renderer::GetInstance()->AddTexture(
         "melee",
         "../assets/textures/BulletHell/PURPLE/Weapons/weapons/Melee/"
         "spr_sword_03.png");
     Renderer::GetInstance()->AddTexture(
-        "gun",
+        "pistol",
+        "../assets/textures/BulletHell/PURPLE/Weapons/weapons/Firearms/"
+        "spr_weapon03.png");
+    Renderer::GetInstance()->AddTexture(
+        "uzi",
+        "../assets/textures/BulletHell/PURPLE/Weapons/weapons/Firearms/"
+        "spr_weapon05.png");
+    Renderer::GetInstance()->AddTexture(
+        "sniper",
         "../assets/textures/BulletHell/PURPLE/Weapons/weapons/Firearms/"
         "spr_weapon06.png");
-    
+
     Renderer::GetInstance()->AddTexture(
-        "healthpotion",
-        "../assets/textures/spritesheets/lifepotion.png");
+        "healthpotion", "../assets/textures/spritesheets/lifepotion.png");
 
     m_Objects = Application::m_Rooms["room1"];
 
@@ -144,11 +159,11 @@ Game::Game() {
 
     Properties props11("healthpotion", {1, 1, 16, 16}, {250, 150, 25, 25}, 0,
                        "healthpotion");
-    auto* healthpotion = new HealthPotion(props11, 20); 
+    auto* healthpotion = new HealthPotion(props11, 20);
 
     Properties props12("healthpotion", {1, 1, 16, 16}, {550, 400, 25, 25}, 0,
                        "healthpotion2");
-    auto* healthpotion2 = new HealthPotion(props12,20); 
+    auto* healthpotion2 = new HealthPotion(props12, 20);
 
     m_Objects.push_back(enemy1);
     m_Objects.push_back(enemy2);
@@ -282,7 +297,6 @@ void Game::Update(float dt) {
 }
 
 void Game::Render() {
-    SDL_Log("Hello3");
     Renderer::GetInstance()->RenderClear();
     for (auto* obj : m_Objects) {
         obj->Draw();

@@ -49,7 +49,6 @@ void MeleeWeapon::Update(float dt) {
         m_CollisionBox.clear();
         //SetRotation(0.0);
     }
-    SDL_Log("sword angle: %f", GetRotation());
 }
 
 void MeleeWeapon::OnCollide(Collider* collidee) {
