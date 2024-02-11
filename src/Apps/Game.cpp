@@ -96,16 +96,6 @@ Game::Game() {
         "wooden_chest_opening",
         "../assets/textures/spritesheets/chest.png");
 
-
-    Renderer::GetInstance()->AddTexture(
-        "wooden_chest_idle",
-        "../assets/textures/BulletHell/PURPLE/Others/Chest/spr_chest1.png");
-    
-    Renderer::GetInstance()->AddTexture(
-        "wooden_chest_opening",
-        "../assets/textures/spritesheets/chest.png");
-
-
     m_Objects = Application::m_Rooms["room1"];
 
     for (auto& obj : m_Objects) {
@@ -187,9 +177,9 @@ Game::Game() {
     auto* healthpotion2 = new HealthPotion(props12, 20);
 
     std::vector<GameObject*> items1;
-    Properties props13("", {1, 1, 16, 16}, {350, 240, 36, 36}, 0,
+    Properties props13("", {1, 1, 18, 16}, {50, 240, 32, 32}, 0,
                        "chest1");
-    auto* chest1 = new Chest(props13, ChestType::Wooden, items1); 
+    auto* chest1 = new Chest(props13, ChestType::Wooden, items1, player); 
 
     
     m_Objects.push_back(enemy1);

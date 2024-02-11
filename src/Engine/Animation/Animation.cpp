@@ -43,4 +43,5 @@ void Animation::SelectAnimation(const std::string& id) {
     m_SpriteFrame = 0;
     m_Ended = false;
     SetProps(m_Animations[id]);
+    m_CurrentAnimationID = id;
 }
