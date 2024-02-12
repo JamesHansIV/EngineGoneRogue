@@ -3,7 +3,7 @@
 #include "Engine/Input/InputChecker.h"
 #include "Engine/Objects/ColliderHandler.h"
 #include "SDL2/SDL_log.h"
-constexpr float CLOSE_DISTANCE = 40.0f; 
+constexpr float CLOSE_DISTANCE = 45.0f; 
 
 Chest::Chest(Properties& props, ChestType ctype, std::vector<GameObject*>& chestItems, Player* player) : Collider(props) 
 {
