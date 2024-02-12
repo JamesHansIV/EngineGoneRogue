@@ -207,6 +207,7 @@ std::vector<GameObject*> CopyObjects(const std::vector<GameObject*>& objects) {
 }
 
 Editor::Editor() {
+
     ImGui::CreateContext();
     SDL_Renderer* renderer = Renderer::GetInstance()->GetRenderer();
 
@@ -220,6 +221,25 @@ Editor::Editor() {
     SDL_Log("editor constructor");
     m_Rooms = Application::m_Rooms;
     m_Layers.emplace_back();
+
+    // create keymap
+    m_KeyMap = new KeyMap();
+
+    std::cout << "Keymap createed\n";
+
+    // add cursor textures to renderer
+    std::cout << "Adding draw texture... ";
+    Renderer::GetInstance()->AddTexture(
+        "draw_cursor","../assets/textures/spritesheets/cursor_pencil_dark.png");
+    std::cout << "Success\n";
+
+    // create cursor
+    // m_Cursor = new Cursor();
+
+    std::cout << "Cursor created\n";
+
+
+    
 }
 
 Editor::~Editor() {
@@ -229,6 +249,9 @@ Editor::~Editor() {
     ImGui::DestroyContext();
 
     CleanLayers();
+
+    delete m_KeyMap;
+    // delete m_Cursor;
 }
 
 void Editor::CleanLayers() {
@@ -457,7 +480,7 @@ void Editor::ShowFileManager() {
     if (ImGui::BeginTabItem("File")) {
         ImGui::Text("Current room: %s", m_CurrentRoomID.c_str());
 
-        if (ImGui::Button("Save Project", ImVec2(150, 20))) {
+        if (ImGui::Button("Save SDFSDFSDProject", ImVec2(150, 20))) {
             SaveProject();
         }
 
@@ -709,25 +732,25 @@ void Editor::ShowObjectEditor() {
         }
 
         std::string const select_label =
-            m_DrawState.EditMode == EditMode::SELECT ? "Stop Select"
+            m_EditState.EditMode == EditMode::SELECT ? "Stop Select"
                                                      : "Begin Select";
         if (ImGui::Button(select_label.c_str())) {
             m_CurrentObject = nullptr;
-            m_DrawState.EditMode = m_DrawState.EditMode == EditMode::SELECT
+            m_EditState.EditMode = m_EditState.EditMode == EditMode::SELECT
                                        ? EditMode::NONE
                                        : EditMode::SELECT;
         }
 
         if (ImGui::Button("Deselect")) {
             m_SelectedObjects.clear();
-            m_DrawState.EditMode = EditMode::NONE;
+            m_EditState.EditMode = EditMode::NONE;
         }
 
-        std::string const erase_label = m_DrawState.EditMode == EditMode::ERASE
+        std::string const erase_label = m_EditState.EditMode == EditMode::ERASE
                                             ? "Stop Erase"
                                             : "Begin Erase";
         if (ImGui::Button(erase_label.c_str())) {
-            m_DrawState.EditMode = m_DrawState.EditMode == EditMode::ERASE
+            m_EditState.EditMode = m_EditState.EditMode == EditMode::ERASE
                                        ? EditMode::NONE
                                        : EditMode::ERASE;
         }
@@ -792,6 +815,7 @@ void Editor::ShowLoadTexture() {
 void Editor::AddObject(float x, float y) {
     GameObject* new_object;
 
+    std::cout << m_CurrentTexture << std::endl;
     std::string obj_id = m_CurrentTexture->GetID();
     obj_id += std::to_string(m_CurrentTexture->GetObjectCount());
 
@@ -958,11 +982,11 @@ void Editor::ShowCreateObject() {
                     assert(false);
             }
             std::string const draw_label =
-                m_DrawState.EditMode == EditMode::DRAW ? "Stop Draw"
+                m_EditState.EditMode == EditMode::DRAW ? "Stop Draw"
                                                        : "Begin Draw";
 
             if (ImGui::Button(draw_label.c_str())) {
-                m_DrawState.EditMode = m_DrawState.EditMode == EditMode::DRAW
+                m_EditState.EditMode = m_EditState.EditMode == EditMode::DRAW
                                            ? EditMode::NONE
                                            : EditMode::DRAW;
             }
@@ -1024,17 +1048,35 @@ void Editor::ShowObjectManager() {
 }
 
 void Editor::Update(float /*dt*/) {
-    if (InputChecker::IsKeyPressed(SDLK_UP)) {
+    // Now includes checks for previous keys
+
+    // basing input off of editor acction allows us to use bindings and easier rebinds in the future
+    if (m_KeyMap->CheckInputs(EditorAction::PAN_CAMERA_UP)) {
         Renderer::GetInstance()->MoveCameraY(-10.0F);
     }
-    if (InputChecker::IsKeyPressed(SDLK_DOWN)) {
+    if (m_KeyMap->CheckInputs(EditorAction::PAN_CAMERA_DOWN)) {
         Renderer::GetInstance()->MoveCameraY(10.0F);
     }
-    if (InputChecker::IsKeyPressed(SDLK_LEFT)) {
+    if (m_KeyMap->CheckInputs(EditorAction::PAN_CAMERA_LEFT)) {
         Renderer::GetInstance()->MoveCameraX(-10.0F);
     }
-    if (InputChecker::IsKeyPressed(SDLK_RIGHT)) {
+    if (m_KeyMap->CheckInputs(EditorAction::PAN_CAMERA_RIGHT)) {
         Renderer::GetInstance()->MoveCameraX(10.0F);
+    }
+
+    CheckForEditorModeChangingInputs(EditorAction::ENTER_DRAW_TOOL, EditMode::DRAW);
+    CheckForEditorModeChangingInputs(EditorAction::ENTER_ERASE_TOOL, EditMode::ERASE);
+
+    if (m_KeyMap->CheckInputs(EditorAction::EXIT_CURRENT_TOOL)) {
+        m_EditState.EditMode = EditMode::NONE;
+    }
+
+    InputChecker::SetPrevFrameKeys();
+
+    // set cursor
+    // m_Cursor->SetCursor(static_cast<int>(m_EditState.EditMode));
+    if (m_EditState.EditMode !=  EditMode::NONE) {
+        // ImGui::SetMouseCursor(ImGuiMouseCursor_None);
     }
 
     ImGui_ImplSDLRenderer2_NewFrame();
@@ -1071,6 +1113,9 @@ void Editor::Render() {
     DrawGrid();
     ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
 
+    // draw cursor
+    // m_Cursor->Draw();
+
     if ((ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable) != 0) {
         ImGui::UpdatePlatformWindows();
         ImGui::RenderPlatformWindowsDefault();
@@ -1093,8 +1138,8 @@ GameObject* Editor::GetObjectUnderMouse() {
 }
 
 void Editor::OnMouseClicked(SDL_Event& /*event*/) {
-    if (m_DrawState.EditMode != EditMode::NONE) {
-        m_DrawState.IsEditing = true;
+    if (m_EditState.EditMode != EditMode::NONE) {
+        m_EditState.IsEditing = true;
 
         float const x = ((InputChecker::GetMouseX() +
                           Renderer::GetInstance()->GetCameraX()) /
@@ -1105,9 +1150,11 @@ void Editor::OnMouseClicked(SDL_Event& /*event*/) {
                          TILE_SIZE) *
                         TILE_SIZE;
 
-        if (m_DrawState.EditMode == EditMode::DRAW) {
+        if (m_EditState.EditMode == EditMode::DRAW) {
+            std::cout << "Adding object\n";
+            if (m_CurrentTexture == nullptr) return;
             AddObject(x, y);
-        } else if (m_DrawState.EditMode == EditMode::ERASE) {
+        } else if (m_EditState.EditMode == EditMode::ERASE) {
             GameObject* obj = GetObjectUnderMouse();
             if (obj != nullptr) {
                 DeleteObject(obj);
@@ -1123,8 +1170,8 @@ void Editor::OnMouseClicked(SDL_Event& /*event*/) {
             }
             SDL_Log("\n");
         }
-        m_DrawState.PrevX = x;
-        m_DrawState.PrevY = y;
+        m_EditState.PrevX = x;
+        m_EditState.PrevY = y;
 
     } else {
         GameObject* obj = GetObjectUnderMouse();
@@ -1141,7 +1188,7 @@ void Editor::OnMouseClicked(SDL_Event& /*event*/) {
 void Editor::OnMouseMoved(SDL_Event& event) {
     if (InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT)) {
 
-        if (m_DrawState.IsEditing) {
+        if (m_EditState.IsEditing) {
             float const x = ((InputChecker::GetMouseX() +
                               Renderer::GetInstance()->GetCameraX()) /
                              TILE_SIZE) *
@@ -1151,11 +1198,11 @@ void Editor::OnMouseMoved(SDL_Event& event) {
                              TILE_SIZE) *
                             TILE_SIZE;
 
-            if ((x != m_DrawState.PrevX || y != m_DrawState.PrevY)) {
-                if (m_DrawState.EditMode == EditMode::DRAW) {
+            if ((x != m_EditState.PrevX || y != m_EditState.PrevY)) {
+                if (m_EditState.EditMode == EditMode::DRAW) {
                     AddObject(x, y);
 
-                } else if (m_DrawState.EditMode == EditMode::ERASE) {
+                } else if (m_EditState.EditMode == EditMode::ERASE) {
                     GameObject* obj = GetObjectUnderMouse();
 
                     if (obj != nullptr) {
@@ -1168,8 +1215,8 @@ void Editor::OnMouseMoved(SDL_Event& event) {
                         m_SelectedObjects.insert(obj);
                     }
                 }
-                m_DrawState.PrevX = x;
-                m_DrawState.PrevY = y;
+                m_EditState.PrevX = x;
+                m_EditState.PrevY = y;
             }
         } else if (!m_SelectedObjects.empty()) {
             bool mouse_over_any = false;
@@ -1198,8 +1245,8 @@ void Editor::OnMouseMoved(SDL_Event& event) {
 
 void Editor::OnMouseUp(SDL_Event& /*event*/) {
     if (InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT)) {
-        if (m_DrawState.IsEditing) {
-            m_DrawState.IsEditing = false;
+        if (m_EditState.IsEditing) {
+            m_EditState.IsEditing = false;
 
         } else if (!m_SelectedObjects.empty()) {
             if (m_ObjectInfo.SnapToGrid) {
@@ -1266,6 +1313,11 @@ void Editor::Events() {
                 break;
         }
     }
+}
+
+void Editor::CheckForEditorModeChangingInputs(EditorAction editor_action, EditMode edit_mode) {
+    if (m_KeyMap->CheckInputs(editor_action)) 
+        m_EditState.EditMode = m_EditState.EditMode != edit_mode ? edit_mode : EditMode::NONE;
 }
 
 #if EDITOR == 1

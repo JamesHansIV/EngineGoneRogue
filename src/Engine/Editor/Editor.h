@@ -6,6 +6,9 @@
 #include "Engine/Objects/Characters/Player.h"
 #include "Engine/Objects/Projectiles/Projectile.h"
 #include "Engine/Renderer/Texture.h"
+#include "Engine/Cursors/Cursor.h"
+#include "Engine/KeyMap/KeyMap.h"
+// #include "Engine/Cursors/Cursor.h"
 
 struct E_EnemyInfo {
     int PerceptionWidth;
@@ -88,10 +91,19 @@ class Editor : public Application {
     Texture* m_CurrentTexture{nullptr};
     GameObject* m_CurrentObject;
     std::set<GameObject*> m_SelectedObjects;
-    EditState m_DrawState;
+    EditState m_EditState;
     E_ObjectInfo m_ObjectInfo;
     E_EnemyInfo m_EnemyInfo;
     std::vector<std::vector<GameObject*>> m_Layers;
     std::set<int> m_HiddenLayers;
     int m_CurrentLayer{0};
+
+
+    void CheckForEditorModeChangingInputs(EditorAction editor_action, EditMode edit_mode);
+
+    // keymap
+    KeyMap* m_KeyMap;
+
+    // map
+    // Cursor* m_Cursor;
 };
