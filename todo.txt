@@ -1,3 +1,5 @@
+(x = finished)
+(~ = in progress)
 
 x consider managing projectiles with projectile manager
 x the character class should own the health property
@@ -6,6 +8,30 @@ x managing health should be done by the health class
 - remove hard coded animations/health bars/weapons
 - add enemy types
 x enemies are able to slip through walls somehow
+
+editor stuff
+- resizable main window
+x switch edit mode from keybinds (decouple edit mode from gui, so we can change the gui to new layout)
+~ Visual indicator for edit mode
+    - Text
+    ~ Cursor
+- Erase tool should not have to collide with with the texture game object to delete the texture. 
+  The collider should be the tile. This would make the "paint-erase" easier to use. Current implementation
+  often requires multiple passes to delete everything.
+- adjustable window size
+- resolution handling
+~ vertical toolbar (left) 
+- create multiselect tool 
+  - select
+  - copy
+  - paste
+  - delete
+- save scenes (to be loaded into game application)
+.
+.
+.
+(would be cool)
+- multi  viewports
 
 enemy types
 - enemy that shoots a projectile that explodes into other projectiles
