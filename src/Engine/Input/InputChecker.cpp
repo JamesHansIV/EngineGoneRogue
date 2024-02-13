@@ -2,21 +2,28 @@
 #include <SDL2/SDL.h>
 #include <cmath>
 #include <iostream>
+#include <algorithm>
+#include <array>
 
 const int kNumkeys = 322;
 const int kNummousebuttons = 3;
-bool keys[kNumkeys];
+// bool keys[kNumkeys];
+std::array<bool, kNumkeys> keys;
+std::array<bool, kNumkeys> prev_frame_keys;
+// bool prev_frame_keys[kNumkeys];
 bool mouse_buttons[kNummousebuttons];
 int mouse_x;
 int mouse_y;
 int mouse_wheel_direction = 0;
 
 bool InputChecker::IsKeyPressed(int keycode) {
-    return keys[keycode % kNumkeys];
+    return keys[int(keycode % kNumkeys)];
+    // return keys.at(keycode % kNumkeys);
 }
 
 void InputChecker::SetKeyPressed(int keycode, bool value) {
-    keys[keycode % kNumkeys] = value;
+    int key = keycode % kNumkeys;
+    keys[key] = value;
 }
 
 bool InputChecker::IsMouseButtonPressed(int button) {
@@ -46,4 +53,16 @@ void InputChecker::SetMouseWheelDirection(int direction) {
 
 int InputChecker::GetMouseWheelDirection() {
     return mouse_wheel_direction;
+}
+
+void InputChecker::SetPrevFrameKeys() {
+    prev_frame_keys = keys;
+}
+
+void InputChecker::ClearPrevFrameKeys() {
+    std::fill(std::begin(prev_frame_keys), std::end(prev_frame_keys),0);
+}
+
+bool InputChecker::WasKeyAlreadyPresssed(int keycode) {
+    return prev_frame_keys[int(keycode % kNumkeys)];
 }

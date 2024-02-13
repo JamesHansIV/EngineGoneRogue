@@ -1,0 +1,17 @@
+<Root>
+    <Texture type="cursor">
+        <CursorType>POINT</CursorType>
+        <FilePath></FilePath>
+        <ID>editor-cursor-point</ID>
+    </Texture>
+    <Texture type="cursor">
+        <CursorType>DRAW</CursorType>
+        <FilePath>../assets/editor/cursors/draw_cursor.png</FilePath>
+        <ID>editor-cursor-draw</ID>
+    </Texture>
+    <Texture type="cursor">
+        <CursorType>ERASE</CursorType>
+        <FilePath>../assets/editor/cursors/erase_cursor.png</FilePath>
+        <ID>editor-cursor-erase</ID>
+    </Texture>
+</Root>
