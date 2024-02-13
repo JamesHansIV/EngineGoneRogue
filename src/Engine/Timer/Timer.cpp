@@ -1,5 +1,7 @@
 #include "Timer.h"
 
+Timer timer = Timer();
+
 Timer::Timer() {
     m_start_time = 0;
     m_paused_time = 0;
@@ -25,6 +27,7 @@ void Timer::Pause() {
     if (m_is_started && !m_is_paused) {
         m_is_paused = true;
         m_paused_time = SDL_GetTicks() - m_start_time;
+        m_start_time = 0;
     }
 }
 
@@ -33,7 +36,6 @@ void Timer::Unpause() {
         m_is_paused = false;
         m_start_time = SDL_GetTicks() - m_paused_time;
         m_paused_time = 0;
-        m_current_time = 0;
     }
 }
 

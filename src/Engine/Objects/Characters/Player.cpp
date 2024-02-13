@@ -68,7 +68,7 @@ Player::Player(Properties& props) : Character(props) {
 
     m_CurrentTilePos = m_StillFrames["face-down"];
 
-    m_stats = new PlayerStats(10, 0, 1.3, 1, 1, 1, 50, 1, 20);
+    m_stats = new PlayerStats(5, 0, 1.3, 1, 1, 1, 50, 1, 20);
 
     ChangeState(new PlayerIdle(this));
     // m_Collider->SetCorrection(-45, -20, 60, 80 )
@@ -94,7 +94,7 @@ Player::Player(Properties& props) : Character(props) {
     Weapon* w2 = new MeleeWeapon(props_m, stats_m, this);
     w2->SetRotation(50);
     m_Weapons.push_back(w2);
-          
+
     Properties props_bow("bow", {0, 0, 16, 18}, {0, 0, 16, 18}, 90.0);
     RangedWeaponStats stats_bow = {true, 750, 10, 75, m_stats};
     Weapon* bow = new Bow(props_bow, stats_bow, this);
@@ -169,7 +169,6 @@ void Player::UpdateWeapon(float dt) {
             it = m_Weapons.begin();
         }
         m_CurrentWeapon = *it;
-
 
         // Reset the mouse wheel direction to avoid toggling multiple times
         InputChecker::SetMouseWheelDirection(0);

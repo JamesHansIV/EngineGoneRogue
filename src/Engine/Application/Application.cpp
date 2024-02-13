@@ -17,7 +17,7 @@
 
 Application* Application::m_instance = nullptr;
 
-Timer timer = Timer();
+const float kDt = 0.01;
 
 Application::Application() : m_ProjectName("test_project"), m_Frame(0) {
 
@@ -349,11 +349,11 @@ void Application::Events() {
 
 void Application::Run() {
     timer.Start();
-    double accumulator = 0.0;
+    float accumulator = 0.0;
     while (m_IsRunning) {
-        SDL_Log("Time: %d", timer.GetTicks());
+        // SDL_Log("Time: %d", timer.GetTicks() / 1000);
+        //SDL_Log("Current time: %d", timer.GetCurrentTime());
         Events();
-        float DT = 0.01;
         m_Frame++;
         if (!m_is_paused) {
             Uint32 const new_time = timer.GetTicks();
@@ -368,15 +368,10 @@ void Application::Run() {
 
             accumulator += frame_time;
 
-            while (accumulator >= DT) {
-                Update(DT);
-                accumulator -= DT;
+            while (accumulator >= kDt) {
+                Update(kDt);
+                accumulator -= kDt;
             }
-
-            // float dt = static_cast<float>(frame_time);
-            // SDL_Log("dt: %f", dt);
-
-            // Update(dt / 10);
         }
         Render();
     }

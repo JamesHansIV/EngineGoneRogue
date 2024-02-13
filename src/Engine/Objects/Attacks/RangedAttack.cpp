@@ -5,8 +5,6 @@
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Timer/Timer.h"
 
-extern Timer timer;
-
 void RangedAttack::Update(float dt) {
     m_ProjectileManager.UpdateProjectiles(dt);
     if (m_AttackPattern != nullptr) {

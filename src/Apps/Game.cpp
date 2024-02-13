@@ -38,8 +38,6 @@ std::vector<Collider*> colliders;
 int max_tick_interval = 500;
 int cur_enemy_generation_interval = 5000;
 
-extern Timer timer;
-
 const EnemyStats kDefaultEnemyStats = {
     100,  // health
     1,    // damage
@@ -232,6 +230,17 @@ void Game::Events() {
                 return;
             case SDL_KEYDOWN:
                 InputChecker::SetKeyPressed(event.key.keysym.sym, true);
+                switch (event.key.keysym.sym) {
+                    case SDLK_ESCAPE:
+                        if (timer.IsPaused()) {
+                            timer.Unpause();
+                        } else {
+                            timer.Pause();
+                        }
+                        return;
+                    default:
+                        break;
+                }
                 //player->OnKeyPressed(event);
                 break;
             case SDL_KEYUP:
@@ -253,16 +262,10 @@ void Game::Events() {
                 break;
             case SDL_WINDOWEVENT:
                 // TODO: Add pause menu to render when focus is lost
-                // Also add hotkey (esc) to pause game
                 if (event.window.event == SDL_WINDOWEVENT_FOCUS_GAINED) {
-                    m_has_focus = true;
-                    m_is_paused = false;
-                    timer.Start();
-                    m_LastTick = static_cast<float>(SDL_GetTicks());
+                    timer.Unpause();
                 }
                 if (event.window.event == SDL_WINDOWEVENT_FOCUS_LOST) {
-                    m_has_focus = false;
-                    m_is_paused = true;
                     timer.Pause();
                 }
                 break;

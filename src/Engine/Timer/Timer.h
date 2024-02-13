@@ -44,3 +44,5 @@ class Timer {
     bool m_is_paused;
     bool m_is_started;
 };
+
+extern Timer timer;
