@@ -8,7 +8,7 @@
 #include "Engine/Renderer/Texture.h"
 #include "Engine/Cursors/Cursor.h"
 #include "Engine/KeyMap/KeyMap.h"
-// #include "Engine/Cursors/Cursor.h"
+#include "Engine/Cursors/Cursor.h"
 
 struct E_EnemyInfo {
     int PerceptionWidth;
@@ -86,6 +86,8 @@ class Editor : public Application {
     void SaveRoom(const char* roomName);
     void SaveProject();
 
+    bool LoadEditorTextures();
+
    private:
     std::string m_CurrentRoomID;
     Texture* m_CurrentTexture{nullptr};
@@ -99,11 +101,11 @@ class Editor : public Application {
     int m_CurrentLayer{0};
 
 
-    void CheckForEditorModeChangingInputs(EditorAction editor_action, EditMode edit_mode);
+    void CheckForToolSelection(EditorAction editor_action, EditMode edit_mode);
 
     // keymap
     KeyMap* m_KeyMap;
 
     // map
-    // Cursor* m_Cursor;
+    Cursor* m_Cursor;
 };

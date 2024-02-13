@@ -222,24 +222,14 @@ Editor::Editor() {
     m_Rooms = Application::m_Rooms;
     m_Layers.emplace_back();
 
+    // load editor textures
+    LoadEditorTextures();
+
     // create keymap
     m_KeyMap = new KeyMap();
 
-    std::cout << "Keymap createed\n";
-
-    // add cursor textures to renderer
-    std::cout << "Adding draw texture... ";
-    Renderer::GetInstance()->AddTexture(
-        "draw_cursor","../assets/textures/spritesheets/cursor_pencil_dark.png");
-    std::cout << "Success\n";
-
     // create cursor
-    // m_Cursor = new Cursor();
-
-    std::cout << "Cursor created\n";
-
-
-    
+    m_Cursor = new Cursor();   
 }
 
 Editor::~Editor() {
@@ -251,7 +241,7 @@ Editor::~Editor() {
     CleanLayers();
 
     delete m_KeyMap;
-    // delete m_Cursor;
+    delete m_Cursor;
 }
 
 void Editor::CleanLayers() {
@@ -1064,20 +1054,17 @@ void Editor::Update(float /*dt*/) {
         Renderer::GetInstance()->MoveCameraX(10.0F);
     }
 
-    CheckForEditorModeChangingInputs(EditorAction::ENTER_DRAW_TOOL, EditMode::DRAW);
-    CheckForEditorModeChangingInputs(EditorAction::ENTER_ERASE_TOOL, EditMode::ERASE);
+    // Check and handle tool selection / deselection via keybinds
+    // the EditorAction param is the result of a satisfied keybind input, with the EditMode param being the tool selection
+    CheckForToolSelection(EditorAction::ENTER_DRAW_TOOL, EditMode::DRAW);
+    CheckForToolSelection(EditorAction::ENTER_ERASE_TOOL, EditMode::ERASE);
 
+    // Tool deselection
     if (m_KeyMap->CheckInputs(EditorAction::EXIT_CURRENT_TOOL)) {
         m_EditState.EditMode = EditMode::NONE;
     }
 
     InputChecker::SetPrevFrameKeys();
-
-    // set cursor
-    // m_Cursor->SetCursor(static_cast<int>(m_EditState.EditMode));
-    if (m_EditState.EditMode !=  EditMode::NONE) {
-        // ImGui::SetMouseCursor(ImGuiMouseCursor_None);
-    }
 
     ImGui_ImplSDLRenderer2_NewFrame();
     ImGui_ImplSDL2_NewFrame();
@@ -1114,7 +1101,19 @@ void Editor::Render() {
     ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
 
     // draw cursor
-    // m_Cursor->Draw();
+    if (m_EditState.EditMode !=  EditMode::NONE) {
+        ImGui::SetMouseCursor(ImGuiMouseCursor_None); // hide default cursor
+        
+        SDL_Rect cursor_rect = m_Cursor->UpdateAndGetRect();
+
+        std::string cursor_texture_id = m_Cursor->GetTextureId(
+                                                    static_cast<int>(m_EditState.EditMode));
+
+        SDL_RenderCopy(Renderer::GetInstance()->GetRenderer(),
+                       Renderer::GetInstance()->GetTexture(cursor_texture_id)->GetTexture(),
+                       NULL,
+                       &cursor_rect);
+    }
 
     if ((ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable) != 0) {
         ImGui::UpdatePlatformWindows();
@@ -1315,9 +1314,45 @@ void Editor::Events() {
     }
 }
 
-void Editor::CheckForEditorModeChangingInputs(EditorAction editor_action, EditMode edit_mode) {
-    if (m_KeyMap->CheckInputs(editor_action)) 
+// removes boilerplate needed to handle tool selection via keybinds.
+void Editor::CheckForToolSelection(EditorAction editor_action, EditMode edit_mode) {
+    if (m_KeyMap->CheckInputs(editor_action)) {
         m_EditState.EditMode = m_EditState.EditMode != edit_mode ? edit_mode : EditMode::NONE;
+        m_Cursor->SetCursor(static_cast<int>(m_EditState.EditMode));
+    }
+}
+
+bool Editor::LoadEditorTextures() {
+    tinyxml2::XMLDocument doc;
+    std::string textures_path = "../assets/editor/editor_textures.xml";
+
+    // check for loading error for xml
+    tinyxml2::XMLError const error = doc.LoadFile(textures_path.c_str());
+    if (error != tinyxml2::XML_SUCCESS) {
+        SDL_LogError(0, "Could not load textures");
+        return false;
+    }
+
+    tinyxml2::XMLElement* root = doc.FirstChildElement("Root");
+    tinyxml2::XMLElement* curr_texture = root->FirstChildElement("Texture");
+
+    std::string type;
+    std::string id;
+    std::string texture_path;
+
+    while (curr_texture != nullptr) {
+        type = curr_texture->Attribute("type");
+        id = curr_texture->FirstChildElement("ID")->GetText();
+        
+        if (curr_texture->FirstChildElement("FilePath")->GetText() != nullptr) {
+            texture_path = curr_texture->FirstChildElement("FilePath")->GetText();
+            Renderer::GetInstance()->AddTexture(id, texture_path);
+        }
+
+        curr_texture = curr_texture->NextSiblingElement("Texture");
+    }
+
+    return true;
 }
 
 #if EDITOR == 1
