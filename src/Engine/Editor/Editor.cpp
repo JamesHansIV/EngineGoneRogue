@@ -835,6 +835,20 @@ void Editor::AddObject(float x, float y) {
     m_Layers[m_CurrentLayer].push_back(new_object);
 }
 
+void Editor::PrintLayer() {
+    for (GameObject* obj : m_Layers[m_CurrentLayer]) {
+        std::cout << obj->GetID() << "\tTILE: " << obj->GetTilePos().col << "," << obj->GetTilePos().row 
+              << "\tLAYER: " << m_CurrentLayer << std::endl;
+    }
+}
+
+void Editor::PrintLayer(int row, int col) {
+    for (GameObject* obj : m_Layers[m_CurrentLayer]) {
+        std::cout << obj->GetID() << "\tTILE: " << obj->GetTilePos().row << "," << obj->GetTilePos().col 
+              <<"\tW" << obj->GetTilePos().w << "\tH"<<obj->GetTilePos().h<< "\tLAYER: " << m_CurrentLayer << std::endl;
+    }
+}
+
 void Editor::DeleteObject(GameObject* obj) {
     // if (m_Rooms.find(m_CurrentRoomID) != m_Rooms.end()) {
     //     std::vector<GameObject*>& room = m_Rooms[m_CurrentRoomID];
@@ -1150,14 +1164,29 @@ void Editor::OnMouseClicked(SDL_Event& /*event*/) {
                         TILE_SIZE;
 
         if (m_EditState.EditMode == EditMode::DRAW) {
-            std::cout << "Adding object\n";
+            // std::cout << "Adding object @ " << x << "," << y <<"\t";
             if (m_CurrentTexture == nullptr) return;
             AddObject(x, y);
         } else if (m_EditState.EditMode == EditMode::ERASE) {
-            GameObject* obj = GetObjectUnderMouse();
-            if (obj != nullptr) {
+            // delete all objects on mousedover tile, in current layer.
+            std::pair<int,int>tile_coords = PixelToTilePos(x,y);
+
+            // create list of objects to delete on that tile and layer
+            std::vector<GameObject*>objects_to_delete;
+
+            for (GameObject* obj : m_Layers[m_CurrentLayer]) {
+                std::pair<int,int>curr_tile_coords = PixelToTilePos(obj->GetX(), obj->GetY());
+
+                if (curr_tile_coords.first == tile_coords.first && curr_tile_coords.second == tile_coords.second) {
+                    objects_to_delete.push_back(obj);
+                }
+            }
+
+            // delete all the objects
+            for (GameObject* obj : objects_to_delete) {
                 DeleteObject(obj);
             }
+
         } else {
             GameObject* obj = GetObjectUnderMouse();
 
@@ -1202,11 +1231,29 @@ void Editor::OnMouseMoved(SDL_Event& event) {
                     AddObject(x, y);
 
                 } else if (m_EditState.EditMode == EditMode::ERASE) {
-                    GameObject* obj = GetObjectUnderMouse();
+                    // delete all objects on mousedover tile, in current layer.
+                    std::pair<int,int>tile_coords = PixelToTilePos(x,y);
 
-                    if (obj != nullptr) {
+                    // create list of objects to delete on that tile and layer
+                    std::vector<GameObject*>objects_to_delete;
+
+                    for (GameObject* obj : m_Layers[m_CurrentLayer]) {
+                        std::pair<int,int>curr_tile_coords = PixelToTilePos(obj->GetX(), obj->GetY());
+
+                        if (curr_tile_coords.first == tile_coords.first && curr_tile_coords.second == tile_coords.second) {
+                            objects_to_delete.push_back(obj);
+                        }
+                    }
+
+                    // delete all the objects
+                    for (GameObject* obj : objects_to_delete) {
                         DeleteObject(obj);
                     }
+                    // GameObject* obj = GetObjectUnderMouse();
+
+                    // if (obj != nullptr) {
+                    //     DeleteObject(obj);
+                    // }
                 } else {
                     GameObject* obj = GetObjectUnderMouse();
 
@@ -1277,6 +1324,14 @@ std::pair<float, float> Editor::SnapToGrid(float x, float y) {
     next_y = (static_cast<int>(y + TILE_SIZE / 2) / TILE_SIZE) * TILE_SIZE;
 
     return {next_x, next_y};
+}
+
+std::pair<int, int>Editor::PixelToTilePos(float x, float y) {
+    int row, col;
+    row = y / TILE_SIZE;
+    col = x / TILE_SIZE;
+
+    return {row, col};
 }
 
 void Editor::Events() {

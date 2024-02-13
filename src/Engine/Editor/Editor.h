@@ -47,11 +47,15 @@ class Editor : public Application {
 
     void CleanLayers();
 
+    void PrintLayer();
+    void PrintLayer(int row, int col);
+
     void Update(float dt) override;
     void Render() override;
     void Events() override;
 
     static std::pair<float, float> SnapToGrid(float x, float y);
+    std::pair<int, int>PixelToTilePos(float x, float y);
 
     GameObject* GetObjectUnderMouse();
 
@@ -72,6 +76,7 @@ class Editor : public Application {
     static void ShowBuildPlayer();
     void ShowCreateObject();
     void DeleteObject(GameObject* obj);
+    void DeleteObject(GameObject* obj, int layer_num);
     void CreateObject(ObjectType type);
     // Player* CreatePlayer(Properties props);
     // Projectile* CreateProjectile(Properties props);
