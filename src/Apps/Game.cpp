@@ -51,7 +51,7 @@ const EnemyStats kDefaultEnemyStats = {
 };
 const RangedEnemyStats kDefaultRangedEnemyStats = {
     kDefaultEnemyStats,  // enemy stats
-    10000,               // fireInterval
+    3000,                // fireInterval
     4                    // spread};
 };
 

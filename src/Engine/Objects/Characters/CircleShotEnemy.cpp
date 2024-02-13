@@ -38,11 +38,12 @@ void CircleShotEnemy::Update(float dt) {
 }
 
 void CircleShotEnemy::Shoot() {
-    Properties const props = {"weapons", {6, 0, 16, 16}, {GetX(), GetY(), 12, 12}};
+    Properties const props = {
+        "weapons", {6, 0, 16, 16}, {GetX(), GetY(), 12, 12}};
 
-    GetAttack()->Shoot({GetMidPointX(), GetMidPointY(),
-                        GetTarget()->GetMidPointX(),
-                        GetTarget()->GetMidPointY(), props, 3, m_ShotCount});
+    GetAttack()->Shoot(RangedAttackInfo{
+        GetMidPointX(), GetMidPointY(), GetTarget()->GetMidPointX(),
+        GetTarget()->GetMidPointY(), props, 9, m_ShotCount});
 }
 
 void CircleShotEnemy::OnCollide(Collider* collidee) {

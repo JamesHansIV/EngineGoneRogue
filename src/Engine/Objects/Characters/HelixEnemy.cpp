@@ -37,9 +37,9 @@ void HelixEnemy::Update(float dt) {
 void HelixEnemy::Shoot() {
     Properties const props("weapons", {6, 1, 16, 16}, {GetX(), GetY(), 12, 12});
 
-    GetAttack()->Shoot({GetMidPointX(), GetMidPointY(),
-                        GetTarget()->GetMidPointX(),
-                        GetTarget()->GetMidPointY(), props});
+    GetAttack()->Shoot(RangedAttackInfo{
+        GetMidPointX(), GetMidPointY(), GetTarget()->GetMidPointX(),
+        GetTarget()->GetMidPointY(), props, .01});
 }
 
 void HelixEnemy::OnCollide(Collider* collidee) {
