@@ -60,27 +60,20 @@ void GameEventManager::HandleEvents() {
                 }
                 break;
             case SDL_USEREVENT:
-                switch (event.user.code) {
-                    case static_cast<int>(EventType::UserEvent):
-                        event_wrapper.SetSDLEvent(&event);
+                switch (static_cast<EventType>(event.user.code)) {
+                    case EventType::UserEvent:
+                    case EventType::CollideEvent:
+                    case EventType::TargetFoundEvent:
+                    case EventType::TargetLostEvent:
                         break;
-                    case static_cast<int>(EventType::CollideEvent):
-                        event_wrapper.SetSDLEvent(&event);
-                        break;
-                    case static_cast<int>(EventType::TargetFoundEvent):
-                        event_wrapper.SetSDLEvent(&event);
-                        break;
-                    case static_cast<int>(EventType::TargetLostEvent):
-                        event_wrapper.SetSDLEvent(&event);
-                        break;
-                    case static_cast<int>(EventType::EnemyDeathEvent): {
+                    case EventType::EnemyDeathEvent: {
                         auto* enemy = static_cast<Enemy*>(event.user.data1);
                         m_player.GetStats().AddExperience(
                             enemy->GetEnemyStats().xpGiven);
                         event_wrapper.SetSDLEvent(&event);
                         break;
                     }
-                    case static_cast<int>(EventType::PlayerLevelUpEvent):
+                    case EventType::PlayerLevelUpEvent:
                         event_wrapper.SetSDLEvent(&event);
                         break;
                     default:
