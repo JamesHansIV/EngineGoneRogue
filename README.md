@@ -15,3 +15,6 @@ To build the editor with cmake:
 ```console
 $ ./build-engine.sh editor
 ```
+
+### Attributions
+<a href="https://www.flaticon.com/free-icons/edit" title="edit icons">Edit icons created by Freepik - Flaticon</a>
