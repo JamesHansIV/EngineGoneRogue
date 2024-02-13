@@ -16,6 +16,8 @@
 #include "Engine/Objects/GameObject.h"
 #include "Engine/Objects/HealthPotion.h"
 #include "Engine/Objects/Chests/Chest.h"
+#include "Engine/Objects/WeaponInventory.h"
+#include "Engine/Objects/Weapons/Weapon.h"
 #include "Engine/Renderer/Renderer.h"
 
 Player* player = nullptr;
@@ -177,7 +179,7 @@ Game::Game() {
     auto* healthpotion2 = new HealthPotion(props12, 20);
 
     std::vector<GameObject*> items1;
-    Properties props13("", {1, 1, 18, 16}, {50, 240, 32, 32}, 0,
+    Properties props13("", {1, 1, 18, 16}, {200, 240, 32, 32}, 0,
                        "chest1");
     auto* chest1 = new Chest(props13, ChestType::Wooden, items1, player); 
 
@@ -213,6 +215,9 @@ Game::Game() {
     ColliderHandler::GetInstance()->AddCollider(chest1);
 
     srand(time(nullptr));
+
+    m_WeaponInventory = new WeaponInventory(player->GetPlayerWeapons());
+    m_WeaponInventory->SetSelectedWeapon(player->GetCurrentWeapon());
 
     Renderer::GetInstance()->SetCameraTarget(player);
 }
@@ -274,6 +279,7 @@ void Game::Update(float dt) {
     }
     ColliderHandler::GetInstance()->HandleCollisions();
     player->Update(dt);
+    m_WeaponInventory->SetSelectedWeapon(player->GetCurrentWeapon());
     if (player->MarkedForDeletion()) {
         DeleteObject(player);
     }
@@ -297,7 +303,6 @@ void Game::Update(float dt) {
             ++it;
         }
     }
-
     m_tick++;
     // Auto generate enemies
     //if (m_tick % cur_enemy_generation_interval == 0) {
@@ -321,6 +326,7 @@ void Game::Render() {
         obj->Draw();
     }
     player->Draw();
+    m_WeaponInventory->Draw();
     Renderer::GetInstance()->Render();
 }
 

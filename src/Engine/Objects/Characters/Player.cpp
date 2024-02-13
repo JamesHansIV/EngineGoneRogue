@@ -94,7 +94,7 @@ Player::Player(Properties& props) : Character(props) {
     Weapon* w2 = new MeleeWeapon(props_m, stats_m, this);
     w2->SetRotation(50);
     m_Weapons.push_back(w2);
-
+          
     Properties props_bow("bow", {0, 0, 16, 18}, {0, 0, 16, 18}, 90.0);
     RangedWeaponStats stats_bow = {true, 750, 10, 75, m_stats};
     Weapon* bow = new Bow(props_bow, stats_bow, this);
@@ -169,6 +169,7 @@ void Player::UpdateWeapon(float dt) {
             it = m_Weapons.begin();
         }
         m_CurrentWeapon = *it;
+
 
         // Reset the mouse wheel direction to avoid toggling multiple times
         InputChecker::SetMouseWheelDirection(0);

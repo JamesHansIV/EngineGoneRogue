@@ -110,6 +110,10 @@ class Player : public Character {
 
     PlayerStats& GetStats() { return *m_stats; }
 
+    std::vector<Weapon*>& GetPlayerWeapons() { return m_Weapons;};
+    
+    Weapon* GetCurrentWeapon() { return m_CurrentWeapon;};
+
     ObjectType GetObjectType() override { return ObjectType::Player; }
 
    private:

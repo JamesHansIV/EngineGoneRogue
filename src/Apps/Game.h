@@ -5,6 +5,7 @@
 #include "Engine/Application/Application.h"
 #include "Engine/Events/Event.h"
 #include "Engine/Objects/ColliderHandler.h"
+#include "Engine/Objects/WeaponInventory.h"
 
 class Game : public Application {
    public:
@@ -20,4 +21,5 @@ class Game : public Application {
    private:
     std::vector<GameObject*> m_Objects;
     int m_tick;
+    WeaponInventory* m_WeaponInventory;
 };
