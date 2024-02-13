@@ -161,12 +161,25 @@ bool IsLookingBehind(float angle) {
 }
 
 void Player::UpdateWeapon(float dt) {
-    if (InputChecker::GetMouseWheelDirection() != 0) {
+    if (InputChecker::GetMouseWheelDirection() > 0) {
         auto it =
             std::find(m_Weapons.begin(), m_Weapons.end(), m_CurrentWeapon);
         it++;
         if (it == m_Weapons.end()) {
             it = m_Weapons.begin();
+        }
+        m_CurrentWeapon = *it;
+
+        // Reset the mouse wheel direction to avoid toggling multiple times
+        InputChecker::SetMouseWheelDirection(0);
+    }
+
+    if (InputChecker::GetMouseWheelDirection() < 0) {
+        auto it =
+            std::find(m_Weapons.rbegin(), m_Weapons.rend(), m_CurrentWeapon);
+        it++;
+        if (it == m_Weapons.rend()) {
+            it = m_Weapons.rbegin();
         }
         m_CurrentWeapon = *it;
 

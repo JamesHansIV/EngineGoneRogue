@@ -262,6 +262,7 @@ State* SlimeIsHit::Update(float /*dt*/) {
         return new SlimeIdle(GetEnemy());
     }
     if (GetEnemy()->GetHealth()->GetHP() <= 0) {
+        // Todo: create function that creates this event?
         SDL_Event event;
         SDL_zero(event);
         event.type = custom_event_type;
