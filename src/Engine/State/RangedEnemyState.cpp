@@ -1,5 +1,6 @@
 #include "RangedEnemyState.h"
 #include "Engine/Application/Application.h"
+#include "Engine/Events/GameEventManager.h"
 #include "Engine/Objects/Characters/Player.h"
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Objects/Environment/Entrance.h"
@@ -208,6 +209,13 @@ State* RangedEnemyIsHit::Update(float /*dt*/) {
         return new RangedEnemyIdle(GetEnemy());
     }
     if (GetEnemy()->GetHealth()->GetHP() <= 0) {
+        SDL_Event event;
+        SDL_zero(event);
+        event.type = custom_event_type;
+        event.user.code = static_cast<int>(EventType::EnemyDeathEvent);
+        event.user.data1 = GetEnemy();
+        event.user.data2 = nullptr;
+        SDL_PushEvent(&event);
         return new RangedEnemyDead(GetEnemy());
     }
     return nullptr;
@@ -253,7 +261,7 @@ State* RangedEnemyIsHit::OnCollideEvent(CollideEvent* event) {
             }
             break;
         }
-        case ObjectType::Chest: 
+        case ObjectType::Chest:
         case ObjectType::Player:
         case ObjectType::Enemy:
         case ObjectType::Collider:

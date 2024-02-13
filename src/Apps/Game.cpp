@@ -217,63 +217,11 @@ Game::Game() {
     m_WeaponInventory->SetSelectedWeapon(player->GetCurrentWeapon());
 
     Renderer::GetInstance()->SetCameraTarget(player);
+    m_GameEventManager = new GameEventManager(*player, m_Objects);
 }
 
 void Game::Events() {
-    SDL_Event event;
-    UserEvent event_wrapper;
-    event_wrapper.SetSDLEvent(&event);
-    while (SDL_PollEvent(&event) != 0) {
-        switch (event.type) {
-            case SDL_QUIT:
-                Quit();
-                return;
-            case SDL_KEYDOWN:
-                InputChecker::SetKeyPressed(event.key.keysym.sym, true);
-                switch (event.key.keysym.sym) {
-                    case SDLK_ESCAPE:
-                        if (timer.IsPaused()) {
-                            timer.Unpause();
-                        } else {
-                            timer.Pause();
-                        }
-                        return;
-                    default:
-                        break;
-                }
-                //player->OnKeyPressed(event);
-                break;
-            case SDL_KEYUP:
-                InputChecker::SetKeyPressed(event.key.keysym.sym, false);
-                //player->OnKeyReleased(event);
-                break;
-            case SDL_MOUSEBUTTONDOWN:
-                InputChecker::SetMouseButtonPressed(event.button.button, true);
-                break;
-            case SDL_MOUSEBUTTONUP:
-                InputChecker::SetMouseButtonPressed(event.button.button, false);
-                break;
-            case SDL_MOUSEMOTION:
-                InputChecker::UpdateMousePosition(event.motion.x,
-                                                  event.motion.y);
-                break;
-            case SDL_MOUSEWHEEL:
-                InputChecker::SetMouseWheelDirection(event.wheel.y);
-                break;
-            case SDL_WINDOWEVENT:
-                // TODO: Add pause menu to render when focus is lost
-                if (event.window.event == SDL_WINDOWEVENT_FOCUS_GAINED) {
-                    timer.Unpause();
-                }
-                if (event.window.event == SDL_WINDOWEVENT_FOCUS_LOST) {
-                    timer.Pause();
-                }
-                break;
-            default:
-                break;
-        }
-        player->HandleEvent(&event_wrapper);
-    }
+    m_GameEventManager->HandleEvents();
 }
 
 void Game::Update(float dt) {
@@ -296,12 +244,6 @@ void Game::Update(float dt) {
         if ((*it)
                 ->MarkedForDeletion())  // Check if it's an Enemy and marked for deletion
         {
-            // TODO: Remove this hack for experience. It should be handled by the
-            // player by either a global event or global state
-            if (enemy != nullptr && enemy->GetHealth()->GetHP() <= 0) {
-                player->GetStats().AddExperience(
-                    enemy->GetEnemyStats().xpGiven);
-            }
             DeleteObject(*it);
         } else {
             ++it;

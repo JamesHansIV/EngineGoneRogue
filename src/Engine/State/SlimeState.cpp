@@ -262,6 +262,13 @@ State* SlimeIsHit::Update(float /*dt*/) {
         return new SlimeIdle(GetEnemy());
     }
     if (GetEnemy()->GetHealth()->GetHP() <= 0) {
+        SDL_Event event;
+        SDL_zero(event);
+        event.type = custom_event_type;
+        event.user.code = static_cast<int>(EventType::EnemyDeathEvent);
+        event.user.data1 = GetEnemy();
+        event.user.data2 = nullptr;
+        SDL_PushEvent(&event);
         return new SlimeDead(GetEnemy());
     }
     return nullptr;

@@ -11,6 +11,7 @@ enum class EventType {
     TargetFoundEvent,
     TargetLostEvent,
     EnemyDeathEvent,
+    PlayerLevelUpEvent,
 };
 
 class Event {
