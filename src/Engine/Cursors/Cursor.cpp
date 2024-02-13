@@ -1,40 +1,30 @@
 #include "Cursor.h"
 #include "imgui.h"
+#include "Engine/Application/Application.h"
 #include<iostream>
 
 Cursor::Cursor() {
-    m_Width = 18;
-    m_Height = 18;
+    m_Width = 24;
+    m_Height = 24;
+    m_Scale = 1;
     m_Cursor_Type = CursorType::POINT;
-    try {
-
-    // check nullptr
-    
-
-    std::cout << "m_animation ptr" << m_Animation << std::endl;
-    m_Animation->AddAnimation("draw_cursor", {"cursor_draw_texture", {0,0,m_Width,m_Height}, 0, 0});
-    // m_Animation->AddAnimation("Dead", {"m_TextureID", {0, 0, 18, 16}, 6, 5}));
-    } catch (std::runtime_error& e) {
-        std::cout << e.what() << std::endl;
-    }
 }
 
-Cursor::~Cursor() {
-    delete m_Animation;
-}
+Cursor::~Cursor() {}
 
-void Cursor::Draw() {
-
-    std::cout << "Trying to draw" << std::endl;
-
-    // add logic for point
-    if (m_Cursor_Type == CursorType::POINT)
-        return;
-
+SDL_Rect Cursor::UpdateAndGetRect() {
     ImGuiIO& io = ImGui::GetIO();  
-    Rect dstRect { io.MousePos.x, io.MousePos.y, m_Width, m_Height };
-    m_Animation->Draw(dstRect, 0.0f);
 
+    m_Cursor_Rect.h = m_Height * m_Scale;
+    m_Cursor_Rect.w = m_Width * m_Scale;
+    m_Cursor_Rect.x = io.MousePos.x;
+    m_Cursor_Rect.y = io.MousePos.y - m_Cursor_Rect.h;
+
+    return m_Cursor_Rect;
+}
+
+std::string Cursor::GetTextureId(int edit_mode) {
+    return cursor_type_to_texture_id_map[m_Cursor_Type];
 }
 
 void Cursor::SetCursor(CursorType cursor_type) {
