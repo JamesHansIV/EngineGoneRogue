@@ -70,8 +70,8 @@ bool Enemy::MoveTowardsTarget(float dt) {
             direction_y /= direction_length;
         }
 
-        m_RigidBody->ApplyVelocity(Vector2D(direction_x, direction_y) *
-                                   (dt + 0.02));
+        m_RigidBody->ApplyVelocity(
+            Vector2D(direction_x * 1.5, direction_y * 1.5) * dt);
         if (direction_length <= m_stats.range) {
             return true;
         }

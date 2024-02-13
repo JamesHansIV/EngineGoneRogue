@@ -15,7 +15,6 @@ void MovePlayer(Player* player, float dt) {
     float speed = 0;
     if (InputChecker::IsKeyPressed(SDLK_w)) {
         speed = player->GetStats().getSpeed();
-        SDL_Log("speed: %f", -speed * 100);
         player->GetRigidBody()->ApplyVelocity(Vector2D(0, -speed * dt));
     }
     if (InputChecker::IsKeyPressed(SDLK_s)) {

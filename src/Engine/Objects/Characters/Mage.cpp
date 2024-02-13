@@ -35,11 +35,12 @@ void Mage::Update(float dt) {
 void Mage::Shoot() {
     RotatingBullet* bullet;
 
-    Properties const props = {"weapons", {6, 1, 16, 16}, {GetX(), GetY(), 12, 12}};
+    Properties const props = {
+        "weapons", {6, 1, 16, 16}, {GetX(), GetY(), 12, 12}};
 
-    GetAttack()->Shoot({GetMidPointX(), GetMidPointY(),
-                        GetTarget()->GetMidPointX(),
-                        GetTarget()->GetMidPointY(), props, 3, m_BulletCount});
+    GetAttack()->Shoot(
+        {GetMidPointX(), GetMidPointY(), GetTarget()->GetMidPointX(),
+         GetTarget()->GetMidPointY(), props, .05, m_BulletCount});
 }
 
 void Mage::OnCollide(Collider* collidee) {

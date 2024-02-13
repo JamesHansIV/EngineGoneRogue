@@ -21,5 +21,6 @@ class Game : public Application {
    private:
     std::vector<GameObject*> m_Objects;
     WeaponInventory* m_WeaponInventory;
+    int m_tick = 0;
     Uint32 m_last_enemy_spawn_time = 0;
 };

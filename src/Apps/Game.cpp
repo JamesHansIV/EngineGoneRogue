@@ -51,7 +51,7 @@ const EnemyStats kDefaultEnemyStats = {
 };
 const RangedEnemyStats kDefaultRangedEnemyStats = {
     kDefaultEnemyStats,  // enemy stats
-    10000,               // fireInterval
+    3000,                // fireInterval
     4                    // spread};
 };
 
@@ -180,7 +180,11 @@ Game::Game() {
     auto* healthpotion2 = new HealthPotion(props12, 20);
 
     std::vector<GameObject*> items1;
+<<<<<<< HEAD
     Properties props13("", {1, 1, 18, 16}, {50, 240, 32, 32}, 0, "chest1");
+=======
+    Properties props13("", {1, 1, 18, 16}, {200, 240, 32, 32}, 0, "chest1");
+>>>>>>> 03c548f (Change DeltaTime implementation)
     auto* chest1 = new Chest(props13, ChestType::Wooden, items1, player);
 
     m_Objects.push_back(enemy1);
