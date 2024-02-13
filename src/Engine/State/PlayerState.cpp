@@ -15,6 +15,7 @@ void MovePlayer(Player* player, float dt) {
     float speed = 0;
     if (InputChecker::IsKeyPressed(SDLK_w)) {
         speed = player->GetStats().getSpeed();
+        SDL_Log("speed: %f", -speed * 100);
         player->GetRigidBody()->ApplyVelocity(Vector2D(0, -speed * dt));
     }
     if (InputChecker::IsKeyPressed(SDLK_s)) {
@@ -125,7 +126,7 @@ State* HandleCollide(Player* player, CollideEvent* event) {
                                          dynamic_cast<Entrance*>(collidee));
             break;
         }
-        case ObjectType::Chest: 
+        case ObjectType::Chest:
         case ObjectType::Collider:
             player->UnCollide(collidee);
             break;

@@ -6,6 +6,7 @@
 
 #include "Engine/Input/InputChecker.h"
 
+#include "Engine/Timer/Timer.h"
 #include "backends/imgui_impl_sdl2.h"
 #include "backends/imgui_impl_sdlrenderer2.h"
 
@@ -15,6 +16,8 @@
 #include <unistd.h>
 
 Application* Application::m_instance = nullptr;
+
+Timer timer = Timer();
 
 Application::Application() : m_ProjectName("test_project"), m_Frame(0) {
 
@@ -345,22 +348,35 @@ void Application::Events() {
 }
 
 void Application::Run() {
+    timer.Start();
+    double accumulator = 0.0;
     while (m_IsRunning) {
-        m_Frame++;
+        SDL_Log("Time: %d", timer.GetTicks());
         Events();
+        float DT = 0.01;
+        m_Frame++;
         if (!m_is_paused) {
-            Uint32 const current_tick = SDL_GetTicks();
-            float dt = static_cast<float>(current_tick) - m_LastTick;
-            // TODO: Pausing fixed the need for this hack, but for some reason
-            // when running a debugger it will pause after one game loop,
-            // so this check is still needed.
-            if (dt > 200) {
-                SDL_Log("dt: %f", dt);
-                dt = 1;
+            Uint32 const new_time = timer.GetTicks();
+            auto frame_time =
+                static_cast<float>(new_time - timer.GetCurrentTime());
+
+            if (frame_time > 0.25) {
+                frame_time = 0.25;
             }
 
-            m_LastTick = current_tick;
-            Update(dt / 10);
+            timer.SetCurrentTime(new_time);
+
+            accumulator += frame_time;
+
+            while (accumulator >= DT) {
+                Update(DT);
+                accumulator -= DT;
+            }
+
+            // float dt = static_cast<float>(frame_time);
+            // SDL_Log("dt: %f", dt);
+
+            // Update(dt / 10);
         }
         Render();
     }
@@ -369,6 +385,7 @@ void Application::Run() {
 
 bool Application::Clean() {
     Renderer::GetInstance()->Destroy();
+    delete Renderer::GetInstance();
 
     SDL_DestroyWindow(m_Window);
     IMG_Quit();

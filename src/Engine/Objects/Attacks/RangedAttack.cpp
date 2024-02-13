@@ -3,6 +3,9 @@
 #include <utility>
 #include "Engine/Application/Application.h"
 #include "Engine/Objects/ColliderHandler.h"
+#include "Engine/Timer/Timer.h"
+
+extern Timer timer;
 
 void RangedAttack::Update(float dt) {
     m_ProjectileManager.UpdateProjectiles(dt);
@@ -24,7 +27,7 @@ void RangedAttack::Reset() {
 void RangedAttack::Perform() {}
 
 void RangedAttack::Shoot(RangedAttackInfo info) {
-    if (Application::Get()->GetFrame() % m_Interval != 0) {
+    if ((timer.GetTicks() - m_LastAttack) <= m_Interval) {
         return;
     }
     if (m_AttackPattern != nullptr && !m_AttackPattern->Attack()) {
@@ -34,5 +37,6 @@ void RangedAttack::Shoot(RangedAttackInfo info) {
     for (auto* bullet : bullets) {
         m_ProjectileManager.AddProjectile(bullet);
         ColliderHandler::GetInstance()->AddCollider(bullet);
+        m_LastAttack = timer.GetTicks();
     }
 }

@@ -11,14 +11,15 @@
 #include "Engine/Objects/Characters/Player.h"
 #include "Engine/Objects/Characters/Skeleton.h"
 #include "Engine/Objects/Characters/Slime.h"
+#include "Engine/Objects/Chests/Chest.h"
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Objects/Environment/Entrance.h"
 #include "Engine/Objects/GameObject.h"
 #include "Engine/Objects/HealthPotion.h"
-#include "Engine/Objects/Chests/Chest.h"
 #include "Engine/Objects/WeaponInventory.h"
 #include "Engine/Objects/Weapons/Weapon.h"
 #include "Engine/Renderer/Renderer.h"
+#include "Engine/Timer/Timer.h"
 
 Player* player = nullptr;
 Enemy* enemy1 = nullptr;
@@ -34,8 +35,25 @@ Enemy* enemy10 = nullptr;
 
 std::vector<Collider*> colliders;
 
-int max_tick_interval = 100;
-int cur_enemy_generation_interval = 800;
+int max_tick_interval = 500;
+int cur_enemy_generation_interval = 5000;
+
+extern Timer timer;
+
+const EnemyStats kDefaultEnemyStats = {
+    100,  // health
+    1,    // damage
+    10,   // speed
+    150,  // range
+    160,  // perception width
+    150,  // perception height
+    15,   // xp
+};
+const RangedEnemyStats kDefaultRangedEnemyStats = {
+    kDefaultEnemyStats,  // enemy stats
+    10000,               // fireInterval
+    4                    // spread};
+};
 
 Game::Game() {
     SDL_Renderer* renderer = Renderer::GetInstance()->GetRenderer();
@@ -87,16 +105,14 @@ Game::Game() {
         "spr_weapon06.png");
 
     Renderer::GetInstance()->AddTexture(
-        "healthpotion", 
-        "../assets/textures/spritesheets/lifepotion.png");
+        "healthpotion", "../assets/textures/spritesheets/lifepotion.png");
 
     Renderer::GetInstance()->AddTexture(
         "wooden_chest_idle",
         "../assets/textures/BulletHell/PURPLE/Others/Chest/spr_chest1.png");
-    
+
     Renderer::GetInstance()->AddTexture(
-        "wooden_chest_opening",
-        "../assets/textures/spritesheets/chest.png");
+        "wooden_chest_opening", "../assets/textures/spritesheets/chest.png");
 
     m_Objects = Application::m_Rooms["room1"];
 
@@ -115,60 +131,45 @@ Game::Game() {
 
     Properties props1("enemies", {0, 1, 16, 16}, {200, 200, 36, 36}, 0,
                       "enemy1");
-    const EnemyStats default_enemy_stats = {
-        100,  // health
-        1,    // damage
-        10,   // speed
-        150,  // range
-        160,  // perception width
-        150,  // perception height
-        15,   // xp
-    };
-    enemy1 = new Slime(props1, default_enemy_stats);
+    enemy1 = new Slime(props1, kDefaultEnemyStats);
 
     Properties props2("enemies", {0, 1, 16, 16}, {300, 260, 36, 36}, 0,
                       "enemy2");
-    enemy2 = new Slime(props2, default_enemy_stats);
+    enemy2 = new Slime(props2, kDefaultEnemyStats);
 
     Properties props3("enemies", {0, 1, 16, 16}, {500, 200, 36, 36}, 0,
                       "enemy3");
-    enemy3 = new Slime(props3, default_enemy_stats);
+    enemy3 = new Slime(props3, kDefaultEnemyStats);
 
     Properties props4("enemies", {0, 1, 16, 16}, {600, 367, 36, 36}, 0,
                       "enemy4");
-    enemy4 = new Slime(props4, default_enemy_stats);
-
-    const RangedEnemyStats default_ranged_enemy_stats = {
-        default_enemy_stats,  // enemy stats
-        20,                   // fireInterval
-        4                     // spread};
-    };
+    enemy4 = new Slime(props4, kDefaultEnemyStats);
 
     Properties props5("enemies", {0, 1, 16, 16}, {700, 300, 36, 36}, 0,
                       "enemy5");
     // specific stats replaced with defaults for easy refactor. can be changed later
     // specific enemy stats changed in commit on 2/4.
-    enemy5 = new CircleShotEnemy(props5, default_ranged_enemy_stats);
+    enemy5 = new CircleShotEnemy(props5, kDefaultRangedEnemyStats);
 
     Properties props6("enemies", {6, 2, 16, 16}, {600, 150, 36, 36}, 0,
                       "enemy6");
-    enemy6 = new Mage(props6, default_ranged_enemy_stats);
+    enemy6 = new Mage(props6, kDefaultRangedEnemyStats);
 
     Properties props7("enemies", {6, 2, 16, 16}, {500, 300, 36, 36}, 0,
                       "enemy7");
-    enemy7 = new Dog(props7, default_ranged_enemy_stats);
+    enemy7 = new Dog(props7, kDefaultRangedEnemyStats);
 
     Properties props8("enemies", {9, 2, 16, 16}, {600, 300, 36, 36}, 0,
                       "enemy8");
-    enemy8 = new Skeleton(props8, default_ranged_enemy_stats);
+    enemy8 = new Skeleton(props8, kDefaultRangedEnemyStats);
 
     Properties props9("enemies", {9, 2, 16, 16}, {550, 300, 36, 36}, 0,
                       "enemy9");
-    enemy9 = new Goblin(props9, default_ranged_enemy_stats);
+    enemy9 = new Goblin(props9, kDefaultRangedEnemyStats);
 
     Properties props10("enemies", {9, 2, 16, 16}, {400, 300, 36, 36}, 0,
                        "enemy10");
-    enemy10 = new HelixEnemy(props10, default_ranged_enemy_stats);
+    enemy10 = new HelixEnemy(props10, kDefaultRangedEnemyStats);
 
     Properties props11("healthpotion", {1, 1, 16, 16}, {250, 150, 25, 25}, 0,
                        "healthpotion");
@@ -179,11 +180,9 @@ Game::Game() {
     auto* healthpotion2 = new HealthPotion(props12, 20);
 
     std::vector<GameObject*> items1;
-    Properties props13("", {1, 1, 18, 16}, {200, 240, 32, 32}, 0,
-                       "chest1");
-    auto* chest1 = new Chest(props13, ChestType::Wooden, items1, player); 
+    Properties props13("", {1, 1, 18, 16}, {50, 240, 32, 32}, 0, "chest1");
+    auto* chest1 = new Chest(props13, ChestType::Wooden, items1, player);
 
-    
     m_Objects.push_back(enemy1);
     m_Objects.push_back(enemy2);
     m_Objects.push_back(enemy3);
@@ -258,11 +257,13 @@ void Game::Events() {
                 if (event.window.event == SDL_WINDOWEVENT_FOCUS_GAINED) {
                     m_has_focus = true;
                     m_is_paused = false;
+                    timer.Start();
                     m_LastTick = static_cast<float>(SDL_GetTicks());
                 }
                 if (event.window.event == SDL_WINDOWEVENT_FOCUS_LOST) {
                     m_has_focus = false;
                     m_is_paused = true;
+                    timer.Pause();
                 }
                 break;
             default:
@@ -303,21 +304,65 @@ void Game::Update(float dt) {
             ++it;
         }
     }
-    m_tick++;
+    // We probably want a wave multipler. Idea of waves.
+    // Have dedicated stats for each enemy
+    // Have a wave manager that will spawn enemies
+    // have a wave multiplier that will increase the stats of the enemies
     // Auto generate enemies
-    //if (m_tick % cur_enemy_generation_interval == 0) {
-    //    float const generated_x = rand() % 500 + 200;
-    //    float const generated_y = rand() % 300 + 20;
-    //    Properties generated_props("enemies", {0, 1, 16, 16},
-    //                               {generated_x, generated_y, 36, 36}, 0,
-    //                               "enemy1");
-    //    auto* generated_enemy = new Slime(generated_props, 300, 300);
-    //    ColliderHandler::GetInstance()->AddCollider(generated_enemy);
-    //    m_Objects.push_back(generated_enemy);
-    //}
-    //if (max_tick_interval < cur_enemy_generation_interval) {
-    //    cur_enemy_generation_interval -= 20;
-    //}
+    if ((SDL_GetTicks() - m_last_enemy_spawn_time) >=
+        cur_enemy_generation_interval) {
+        m_last_enemy_spawn_time = SDL_GetTicks();
+        // Generate random x and y coordinates
+        float const generated_x = rand() % 500 + 200;
+        float const generated_y = rand() % 300 + 20;
+        Properties generated_props("enemies", {0, 1, 16, 16},
+                                   {generated_x, generated_y, 36, 36}, 0,
+                                   "enemy1");
+        // Generate random enemy type
+        int const enemy_type = rand() % 7;
+        Enemy* generated_enemy = nullptr;
+        // switch (enemy_type) {
+        //     case 0:
+        //         generated_enemy =
+        //             new Slime(generated_props, kDefaultEnemyStats);
+        //         break;
+        //     case 1:
+        //         generated_enemy = new CircleShotEnemy(generated_props,
+        //                                               kDefaultRangedEnemyStats);
+        //         break;
+        //     case 2:
+        //         generated_enemy =
+        //             new Mage(generated_props, kDefaultRangedEnemyStats);
+        //         break;
+        //     case 3:
+        //         generated_enemy =
+        //             new Dog(generated_props, kDefaultRangedEnemyStats);
+        //         break;
+        //     case 4:
+        //         generated_enemy =
+        //             new Skeleton(generated_props, kDefaultRangedEnemyStats);
+        //         break;
+        //     case 5:
+        //         generated_enemy =
+        //             new Goblin(generated_props, kDefaultRangedEnemyStats);
+        //         break;
+        //     case 6:
+        //         generated_enemy =
+        //             new HelixEnemy(generated_props, kDefaultRangedEnemyStats);
+        //         break;
+        //     default:
+        //         break;
+        // }
+
+        // ColliderHandler::GetInstance()->AddCollider(generated_enemy);
+        // m_Objects.push_back(generated_enemy);
+    }
+
+    if (SDL_GetTicks() % 5000 <= 10 &&
+        max_tick_interval < cur_enemy_generation_interval) {
+        SDL_Log("Increasing enemy generation interval");
+        cur_enemy_generation_interval -= 200;
+    }
 }
 
 void Game::Render() {

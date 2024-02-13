@@ -13,6 +13,7 @@ RangedWeapon::RangedWeapon(Properties& props, RangedWeaponStats& stats,
                        {GetMidPointX(), GetMidPointY(), k_projectile_width,
                         k_projectile_height},
                        GetRotation(), "bullet");
+    m_auto_fire_enabled = true;
 }
 
 void RangedWeapon::Draw() {

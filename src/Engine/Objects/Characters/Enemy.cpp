@@ -57,7 +57,7 @@ bool Enemy::TargetDetected() {
 }
 
 // Returns true if in target is in range
-bool Enemy::MoveTowardsTarget(float /*dt*/) {
+bool Enemy::MoveTowardsTarget(float dt) {
     if (TargetDetected()) {
         float direction_x = m_Target->GetMidPointX() - GetMidPointX();
         float direction_y = m_Target->GetMidPointY() - GetMidPointY();
@@ -70,8 +70,8 @@ bool Enemy::MoveTowardsTarget(float /*dt*/) {
             direction_y /= direction_length;
         }
 
-        m_RigidBody->ApplyVelocity(
-            Vector2D(direction_x * 0.5, direction_y * 0.5));
+        m_RigidBody->ApplyVelocity(Vector2D(direction_x, direction_y) *
+                                   (dt + 0.02));
         if (direction_length <= m_stats.range) {
             return true;
         }

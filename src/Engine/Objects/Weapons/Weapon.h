@@ -6,6 +6,7 @@
 
 class PlayerStats;
 class Player;
+
 // Potential stats:
 // Damage, Accuracy, Pattern?, spread?, range, knockback, elemental, status effect, armor penetration, reload, switching speed,
 
@@ -57,7 +58,8 @@ class WeaponStats {
 
 class Weapon : public Collider {
    public:
-    explicit Weapon(Properties& props, WeaponStats& stats, Player* owner) : Collider(props) {
+    explicit Weapon(Properties& props, WeaponStats& stats, Player* owner)
+        : Collider(props) {
         m_stats = stats;
         m_owner = owner;
     }
