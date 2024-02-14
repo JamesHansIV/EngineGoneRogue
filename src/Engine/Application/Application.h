@@ -13,7 +13,6 @@ class Application {
     Application();
     virtual ~Application() = default;
 
-    static bool LoadTextures(char* projectPath);
     static GameObject* LoadObject(tinyxml2::XMLElement* xmlObj);
     static Collider* LoadCollider(tinyxml2::XMLElement* xmlObj,
                                   GameObject* obj);

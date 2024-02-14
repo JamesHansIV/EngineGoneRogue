@@ -58,49 +58,6 @@ Application::Application() : m_ProjectName("test_project"), m_Frame(0) {
     m_IsRunning = true;
 }
 
-bool Application::LoadTextures(char* projectPath) {
-    tinyxml2::XMLDocument doc;
-    std::string textures_path;
-    textures_path += projectPath;
-    textures_path += "/textures.xml";
-    SDL_Log("%s", textures_path.c_str());
-    tinyxml2::XMLError const error = doc.LoadFile(textures_path.c_str());
-    if (error != tinyxml2::XML_SUCCESS) {
-        SDL_LogError(0, "Could not load textures");
-        return false;
-    }
-
-    tinyxml2::XMLElement* root = doc.FirstChildElement("Root");
-    tinyxml2::XMLElement* curr_texture = root->FirstChildElement("Texture");
-
-    std::string type;
-    std::string id;
-    std::string texture_path;
-    int tile_size;
-    int rows;
-    int cols;
-
-    while (curr_texture != nullptr) {
-        type = curr_texture->Attribute("type");
-        id = curr_texture->FirstChildElement("ID")->GetText();
-        texture_path = curr_texture->FirstChildElement("FilePath")->GetText();
-        if (type == "tileMap") {
-            SDL_Log("texture filepath: %s", texture_path.c_str());
-            tile_size =
-                atoi(curr_texture->FirstChildElement("TileSize")->GetText());
-            rows = atoi(curr_texture->FirstChildElement("Rows")->GetText());
-            cols = atoi(curr_texture->FirstChildElement("Cols")->GetText());
-            Renderer::GetInstance()->AddTileMap(id, texture_path, tile_size,
-                                                rows, cols);
-        } else {
-            Renderer::GetInstance()->AddTexture(id, texture_path);
-        }
-
-        curr_texture = curr_texture->NextSiblingElement("Texture");
-    }
-    return true;
-}
-
 bool Application::LoadRooms(const char* projectPath) {
     struct dirent* entry;
     DIR* dp;
