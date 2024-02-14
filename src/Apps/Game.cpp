@@ -20,6 +20,7 @@
 #include "Engine/Objects/Weapons/Weapon.h"
 #include "Engine/Renderer/Renderer.h"
 #include "Engine/Timer/Timer.h"
+#include "SDL2/SDL_log.h"
 
 Player* player = nullptr;
 Enemy* enemy1 = nullptr;
@@ -244,6 +245,13 @@ void Game::Update(float dt) {
         if ((*it)
                 ->MarkedForDeletion())  // Check if it's an Enemy and marked for deletion
         {
+            // TODO: Remove this hack for experience. It should be handled by the
+            // player by either a global event or global state
+            if (enemy != nullptr && enemy->GetHealth()->GetHP() <= 0) {
+                player->GetStats().AddExperience(
+                    enemy->GetEnemyStats().xpGiven);
+                ChestDrops();
+            }
             DeleteObject(*it);
         } else {
             ++it;
@@ -335,6 +343,16 @@ void Game::DeleteObject(GameObject* obj) {
     obj->Clean();
     delete obj;
     obj = nullptr;
+}
+
+void Game::ChestDrops(){
+    srand(time(nullptr));
+    float random_number =  static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
+    SDL_Log("Rand: %f", random_number);
+    if (random_number <= m_ChanceOfDrop)
+    {
+        SDL_Log("CHESTT DROPPP");
+    }
 }
 
 #if EDITOR == 0
