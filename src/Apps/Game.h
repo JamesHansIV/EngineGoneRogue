@@ -19,7 +19,7 @@ class Game : public Application {
     void AddObject(GameObject* obj);
     void DeleteObject(GameObject* obj);
 
-    void ChestDrops();
+    void ChestDrops(float chest_x, float chest_y);
 
    private:
     std::vector<GameObject*> m_Objects;
@@ -27,5 +27,5 @@ class Game : public Application {
     int m_tick = 0;
     Uint32 m_last_enemy_spawn_time = 0;
     GameEventManager* m_GameEventManager;
-    float m_ChanceOfDrop = 0.5;
+    float m_ChanceOfDrop = 0.1;
 };

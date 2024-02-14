@@ -21,6 +21,7 @@
 #include "Engine/Renderer/Renderer.h"
 #include "Engine/Timer/Timer.h"
 #include "SDL2/SDL_log.h"
+#include <random>
 
 Player* player = nullptr;
 Enemy* enemy1 = nullptr;
@@ -178,10 +179,6 @@ Game::Game() {
                        "healthpotion2");
     auto* healthpotion2 = new HealthPotion(props12, 20);
 
-    std::vector<GameObject*> items1;
-    Properties props13("", {1, 1, 18, 16}, {200, 240, 32, 32}, 0, "chest1");
-    auto* chest1 = new Chest(props13, ChestType::Wooden, items1, player);
-
     m_Objects.push_back(enemy1);
     m_Objects.push_back(enemy2);
     m_Objects.push_back(enemy3);
@@ -195,7 +192,6 @@ Game::Game() {
     m_Objects.push_back(entrance);
     m_Objects.push_back(healthpotion);
     m_Objects.push_back(healthpotion2);
-    m_Objects.push_back(chest1);
     ColliderHandler::GetInstance()->AddCollider(player);
     ColliderHandler::GetInstance()->AddCollider(enemy1);
     ColliderHandler::GetInstance()->AddCollider(enemy2);
@@ -210,7 +206,6 @@ Game::Game() {
     ColliderHandler::GetInstance()->AddCollider(entrance);
     ColliderHandler::GetInstance()->AddCollider(healthpotion);
     ColliderHandler::GetInstance()->AddCollider(healthpotion2);
-    ColliderHandler::GetInstance()->AddCollider(chest1);
 
     srand(time(nullptr));
 
@@ -250,7 +245,7 @@ void Game::Update(float dt) {
             if (enemy != nullptr && enemy->GetHealth()->GetHP() <= 0) {
                 player->GetStats().AddExperience(
                     enemy->GetEnemyStats().xpGiven);
-                ChestDrops();
+                ChestDrops(enemy->GetMidPointX(), enemy->GetMidPointY());
             }
             DeleteObject(*it);
         } else {
@@ -345,13 +340,19 @@ void Game::DeleteObject(GameObject* obj) {
     obj = nullptr;
 }
 
-void Game::ChestDrops(){
-    srand(time(nullptr));
-    float random_number =  static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
+void Game::ChestDrops(float chest_x, float chest_y){
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<float> dis(0.0f, 1.0f);
+    float const random_number = dis(gen);
     SDL_Log("Rand: %f", random_number);
     if (random_number <= m_ChanceOfDrop)
     {
-        SDL_Log("CHESTT DROPPP");
+        std::vector<GameObject*> items1;
+        Properties props13("", {1, 1, 18, 16}, {chest_x, chest_y, 32, 32}, 0, "chest1");
+        auto* chest1 = new Chest(props13, ChestType::Wooden, items1, player);
+        m_Objects.push_back(chest1);
+        ColliderHandler::GetInstance()->AddCollider(chest1);
     }
 }
 
