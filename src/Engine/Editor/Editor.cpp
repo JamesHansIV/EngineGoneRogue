@@ -13,7 +13,6 @@
 
 #include <dirent.h>
 #include <sys/stat.h>
-#include <tinyxml2.h>
 #include <cstdlib>
 #include <memory>
 

@@ -2,7 +2,6 @@
 #include <SDL2/SDL.h>
 #include <SDL2_image/SDL_image.h>
 
-#include <tinyxml2.h>
 #include <unordered_map>
 #include "Engine/Events/EventManager.h"
 #include "Engine/Layers/Layer.h"
@@ -13,9 +12,6 @@ class Application {
     Application();
     virtual ~Application() = default;
 
-    static GameObject* LoadObject(tinyxml2::XMLElement* xmlObj);
-    static Collider* LoadCollider(tinyxml2::XMLElement* xmlObj,
-                                  GameObject* obj);
     bool LoadRooms(const char* projectPath);
     bool LoadProject();
 
