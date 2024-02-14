@@ -1,6 +1,5 @@
 #include "RangedEnemy.h"
 
-
 RangedEnemy::~RangedEnemy() = default;
 
 void RangedEnemy::Draw() {
@@ -36,4 +35,7 @@ void RangedEnemy::OnCollide(Collider* collidee) {
     }
 }
 
-void RangedEnemy::Clean() {}
+void RangedEnemy::Clean() {
+    delete m_Attack;
+    delete m_Health;
+}

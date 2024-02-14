@@ -34,7 +34,8 @@ void Skeleton::Update(float dt) {
 }
 
 void Skeleton::Shoot() {
-    Properties const props = {"weapons", {6, 3, 16, 16}, {GetX(), GetY(), 16, 16}};
+    Properties const props = {
+        "weapons", {6, 3, 16, 16}, {GetX(), GetY(), 16, 16}};
 
     GetAttack()->Shoot({GetMidPointX(), GetMidPointY(),
                         GetTarget()->GetMidPointX(),
@@ -46,4 +47,6 @@ void Skeleton::OnCollide(Collider* collidee) {
     RangedEnemy::OnCollide(collidee);
 }
 
-void Skeleton::Clean() {}
+void Skeleton::Clean() {
+    delete m_Attack;
+}

@@ -40,11 +40,12 @@ class RangedAttack : public Attack {
     virtual void Perform() override;
 
     virtual void Shoot(RangedAttackInfo info);
+    ~RangedAttack();
 
    private:
     int m_Interval;
     std::vector<Projectile*> (*m_CreateBullets)(RangedAttackInfo);
     ProjectileManager m_ProjectileManager;
     AttackPattern* m_AttackPattern;
-    int m_LastAttack = 0;
+    Uint32 m_LastAttack = 0;
 };

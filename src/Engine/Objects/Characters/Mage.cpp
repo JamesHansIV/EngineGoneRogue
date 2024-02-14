@@ -47,4 +47,6 @@ void Mage::OnCollide(Collider* collidee) {
     RangedEnemy::OnCollide(collidee);
 }
 
-void Mage::Clean() {}
+void Mage::Clean() {
+    delete m_Attack;
+}

@@ -68,9 +68,8 @@ void GameEventManager::HandleEvents() {
                         break;
                     case EventType::EnemyDeathEvent: {
                         auto* enemy = static_cast<Enemy*>(event.user.data1);
-                        m_player.GetStats().AddExperience(
-                            enemy->GetEnemyStats().xpGiven);
-                        event_wrapper.SetSDLEvent(&event);
+                        EnemyDeathEvent death_event(enemy->GetEnemyStats());
+                        m_player.HandleEvent(&death_event);
                         break;
                     }
                     case EventType::PlayerLevelUpEvent:

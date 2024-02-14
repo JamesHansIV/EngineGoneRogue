@@ -34,7 +34,8 @@ void Goblin::Update(float dt) {
 }
 
 void Goblin::Shoot() {
-    Properties const props = {"weapons", {6, 1, 16, 16}, {GetX(), GetY(), 12, 12}};
+    Properties const props = {
+        "weapons", {6, 1, 16, 16}, {GetX(), GetY(), 12, 12}};
 
     GetAttack()->Shoot(
         {GetMidPointX(), GetMidPointY(), GetTarget()->GetMidPointX(),
@@ -45,4 +46,6 @@ void Goblin::OnCollide(Collider* collidee) {
     RangedEnemy::OnCollide(collidee);
 }
 
-void Goblin::Clean() {}
+void Goblin::Clean() {
+    delete m_Attack;
+}

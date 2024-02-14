@@ -32,7 +32,8 @@ void Dog::Update(float dt) {
 }
 
 void Dog::Shoot() {
-    Properties const props = {"enemies", {6, 4, 16, 16}, {GetX(), GetY(), 12, 12}};
+    Properties const props = {
+        "enemies", {6, 4, 16, 16}, {GetX(), GetY(), 12, 12}};
 
     GetAttack()->Shoot({GetMidPointX(), GetMidPointY(),
                         GetTarget()->GetMidPointX(),
@@ -43,4 +44,6 @@ void Dog::OnCollide(Collider* collidee) {
     RangedEnemy::OnCollide(collidee);
 }
 
-void Dog::Clean() {}
+void Dog::Clean() {
+    delete m_Attack;
+}

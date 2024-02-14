@@ -2,6 +2,8 @@
 
 #include "RangedEnemy.h"
 
+class RangedAttack;
+
 class CircleShotEnemy : public RangedEnemy {
    public:
     explicit CircleShotEnemy(Properties& props, RangedEnemyStats stats,

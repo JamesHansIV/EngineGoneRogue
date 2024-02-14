@@ -1,5 +1,6 @@
 #include "Game.h"
 #include <cstdlib>
+#include <random>
 #include <vector>
 #include "Engine/Input/InputChecker.h"
 #include "Engine/Objects/Characters/CircleShotEnemy.h"
@@ -21,7 +22,6 @@
 #include "Engine/Renderer/Renderer.h"
 #include "Engine/Timer/Timer.h"
 #include "SDL2/SDL_log.h"
-#include <random>
 
 Player* player = nullptr;
 Enemy* enemy1 = nullptr;
@@ -242,10 +242,10 @@ void Game::Update(float dt) {
         {
             // TODO: Remove this hack for experience. It should be handled by the
             // player by either a global event or global state
-            if (enemy != nullptr && enemy->GetHealth()->GetHP() <= 0) {
-                player->GetStats().AddExperience(
-                    enemy->GetEnemyStats().xpGiven);
-                ChestDrops(enemy->GetMidPointX(), enemy->GetMidPointY());
+            if (enemy != nullptr) {
+                if (enemy->GetHealth()->GetHP() <= 0) {
+                    ChestDrops(enemy->GetMidPointX(), enemy->GetMidPointY());
+                }
             }
             DeleteObject(*it);
         } else {
@@ -340,16 +340,16 @@ void Game::DeleteObject(GameObject* obj) {
     obj = nullptr;
 }
 
-void Game::ChestDrops(float chest_x, float chest_y){
+void Game::ChestDrops(float chest_x, float chest_y) {
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_real_distribution<float> dis(0.0f, 1.0f);
     float const random_number = dis(gen);
     SDL_Log("Rand: %f", random_number);
-    if (random_number <= m_ChanceOfDrop)
-    {
+    if (random_number <= m_ChanceOfDrop) {
         std::vector<GameObject*> items1;
-        Properties props13("", {1, 1, 18, 16}, {chest_x, chest_y, 32, 32}, 0, "chest1");
+        Properties props13("", {1, 1, 18, 16}, {chest_x, chest_y, 32, 32}, 0,
+                           "chest1");
         auto* chest1 = new Chest(props13, ChestType::Wooden, items1, player);
         m_Objects.push_back(chest1);
         ColliderHandler::GetInstance()->AddCollider(chest1);

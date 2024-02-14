@@ -32,9 +32,11 @@ void RangedAttack::Shoot(RangedAttackInfo info) {
         return;
     }
     std::vector<Projectile*> const bullets = m_CreateBullets(std::move(info));
+    m_LastAttack = timer.GetTicks();
     for (auto* bullet : bullets) {
         m_ProjectileManager.AddProjectile(bullet);
         ColliderHandler::GetInstance()->AddCollider(bullet);
-        m_LastAttack = timer.GetTicks();
     }
 }
+
+RangedAttack::~RangedAttack() {}
