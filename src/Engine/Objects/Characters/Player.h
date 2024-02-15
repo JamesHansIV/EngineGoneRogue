@@ -9,6 +9,7 @@
 #include "Engine/Objects/Weapons/Weapon.h"
 #include "Engine/Physics/RigidBody.h"
 #include "Engine/State/PlayerState.h"
+#include "Engine/utils/utils.h"
 #include "functional"
 
 class PlayerStats {
@@ -27,6 +28,7 @@ class PlayerStats {
         m_ArmorPercentage = armorPercentage;
         m_HPRegenRate = HPRegenRate;
         m_LifeStealPercentage = lifeStealPercentage;
+        m_level = 1;
     }
 
     float getSpeed() { return m_Speed; };
@@ -74,7 +76,18 @@ class PlayerStats {
     }
 
     void AddExperience(int experience) {
-        m_experience = (m_experience + experience) % 100;
+        const int total_experience = m_experience + experience;
+        m_experience = total_experience % 100;
+        int potential_levels = total_experience / 100;
+        SDL_Log("Experience: %d", m_experience);
+        SDL_Log("added experience: %d", experience);
+        SDL_Log("Potential levels: %d", potential_levels);
+        while (potential_levels > 0) {
+            PushNewEvent(EventType::PlayerLevelUpEvent);
+
+            potential_levels--;
+            m_level++;
+        }
     };
 
     ~PlayerStats();
@@ -89,6 +102,7 @@ class PlayerStats {
     int m_Piercing;
     int m_ArmorPercentage;
     int m_HPRegenRate;
+    int m_level;
     int m_LifeStealPercentage;
 };
 
@@ -110,9 +124,9 @@ class Player : public Character {
 
     PlayerStats& GetStats() { return *m_stats; }
 
-    std::vector<Weapon*>& GetPlayerWeapons() { return m_Weapons;};
-    
-    Weapon* GetCurrentWeapon() { return m_CurrentWeapon;};
+    std::vector<Weapon*>& GetPlayerWeapons() { return m_Weapons; };
+
+    Weapon* GetCurrentWeapon() { return m_CurrentWeapon; };
 
     ObjectType GetObjectType() override { return ObjectType::Player; }
 

@@ -1,4 +1,7 @@
 #pragma once
+#include <iostream>
+#include "Engine/Events/Event.h"
+#include "SDL2/SDL.h"
 
 #define SCREEN_WIDTH 960
 #define SCREEN_HEIGHT 520
@@ -21,3 +24,10 @@ struct Rect {
 };
 
 const int HEALTH_BAR_HEIGHT = 10;
+
+using CustomEventType = Uint32;
+
+extern CustomEventType custom_event_type;
+
+void PushNewEvent(EventType eventType, void* data1 = nullptr,
+                  void* data2 = nullptr);

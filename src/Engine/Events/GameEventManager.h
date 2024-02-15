@@ -2,10 +2,6 @@
 
 #include "Engine/Events/EventManager.h"
 
-using CustomEventType = Uint32;
-
-extern CustomEventType custom_event_type;
-
 class GameEventManager : public virtual EventManager {
    public:
     GameEventManager(Player& player, std::vector<GameObject*>& objects);
@@ -14,6 +10,7 @@ class GameEventManager : public virtual EventManager {
     virtual GameEventManager& operator=(const GameEventManager&) = delete;
 
     void HandleEvents() override;
+    void PushNewEvent(EventType event_type);
 
    private:
     void HandleCustomEvents();

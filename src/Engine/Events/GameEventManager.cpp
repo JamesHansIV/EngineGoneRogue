@@ -27,7 +27,6 @@ void GameEventManager::HandleEvents() {
                         } else {
                             timer.Pause();
                         }
-                        return;
                     default:
                         break;
                 }
@@ -70,7 +69,7 @@ void GameEventManager::HandleEvents() {
                         break;
                     }
                     case EventType::PlayerLevelUpEvent:
-                        event_wrapper.SetSDLEvent(&event);
+                        timer.Pause();
                         break;
                     default:
                         break;
