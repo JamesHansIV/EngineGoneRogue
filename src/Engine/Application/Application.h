@@ -12,6 +12,7 @@ class Application {
     Application();
     virtual ~Application() = default;
 
+    bool LoadCharacters(const char* projectPath);
     bool LoadRooms(const char* projectPath);
     bool LoadProject();
 

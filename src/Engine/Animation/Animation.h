@@ -47,6 +47,10 @@ class Animation {
 
     std::string GetAnimationID() { return m_CurrentAnimationID; }
 
+    std::unordered_map<std::string, AnimationInfo> GetAnimationInfo() {
+        return m_Animations;
+    }
+
     void GetKeyFrameRange(int& start, int& end) const {
         start = m_Info.KeyFramesStart;
         end = m_Info.KeyFramesEnd;

@@ -20,13 +20,36 @@ void WriteAnimationInfo(tinyxml2::XMLDocument& doc,
                         tinyxml2::XMLElement* xmlObj, GameObject* obj) {
 
     Animation* animation = obj->GetAnimation();
-    xmlObj->SetAttribute("texture_id", animation->GetTextureID().c_str());
-    xmlObj->SetAttribute("row", animation->GetSpriteRow());
-    xmlObj->SetAttribute("col", animation->GetSpriteCol());
-    xmlObj->SetAttribute("w", animation->GetSpriteWidth());
-    xmlObj->SetAttribute("h", animation->GetSpriteHeight());
-    xmlObj->SetAttribute("frame_count", animation->GetFrameCount());
-    xmlObj->SetAttribute("speed", animation->GetAnimationSpeed());
+
+    tinyxml2::XMLElement* animation_element = doc.NewElement("Animation");
+
+    tinyxml2::XMLElement* curr = nullptr;
+    tinyxml2::XMLElement* tile = nullptr;
+
+    for (auto& info : animation->GetAnimationInfo()) {
+        auto second = info.second;
+        curr = doc.NewElement("AnimationInfo");
+
+        curr->SetAttribute("id", info.first.c_str());
+        curr->SetAttribute("texture_id", second.TextureID.c_str());
+        curr->SetAttribute("frame_count", second.FrameCount);
+        curr->SetAttribute("speed", second.AnimationSpeed);
+        curr->SetAttribute("flip", second.Flip);
+        curr->SetAttribute("loop", second.Loop);
+        curr->SetAttribute("key_frames_start", second.KeyFramesStart);
+        curr->SetAttribute("key_frames_end", second.KeyFramesEnd);
+
+        tile = doc.NewElement("Tile");
+        tile->SetAttribute("row", second.Tile.row);
+        tile->SetAttribute("col", second.Tile.col);
+        tile->SetAttribute("w", second.Tile.w);
+        tile->SetAttribute("h", second.Tile.h);
+
+        curr->InsertEndChild(tile);
+        animation_element->InsertEndChild(curr);
+    }
+
+    xmlObj->InsertEndChild(animation_element);
 }
 
 void WriteBaseObjectInfo(tinyxml2::XMLDocument& doc,
@@ -145,23 +168,42 @@ void AddAnimation(tinyxml2::XMLElement* xmlObj, GameObject* obj) {
 
     if (animation != nullptr) {
         obj->SetAnimation(new Animation());
-        TilePos const tile_pos = {
-            atoi(animation->Attribute("row")),
-            atoi(animation->Attribute("col")),
-            atoi(animation->Attribute("w")),
-            atoi(animation->Attribute("h")),
-        };
-        obj->GetAnimation()->SetProps(
-            {animation->Attribute("texture_id"), tile_pos,
-             atoi(animation->Attribute("frame_count")),
-             atoi(animation->Attribute("speed"))});
 
-        SDL_Log("Animation row: %d", obj->GetAnimation()->GetSpriteRow());
-        SDL_Log("Animation col: %d", obj->GetAnimation()->GetSpriteCol());
-        SDL_Log("Animation frameCount: %d",
-                obj->GetAnimation()->GetFrameCount());
-        SDL_Log("Animation speed: %d",
-                obj->GetAnimation()->GetAnimationSpeed());
+        tinyxml2::XMLElement* curr =
+            animation->FirstChildElement("AnimationInfo");
+
+        while (curr != nullptr) {
+            TilePos const tile_pos = {
+                atoi(curr->Attribute("row")),
+                atoi(curr->Attribute("col")),
+                atoi(curr->Attribute("w")),
+                atoi(curr->Attribute("h")),
+            };
+
+            AnimationInfo info = {curr->Attribute("texture_id"), tile_pos,
+                                  atoi(curr->Attribute("frame_count")),
+                                  atoi(curr->Attribute("speed"))};
+            if (curr->Attribute("flip") != nullptr) {
+                info.Flip = (SDL_RendererFlip)atoi(curr->Attribute("flip"));
+            }
+
+            info.Loop = curr->Attribute("loop") == "1" ? true : false;
+
+            if (curr->Attribute("key_frames_start") != nullptr &&
+                curr->Attribute("key_frames_end") != nullptr) {
+                info.KeyFramesStart = atoi(curr->Attribute("key_frames_start"));
+                info.KeyFramesEnd = atoi(curr->Attribute("key_frames_end"));
+            }
+
+            obj->GetAnimation()->AddAnimation(curr->Attribute("id"), info);
+
+            SDL_Log("Animation row: %d", obj->GetAnimation()->GetSpriteRow());
+            SDL_Log("Animation col: %d", obj->GetAnimation()->GetSpriteCol());
+            SDL_Log("Animation frameCount: %d",
+                    obj->GetAnimation()->GetFrameCount());
+            SDL_Log("Animation speed: %d",
+                    obj->GetAnimation()->GetAnimationSpeed());
+        }
     }
 }
 

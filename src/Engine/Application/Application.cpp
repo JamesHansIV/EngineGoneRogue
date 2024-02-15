@@ -58,6 +58,15 @@ Application::Application() : m_ProjectName("test_project"), m_Frame(0) {
     m_IsRunning = true;
 }
 
+bool Application::LoadCharacters(const char* projectPath) {
+    std::string objects_path = projectPath;
+    objects_path += "/objects.xml";
+
+    std::vector<GameObject*> objects = LoadObjects(objects_path.c_str());
+
+    for (auto* obj : objects) {}
+}
+
 bool Application::LoadRooms(const char* projectPath) {
     struct dirent* entry;
     DIR* dp;
@@ -98,6 +107,9 @@ bool Application::LoadProject() {
     }
     SDL_Log("Textures are fine");
     SDL_Log("%s", project_path);
+    if (!LoadCharacters(project_path)) {
+        return false;
+    }
     return LoadRooms(project_path);
 }
 
