@@ -64,6 +64,11 @@ void GameEventManager::HandleEvents() {
                         break;
                     case EventType::EnemyDeathEvent: {
                         auto* enemy = static_cast<Enemy*>(event.user.data1);
+                        if (enemy == nullptr) {
+                            SDL_Log(
+                                "ERROR: Enemy from EnemyDeathEvent is null");
+                            break;
+                        }
                         EnemyDeathEvent death_event(enemy->GetEnemyStats());
                         m_player.HandleEvent(&death_event);
                         break;

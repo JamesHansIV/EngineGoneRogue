@@ -211,7 +211,7 @@ State* RangedEnemyIsHit::Update(float /*dt*/) {
         return new RangedEnemyIdle(GetEnemy());
     }
     if (GetEnemy()->GetHealth()->GetHP() <= 0) {
-        PushNewEvent(EventType::EnemyDeathEvent);
+        PushNewEvent(EventType::EnemyDeathEvent, GetEnemy());
         return new RangedEnemyDead(GetEnemy());
     }
     return nullptr;
