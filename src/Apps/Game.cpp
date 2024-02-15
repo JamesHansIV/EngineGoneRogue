@@ -220,6 +220,68 @@ void Game::Events() {
     m_GameEventManager->HandleEvents();
 }
 
+void Game::GenerateRandomEnemyIfNeeded() {
+    // We probably want a wave multipler. Idea of waves.
+    // Have dedicated stats for each enemy
+    // Have a wave manager that will spawn enemies
+    // have a wave multiplier that will increase the stats of the enemies
+    // Auto generate enemies
+    if ((SDL_GetTicks() - m_last_enemy_spawn_time) >=
+        cur_enemy_generation_interval) {
+        m_last_enemy_spawn_time = SDL_GetTicks();
+        // Generate random x and y coordinates
+        float const generated_x = rand() % 500 + 200;
+        float const generated_y = rand() % 300 + 20;
+        Properties generated_props("enemies", {0, 1, 16, 16},
+                                   {generated_x, generated_y, 36, 36}, 0,
+                                   "enemy1");
+        // Generate random enemy type
+        int const enemy_type = rand() % 7;
+        Enemy* generated_enemy = nullptr;
+        switch (enemy_type) {
+            case 0:
+                generated_enemy =
+                    new Slime(generated_props, kDefaultEnemyStats);
+                break;
+            case 1:
+                generated_enemy = new CircleShotEnemy(generated_props,
+                                                      kDefaultRangedEnemyStats);
+                break;
+            case 2:
+                generated_enemy =
+                    new Mage(generated_props, kDefaultRangedEnemyStats);
+                break;
+            case 3:
+                generated_enemy =
+                    new Dog(generated_props, kDefaultRangedEnemyStats);
+                break;
+            case 4:
+                generated_enemy =
+                    new Skeleton(generated_props, kDefaultRangedEnemyStats);
+                break;
+            case 5:
+                generated_enemy =
+                    new Goblin(generated_props, kDefaultRangedEnemyStats);
+                break;
+            case 6:
+                generated_enemy =
+                    new HelixEnemy(generated_props, kDefaultRangedEnemyStats);
+                break;
+            default:
+                break;
+        }
+
+        ColliderHandler::GetInstance()->AddCollider(generated_enemy);
+        m_Objects.push_back(generated_enemy);
+    }
+
+    if (SDL_GetTicks() % 5000 <= 10 &&
+        max_tick_interval < cur_enemy_generation_interval) {
+        SDL_Log("Increasing enemy generation interval");
+        cur_enemy_generation_interval -= 200;
+    }
+}
+
 void Game::Update(float dt) {
     if (player->MarkedForDeletion()) {
         player->Clean();
@@ -252,65 +314,8 @@ void Game::Update(float dt) {
             ++it;
         }
     }
-    // We probably want a wave multipler. Idea of waves.
-    // Have dedicated stats for each enemy
-    // Have a wave manager that will spawn enemies
-    // have a wave multiplier that will increase the stats of the enemies
-    // Auto generate enemies
-    if ((SDL_GetTicks() - m_last_enemy_spawn_time) >=
-        cur_enemy_generation_interval) {
-        m_last_enemy_spawn_time = SDL_GetTicks();
-        // Generate random x and y coordinates
-        float const generated_x = rand() % 500 + 200;
-        float const generated_y = rand() % 300 + 20;
-        Properties generated_props("enemies", {0, 1, 16, 16},
-                                   {generated_x, generated_y, 36, 36}, 0,
-                                   "enemy1");
-        // Generate random enemy type
-        int const enemy_type = rand() % 7;
-        Enemy* generated_enemy = nullptr;
-        // switch (enemy_type) {
-        //     case 0:
-        //         generated_enemy =
-        //             new Slime(generated_props, kDefaultEnemyStats);
-        //         break;
-        //     case 1:
-        //         generated_enemy = new CircleShotEnemy(generated_props,
-        //                                               kDefaultRangedEnemyStats);
-        //         break;
-        //     case 2:
-        //         generated_enemy =
-        //             new Mage(generated_props, kDefaultRangedEnemyStats);
-        //         break;
-        //     case 3:
-        //         generated_enemy =
-        //             new Dog(generated_props, kDefaultRangedEnemyStats);
-        //         break;
-        //     case 4:
-        //         generated_enemy =
-        //             new Skeleton(generated_props, kDefaultRangedEnemyStats);
-        //         break;
-        //     case 5:
-        //         generated_enemy =
-        //             new Goblin(generated_props, kDefaultRangedEnemyStats);
-        //         break;
-        //     case 6:
-        //         generated_enemy =
-        //             new HelixEnemy(generated_props, kDefaultRangedEnemyStats);
-        //         break;
-        //     default:
-        //         break;
-        // }
 
-        // ColliderHandler::GetInstance()->AddCollider(generated_enemy);
-        // m_Objects.push_back(generated_enemy);
-    }
-
-    if (SDL_GetTicks() % 5000 <= 10 &&
-        max_tick_interval < cur_enemy_generation_interval) {
-        SDL_Log("Increasing enemy generation interval");
-        cur_enemy_generation_interval -= 200;
-    }
+    //GenerateRandomEnemyIfNeeded();
 }
 
 void Game::Render() {

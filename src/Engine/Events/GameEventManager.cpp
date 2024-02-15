@@ -52,9 +52,6 @@ void GameEventManager::HandleEvents() {
                 break;
             case SDL_WINDOWEVENT:
                 // TODO: Add pause menu to render when focus is lost
-                if (event.window.event == SDL_WINDOWEVENT_FOCUS_GAINED) {
-                    timer.Unpause();
-                }
                 if (event.window.event == SDL_WINDOWEVENT_FOCUS_LOST) {
                     timer.Pause();
                 }
@@ -80,6 +77,9 @@ void GameEventManager::HandleEvents() {
                 }
             default:
                 break;
+        }
+        if (timer.IsPaused()) {
+            return;
         }
         m_player.HandleEvent(&event_wrapper);
     }

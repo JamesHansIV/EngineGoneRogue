@@ -28,4 +28,6 @@ class Game : public Application {
     Uint32 m_last_enemy_spawn_time = 0;
     GameEventManager* m_GameEventManager;
     float m_ChanceOfDrop = 0.1;
+
+    void GenerateRandomEnemyIfNeeded();
 };

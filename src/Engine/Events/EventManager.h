@@ -14,7 +14,7 @@ class EventManager {
     EventManager& operator=(const EventManager&) = delete;
     EventManager& operator=(EventManager&&) = delete;
     // Handle custom events and SDL events
-    virtual void HandleEvents() = 0;
+    virtual void HandleEvents();
 
    protected:
 };

@@ -4,6 +4,7 @@
 
 #include <tinyxml2.h>
 #include <unordered_map>
+#include "Engine/Events/EventManager.h"
 #include "Engine/Layers/Layer.h"
 #include "Engine/Objects/Collider.h"
 
@@ -48,6 +49,7 @@ class Application {
     bool m_is_paused;
     bool m_has_focus;
     int m_Frame;
+    EventManager m_EventManager;
 
    private:
     bool m_IsRunning;
