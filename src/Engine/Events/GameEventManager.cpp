@@ -57,7 +57,14 @@ void GameEventManager::HandleEvents() {
                 break;
             case SDL_USEREVENT:
                 switch (static_cast<EventType>(event.user.code)) {
-                    case EventType::UserEvent:
+                    case EventType::UserEvent: {
+                        // Todo: once UserEvent is implemented to use
+                        // SDL_USEREVENT, uncomment this
+                        // UserEvent user_event = UserEvent();
+                        // user_event.SetSDLEvent(&event);
+                        // event_wrapper = user_event;
+                        break;
+                    }
                     case EventType::CollideEvent:
                     case EventType::TargetFoundEvent:
                     case EventType::TargetLostEvent:
@@ -67,11 +74,10 @@ void GameEventManager::HandleEvents() {
                         if (enemy == nullptr) {
                             SDL_Log(
                                 "ERROR: Enemy from EnemyDeathEvent is null");
-                            break;
                         }
                         EnemyDeathEvent death_event(enemy->GetEnemyStats());
                         m_player.HandleEvent(&death_event);
-                        break;
+                        return;
                     }
                     case EventType::PlayerLevelUpEvent:
                         timer.Pause();

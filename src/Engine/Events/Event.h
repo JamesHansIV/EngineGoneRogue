@@ -18,7 +18,8 @@ class Event {
    public:
     bool handled{false};
     virtual ~Event() = default;
-    virtual EventType GetEventType() = 0;
+
+    virtual EventType GetEventType() { return EventType::UserEvent; }
 };
 
 class UserEvent : public Event {

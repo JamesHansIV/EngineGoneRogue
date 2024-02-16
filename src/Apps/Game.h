@@ -21,6 +21,8 @@ class Game : public Application {
 
     void ChestDrops(float chest_x, float chest_y);
 
+    ~Game();
+
    private:
     std::vector<GameObject*> m_Objects;
     WeaponInventory* m_WeaponInventory;

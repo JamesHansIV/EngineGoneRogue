@@ -214,6 +214,9 @@ Game::Game() {
 
     Renderer::GetInstance()->SetCameraTarget(player);
     m_GameEventManager = new GameEventManager(*player, m_Objects);
+
+    SDL_Cursor* cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR);
+    SDL_SetCursor(cursor);
 }
 
 void Game::Events() {
@@ -359,6 +362,18 @@ void Game::ChestDrops(float chest_x, float chest_y) {
         m_Objects.push_back(chest1);
         ColliderHandler::GetInstance()->AddCollider(chest1);
     }
+}
+
+Game::~Game() {
+    for (auto* obj : m_Objects) {
+        obj->Clean();
+        delete obj;
+    }
+    m_Objects.clear();
+    delete m_WeaponInventory;
+    delete m_GameEventManager;
+    delete player;
+    SDL_FreeCursor(SDL_GetCursor());
 }
 
 #if EDITOR == 0
