@@ -2,13 +2,10 @@
 
 class Health {
    public:
-    Health(int max_health)
-        : m_TotalHealth(max_health),
-          m_HP(max_health),
-          m_XOffset(5),
-          m_YOffset(5) {}
+    explicit Health(int max_health)
+        : m_TotalHealth(max_health), m_HP(max_health) {}
 
-    int GetHP() { return m_HP; }
+    [[nodiscard]] int GetHP() const { return m_HP; }
 
     void SetDamage(int damage) { m_HP = m_HP - damage; }
 
@@ -19,6 +16,6 @@ class Health {
    private:
     int m_HP;
     int m_TotalHealth;
-    int m_XOffset;
-    int m_YOffset;
+    int m_XOffset{5};
+    int m_YOffset{7};
 };

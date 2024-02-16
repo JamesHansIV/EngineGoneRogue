@@ -1,20 +1,20 @@
 #include "utils.h"
 
 SDL_Rect DrawBar(Position pos, Size size) {
-    int experience_bar_container_width = size.w;
+    int bar_container_width = size.w;
 
-    if (experience_bar_container_width <= 0) {
-        experience_bar_container_width = 0;
+    if (bar_container_width <= 0) {
+        bar_container_width = 0;
     }
 
-    int const experience_bar_container_x = pos.x;
-    int const experience_bar_container_y = pos.y;
+    int const bar_container_x = pos.x;
+    int const bar_container_y = pos.y;
 
-    SDL_Rect experience_bar_container_rect;
-    experience_bar_container_rect.x = experience_bar_container_x;
-    experience_bar_container_rect.y = experience_bar_container_y;
-    experience_bar_container_rect.w = experience_bar_container_width;
-    experience_bar_container_rect.h = 10;
+    SDL_Rect bar_container_rect;
+    bar_container_rect.x = bar_container_x;
+    bar_container_rect.y = bar_container_y;
+    bar_container_rect.w = bar_container_width;
+    bar_container_rect.h = size.h;
 
-    return experience_bar_container_rect;
+    return bar_container_rect;
 }

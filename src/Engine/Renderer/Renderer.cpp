@@ -314,7 +314,7 @@ void Renderer::SaveTextures() {
         if (id_str.length() >= 7) {
             if (id_str.substr(0, 7) == "editor-") {
                 continue;
-}
+            }
         }
 
         texture = doc.NewElement("Texture");

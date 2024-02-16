@@ -117,16 +117,6 @@ Player::Player(Properties& props) : Character(props) {
     health_regen_thread.detach();
 }
 
-Player::~Player() {
-    delete m_Health;
-    delete m_CurrentState;
-    delete m_ExperienceBar;
-    delete m_Animation;
-    for (auto& weapon : m_Weapons) {
-        delete weapon;
-    }
-}
-
 void Player::Draw() {
     m_CurrentState->Draw();
     m_ExperienceBar->Draw();
@@ -243,6 +233,16 @@ void Player::HandleEvent(Event* event) {
     }
     if (state != nullptr) {
         ChangeState(state);
+    }
+}
+
+Player::~Player() {
+    delete m_Health;
+    delete m_CurrentState;
+    delete m_ExperienceBar;
+    delete m_Animation;
+    for (auto& weapon : m_Weapons) {
+        delete weapon;
     }
 }
 

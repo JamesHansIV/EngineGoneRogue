@@ -23,7 +23,7 @@ struct Rect {
     int h;
 };
 
-const int HEALTH_BAR_HEIGHT = 10;
+const int HEALTH_BAR_HEIGHT = 5;
 
 using CustomEventType = Uint32;
 

@@ -14,7 +14,7 @@ void Health::Draw(int objX, int objY, int objWidth) const {
         health_bar_width = 0;
     }
 
-    const Position pos{objX - m_XOffset, objY - HEALTH_BAR_HEIGHT - m_YOffset};
+    const Position pos{objX - m_XOffset, objY - m_YOffset};
     SDL_Rect health_bar_rect =
         DrawBar(pos, Size{health_bar_width, HEALTH_BAR_HEIGHT});
     SDL_Rect health_bar_container_rect =
