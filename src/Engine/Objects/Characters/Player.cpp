@@ -11,6 +11,7 @@
 #include "SDL2/SDL_render.h"
 
 const int kMoveAnimationSpeed = 20;
+const int kIdleAnimationSpeed = 50;
 
 Player::Player(Properties& props) : Character(props) {
     AddStillFrame("face-down", {1, 0, 18, 16});
@@ -19,6 +20,13 @@ Player::Player(Properties& props) : Character(props) {
     AddStillFrame("face-up", {4, 0, 18, 16});
 
     m_Animation = new Animation();
+
+    m_Animation->AddAnimation("PlayerIdle", {m_TextureID,
+                                             {7, 0, 18, 16},
+                                             2,
+                                             kIdleAnimationSpeed,
+                                             SDL_FLIP_NONE,
+                                             true});
     m_Animation->AddAnimation(
         "PlayerDead", {m_TextureID, {0, 0, 18, 16}, 6, kMoveAnimationSpeed});
 

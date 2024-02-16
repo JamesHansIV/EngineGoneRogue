@@ -135,7 +135,9 @@ State* HandleCollide(Player* player, CollideEvent* event) {
     return nullptr;
 }
 
-void PlayerIdle::Enter() {}
+void PlayerIdle::Enter() {
+    GetPlayer()->GetAnimation()->SelectAnimation("PlayerIdle");
+}
 
 void PlayerIdle::Exit() {}
 
@@ -148,7 +150,7 @@ State* PlayerIdle::Update(float dt) {
 }
 
 void PlayerIdle::Draw() {
-    GetPlayer()->DrawRect();
+    GetPlayer()->DrawAnimation();
 }
 
 State* PlayerIdle::HandleEvent(Event* event) {

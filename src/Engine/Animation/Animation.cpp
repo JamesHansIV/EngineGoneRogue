@@ -9,6 +9,7 @@ void Animation::Update() {
     bool const no_update = LastFrame() && !m_Info.Loop;
 
     if (no_update) {
+        SDL_Log("Animation ended");
         m_Ended = true;
         return;
     }
