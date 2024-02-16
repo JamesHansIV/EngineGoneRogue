@@ -14,8 +14,8 @@ void ExperienceBar::Draw() const {
     SDL_Rect experience_bar_rect = DrawBar(pos, Size{m_xp, 5});
 
     Renderer::GetInstance()->DrawRect(experience_bar_container_rect,
-                                      {0, 100, 255, 255}, true);
+                                      {39, 92, 171, 255}, true);
 
-    Renderer::GetInstance()->DrawRect(experience_bar_rect, {0, 150, 200, 255},
+    Renderer::GetInstance()->DrawRect(experience_bar_rect, {44, 138, 220, 255},
                                       true);
 }

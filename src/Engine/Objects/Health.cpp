@@ -21,8 +21,9 @@ void Health::Draw(int objX, int objY, int objWidth) const {
         DrawBar(pos, Size{health_bar_container_width, HEALTH_BAR_HEIGHT});
 
     Renderer::GetInstance()->DrawRect(health_bar_container_rect,
-                                      {255, 0, 0, 255}, true);
-    Renderer::GetInstance()->DrawRect(health_bar_rect, {0, 255, 0, 255}, true);
+                                      {53, 18, 104, 255}, true);
+    Renderer::GetInstance()->DrawRect(health_bar_rect, {182, 69, 153, 255},
+                                      true);
 }
 
 void Health::IncreaseHealth(int amount) {

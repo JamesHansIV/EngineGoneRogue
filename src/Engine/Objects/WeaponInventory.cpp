@@ -3,7 +3,7 @@
 #include "Engine/Objects/Weapons/Weapon.h"
 #include "SDL2/SDL_render.h"
 
-const DrawColor kSelectedWeaponColor{186, 217, 132, 150};
+const DrawColor kSelectedWeaponColor{182, 69, 153, 150};
 
 void WeaponInventory::Draw() {
     Renderer* renderer = Renderer::GetInstance();

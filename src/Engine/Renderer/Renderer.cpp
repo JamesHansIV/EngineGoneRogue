@@ -40,7 +40,7 @@ void Renderer::Destroy() {
 }
 
 void Renderer::RenderClear() {
-    SDL_SetRenderDrawColor(m_Renderer, 124, 218, 254, 255);
+    SDL_SetRenderDrawColor(m_Renderer, 8, 21, 38, 255);
     SDL_RenderClear(m_Renderer);
 }
 

@@ -202,7 +202,6 @@ State* PlayerIdle::PollInput(float /*dt*/) {
 }
 
 void PlayerMoving::Enter() {
-    SDL_Log("enter moving state");
     UpdateAnimationDirection(GetPlayer(), GetMoveAnimationIDs());
 }
 
