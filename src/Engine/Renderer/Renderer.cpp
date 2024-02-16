@@ -31,6 +31,7 @@ void Renderer::Init() {
         SDL_Log("Failed to create Renderer: %s", SDL_GetError());
         assert(false);
     }
+    SDL_SetRenderDrawBlendMode(m_Renderer, SDL_BLENDMODE_BLEND);
 }
 
 void Renderer::Destroy() {
@@ -311,10 +312,9 @@ void Renderer::SaveTextures() {
         // check for editor textures (dont save here)
         std::string id_str = it.first;
         if (id_str.length() >= 7) {
-            if (id_str.substr(0,7) == "editor-")
+            if (id_str.substr(0, 7) == "editor-")
                 continue;
         }
-
 
         texture = doc.NewElement("Texture");
         type = doc.NewElement("Type");
