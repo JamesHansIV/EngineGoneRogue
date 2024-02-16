@@ -143,7 +143,7 @@ State* PlayerIdle::Update(float dt) {
     int const dodge_cd = GetPlayer()->GetStats().getDodgeCD();
     if (dodge_cd > 0) {
         GetPlayer()->GetStats().setDodgeCD(dodge_cd - 1);
-}
+    }
     return PollInput(dt);
 }
 
@@ -212,7 +212,7 @@ State* PlayerMoving::Update(float dt) {
     int const dodge_cd = GetPlayer()->GetStats().getDodgeCD();
     if (dodge_cd > 0) {
         GetPlayer()->GetStats().setDodgeCD(dodge_cd - 1);
-}
+    }
     PollInput(dt);
     return nullptr;
 }
@@ -390,8 +390,8 @@ State* PlayerIsHit::OnCollideEvent(CollideEvent* event) {
         }
         case ObjectType::Enemy:
             GetPlayer()->UnCollide(collidee);
-            // SetDamage(1);
-            // ApplyDamage();
+            SetDamage(2);
+            ApplyDamage();
             break;
         case ObjectType::Collider:
             GetPlayer()->UnCollide(collidee);

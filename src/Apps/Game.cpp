@@ -286,15 +286,14 @@ void Game::GenerateRandomEnemyIfNeeded() {
 }
 
 void Game::Update(float dt) {
-    if (player->MarkedForDeletion()) {
-        player->Clean();
-        delete player;
-    }
     ColliderHandler::GetInstance()->HandleCollisions();
-    player->Update(dt);
-    m_WeaponInventory->SetSelectedWeapon(player->GetCurrentWeapon());
-    if (player->MarkedForDeletion()) {
-        DeleteObject(player);
+    if (player != nullptr) {
+        player->Update(dt);
+        m_WeaponInventory->SetSelectedWeapon(player->GetCurrentWeapon());
+        if (player->MarkedForDeletion()) {
+            DeleteObject(player);
+            player = nullptr;
+        }
     }
     for (auto it = m_Objects.begin(); it != m_Objects.end();) {
         auto* enemy = dynamic_cast<Enemy*>(*it);  // Cast to Enemy type
@@ -326,8 +325,10 @@ void Game::Render() {
     for (auto* obj : m_Objects) {
         obj->Draw();
     }
-    player->Draw();
-    m_WeaponInventory->Draw();
+    if (player != nullptr) {
+        player->Draw();
+        m_WeaponInventory->Draw();
+    }
     Renderer::GetInstance()->Render();
 }
 

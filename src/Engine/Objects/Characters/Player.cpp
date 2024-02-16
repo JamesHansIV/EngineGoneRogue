@@ -10,6 +10,8 @@
 #include "Engine/State/State.h"
 #include "SDL2/SDL_render.h"
 
+const int kMoveAnimationSpeed = 20;
+
 Player::Player(Properties& props) : Character(props) {
     AddStillFrame("face-down", {1, 0, 18, 16});
     AddStillFrame("face-right", {2, 0, 18, 16});
@@ -17,26 +19,28 @@ Player::Player(Properties& props) : Character(props) {
     AddStillFrame("face-up", {4, 0, 18, 16});
 
     m_Animation = new Animation();
-    m_Animation->AddAnimation("Dead", {m_TextureID, {0, 0, 18, 16}, 6, 5});
-
     m_Animation->AddAnimation(
-        "move-right",
-        {m_TextureID, m_StillFrames["face-right"], 6, 5, SDL_FLIP_NONE, true});
+        "PlayerDead", {m_TextureID, {0, 0, 18, 16}, 6, kMoveAnimationSpeed});
+
+    m_Animation->AddAnimation("move-right",
+                              {m_TextureID, m_StillFrames["face-right"], 6,
+                               kMoveAnimationSpeed, SDL_FLIP_NONE, true});
     m_Animation->AddAnimation("move-left",
-                              {m_TextureID, m_StillFrames["face-right"], 6, 5,
-                               SDL_FLIP_HORIZONTAL, true});
-    m_Animation->AddAnimation(
-        "move-right-up", {m_TextureID, m_StillFrames["face-right-up"], 6, 5,
-                          SDL_FLIP_NONE, true});
+                              {m_TextureID, m_StillFrames["face-right"], 6,
+                               kMoveAnimationSpeed, SDL_FLIP_HORIZONTAL, true});
+    m_Animation->AddAnimation("move-right-up",
+                              {m_TextureID, m_StillFrames["face-right-up"], 6,
+                               kMoveAnimationSpeed, SDL_FLIP_NONE, true});
 
-    m_Animation->AddAnimation(
-        "move-left-up", {m_TextureID, m_StillFrames["face-right-up"], 6, 5,
-                         SDL_FLIP_HORIZONTAL, true});
-    m_Animation->AddAnimation("move-up", {m_TextureID, m_StillFrames["face-up"],
-                                          6, 5, SDL_FLIP_NONE});
-    m_Animation->AddAnimation(
-        "move-down",
-        {m_TextureID, m_StillFrames["face-down"], 6, 5, SDL_FLIP_NONE});
+    m_Animation->AddAnimation("move-left-up",
+                              {m_TextureID, m_StillFrames["face-right-up"], 6,
+                               kMoveAnimationSpeed, SDL_FLIP_HORIZONTAL, true});
+    m_Animation->AddAnimation("move-up",
+                              {m_TextureID, m_StillFrames["face-up"], 6,
+                               kMoveAnimationSpeed, SDL_FLIP_NONE});
+    m_Animation->AddAnimation("move-down",
+                              {m_TextureID, m_StillFrames["face-down"], 6,
+                               kMoveAnimationSpeed, SDL_FLIP_NONE});
 
     m_Animation->AddAnimation(
         "dodge-down", {"player-dodge", {0, 0, 20, 20}, 6, 2, SDL_FLIP_NONE});
@@ -104,17 +108,17 @@ Player::Player(Properties& props) : Character(props) {
 
     m_CurrentWeapon = m_Weapons[0];
 
-    std::thread health_regen_thread([this]() {
-        while (true) {
-            m_Health->IncreaseHealth(m_stats->getHPRegenRate());
-            // Sleep for one second
-            std::this_thread::sleep_for(std::chrono::seconds(1));
-        }
-    });
+    //std::thread health_regen_thread([this]() {
+    //    while (true) {
+    //        m_Health->IncreaseHealth(m_stats->getHPRegenRate());
+    //        // Sleep for one second
+    //        std::this_thread::sleep_for(std::chrono::seconds(1));
+    //    }
+    //});
 
     m_ExperienceBar = new ExperienceBar(100, 0);
     // Detach the health regeneration thread so it can run independently
-    health_regen_thread.detach();
+    // health_regen_thread.detach();
 }
 
 void Player::Draw() {
@@ -229,7 +233,9 @@ void Player::HandleEvent(Event* event) {
             break;
         }
         default:
-            state = m_CurrentState->HandleEvent(event);
+            if (m_CurrentState != nullptr) {
+                state = m_CurrentState->HandleEvent(event);
+            }
     }
     if (state != nullptr) {
         ChangeState(state);

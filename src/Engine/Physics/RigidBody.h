@@ -46,7 +46,7 @@ class RigidBody {
 
     inline Vector2D GetFriction() const { return m_Friction; }
 
-    inline Vector2D Position() const { return m_Position; }
+    [[nodiscard]] inline Vector2D Position() const { return m_Position; }
 
     inline Vector2D Velocity() const { return m_Velocity; }
 

@@ -107,8 +107,16 @@ void ColliderHandler::HandleCollisions() {
             Collider* c1 = m_Colliders[i];
             Collider* c2 = m_Colliders[j];
 
+            if (c1 == nullptr || c2 == nullptr) {
+                continue;
+            }
+
             RigidBody* r1 = c1->GetRigidBody();
             RigidBody* r2 = c2->GetRigidBody();
+
+            if (r1 == nullptr || r2 == nullptr) {
+                continue;
+            }
 
             Rect const next_pos1 = {r1->Position().X + r1->Velocity().X,
                                     r1->Position().Y + r1->Velocity().Y,

@@ -24,10 +24,14 @@ Enemy::Enemy(Properties& props, EnemyStats const& stats)
     : Character(props), m_stats(stats) {}
 
 bool Enemy::TargetInRange() {
+    if (GetTarget() == nullptr) {
+        return false;
+    }
     const Rect range = {GetMidPointX() - m_stats.range,
                         GetMidPointY() - m_stats.range,
                         static_cast<int>(m_stats.range) * 2,
                         static_cast<int>(m_stats.range) * 2};
+
     const Rect rect1 = GetTarget()->GetDstRect();
 
     return ColliderHandler::CheckCollision(rect1, range);
@@ -43,7 +47,7 @@ bool Enemy::TargetDetected() {
 
     if (m_Target == nullptr) {
         SDL_Log("Target is null for object %s", GetID().c_str());
-        assert(false);
+        return false;
     }
 
     Rect const target = m_Target->GetDstRect();
