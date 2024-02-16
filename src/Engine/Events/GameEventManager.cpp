@@ -5,7 +5,7 @@
 
 CustomEventType custom_event_type = SDL_RegisterEvents(1);
 
-GameEventManager::GameEventManager(Player& player,
+GameEventManager::GameEventManager(Player* player,
                                    std::vector<GameObject*>& objects)
     : m_player(player), m_Objects(objects) {}
 
@@ -76,7 +76,7 @@ void GameEventManager::HandleEvents() {
                                 "ERROR: Enemy from EnemyDeathEvent is null");
                         }
                         EnemyDeathEvent death_event(enemy->GetEnemyStats());
-                        m_player.HandleEvent(&death_event);
+                        m_player->HandleEvent(&death_event);
                         return;
                     }
                     case EventType::PlayerLevelUpEvent:
@@ -91,6 +91,8 @@ void GameEventManager::HandleEvents() {
         if (timer.IsPaused()) {
             return;
         }
-        m_player.HandleEvent(&event_wrapper);
+        if (m_player != nullptr) {
+            m_player->HandleEvent(&event_wrapper);
+        }
     }
 }

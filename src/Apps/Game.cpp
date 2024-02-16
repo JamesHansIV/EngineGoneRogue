@@ -213,7 +213,7 @@ Game::Game() {
     m_WeaponInventory->SetSelectedWeapon(player->GetCurrentWeapon());
 
     Renderer::GetInstance()->SetCameraTarget(player);
-    m_GameEventManager = new GameEventManager(*player, m_Objects);
+    m_GameEventManager = new GameEventManager(player, m_Objects);
 
     SDL_Cursor* cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR);
     SDL_SetCursor(cursor);
@@ -293,6 +293,7 @@ void Game::Update(float dt) {
         if (player->MarkedForDeletion()) {
             DeleteObject(player);
             player = nullptr;
+            m_GameEventManager->SetPlayer(nullptr);
         }
     }
     for (auto it = m_Objects.begin(); it != m_Objects.end();) {
