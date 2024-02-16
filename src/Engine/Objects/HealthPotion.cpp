@@ -1,15 +1,15 @@
 #include "HealthPotion.h"
-#include "Engine/Objects/Health.h"
 #include "Engine/Objects/Characters/Character.h"
 #include "Engine/Objects/ColliderHandler.h"
+#include "Engine/Objects/Health.h"
 
-HealthPotion::HealthPotion(Properties& props, int health ) : Collider(props) {
-        m_health = health;
-        m_Animation = new Animation();
-        m_Animation->AddAnimation(
+HealthPotion::HealthPotion(Properties& props, int health) : Collider(props) {
+    m_health = health;
+    m_Animation = new Animation();
+    m_Animation->AddAnimation(
         "healthpotion",
-        {m_TextureID, {0, 0, 16, 16},4, 15, SDL_FLIP_NONE, true});
-        m_Animation->SelectAnimation("healthpotion");
+        {m_TextureID, {0, 0, 16, 16}, 4, 30, SDL_FLIP_NONE, true});
+    m_Animation->SelectAnimation("healthpotion");
 }
 
 void HealthPotion::Update(float dt) {
@@ -24,7 +24,8 @@ void HealthPotion::OnCollide(Collider* collidee) {
 
     switch (collidee->GetObjectType()) {
         case ObjectType::Player:
-            dynamic_cast<Character*>(collidee)->GetHealth()->IncreaseHealth(GetHealth());
+            dynamic_cast<Character*>(collidee)->GetHealth()->IncreaseHealth(
+                GetHealth());
             m_MarkedForDeletion = true;
             ColliderHandler::GetInstance()->RemoveCollider(this);
             break;

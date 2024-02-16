@@ -354,7 +354,6 @@ void Application::Run() {
         // SDL_Log("Time: %d", timer.GetTicks() / 1000);
         //SDL_Log("Current time: %d", timer.GetCurrentTime());
         Events();
-        m_Frame++;
         if (!m_is_paused) {
             Uint32 const new_time = timer.GetTicks();
             auto frame_time =
@@ -369,6 +368,7 @@ void Application::Run() {
             accumulator += frame_time;
 
             while (accumulator >= kDt) {
+                m_Frame++;
                 Update(kDt);
                 accumulator -= kDt;
             }

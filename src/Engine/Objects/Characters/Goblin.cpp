@@ -6,7 +6,7 @@
 Goblin::Goblin(Properties& props, const RangedEnemyStats& stats)
     : RangedEnemy(props, stats) {
     m_Animation->AddAnimation(
-        "Idle", {m_TextureID, {12, 2, 16, 16}, 2, 15, SDL_FLIP_NONE, true});
+        "Idle", {m_TextureID, {12, 2, 16, 16}, 2, 50, SDL_FLIP_NONE, true});
     m_Animation->AddAnimation(
         "Move-up", {m_TextureID, {13, 4, 16, 16}, 4, 15, SDL_FLIP_NONE, true});
     m_Animation->AddAnimation(

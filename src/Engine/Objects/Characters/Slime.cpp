@@ -8,7 +8,7 @@ Slime::Slime(Properties& props, const EnemyStats& stats, bool split)
     m_Animation = new Animation();
     m_Animation->AddAnimation(
         "MiniSlimeIdle",
-        {m_TextureID, {0, 2, 16, 16}, 2, 15, SDL_FLIP_NONE, true});
+        {m_TextureID, {0, 2, 16, 16}, 2, 30, SDL_FLIP_NONE, true});
     m_Animation->AddAnimation(
         "MiniSlimeHit", {m_TextureID, {1, 0, 16, 16}, 3, 8, SDL_FLIP_NONE});
     m_Animation->AddAnimation(
@@ -18,7 +18,7 @@ Slime::Slime(Properties& props, const EnemyStats& stats, bool split)
         "MiniSlimeDead", {m_TextureID, {0, 0, 16, 16}, 2, 50, SDL_FLIP_NONE});
 
     m_Animation->AddAnimation(
-        "SlimeIdle", {m_TextureID, {3, 2, 16, 16}, 2, 15, SDL_FLIP_NONE, true});
+        "SlimeIdle", {m_TextureID, {3, 2, 16, 16}, 2, 30, SDL_FLIP_NONE, true});
     m_Animation->AddAnimation(
         "SlimeHit", {m_TextureID, {4, 0, 16, 16}, 3, 8, SDL_FLIP_NONE});
     m_Animation->AddAnimation(
