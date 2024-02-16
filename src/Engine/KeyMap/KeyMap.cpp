@@ -2,26 +2,27 @@
 #include "Engine/Input/InputChecker.h"
 
 #include<fstream>
-#include<string>
-#include<vector>
 #include<iostream>
+#include<string>
+#include <utility>
+#include<vector>
 
 std::string path = "editor.binds";
 
 std::ostream& operator << (std::ostream& os, const EditorAction& obj)
 {
-   os << static_cast<std::underlying_type<EditorAction>::type>(obj);
+   os << static_cast<std::underlying_type_t<EditorAction>>(obj);
    return os;
 }
 
 std::ostream& operator << (std::ostream& os, const InputType& obj)
 {
-   os << static_cast<std::underlying_type<InputType>::type>(obj);
+   os << static_cast<std::underlying_type_t<InputType>>(obj);
    return os;
 }
 
 Bind KeyMap::CreateBind(EditorAction action, InputType input_type, std::vector<SDL_KeyCode> keys) {
-    Bind bind = {action, input_type, keys};
+    Bind bind = {action, input_type, std::move(keys)};
     return bind;
 }
 
@@ -40,22 +41,20 @@ KeyMap::KeyMap() {
     BuildMapFromFile();
 
     Bind bind = m_Bindings_Map[EditorAction::ENTER_DRAW_TOOL];
-    std::cout << " " << bind.keys[0] << " " << bind.action << std::endl;
-    std::cout << m_Bindings_Map.size() << std::endl;
-    std::cout << m_Default_Bindings_Map.size() << std::endl;
+    std::cout << " " << bind.keys[0] << " " << bind.action << '\n';
+    std::cout << m_Bindings_Map.size() << '\n';
+    std::cout << m_Default_Bindings_Map.size() << '\n';
 }
 
-KeyMap::~KeyMap() {
-
-}
+KeyMap::~KeyMap() = default;
 
 bool KeyMap::CheckInputs(EditorAction action) {
-    bool res = false;
-    Bind bind = m_Bindings_Map[action];
+    bool const res = false;
+    Bind const bind = m_Bindings_Map[action];
 
-    for (SDL_KeyCode key : bind.keys) {
-        bool curr_down = InputChecker::IsKeyPressed(key);
-        bool prev_down = InputChecker::WasKeyAlreadyPresssed(key);
+    for (SDL_KeyCode const key : bind.keys) {
+        bool const curr_down = InputChecker::IsKeyPressed(key);
+        bool const prev_down = InputChecker::WasKeyAlreadyPresssed(key);
 
         if (bind.input_type == InputType::LATCH && prev_down || !curr_down) {
             return false;
@@ -71,7 +70,7 @@ void KeyMap::BuildMapFromFile() {
         file.open(path);
         
         if (file.is_open()) {
-            std::cout << "file open" << std::endl;
+            std::cout << "file open" << '\n';
         } else {
             throw std::runtime_error("failure to open file!");
         }
@@ -84,27 +83,27 @@ void KeyMap::BuildMapFromFile() {
         // pull data out of each line
         for (std::string line : lines) {
             // remove whitespace
-            line.erase(std::remove_if(line.begin(), line.end(), [](unsigned char x) { return std::isspace(x); }));
+            line.erase(std::remove_if(line.begin(), line.end(), [](unsigned char x) { return std::isspace(x); }), line.end());
             
             // seperate fields by delimiter ','
             std::vector<std::string>fields;
             int pos = 0;
             while(pos < line.size()){
-                pos = line.find(",");
+                pos = line.find(',');
                 fields.push_back(line.substr(0,pos));
                 line.erase(0, pos+1); 
             }
 
             // creat a bind from the fields & add it to the map
-            EditorAction bind_action = static_cast<EditorAction>(stoi(fields[0]));
-            InputType bind_input_type = static_cast<InputType>(stoi(fields[1]));
+            auto const bind_action = static_cast<EditorAction>(stoi(fields[0]));
+            auto const bind_input_type = static_cast<InputType>(stoi(fields[1]));
 
             std::vector<SDL_KeyCode>bind_keys;
             for (int i = 2; i < fields.size(); i++) {
                 bind_keys.push_back(static_cast<SDL_KeyCode>(stoi(fields[i])));
             }
 
-            Bind bind{bind_action, bind_input_type, bind_keys};
+            Bind const bind{bind_action, bind_input_type, bind_keys};
 
             m_Bindings_Map.insert(std::pair<EditorAction, Bind>(bind_action, bind));
 
@@ -113,7 +112,7 @@ void KeyMap::BuildMapFromFile() {
     }
     // if fail load default binds into map, then write defaults to file
     catch (const std::runtime_error& e) {
-        std::cout << "ERROR: " << e.what() << std::endl;
+        std::cout << "ERROR: " << e.what() << '\n';
         std::cout << "Using defaults\n";
         m_Bindings_Map = m_Default_Bindings_Map;
     }

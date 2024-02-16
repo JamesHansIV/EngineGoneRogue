@@ -42,6 +42,6 @@ class KeyMap {
         void SetBind(EditorAction action, std::vector<SDL_KeyCode> keys, InputType input_type);
         void DeleteBind(EditorAction action);
 
-        Bind CreateBind(EditorAction action, InputType input_type, std::vector<SDL_KeyCode> keys);
+        static Bind CreateBind(EditorAction action, InputType input_type, std::vector<SDL_KeyCode> keys);
 
 };

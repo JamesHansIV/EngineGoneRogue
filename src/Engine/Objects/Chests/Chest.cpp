@@ -3,7 +3,7 @@
 #include "Engine/Input/InputChecker.h"
 #include "Engine/Objects/ColliderHandler.h"
 #include "SDL2/SDL_log.h"
-constexpr float CLOSE_DISTANCE = 45.0f; 
+constexpr float kCloseDistance = 45.0F; 
 
 Chest::Chest(Properties& props, ChestType ctype, std::vector<GameObject*>& chestItems, Player* player) : Collider(props) 
 {
@@ -35,11 +35,11 @@ Chest::Chest(Properties& props, ChestType ctype, std::vector<GameObject*>& chest
     m_CollisionBox.Set(GetX(), GetY(), GetHeight(), GetWidth());
 }
 
-void Chest::Update(float dt) {
+void Chest::Update(float  /*dt*/) {
     m_DistanceToPlayer = CalculateDistanceToPlayer();
     m_Animation->Update();
 
-    if (m_DistanceToPlayer <= CLOSE_DISTANCE && InputChecker::IsKeyPressed(SDLK_o)) {
+    if (m_DistanceToPlayer <= kCloseDistance && InputChecker::IsKeyPressed(SDLK_o)) {
         if(m_Animation->GetAnimationID() != m_OpeningTexture){
             m_Animation->SelectAnimation(m_OpeningTexture); 
         }
@@ -52,8 +52,8 @@ void Chest::Update(float dt) {
 }
 
 float Chest::CalculateDistanceToPlayer() {
-    float dx = m_PlayerRef->GetX() - GetX();
-    float dy = m_PlayerRef->GetY() - GetY();
+    float const dx = m_PlayerRef->GetX() - GetX();
+    float const dy = m_PlayerRef->GetY() - GetY();
     return std::sqrt(dx * dx + dy * dy);
 }
 

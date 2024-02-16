@@ -351,7 +351,7 @@ void Game::DeleteObject(GameObject* obj) {
 void Game::ChestDrops(float chest_x, float chest_y) {
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_real_distribution<float> dis(0.0f, 1.0f);
+    std::uniform_real_distribution<float> dis(0.0F, 1.0F);
     float const random_number = dis(gen);
     SDL_Log("Rand: %f", random_number);
     if (random_number <= m_ChanceOfDrop) {

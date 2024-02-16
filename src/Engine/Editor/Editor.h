@@ -86,7 +86,7 @@ class Editor : public Application {
     void SaveRoom(const char* roomName);
     void SaveProject();
 
-    bool LoadEditorTextures();
+    static bool LoadEditorTextures();
 
    private:
     std::string m_CurrentRoomID;

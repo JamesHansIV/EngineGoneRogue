@@ -805,7 +805,7 @@ void Editor::ShowLoadTexture() {
 void Editor::AddObject(float x, float y) {
     GameObject* new_object;
 
-    std::cout << m_CurrentTexture << std::endl;
+    std::cout << m_CurrentTexture << '\n';
     std::string obj_id = m_CurrentTexture->GetID();
     obj_id += std::to_string(m_CurrentTexture->GetObjectCount());
 
@@ -1104,14 +1104,14 @@ void Editor::Render() {
     if (m_EditState.EditMode !=  EditMode::NONE) {
         ImGui::SetMouseCursor(ImGuiMouseCursor_None); // hide default cursor
         
-        SDL_Rect cursor_rect = m_Cursor->UpdateAndGetRect();
+        SDL_Rect const cursor_rect = m_Cursor->UpdateAndGetRect();
 
-        std::string cursor_texture_id = m_Cursor->GetTextureId(
+        std::string const cursor_texture_id = m_Cursor->GetTextureId(
                                                     static_cast<int>(m_EditState.EditMode));
 
         SDL_RenderCopy(Renderer::GetInstance()->GetRenderer(),
                        Renderer::GetInstance()->GetTexture(cursor_texture_id)->GetTexture(),
-                       NULL,
+                       nullptr,
                        &cursor_rect);
     }
 
@@ -1324,7 +1324,7 @@ void Editor::CheckForToolSelection(EditorAction editor_action, EditMode edit_mod
 
 bool Editor::LoadEditorTextures() {
     tinyxml2::XMLDocument doc;
-    std::string textures_path = "../assets/editor/editor_textures.xml";
+    std::string const textures_path = "../assets/editor/editor_textures.xml";
 
     // check for loading error for xml
     tinyxml2::XMLError const error = doc.LoadFile(textures_path.c_str());

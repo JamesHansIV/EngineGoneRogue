@@ -10,10 +10,10 @@ Cursor::Cursor() {
     m_Cursor_Type = CursorType::POINT;
 }
 
-Cursor::~Cursor() {}
+Cursor::~Cursor() = default;
 
 SDL_Rect Cursor::UpdateAndGetRect() {
-    ImGuiIO& io = ImGui::GetIO();  
+    ImGuiIO const& io = ImGui::GetIO();  
 
     m_Cursor_Rect.h = m_Height * m_Scale;
     m_Cursor_Rect.w = m_Width * m_Scale;
@@ -23,7 +23,7 @@ SDL_Rect Cursor::UpdateAndGetRect() {
     return m_Cursor_Rect;
 }
 
-std::string Cursor::GetTextureId(int edit_mode) {
+std::string Cursor::GetTextureId(int  /*edit_mode*/) {
     return cursor_type_to_texture_id_map[m_Cursor_Type];
 }
 

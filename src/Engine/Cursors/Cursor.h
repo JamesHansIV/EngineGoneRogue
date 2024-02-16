@@ -20,7 +20,7 @@ class Cursor {
         int y;
 
         void Draw();
-        void SetCursor(CursorType cusor_type);
+        void SetCursor(CursorType cursor_type);
         void SetCursor(int edit_mode);
 
         SDL_Rect UpdateAndGetRect();

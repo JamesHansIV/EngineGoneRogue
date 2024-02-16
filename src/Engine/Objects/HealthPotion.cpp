@@ -12,7 +12,7 @@ HealthPotion::HealthPotion(Properties& props, int health) : Collider(props) {
     m_Animation->SelectAnimation("healthpotion");
 }
 
-void HealthPotion::Update(float dt) {
+void HealthPotion::Update(float  /*dt*/) {
     m_CollisionBox.Set(GetX(), GetY(), GetHeight(), GetWidth());
     m_Animation->Update();
 }

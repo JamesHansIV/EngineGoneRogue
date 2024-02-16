@@ -34,6 +34,7 @@ Slime::Slime(Properties& props, const EnemyStats& stats, bool split)
 void Slime::Draw() {
     m_CurrentState->Draw();
 
+    //Todo(Ahmni): Add flag to only show enemy health bar in dev mode.
     m_Health->Draw(GetX(), GetY(), GetWidth());
 }
 

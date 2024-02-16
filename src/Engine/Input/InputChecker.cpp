@@ -17,12 +17,12 @@ int mouse_y;
 int mouse_wheel_direction = 0;
 
 bool InputChecker::IsKeyPressed(int keycode) {
-    return keys[int(keycode % kNumkeys)];
+    return keys[(keycode % kNumkeys)];
     // return keys.at(keycode % kNumkeys);
 }
 
 void InputChecker::SetKeyPressed(int keycode, bool value) {
-    int key = keycode % kNumkeys;
+    int const key = keycode % kNumkeys;
     keys[key] = value;
 }
 
@@ -64,5 +64,5 @@ void InputChecker::ClearPrevFrameKeys() {
 }
 
 bool InputChecker::WasKeyAlreadyPresssed(int keycode) {
-    return prev_frame_keys[int(keycode % kNumkeys)];
+    return prev_frame_keys[(keycode % kNumkeys)];
 }
