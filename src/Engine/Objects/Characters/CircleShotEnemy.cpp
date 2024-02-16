@@ -49,7 +49,3 @@ void CircleShotEnemy::Shoot() {
 void CircleShotEnemy::OnCollide(Collider* collidee) {
     RangedEnemy::OnCollide(collidee);
 }
-
-void CircleShotEnemy::Clean() {
-    delete m_Attack;
-}

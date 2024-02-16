@@ -4,6 +4,10 @@ class AttackPattern {
     virtual void Update(float dt) = 0;
     virtual bool Attack() = 0;
     virtual void Reset() = 0;
+    virtual ~AttackPattern() = default;
+    AttackPattern() = default;
+    AttackPattern(const AttackPattern&) = default;
+    AttackPattern& operator=(const AttackPattern&) = default;
 };
 
 class Burst : public AttackPattern {

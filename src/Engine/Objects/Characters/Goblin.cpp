@@ -45,7 +45,3 @@ void Goblin::Shoot() {
 void Goblin::OnCollide(Collider* collidee) {
     RangedEnemy::OnCollide(collidee);
 }
-
-void Goblin::Clean() {
-    delete m_Attack;
-}

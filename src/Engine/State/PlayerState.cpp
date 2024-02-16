@@ -135,9 +135,7 @@ State* HandleCollide(Player* player, CollideEvent* event) {
     return nullptr;
 }
 
-void PlayerIdle::Enter() {
-    SDL_Log("enter idle state");
-}
+void PlayerIdle::Enter() {}
 
 void PlayerIdle::Exit() {}
 

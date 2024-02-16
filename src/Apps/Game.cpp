@@ -372,7 +372,6 @@ Game::~Game() {
     m_Objects.clear();
     delete m_WeaponInventory;
     delete m_GameEventManager;
-    delete player;
     SDL_FreeCursor(SDL_GetCursor());
 }
 

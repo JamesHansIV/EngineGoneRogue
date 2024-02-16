@@ -6,15 +6,14 @@ class Goblin : public RangedEnemy {
    public:
     explicit Goblin(Properties& props, const RangedEnemyStats& enemyStats);
 
-    virtual void Draw() override;
-    virtual void Clean() override;
-    virtual void Update(float dt) override;
+    void Draw() override;
+    void Update(float dt) override;
 
-    virtual void Shoot() override;
+    void Shoot() override;
 
-    virtual void OnCollide(Collider* collidee) override;
+    void OnCollide(Collider* collidee) override;
 
-    float GetSpread() const { return m_stats.spread; }
+    [[nodiscard]] float GetSpread() const { return m_stats.spread; }
 
-    virtual ObjectType GetObjectType() override { return ObjectType::Enemy; }
+    ObjectType GetObjectType() override { return ObjectType::Enemy; }
 };

@@ -76,3 +76,5 @@ void GameObject::ChangeState(State* state) {
     m_CurrentState = state;
     m_CurrentState->Enter();
 }
+
+GameObject::~GameObject() = default;

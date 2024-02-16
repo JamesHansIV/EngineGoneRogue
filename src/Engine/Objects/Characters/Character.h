@@ -7,8 +7,7 @@
 class Character : public Collider {
 
    public:
-    explicit Character(Properties& props)
-        : Collider(props), m_Health(nullptr) {}
+    explicit Character(Properties& props) : Collider(props) {}
 
     void Draw() override = 0;
     void Clean() override = 0;
@@ -19,6 +18,6 @@ class Character : public Collider {
     void SetHealth(Health* health) { m_Health = health; }
 
    protected:
-    Health* m_Health;
+    Health* m_Health{};
     std::string m_Name;
 };

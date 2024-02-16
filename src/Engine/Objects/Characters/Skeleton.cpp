@@ -46,7 +46,3 @@ void Skeleton::Shoot() {
 void Skeleton::OnCollide(Collider* collidee) {
     RangedEnemy::OnCollide(collidee);
 }
-
-void Skeleton::Clean() {
-    delete m_Attack;
-}

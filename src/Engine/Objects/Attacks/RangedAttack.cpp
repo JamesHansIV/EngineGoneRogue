@@ -39,4 +39,6 @@ void RangedAttack::Shoot(RangedAttackInfo info) {
     }
 }
 
-RangedAttack::~RangedAttack() {}
+RangedAttack::~RangedAttack() {
+    delete m_AttackPattern;
+}

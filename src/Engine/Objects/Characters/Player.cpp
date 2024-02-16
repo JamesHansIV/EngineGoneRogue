@@ -106,9 +106,7 @@ Player::Player(Properties& props) : Character(props) {
 
     std::thread health_regen_thread([this]() {
         while (true) {
-            SDL_Log("Cur health: %d", m_Health->GetHP());
             m_Health->IncreaseHealth(m_stats->getHPRegenRate());
-            SDL_Log("Health regen done to: %d", m_Health->GetHP());
             // Sleep for one second
             std::this_thread::sleep_for(std::chrono::seconds(1));
         }
@@ -123,6 +121,7 @@ Player::~Player() {
     delete m_Health;
     delete m_CurrentState;
     delete m_ExperienceBar;
+    delete m_Animation;
     for (auto& weapon : m_Weapons) {
         delete weapon;
     }

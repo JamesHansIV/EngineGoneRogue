@@ -45,7 +45,3 @@ void HelixEnemy::Shoot() {
 void HelixEnemy::OnCollide(Collider* collidee) {
     RangedEnemy::OnCollide(collidee);
 }
-
-void HelixEnemy::Clean() {
-    delete m_Attack;
-}

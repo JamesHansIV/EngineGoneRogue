@@ -43,7 +43,3 @@ void Dog::Shoot() {
 void Dog::OnCollide(Collider* collidee) {
     RangedEnemy::OnCollide(collidee);
 }
-
-void Dog::Clean() {
-    delete m_Attack;
-}

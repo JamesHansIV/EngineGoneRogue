@@ -8,7 +8,6 @@ class Mage : public RangedEnemy {
                   int bulletCount = 6);
 
     virtual void Draw() override;
-    virtual void Clean() override;
     virtual void Update(float dt) override;
 
     virtual void Shoot() override;

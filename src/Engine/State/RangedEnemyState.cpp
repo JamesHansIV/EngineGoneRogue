@@ -246,7 +246,6 @@ State* RangedEnemyIsHit::OnCollideEvent(CollideEvent* event) {
                 // ApplyDamage();
             }
 
-            SDL_Log("Enemy hit: %d", projectile->GetDamage());
             break;
         }
         case ObjectType::Entrance: {

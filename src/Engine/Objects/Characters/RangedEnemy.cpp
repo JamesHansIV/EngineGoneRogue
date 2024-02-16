@@ -38,4 +38,6 @@ void RangedEnemy::OnCollide(Collider* collidee) {
 void RangedEnemy::Clean() {
     delete m_Attack;
     delete m_Health;
+    delete m_Animation;
+    delete m_CurrentState;
 }
