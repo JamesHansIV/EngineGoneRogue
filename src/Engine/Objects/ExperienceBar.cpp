@@ -1,8 +1,5 @@
 #include "ExperienceBar.h"
-#include <SDL2/SDL.h>
 #include "Engine/Objects/utils/utils.h"
-#include "Engine/Renderer/Renderer.h"
-#include "Engine/utils/utils.h"
 
 void ExperienceBar::Draw() const {
     Renderer* renderer = Renderer::GetInstance();
@@ -16,4 +13,8 @@ void ExperienceBar::Draw() const {
     renderer->DrawRect(experience_bar_container_rect, {39, 92, 171, 255}, true);
 
     renderer->DrawRect(experience_bar_rect, {44, 138, 220, 255}, true);
+}
+
+void ExperienceBar::Update(const Player& player) {
+    m_xp = player.GetStats().GetExperience();
 }

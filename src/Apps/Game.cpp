@@ -214,7 +214,7 @@ Game::Game() {
     Renderer::GetInstance()->SetCameraTarget(player);
     m_GameEventManager = new GameEventManager(player, m_Objects);
 
-    m_HeadsUpDisplay = new HUD();
+    m_HeadsUpDisplay = new HUD(*player);
 
     SDL_Cursor* cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR);
     SDL_SetCursor(cursor);
@@ -290,7 +290,7 @@ void Game::Update(float dt) {
     ColliderHandler::GetInstance()->HandleCollisions();
     if (player != nullptr) {
         player->Update(dt);
-        m_WeaponInventory->SetSelectedWeapon(player->GetCurrentWeapon());
+        m_HeadsUpDisplay->Update(*player);
         if (player->MarkedForDeletion()) {
             DeleteObject(player);
             player = nullptr;
@@ -320,7 +320,6 @@ void Game::Render() {
     }
     if (player != nullptr) {
         player->Draw();
-        m_WeaponInventory->Draw();
         m_HeadsUpDisplay->Draw();
     }
     Renderer::GetInstance()->Render();

@@ -101,7 +101,7 @@ Texture* Renderer::AddTextTexture(const std::string& id,
         if (m_TextureMap.find(id) != m_TextureMap.end()) {
             Texture* cur_texture = m_TextureMap[id];
             // Todo(): Should not be using filePath to compare with text
-            if (cur_texture->GetFilePath() == text) {
+            if (cur_texture->GetText() == text) {
                 return cur_texture;
             }
             delete m_TextureMap[id];

@@ -45,7 +45,8 @@ Texture::Texture(const char* filename, std::string id) {
 
 Texture::Texture(const std::string& text, SDL_Color text_color,
                  std::string id) {
-    m_FilePath = text;
+    m_FilePath = "";
+    m_curText = text;
     SDL_Surface* surface = TTF_RenderUTF8_Solid(
         Renderer::GetInstance()->GetFont(), text.c_str(), text_color);
     if (surface == nullptr) {

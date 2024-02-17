@@ -1,4 +1,5 @@
 #include "WeaponInventory.h"
+#include "Engine/Objects/Characters/Player.h"
 #include "Engine/Objects/IObject.h"
 #include "Engine/Objects/Weapons/Weapon.h"
 #include "SDL2/SDL_render.h"
@@ -47,4 +48,7 @@ void WeaponInventory::Draw() {
 
 void WeaponInventory::Clean() {}
 
-void WeaponInventory::Update(float dt) {}
+void WeaponInventory::Update(const Player& player) {
+    m_Weapons = player.GetPlayerWeapons();
+    m_SelectedWeapon = player.GetCurrentWeapon();
+}

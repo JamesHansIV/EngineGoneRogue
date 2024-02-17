@@ -116,13 +116,10 @@ Player::Player(Properties& props) : Character(props) {
     ColliderHandler::GetInstance()->AddCollider(w2);
 
     m_CurrentWeapon = m_Weapons[0];
-
-    m_ExperienceBar = new ExperienceBar(100, 0);
 }
 
 void Player::Draw() {
     m_CurrentState->Draw();
-    m_ExperienceBar->Draw();
 
     m_Health->Draw(GetX(), GetY(), GetWidth());
     m_CurrentWeapon->Draw();
@@ -133,13 +130,10 @@ void Player::Update(float dt) {
     if (state != nullptr) {
         ChangeState(state);
     }
-    m_RigidBody->ApplyVelocity(Vector2D(0, -5 * dt));
 
-    m_ExperienceBar->SetExperience(m_stats->getExperience());
-    if(SDL_GetTicks() - m_lastHealthRegen > 1000)
-    {
+    if (SDL_GetTicks() - m_lastHealthRegen > 1000) {
         m_lastHealthRegen = SDL_GetTicks();
-        m_Health->IncreaseHealth(m_stats->getHPRegenRate());
+        m_Health->IncreaseHealth(m_stats->GetHPRegenRate());
     }
     m_Animation->Update();
     m_RigidBody->Update(dt);
@@ -250,7 +244,6 @@ void Player::HandleEvent(Event* event) {
 Player::~Player() {
     delete m_Health;
     delete m_CurrentState;
-    delete m_ExperienceBar;
     delete m_Animation;
     for (auto& weapon : m_Weapons) {
         delete weapon;

@@ -16,7 +16,8 @@ class Projectile : public Collider {
    public:
     bool m_Active = true;
     Projectile(Properties& props, float speed, float angle,
-               bool playerOwned = false, int damage = 10, int piercing = 0, Player* owner = nullptr);
+               bool playerOwned = false, int damage = 10, int piercing = 0,
+               Player* owner = nullptr);
     void Draw() override;
     void Clean() override;
     void Update(float dt) override;
@@ -49,13 +50,13 @@ class Projectile : public Collider {
         return ProjectileType::Standard;
     }
 
-    void SetPiercing(int piercing){ m_Piercing = piercing; }
+    void SetPiercing(int piercing) { m_Piercing = piercing; }
 
     int GetPiercing() const { return m_Piercing; }
 
-    void AddNumberofEnemiesHit(){ m_NumberofEnemiesHit++; }
+    void AddNumberofEnemiesHit() { m_NumberofEnemiesHit++; }
 
-    int GetNumberofEnemiesHit() const {return m_NumberofEnemiesHit;};
+    int GetNumberofEnemiesHit() const { return m_NumberofEnemiesHit; };
 
     Player* GetOwner() { return m_Owner; };
 

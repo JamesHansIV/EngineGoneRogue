@@ -5,7 +5,6 @@
 #include "Character.h"
 #include "Engine/Animation/Animation.h"
 #include "Engine/Objects/ColliderHandler.h"
-#include "Engine/Objects/ExperienceBar.h"
 #include "Engine/Objects/Weapons/Weapon.h"
 #include "Engine/Physics/RigidBody.h"
 #include "Engine/State/PlayerState.h"
@@ -32,47 +31,49 @@ class PlayerStats {
         m_level = 1;
     }
 
-    float getSpeed() { return m_Speed; };
+    [[nodiscard]] float GetSpeed() const { return m_Speed; };
 
-    int getDodgeCD() { return m_DodgeCD; };
+    [[nodiscard]] int GetDodgeCd() const { return m_DodgeCD; };
 
-    float getDodgeSpeed() { return m_DodgeSpeed; };
+    [[nodiscard]] float GetDodgeSpeed() const { return m_DodgeSpeed; };
 
-    int getRangedDamage() const { return m_RangedDamage; }
+    [[nodiscard]] int GetRangedDamage() const { return m_RangedDamage; }
 
-    int getMeleeDamage() const { return m_MeleeDamage; }
+    [[nodiscard]] int GetMeleeDamage() const { return m_MeleeDamage; }
 
-    int getExperience() const { return m_experience; }
+    [[nodiscard]] int GetExperience() const { return m_experience; }
 
-    int getPiercing() const { return m_Piercing; };
+    [[nodiscard]] int GetPiercing() const { return m_Piercing; };
 
-    int getArmorPercentage() const { return m_ArmorPercentage; }
+    [[nodiscard]] int GetArmorPercentage() const { return m_ArmorPercentage; }
 
-    int getHPRegenRate() const { return m_HPRegenRate; }
+    [[nodiscard]] int GetHPRegenRate() const { return m_HPRegenRate; }
 
-    int getLifeStealPercentage() const { return m_LifeStealPercentage; }
+    [[nodiscard]] int GetLifeStealPercentage() const {
+        return m_LifeStealPercentage;
+    }
 
-    void setSpeed(float speed) { m_Speed = speed; };
+    void SetSpeed(float speed) { m_Speed = speed; };
 
-    void setDodgeCD(int dodgeCD) { m_DodgeCD = dodgeCD; };
+    void SetDodgeCd(int dodgeCD) { m_DodgeCD = dodgeCD; };
 
-    void setDodgeSpeed(float dodgeSpeed) { m_DodgeSpeed = dodgeSpeed; };
+    void SetDodgeSpeed(float dodgeSpeed) { m_DodgeSpeed = dodgeSpeed; };
 
-    void setMeleeDamage(int meleeDamage) { m_MeleeDamage = meleeDamage; }
+    void SetMeleeDamage(int meleeDamage) { m_MeleeDamage = meleeDamage; }
 
-    void setRangedDamage(int rangedDamage) { m_RangedDamage = rangedDamage; }
+    void SetRangedDamage(int rangedDamage) { m_RangedDamage = rangedDamage; }
 
-    void setExperience(int experience) { m_experience = experience; }
+    void SetExperience(int experience) { m_experience = experience; }
 
-    void setPiercing(int piercing) { m_Piercing = piercing; }
+    void SetPiercing(int piercing) { m_Piercing = piercing; }
 
-    void setArmorPercentage(int armorPercentage) {
+    void SetArmorPercentage(int armorPercentage) {
         m_ArmorPercentage = armorPercentage;
     }
 
-    void setHPRegenRate(int regenRate) { m_HPRegenRate = regenRate; }
+    void SetHpRegenRate(int regenRate) { m_HPRegenRate = regenRate; }
 
-    void setLifeStealPercentage(int lifeSteal) {
+    void SetLifeStealPercentage(int lifeSteal) {
         m_LifeStealPercentage = lifeSteal;
     }
 
@@ -112,6 +113,7 @@ class Player : public Character {
    public:
     explicit Player(Properties& props);
     ~Player() override;
+    Player(const Player&) = delete;
     void Draw() override;
     void Clean() override;
     void Update(float dt) override;
@@ -123,11 +125,15 @@ class Player : public Character {
     void OnKeyReleased(SDL_Event& event);
     void OnCollide(Collider* collidee) override;
 
-    PlayerStats& GetStats() { return *m_stats; }
+    [[nodiscard]] const PlayerStats& GetStats() const { return *m_stats; }
 
-    std::vector<Weapon*>& GetPlayerWeapons() { return m_Weapons; };
+    PlayerStats& GetMutableStats() { return *m_stats; }
 
-    Weapon* GetCurrentWeapon() { return m_CurrentWeapon; };
+    [[nodiscard]] const std::vector<Weapon*>& GetPlayerWeapons() const {
+        return m_Weapons;
+    };
+
+    [[nodiscard]] Weapon* GetCurrentWeapon() const { return m_CurrentWeapon; };
 
     ObjectType GetObjectType() override { return ObjectType::Player; }
 
@@ -135,7 +141,6 @@ class Player : public Character {
     std::vector<Weapon*> m_Weapons;
     PlayerStats* m_stats;
     Weapon* m_CurrentWeapon;
-    ExperienceBar* m_ExperienceBar;
     // TODO: add this to player state when game state is added.
     int m_able_to_dash = 0;
     bool m_is_dashing = false;

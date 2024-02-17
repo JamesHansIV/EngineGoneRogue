@@ -15,6 +15,8 @@ class Texture {
 
     std::string GetFilePath() const { return m_FilePath; }
 
+    std::string GetText() const { return m_curText; }
+
     int GetWidth() const { return m_Width; }
 
     int GetHeight() const { return m_Height; }
@@ -32,4 +34,5 @@ class Texture {
     int m_ObjectCount;
     int m_Width;
     int m_Height;
+    std::string m_curText;
 };

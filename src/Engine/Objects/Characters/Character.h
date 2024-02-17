@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 #include "Engine/Objects/Collider.h"
-#include "Engine/Objects/ExperienceBar.h"
 #include "Engine/Objects/GameObject.h"
 
 class Character : public Collider {
