@@ -17,7 +17,6 @@ class Application {
     static GameObject* LoadObject(tinyxml2::XMLElement* xmlObj);
     static Collider* LoadCollider(tinyxml2::XMLElement* xmlObj,
                                   GameObject* obj);
-    bool LoadObjects(const std::string& roomPath, const std::string& roomID);
     bool LoadRooms(const char* projectPath);
     bool LoadProject();
 

@@ -7,47 +7,47 @@
         <ID>background-tiles</ID>
     </Texture>
     <Texture type="base">
-        <FilePath>../assets/textures/spritesheets/door-idle.png</FilePath>
-        <ID>door1</ID>
-    </Texture>
-    <Texture type="base">
-        <FilePath>../assets/textures/foo.png</FilePath>
-        <ID>foo</ID>
-    </Texture>
-    <Texture type="base">
-        <FilePath>../assets/textures/spritesheets/side-door-idle.png</FilePath>
-        <ID>side-door</ID>
-    </Texture>
-    <Texture type="base">
         <FilePath>../assets/textures/spritesheets/door2-open.png</FilePath>
         <ID>door-open</ID>
     </Texture>
     <Texture type="base">
-        <FilePath>../assets/textures/spritesheets/weapons.png</FilePath>
-        <ID>weapons</ID>
-    </Texture>
-    <Texture type="base">
-        <FilePath>../assets/textures/spritesheets/player-sheet.png</FilePath>
-        <ID>player</ID>
+        <FilePath>../assets/textures/spritesheets/door-idle.png</FilePath>
+        <ID>door1</ID>
     </Texture>
     <Texture type="base">
         <FilePath>../assets/textures/spritesheets/enemies.png</FilePath>
         <ID>enemies</ID>
     </Texture>
     <Texture type="base">
-        <FilePath>../assets/textures/BulletHell/PURPLE/Weapons/weapons/Firearms/spr_weapon06.png</FilePath>
-        <ID>sniper</ID>
+        <FilePath>../assets/textures/foo.png</FilePath>
+        <ID>foo</ID>
     </Texture>
     <Texture type="base">
         <FilePath>../assets/textures/spritesheets/lifepotion.png</FilePath>
         <ID>healthpotion</ID>
     </Texture>
     <Texture type="base">
-        <FilePath>../assets/textures/spritesheets/chest.png</FilePath>
-        <ID>wooden-chest-opening</ID>
+        <FilePath>../assets/textures/spritesheets/player-sheet.png</FilePath>
+        <ID>player</ID>
+    </Texture>
+    <Texture type="base">
+        <FilePath>../assets/textures/spritesheets/side-door-idle.png</FilePath>
+        <ID>side-door</ID>
+    </Texture>
+    <Texture type="base">
+        <FilePath>../assets/textures/BulletHell/PURPLE/Weapons/weapons/Firearms/spr_weapon06.png</FilePath>
+        <ID>sniper</ID>
+    </Texture>
+    <Texture type="base">
+        <FilePath>../assets/textures/spritesheets/weapons.png</FilePath>
+        <ID>weapons</ID>
     </Texture>
     <Texture type="base">
         <FilePath>../assets/textures/BulletHell/PURPLE/Others/Chest/spr_chest1.png</FilePath>
         <ID>wooden-chest-idle</ID>
+    </Texture>
+    <Texture type="base">
+        <FilePath>../assets/textures/spritesheets/chest.png</FilePath>
+        <ID>wooden-chest-opening</ID>
     </Texture>
 </Root>

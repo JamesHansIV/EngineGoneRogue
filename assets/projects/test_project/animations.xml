@@ -13,7 +13,7 @@
         </Animation>
         <Animation
 			ID=""
-            textureID=""
+            textureID="player"
             frameCount="6"
             animationSpeed=""
             flip=""
@@ -24,7 +24,7 @@
         </Animation>
         <Animation
 			ID=""
-            textureID=""
+            textureID="player"
             frameCount="6"
             animationSpeed=""
             flip=""
@@ -35,7 +35,7 @@
         </Animation>
         <Animation
 			ID=""
-            textureID=""
+            textureID="player"
             frameCount="6"
             animationSpeed=""
             flip=""
@@ -46,7 +46,7 @@
         </Animation>
         <Animation
 			ID=""
-            textureID=""
+            textureID="player"
             frameCount="6"
             animationSpeed=""
             flip=""
@@ -57,7 +57,7 @@
         </Animation>
         <Animation
 			ID=""
-            textureID=""
+            textureID="player"
             frameCount="6"
             animationSpeed=""
             flip=""
@@ -68,7 +68,7 @@
         </Animation>
         <Animation
 			ID=""
-            textureID=""
+            textureID="player"
             frameCount="6"
             animationSpeed=""
             flip=""
@@ -79,7 +79,7 @@
         </Animation>
         <Animation
 			ID=""
-            textureID=""
+            textureID="player"
             frameCount="6"
             animationSpeed=""
             flip=""
@@ -90,7 +90,7 @@
         </Animation>
         <Animation
 			ID=""
-            textureID=""
+            textureID="player"
             frameCount="6"
             animationSpeed=""
             flip=""
@@ -101,7 +101,7 @@
         </Animation>
         <Animation
 			ID=""
-            textureID=""
+            textureID="player"
             frameCount="6"
             animationSpeed=""
             flip=""
@@ -112,7 +112,7 @@
         </Animation>
         <Animation
 			ID=""
-            textureID=""
+            textureID="player"
             frameCount="6"
             animationSpeed=""
             flip=""
@@ -123,7 +123,7 @@
         </Animation>
         <Animation
 			ID=""
-            textureID=""
+            textureID="player"
             frameCount="6"
             animationSpeed=""
             flip=""
@@ -134,7 +134,7 @@
         </Animation>
         <Animation
 			ID=""
-            textureID=""
+            textureID="player"
             frameCount="6"
             animationSpeed=""
             flip=""
