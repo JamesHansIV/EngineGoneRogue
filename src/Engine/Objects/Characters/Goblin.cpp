@@ -16,7 +16,15 @@ Goblin::Goblin(Properties& props, const RangedEnemyStats& stats)
         "Hit", {m_TextureID, {14, 0, 16, 16}, 3, 8, SDL_FLIP_NONE});
     m_Animation->AddAnimation(
         "Dead", {m_TextureID, {12, 0, 16, 16}, 2, 50, SDL_FLIP_NONE});
+    Init();
+}
 
+Goblin::Goblin(Collider& rhs, RangedEnemyStats stats)
+    : RangedEnemy(rhs, stats) {
+    Init();
+}
+
+void Goblin::Init() {
     ChangeState(new RangedEnemyIdle(this));
     SetHealth(new Health(100));
     SetAttack(new RangedAttack(CreateSpreadBullet, GetFireInterval(),

@@ -64,7 +64,20 @@ bool Application::LoadCharacters(const char* projectPath) {
 
     std::vector<GameObject*> objects = LoadObjects(objects_path.c_str());
 
-    for (auto* obj : objects) {}
+    if (objects.empty()) {
+        return false;
+    }
+
+    for (auto* obj : objects) {
+        if (obj->GetID() == "player") {
+            m_Player = static_cast<Player*>(obj);
+            continue;
+        }
+        SDL_Log("adding obj %s", obj->GetID().c_str());
+        m_Rooms[m_BaseRoomID].push_back(obj);
+    }
+
+    return true;
 }
 
 bool Application::LoadRooms(const char* projectPath) {
@@ -89,10 +102,14 @@ bool Application::LoadRooms(const char* projectPath) {
             room_path += "/";
             room_path += entry->d_name;
             room_id = file_name.substr(0, file_name.rfind('.'));
-            m_Rooms[room_id] = LoadObjects(room_path.c_str());
+            std::vector<GameObject*> objects = LoadObjects(room_path.c_str());
+            m_Rooms[room_id].insert(m_Rooms[room_id].begin(), objects.begin(),
+                                    objects.end());
             room_path = rooms_path;
         }
     }
+
+    SDL_Log("room %s has size %d", room_id.c_str(), m_Rooms[room_id].size());
 
     closedir(dp);
     return true;
@@ -108,6 +125,7 @@ bool Application::LoadProject() {
     SDL_Log("Textures are fine");
     SDL_Log("%s", project_path);
     if (!LoadCharacters(project_path)) {
+        SDL_Log("cannot load characters");
         return false;
     }
     return LoadRooms(project_path);

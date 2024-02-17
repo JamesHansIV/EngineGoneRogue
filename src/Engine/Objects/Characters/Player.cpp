@@ -15,69 +15,18 @@ const int kMoveAnimationSpeed = 20;
 const int kIdleAnimationSpeed = 50;
 
 Player::Player(Properties& props) : Character(props) {
+    Init();
+}
+
+Player::Player(Collider& rhs) : Character(rhs) {
+    Init();
+}
+
+void Player::Init() {
     AddStillFrame("face-down", {1, 0, 18, 16});
     AddStillFrame("face-right", {2, 0, 18, 16});
     AddStillFrame("face-right-up", {3, 0, 18, 16});
     AddStillFrame("face-up", {4, 0, 18, 16});
-
-    m_Animation = new Animation();
-
-    m_Animation->AddAnimation("PlayerIdle", {m_TextureID,
-                                             {7, 0, 18, 16},
-                                             2,
-                                             kIdleAnimationSpeed,
-                                             SDL_FLIP_NONE,
-                                             true});
-    m_Animation->AddAnimation(
-        "PlayerDead", {m_TextureID, {0, 0, 18, 16}, 6, kMoveAnimationSpeed});
-
-    m_Animation->AddAnimation("move-right",
-                              {m_TextureID, m_StillFrames["face-right"], 6,
-                               kMoveAnimationSpeed, SDL_FLIP_NONE, true});
-    m_Animation->AddAnimation("move-left",
-                              {m_TextureID, m_StillFrames["face-right"], 6,
-                               kMoveAnimationSpeed, SDL_FLIP_HORIZONTAL, true});
-    m_Animation->AddAnimation("move-right-up",
-                              {m_TextureID, m_StillFrames["face-right-up"], 6,
-                               kMoveAnimationSpeed, SDL_FLIP_NONE, true});
-
-    m_Animation->AddAnimation("move-left-up",
-                              {m_TextureID, m_StillFrames["face-right-up"], 6,
-                               kMoveAnimationSpeed, SDL_FLIP_HORIZONTAL, true});
-    m_Animation->AddAnimation("move-up",
-                              {m_TextureID, m_StillFrames["face-up"], 6,
-                               kMoveAnimationSpeed, SDL_FLIP_NONE});
-    m_Animation->AddAnimation("move-down",
-                              {m_TextureID, m_StillFrames["face-down"], 6,
-                               kMoveAnimationSpeed, SDL_FLIP_NONE});
-
-    m_Animation->AddAnimation(
-        "dodge-down", {"player-dodge", {0, 0, 20, 20}, 6, 2, SDL_FLIP_NONE});
-    m_Animation->AddAnimation(
-        "dodge-right", {"player-dodge", {1, 0, 20, 20}, 6, 2, SDL_FLIP_NONE});
-    m_Animation->AddAnimation(
-        "dodge-right-up",
-        {"player-dodge", {2, 0, 20, 20}, 6, 2, SDL_FLIP_NONE});
-    m_Animation->AddAnimation(
-        "dodge-up", {"player-dodge", {3, 0, 20, 20}, 6, 2, SDL_FLIP_NONE});
-    m_Animation->AddAnimation(
-        "dodge-left-up", {"player-dodge", {4, 0, 20, 20}, 6, 2, SDL_FLIP_NONE});
-    m_Animation->AddAnimation(
-        "dodge-left", {"player-dodge", {5, 0, 20, 20}, 6, 2, SDL_FLIP_NONE});
-
-    m_Animation->AddAnimation(
-        "front-hit", {m_TextureID, {5, 0, 18, 16}, 2, 20, SDL_FLIP_NONE});
-    m_Animation->AddAnimation(
-        "right-hit", {m_TextureID, {5, 2, 18, 16}, 2, 8, SDL_FLIP_NONE});
-    m_Animation->AddAnimation(
-        "left-hit", {m_TextureID, {5, 2, 18, 16}, 2, 8, SDL_FLIP_HORIZONTAL});
-    m_Animation->AddAnimation(
-        "right-up-hit", {m_TextureID, {5, 4, 18, 16}, 2, 8, SDL_FLIP_NONE});
-    m_Animation->AddAnimation(
-        "left-up-hit",
-        {m_TextureID, {5, 4, 18, 16}, 2, 8, SDL_FLIP_HORIZONTAL});
-    m_Animation->AddAnimation(
-        "back-hit", {m_TextureID, {6, 0, 18, 16}, 2, 8, SDL_FLIP_NONE});
 
     m_CurrentTilePos = m_StillFrames["face-down"];
 
@@ -119,6 +68,7 @@ Player::Player(Properties& props) : Character(props) {
 }
 
 void Player::Draw() {
+    SDL_Log("player texture id: %s", GetTextureID().c_str());
     m_CurrentState->Draw();
 
     m_Health->Draw(GetX(), GetY(), GetWidth());

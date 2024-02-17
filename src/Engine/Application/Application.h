@@ -5,7 +5,7 @@
 #include <unordered_map>
 #include "Engine/Events/EventManager.h"
 #include "Engine/Layers/Layer.h"
-#include "Engine/Objects/Collider.h"
+#include "Engine/Objects/Characters/Player.h"
 
 class Application {
    public:
@@ -39,12 +39,14 @@ class Application {
 
    protected:
     std::string m_ProjectName;
+    std::string m_BaseRoomID = "room1";
     std::unordered_map<std::string, std::vector<GameObject*>> m_Rooms;
     Uint32 m_LastTick;
     bool m_is_paused;
     bool m_has_focus;
     int m_Frame;
     EventManager m_EventManager;
+    Player* m_Player;
 
    private:
     bool m_IsRunning;

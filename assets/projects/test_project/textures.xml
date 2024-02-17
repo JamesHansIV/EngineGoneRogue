@@ -11,6 +11,10 @@
         <ID>door-open</ID>
     </Texture>
     <Texture type="base">
+        <FilePath>../assets/textures/spritesheets/door2-close.png</FilePath>
+        <ID>door-close</ID>
+    </Texture>
+    <Texture type="base">
         <FilePath>../assets/textures/spritesheets/door-idle.png</FilePath>
         <ID>door1</ID>
     </Texture>
@@ -29,6 +33,10 @@
     <Texture type="base">
         <FilePath>../assets/textures/spritesheets/player-sheet.png</FilePath>
         <ID>player</ID>
+    </Texture>
+    <Texture type="base">
+        <FilePath>../assets/textures/spritesheets/player-dodge.png</FilePath>
+        <ID>player-dodge</ID>
     </Texture>
     <Texture type="base">
         <FilePath>../assets/textures/spritesheets/side-door-idle.png</FilePath>

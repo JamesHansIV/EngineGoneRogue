@@ -115,8 +115,11 @@ class Player : public Character {
 
    public:
     explicit Player(Properties& props);
+    Player(Collider& rhs);
     ~Player() override;
     Player(const Player&) = delete;
+
+    void Init();
     void Draw() override;
     void Clean() override;
     void Update(float dt) override;

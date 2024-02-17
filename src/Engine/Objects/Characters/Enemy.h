@@ -6,6 +6,8 @@
 class Enemy : public Character {
    public:
     explicit Enemy(Properties& props, const EnemyStats& stats);
+    Enemy(Collider& rhs, EnemyStats stats);
+
     virtual void Draw() override = 0;
     virtual void Clean() override = 0;
     virtual void Update(float dt) override = 0;

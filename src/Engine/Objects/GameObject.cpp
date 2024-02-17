@@ -17,6 +17,10 @@ GameObject::GameObject(GameObject* rhs) {
                                 rhs->m_Animation->GetSpriteHeight()},
                                rhs->m_Animation->GetFrameCount(),
                                rhs->m_Animation->GetAnimationSpeed()});
+
+        for (const auto item : rhs->m_Animation->GetAnimations()) {
+            m_Animation->AddAnimation(item.first, item.second);
+        }
     }
 }
 

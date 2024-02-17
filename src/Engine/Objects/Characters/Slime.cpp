@@ -5,27 +5,14 @@
 
 Slime::Slime(Properties& props, const EnemyStats& stats, bool split)
     : Enemy(props, stats), m_Split(split) {
-    m_Animation = new Animation();
-    m_Animation->AddAnimation(
-        "MiniSlimeIdle",
-        {m_TextureID, {0, 2, 16, 16}, 2, 30, SDL_FLIP_NONE, true});
-    m_Animation->AddAnimation(
-        "MiniSlimeHit", {m_TextureID, {1, 0, 16, 16}, 3, 8, SDL_FLIP_NONE});
-    m_Animation->AddAnimation(
-        "MiniSlimeAttack",
-        {m_TextureID, {2, 0, 16, 16}, 8, 15, SDL_FLIP_NONE, false, 2, 5});
-    m_Animation->AddAnimation(
-        "MiniSlimeDead", {m_TextureID, {0, 0, 16, 16}, 2, 50, SDL_FLIP_NONE});
+    Init();
+}
 
-    m_Animation->AddAnimation(
-        "SlimeIdle", {m_TextureID, {3, 2, 16, 16}, 2, 30, SDL_FLIP_NONE, true});
-    m_Animation->AddAnimation(
-        "SlimeHit", {m_TextureID, {4, 0, 16, 16}, 3, 8, SDL_FLIP_NONE});
-    m_Animation->AddAnimation(
-        "SlimeAttack",
-        {m_TextureID, {5, 0, 16, 16}, 8, 15, SDL_FLIP_NONE, false, 2, 5});
-    m_Animation->AddAnimation(
-        "SlimeDead", {m_TextureID, {3, 0, 16, 16}, 2, 50, SDL_FLIP_NONE});
+Slime::Slime(Collider& rhs, EnemyStats stats) : Enemy(rhs, stats) {
+    Init();
+}
+
+void Slime::Init() {
     SetHealth(new Health(100));
 
     ChangeState(new SlimeIdle(this));

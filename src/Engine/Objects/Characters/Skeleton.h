@@ -5,8 +5,11 @@ class Skeleton : public RangedEnemy {
    public:
     explicit Skeleton(Properties& props, const RangedEnemyStats& stats);
 
-    void Draw() override;
-    void Update(float dt) override;
+    Skeleton(Collider& rhs, RangedEnemyStats stats);
+    void Init();
+
+    virtual void Draw() override;
+    virtual void Update(float dt) override;
 
     void Shoot() override;
 

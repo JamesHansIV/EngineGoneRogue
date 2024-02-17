@@ -6,6 +6,9 @@ class Slime : public Enemy {
    public:
     explicit Slime(Properties& props, const EnemyStats& stats,
                    bool split = false);
+    Slime(Collider& rhs, EnemyStats stats);
+    void Init();
+
     virtual void Draw() override;
     virtual void Clean() override;
     virtual void Update(float dt) override;

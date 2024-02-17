@@ -1,4 +1,12 @@
 #include "Config.h"
+#include "Engine/Objects/Characters/Dog.h"
+#include "Engine/Objects/Characters/Goblin.h"
+#include "Engine/Objects/Characters/HelixEnemy.h"
+#include "Engine/Objects/Characters/Mage.h"
+#include "Engine/Objects/Characters/Player.h"
+#include "Engine/Objects/Characters/RingShotEnemy.h"
+#include "Engine/Objects/Characters/Skeleton.h"
+#include "Engine/Objects/Characters/Slime.h"
 #include "Engine/Objects/Collider.h"
 #include "Engine/Renderer/Renderer.h"
 
@@ -166,44 +174,67 @@ int SaveTextureMap(const char* filepath,
 void AddAnimation(tinyxml2::XMLElement* xmlObj, GameObject* obj) {
     tinyxml2::XMLElement* animation = xmlObj->FirstChildElement("Animation");
 
-    if (animation != nullptr) {
-        obj->SetAnimation(new Animation());
+    if (animation == nullptr) {
+        return;
+    }
 
-        tinyxml2::XMLElement* curr =
-            animation->FirstChildElement("AnimationInfo");
+    obj->SetAnimation(new Animation());
 
-        while (curr != nullptr) {
-            TilePos const tile_pos = {
-                atoi(curr->Attribute("row")),
-                atoi(curr->Attribute("col")),
-                atoi(curr->Attribute("w")),
-                atoi(curr->Attribute("h")),
-            };
+    tinyxml2::XMLElement* curr = animation->FirstChildElement("AnimationInfo");
+    tinyxml2::XMLElement* tile;
 
-            AnimationInfo info = {curr->Attribute("texture_id"), tile_pos,
-                                  atoi(curr->Attribute("frame_count")),
-                                  atoi(curr->Attribute("speed"))};
-            if (curr->Attribute("flip") != nullptr) {
-                info.Flip = (SDL_RendererFlip)atoi(curr->Attribute("flip"));
-            }
+    while (curr != nullptr) {
+        tile = curr->FirstChildElement("Tile");
 
-            info.Loop = curr->Attribute("loop") == "1" ? true : false;
+        TilePos const tile_pos = {
+            atoi(tile->Attribute("row")),
+            atoi(tile->Attribute("col")),
+            atoi(tile->Attribute("w")),
+            atoi(tile->Attribute("h")),
+        };
 
-            if (curr->Attribute("key_frames_start") != nullptr &&
-                curr->Attribute("key_frames_end") != nullptr) {
-                info.KeyFramesStart = atoi(curr->Attribute("key_frames_start"));
-                info.KeyFramesEnd = atoi(curr->Attribute("key_frames_end"));
-            }
+        AnimationInfo info = {curr->Attribute("texture_id"), tile_pos,
+                              atoi(curr->Attribute("frame_count")),
+                              atoi(curr->Attribute("speed"))};
 
-            obj->GetAnimation()->AddAnimation(curr->Attribute("id"), info);
+        SDL_Log("info loop: %s", (curr->Attribute("texture_id")));
 
-            SDL_Log("Animation row: %d", obj->GetAnimation()->GetSpriteRow());
-            SDL_Log("Animation col: %d", obj->GetAnimation()->GetSpriteCol());
-            SDL_Log("Animation frameCount: %d",
-                    obj->GetAnimation()->GetFrameCount());
-            SDL_Log("Animation speed: %d",
-                    obj->GetAnimation()->GetAnimationSpeed());
+        if (curr->Attribute("flip") != nullptr) {
+            info.Flip =
+                static_cast<SDL_RendererFlip>(atoi(curr->Attribute("flip")));
         }
+
+        SDL_Log("checked flip attribute");
+
+        info.Loop = curr->Attribute("loop") != nullptr &&
+                    strcmp(curr->Attribute("loop"), "1") == 0;
+        SDL_Log("info loop: %d", info.Loop);
+
+        SDL_Log("checked loop attribute");
+
+        if (curr->Attribute("key_frames_start") != nullptr &&
+            curr->Attribute("key_frames_end") != nullptr) {
+            info.KeyFramesStart = atoi(curr->Attribute("key_frames_start"));
+            info.KeyFramesEnd = atoi(curr->Attribute("key_frames_end"));
+        }
+
+        SDL_Log("checked key frames attributes");
+
+        obj->GetAnimation()->AddAnimation(curr->Attribute("id"), info);
+        SDL_Log("added animation for '%s'", curr->Attribute("id"));
+
+        obj->GetAnimation()->SelectAnimation(curr->Attribute("id"));
+
+        curr = curr->NextSiblingElement("AnimationInfo");
+
+        SDL_Log("Animation texture id: %s",
+                obj->GetAnimation()->GetAnimationID().c_str());
+        SDL_Log("Animation row: %d", obj->GetAnimation()->GetSpriteRow());
+        SDL_Log("Animation col: %d", obj->GetAnimation()->GetSpriteCol());
+        SDL_Log("Animation frameCount: %d",
+                obj->GetAnimation()->GetFrameCount());
+        SDL_Log("Animation speed: %d",
+                obj->GetAnimation()->GetAnimationSpeed());
     }
 }
 
@@ -251,7 +282,6 @@ GameObject* LoadObject(tinyxml2::XMLElement* xmlObj) {
 }
 
 Collider* LoadCollider(tinyxml2::XMLElement* xmlObj, GameObject* obj) {
-    SDL_Log("in load collider");
     auto* collider = new Collider(obj);
 
     if (collider == nullptr) {
@@ -266,15 +296,115 @@ Collider* LoadCollider(tinyxml2::XMLElement* xmlObj, GameObject* obj) {
     if (collision_box == nullptr) {
         SDL_Log("Collider %s does not have a collision box set",
                 obj->GetID().c_str());
+        collider->GetCollisionBox().Set(
+            obj->GetDstRect().x, obj->GetDstRect().y, obj->GetDstRect().w,
+            obj->GetDstRect().h);
+    } else {
+        collider->GetCollisionBox().Set(atoi(collision_box->Attribute("x")),
+                                        atoi(collision_box->Attribute("y")),
+                                        atoi(collision_box->Attribute("w")),
+                                        atoi(collision_box->Attribute("h")));
     }
-
-    collider->GetCollisionBox().Set(atoi(collision_box->Attribute("x")),
-                                    atoi(collision_box->Attribute("y")),
-                                    atoi(collision_box->Attribute("w")),
-                                    atoi(collision_box->Attribute("h")));
 
     delete obj;
     return collider;
+}
+
+EnemyStats GetEnemyStats(tinyxml2::XMLElement* element) {
+
+    EnemyStats stats;
+    stats.health = atoi(element->Attribute("health"));
+    stats.damage = atoi(element->Attribute("damage"));
+    stats.speed = atoi(element->Attribute("speed"));
+    stats.range = atof(element->Attribute("range"));
+    stats.perceptionWidth = atoi(element->Attribute("perception_width"));
+    stats.xpGiven = atoi(element->Attribute("xp"));
+
+    return stats;
+}
+
+RangedEnemyStats GetRangedEnemyStats(tinyxml2::XMLElement* element,
+                                     EnemyStats stats) {
+    SDL_Log("getting ranged enemy stats");
+    RangedEnemyStats new_stats;
+    new_stats.health = stats.health;
+    new_stats.damage = stats.damage;
+    new_stats.speed = stats.speed;
+    new_stats.range = stats.range;
+    new_stats.perceptionWidth = stats.perceptionWidth;
+    new_stats.xpGiven = stats.xpGiven;
+    new_stats.fireInterval = atoi(element->Attribute("fire_interval"));
+    //Spread is saved as a fraction of PI
+    if (element->Attribute("spread") != nullptr &&
+        element->Attribute("spread_count") != nullptr) {
+        new_stats.spread = M_PI * atof(element->Attribute("spread"));
+        new_stats.spreadCount = M_PI * atoi(element->Attribute("spread_count"));
+    }
+    return new_stats;
+}
+
+GameObject* BuildRangedEnemy(tinyxml2::XMLElement* types,
+                             tinyxml2::XMLElement* xmlObj, GameObject* obj) {
+
+    GameObject* new_obj = nullptr;
+    EnemyStats stats =
+        GetEnemyStats(xmlObj->FirstChildElement("RangedEnemyStats"));
+    RangedEnemyStats ranged_stats = GetRangedEnemyStats(
+        xmlObj->FirstChildElement("RangedEnemyStats"), stats);
+
+    if (types->Attribute("ring_shot_enemy") != nullptr) {
+        SDL_Log("creating ring shot enemy %f", ranged_stats.spread);
+        new_obj = new RingShotEnemy(*static_cast<Collider*>(obj), ranged_stats);
+        SDL_Log("ring shot enemy spread %s", new_obj->GetID().c_str());
+    }
+    if (types->Attribute("dog") != nullptr) {
+        new_obj = new Dog(*static_cast<Collider*>(obj), ranged_stats);
+    }
+    if (types->Attribute("goblin") != nullptr) {
+        new_obj = new Goblin(*static_cast<Collider*>(obj), ranged_stats);
+    }
+    if (types->Attribute("helix_enemy") != nullptr) {
+        new_obj = new HelixEnemy(*static_cast<Collider*>(obj), ranged_stats);
+    }
+    if (types->Attribute("skeleton") != nullptr) {
+        new_obj = new Skeleton(*static_cast<Collider*>(obj), ranged_stats);
+    }
+    if (types->Attribute("mage") != nullptr) {
+        new_obj = new Mage(*static_cast<Collider*>(obj), ranged_stats);
+    }
+
+    delete obj;
+
+    return new_obj;
+}
+
+GameObject* BuildObjectOnType(tinyxml2::XMLElement* types,
+                              tinyxml2::XMLElement* xmlObj, GameObject* obj) {
+    GameObject* new_obj = obj;
+
+    if (types->Attribute("collider") != nullptr) {
+        new_obj = LoadCollider(xmlObj, new_obj);
+        SDL_Log("loaded collider: %d aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                static_cast<int>(dynamic_cast<Collider*>(new_obj) != nullptr));
+    }
+
+    if (types->Attribute("player") != nullptr) {
+        SDL_Log("Adding new player");
+        new_obj = new Player(*static_cast<Collider*>(new_obj));
+        return new_obj;
+    }
+
+    if (types->Attribute("slime") != nullptr) {
+        EnemyStats stats =
+            GetEnemyStats(xmlObj->FirstChildElement("EnemyStats"));
+        new_obj = new Slime(*static_cast<Collider*>(new_obj), stats);
+    }
+
+    if (types->Attribute("ranged_enemy") != nullptr) {
+        new_obj = BuildRangedEnemy(types, xmlObj, new_obj);
+    }
+
+    return new_obj;
 }
 
 std::vector<GameObject*> LoadObjects(const char* filepath) {
@@ -285,7 +415,7 @@ std::vector<GameObject*> LoadObjects(const char* filepath) {
 
     tinyxml2::XMLError const error = doc.LoadFile(filepath);
     if (error != tinyxml2::XML_SUCCESS) {
-        SDL_LogError(0, "Could not load objects");
+        SDL_LogError(0, "Could not load objects file");
         return objects;
     }
 
@@ -319,18 +449,12 @@ std::vector<GameObject*> LoadObjects(const char* filepath) {
         }
         SDL_Log("types collider attribute: %s", types->Attribute("Collider"));
 
-        if (types->Attribute("Collider") != nullptr) {
-            created_obj = LoadCollider(curr_object, created_obj);
-            SDL_Log("collider");
-            SDL_Log("loaded collider: %d aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                    static_cast<int>(dynamic_cast<Collider*>(created_obj) !=
-                                     nullptr));
-        }
-
         if (created_obj == nullptr) {
             SDL_Log("maybe collider load failed?");
             assert(false);
         };
+
+        created_obj = BuildObjectOnType(types, curr_object, created_obj);
 
         objects.push_back(created_obj);
 

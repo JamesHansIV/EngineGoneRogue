@@ -15,7 +15,14 @@ Dog::Dog(Properties& props, const RangedEnemyStats& stats)
         "Hit", {m_TextureID, {7, 0, 16, 16}, 3, 8, SDL_FLIP_NONE});
     m_Animation->AddAnimation(
         "Dead", {m_TextureID, {6, 0, 16, 16}, 2, 75, SDL_FLIP_NONE});
+    Init();
+}
 
+Dog::Dog(Collider& rhs, RangedEnemyStats stats) : RangedEnemy(rhs, stats) {
+    Init();
+}
+
+void Dog::Init() {
     ChangeState(new RangedEnemyIdle(this));
     SetHealth(new Health(100));
     SetAttack(new RangedAttack(CreateBullet, GetFireInterval()));

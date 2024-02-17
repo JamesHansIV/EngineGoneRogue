@@ -48,6 +48,7 @@ State* RangedEnemyHandleCollide(RangedEnemy* enemy, Collider* collidee) {
 }
 
 void RangedEnemyIdle::Enter() {
+    SDL_Log("ranged enemy enter");
     GetEnemy()->GetAnimation()->SelectAnimation("Idle");
 }
 

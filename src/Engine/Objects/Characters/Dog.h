@@ -6,6 +6,10 @@ class Dog : public RangedEnemy {
    public:
     explicit Dog(Properties& props, const RangedEnemyStats& stats);
 
+    Dog(Collider& rhs, RangedEnemyStats stats);
+
+    void Init();
+
     virtual void Draw() override;
     virtual void Update(float dt) override;
 

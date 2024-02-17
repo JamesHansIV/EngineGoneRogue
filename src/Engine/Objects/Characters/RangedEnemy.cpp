@@ -1,5 +1,8 @@
 #include "RangedEnemy.h"
 
+RangedEnemy::RangedEnemy(Collider& rhs, RangedEnemyStats stats)
+    : Enemy(rhs, stats), m_stats(stats) {}
+
 RangedEnemy::~RangedEnemy() = default;
 
 void RangedEnemy::Draw() {
