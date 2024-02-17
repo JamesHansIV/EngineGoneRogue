@@ -23,7 +23,7 @@ std::string GetFormattedTime() {
     return time;
 }
 
-void TimerElement::Draw() const {
+void TimerElement::Draw() {
     const std::string time = GetFormattedTime();
 
     Texture* timer_texture =

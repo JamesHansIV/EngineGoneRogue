@@ -77,20 +77,23 @@ class PlayerStats {
         m_LifeStealPercentage = lifeSteal;
     }
 
-    void AddExperience(int experience) {
-        const int total_experience = m_experience + experience;
+    void AddExperience(int experience) { m_experience += experience; };
+
+    void SetLevel(int level) { m_level = level; }
+
+    [[nodiscard]] int GetLevel() const { return m_level; }
+
+    void Update() {
+        const int total_experience = m_experience;
         m_experience = total_experience % 100;
         int potential_levels = total_experience / 100;
-        SDL_Log("Experience: %d", m_experience);
-        SDL_Log("added experience: %d", experience);
-        SDL_Log("Potential levels: %d", potential_levels);
         while (potential_levels > 0) {
             PushNewEvent(EventType::PlayerLevelUpEvent);
 
             potential_levels--;
             m_level++;
         }
-    };
+    }
 
     ~PlayerStats();
 

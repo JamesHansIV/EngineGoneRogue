@@ -135,6 +135,7 @@ void Player::Update(float dt) {
         m_lastHealthRegen = SDL_GetTicks();
         m_Health->IncreaseHealth(m_stats->GetHPRegenRate());
     }
+    m_stats->Update();
     m_Animation->Update();
     m_RigidBody->Update(dt);
 

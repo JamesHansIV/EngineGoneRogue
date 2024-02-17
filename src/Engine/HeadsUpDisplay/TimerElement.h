@@ -6,7 +6,7 @@ class TimerElement {
    public:
     TimerElement();
 
-    void Draw() const;
+    static void Draw();
 
    private:
 };
