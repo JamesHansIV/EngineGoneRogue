@@ -1,6 +1,5 @@
 #include "Game.h"
 #include <cstdlib>
-#include <random>
 #include <vector>
 #include "Engine/Input/InputChecker.h"
 #include "Engine/Objects/Characters/CircleShotEnemy.h"
@@ -303,7 +302,7 @@ void Game::Update(float dt) {
         }
         (*it)->Update(dt);
         if ((*it)
-                ->MarkedForDeletion())  // Check if it's an Enemy and marked for deletion
+                ->MarkedForDeletion())
         {
             DeleteObject(*it);
         } else {
@@ -343,21 +342,7 @@ void Game::DeleteObject(GameObject* obj) {
     obj = nullptr;
 }
 
-void Game::ChestDrops(float chest_x, float chest_y) {
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_real_distribution<float> dis(0.0F, 1.0F);
-    float const random_number = dis(gen);
-    SDL_Log("Rand: %f", random_number);
-    if (random_number <= m_ChanceOfDrop) {
-        std::vector<GameObject*> items1;
-        Properties props13("", {1, 1, 18, 16}, {chest_x, chest_y, 32, 32}, 0,
-                           "chest1");
-        auto* chest1 = new Chest(props13, ChestType::Wooden, items1, player);
-        m_Objects.push_back(chest1);
-        ColliderHandler::GetInstance()->AddCollider(chest1);
-    }
-}
+
 
 Game::~Game() {
     for (auto* obj : m_Objects) {

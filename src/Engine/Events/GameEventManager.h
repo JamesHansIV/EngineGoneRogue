@@ -13,10 +13,12 @@ class GameEventManager : public virtual EventManager {
     void PushNewEvent(EventType event_type);
 
     void SetPlayer(Player* player) { m_player = player; }
+    void ChestDrops(float chest_x, float chest_y);
 
    private:
     void HandleCustomEvents();
     void HandleSDLEvents();
     Player* m_player;
     std::vector<GameObject*>& m_Objects;
+    float m_ChanceOfDrop = 0.1;
 };

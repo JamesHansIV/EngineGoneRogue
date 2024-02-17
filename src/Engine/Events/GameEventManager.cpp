@@ -1,6 +1,8 @@
 #include "GameEventManager.h"
+#include <random>
 #include "Engine/Application/Application.h"
 #include "Engine/Objects/Characters/Enemy.h"
+#include "Engine/Objects/Chests/Chest.h"
 #include "Engine/Timer/Timer.h"
 
 CustomEventType custom_event_type = SDL_RegisterEvents(1);
@@ -78,6 +80,7 @@ void GameEventManager::HandleEvents() {
                         EnemyDeathEvent death_event(enemy->GetEnemyStats());
                         if (m_player != nullptr) {
                             m_player->HandleEvent(&death_event);
+                            ChestDrops(enemy->GetX(), enemy->GetY());
                         }
                         return;
                     }
@@ -96,5 +99,21 @@ void GameEventManager::HandleEvents() {
         if (m_player != nullptr) {
             m_player->HandleEvent(&event_wrapper);
         }
+    }
+}
+
+void GameEventManager::ChestDrops(float chest_x, float chest_y) {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<float> dis(0.0F, 1.0F);
+    float const random_number = dis(gen);
+    SDL_Log("Rand: %f", random_number);
+    if (random_number <= m_ChanceOfDrop) {
+        std::vector<GameObject*> items1;
+        Properties props13("", {1, 1, 18, 16}, {chest_x, chest_y, 32, 32}, 0,
+                           "chest1");
+        auto* chest1 = new Chest(props13, ChestType::Wooden, items1, m_player);
+        m_Objects.push_back(chest1);
+        ColliderHandler::GetInstance()->AddCollider(chest1);
     }
 }

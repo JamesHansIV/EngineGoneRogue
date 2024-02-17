@@ -8,6 +8,7 @@
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Objects/WeaponInventory.h"
 
+
 class Game : public Application {
    public:
     Game();
@@ -19,8 +20,6 @@ class Game : public Application {
     void AddObject(GameObject* obj);
     void DeleteObject(GameObject* obj);
 
-    void ChestDrops(float chest_x, float chest_y);
-
     ~Game();
 
    private:
@@ -29,7 +28,5 @@ class Game : public Application {
     int m_tick = 0;
     Uint32 m_last_enemy_spawn_time = 0;
     GameEventManager* m_GameEventManager;
-    float m_ChanceOfDrop = 0.1;
-
     void GenerateRandomEnemyIfNeeded();
 };
