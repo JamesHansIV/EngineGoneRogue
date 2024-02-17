@@ -392,8 +392,6 @@ State* PlayerIsHit::OnCollideEvent(CollideEvent* event) {
         }
         case ObjectType::Enemy:
             GetPlayer()->UnCollide(collidee);
-            SetDamage(2);
-            ApplyDamage();
             break;
         case ObjectType::Collider:
             GetPlayer()->UnCollide(collidee);
@@ -418,7 +416,6 @@ void PlayerIsHit::ApplyDamage() {
 }
 
 void PlayerDead::Enter() {
-    SDL_Log("enter dead state");
     GetPlayer()->GetAnimation()->SelectAnimation("PlayerDead");
 }
 

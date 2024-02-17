@@ -80,7 +80,7 @@ Player::Player(Properties& props) : Character(props) {
 
     m_CurrentTilePos = m_StillFrames["face-down"];
 
-    m_stats = new PlayerStats(3, 0, 1.3, 1, 1, 1, 50, 1, 20);
+    m_stats = new PlayerStats(50, 0, 1.3, 1, 1, 1, 50, 1, 20);
 
     ChangeState(new PlayerIdle(this));
     // m_Collider->SetCorrection(-45, -20, 60, 80 )
@@ -142,6 +142,7 @@ void Player::Update(float dt) {
     if (state != nullptr) {
         ChangeState(state);
     }
+    m_RigidBody->ApplyVelocity(Vector2D(0, -5 * dt));
 
     m_ExperienceBar->SetExperience(m_stats->getExperience());
 
@@ -150,6 +151,7 @@ void Player::Update(float dt) {
 
     SetX(m_RigidBody->Position().X);
     SetY(m_RigidBody->Position().Y);
+    //SDL_Log("Player position: %f, %f", GetX(), GetY());
     m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
 
     UpdateWeapon(dt);

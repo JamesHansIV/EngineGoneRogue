@@ -76,7 +76,9 @@ void GameEventManager::HandleEvents() {
                                 "ERROR: Enemy from EnemyDeathEvent is null");
                         }
                         EnemyDeathEvent death_event(enemy->GetEnemyStats());
-                        m_player->HandleEvent(&death_event);
+                        if (m_player != nullptr) {
+                            m_player->HandleEvent(&death_event);
+                        }
                         return;
                     }
                     case EventType::PlayerLevelUpEvent:

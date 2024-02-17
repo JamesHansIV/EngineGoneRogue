@@ -305,13 +305,6 @@ void Game::Update(float dt) {
         if ((*it)
                 ->MarkedForDeletion())  // Check if it's an Enemy and marked for deletion
         {
-            // TODO: Remove this hack for experience. It should be handled by the
-            // player by either a global event or global state
-            if (enemy != nullptr) {
-                if (enemy->GetHealth()->GetHP() <= 0) {
-                    ChestDrops(enemy->GetMidPointX(), enemy->GetMidPointY());
-                }
-            }
             DeleteObject(*it);
         } else {
             ++it;

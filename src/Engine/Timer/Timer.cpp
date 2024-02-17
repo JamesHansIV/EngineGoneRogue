@@ -13,6 +13,7 @@ void Timer::Start() {
     m_is_started = true;
     m_is_paused = false;
     m_start_time = SDL_GetTicks();
+    m_current_time = m_start_time;
     m_paused_time = 0;
 }
 

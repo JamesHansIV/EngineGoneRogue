@@ -1,14 +1,6 @@
 #include "RigidBody.h"
 
 void RigidBody::Update(float dt) {
-    if (-0.3 < m_Force.X && m_Force.X < 0.3) {
-        m_Force.X = 0;
-        m_Friction.X = 0;
-    }
-    if (-0.3 < m_Force.Y && m_Force.Y < 0.3) {
-        m_Force.Y = 0;
-        m_Friction.Y = 0;
-    }
     m_Force = m_Force - m_Friction;
     // m_Acceleration.X = m_Force.X/m_Mass;
     // m_Acceleration.Y = m_Force.Y/m_Mass;

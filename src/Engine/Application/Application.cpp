@@ -17,6 +17,7 @@
 
 Application* Application::m_instance = nullptr;
 
+//const float kDt = 0.0083;
 const float kDt = 0.01;
 
 Application::Application() : m_ProjectName("test_project"), m_Frame(0) {
@@ -350,30 +351,44 @@ void Application::Events() {
 void Application::Run() {
     timer.Start();
     float accumulator = 0.0;
+    int count_until_next_second = 1000;
+    int fps = 0;
+    int updates_per_second = 0;
     while (m_IsRunning) {
-        // SDL_Log("Time: %d", timer.GetTicks() / 1000);
-        //SDL_Log("Current time: %d", timer.GetCurrentTime());
         Events();
-        if (!m_is_paused) {
-            Uint32 const new_time = timer.GetTicks();
-            auto frame_time =
-                static_cast<float>(new_time - timer.GetCurrentTime());
-
-            if (frame_time > 0.25) {
-                frame_time = 0.25;
+        bool render = false;
+        if (!timer.IsPaused()) {
+            if (timer.GetTicks() > count_until_next_second) {
+                SDL_Log("FPS: %d", fps);
+                count_until_next_second += 1000;
+                fps = 0;
+                SDL_Log("Updates per second: %d", updates_per_second);
+                updates_per_second = 0;
             }
-
+            float const new_time = timer.GetTicks();
+            auto frame_time = static_cast<float>(
+                new_time / 1000.0F - timer.GetCurrentTime() / 1000.0F);
             timer.SetCurrentTime(new_time);
+            // Necessary for slow computers
+            // Todo: implement this if slowness ever becomes an issue.
+            //if (frame_time > 0.25F) {
+            //    frame_time = 0.25F;
+            //}
 
             accumulator += frame_time;
-
             while (accumulator >= kDt) {
-                m_Frame++;
                 Update(kDt);
+                updates_per_second++;
+                render = true;
                 accumulator -= kDt;
             }
         }
-        Render();
+
+        if (render) {
+            m_Frame++;
+            Render();
+            fps++;
+        }
     }
     Clean();
 }
