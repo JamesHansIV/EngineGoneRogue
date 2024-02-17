@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Engine/Renderer/Renderer.h"
 #include "SDL2/SDL_rect.h"
 

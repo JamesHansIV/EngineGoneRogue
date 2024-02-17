@@ -338,16 +338,6 @@ void Application::Events() {
                 InputChecker::SetMouseWheelDirection(event.wheel.y);
                 break;
             case SDL_WINDOWEVENT:
-                if (event.window.event == SDL_WINDOWEVENT_FOCUS_GAINED) {
-                    m_has_focus = true;
-                    m_is_paused = false;
-                    m_LastTick = SDL_GetTicks();
-                }
-                if (event.window.event == SDL_WINDOWEVENT_FOCUS_LOST) {
-                    SDL_Log("Lost focus");
-                    m_has_focus = false;
-                    m_is_paused = true;
-                }
                 break;
         }
     }

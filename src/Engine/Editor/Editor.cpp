@@ -229,7 +229,7 @@ Editor::Editor() {
     m_KeyMap = new KeyMap();
 
     // create cursor
-    m_Cursor = new Cursor();   
+    m_Cursor = new Cursor();
 }
 
 Editor::~Editor() {
@@ -837,15 +837,18 @@ void Editor::AddObject(float x, float y) {
 
 void Editor::PrintLayer() {
     for (GameObject* obj : m_Layers[m_CurrentLayer]) {
-        std::cout << obj->GetID() << "\tTILE: " << obj->GetTilePos().col << "," << obj->GetTilePos().row 
-              << "\tLAYER: " << m_CurrentLayer << std::endl;
+        std::cout << obj->GetID() << "\tTILE: " << obj->GetTilePos().col << ","
+                  << obj->GetTilePos().row << "\tLAYER: " << m_CurrentLayer
+                  << std::endl;
     }
 }
 
 void Editor::PrintLayer(int row, int col) {
     for (GameObject* obj : m_Layers[m_CurrentLayer]) {
-        std::cout << obj->GetID() << "\tTILE: " << obj->GetTilePos().row << "," << obj->GetTilePos().col 
-              <<"\tW" << obj->GetTilePos().w << "\tH"<<obj->GetTilePos().h<< "\tLAYER: " << m_CurrentLayer << std::endl;
+        std::cout << obj->GetID() << "\tTILE: " << obj->GetTilePos().row << ","
+                  << obj->GetTilePos().col << "\tW" << obj->GetTilePos().w
+                  << "\tH" << obj->GetTilePos().h
+                  << "\tLAYER: " << m_CurrentLayer << std::endl;
     }
 }
 
@@ -1079,17 +1082,18 @@ void Editor::Update(float /*dt*/) {
     }
 
     InputChecker::SetPrevFrameKeys();
+}
 
+void Editor::Render() {
     ImGui_ImplSDLRenderer2_NewFrame();
     ImGui_ImplSDL2_NewFrame();
     ImGui::NewFrame();
 
     ImGui::ShowDemoWindow();
     ShowObjectManager();
-}
 
-void Editor::Render() {
     ImGui::Render();
+
     Renderer::GetInstance()->RenderClear();
     for (int i = 0; i < m_Layers.size(); i++) {
         if (m_HiddenLayers.find(i) == m_HiddenLayers.end()) {
@@ -1115,18 +1119,19 @@ void Editor::Render() {
     ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
 
     // draw cursor
-    if (m_EditState.EditMode !=  EditMode::NONE) {
-        ImGui::SetMouseCursor(ImGuiMouseCursor_None); // hide default cursor
-        
+    if (m_EditState.EditMode != EditMode::NONE) {
+        ImGui::SetMouseCursor(ImGuiMouseCursor_None);  // hide default cursor
+
         SDL_Rect const cursor_rect = m_Cursor->UpdateAndGetRect();
 
-        std::string const cursor_texture_id = m_Cursor->GetTextureId(
-                                                    static_cast<int>(m_EditState.EditMode));
+        std::string const cursor_texture_id =
+            m_Cursor->GetTextureId(static_cast<int>(m_EditState.EditMode));
 
         SDL_RenderCopy(Renderer::GetInstance()->GetRenderer(),
-                       Renderer::GetInstance()->GetTexture(cursor_texture_id)->GetTexture(),
-                       nullptr,
-                       &cursor_rect);
+                       Renderer::GetInstance()
+                           ->GetTexture(cursor_texture_id)
+                           ->GetTexture(),
+                       nullptr, &cursor_rect);
     }
 
     if ((ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable) != 0) {
@@ -1165,19 +1170,22 @@ void Editor::OnMouseClicked(SDL_Event& /*event*/) {
 
         if (m_EditState.EditMode == EditMode::DRAW) {
             // std::cout << "Adding object @ " << x << "," << y <<"\t";
-            if (m_CurrentTexture == nullptr) return;
+            if (m_CurrentTexture == nullptr)
+                return;
             AddObject(x, y);
         } else if (m_EditState.EditMode == EditMode::ERASE) {
             // delete all objects on mousedover tile, in current layer.
-            std::pair<int,int>tile_coords = PixelToTilePos(x,y);
+            std::pair<int, int> tile_coords = PixelToTilePos(x, y);
 
             // create list of objects to delete on that tile and layer
-            std::vector<GameObject*>objects_to_delete;
+            std::vector<GameObject*> objects_to_delete;
 
             for (GameObject* obj : m_Layers[m_CurrentLayer]) {
-                std::pair<int,int>curr_tile_coords = PixelToTilePos(obj->GetX(), obj->GetY());
+                std::pair<int, int> curr_tile_coords =
+                    PixelToTilePos(obj->GetX(), obj->GetY());
 
-                if (curr_tile_coords.first == tile_coords.first && curr_tile_coords.second == tile_coords.second) {
+                if (curr_tile_coords.first == tile_coords.first &&
+                    curr_tile_coords.second == tile_coords.second) {
                     objects_to_delete.push_back(obj);
                 }
             }
@@ -1232,15 +1240,17 @@ void Editor::OnMouseMoved(SDL_Event& event) {
 
                 } else if (m_EditState.EditMode == EditMode::ERASE) {
                     // delete all objects on mousedover tile, in current layer.
-                    std::pair<int,int>tile_coords = PixelToTilePos(x,y);
+                    std::pair<int, int> tile_coords = PixelToTilePos(x, y);
 
                     // create list of objects to delete on that tile and layer
-                    std::vector<GameObject*>objects_to_delete;
+                    std::vector<GameObject*> objects_to_delete;
 
                     for (GameObject* obj : m_Layers[m_CurrentLayer]) {
-                        std::pair<int,int>curr_tile_coords = PixelToTilePos(obj->GetX(), obj->GetY());
+                        std::pair<int, int> curr_tile_coords =
+                            PixelToTilePos(obj->GetX(), obj->GetY());
 
-                        if (curr_tile_coords.first == tile_coords.first && curr_tile_coords.second == tile_coords.second) {
+                        if (curr_tile_coords.first == tile_coords.first &&
+                            curr_tile_coords.second == tile_coords.second) {
                             objects_to_delete.push_back(obj);
                         }
                     }
@@ -1326,7 +1336,7 @@ std::pair<float, float> Editor::SnapToGrid(float x, float y) {
     return {next_x, next_y};
 }
 
-std::pair<int, int>Editor::PixelToTilePos(float x, float y) {
+std::pair<int, int> Editor::PixelToTilePos(float x, float y) {
     int row, col;
     row = y / TILE_SIZE;
     col = x / TILE_SIZE;
@@ -1370,9 +1380,11 @@ void Editor::Events() {
 }
 
 // removes boilerplate needed to handle tool selection via keybinds.
-void Editor::CheckForToolSelection(EditorAction editor_action, EditMode edit_mode) {
+void Editor::CheckForToolSelection(EditorAction editor_action,
+                                   EditMode edit_mode) {
     if (m_KeyMap->CheckInputs(editor_action)) {
-        m_EditState.EditMode = m_EditState.EditMode != edit_mode ? edit_mode : EditMode::NONE;
+        m_EditState.EditMode =
+            m_EditState.EditMode != edit_mode ? edit_mode : EditMode::NONE;
         m_Cursor->SetCursor(static_cast<int>(m_EditState.EditMode));
     }
 }
@@ -1398,9 +1410,10 @@ bool Editor::LoadEditorTextures() {
     while (curr_texture != nullptr) {
         type = curr_texture->Attribute("type");
         id = curr_texture->FirstChildElement("ID")->GetText();
-        
+
         if (curr_texture->FirstChildElement("FilePath")->GetText() != nullptr) {
-            texture_path = curr_texture->FirstChildElement("FilePath")->GetText();
+            texture_path =
+                curr_texture->FirstChildElement("FilePath")->GetText();
             Renderer::GetInstance()->AddTexture(id, texture_path);
         }
 

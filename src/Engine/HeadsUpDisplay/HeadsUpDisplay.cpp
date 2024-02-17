@@ -8,7 +8,7 @@ HUD::HUD(const Player& player)
 void HUD::Draw() {
     Renderer* renderer = Renderer::GetInstance();
     // Timer
-    m_TimerElement.Draw();
+    TimerElement::Draw();
     m_WeaponInventory.Draw();
     m_ExperienceBar.Draw();
 }
