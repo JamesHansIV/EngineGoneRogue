@@ -9,6 +9,7 @@
 #include "Engine/Renderer/Renderer.h"
 #include "Engine/State/State.h"
 #include "SDL2/SDL_render.h"
+#include "SDL2/SDL_timer.h"
 
 const int kMoveAnimationSpeed = 20;
 const int kIdleAnimationSpeed = 50;
@@ -116,17 +117,7 @@ Player::Player(Properties& props) : Character(props) {
 
     m_CurrentWeapon = m_Weapons[0];
 
-    //std::thread health_regen_thread([this]() {
-    //    while (true) {
-    //        m_Health->IncreaseHealth(m_stats->getHPRegenRate());
-    //        // Sleep for one second
-    //        std::this_thread::sleep_for(std::chrono::seconds(1));
-    //    }
-    //});
-
     m_ExperienceBar = new ExperienceBar(100, 0);
-    // Detach the health regeneration thread so it can run independently
-    // health_regen_thread.detach();
 }
 
 void Player::Draw() {
@@ -145,7 +136,11 @@ void Player::Update(float dt) {
     m_RigidBody->ApplyVelocity(Vector2D(0, -5 * dt));
 
     m_ExperienceBar->SetExperience(m_stats->getExperience());
-
+    if(SDL_GetTicks() - m_lastHealthRegen > 1000)
+    {
+        m_lastHealthRegen = SDL_GetTicks();
+        m_Health->IncreaseHealth(m_stats->getHPRegenRate());
+    }
     m_Animation->Update();
     m_RigidBody->Update(dt);
 
