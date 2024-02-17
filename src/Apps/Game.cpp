@@ -65,7 +65,8 @@ Game::Game() {
     auto* healthpotion2 = new HealthPotion(props12, 20);
 
     std::vector<GameObject*> items1;
-    Properties props13("", {1, 1, 18, 16}, {50, 240, 32, 32}, 0, "chest1");
+    Properties props13("wooden-chest-idle", {1, 1, 18, 16}, {50, 240, 32, 32},
+                       0, "chest1");
     auto* chest1 = new Chest(props13, ChestType::Wooden, items1, m_Player);
 
     m_Objects.push_back(healthpotion);

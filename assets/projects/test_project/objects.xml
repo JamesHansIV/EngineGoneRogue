@@ -325,7 +325,7 @@
                 <Tile row="12" col="0" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
-        <RangedEnemyStats health="100" damage="1" speed="10" range="150" perception_width="160" perception_height="150" xp="15" fire_interval="20" spread="0.5" spread_count="8"/>
+        <RangedEnemyStats health="100" damage="1" speed="10" range="150" perception_width="160" perception_height="150" xp="15" fire_interval="20" spread="0.4" spread_count="8"/>
     </Object>
     <Object texture_id="enemies" object_id="helixenemy" rotation="0">
         <Types collider="1" ranged_enemy="1" helix_enemy="1"/>
