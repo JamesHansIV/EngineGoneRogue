@@ -2,13 +2,13 @@
 #include <cstdlib>
 #include <vector>
 #include "Engine/Input/InputChecker.h"
-#include "Engine/Objects/Characters/CircleShotEnemy.h"
 #include "Engine/Objects/Characters/Dog.h"
 #include "Engine/Objects/Characters/EnemyStats.h"
 #include "Engine/Objects/Characters/Goblin.h"
 #include "Engine/Objects/Characters/HelixEnemy.h"
 #include "Engine/Objects/Characters/Mage.h"
 #include "Engine/Objects/Characters/Player.h"
+#include "Engine/Objects/Characters/RingShotEnemy.h"
 #include "Engine/Objects/Characters/Skeleton.h"
 #include "Engine/Objects/Characters/Slime.h"
 #include "Engine/Objects/Chests/Chest.h"
@@ -57,62 +57,6 @@ const RangedEnemyStats kDefaultRangedEnemyStats = {
 Game::Game() {
     SDL_Renderer* renderer = Renderer::GetInstance()->GetRenderer();
 
-    Renderer::GetInstance()->AddTexture(
-        "door-open", "../assets/textures/spritesheets/door2-open.png");
-    Renderer::GetInstance()->AddTexture(
-        "door-close", "../assets/textures/spritesheets/door2-close.png");
-
-    Renderer::GetInstance()->AddTexture(
-        "weapons", "../assets/textures/spritesheets/weapons.png");
-    Renderer::GetInstance()->AddTexture(
-        "player", "../assets/textures/spritesheets/player-sheet.png");
-    Renderer::GetInstance()->AddTexture(
-        "player-dodge", "../assets/textures/spritesheets/player-dodge.png");
-    Renderer::GetInstance()->AddTexture(
-        "enemies", "../assets/textures/spritesheets/enemies.png");
-    Renderer::GetInstance()->AddTexture(
-        "boss", "../assets/textures/spritesheets/boss_idle_spritesheet.png");
-    Renderer::GetInstance()->AddTexture("player_run",
-                                        "../assets/textures/Run.png");
-    Renderer::GetInstance()->AddTexture(
-        "projectile",
-        "../assets/textures/BulletHell/PURPLE/Weapons/weapons/Firearms/Bullets/"
-        "spr_bullet3.png");
-    Renderer::GetInstance()->AddTexture("arrow",
-                                        "../assets/textures/BulletHell/PURPLE/"
-                                        "Weapons/weapons/Bow-Arrow/"
-                                        "spr_arrow1.png");
-    Renderer::GetInstance()->AddTexture(
-        "bow",
-        "../assets/textures/BulletHell/PURPLE/Weapons/weapons/Bow-Arrow/"
-        "spr_bow41.png");
-    Renderer::GetInstance()->AddTexture(
-        "melee",
-        "../assets/textures/BulletHell/PURPLE/Weapons/weapons/Melee/"
-        "spr_sword_03.png");
-    Renderer::GetInstance()->AddTexture(
-        "pistol",
-        "../assets/textures/BulletHell/PURPLE/Weapons/weapons/Firearms/"
-        "spr_weapon03.png");
-    Renderer::GetInstance()->AddTexture(
-        "uzi",
-        "../assets/textures/BulletHell/PURPLE/Weapons/weapons/Firearms/"
-        "spr_weapon05.png");
-    Renderer::GetInstance()->AddTexture(
-        "sniper",
-        "../assets/textures/BulletHell/PURPLE/Weapons/weapons/Firearms/"
-        "spr_weapon06.png");
-
-    Renderer::GetInstance()->AddTexture(
-        "healthpotion", "../assets/textures/spritesheets/lifepotion.png");
-
-    Renderer::GetInstance()->AddTexture(
-        "wooden_chest_idle",
-        "../assets/textures/BulletHell/PURPLE/Others/Chest/spr_chest1.png");
-
-    Renderer::GetInstance()->AddTexture(
-        "wooden_chest_opening", "../assets/textures/spritesheets/chest.png");
-
     m_Objects = Application::m_Rooms["room1"];
 
     for (auto& obj : m_Objects) {
@@ -148,7 +92,7 @@ Game::Game() {
                       "enemy5");
     // specific stats replaced with defaults for easy refactor. can be changed later
     // specific enemy stats changed in commit on 2/4.
-    enemy5 = new CircleShotEnemy(props5, kDefaultRangedEnemyStats);
+    enemy5 = new RingShotEnemy(props5, kDefaultRangedEnemyStats);
 
     Properties props6("enemies", {6, 2, 16, 16}, {600, 150, 36, 36}, 0,
                       "enemy6");
@@ -248,8 +192,8 @@ void Game::GenerateRandomEnemyIfNeeded() {
                     new Slime(generated_props, kDefaultEnemyStats);
                 break;
             case 1:
-                generated_enemy = new CircleShotEnemy(generated_props,
-                                                      kDefaultRangedEnemyStats);
+                generated_enemy = new RingShotEnemy(generated_props,
+                                                    kDefaultRangedEnemyStats);
                 break;
             case 2:
                 generated_enemy =
@@ -333,9 +277,8 @@ void Game::AddObject(GameObject* obj) {
 void Game::DeleteObject(GameObject* obj) {
     auto it = std::find(m_Objects.begin(), m_Objects.end(), obj);
     if (it != m_Objects.end()) {
-        SDL_Log("found obj in m_Objects: %s", (*it)->GetID().c_str());
+        SDL_Log("delete object: %s", (*it)->GetID().c_str());
         m_Objects.erase(it);
-        SDL_Log("m_Objects size: %lu", m_Objects.size());
     }
     obj->Clean();
     delete obj;

@@ -4,11 +4,11 @@
 
 class RangedAttack;
 
-class CircleShotEnemy : public RangedEnemy {
+class RingShotEnemy : public RangedEnemy {
    public:
-    explicit CircleShotEnemy(Properties& props, RangedEnemyStats stats,
-                             float outerRadius = 40.0f,
-                             float innerRadius = 20.0f, int shotCount = 24);
+    explicit RingShotEnemy(Properties& props, RangedEnemyStats stats,
+                           float outerRadius = 40.0f, float innerRadius = 20.0f,
+                           int shotCount = 24);
 
     void Draw() override;
     void Update(float dt) override;

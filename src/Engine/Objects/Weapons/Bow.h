@@ -13,7 +13,7 @@ class Bow : public RangedWeapon {
         // Probably should have a virtual function to create the projectile props
         delete m_projectile_props;
         m_projectile_props =
-            new Properties("arrow", {0, 0, 16, 14},
+            new Properties("weapons", {2, 6, 16, 16},
                            {GetMidPointX() * 2, GetMidPointY() * 2,
                             k_projectile_width * 2, k_projectile_height * 2},
                            GetRotation(), "arrow");
