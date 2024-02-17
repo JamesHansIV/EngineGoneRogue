@@ -43,6 +43,28 @@ Texture::Texture(const char* filename, std::string id) {
     m_ObjectCount = 0;
 }
 
+Texture::Texture(const std::string& text, SDL_Color text_color,
+                 std::string id) {
+    m_FilePath = text;
+    SDL_Surface* surface = TTF_RenderUTF8_Solid(
+        Renderer::GetInstance()->GetFont(), text.c_str(), text_color);
+    if (surface == nullptr) {
+        throw std::runtime_error("Failed to load texture");
+    }
+
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(
+        Renderer::GetInstance()->GetRenderer(), surface);
+    if (texture == nullptr) {
+        throw std::runtime_error("Failed to load texture");
+    }
+
+    m_ID = std::move(id);
+    m_Texture = texture;
+    m_Width = surface->w;
+    m_Height = surface->h;
+    m_ObjectCount = 0;
+}
+
 Texture::~Texture() {
     SDL_DestroyTexture(m_Texture);
 }

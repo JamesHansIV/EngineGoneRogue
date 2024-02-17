@@ -214,6 +214,8 @@ Game::Game() {
     Renderer::GetInstance()->SetCameraTarget(player);
     m_GameEventManager = new GameEventManager(player, m_Objects);
 
+    m_HeadsUpDisplay = new HUD();
+
     SDL_Cursor* cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR);
     SDL_SetCursor(cursor);
 }
@@ -277,7 +279,7 @@ void Game::GenerateRandomEnemyIfNeeded() {
         m_Objects.push_back(generated_enemy);
     }
 
-    if (SDL_GetTicks() % 5000 <= 10 &&
+    if (timer.GetTicks() % 5000 <= 10 &&
         max_tick_interval < cur_enemy_generation_interval) {
         SDL_Log("Increasing enemy generation interval");
         cur_enemy_generation_interval -= 200;
@@ -301,9 +303,7 @@ void Game::Update(float dt) {
             enemy->SetTarget(player);
         }
         (*it)->Update(dt);
-        if ((*it)
-                ->MarkedForDeletion())
-        {
+        if ((*it)->MarkedForDeletion()) {
             DeleteObject(*it);
         } else {
             ++it;
@@ -321,6 +321,7 @@ void Game::Render() {
     if (player != nullptr) {
         player->Draw();
         m_WeaponInventory->Draw();
+        m_HeadsUpDisplay->Draw();
     }
     Renderer::GetInstance()->Render();
 }
@@ -342,8 +343,6 @@ void Game::DeleteObject(GameObject* obj) {
     obj = nullptr;
 }
 
-
-
 Game::~Game() {
     for (auto* obj : m_Objects) {
         obj->Clean();
@@ -352,6 +351,7 @@ Game::~Game() {
     m_Objects.clear();
     delete m_WeaponInventory;
     delete m_GameEventManager;
+    delete m_HeadsUpDisplay;
     SDL_FreeCursor(SDL_GetCursor());
 }
 

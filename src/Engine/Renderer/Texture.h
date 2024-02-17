@@ -8,6 +8,7 @@ class Texture {
    public:
     Texture(const std::string& filename, std::string id);
     Texture(const char* filename, std::string id);
+    Texture(const std::string& text, SDL_Color text_color, std::string id);
     virtual ~Texture();
 
     std::string GetID() const { return m_ID; }

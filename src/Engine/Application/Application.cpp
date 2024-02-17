@@ -28,6 +28,11 @@ Application::Application() : m_ProjectName("test_project"), m_Frame(0) {
         assert(false);
     }
 
+    if (TTF_Init() != 0) {
+        SDL_Log("Failed to initialize TTF: %s", TTF_GetError());
+        assert(false);
+    }
+
     m_Window = SDL_CreateWindow("Engine Gone Rogue", SDL_WINDOWPOS_CENTERED,
                                 SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH,
                                 SCREEN_HEIGHT, 0);
@@ -398,6 +403,7 @@ bool Application::Clean() {
     delete Renderer::GetInstance();
 
     SDL_DestroyWindow(m_Window);
+    TTF_Quit();
     IMG_Quit();
     SDL_Quit();
     return true;

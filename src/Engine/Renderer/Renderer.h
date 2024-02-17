@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL2/SDL.h>
 #include <SDL2_image/SDL_image.h>
+#include <SDL2_ttf/SDL_ttf.h>
 
 #include "Texture.h"
 #include "TileMap.h"
@@ -40,6 +41,8 @@ class Renderer {
 
     Texture* AddTexture(const std::string& id, const std::string& filename);
     Texture* AddTexture(const std::string& id, const char* filename);
+    Texture* AddTextTexture(const std::string& id, const std::string& text,
+                            SDL_Color text_color);
     TileMap* AddTileMap(const std::string& id, const std::string& filename,
                         int tileSize, int rows, int cols);
     TileMap* AddTileMap(const std::string& id, const char* filename,
@@ -86,6 +89,8 @@ class Renderer {
 
     int GetCameraY() const { return m_Camera.y; };
 
+    [[nodiscard]] TTF_Font* GetFont() const { return m_font; };
+
     void SaveTextures();
 
    private:
@@ -98,4 +103,5 @@ class Renderer {
     std::set<std::string> m_Filepaths;
     static Renderer* m_instance;
     GameObject* m_CameraTarget;
+    TTF_Font* m_font;
 };

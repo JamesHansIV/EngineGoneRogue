@@ -5,9 +5,9 @@
 #include "Engine/Application/Application.h"
 #include "Engine/Events/Event.h"
 #include "Engine/Events/GameEventManager.h"
+#include "Engine/HeadsUpDisplay/HeadsUpDisplay.h"
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Objects/WeaponInventory.h"
-
 
 class Game : public Application {
    public:
@@ -28,5 +28,6 @@ class Game : public Application {
     int m_tick = 0;
     Uint32 m_last_enemy_spawn_time = 0;
     GameEventManager* m_GameEventManager;
+    HUD* m_HeadsUpDisplay;
     void GenerateRandomEnemyIfNeeded();
 };

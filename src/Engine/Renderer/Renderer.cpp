@@ -32,6 +32,12 @@ void Renderer::Init() {
         assert(false);
     }
     SDL_SetRenderDrawBlendMode(m_Renderer, SDL_BLENDMODE_BLEND);
+    m_font = TTF_OpenFont(
+        "../assets/fonts/josefin-sans/JosefinSans-Regular.ttf", 24);
+    if (m_font == nullptr) {
+        SDL_Log("Failed to load font: %s", TTF_GetError());
+        assert(false);
+    }
 }
 
 void Renderer::Destroy() {
@@ -73,11 +79,36 @@ Texture* Renderer::AddTexture(const std::string& id, const char* filename) {
     Texture* texture_wrapper = nullptr;
     try {
         if (m_Filepaths.find(filename) != m_Filepaths.end()) {
-            throw std::runtime_error("Filepath already exists");
+            throw std::runtime_error("Filepath already exists" +
+                                     std::string(filename));
         }
         texture_wrapper = new Texture(filename, id);
         m_TextureMap[id] = texture_wrapper;
         m_Filepaths.insert(filename);
+        m_TextureIDs.push_back(id);
+
+    } catch (std::runtime_error& err) {
+        SDL_LogError(0, "%s", err.what());
+    }
+    return texture_wrapper;
+}
+
+Texture* Renderer::AddTextTexture(const std::string& id,
+                                  const std::string& text,
+                                  SDL_Color text_color) {
+    Texture* texture_wrapper = nullptr;
+    try {
+        if (m_TextureMap.find(id) != m_TextureMap.end()) {
+            Texture* cur_texture = m_TextureMap[id];
+            // Todo(): Should not be using filePath to compare with text
+            if (cur_texture->GetFilePath() == text) {
+                return cur_texture;
+            }
+            delete m_TextureMap[id];
+        }
+
+        texture_wrapper = new Texture(text, text_color, id);
+        m_TextureMap[id] = texture_wrapper;
         m_TextureIDs.push_back(id);
 
     } catch (std::runtime_error& err) {
@@ -135,6 +166,7 @@ void Renderer::Clean() {
         delete it.second;
     }
     m_TextureMap.clear();
+    TTF_CloseFont(m_font);
 
     SDL_Log("Texture Manager cleaned");
 }
