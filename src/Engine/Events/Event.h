@@ -1,9 +1,13 @@
 #pragma once
 
 #include <SDL2/SDL.h>
+#include <tuple>
+#include <vector>
 #include "Engine/Objects/Characters/EnemyStats.h"
 
 class Collider;
+
+enum class ItemType;
 
 enum class EventType {
     UserEvent = 0,
@@ -12,6 +16,8 @@ enum class EventType {
     TargetLostEvent,
     EnemyDeathEvent,
     PlayerLevelUpEvent,
+    PlaceChestIfNeededEvent,
+    ChestOpenedEvent,
 };
 
 class Event {
@@ -80,5 +86,35 @@ class TargetLostEvent : public Event {
    public:
     explicit TargetLostEvent() {}
 
-    virtual EventType GetEventtype() { return EventType::TargetLostEvent; }
+    virtual EventType GetEventType() { return EventType::TargetLostEvent; }
+};
+
+class PlaceChestIfNeededEvent : public Event {
+public:
+    explicit PlaceChestIfNeededEvent(float x, float y)
+    : m_X(x), m_Y(y) {};
+
+    virtual EventType GetEventType() override { return EventType::PlaceChestIfNeededEvent; }
+
+    float GetX() { return m_X;};
+    float GetY() { return m_Y;};
+
+    private:
+        float m_X;
+        float m_Y;
+};
+
+class ChestOpenedEvent: public Event {
+    public:
+    explicit ChestOpenedEvent(std::vector<ItemType>& itemTypes, std::pair<float, float>& index ) 
+        : m_ItemTypes(itemTypes), m_Index(index) {} 
+
+    virtual EventType GetEventType() override{ return EventType::ChestOpenedEvent; };
+
+    std::vector<ItemType> GetItemTypes() {return m_ItemTypes;};
+    std::pair<float,float> GetIndex() {return m_Index;};
+    
+    private:
+        std::vector<ItemType> m_ItemTypes;
+        std::pair<float, float> m_Index;
 };

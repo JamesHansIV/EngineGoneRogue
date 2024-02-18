@@ -1,6 +1,7 @@
 #include "Game.h"
 #include <cstdlib>
 #include <vector>
+#include "Engine/Events/ItemManager.h"
 #include "Engine/Input/InputChecker.h"
 #include "Engine/Objects/Characters/Dog.h"
 #include "Engine/Objects/Characters/EnemyStats.h"
@@ -16,6 +17,7 @@
 #include "Engine/Objects/Environment/Entrance.h"
 #include "Engine/Objects/GameObject.h"
 #include "Engine/Objects/HealthPotion.h"
+#include "Engine/Objects/Item.h"
 #include "Engine/Objects/WeaponInventory.h"
 #include "Engine/Objects/Weapons/Weapon.h"
 #include "Engine/Renderer/Renderer.h"
@@ -86,12 +88,14 @@ Game::Game() {
 
     m_HeadsUpDisplay = new HUD(*m_Player);
 
+    m_ItemManager = new ItemManager(m_Objects);
+
     SDL_Cursor* cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR);
     SDL_SetCursor(cursor);
 }
 
 void Game::Events() {
-    m_GameEventManager->HandleEvents();
+    m_GameEventManager->HandleEvents(m_ItemManager);
 }
 
 void Game::GenerateRandomEnemyIfNeeded() {

@@ -5,6 +5,7 @@
 #include "Engine/Objects/GameObject.h"
 #include "Engine/Objects/IObject.h"
 #include "Engine/Objects/Characters/Player.h"
+#include "Engine/Objects/Item.h"
 
 enum class ChestType {
     None = 0,
@@ -15,7 +16,7 @@ enum class ChestType {
 
 class Chest : public Collider {
    public:
-    Chest(Properties& props, ChestType ctype, std::vector<GameObject*>& chestItems, Player* player);
+    Chest(Properties& props, ChestType ctype, std::vector<ItemType>* chestItems);
 
     void Draw() override { GameObject::Draw(); }
 
@@ -27,17 +28,14 @@ class Chest : public Collider {
     
     void Update(float dt) override;
 
-    std::vector<GameObject*>* GetChestItems()  { return & m_ChestItems; }
+    std::vector<ItemType>* GetChestItems()  { return m_ChestItems; }
 
     void OnCollide(Collider* collidee) override;
-
-    float CalculateDistanceToPlayer();
     
    private:
-    std::vector<GameObject*> m_ChestItems;
+    std::vector<ItemType>* m_ChestItems;
     ChestType m_ChestType;
     std::string m_IdleTexture;
     std::string m_OpeningTexture;
-    Player* m_PlayerRef;
     float m_DistanceToPlayer;
 };

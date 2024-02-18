@@ -1,18 +1,18 @@
 #include "Chest.h"
 #include "Engine/Animation/Animation.h"
+#include "Engine/Events/Event.h"
 #include "Engine/Input/InputChecker.h"
 #include "Engine/Objects/ColliderHandler.h"
+#include "Engine/Objects/Item.h"
+#include "Engine/utils/utils.h"
 #include "SDL2/SDL_log.h"
+constexpr float kCloseDistance = 45.0F; 
 
-constexpr float kCloseDistance = 45.0F;
-
-Chest::Chest(Properties& props, ChestType ctype,
-             std::vector<GameObject*>& chestItems, Player* player)
-    : Collider(props) {
+Chest::Chest(Properties& props, ChestType ctype, std::vector<ItemType>* chestItems) : Collider(props) 
+{   
     m_ChestItems = chestItems;
     m_ChestType = ctype;
     m_Animation = new Animation();
-    m_PlayerRef = player;
 
     if (m_ChestType == ChestType::Wooden) {
         m_IdleTexture = "wooden-chest-idle";
@@ -37,28 +37,15 @@ Chest::Chest(Properties& props, ChestType ctype,
     m_CollisionBox.Set(GetX(), GetY(), GetHeight(), GetWidth());
 }
 
-void Chest::Update(float /*dt*/) {
-    m_DistanceToPlayer = CalculateDistanceToPlayer();
+void Chest::Update(float  /*dt*/) {
     m_Animation->Update();
-
-    if (m_DistanceToPlayer <= kCloseDistance &&
-        InputChecker::IsKeyPressed(SDLK_o)) {
-        if (m_Animation->GetAnimationID() != m_OpeningTexture) {
-            m_Animation->SelectAnimation(m_OpeningTexture);
-        }
-    }
-
-    if (m_Animation->GetAnimationID() == m_OpeningTexture &&
-        m_Animation->GetCurrentFrame() == 4) {
+  
+    if (m_Animation->GetAnimationID() == m_OpeningTexture && m_Animation->GetCurrentFrame() == 4) {
         MarkForDeletion();
         ColliderHandler::GetInstance()->RemoveCollider(this);
+        auto *index = new std::pair<float,float>(this->GetMidPointX(), this->GetMidPointY());
+        PushNewEvent(EventType::ChestOpenedEvent, m_ChestItems, index);
     }
-}
-
-float Chest::CalculateDistanceToPlayer() {
-    float const dx = m_PlayerRef->GetX() - GetX();
-    float const dy = m_PlayerRef->GetY() - GetY();
-    return std::sqrt(dx * dx + dy * dy);
 }
 
 void Chest::OnCollide(Collider* collidee) {
@@ -67,6 +54,10 @@ void Chest::OnCollide(Collider* collidee) {
     }
     switch (collidee->GetObjectType()) {
         case ObjectType::Player:
+          if(m_Animation->GetAnimationID() != m_OpeningTexture){
+            m_Animation->SelectAnimation(m_OpeningTexture); 
+          }
+            break;
         default:
             break;
     }

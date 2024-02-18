@@ -9,7 +9,6 @@
 #include "Engine/Physics/RigidBody.h"
 #include "Engine/State/PlayerState.h"
 #include "Engine/utils/utils.h"
-#include "SDL2/SDL_stdinc.h"
 #include "functional"
 
 class PlayerStats {
@@ -151,5 +150,5 @@ class Player : public Character {
     int m_able_to_dash = 0;
     bool m_is_dashing = false;
     int m_multiplier = 1;
-    Uint32 m_lastHealthRegen = 0;
+    int m_lastHealthRegen = 0;
 };

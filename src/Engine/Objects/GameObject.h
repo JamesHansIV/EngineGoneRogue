@@ -6,7 +6,6 @@
 #include "Engine/State/State.h"
 #include "Health.h"
 #include "IObject.h"
-
 #include <SDL2/SDL.h>
 #include <string>
 #include <unordered_map>
@@ -134,6 +133,8 @@ class GameObject : public IObject {
     void SetRotation(float rotation) { m_Rotation = rotation; }
 
     std::string GetTextureID() { return m_TextureID; }
+
+    void SetTextureID (std::string texture) {m_TextureID = texture;};
 
     std::string GetID() { return m_ObjectID; }
 

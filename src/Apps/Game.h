@@ -3,9 +3,9 @@
 #include <tinyxml2.h>
 #include <iostream>
 #include "Engine/Application/Application.h"
-#include "Engine/Events/Event.h"
 #include "Engine/Events/GameEventManager.h"
 #include "Engine/HeadsUpDisplay/HeadsUpDisplay.h"
+#include "Engine/Events/ItemManager.h"
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Objects/WeaponInventory.h"
 
@@ -29,5 +29,6 @@ class Game : public Application {
     Uint32 m_last_enemy_spawn_time = 0;
     GameEventManager* m_GameEventManager;
     HUD* m_HeadsUpDisplay;
+    ItemManager* m_ItemManager;
     void GenerateRandomEnemyIfNeeded();
 };

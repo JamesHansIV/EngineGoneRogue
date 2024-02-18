@@ -1,9 +1,16 @@
 #include "GameEventManager.h"
 #include <random>
+#include <utility>
+#include <vector>
 #include "Engine/Application/Application.h"
+#include "Engine/Events/Event.h"
 #include "Engine/Objects/Characters/Enemy.h"
 #include "Engine/Objects/Chests/Chest.h"
+#include "Engine/Objects/Item.h"
+#include "Engine/State/State.h"
 #include "Engine/Timer/Timer.h"
+#include "Engine/utils/utils.h"
+
 
 CustomEventType custom_event_type = SDL_RegisterEvents(1);
 
@@ -11,7 +18,7 @@ GameEventManager::GameEventManager(Player* player,
                                    std::vector<GameObject*>& objects)
     : m_player(player), m_Objects(objects) {}
 
-void GameEventManager::HandleEvents() {
+void GameEventManager::HandleEvents(ItemManager* ItemManager) {
     SDL_Event event;
     UserEvent event_wrapper;
     event_wrapper.SetSDLEvent(&event);
@@ -90,8 +97,16 @@ void GameEventManager::HandleEvents() {
                         EnemyDeathEvent death_event(enemy->GetEnemyStats());
                         if (m_player != nullptr) {
                             m_player->HandleEvent(&death_event);
-                            ChestDrops(enemy->GetX(), enemy->GetY());
+                            PlaceChestIfNeededEvent place_chest_event(enemy->GetX(), enemy->GetY());
+                            ItemManager->HandleEvent(&place_chest_event);
                         }
+                        return;
+                    }
+                    case EventType::ChestOpenedEvent: {
+                        auto* item = static_cast<std::vector<ItemType>*>(event.user.data1);
+                        auto *index = static_cast<std::pair<float, float>*>(event.user.data2);
+                        ChestOpenedEvent chest_open_event(*item, *index);
+                        ItemManager->HandleEvent(&chest_open_event);
                         return;
                     }
                     case EventType::PlayerLevelUpEvent:
@@ -112,18 +127,18 @@ void GameEventManager::HandleEvents() {
     }
 }
 
-void GameEventManager::ChestDrops(float chest_x, float chest_y) {
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_real_distribution<float> dis(0.0F, 1.0F);
-    float const random_number = dis(gen);
-    SDL_Log("Rand: %f", random_number);
-    if (random_number <= m_ChanceOfDrop) {
-        std::vector<GameObject*> items1;
-        Properties props13("", {1, 1, 18, 16}, {chest_x, chest_y, 32, 32}, 0,
-                           "chest1");
-        auto* chest1 = new Chest(props13, ChestType::Wooden, items1, m_player);
-        m_Objects.push_back(chest1);
-        ColliderHandler::GetInstance()->AddCollider(chest1);
-    }
-}
+// void GameEventManager::PlaceChestIfNeeded(float chest_x, float chest_y) {
+//     std::random_device rd;
+//     std::mt19937 gen(rd());
+//     std::uniform_real_distribution<float> dis(0.0F, 1.0F);
+//     float const random_number = dis(gen);
+//     SDL_Log("Rand: %f", random_number);
+//     if (random_number <= m_ChanceOfDrop) {
+//         std::vector<ItemType> items1 = {Item1, Item2, Item3};
+//         Properties props13("", {1, 1, 18, 16}, {chest_x, chest_y, 32, 32}, 0,
+//                            "chest1");
+//         auto* chest1 = new Chest(props13, ChestType::Wooden, items1, m_player);
+//         m_Objects.push_back(chest1);
+//         ColliderHandler::GetInstance()->AddCollider(chest1);
+//     }
+// }
