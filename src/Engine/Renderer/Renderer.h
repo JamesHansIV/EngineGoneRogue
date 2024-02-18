@@ -92,12 +92,13 @@ class Renderer {
     [[nodiscard]] TTF_Font* GetFont() const { return m_font; };
 
     void SaveTextures(const char* filepath);
+    void SetCameraSize(int width, int height);
 
    private:
     Renderer() {}
 
     SDL_Renderer* m_Renderer;
-    SDL_Rect m_Camera{0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
+    SDL_Rect m_Camera;
     std::map<std::string, Texture*> m_TextureMap;
     std::vector<std::string> m_TextureIDs;
     std::set<std::string> m_Filepaths;

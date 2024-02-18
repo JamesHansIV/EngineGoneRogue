@@ -35,6 +35,14 @@ class Application {
 
     inline std::string GetProjectName() { return m_ProjectName; }
 
+    [[nodiscard]] int GetWindowWidth() const { return m_WindowWidth; }
+
+    [[nodiscard]] int GetWindowHeight() const { return m_WindowHeight; }
+
+    int& GetMutableWindowWidth() { return m_WindowWidth; }
+
+    int& GetMutableWindowHeight() { return m_WindowHeight; }
+
     inline static Application* Get() { return m_instance; }
 
    protected:
@@ -44,6 +52,8 @@ class Application {
     Uint32 m_LastTick;
     bool m_is_paused;
     bool m_has_focus;
+    int m_WindowWidth = 0;
+    int m_WindowHeight = 0;
     int m_Frame;
     EventManager m_EventManager;
     Player* m_Player;

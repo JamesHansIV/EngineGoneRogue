@@ -56,6 +56,16 @@ void GameEventManager::HandleEvents() {
                 if (event.window.event == SDL_WINDOWEVENT_FOCUS_LOST) {
                     timer.Pause();
                 }
+                if (event.window.event == SDL_WINDOWEVENT_RESIZED) {
+                    SDL_GetWindowSize(
+                        Application::Get()->GetWindow(),
+                        &Application::Get()->GetMutableWindowWidth(),
+                        &Application::Get()->GetMutableWindowHeight());
+
+                    Renderer::GetInstance()->SetCameraSize(
+                        Application::Get()->GetWindowWidth(),
+                        Application::Get()->GetWindowHeight());
+                }
                 break;
             case SDL_USEREVENT:
                 switch (static_cast<EventType>(event.user.code)) {

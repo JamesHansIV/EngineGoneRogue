@@ -17,5 +17,4 @@ void ExperienceBar::Draw() const {
 
 void ExperienceBar::Update(const Player& player) {
     m_xp = player.GetStats().GetExperience();
-    SDL_Log("m_xp: %d", m_xp);
 }

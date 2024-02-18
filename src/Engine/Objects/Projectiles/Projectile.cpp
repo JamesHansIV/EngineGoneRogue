@@ -1,6 +1,7 @@
 #include "Projectile.h"
 #include <SDL2/SDL.h>
 #include <cstddef>
+#include "Engine/Application/Application.h"
 #include "Engine/Objects/Characters/Character.h"
 #include "Engine/Objects/Characters/Enemy.h"
 #include "Engine/Objects/Characters/Player.h"
@@ -40,8 +41,8 @@ void Projectile::Update(float dt) {
 
 void Projectile::CheckOutOfBounds() {
     if (GetX() < 0.0F || GetY() < 0.0F ||
-        GetX() + this->GetWidth() > SCREEN_WIDTH ||
-        GetY() + this->GetHeight() > SCREEN_HEIGHT) {
+        GetX() + this->GetWidth() > Application::Get()->GetWindowWidth() ||
+        GetY() + this->GetHeight() > Application::Get()->GetWindowHeight()) {
         m_MarkedForDeletion = true;
     }
 }

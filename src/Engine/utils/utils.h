@@ -3,8 +3,8 @@
 #include "Engine/Events/Event.h"
 #include "SDL2/SDL.h"
 
-#define SCREEN_WIDTH 960
-#define SCREEN_HEIGHT 520
+#define SCREEN_WIDTH 1024
+#define SCREEN_HEIGHT 768
 
 #define LEVEL_WIDTH 1280
 #define LEVEL_HEIGHT 960

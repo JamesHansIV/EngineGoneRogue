@@ -26,6 +26,12 @@ Renderer* Renderer::m_instance = nullptr;
 
 void Renderer::Init() {
     SDL_Window* window = Application::Get()->GetWindow();
+    m_Camera = {0, 0, Application::Get()->GetWindowWidth(),
+                Application::Get()->GetWindowHeight()};
+    SDL_Log("Window width: %d, Window height: %d",
+            Application::Get()->GetWindowWidth(),
+            Application::Get()->GetWindowHeight());
+
     m_Renderer = SDL_CreateRenderer(
         window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (m_Renderer == nullptr) {
@@ -39,6 +45,10 @@ void Renderer::Init() {
         SDL_Log("Failed to load font: %s", TTF_GetError());
         assert(false);
     }
+}
+
+void Renderer::SetCameraSize(int width, int height) {
+    m_Camera = {m_Camera.x, m_Camera.y, width, height};
 }
 
 void Renderer::Destroy() {
@@ -303,8 +313,8 @@ void Renderer::CenterCameraOnObject() {
     int const target_y =
         m_CameraTarget->GetY() + m_CameraTarget->GetHeight() / 2;
 
-    m_Camera.x = target_x - SCREEN_WIDTH / 2;
-    m_Camera.y = target_y - SCREEN_HEIGHT / 2;
+    m_Camera.x = target_x - Application::Get()->GetWindowWidth() / 2;
+    m_Camera.y = target_y - Application::Get()->GetWindowHeight() / 2;
 }
 
 void Renderer::MoveCameraX(float x) {

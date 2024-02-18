@@ -38,13 +38,19 @@ Application::Application() : m_ProjectName("test_project"), m_Frame(0) {
 
     m_Window = SDL_CreateWindow("Engine Gone Rogue", SDL_WINDOWPOS_CENTERED,
                                 SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH,
-                                SCREEN_HEIGHT, 0);
+                                SCREEN_HEIGHT, SDL_WINDOW_RESIZABLE);
     if (m_Window == nullptr) {
         SDL_Log("Failed to create Window: %s", SDL_GetError());
         assert(false);
     }
 
     m_instance = this;
+
+    SDL_GetWindowSize(m_Window, &m_WindowWidth, &m_WindowHeight);
+    //SDL_SetWindowFullscreen(m_Window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+
+    //SDL_Log("Window width: %d", m_WindowWidth);
+    //SDL_Log("Window height: %d", m_WindowHeight);
 
     //TODO: note that the cwd is <projectDir>/build instead of <projectDir>.
     //      Set a working directory path macro to use absolute file paths
@@ -174,6 +180,7 @@ void Application::Run() {
     int fps = 0;
     int updates_per_second = 0;
     while (m_IsRunning) {
+
         Events();
         bool render = false;
         if (!timer.IsPaused()) {
