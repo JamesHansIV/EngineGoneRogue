@@ -1,0 +1,149 @@
+<Root>
+    <Object type="player">
+        <Animation
+			ID="Dead"
+            textureID="player"
+            frameCount="6"
+            animationSpeed=""
+            flip=""
+            loop=""
+            keyFramesStart=""
+            keyFramesEnd="">
+            <Tile x="" y="" w="" h=""></Tile>
+        </Animation>
+        <Animation
+			ID=""
+            textureID="player"
+            frameCount="6"
+            animationSpeed=""
+            flip=""
+            loop=""
+            keyFramesStart=""
+            keyFramesEnd="">
+            <Tile x="" y="" w="" h=""></Tile>
+        </Animation>
+        <Animation
+			ID=""
+            textureID="player"
+            frameCount="6"
+            animationSpeed=""
+            flip=""
+            loop=""
+            keyFramesStart=""
+            keyFramesEnd="">
+            <Tile x="" y="" w="" h=""></Tile>
+        </Animation>
+        <Animation
+			ID=""
+            textureID="player"
+            frameCount="6"
+            animationSpeed=""
+            flip=""
+            loop=""
+            keyFramesStart=""
+            keyFramesEnd="">
+            <Tile x="" y="" w="" h=""></Tile>
+        </Animation>
+        <Animation
+			ID=""
+            textureID="player"
+            frameCount="6"
+            animationSpeed=""
+            flip=""
+            loop=""
+            keyFramesStart=""
+            keyFramesEnd="">
+            <Tile x="" y="" w="" h=""></Tile>
+        </Animation>
+        <Animation
+			ID=""
+            textureID="player"
+            frameCount="6"
+            animationSpeed=""
+            flip=""
+            loop=""
+            keyFramesStart=""
+            keyFramesEnd="">
+            <Tile x="" y="" w="" h=""></Tile>
+        </Animation>
+        <Animation
+			ID=""
+            textureID="player"
+            frameCount="6"
+            animationSpeed=""
+            flip=""
+            loop=""
+            keyFramesStart=""
+            keyFramesEnd="">
+            <Tile x="" y="" w="" h=""></Tile>
+        </Animation>
+        <Animation
+			ID=""
+            textureID="player"
+            frameCount="6"
+            animationSpeed=""
+            flip=""
+            loop=""
+            keyFramesStart=""
+            keyFramesEnd="">
+            <Tile x="" y="" w="" h=""></Tile>
+        </Animation>
+        <Animation
+			ID=""
+            textureID="player"
+            frameCount="6"
+            animationSpeed=""
+            flip=""
+            loop=""
+            keyFramesStart=""
+            keyFramesEnd="">
+            <Tile x="" y="" w="" h=""></Tile>
+        </Animation>
+        <Animation
+			ID=""
+            textureID="player"
+            frameCount="6"
+            animationSpeed=""
+            flip=""
+            loop=""
+            keyFramesStart=""
+            keyFramesEnd="">
+            <Tile x="" y="" w="" h=""></Tile>
+        </Animation>
+        <Animation
+			ID=""
+            textureID="player"
+            frameCount="6"
+            animationSpeed=""
+            flip=""
+            loop=""
+            keyFramesStart=""
+            keyFramesEnd="">
+            <Tile x="" y="" w="" h=""></Tile>
+        </Animation>
+        <Animation
+			ID=""
+            textureID="player"
+            frameCount="6"
+            animationSpeed=""
+            flip=""
+            loop=""
+            keyFramesStart=""
+            keyFramesEnd="">
+            <Tile x="" y="" w="" h=""></Tile>
+        </Animation>
+        <Animation
+			ID=""
+            textureID="player"
+            frameCount="6"
+            animationSpeed=""
+            flip=""
+            loop=""
+            keyFramesStart=""
+            keyFramesEnd="">
+            <Tile x="" y="" w="" h=""></Tile>
+        </Animation>
+    </Object>
+
+
+</Root>

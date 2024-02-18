@@ -23,6 +23,9 @@ DEVELOPING BASIC ENEMY BEHAVIOUR:
 Enemy::Enemy(Properties& props, EnemyStats const& stats)
     : Character(props), m_stats(stats) {}
 
+Enemy::Enemy(Collider& rhs, EnemyStats stats)
+    : Character(rhs), m_stats(stats) {}
+
 bool Enemy::TargetInRange() {
     if (GetTarget() == nullptr) {
         return false;

@@ -6,9 +6,9 @@
 class RangedEnemy : public Enemy {
    public:
     explicit RangedEnemy(Properties& props, const RangedEnemyStats& enemyStats)
-        : Enemy(props, enemyStats), m_stats(enemyStats) {
-        m_Animation = new Animation();
-    }
+        : Enemy(props, enemyStats), m_stats(enemyStats) {}
+
+    RangedEnemy(Collider& rhs, RangedEnemyStats stats);
 
     ~RangedEnemy();
 

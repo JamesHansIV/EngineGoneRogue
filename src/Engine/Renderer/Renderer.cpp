@@ -1,6 +1,7 @@
 #include "Renderer.h"
 #include <tinyxml2.h>
 #include "Engine/Application/Application.h"
+#include "Engine/Config/Config.h"
 #include "Engine/Objects/GameObject.h"
 
 bool CheckCollision(SDL_Rect& a, SDL_Rect& b) {
@@ -220,7 +221,7 @@ void Renderer::Draw(const std::string& id, SDL_Rect& srcRect, SDL_Rect& dstRect,
     dstRect.x -= m_Camera.x;
     dstRect.y -= m_Camera.y;
     if (m_TextureMap[id] == nullptr) {
-        SDL_LogError(0, "Texture is null");
+        SDL_LogError(0, "Texture '%s' is null", id.c_str());
         return;
     }
     SDL_RenderCopyEx(m_Renderer, m_TextureMap[id]->GetTexture(), &srcRect,
@@ -326,65 +327,8 @@ void Renderer::MoveCameraY(float y) {
     }
 }
 
-void Renderer::SaveTextures() {
-    tinyxml2::XMLDocument doc;
-    tinyxml2::XMLElement* root = doc.NewElement("Root");
-    doc.InsertFirstChild(root);
-
-    tinyxml2::XMLElement* texture;
-    tinyxml2::XMLElement* id;
-    tinyxml2::XMLElement* file_path;
-    tinyxml2::XMLElement* type;
-
-    tinyxml2::XMLElement* tile_size;
-    tinyxml2::XMLElement* rows;
-    tinyxml2::XMLElement* cols;
-
-    for (auto& it : m_TextureMap) {
-        // check for editor textures (dont save here)
-        std::string const id_str = it.first;
-        if (id_str.length() >= 7) {
-            if (id_str.substr(0, 7) == "editor-") {
-                continue;
-            }
-        }
-
-        texture = doc.NewElement("Texture");
-        type = doc.NewElement("Type");
-        id = doc.NewElement("ID");
-        file_path = doc.NewElement("FilePath");
-
-        auto* tile_map = dynamic_cast<TileMap*>(it.second);
-        if (tile_map != nullptr) {
-            SDL_Log("Saving tilemap");
-            texture->SetAttribute("type", "tileMap");
-            tile_size = doc.NewElement("TileSize");
-            rows = doc.NewElement("Rows");
-            cols = doc.NewElement("Cols");
-
-            tile_size->SetText(tile_map->GetTileSize());
-            rows->SetText(tile_map->GetRows());
-            cols->SetText(tile_map->GetCols());
-
-            texture->InsertEndChild(tile_size);
-            texture->InsertEndChild(rows);
-            texture->InsertEndChild(cols);
-        } else {
-            texture->SetAttribute("type", "base");
-        }
-
-        id->SetText(it.first.c_str());
-        file_path->SetText(it.second->GetFilePath().c_str());
-
-        texture->InsertEndChild(file_path);
-        texture->InsertEndChild(id);
-
-        root->InsertEndChild(texture);
+void Renderer::SaveTextures(const char* filepath) {
+    if (SaveTextureMap(filepath, m_TextureMap) != 0) {
+        SDL_Log("failed to save textures");
     }
-
-    char dst_path[FILEPATH_LEN + 1];
-    snprintf(dst_path, FILEPATH_LEN, "../assets/projects/%s/textures.xml",
-             Application::Get()->GetProjectName().c_str());
-    int const success = doc.SaveFile(dst_path);
-    SDL_Log("Saving textures a success: %d", success);
 }

@@ -79,6 +79,7 @@ void SlimeSplit(Slime* enemy) {
 }
 
 void BigSlimeSelectAnimation(Slime* enemy, StateType type) {
+    SDL_Log("selecting big slime animation");
     switch (type) {
         case StateType::Idle:
             enemy->GetAnimation()->SelectAnimation("SlimeIdle");

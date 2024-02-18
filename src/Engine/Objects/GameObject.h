@@ -78,8 +78,6 @@ class GameObject : public IObject {
 
     explicit GameObject(GameObject* rhs);
     virtual ~GameObject();
-    GameObject(GameObject&& rhs) noexcept;
-    GameObject(const GameObject& rhs) = delete;
 
     virtual void Draw() override;
     virtual void Clean() override{};

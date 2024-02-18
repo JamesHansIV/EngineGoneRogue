@@ -2,22 +2,17 @@
 #include <SDL2/SDL.h>
 #include <SDL2_image/SDL_image.h>
 
-#include <tinyxml2.h>
 #include <unordered_map>
 #include "Engine/Events/EventManager.h"
 #include "Engine/Layers/Layer.h"
-#include "Engine/Objects/Collider.h"
+#include "Engine/Objects/Characters/Player.h"
 
 class Application {
    public:
     Application();
     virtual ~Application() = default;
 
-    static bool LoadTextures(char* projectPath);
-    static GameObject* LoadObject(tinyxml2::XMLElement* xmlObj);
-    static Collider* LoadCollider(tinyxml2::XMLElement* xmlObj,
-                                  GameObject* obj);
-    bool LoadObjects(const std::string& roomPath, const std::string& roomID);
+    bool LoadCharacters(const char* projectPath);
     bool LoadRooms(const char* projectPath);
     bool LoadProject();
 
@@ -44,12 +39,14 @@ class Application {
 
    protected:
     std::string m_ProjectName;
+    std::string m_BaseRoomID = "room1";
     std::unordered_map<std::string, std::vector<GameObject*>> m_Rooms;
     Uint32 m_LastTick;
     bool m_is_paused;
     bool m_has_focus;
     int m_Frame;
     EventManager m_EventManager;
+    Player* m_Player;
 
    private:
     bool m_IsRunning;

@@ -22,6 +22,10 @@ void Animation::Update() {
 }
 
 void Animation::Draw(const Rect& dstRect, float angle) {
+    if (m_Info.TextureID == " ") {
+        SDL_Log("tile: (%d, %d, %d, %d)", m_Info.Tile.row, m_Info.Tile.col,
+                m_Info.Tile.w, m_Info.Tile.h);
+    }
     SDL_Rect src_rect = {(m_Info.Tile.col + m_SpriteFrame) * m_Info.Tile.w,
                          m_Info.Tile.row * m_Info.Tile.h, m_Info.Tile.w,
                          m_Info.Tile.h};
@@ -38,7 +42,7 @@ void Animation::StopAnimation() {
 
 void Animation::SelectAnimation(const std::string& id) {
     if (m_Animations.find(id) == m_Animations.end()) {
-        SDL_LogError(0, "Animation does not exist");
+        SDL_LogError(0, "Animation %s does not exist", id.c_str());
     }
     m_SpriteFrame = 0;
     m_Ended = false;

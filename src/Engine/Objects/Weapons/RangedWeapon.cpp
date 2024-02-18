@@ -9,7 +9,7 @@ RangedWeapon::RangedWeapon(Properties& props, RangedWeaponStats& stats,
                            Player* owner)
     : Weapon(props, stats, owner), m_stats(stats) {
     m_projectile_props =
-        new Properties("projectile", {0, 0, 723, 724},
+        new Properties("weapons", {6, 0, 16, 16},
                        {GetMidPointX(), GetMidPointY(), k_projectile_width,
                         k_projectile_height},
                        GetRotation(), "bullet");

@@ -12,8 +12,8 @@ struct EnemyStats {
 
 struct RangedEnemyStats : EnemyStats {
     int fireInterval;
-    float spread;
-    int spreadCount;
+    float spread = 0;
+    int spreadCount = 0;
 };
 
 struct MeleeEnemyStats : EnemyStats {

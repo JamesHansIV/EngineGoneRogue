@@ -91,7 +91,7 @@ class Renderer {
 
     [[nodiscard]] TTF_Font* GetFont() const { return m_font; };
 
-    void SaveTextures();
+    void SaveTextures(const char* filepath);
 
    private:
     Renderer() {}

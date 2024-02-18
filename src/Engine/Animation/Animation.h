@@ -47,6 +47,14 @@ class Animation {
 
     std::string GetAnimationID() { return m_CurrentAnimationID; }
 
+    std::unordered_map<std::string, AnimationInfo> GetAnimations() {
+        return m_Animations;
+    }
+
+    std::unordered_map<std::string, AnimationInfo> GetAnimationInfo() {
+        return m_Animations;
+    }
+
     void GetKeyFrameRange(int& start, int& end) const {
         start = m_Info.KeyFramesStart;
         end = m_Info.KeyFramesEnd;
@@ -73,6 +81,10 @@ class Animation {
     void AddAnimation(std::string id, AnimationInfo info) {
         m_Animations[id] = info;
         m_CurrentAnimationID = id;
+
+        SDL_Log("added animation %s in texture id: %s",
+                m_CurrentAnimationID.c_str(),
+                m_Animations[id].TextureID.c_str());
     }
 
    private:

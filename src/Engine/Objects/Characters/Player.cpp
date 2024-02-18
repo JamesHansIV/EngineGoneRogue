@@ -15,69 +15,18 @@ const int kMoveAnimationSpeed = 20;
 const int kIdleAnimationSpeed = 50;
 
 Player::Player(Properties& props) : Character(props) {
+    Init();
+}
+
+Player::Player(Collider& rhs) : Character(rhs) {
+    Init();
+}
+
+void Player::Init() {
     AddStillFrame("face-down", {1, 0, 18, 16});
     AddStillFrame("face-right", {2, 0, 18, 16});
     AddStillFrame("face-right-up", {3, 0, 18, 16});
     AddStillFrame("face-up", {4, 0, 18, 16});
-
-    m_Animation = new Animation();
-
-    m_Animation->AddAnimation("PlayerIdle", {m_TextureID,
-                                             {7, 0, 18, 16},
-                                             2,
-                                             kIdleAnimationSpeed,
-                                             SDL_FLIP_NONE,
-                                             true});
-    m_Animation->AddAnimation(
-        "PlayerDead", {m_TextureID, {0, 0, 18, 16}, 6, kMoveAnimationSpeed});
-
-    m_Animation->AddAnimation("move-right",
-                              {m_TextureID, m_StillFrames["face-right"], 6,
-                               kMoveAnimationSpeed, SDL_FLIP_NONE, true});
-    m_Animation->AddAnimation("move-left",
-                              {m_TextureID, m_StillFrames["face-right"], 6,
-                               kMoveAnimationSpeed, SDL_FLIP_HORIZONTAL, true});
-    m_Animation->AddAnimation("move-right-up",
-                              {m_TextureID, m_StillFrames["face-right-up"], 6,
-                               kMoveAnimationSpeed, SDL_FLIP_NONE, true});
-
-    m_Animation->AddAnimation("move-left-up",
-                              {m_TextureID, m_StillFrames["face-right-up"], 6,
-                               kMoveAnimationSpeed, SDL_FLIP_HORIZONTAL, true});
-    m_Animation->AddAnimation("move-up",
-                              {m_TextureID, m_StillFrames["face-up"], 6,
-                               kMoveAnimationSpeed, SDL_FLIP_NONE});
-    m_Animation->AddAnimation("move-down",
-                              {m_TextureID, m_StillFrames["face-down"], 6,
-                               kMoveAnimationSpeed, SDL_FLIP_NONE});
-
-    m_Animation->AddAnimation(
-        "dodge-down", {"player-dodge", {0, 0, 20, 20}, 6, 2, SDL_FLIP_NONE});
-    m_Animation->AddAnimation(
-        "dodge-right", {"player-dodge", {1, 0, 20, 20}, 6, 2, SDL_FLIP_NONE});
-    m_Animation->AddAnimation(
-        "dodge-right-up",
-        {"player-dodge", {2, 0, 20, 20}, 6, 2, SDL_FLIP_NONE});
-    m_Animation->AddAnimation(
-        "dodge-up", {"player-dodge", {3, 0, 20, 20}, 6, 2, SDL_FLIP_NONE});
-    m_Animation->AddAnimation(
-        "dodge-left-up", {"player-dodge", {4, 0, 20, 20}, 6, 2, SDL_FLIP_NONE});
-    m_Animation->AddAnimation(
-        "dodge-left", {"player-dodge", {5, 0, 20, 20}, 6, 2, SDL_FLIP_NONE});
-
-    m_Animation->AddAnimation(
-        "front-hit", {m_TextureID, {5, 0, 18, 16}, 2, 20, SDL_FLIP_NONE});
-    m_Animation->AddAnimation(
-        "right-hit", {m_TextureID, {5, 2, 18, 16}, 2, 8, SDL_FLIP_NONE});
-    m_Animation->AddAnimation(
-        "left-hit", {m_TextureID, {5, 2, 18, 16}, 2, 8, SDL_FLIP_HORIZONTAL});
-    m_Animation->AddAnimation(
-        "right-up-hit", {m_TextureID, {5, 4, 18, 16}, 2, 8, SDL_FLIP_NONE});
-    m_Animation->AddAnimation(
-        "left-up-hit",
-        {m_TextureID, {5, 4, 18, 16}, 2, 8, SDL_FLIP_HORIZONTAL});
-    m_Animation->AddAnimation(
-        "back-hit", {m_TextureID, {6, 0, 18, 16}, 2, 8, SDL_FLIP_NONE});
 
     m_CurrentTilePos = m_StillFrames["face-down"];
 
@@ -87,17 +36,17 @@ Player::Player(Properties& props) : Character(props) {
     // m_Collider->SetCorrection(-45, -20, 60, 80 )
     m_Health = new Health(100);
 
-    Properties props_uzi("uzi", {0, 0, 18, 16}, {0, 0, 18, 16}, 0.0);
+    Properties props_uzi("weapons", {0, 3, 16, 16}, {0, 0, 18, 18}, 0.0);
     RangedWeaponStats stats_uzi = {true, 200, 10, 16, m_stats};
     Weapon* uzi = new RangedWeapon(props_uzi, stats_uzi, this);
     m_Weapons.push_back(uzi);
 
-    Properties props_pistol("pistol", {0, 0, 18, 16}, {0, 0, 18, 16}, 0.0);
+    Properties props_pistol("weapons", {0, 1, 16, 16}, {0, 0, 18, 18}, 0.0);
     RangedWeaponStats stats_pistol = {true, 400, 7, 34, m_stats};
     Weapon* pistol = new RangedWeapon(props_pistol, stats_pistol, this);
     m_Weapons.push_back(pistol);
 
-    Properties props_sniper("sniper", {0, 0, 35, 16}, {0, 0, 35, 16}, 0.0);
+    Properties props_sniper("weapons", {0, 5, 16, 16}, {0, 0, 36, 16}, 0.0);
     RangedWeaponStats stats_sniper = {true, 1000, 10, 100, m_stats};
     Weapon* sniper = new RangedWeapon(props_sniper, stats_sniper, this);
     m_Weapons.push_back(sniper);
@@ -108,7 +57,7 @@ Player::Player(Properties& props) : Character(props) {
     w2->SetRotation(50);
     m_Weapons.push_back(w2);
 
-    Properties props_bow("bow", {0, 0, 16, 18}, {0, 0, 16, 18}, 90.0);
+    Properties props_bow("weapons", {2, 5, 16, 16}, {0, 0, 18, 18}, 45.0);
     RangedWeaponStats stats_bow = {true, 750, 10, 75, m_stats};
     Weapon* bow = new Bow(props_bow, stats_bow, this);
     m_Weapons.push_back(bow);
@@ -119,6 +68,7 @@ Player::Player(Properties& props) : Character(props) {
 }
 
 void Player::Draw() {
+    SDL_Log("player texture id: %s", GetTextureID().c_str());
     m_CurrentState->Draw();
 
     m_Health->Draw(GetX(), GetY(), GetWidth());
