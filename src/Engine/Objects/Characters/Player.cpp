@@ -46,7 +46,7 @@ void Player::Init() {
     Weapon* pistol = new RangedWeapon(props_pistol, stats_pistol, this);
     m_Weapons.push_back(pistol);
 
-    Properties props_sniper("weapons", {0, 5, 16, 16}, {0, 0, 36, 16}, 0.0);
+    Properties props_sniper("sniper", {0, 5, 16, 16}, {0, 0, 36, 16}, 0.0);
     RangedWeaponStats stats_sniper = {true, 1000, 10, 100, m_stats};
     Weapon* sniper = new RangedWeapon(props_sniper, stats_sniper, this);
     m_Weapons.push_back(sniper);
