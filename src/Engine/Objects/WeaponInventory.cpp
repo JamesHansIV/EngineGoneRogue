@@ -6,29 +6,19 @@
 #include "Engine/Objects/BoxContainer.h"
 
 const DrawColor kSelectedWeaponColor{182, 69, 153, 150};
+const DrawColor kWeaponColor{0, 0, 0, 255};
 
 void WeaponInventory::Draw() {
     Renderer* renderer = Renderer::GetInstance();
     
-    BoxContainer box_container(0, 0, 40, 50, 0);
+    BoxContainer box_container(0, 0, 40, 50, 10);
 
     for (Weapon* weapon : m_Weapons) {
-        // if (m_SelectedWeapon == weapon) {
-        //     SDL_Rect bg_rect = {renderer->GetCameraX(),
-        //                         renderer->GetCameraY(), 50, 40};
-        //     renderer->DrawRect(bg_rect, kSelectedWeaponColor, true);
-        // }
-
-        SDL_Rect src_rect;
-        if (weapon->GetObjectType() == ObjectType::MeleeWeapon) {
-            src_rect = {weapon->GetTilePos().col * weapon->GetTilePos().w,
+        SDL_Rect src_rect = {weapon->GetTilePos().col * weapon->GetTilePos().w,
                         weapon->GetTilePos().row * weapon->GetTilePos().h,
                         weapon->GetTilePos().w, weapon->GetTilePos().h};
 
-        } else {
-            src_rect = {0, 0, weapon->GetWidth(), weapon->GetHeight()};
-        }
-        Box const weapon_box{weapon->GetTextureID(), src_rect, {0, 0, 0, 255}};
+        Box const weapon_box{weapon->GetTextureID(), src_rect, kWeaponColor };
         box_container.AddBox(weapon_box);
     }
     box_container.DrawBoxes();
