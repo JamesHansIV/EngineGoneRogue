@@ -17,6 +17,8 @@ enum class ItemType {
     Item12
 };
 
+class Player;
+
 class Item : public GameObject {
    public:
     explicit Item(Properties& props, ItemType itemType) : GameObject(props), m_ItemType(itemType) {
@@ -25,7 +27,7 @@ class Item : public GameObject {
     
     void Draw() override { GameObject::Draw(); }
     
-    void Use() ;
+    void Apply(Player* player);
     
     ~Item() override = default;
 

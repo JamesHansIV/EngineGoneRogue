@@ -1,14 +1,15 @@
 #include "Item.h"
+#include "Engine/Objects/Characters/Player.h"
 
 const std::unordered_map<ItemType, std::string> Item::ItemTypeToTexture = {
-    {ItemType::Item1, "healthpotion"},
+    {ItemType::Item1, "sniper"},
     {ItemType::Item2, "wooden-chest-idle"},
-    {ItemType::Item3, "sniper"},
+    {ItemType::Item3, "healthpotion"},
     {ItemType::Item4, "healthpotion"},
     {ItemType::Item5, "wooden-chest-idle"},
-    {ItemType::Item6, "healthpotion"},
+    {ItemType::Item6, "sniper"},
     {ItemType::Item7, "sniper"},
-    {ItemType::Item8, "healthpotion"},
+    {ItemType::Item8, "sniper"},
     {ItemType::Item9, "wooden-chest-idle"},
     {ItemType::Item10, "wooden-chest-idle"},
     {ItemType::Item11, "healthpotion"},
@@ -16,14 +17,14 @@ const std::unordered_map<ItemType, std::string> Item::ItemTypeToTexture = {
 };
 
 const std::unordered_map<ItemType, std::string> Item::ItemTypeToDescription = {
-    {ItemType::Item1, "Description of Item 1"},
-    {ItemType::Item2, "Description of Item 2"},
-    {ItemType::Item3, "Description of Item 3"},
-    {ItemType::Item4, "Description of Item 4"},
-    {ItemType::Item5, "Description of Item 5"},
-    {ItemType::Item6, "Description of Item 6"},
-    {ItemType::Item7, "Description of Item 7"},
-    {ItemType::Item8, "Description of Item 8"},
+    {ItemType::Item1, "This item increases your piercing ability by 1"},
+    {ItemType::Item2, "This item increases your HP regen rate by 1 "},
+    {ItemType::Item3, "This item increases your Life Steal percentage by 5"},
+    {ItemType::Item4, "This item increases your Ranged Damage by 5"},
+    {ItemType::Item5, "This item increases your Melee Damage by 5"},
+    {ItemType::Item6, "This item increases your Armor Percentage by 10"},
+    {ItemType::Item7, "This item increases your Speed by 20"},
+    {ItemType::Item8, "This item increases your Dodge Speed by 1"},
     {ItemType::Item9, "Description of Item 9"},
     {ItemType::Item10, "Description of Item 10"},
     {ItemType::Item11, "Description of Item 11"},
@@ -31,20 +32,83 @@ const std::unordered_map<ItemType, std::string> Item::ItemTypeToDescription = {
 };
 
 const std::unordered_map<ItemType, std::string> Item::ItemTypeToName = {
-    {ItemType::Item1, "Item 1"},
-    {ItemType::Item2, "Item 2"},
-    {ItemType::Item3, "Item 3"},
-    {ItemType::Item4, "Item 4"},
-    {ItemType::Item5, "Item 5"},
-    {ItemType::Item6, "Item 6"},
-    {ItemType::Item7, "Item 7"},
-    {ItemType::Item8, "Item 8"},
+    {ItemType::Item1, "Increase Piercing"},
+    {ItemType::Item2, "Increase HP Regen"},
+    {ItemType::Item3, "Increase Life Steal"},
+    {ItemType::Item4, "Increase Ranged Damage"},
+    {ItemType::Item5, "Increase Melee Damage"},
+    {ItemType::Item6, "Increase Armor Percentage"},
+    {ItemType::Item7, "Increase Speed"},
+    {ItemType::Item8, "Increase Dodge Speed"},
     {ItemType::Item9, "Item 9"},
     {ItemType::Item10, "Item 10"},
     {ItemType::Item11, "Item 11"},
     {ItemType::Item12, "Item 12"}
 };
 
-void Item::Use() {
-    
+void Item::Apply(Player* player) {
+    switch (m_ItemType) {
+        case ItemType::Item1: {
+            int piercing = player->GetMutableStats().GetPiercing();
+            player->GetMutableStats().SetPiercing(piercing + 1);
+            int new_piercing = player->GetMutableStats().GetPiercing();
+            SDL_Log("Increased piercing from %d to %d", piercing, new_piercing);
+            break;
+        }
+        case ItemType::Item2: {
+            int hp_regen = player->GetMutableStats().GetHPRegenRate();
+            player->GetMutableStats().SetHpRegenRate(hp_regen + 1);
+            int new_hp_regen = player->GetMutableStats().GetHPRegenRate();
+            SDL_Log("Increased HP regeneration rate from %d to %d", hp_regen, new_hp_regen);
+            break;
+        }
+        case ItemType::Item3: {
+            int life_steal = player->GetMutableStats().GetLifeStealPercentage();
+            player->GetMutableStats().SetLifeStealPercentage(life_steal + 5);
+            int new_life_steal = player->GetMutableStats().GetLifeStealPercentage();
+            SDL_Log("Increased life steal percentage from %d to %d", life_steal, new_life_steal);
+            break;
+        }
+        case ItemType::Item4: {
+            int ranged_damage = player->GetMutableStats().GetRangedDamage();
+            player->GetMutableStats().SetRangedDamage(ranged_damage + 5);
+            int new_ranged_damage = player->GetMutableStats().GetRangedDamage();
+            SDL_Log("Increased ranged damage from %d to %d", ranged_damage, new_ranged_damage);
+            break;
+        }
+        case ItemType::Item5: {
+            int melee_damage = player->GetMutableStats().GetMeleeDamage();
+            player->GetMutableStats().SetMeleeDamage(melee_damage + 5);
+            int new_melee_damage = player->GetMutableStats().GetMeleeDamage();
+            SDL_Log("Increased melee damage from %d to %d", melee_damage, new_melee_damage);
+            break;
+        }
+        case ItemType::Item6: {
+            int armor_percentage = player->GetMutableStats().GetArmorPercentage();
+            player->GetMutableStats().SetArmorPercentage(armor_percentage + 10);
+            int new_armor_percentage = player->GetMutableStats().GetArmorPercentage();
+            SDL_Log("Increased armor percentage from %d to %d", armor_percentage, new_armor_percentage);
+            break;
+        }
+        case ItemType::Item7: {
+            float speed = player->GetMutableStats().GetSpeed();
+            player->GetMutableStats().SetSpeed(speed + 20);
+            float new_speed = player->GetMutableStats().GetSpeed();
+            SDL_Log("Increased speed from %.2f to %.2f", speed, new_speed);
+            break;
+        }
+        case ItemType::Item8: {
+            float dodge_speed = player->GetMutableStats().GetDodgeSpeed();
+            player->GetMutableStats().SetDodgeSpeed(dodge_speed + 1);
+            float new_dodge_speed = player->GetMutableStats().GetDodgeSpeed();
+            SDL_Log("Increased dodge speed from %.2f to %.2f", dodge_speed, new_dodge_speed);
+            break;
+        }
+        case ItemType::Item9:
+        case ItemType::Item10:
+        case ItemType::Item11:
+        case ItemType::Item12:
+        default:
+            break;
+    }
 }

@@ -39,7 +39,6 @@ void ItemManager::HandleEvent(Event* event) {
             break;
         }
         case EventType::ChestOpenedEvent:{
-            SDL_Log("Chest Opened");
             auto* chest_open_event = dynamic_cast<ChestOpenedEvent*>(event);
             for(auto entry: chest_open_event->GetItemTypes())
             {
@@ -47,10 +46,15 @@ void ItemManager::HandleEvent(Event* event) {
                     chest_open_event->GetIndex().second, 32, 32}, 0, "");
                 auto* item = new Item(props, entry);
                 auto it = m_Player->GetPlayerItems().find(item->GetName());
+                bool added_to_inventory = false;
                 if (it == m_Player->GetPlayerItems().end()) {
                     m_Player->AddItem(item);
+                    added_to_inventory = true;
                 } else {
                     (*it).second->AddCount();
+                }
+                item->Apply(m_Player);
+                if(!added_to_inventory){
                     delete item;
                 }
             }
