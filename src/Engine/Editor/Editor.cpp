@@ -683,7 +683,11 @@ void Editor::ShowLoadTexture() {
 void Editor::AddObject(float x, float y) {
     GameObject* new_object;
 
-    std::cout << m_CurrentTexture << '\n';
+    // safety check
+    if (m_CurrentTexture == nullptr)
+        return;
+    
+    // std::cout << "Current texture: " << m_CurrentTexture << '\n';
     std::string obj_id = m_CurrentTexture->GetID();
     obj_id += std::to_string(m_CurrentTexture->GetObjectCount());
 
@@ -1047,9 +1051,6 @@ void Editor::OnMouseClicked(SDL_Event& /*event*/) {
                         TILE_SIZE;
 
         if (m_EditState.EditMode == EditMode::DRAW) {
-            // std::cout << "Adding object @ " << x << "," << y <<"\t";
-            if (m_CurrentTexture == nullptr)
-                return;
             AddObject(x, y);
         } else if (m_EditState.EditMode == EditMode::ERASE) {
             // delete all objects on mousedover tile, in current layer.
