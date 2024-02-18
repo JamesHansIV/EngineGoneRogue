@@ -201,7 +201,7 @@ State* RangedEnemyAttack::OnCollideEvent(CollideEvent* event) {
 }
 
 void RangedEnemyIsHit::Enter() {
-    ApplyDamage();
+    //ApplyDamage();
     GetEnemy()->GetAnimation()->SelectAnimation("Hit");
 }
 
@@ -242,9 +242,9 @@ State* RangedEnemyIsHit::OnCollideEvent(CollideEvent* event) {
         case ObjectType::Projectile: {
             auto* projectile = dynamic_cast<Projectile*>(collidee);
             if (projectile->IsPlayerOwned()) {
-                // SetDamage(projectile->GetDamage());
-                // SDL_Log("Enemy hit: %d", projectile->GetDamage());
-                // ApplyDamage();
+                SetDamage(projectile->GetDamage());
+                SDL_Log("Enemy hit: %d", projectile->GetDamage());
+                ApplyDamage();
             }
 
             break;

@@ -22,7 +22,8 @@ class Animation {
         : m_Info({"", {0, 0, 0, 0}, 0, 0, SDL_FLIP_NONE, false}),
           m_Ended(false),
           m_SpriteFrame(0),
-          m_CurrentAnimationID("") {}
+          m_CurrentAnimationID(""),
+          m_LastFrameTime(0) {}
 
     void Update();
     void Draw(const Rect& dstRect, float angle = 0.0f);
@@ -93,4 +94,5 @@ class Animation {
     std::string m_CurrentAnimationID;
     int m_SpriteFrame;
     bool m_Ended;
+    double m_LastFrameTime;
 };

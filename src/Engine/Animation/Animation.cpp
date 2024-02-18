@@ -3,6 +3,7 @@
 #include <utility>
 #include "Engine/Application/Application.h"
 #include "Engine/Renderer/Renderer.h"
+#include "Engine/Timer/Timer.h"
 
 void Animation::Update() {
 
@@ -12,12 +13,15 @@ void Animation::Update() {
         m_Ended = true;
         return;
     }
+    SDL_Log("time between frames: %d",
+            timer.GetTicks() - timer.GetCurrentTime());
 
-    if (Application::Get()->GetFrame() % (m_Info.AnimationSpeed * 25) == 0) {
-        // SDL_Log("current frame: %d", m_SpriteFrame);
+    if ((timer.GetTicks() - m_LastFrameTime) > m_Info.AnimationSpeed) {
+        SDL_Log("current frame: %d", m_SpriteFrame);
 
         m_SpriteFrame = (m_SpriteFrame + 1) % m_Info.FrameCount;
         // SDL_Log("Updating animation frame: %d", m_SpriteFrame);
+        m_LastFrameTime = timer.GetTicks();
     }
 }
 

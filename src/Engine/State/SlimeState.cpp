@@ -252,7 +252,6 @@ State* SlimeAttack::OnCollideEvent(CollideEvent* event) {
 }
 
 void SlimeIsHit::Enter() {
-    ApplyDamage();
     SlimeSelectAnimation(GetEnemy(), GetType());
 }
 
@@ -293,8 +292,8 @@ State* SlimeIsHit::OnCollideEvent(CollideEvent* event) {
         case ObjectType::Projectile: {
             auto* projectile = dynamic_cast<Projectile*>(collidee);
             if (projectile->IsPlayerOwned()) {
-                // SetDamage(projectile->GetDamage());
-                // ApplyDamage();
+                SetDamage(projectile->GetDamage());
+                ApplyDamage();
             }
             break;
         }

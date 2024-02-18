@@ -95,7 +95,7 @@ void Game::Events() {
 void Game::GenerateRandomEnemyIfNeeded() {
     // We probably want a wave multipler. Idea of waves.
     // Have dedicated stats for each enemy
-    // Have a wave manager that will spawn enemies
+    // Have a wave manager that will spaw100enemies
     // have a wave multiplier that will increase the stats of the enemies
     // Auto generate enemies
     if ((SDL_GetTicks() - m_last_enemy_spawn_time) >=

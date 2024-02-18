@@ -72,13 +72,14 @@ bool Enemy::MoveTowardsTarget(float dt) {
         float const direction_length =
             sqrt(direction_x * direction_x + direction_y * direction_y);
 
+        Vector2D direction;
         if (direction_length != 0) {
-            direction_x /= direction_length;
-            direction_y /= direction_length;
+
+            direction.X = direction_x /= direction_length;
+            direction.Y = direction_y /= direction_length;
         }
 
-        m_RigidBody->ApplyVelocity(
-            Vector2D(direction_x * 1.5, direction_y * 1.5) * dt);
+        m_RigidBody->ApplyVelocity(direction * dt * m_stats.speed);
         if (direction_length <= m_stats.range) {
             return true;
         }
