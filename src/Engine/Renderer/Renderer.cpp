@@ -38,6 +38,9 @@ void Renderer::Init() {
         SDL_Log("Failed to create Renderer: %s", SDL_GetError());
         assert(false);
     }
+    // TODO: This is a hack to scale the window up and makes everything appear bigger.
+    // But it ruins the camera and HUD placement.
+    //SDL_RenderSetScale(m_Renderer, 1.25, 1.25);
     SDL_SetRenderDrawBlendMode(m_Renderer, SDL_BLENDMODE_BLEND);
     m_font = TTF_OpenFont(
         "../assets/fonts/josefin-sans/JosefinSans-Regular.ttf", 24);

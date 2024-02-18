@@ -37,7 +37,7 @@ class RangedAttack : public Attack {
 
     void SetAttackPattern(AttackPattern* burst) { m_AttackPattern = burst; }
 
-    virtual void Perform() override;
+    void Perform() override;
 
     virtual void Shoot(RangedAttackInfo info);
     ~RangedAttack();

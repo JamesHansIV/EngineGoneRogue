@@ -17,4 +17,5 @@ class ExperienceBar {
    private:
     int m_max_xp;
     int m_xp;
+    int m_level;
 };
