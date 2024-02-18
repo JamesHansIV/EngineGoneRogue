@@ -25,18 +25,17 @@ class BoxContainer{
             Renderer* renderer = Renderer::GetInstance();
             int x = m_startX;
             for (Box& box : m_Boxes) {
+                SDL_Rect box_around = {x + renderer->GetCameraX(), renderer->GetCameraY(), m_BoxWidth,
+                        40};
+                renderer->DrawRect(box_around, box.color, true);
+
                 SDL_Rect dst_rect = {x + renderer->GetCameraX(), renderer->GetCameraY() + m_StartY, m_BoxWidth,
                         m_Height};
                 SDL_Rect src_rect = box.src_rect;
                 renderer->Draw(box.TextureID, src_rect, dst_rect, 0.0F, nullptr, SDL_FLIP_NONE);
                 
-                SDL_Rect box_around = {x + renderer->GetCameraX(), renderer->GetCameraY(), m_BoxWidth,
-                        40};
-                renderer->DrawRect(box_around, box.color);
                 x += m_BoxWidth + m_Spacing;
             }
-            SDL_Rect box = {renderer->GetCameraX() + m_startX, renderer->GetCameraY() + m_StartY, GetTotalWidth(), m_Height};
-            renderer->DrawRect(box, {0, 0, 0, 255});
         }
 
     private:
