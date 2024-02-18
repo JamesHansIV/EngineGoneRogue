@@ -6,10 +6,10 @@
 
 class ItemManager : public virtual EventManager {
     public:
-        ItemManager(std::vector<GameObject*>& objects);
+        ItemManager(std::vector<GameObject*>& objects,Player* player);
         void HandleEvent(Event* event); 
     private:
         std::vector<GameObject*>& m_Objects;
-        float m_ChanceOfDrop = 0.5;
-
+        float m_ChanceOfDrop = 1;
+        Player* m_Player;
 };

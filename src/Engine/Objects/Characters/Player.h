@@ -5,11 +5,14 @@
 #include "Character.h"
 #include "Engine/Animation/Animation.h"
 #include "Engine/Objects/ColliderHandler.h"
+#include "Engine/Objects/ItemInventory.h"
 #include "Engine/Objects/Weapons/Weapon.h"
 #include "Engine/Physics/RigidBody.h"
 #include "Engine/State/PlayerState.h"
 #include "Engine/utils/utils.h"
 #include "functional"
+#include <unordered_map>
+#include "Engine/Objects/Item.h"
 
 class PlayerStats {
    public:
@@ -142,8 +145,13 @@ class Player : public Character {
 
     ObjectType GetObjectType() override { return ObjectType::Player; }
 
+    void AddItem(Item* item);
+
+    [[nodiscard]] const std::unordered_map<std::string, Item*>& GetPlayerItems() const {return m_Items;};
+
    private:
     std::vector<Weapon*> m_Weapons;
+    std::unordered_map<std::string, Item*> m_Items;
     PlayerStats* m_stats;
     Weapon* m_CurrentWeapon;
     // TODO: add this to player state when game state is added.

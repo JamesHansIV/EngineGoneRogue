@@ -10,8 +10,6 @@ const DrawColor kWeaponColor{0, 0, 0, 255};
 
 
 void WeaponInventory::Draw() {
-    Renderer* renderer = Renderer::GetInstance();
-    
     BoxContainer box_container(0, 0, 40, 50, 0);
 
     for (Weapon* weapon : m_Weapons) {

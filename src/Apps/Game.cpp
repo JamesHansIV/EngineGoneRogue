@@ -82,7 +82,7 @@ Game::Game() {
 
     m_HeadsUpDisplay = new HUD(*m_Player);
 
-    m_ItemManager = new ItemManager(m_Objects);
+    m_ItemManager = new ItemManager(m_Objects, m_Player);
 
     SDL_Cursor* cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR);
     SDL_SetCursor(cursor);

@@ -234,7 +234,7 @@ void Renderer::Draw(const std::string& id, SDL_Rect& srcRect, SDL_Rect& dstRect,
     dstRect.x -= m_Camera.x;
     dstRect.y -= m_Camera.y;
     if (m_TextureMap[id] == nullptr) {
-        SDL_LogError(0, "Texture '%s' is null", id.c_str());
+        // SDL_LogError(0, "Texture '%s' is null", id.c_str());
         return;
     }
     SDL_RenderCopyEx(m_Renderer, m_TextureMap[id]->GetTexture(), &srcRect,

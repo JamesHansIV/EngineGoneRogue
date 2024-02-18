@@ -5,11 +5,15 @@
 #include "Engine/State/State.h"
 #include "SDL2/SDL_rect.h"
 
+const SDL_Color kCountColor = {255, 255, 255, 255};
+
 struct Box{ 
     std::string TextureID;
     SDL_Rect src_rect;
     DrawColor color;
     bool should_fill;
+    bool has_count = false;
+    int count = 0;
 };
 
 class BoxContainer{
@@ -34,7 +38,26 @@ class BoxContainer{
                         m_Height};
                 SDL_Rect src_rect = box.src_rect;
                 renderer->Draw(box.TextureID, src_rect, dst_rect, 0.0F, nullptr, SDL_FLIP_NONE);
-                
+                if (box.has_count) {
+                    int count_x = x + renderer->GetCameraX() + m_BoxWidth - 20; 
+                    int count_y = renderer->GetCameraY() +  m_StartY;
+                    int count_width = 20; 
+                    int count_height = 20;
+
+                    std::string count_text = std::to_string(box.count);
+
+                    Texture* count_texture = renderer->AddTextTexture("count", count_text, kCountColor);
+                    SDL_Rect src_rect = {0, 0, count_texture->GetWidth(),
+                        count_texture->GetHeight()};
+                    int const count_texture_x = count_x + (count_width - count_texture->GetWidth()) / 2;
+                    int const count_texture_y = count_y + (count_height - count_texture->GetHeight()) / 2;
+
+                    SDL_Rect count_rect = {count_x, count_y, count_width, count_height};
+                    renderer->DrawRect(count_rect, box.color, true);
+
+                    SDL_Rect count_texture_rect = {count_texture_x, count_texture_y, count_texture->GetWidth(), count_texture->GetHeight()};
+                    renderer->Draw("count", src_rect, count_texture_rect, SDL_FLIP_NONE);
+                }   
                 x += m_BoxWidth + m_Spacing;
             }
         }

@@ -3,6 +3,7 @@
 #include <thread>
 #include "Engine/Input/InputChecker.h"
 #include "Engine/Objects/Environment/Entrance.h"
+#include "Engine/Objects/ItemInventory.h"
 #include "Engine/Objects/Projectiles/Projectile.h"
 #include "Engine/Objects/Weapons/Bow.h"
 #include "Engine/Objects/Weapons/MeleeWeapon.h"
@@ -11,6 +12,8 @@
 #include "Engine/State/State.h"
 #include "SDL2/SDL_render.h"
 #include "SDL2/SDL_timer.h"
+
+
 
 const int kMoveAnimationSpeed = 20;
 const int kIdleAnimationSpeed = 50;
@@ -72,7 +75,6 @@ void Player::Init() {
 
 void Player::Draw() {
     m_CurrentState->Draw();
-
     m_Health->Draw(GetX(), GetY(), GetWidth());
     m_CurrentWeapon->Draw();
     for (auto& weapon : m_Weapons) {
@@ -80,6 +82,15 @@ void Player::Draw() {
             ranged->DrawProjectiles();
         }
     }
+}
+
+void Player::AddItem(Item* item) {
+    if (m_Items.size() >= 12) {
+        SDL_Log("Inventory is full. Cannot add more items");
+        return;
+    }
+    m_Items[item->GetName()] = item;  
+    item->AddCount();
 }
 
 void Player::Update(float dt) {
@@ -211,6 +222,10 @@ Player::~Player() {
     for (auto& weapon : m_Weapons) {
         delete weapon;
     }
+    for (auto& item_pair : m_Items) {
+        delete item_pair.second;
+    }
+    m_Items.clear();
 }
 
 void Player::Clean() {}
