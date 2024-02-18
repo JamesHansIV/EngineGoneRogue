@@ -8,7 +8,7 @@ HealthPotion::HealthPotion(Properties& props, int health) : Collider(props) {
     m_Animation = new Animation();
     m_Animation->AddAnimation(
         "healthpotion",
-        {m_TextureID, {0, 0, 16, 16}, 4, 30, SDL_FLIP_NONE, true});
+        {m_TextureID, {0, 0, 16, 16}, 4, 200, SDL_FLIP_NONE, true});
     m_Animation->SelectAnimation("healthpotion");
 }
 

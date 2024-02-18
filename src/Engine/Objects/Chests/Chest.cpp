@@ -31,7 +31,7 @@ Chest::Chest(Properties& props, ChestType ctype, std::vector<ItemType>* chestIte
 
     m_Animation->AddAnimation(
         m_OpeningTexture,
-        {m_OpeningTexture, {0, 0, 18, 16}, 5, 15, SDL_FLIP_NONE, true});
+        {m_OpeningTexture, {0, 0, 18, 16}, 5, 300 , SDL_FLIP_NONE, true});
 
     m_Animation->SelectAnimation(m_IdleTexture);
     m_CollisionBox.Set(GetX(), GetY(), GetHeight(), GetWidth());
