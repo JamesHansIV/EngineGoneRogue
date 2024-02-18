@@ -69,6 +69,7 @@ std::vector<Projectile*> CreateRotatingBullets(RangedAttackInfo info) {
 
     float const bullet_separation = 2 * M_PI / info.ProjCount;
     RotatingBullet* bullet;
+    SDL_Log("projspeed: %f", info.ProjSpeed);
 
     for (float i = 0; i < 2 * M_PI; i += bullet_separation) {
 

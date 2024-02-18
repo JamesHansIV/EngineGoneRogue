@@ -34,10 +34,10 @@ void Skeleton::Shoot() {
     Properties const props = {
         "weapons", {6, 3, 16, 16}, {GetX(), GetY(), 16, 16}};
 
-    GetAttack()->Shoot({GetMidPointX(), GetMidPointY(),
-                        GetTarget()->GetMidPointX(),
-                        GetTarget()->GetMidPointY(), props, 3,
-                        m_stats.spreadCount, m_stats.spread});
+    GetAttack()->Shoot(RangedAttackInfo{GetMidPointX(), GetMidPointY(),
+                                        GetTarget()->GetMidPointX(),
+                                        GetTarget()->GetMidPointY(), props, 9,
+                                        m_stats.spreadCount, m_stats.spread});
 }
 
 void Skeleton::OnCollide(Collider* collidee) {

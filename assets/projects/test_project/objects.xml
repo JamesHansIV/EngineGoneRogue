@@ -119,7 +119,7 @@
                 id="front-hit"
                 texture_id="player"
                 frame_count="2"
-                speed="20">
+                speed="300">
                 <Tile row="5" col="0" w="18" h="16"/>
             </AnimationInfo>
         </Animation>

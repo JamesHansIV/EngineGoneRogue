@@ -36,9 +36,9 @@ void Mage::Shoot() {
     Properties const props = {
         "weapons", {6, 1, 16, 16}, {GetX(), GetY(), 12, 12}};
 
-    GetAttack()->Shoot(
-        {GetMidPointX(), GetMidPointY(), GetTarget()->GetMidPointX(),
-         GetTarget()->GetMidPointY(), props, .05, m_BulletCount});
+    GetAttack()->Shoot(RangedAttackInfo{
+        GetMidPointX(), GetMidPointY(), GetTarget()->GetMidPointX(),
+        GetTarget()->GetMidPointY(), props, 1, m_BulletCount});
 }
 
 void Mage::OnCollide(Collider* collidee) {

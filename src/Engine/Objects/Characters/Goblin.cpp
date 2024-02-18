@@ -34,9 +34,9 @@ void Goblin::Shoot() {
     Properties const props = {
         "weapons", {6, 1, 16, 16}, {GetX(), GetY(), 12, 12}};
 
-    GetAttack()->Shoot(
-        {GetMidPointX(), GetMidPointY(), GetTarget()->GetMidPointX(),
-         GetTarget()->GetMidPointY(), props, 3, 1, m_stats.spread});
+    GetAttack()->Shoot(RangedAttackInfo{
+        GetMidPointX(), GetMidPointY(), GetTarget()->GetMidPointX(),
+        GetTarget()->GetMidPointY(), props, 18, 1, m_stats.spread});
 }
 
 void Goblin::OnCollide(Collider* collidee) {

@@ -32,9 +32,9 @@ void Dog::Shoot() {
     Properties const props = {
         "enemies", {6, 4, 16, 16}, {GetX(), GetY(), 12, 12}};
 
-    GetAttack()->Shoot({GetMidPointX(), GetMidPointY(),
-                        GetTarget()->GetMidPointX(),
-                        GetTarget()->GetMidPointY(), props});
+    GetAttack()->Shoot(RangedAttackInfo{
+        GetMidPointX(), GetMidPointY(), GetTarget()->GetMidPointX(),
+        GetTarget()->GetMidPointY(), props, 18});
 }
 
 void Dog::OnCollide(Collider* collidee) {
