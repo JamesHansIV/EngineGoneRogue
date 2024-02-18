@@ -66,14 +66,8 @@ Game::Game() {
                        "healthpotion2");
     auto* healthpotion2 = new HealthPotion(props12, 20);
 
-    std::vector<GameObject*> items1;
-    Properties props13("wooden-chest-idle", {1, 1, 18, 16}, {50, 240, 32, 32},
-                       0, "chest1");
-    auto* chest1 = new Chest(props13, ChestType::Wooden, items1, m_Player);
-
     m_Objects.push_back(healthpotion);
     m_Objects.push_back(healthpotion2);
-    m_Objects.push_back(chest1);
     ColliderHandler::GetInstance()->AddCollider(m_Player);
     ColliderHandler::GetInstance()->AddCollider(healthpotion);
     ColliderHandler::GetInstance()->AddCollider(healthpotion2);
