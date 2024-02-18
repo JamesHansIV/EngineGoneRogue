@@ -963,6 +963,14 @@ void Editor::Update(float /*dt*/) {
         m_EditState.EditMode = EditMode::NONE;
     }
 
+    // COPY & PASTE COMBOS
+    m_KeyMap->CheckInputs(EditorAction::COPY_SELECTION);
+    m_KeyMap->CheckInputs(EditorAction::PASTE_SELECTION);
+
+    // UNDO & REDO COMBOS
+    m_KeyMap->CheckInputs(EditorAction::UNDO_ACTION);
+    m_KeyMap->CheckInputs(EditorAction::REDO_ACTION);
+
     InputChecker::SetPrevFrameKeys();
 }
 
@@ -1002,7 +1010,7 @@ void Editor::Render() {
 
     // draw cursor
     if (m_EditState.EditMode != EditMode::NONE) {
-        ImGui::SetMouseCursor(ImGuiMouseCursor_None);  // hide default cursor
+        // ImGui::SetMouseCursor(ImGuiMouseCursor_None);  // hide default cursor
 
         SDL_Rect const cursor_rect = m_Cursor->UpdateAndGetRect();
 
