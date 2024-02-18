@@ -24,7 +24,7 @@ class RangedWeaponStats : public WeaponStats {
 
 class RangedWeapon : public Weapon {
    public:
-    RangedWeapon(Properties& props, RangedWeaponStats& stats, Player* owner);
+    RangedWeapon(Properties& props, RangedWeaponStats& stats, Player* owner, const std::string& name);
     void Draw() override;
     void Clean() override;
     void Update(float dt) override;

@@ -15,10 +15,15 @@ void WeaponInventory::Draw() {
     BoxContainer box_container(0, 0, 40, 50, 0);
 
     for (Weapon* weapon : m_Weapons) {
-        SDL_Rect src_rect = {weapon->GetTilePos().col * weapon->GetTilePos().w,
+        SDL_Rect src_rect;
+        if(weapon->GetName() == "Sniper"){
+            src_rect = {0, 0, 32, 16};
+        } else {
+            src_rect = {weapon->GetTilePos().col * weapon->GetTilePos().w,
                         weapon->GetTilePos().row * weapon->GetTilePos().h,
                         weapon->GetTilePos().w, weapon->GetTilePos().h};
-
+        }
+        
         Box const weapon_box{weapon->GetTextureID(), src_rect, 
             weapon == m_SelectedWeapon? kSelectedWeaponColor: kWeaponColor, 
             weapon == m_SelectedWeapon};

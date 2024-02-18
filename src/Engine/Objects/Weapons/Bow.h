@@ -4,8 +4,8 @@
 
 class Bow : public RangedWeapon {
    public:
-    Bow(Properties& props, RangedWeaponStats& stats, Player* owner)
-        : RangedWeapon(props, stats, owner) {
+    Bow(Properties& props, RangedWeaponStats& stats, Player* owner, const std::string& name)
+        : RangedWeapon(props, stats, owner, name) {
         const int k_projectile_width = 10;
         const int k_projectile_height = 10;
 

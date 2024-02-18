@@ -6,8 +6,8 @@ int k_projectile_width = 10;
 int k_projectile_height = 10;
 
 RangedWeapon::RangedWeapon(Properties& props, RangedWeaponStats& stats,
-                           Player* owner)
-    : Weapon(props, stats, owner), m_stats(stats) {
+                           Player* owner, const std::string& name)
+    : Weapon(props, stats, owner, name ), m_stats(stats) {
     m_projectile_props =
         new Properties("weapons", {6, 0, 16, 16},
                        {GetMidPointX(), GetMidPointY(), k_projectile_width,

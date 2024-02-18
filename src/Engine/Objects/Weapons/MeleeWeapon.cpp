@@ -5,8 +5,8 @@
 #include "Engine/Objects/Characters/Character.h"
 
 MeleeWeapon::MeleeWeapon(Properties& props, MeleeWeaponStats& stats,
-                         Player* owner)
-    : Weapon(props, stats, owner), m_stats(stats) {}
+                         Player* owner, const std::string name)
+    : Weapon(props, stats, owner, name), m_stats(stats) {}
 
 void MeleeWeapon::Draw() {
     Weapon::Draw();

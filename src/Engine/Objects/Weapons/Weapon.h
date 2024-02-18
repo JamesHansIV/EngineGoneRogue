@@ -58,10 +58,11 @@ class WeaponStats {
 
 class Weapon : public Collider {
    public:
-    explicit Weapon(Properties& props, WeaponStats& stats, Player* owner)
+    explicit Weapon(Properties& props, WeaponStats& stats, Player* owner, const std::string& name)
         : Collider(props) {
         m_stats = stats;
         m_owner = owner;
+        m_name = name;
     }
 
     void Draw() override { GameObject::Draw(); }
@@ -75,8 +76,11 @@ class Weapon : public Collider {
 
     Player* GetOwner() { return m_owner; };
 
+    std::string GetName() {return m_name;};
+
    private:
     WeaponStats m_stats;
     bool m_auto_fire_enabled = false;
     Player* m_owner;
+    std::string m_name;
 };
