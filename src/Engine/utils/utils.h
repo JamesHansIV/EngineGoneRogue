@@ -16,6 +16,12 @@
 #define FILEPATH_LEN 128
 #define LABEL_LEN 32
 
+#ifdef DEBUG_MESSAGES
+#if DEBUG_MESSAGES == 0 
+    #define SDL_Log(...)(void)0
+#endif
+#endif
+
 struct Rect {
     float x;
     float y;

@@ -5,20 +5,33 @@
 # rm -rf build
 if [[ $* == *--clean* ]]
   then
+    echo "cleaning build directory..."
     rm -rf build 
 fi
 
-if [[ $1 == "editor" ]]
+# BUILD OUT CMAKE ARGS
+cmake_args="-B build"
+
+
+if [[ $* == *--editor* ]]
   then
-    cmake -DEDITOR=ON -B build
+    cmake_args="-DEDITOR=ON ${cmake_args}"
 elif [[ $* == *--debug* ]]
   then
-    cmake -DCMAKE_BUILD_TYPE=Debug -B build
-else
-  cmake -B build
+    cmake_args="-DCMAKE_BUILD_TYPE=Debug ${cmake_args}"
 fi
+
+if [[ $* == *--verbose* ]]
+  then
+    cmake_args="-DDEBUG_MESSAGES=ON ${cmake_args}"
+fi
+
+# BUILD WITH CMAKE & CUSTOM ARGS
+# echo $cmake_args
+cmake $cmake_args
 cd build
 
+# RUN NINJA IF NEEDED
 if [[ $* == *--ninja* ]]
   then
     ninja
@@ -26,4 +39,5 @@ else
   make
 fi
 
+# EXECUTE
 ./Engine
