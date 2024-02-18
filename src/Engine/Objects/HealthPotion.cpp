@@ -8,11 +8,11 @@ HealthPotion::HealthPotion(Properties& props, int health) : Collider(props) {
     m_Animation = new Animation();
     m_Animation->AddAnimation(
         "healthpotion",
-        {m_TextureID, {0, 0, 16, 16}, 4, 200, SDL_FLIP_NONE, true});
+        {m_TextureID, {0, 0, 16, 16}, 4, 300, SDL_FLIP_NONE, true});
     m_Animation->SelectAnimation("healthpotion");
 }
 
-void HealthPotion::Update(float  /*dt*/) {
+void HealthPotion::Update(float /*dt*/) {
     m_CollisionBox.Set(GetX(), GetY(), GetHeight(), GetWidth());
     m_Animation->Update();
 }

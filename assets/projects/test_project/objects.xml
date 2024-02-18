@@ -149,7 +149,7 @@
                 id="MiniSlimeAttack"
                 texture_id="enemies"
                 frame_count="8"
-                speed="15"
+                speed="400"
                 loop="1">
                 <Tile row="2" col="0" w="16" h="16"/>
             </AnimationInfo>
@@ -157,14 +157,14 @@
                 id="MiniSlimeDead"
                 texture_id="enemies"
                 frame_count="2"
-                speed="50">
+                speed="500">
                 <Tile row="0" col="0" w="16" h="16"/>
             </AnimationInfo>
             <AnimationInfo
                 id="SlimeIdle"
                 texture_id="enemies"
                 frame_count="2"
-                speed="500"
+                speed="1000"
                 loop="1">
                 <Tile row="3" col="2" w="16" h="16"/>
             </AnimationInfo>
@@ -188,7 +188,7 @@
                 id="SlimeDead"
                 texture_id="enemies"
                 frame_count="2"
-                speed="50">
+                speed="500">
                 <Tile row="3" col="0" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
@@ -235,11 +235,11 @@
                 id="Dead"
                 texture_id="enemies"
                 frame_count="2"
-                speed="50">
+                speed="500">
                 <Tile row="9" col="0" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
-        <RangedEnemyStats health="100" damage="1" speed="50" range="150" perception_width="160" perception_height="150" xp="15" fire_interval="5000"/>
+        <RangedEnemyStats health="100" damage="1" speed="10" range="150" perception_width="160" perception_height="150" xp="15" fire_interval="5000"/>
     </Object>
     <Object texture_id="enemies" object_id="dog" rotation="0">
         <Types collider="1" ranged_enemy="1" dog="1"/>
@@ -282,7 +282,7 @@
                 id="Dead"
                 texture_id="enemies"
                 frame_count="2"
-                speed="50">
+                speed="500">
                 <Tile row="6" col="0" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
@@ -376,7 +376,7 @@
                 id="Dead"
                 texture_id="enemies"
                 frame_count="2"
-                speed="50">
+                speed="500">
                 <Tile row="12" col="0" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
@@ -424,8 +424,8 @@
                 id="Dead"
                 texture_id="enemies"
                 frame_count="2"
-                speed="50"
-                loop="1">
+                speed="500"
+                >
                 <Tile row="6" col="0" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
@@ -474,8 +474,8 @@
                 id="Dead"
                 texture_id="enemies"
                 frame_count="2"
-                speed="50"
-                loop="1">
+                speed="500"
+                >
                 <Tile row="9" col="0" w="16" h="16"/>
             </AnimationInfo>
         </Animation>

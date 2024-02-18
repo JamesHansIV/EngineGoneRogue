@@ -71,11 +71,15 @@ void Player::Init() {
 }
 
 void Player::Draw() {
-    SDL_Log("player texture id: %s", GetTextureID().c_str());
     m_CurrentState->Draw();
 
     m_Health->Draw(GetX(), GetY(), GetWidth());
     m_CurrentWeapon->Draw();
+    for (auto& weapon : m_Weapons) {
+        if (auto* ranged = dynamic_cast<RangedWeapon*>(weapon)) {
+            ranged->DrawProjectiles();
+        }
+    }
 }
 
 void Player::Update(float dt) {
@@ -159,6 +163,11 @@ void Player::UpdateWeapon(float dt) {
     m_CurrentWeapon->SetRotation(angle * (180 / M_PI));
     m_CurrentWeapon->SetFlip(weapon_flip);
     m_CurrentWeapon->Update(dt);
+    for (auto& weapon : m_Weapons) {
+        if (auto* ranged = dynamic_cast<RangedWeapon*>(weapon)) {
+            ranged->UpdateProjectiles(dt);
+        }
+    }
 }
 
 void Player::OnCollide(Collider* collidee) {

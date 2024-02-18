@@ -12,7 +12,7 @@ HelixBullet::HelixBullet(Properties& props, float speed, float angle,
       m_Origin(Vector2D(GetX(), GetY())),
       m_TPos(0, 0),
       m_WaveMagnitude(1),
-      m_Scale(30.0F) {
+      m_Scale(1000.0F) {
 
     SetSpeed(speed / 25);
 }
