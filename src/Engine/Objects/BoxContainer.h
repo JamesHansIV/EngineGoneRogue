@@ -9,6 +9,7 @@ struct Box{
     std::string TextureID;
     SDL_Rect src_rect;
     DrawColor color;
+    bool should_fill;
 };
 
 class BoxContainer{
@@ -27,7 +28,7 @@ class BoxContainer{
             for (Box& box : m_Boxes) {
                 SDL_Rect box_around = {x + renderer->GetCameraX(), renderer->GetCameraY(), m_BoxWidth,
                         40};
-                renderer->DrawRect(box_around, box.color, true);
+                renderer->DrawRect(box_around, box.color, box.should_fill);
 
                 SDL_Rect dst_rect = {x + renderer->GetCameraX(), renderer->GetCameraY() + m_StartY, m_BoxWidth,
                         m_Height};
