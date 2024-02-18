@@ -16,6 +16,11 @@ int mouse_x;
 int mouse_y;
 int mouse_wheel_direction = 0;
 
+int num_keys_down = 0;
+int num_mod_keys_down = 0;
+
+const std::unordered_set<int> InputChecker::modifier_keys = { 1073742055, 1073742051, 1073742054, 1073742050, 1073742052, 1073742048, 1073742053, 1073742049 };
+
 bool InputChecker::IsKeyPressed(int keycode) {
     return keys[(keycode % kNumkeys)];
     // return keys.at(keycode % kNumkeys);
@@ -24,6 +29,9 @@ bool InputChecker::IsKeyPressed(int keycode) {
 void InputChecker::SetKeyPressed(int keycode, bool value) {
     int const key = keycode % kNumkeys;
     keys[key] = value;
+
+    if (modifier_keys.contains(keycode))
+        num_mod_keys_down = (value == true) ? num_mod_keys_down + 1 : num_mod_keys_down - 1; // update keycount
 }
 
 bool InputChecker::IsMouseButtonPressed(int button) {
@@ -65,4 +73,12 @@ void InputChecker::ClearPrevFrameKeys() {
 
 bool InputChecker::WasKeyAlreadyPresssed(int keycode) {
     return prev_frame_keys[(keycode % kNumkeys)];
+}
+
+int InputChecker::GetNumModifierKeysDown() {
+    return num_mod_keys_down;
+}
+
+std::unordered_set<int> InputChecker::GetModifierKeyCodes() {
+    return modifier_keys;
 }
