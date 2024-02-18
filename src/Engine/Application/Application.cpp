@@ -47,10 +47,6 @@ Application::Application() : m_ProjectName("test_project"), m_Frame(0) {
     m_instance = this;
 
     SDL_GetWindowSize(m_Window, &m_WindowWidth, &m_WindowHeight);
-    //SDL_SetWindowFullscreen(m_Window, SDL_WINDOW_FULLSCREEN_DESKTOP);
-
-    //SDL_Log("Window width: %d", m_WindowWidth);
-    //SDL_Log("Window height: %d", m_WindowHeight);
 
     //TODO: note that the cwd is <projectDir>/build instead of <projectDir>.
     //      Set a working directory path macro to use absolute file paths
