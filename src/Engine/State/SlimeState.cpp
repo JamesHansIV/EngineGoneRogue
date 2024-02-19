@@ -12,7 +12,6 @@ State* SlimeHandleCollide(Slime* enemy, Collider* collidee) {
     switch (collidee->GetObjectType()) {
         case ObjectType::Projectile:
             if (dynamic_cast<Projectile*>(collidee)->IsPlayerOwned()) {
-                dynamic_cast<Projectile*>(collidee)->AddNumberofEnemiesHit();
                 return new SlimeIsHit(
                     enemy, dynamic_cast<Projectile*>(collidee)->GetDamage());
             }
