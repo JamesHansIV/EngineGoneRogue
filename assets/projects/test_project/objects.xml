@@ -1,3 +1,6 @@
+<!DOCTYPE resources [
+   <!ENTITY hitAnimationSpeed "10">
+]>
 <Root>
     <Object texture_id="player" object_id="player" rotation="0">
         <Types collider="1" player="1"/>
@@ -119,7 +122,7 @@
                 id="front-hit"
                 texture_id="player"
                 frame_count="2"
-                speed="300">
+                speed="100">
                 <Tile row="5" col="0" w="18" h="16"/>
             </AnimationInfo>
         </Animation>
@@ -142,7 +145,7 @@
                 id="MiniSlimeHit"
                 texture_id="enemies"
                 frame_count="3"
-                speed="300">
+                speed="100">
                 <Tile row="1" col="0" w="16" h="16"/>
             </AnimationInfo>
             <AnimationInfo
@@ -172,8 +175,7 @@
                 id="SlimeHit"
                 texture_id="enemies"
                 frame_count="3"
-                speed="300"
-                loop="1">
+                speed="100">
                 <Tile row="4" col="0" w="16" h="16"/>
             </AnimationInfo>
             <AnimationInfo
@@ -228,7 +230,7 @@
                 id="Hit"
                 texture_id="enemies"
                 frame_count="3"
-                speed="300">
+                speed="100">
                 <Tile row="10" col="0" w="16" h="16"/>
             </AnimationInfo>
             <AnimationInfo
@@ -275,7 +277,7 @@
                 id="Hit"
                 texture_id="enemies"
                 frame_count="3"
-                speed="300">
+                speed="100">
                 <Tile row="7" col="0" w="16" h="16"/>
             </AnimationInfo>
             <AnimationInfo
@@ -322,7 +324,7 @@
                 id="Hit"
                 texture_id="enemies"
                 frame_count="3"
-                speed="300">
+                speed="100">
                 <Tile row="14" col="0" w="16" h="16"/>
             </AnimationInfo>
             <AnimationInfo
@@ -369,7 +371,7 @@
                 id="Hit"
                 texture_id="enemies"
                 frame_count="3"
-                speed="300">
+                speed="100">
                 <Tile row="14" col="0" w="16" h="16"/>
             </AnimationInfo>
             <AnimationInfo
@@ -416,7 +418,7 @@
                 id="Hit"
                 texture_id="enemies"
                 frame_count="3"
-                speed="300"
+                speed="100">
                 >
                 <Tile row="7" col="0" w="16" h="16"/>
             </AnimationInfo>
@@ -466,7 +468,7 @@
                 id="Hit"
                 texture_id="enemies"
                 frame_count="3"
-                speed="300"
+                speed="100">
                 >
                 <Tile row="10" col="0" w="16" h="16"/>
             </AnimationInfo>
