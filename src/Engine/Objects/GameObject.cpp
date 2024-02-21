@@ -8,6 +8,7 @@ GameObject::GameObject(GameObject* rhs) {
     m_Rotation = rhs->m_Rotation;
     m_Flip = rhs->m_Flip;
     m_ObjectID = rhs->m_ObjectID;
+    m_MarkedForDeletion = false;
 
     if (rhs->m_Animation != nullptr) {
         m_Animation = new Animation(*rhs->m_Animation);

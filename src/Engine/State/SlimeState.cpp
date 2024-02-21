@@ -53,22 +53,19 @@ State* SlimeHandleCollide(Slime* enemy, Collider* collidee) {
 void SlimeSplit(Slime* enemy) {
     std::string const id1 = enemy->GetID() + "1";
     std::string const id2 = enemy->GetID() + "2";
-    Properties props1 = {enemy->GetTextureID(),
-                         enemy->GetTilePos(),
-                         enemy->GetDstRect(),
-                         enemy->GetRotation(),
-                         id1,
-                         enemy->GetFlip()};
-    props1.DstRect.x -= static_cast<float>(enemy->GetWidth()) / 2;
-
-    Properties props2 = props1;
-    props2.ObjectID = id2;
-    props1.DstRect.x += static_cast<float>(enemy->GetWidth()) / 2;
 
     // TODO: When Health et cetra are integrated with EnemyStats, change this
     // to use modified health values.
     auto* slime1 = new Slime(enemy, enemy->GetEnemyStats(), true);
     auto* slime2 = new Slime(enemy, enemy->GetEnemyStats(), true);
+
+    slime1->SetID(id1);
+    slime2->SetID(id2);
+
+    float offset = static_cast<float>(enemy->GetWidth()) / 2;
+
+    slime1->GetRigidBody()->MovePosition(Vector2D(-offset, 0));
+    slime2->GetRigidBody()->MovePosition(Vector2D(offset, 0));
 
     dynamic_cast<Game*>(Application::Get())->AddObject(slime1);
     dynamic_cast<Game*>(Application::Get())->AddObject(slime2);
@@ -124,7 +121,6 @@ void SlimeSelectAnimation(Slime* enemy, StateType type) {
 }
 
 void SlimeIdle::Enter() {
-    SDL_Log("in slime idle enter");
     SlimeSelectAnimation(GetEnemy(), GetType());
 }
 

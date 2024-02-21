@@ -10,8 +10,8 @@
 #include "Engine/utils/utils.h"
 
 State* RangedEnemyHandleCollide(RangedEnemy* enemy, Collider* collidee) {
-    SDL_Log("RangedEnemyHandleCollide");
-    SDL_Log("Collidee type: %d", collidee->GetObjectType());
+    //SDL_Log("RangedEnemyHandleCollide");
+    //SDL_Log("Collidee type: %d", collidee->GetObjectType());
     switch (collidee->GetObjectType()) {
         case ObjectType::Projectile:
             if (dynamic_cast<Projectile*>(collidee)->IsPlayerOwned()) {
