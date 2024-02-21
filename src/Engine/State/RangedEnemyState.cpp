@@ -10,10 +10,12 @@
 #include "Engine/utils/utils.h"
 
 State* RangedEnemyHandleCollide(RangedEnemy* enemy, Collider* collidee) {
+    SDL_Log("RangedEnemyHandleCollide");
+    SDL_Log("Collidee type: %d", collidee->GetObjectType());
     switch (collidee->GetObjectType()) {
         case ObjectType::Projectile:
             if (dynamic_cast<Projectile*>(collidee)->IsPlayerOwned()) {
-                dynamic_cast<Projectile*>(collidee)->AddNumberofEnemiesHit();
+                SDL_Log("Projectile hit");
                 return new RangedEnemyIsHit(
                     enemy, dynamic_cast<Projectile*>(collidee)->GetDamage());
             }
@@ -200,7 +202,7 @@ State* RangedEnemyAttack::OnCollideEvent(CollideEvent* event) {
 }
 
 void RangedEnemyIsHit::Enter() {
-    //ApplyDamage();
+    ApplyDamage();
     GetEnemy()->GetAnimation()->SelectAnimation("Hit");
 }
 
@@ -236,14 +238,15 @@ State* RangedEnemyIsHit::HandleEvent(Event* event) {
 
 State* RangedEnemyIsHit::OnCollideEvent(CollideEvent* event) {
     Collider* collidee = event->GetCollidee();
+    SDL_Log("RangedEnemyIsHit::OnCollideEvent");
 
     switch (collidee->GetObjectType()) {
         case ObjectType::Projectile: {
             auto* projectile = dynamic_cast<Projectile*>(collidee);
             if (projectile->IsPlayerOwned()) {
-                SetDamage(projectile->GetDamage());
-                SDL_Log("Enemy hit: %d", projectile->GetDamage());
-                ApplyDamage();
+                //SetDamage(projectile->GetDamage());
+                //SDL_Log("Enemy hit: %d", projectile->GetDamage());
+                //ApplyDamage();
             }
 
             break;

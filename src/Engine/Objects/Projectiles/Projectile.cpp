@@ -61,9 +61,9 @@ void Projectile::OnCollide(Collider* collidee) {
             break;
         case ObjectType::Enemy:
             if (m_PlayerOwned) {
-                if (m_NumberofEnemiesHit == m_Piercing + 1) {
-                    m_MarkedForDeletion = true;
-                }
+                // TODO: Piercing is broke, needs to be fixed
+                m_MarkedForDeletion = true;
+                AddNumberofEnemiesHit();
                 double const life_steal_multiplier =
                     m_Owner->GetStats().GetLifeStealPercentage() / 100.0;
                 int const increase_health_amount =

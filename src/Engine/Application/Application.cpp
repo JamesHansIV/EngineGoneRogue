@@ -187,8 +187,8 @@ void Application::Run() {
                 SDL_Log("Updates per second: %d", updates_per_second);
                 updates_per_second = 0;
             }
-            float const new_time = timer.GetTicks();
-            auto frame_time = static_cast<float>(
+            double const new_time = timer.GetTicks();
+            auto frame_time = static_cast<double>(
                 new_time / 1000.0F - timer.GetCurrentTime() / 1000.0F);
             timer.SetCurrentTime(new_time);
             // Necessary for slow computers
