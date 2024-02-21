@@ -354,23 +354,23 @@ GameObject* BuildRangedEnemy(tinyxml2::XMLElement* types,
 
     if (types->Attribute("ring_shot_enemy") != nullptr) {
         SDL_Log("creating ring shot enemy %f", ranged_stats.spread);
-        new_obj = new RingShotEnemy(*static_cast<Collider*>(obj), ranged_stats);
+        new_obj = new RingShotEnemy(static_cast<Collider*>(obj), ranged_stats);
         SDL_Log("ring shot enemy spread %s", new_obj->GetID().c_str());
     }
     if (types->Attribute("dog") != nullptr) {
-        new_obj = new Dog(*static_cast<Collider*>(obj), ranged_stats);
+        new_obj = new Dog(static_cast<Collider*>(obj), ranged_stats);
     }
     if (types->Attribute("goblin") != nullptr) {
-        new_obj = new Goblin(*static_cast<Collider*>(obj), ranged_stats);
+        new_obj = new Goblin(static_cast<Collider*>(obj), ranged_stats);
     }
     if (types->Attribute("helix_enemy") != nullptr) {
-        new_obj = new HelixEnemy(*static_cast<Collider*>(obj), ranged_stats);
+        new_obj = new HelixEnemy(static_cast<Collider*>(obj), ranged_stats);
     }
     if (types->Attribute("skeleton") != nullptr) {
-        new_obj = new Skeleton(*static_cast<Collider*>(obj), ranged_stats);
+        new_obj = new Skeleton(static_cast<Collider*>(obj), ranged_stats);
     }
     if (types->Attribute("mage") != nullptr) {
-        new_obj = new Mage(*static_cast<Collider*>(obj), ranged_stats);
+        new_obj = new Mage(static_cast<Collider*>(obj), ranged_stats);
     }
 
     delete obj;
@@ -390,14 +390,14 @@ GameObject* BuildObjectOnType(tinyxml2::XMLElement* types,
 
     if (types->Attribute("player") != nullptr) {
         SDL_Log("Adding new player");
-        new_obj = new Player(*static_cast<Collider*>(new_obj));
+        new_obj = new Player(static_cast<Collider*>(new_obj));
         return new_obj;
     }
 
     if (types->Attribute("slime") != nullptr) {
         EnemyStats stats =
             GetEnemyStats(xmlObj->FirstChildElement("EnemyStats"));
-        new_obj = new Slime(*static_cast<Collider*>(new_obj), stats);
+        new_obj = new Slime(static_cast<Collider*>(new_obj), stats);
     }
 
     if (types->Attribute("ranged_enemy") != nullptr) {

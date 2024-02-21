@@ -8,7 +8,7 @@ Dog::Dog(Properties& props, const RangedEnemyStats& stats)
     Init();
 }
 
-Dog::Dog(Collider& rhs, RangedEnemyStats stats) : RangedEnemy(rhs, stats) {
+Dog::Dog(Collider* rhs, RangedEnemyStats stats) : RangedEnemy(rhs, stats) {
     Init();
 }
 

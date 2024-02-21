@@ -9,7 +9,7 @@ HelixEnemy::HelixEnemy(Properties& props, RangedEnemyStats const& stats)
     Init();
 }
 
-HelixEnemy::HelixEnemy(Collider& rhs, RangedEnemyStats stats)
+HelixEnemy::HelixEnemy(Collider* rhs, RangedEnemyStats stats)
     : RangedEnemy(rhs, stats) {
     Init();
 }

@@ -8,7 +8,7 @@ Goblin::Goblin(Properties& props, const RangedEnemyStats& stats)
     Init();
 }
 
-Goblin::Goblin(Collider& rhs, RangedEnemyStats stats)
+Goblin::Goblin(Collider* rhs, RangedEnemyStats stats)
     : RangedEnemy(rhs, stats) {
     Init();
 }

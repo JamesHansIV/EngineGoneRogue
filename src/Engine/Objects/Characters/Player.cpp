@@ -13,8 +13,6 @@
 #include "SDL2/SDL_render.h"
 #include "SDL2/SDL_timer.h"
 
-
-
 const int kMoveAnimationSpeed = 20;
 const int kIdleAnimationSpeed = 50;
 
@@ -22,7 +20,7 @@ Player::Player(Properties& props) : Character(props) {
     Init();
 }
 
-Player::Player(Collider& rhs) : Character(rhs) {
+Player::Player(Collider* rhs) : Character(rhs) {
     Init();
 }
 
@@ -34,7 +32,7 @@ void Player::Init() {
 
     m_CurrentTilePos = m_StillFrames["face-down"];
 
-    m_stats = new PlayerStats(150, 0, 1.3, 1, 1, 0, 50, 1, 20);
+    m_stats = new PlayerStats(90, 0, 1.3, 1, 1, 0, 50, 1, 20);
 
     ChangeState(new PlayerIdle(this));
     // m_Collider->SetCorrection(-45, -20, 60, 80 )
@@ -89,7 +87,7 @@ void Player::AddItem(Item* item) {
         SDL_Log("Inventory is full. Cannot add more items");
         return;
     }
-    m_Items[item->GetName()] = item;  
+    m_Items[item->GetName()] = item;
     item->AddCount();
 }
 

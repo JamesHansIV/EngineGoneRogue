@@ -4,6 +4,29 @@
 #include "Engine/Application/Application.h"
 #include "Engine/Renderer/Renderer.h"
 #include "Engine/Timer/Timer.h"
+#include "SDL2/SDL_render.h"
+
+Animation::Animation(Animation& rhs) {
+    m_CurrentAnimationID = rhs.m_CurrentAnimationID;
+    m_Info = rhs.m_Info;
+
+    for (auto item : rhs.m_Animations) {
+        SDL_Log("copying %s", item.first.c_str());
+        SDL_Log("info: %s, %d, %d", item.second.TextureID.c_str(),
+                item.second.FrameCount, item.second.AnimationSpeed);
+
+        AnimationInfo info = {
+            item.second.TextureID, item.second.Tile,
+            item.second.FrameCount,  item.second.AnimationSpeed, item.second.Flip,
+            item.second.Loop,        item.second.KeyFramesStart,
+            item.second.KeyFramesEnd};
+
+        m_Animations[item.first] = info;
+    }
+    m_Ended = false;
+    m_LastUpdateTime = 0;
+    m_SpriteFrame = 0;
+}
 
 void Animation::Update() {
 
@@ -14,18 +37,16 @@ void Animation::Update() {
         return;
     }
 
-    if ((timer.GetTicks() - m_LastFrameTime) > m_Info.AnimationSpeed) {
+    if ((timer.GetTicks() - m_LastUpdateTime) > m_Info.AnimationSpeed) {
+        //SDL_Log("current frame: %d", m_SpriteFrame);
+
         m_SpriteFrame = (m_SpriteFrame + 1) % m_Info.FrameCount;
         // SDL_Log("Updating animation frame: %d", m_SpriteFrame);
-        m_LastFrameTime = timer.GetTicks();
+        m_LastUpdateTime = timer.GetTicks();
     }
 }
 
 void Animation::Draw(const Rect& dstRect, float angle) {
-    if (m_Info.TextureID == " ") {
-        SDL_Log("tile: (%d, %d, %d, %d)", m_Info.Tile.row, m_Info.Tile.col,
-                m_Info.Tile.w, m_Info.Tile.h);
-    }
     SDL_Rect src_rect = {(m_Info.Tile.col + m_SpriteFrame) * m_Info.Tile.w,
                          m_Info.Tile.row * m_Info.Tile.h, m_Info.Tile.w,
                          m_Info.Tile.h};

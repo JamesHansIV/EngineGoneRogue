@@ -6,7 +6,7 @@ class Slime : public Enemy {
    public:
     explicit Slime(Properties& props, const EnemyStats& stats,
                    bool split = false);
-    Slime(Collider& rhs, EnemyStats stats);
+    Slime(Collider* rhs, EnemyStats stats, bool split = false);
     void Init();
 
     virtual void Draw() override;

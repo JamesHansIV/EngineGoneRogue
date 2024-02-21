@@ -7,7 +7,7 @@ class Mage : public RangedEnemy {
     explicit Mage(Properties& props, const RangedEnemyStats& stats,
                   int bulletCount = 6);
 
-    Mage(Collider& rhs, RangedEnemyStats stats, int bulletCount = 6);
+    Mage(Collider* rhs, RangedEnemyStats stats, int bulletCount = 6);
 
     void Init();
 

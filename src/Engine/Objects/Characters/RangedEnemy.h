@@ -8,7 +8,7 @@ class RangedEnemy : public Enemy {
     explicit RangedEnemy(Properties& props, const RangedEnemyStats& enemyStats)
         : Enemy(props, enemyStats), m_stats(enemyStats) {}
 
-    RangedEnemy(Collider& rhs, RangedEnemyStats stats);
+    RangedEnemy(Collider* rhs, RangedEnemyStats stats);
 
     ~RangedEnemy();
 

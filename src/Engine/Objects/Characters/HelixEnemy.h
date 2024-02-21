@@ -6,7 +6,7 @@ class HelixEnemy : public RangedEnemy {
    public:
     explicit HelixEnemy(Properties& props, RangedEnemyStats const& stats);
 
-    HelixEnemy(Collider& rhs, RangedEnemyStats stats);
+    HelixEnemy(Collider* rhs, RangedEnemyStats stats);
 
     void Init();
 

@@ -5,7 +5,7 @@ class Skeleton : public RangedEnemy {
    public:
     explicit Skeleton(Properties& props, const RangedEnemyStats& stats);
 
-    Skeleton(Collider& rhs, RangedEnemyStats stats);
+    Skeleton(Collider* rhs, RangedEnemyStats stats);
     void Init();
 
     virtual void Draw() override;

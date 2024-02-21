@@ -13,7 +13,7 @@ RingShotEnemy::RingShotEnemy(Properties& props, RangedEnemyStats stats,
     Init();
 }
 
-RingShotEnemy::RingShotEnemy(Collider& rhs, RangedEnemyStats stats,
+RingShotEnemy::RingShotEnemy(Collider* rhs, RangedEnemyStats stats,
                              float outerRadius, float innerRadius,
                              int shotCount)
     : RangedEnemy(rhs, stats),

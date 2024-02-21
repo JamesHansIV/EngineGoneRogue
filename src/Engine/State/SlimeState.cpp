@@ -68,8 +68,8 @@ void SlimeSplit(Slime* enemy) {
 
     // TODO: When Health et cetra are integrated with EnemyStats, change this
     // to use modified health values.
-    auto* slime1 = new Slime(props1, enemy->GetEnemyStats(), true);
-    auto* slime2 = new Slime(props2, enemy->GetEnemyStats(), true);
+    auto* slime1 = new Slime(enemy, enemy->GetEnemyStats(), true);
+    auto* slime2 = new Slime(enemy, enemy->GetEnemyStats(), true);
 
     dynamic_cast<Game*>(Application::Get())->AddObject(slime1);
     dynamic_cast<Game*>(Application::Get())->AddObject(slime2);
@@ -79,7 +79,6 @@ void SlimeSplit(Slime* enemy) {
 }
 
 void BigSlimeSelectAnimation(Slime* enemy, StateType type) {
-    SDL_Log("selecting big slime animation");
     switch (type) {
         case StateType::Idle:
             enemy->GetAnimation()->SelectAnimation("SlimeIdle");
@@ -126,6 +125,7 @@ void SlimeSelectAnimation(Slime* enemy, StateType type) {
 }
 
 void SlimeIdle::Enter() {
+    SDL_Log("in slime idle enter");
     SlimeSelectAnimation(GetEnemy(), GetType());
 }
 

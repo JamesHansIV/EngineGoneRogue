@@ -1,6 +1,7 @@
 #include "GameObject.h"
 
 GameObject::GameObject(GameObject* rhs) {
+    m_CurrentState = nullptr;
     m_TextureID = rhs->m_TextureID;
     m_CurrentTilePos = rhs->m_CurrentTilePos;
     m_DstRect = rhs->m_DstRect;
@@ -9,20 +10,11 @@ GameObject::GameObject(GameObject* rhs) {
     m_ObjectID = rhs->m_ObjectID;
 
     if (rhs->m_Animation != nullptr) {
-        m_Animation = new Animation();
-        m_Animation->SetProps({rhs->m_Animation->GetTextureID(),
-                               {rhs->m_Animation->GetSpriteRow(),
-                                rhs->m_Animation->GetSpriteCol(),
-                                rhs->m_Animation->GetSpriteWidth(),
-                                rhs->m_Animation->GetSpriteHeight()},
-                               rhs->m_Animation->GetFrameCount(),
-                               rhs->m_Animation->GetAnimationSpeed()});
-
-        for (const auto item : rhs->m_Animation->GetAnimations()) {
-            m_Animation->AddAnimation(item.first, item.second);
-        }
+        m_Animation = new Animation(*rhs->m_Animation);
     }
 }
+
+GameObject::~GameObject() {}
 
 void GameObject::Draw() {
     if (m_Animation != nullptr) {
@@ -80,5 +72,3 @@ void GameObject::ChangeState(State* state) {
     m_CurrentState = state;
     m_CurrentState->Enter();
 }
-
-GameObject::~GameObject() = default;

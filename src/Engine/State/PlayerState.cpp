@@ -53,27 +53,21 @@ State* UpdateAnimationDirection(Player* player,
     if (moving_up && moving_right) {
         player->GetAnimation()->SelectAnimation(animationIDs.RightUp);
         player->SelectStillFrame("face-right-up");
-        player->SetFlip(SDL_FLIP_NONE);
     } else if (moving_up && moving_left) {
         player->GetAnimation()->SelectAnimation(animationIDs.LeftUp);
         player->SelectStillFrame("face-right-up");
-        player->SetFlip(SDL_FLIP_HORIZONTAL);
     } else if (moving_up) {
         player->GetAnimation()->SelectAnimation(animationIDs.Up);
         player->SelectStillFrame("face-up");
-        player->SetFlip(SDL_FLIP_NONE);
     } else if (moving_right) {
         player->GetAnimation()->SelectAnimation(animationIDs.Right);
         player->SelectStillFrame("face-right");
-        player->SetFlip(SDL_FLIP_NONE);
     } else if (moving_left) {
         player->GetAnimation()->SelectAnimation(animationIDs.Left);
         player->SelectStillFrame("face-right");
-        player->SetFlip(SDL_FLIP_HORIZONTAL);
     } else if (moving_down) {
         player->GetAnimation()->SelectAnimation(animationIDs.Down);
         player->SelectStillFrame("face-down");
-        player->SetFlip(SDL_FLIP_NONE);
     } else {
         player->GetAnimation()->StopAnimation();
     }

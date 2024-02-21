@@ -1,18 +1,18 @@
 #pragma once
 
 #include <stack>
+#include <unordered_map>
 #include "../../Events/Event.h"
 #include "Character.h"
 #include "Engine/Animation/Animation.h"
 #include "Engine/Objects/ColliderHandler.h"
+#include "Engine/Objects/Item.h"
 #include "Engine/Objects/ItemInventory.h"
 #include "Engine/Objects/Weapons/Weapon.h"
 #include "Engine/Physics/RigidBody.h"
 #include "Engine/State/PlayerState.h"
 #include "Engine/utils/utils.h"
 #include "functional"
-#include <unordered_map>
-#include "Engine/Objects/Item.h"
 
 class PlayerStats {
    public:
@@ -117,7 +117,7 @@ class Player : public Character {
 
    public:
     explicit Player(Properties& props);
-    Player(Collider& rhs);
+    Player(Collider* rhs);
     ~Player() override;
     Player(const Player&) = delete;
 
@@ -147,7 +147,10 @@ class Player : public Character {
 
     void AddItem(Item* item);
 
-    [[nodiscard]] const std::unordered_map<std::string, Item*>& GetPlayerItems() const {return m_Items;};
+    [[nodiscard]] const std::unordered_map<std::string, Item*>& GetPlayerItems()
+        const {
+        return m_Items;
+    };
 
    private:
     std::vector<Weapon*> m_Weapons;

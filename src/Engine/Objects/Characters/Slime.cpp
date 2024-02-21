@@ -8,7 +8,8 @@ Slime::Slime(Properties& props, const EnemyStats& stats, bool split)
     Init();
 }
 
-Slime::Slime(Collider& rhs, EnemyStats stats) : Enemy(rhs, stats) {
+Slime::Slime(Collider* rhs, EnemyStats stats, bool split)
+    : Enemy(rhs, stats), m_Split(split) {
     Init();
 }
 

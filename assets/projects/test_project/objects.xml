@@ -9,7 +9,7 @@
                 id="Dead"
                 texture_id="player"
                 frame_count="6"
-                speed="500">
+                speed="300">
                 <Tile row="0" col="0" w="18" h="16"/>
             </AnimationInfo>
             <AnimationInfo
@@ -25,7 +25,7 @@
                 id="move-right"
                 texture_id="player"
                 frame_count="6"
-                speed="300"
+                speed="250"
                 loop="1">
                 <Tile row="2" col="0" w="18" h="16"/>
             </AnimationInfo>
@@ -33,7 +33,7 @@
                 id="move-left"
                 texture_id="player"
                 frame_count="6"
-                speed="300"
+                speed="250"
                 flip="1"
                 loop="1">
                 <Tile row="2" col="0" w="18" h="16"/>
@@ -42,7 +42,7 @@
                 id="move-right-up"
                 texture_id="player"
                 frame_count="6"
-                speed="300"
+                speed="250"
                 loop="1">
                 <Tile row="3" col="0" w="18" h="16"/>
             </AnimationInfo>
@@ -50,7 +50,7 @@
                 id="move-left-up"
                 texture_id="player"
                 frame_count="6"
-                speed="300"
+                speed="250"
                 flip="1"
                 loop="1">
                 <Tile row="3" col="0" w="18" h="16"/>
@@ -67,7 +67,7 @@
                 id="move-down"
                 texture_id="player"
                 frame_count="6"
-                speed="300"
+                speed="250"
                 loop="1">
                 <Tile row="1" col="0" w="18" h="16"/>
             </AnimationInfo>
@@ -76,42 +76,42 @@
                 id="dodge-down"
                 texture_id="player-dodge"
                 frame_count="6"
-                speed="2">
+                speed="50">
                 <Tile row="0" col="0" w="20" h="20"/>
             </AnimationInfo>
             <AnimationInfo
                 id="dodge-right"
                 texture_id="player-dodge"
                 frame_count="6"
-                speed="2">
+                speed="50">
                 <Tile row="1" col="0" w="20" h="20"/>
             </AnimationInfo>
             <AnimationInfo
                 id="dodge-right-up"
                 texture_id="player-dodge"
                 frame_count="6"
-                speed="2">
+                speed="50">
                 <Tile row="2" col="0" w="20" h="20"/>
             </AnimationInfo>
             <AnimationInfo
                 id="dodge-up"
                 texture_id="player-dodge"
                 frame_count="6"
-                speed="2">
+                speed="50">
                 <Tile row="3" col="0" w="20" h="20"/>
             </AnimationInfo>
             <AnimationInfo
                 id="dodge-left-up"
                 texture_id="player-dodge"
                 frame_count="6"
-                speed="2">
+                speed="50">
                 <Tile row="4" col="0" w="20" h="20"/>
             </AnimationInfo>
             <AnimationInfo
                 id="dodge-left"
                 texture_id="player-dodge"
                 frame_count="6"
-                speed="2">
+                speed="50">
                 <Tile row="5" col="0" w="20" h="20"/>
             </AnimationInfo>
 
@@ -119,7 +119,7 @@
                 id="front-hit"
                 texture_id="player"
                 frame_count="2"
-                speed="300">
+                speed="500">
                 <Tile row="5" col="0" w="18" h="16"/>
             </AnimationInfo>
         </Animation>
@@ -164,7 +164,7 @@
                 id="SlimeIdle"
                 texture_id="enemies"
                 frame_count="2"
-                speed="1000"
+                speed="300"
                 loop="1">
                 <Tile row="3" col="2" w="16" h="16"/>
             </AnimationInfo>
@@ -180,7 +180,7 @@
                 id="SlimeAttack"
                 texture_id="enemies"
                 frame_count="8"
-                speed="15"
+                speed="300"
                 loop="1">
                 <Tile row="5" col="0" w="16" h="16"/>
             </AnimationInfo>

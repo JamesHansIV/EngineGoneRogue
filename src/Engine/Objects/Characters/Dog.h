@@ -6,7 +6,7 @@ class Dog : public RangedEnemy {
    public:
     explicit Dog(Properties& props, const RangedEnemyStats& stats);
 
-    Dog(Collider& rhs, RangedEnemyStats stats);
+    Dog(Collider* rhs, RangedEnemyStats stats);
 
     void Init();
 

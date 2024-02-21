@@ -1,16 +1,16 @@
 #pragma once
 
+#include <SDL2/SDL.h>
+#include <string>
+#include <unordered_map>
+#include <utility>
 #include "Engine/Animation/Animation.h"
+#include "Engine/Physics/CollisionBox.h"
 #include "Engine/Renderer/Renderer.h"
 #include "Engine/Renderer/TileMap.h"
 #include "Engine/State/State.h"
 #include "Health.h"
 #include "IObject.h"
-#include <SDL2/SDL.h>
-#include <string>
-#include <unordered_map>
-#include <utility>
-#include "Engine/Physics/CollisionBox.h"
 
 #include "Engine/utils/utils.h"
 
@@ -73,6 +73,7 @@ class GameObject : public IObject {
           m_Flip(props.Flip),
           m_ObjectID(props.ObjectID),
           m_Animation(nullptr),
+          m_CurrentState(nullptr),
           m_MarkedForDeletion(false) {}
 
     explicit GameObject(GameObject* rhs);
@@ -134,7 +135,7 @@ class GameObject : public IObject {
 
     std::string GetTextureID() { return m_TextureID; }
 
-    void SetTextureID (std::string texture) {m_TextureID = texture;};
+    void SetTextureID(std::string texture) { m_TextureID = texture; };
 
     std::string GetID() { return m_ObjectID; }
 

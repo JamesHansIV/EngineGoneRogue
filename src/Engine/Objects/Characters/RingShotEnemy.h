@@ -14,7 +14,7 @@ class RingShotEnemy : public RangedEnemy {
                            float innerRadius = RING_SHOT_INNER_RADIUS,
                            int shotCount = RING_SHOT_COUNT);
 
-    RingShotEnemy(Collider& rhs, RangedEnemyStats stats,
+    RingShotEnemy(Collider* rhs, RangedEnemyStats stats,
                   float outerRadius = RING_SHOT_OUTER_RADIUS,
                   float innerRadius = RING_SHOT_INNER_RADIUS,
                   int shotCount = RING_SHOT_COUNT);

@@ -9,7 +9,7 @@ Skeleton::Skeleton(Properties& props, const RangedEnemyStats& stats)
     Init();
 }
 
-Skeleton::Skeleton(Collider& rhs, RangedEnemyStats stats)
+Skeleton::Skeleton(Collider* rhs, RangedEnemyStats stats)
     : RangedEnemy(rhs, stats) {
     Init();
 }

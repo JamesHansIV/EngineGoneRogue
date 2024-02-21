@@ -9,7 +9,7 @@ Mage::Mage(Properties& props, const RangedEnemyStats& stats, int bulletCount)
     Init();
 }
 
-Mage::Mage(Collider& rhs, RangedEnemyStats stats, int bulletCount)
+Mage::Mage(Collider* rhs, RangedEnemyStats stats, int bulletCount)
     : RangedEnemy(rhs, stats), m_BulletCount(bulletCount) {
     Init();
 }

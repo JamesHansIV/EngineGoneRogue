@@ -1,9 +1,6 @@
 #include "Enemy.h"
-#include "Engine/Input/InputChecker.h"
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Objects/Environment/Entrance.h"
-#include "Engine/Renderer/Renderer.h"
-#include "Player.h"
 
 #include <cmath>
 
@@ -23,8 +20,9 @@ DEVELOPING BASIC ENEMY BEHAVIOUR:
 Enemy::Enemy(Properties& props, EnemyStats const& stats)
     : Character(props), m_stats(stats) {}
 
-Enemy::Enemy(Collider& rhs, EnemyStats stats)
-    : Character(rhs), m_stats(stats) {}
+Enemy::Enemy(Collider* rhs, EnemyStats stats) : Character(rhs), m_stats(stats) {
+    SDL_Log("enemy copy constructor: %s", rhs->GetID().c_str());
+}
 
 bool Enemy::TargetInRange() {
     if (GetTarget() == nullptr) {
