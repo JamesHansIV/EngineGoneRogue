@@ -5,6 +5,10 @@
 #include "Engine/State/State.h"
 #include "SDL2/SDL_rect.h"
 
+/*NOTE:
+    * Instances of Box and BoxCounter should be created on the heap using 'new' operator.
+*/
+
 const SDL_Color kCountColor = {255, 255, 255, 255};
 
 struct Box {
