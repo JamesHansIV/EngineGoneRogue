@@ -30,7 +30,7 @@ class BoxContainer{
             Renderer* renderer = Renderer::GetInstance();
             int x = m_startX;
             for (Box& box : m_Boxes) {
-                SDL_Rect box_around = {x + renderer->GetCameraX(), renderer->GetCameraY(), m_BoxWidth,
+                SDL_Rect box_around = {x + renderer->GetCameraX(), renderer->GetCameraY() + m_StartY, m_BoxWidth,
                         40};
                 renderer->DrawRect(box_around, box.color, box.should_fill);
 
