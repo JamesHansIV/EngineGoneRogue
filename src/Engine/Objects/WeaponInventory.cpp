@@ -22,9 +22,9 @@ void WeaponInventory::Draw() {
                         weapon->GetTilePos().w, weapon->GetTilePos().h};
         }
         
-        Box const weapon_box{weapon->GetTextureID(), src_rect, 
+        Box* weapon_box = new Box(weapon->GetTextureID(), src_rect, 
             weapon == m_SelectedWeapon? kSelectedWeaponColor: kWeaponColor, 
-            weapon == m_SelectedWeapon};
+            weapon == m_SelectedWeapon);
         box_container.AddBox(weapon_box);
     }
     box_container.DrawBoxes();

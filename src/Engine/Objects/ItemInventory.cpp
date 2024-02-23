@@ -9,10 +9,8 @@ void ItemInventory::Draw() {
 
     for (auto& pair : m_Items) {
         const Item& item = *pair.second;
-        
         SDL_Rect src_rect = {0, 0, 16, 16};
-        Box const item_box{item.GetTexture(), src_rect, kWeaponColor, false, 
-            true, item.GetCount()};
+        BoxWithCounter* item_box = new BoxWithCounter(item.GetTexture(), src_rect, kWeaponColor, false, item.GetCount());
         box_container.AddBox(item_box);
     }
     
