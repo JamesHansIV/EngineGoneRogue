@@ -32,8 +32,7 @@ void Renderer::Init() {
             Application::Get()->GetWindowWidth(),
             Application::Get()->GetWindowHeight());
 
-    m_Renderer = SDL_CreateRenderer(
-        window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    m_Renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     if (m_Renderer == nullptr) {
         SDL_Log("Failed to create Renderer: %s", SDL_GetError());
         assert(false);

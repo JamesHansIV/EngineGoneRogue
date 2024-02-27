@@ -36,7 +36,7 @@ void HelixEnemy::Shoot() {
 
     GetAttack()->Shoot(RangedAttackInfo{GetMidPointX(), GetMidPointY(),
                                         GetTarget()->GetMidPointX(),
-                                        GetTarget()->GetMidPointY(), props, 3});
+                                        GetTarget()->GetMidPointY(), props, 2});
 }
 
 void HelixEnemy::OnCollide(Collider* collidee) {

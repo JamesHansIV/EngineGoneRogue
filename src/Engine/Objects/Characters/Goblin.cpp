@@ -17,7 +17,7 @@ void Goblin::Init() {
     ChangeState(new RangedEnemyIdle(this));
     SetHealth(new Health(100));
     SetAttack(new RangedAttack(CreateSpreadBullet, GetFireInterval(),
-                               new Burst(5, 70)));
+                               new Burst(5, 1000)));
 }
 
 void Goblin::Draw() {

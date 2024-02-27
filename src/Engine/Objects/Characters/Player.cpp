@@ -39,7 +39,7 @@ void Player::Init() {
     m_Health = new Health(100);
 
     Properties props_uzi("weapons", {0, 3, 16, 16}, {0, 0, 18, 18}, 0.0);
-    RangedWeaponStats stats_uzi = {true, 200, 10, 16, m_stats};
+    RangedWeaponStats stats_uzi = {true, 200, 20, 16, m_stats};
     Weapon* uzi = new RangedWeapon(props_uzi, stats_uzi, this, "Uzi");
     m_Weapons.push_back(uzi);
 

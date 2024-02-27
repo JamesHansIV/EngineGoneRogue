@@ -16,10 +16,10 @@ Animation::Animation(Animation& rhs) {
                 item.second.FrameCount, item.second.AnimationSpeed);
 
         AnimationInfo info = {
-            item.second.TextureID, item.second.Tile,
-            item.second.FrameCount,  item.second.AnimationSpeed, item.second.Flip,
-            item.second.Loop,        item.second.KeyFramesStart,
-            item.second.KeyFramesEnd};
+            item.second.TextureID,      item.second.Tile,
+            item.second.FrameCount,     item.second.AnimationSpeed,
+            item.second.Flip,           item.second.Loop,
+            item.second.KeyFramesStart, item.second.KeyFramesEnd};
 
         m_Animations[item.first] = info;
     }
@@ -37,7 +37,8 @@ void Animation::Update() {
         return;
     }
 
-    if ((timer.GetTicks() - m_LastUpdateTime) > m_Info.AnimationSpeed) {
+    if (!m_Ended &&
+        (timer.GetTicks() - m_LastUpdateTime) > m_Info.AnimationSpeed) {
         //SDL_Log("current frame: %d", m_SpriteFrame);
 
         m_SpriteFrame = (m_SpriteFrame + 1) % m_Info.FrameCount;

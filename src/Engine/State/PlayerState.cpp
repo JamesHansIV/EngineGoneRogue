@@ -130,7 +130,7 @@ State* HandleCollide(Player* player, CollideEvent* event) {
 }
 
 void PlayerIdle::Enter() {
-    //GetPlayer()->GetAnimation()->SelectAnimation("PlayerIdle");
+    GetPlayer()->GetAnimation()->SelectAnimation("PlayerIdle");
 }
 
 void PlayerIdle::Exit() {}

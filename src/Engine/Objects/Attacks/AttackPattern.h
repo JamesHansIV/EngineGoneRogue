@@ -1,3 +1,4 @@
+#include "Engine/Timer/Timer.h"
 
 class AttackPattern {
    public:
@@ -12,24 +13,18 @@ class AttackPattern {
 
 class Burst : public AttackPattern {
    public:
-    Burst(int count, float cd) : _Count(count), Count(count), _CD(cd), CD(cd) {}
+    Burst(int count, float cd)
+        : PrevBurstTime(0), _Count(count), Count(count), CD(cd) {}
 
     void ResetCount() { Count = _Count; }
 
-    void ResetCD() { CD = _CD; }
-
-    void Reset() override {
-        ResetCount();
-        ResetCD();
-    }
+    void Reset() override { ResetCount(); }
 
     void Update(float dt) override {
         if (Count <= 0) {
-            if (CD > 0) {
-                CD--;
-            } else {
+            int ticks = timer.GetTicks();
+            if ((ticks - PrevBurstTime) > CD) {
                 ResetCount();
-                ResetCD();
             }
         }
     }
@@ -37,14 +32,15 @@ class Burst : public AttackPattern {
     bool Attack() override {
         if (Count > 0) {
             Count--;
+            PrevBurstTime = Count == 0 ? timer.GetTicks() : PrevBurstTime;
             return true;
         }
         return false;
     }
 
    private:
+    double PrevBurstTime;
     int _Count;
-    float _CD;
     int Count;
-    float CD;
+    double CD;
 };

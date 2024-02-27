@@ -13,7 +13,7 @@ struct RangedAttackInfo {
     float TargetX;
     float TargetY;
     Properties ProjProps;
-    float ProjSpeed = 500;
+    float ProjSpeed = 400;
     int ProjCount = 1;
     float Spread = 0;
     bool IsPlayerOwned = false;
