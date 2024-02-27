@@ -2,17 +2,12 @@
 #include "Engine/Objects/Characters/Player.h"
 #include "Engine/Objects/ColliderHandler.h"
 
-int k_projectile_width = 10;
-int k_projectile_height = 10;
-
 RangedWeapon::RangedWeapon(Properties& props, RangedWeaponStats& stats,
-                           Player* owner, const std::string& name)
-    : Weapon(props, stats, owner, name), m_stats(stats) {
-    m_projectile_props =
-        new Properties("weapons", {6, 0, 16, 16},
-                       {GetMidPointX(), GetMidPointY(), k_projectile_width,
-                        k_projectile_height},
-                       GetRotation(), "bullet");
+                           Player* owner, const std::string& name,
+                           Properties* projectile_props)
+    : Weapon(props, stats, owner, name),
+      m_stats(stats),
+      m_projectile_props(projectile_props) {
     m_auto_fire_enabled = true;
 }
 
