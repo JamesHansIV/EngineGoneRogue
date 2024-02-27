@@ -10,12 +10,9 @@
 #include "Engine/utils/utils.h"
 
 State* RangedEnemyHandleCollide(RangedEnemy* enemy, Collider* collidee) {
-    //SDL_Log("RangedEnemyHandleCollide");
-    //SDL_Log("Collidee type: %d", collidee->GetObjectType());
     switch (collidee->GetObjectType()) {
         case ObjectType::Projectile:
             if (dynamic_cast<Projectile*>(collidee)->IsPlayerOwned()) {
-                SDL_Log("Projectile hit");
                 return new RangedEnemyIsHit(
                     enemy, dynamic_cast<Projectile*>(collidee)->GetDamage());
             }
@@ -238,8 +235,6 @@ State* RangedEnemyIsHit::HandleEvent(Event* event) {
 
 State* RangedEnemyIsHit::OnCollideEvent(CollideEvent* event) {
     Collider* collidee = event->GetCollidee();
-    SDL_Log("RangedEnemyIsHit::OnCollideEvent");
-
     switch (collidee->GetObjectType()) {
         case ObjectType::Projectile: {
             auto* projectile = dynamic_cast<Projectile*>(collidee);

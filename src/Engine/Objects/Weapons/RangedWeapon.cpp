@@ -2,17 +2,12 @@
 #include "Engine/Objects/Characters/Player.h"
 #include "Engine/Objects/ColliderHandler.h"
 
-int k_projectile_width = 10;
-int k_projectile_height = 10;
-
 RangedWeapon::RangedWeapon(Properties& props, RangedWeaponStats& stats,
-                           Player* owner, const std::string& name)
-    : Weapon(props, stats, owner, name), m_stats(stats) {
-    m_projectile_props =
-        new Properties("weapons", {6, 0, 16, 16},
-                       {GetMidPointX(), GetMidPointY(), k_projectile_width,
-                        k_projectile_height},
-                       GetRotation(), "bullet");
+                           Player* owner, const std::string& name,
+                           Properties* projectile_props)
+    : Weapon(props, stats, owner, name),
+      m_stats(stats),
+      m_projectile_props(projectile_props) {
     m_auto_fire_enabled = true;
 }
 
@@ -47,6 +42,11 @@ void RangedWeapon::Update(float dt) {
             IsPlayerOwned(),
             m_stats.GetDamage() + m_stats.GetOwnerStats()->GetRangedDamage(),
             m_stats.GetOwnerStats()->GetPiercing(), GetOwner());
+        // Add player velocity to projectile. Have to multiply by .1 to make the
+        // player velocity to be weaker than the projectile velocity, so that it does
+        // not overpower the projectile velocity.
+        projectile->SetVelocity(m_owner->GetRigidBody()->Velocity() * .1 +
+                                projectile->GetVelocity());
         m_ProjectileManager.AddProjectile(projectile);
         ColliderHandler::GetInstance()->AddCollider(projectile);
         InputChecker::SetMouseButtonPressed(SDL_BUTTON_LEFT, false);
