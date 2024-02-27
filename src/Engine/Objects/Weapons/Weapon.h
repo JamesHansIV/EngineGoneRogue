@@ -58,7 +58,8 @@ class WeaponStats {
 
 class Weapon : public Collider {
    public:
-    explicit Weapon(Properties& props, WeaponStats& stats, Player* owner, const std::string& name)
+    explicit Weapon(Properties& props, WeaponStats& stats, Player* owner,
+                    const std::string& name)
         : Collider(props) {
         m_stats = stats;
         m_owner = owner;
@@ -76,9 +77,9 @@ class Weapon : public Collider {
 
     Player* GetOwner() { return m_owner; };
 
-    std::string GetName() {return m_name;};
+    std::string GetName() { return m_name; };
 
-   private:
+   protected:
     WeaponStats m_stats;
     bool m_auto_fire_enabled = false;
     Player* m_owner;

@@ -32,25 +32,25 @@ void Player::Init() {
 
     m_CurrentTilePos = m_StillFrames["face-down"];
 
-    m_stats = new PlayerStats(90, 0, 1.3, 1, 1, 0, 50, 1, 20);
+    m_stats = new PlayerStats(80, 0, 1.3, 1, 1, 0, 50, 1, 20);
 
     ChangeState(new PlayerIdle(this));
     // m_Collider->SetCorrection(-45, -20, 60, 80 )
     m_Health = new Health(100);
 
     Properties props_uzi("weapons", {0, 3, 16, 16}, {0, 0, 18, 18}, 0.0);
-    RangedWeaponStats stats_uzi = {true, 200, 10, 16, m_stats};
+    RangedWeaponStats stats_uzi = {true, 200, 30, 16, m_stats};
     Weapon* uzi = new RangedWeapon(props_uzi, stats_uzi, this, "Uzi");
     m_Weapons.push_back(uzi);
 
     Properties props_pistol("weapons", {0, 1, 16, 16}, {0, 0, 18, 18}, 0.0);
-    RangedWeaponStats stats_pistol = {true, 400, 7, 34, m_stats};
+    RangedWeaponStats stats_pistol = {true, 400, 15, 34, m_stats};
     Weapon* pistol =
         new RangedWeapon(props_pistol, stats_pistol, this, "Pistol");
     m_Weapons.push_back(pistol);
 
     Properties props_sniper("sniper", {0, 0, 32, 16}, {0, 0, 36, 16}, 0.0);
-    RangedWeaponStats stats_sniper = {true, 1000, 10, 100, m_stats};
+    RangedWeaponStats stats_sniper = {true, 1000, 25, 100, m_stats};
     Weapon* sniper = new RangedWeapon(props_sniper, stats_sniper, this,
                                       std::string("Sniper"));
     m_Weapons.push_back(sniper);
@@ -62,7 +62,7 @@ void Player::Init() {
     m_Weapons.push_back(w2);
 
     Properties props_bow("weapons", {2, 5, 16, 16}, {0, 0, 18, 18}, 45.0);
-    RangedWeaponStats stats_bow = {true, 750, 10, 75, m_stats};
+    RangedWeaponStats stats_bow = {true, 750, 22, 75, m_stats};
     Weapon* bow = new Bow(props_bow, stats_bow, this, std::string("Bow"));
     m_Weapons.push_back(bow);
 

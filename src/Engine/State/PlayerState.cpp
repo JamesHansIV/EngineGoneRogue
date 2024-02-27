@@ -12,21 +12,17 @@ bool IsPlayerDead(Player* player) {
 }
 
 void MovePlayer(Player* player, float dt) {
-    float speed = 0;
+    float speed = player->GetStats().GetSpeed();
     if (InputChecker::IsKeyPressed(SDLK_w)) {
-        speed = player->GetStats().GetSpeed();
         player->GetRigidBody()->ApplyVelocity(Vector2D(0, -speed * dt));
     }
     if (InputChecker::IsKeyPressed(SDLK_s)) {
-        speed = player->GetStats().GetSpeed();
         player->GetRigidBody()->ApplyVelocity(Vector2D(0, speed * dt));
     }
     if (InputChecker::IsKeyPressed(SDLK_a)) {
-        speed = player->GetStats().GetSpeed();
         player->GetRigidBody()->ApplyVelocity(Vector2D(-speed * dt, 0));
     }
     if (InputChecker::IsKeyPressed(SDLK_d)) {
-        speed = player->GetStats().GetSpeed();
         player->GetRigidBody()->ApplyVelocity(Vector2D(speed * dt, 0));
     }
 }
