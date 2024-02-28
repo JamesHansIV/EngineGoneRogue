@@ -5,7 +5,7 @@
 const DrawColor kWeaponColor{0, 0, 0, 255};
 
 void ItemInventory::Draw() {
-    BoxContainer box_container(0, 40, 40, 50, 0);
+    BoxContainer box_container(0, 40, 40, 50, 0, Alignment::kVertical);
 
     for (auto& pair : m_Items) {
         const Item& item = *pair.second;

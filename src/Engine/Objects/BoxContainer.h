@@ -9,6 +9,11 @@
     * Instances of Box and BoxCounter should be created on the heap using 'new' operator.
 */
 
+enum Alignment{
+    kHorizontal,
+    kVertical
+};
+
 const SDL_Color kCountColor = {255, 255, 255, 255};
 
 struct Box {
@@ -33,32 +38,45 @@ struct BoxWithCounter : public Box {
 
 class BoxContainer {
 public:
-    explicit BoxContainer(int startX, int startY, int height, int boxWidth, int spacing)
-        : m_startX(startX), m_StartY(startY), m_Height(height), m_BoxWidth(boxWidth), m_Spacing(spacing) {
+    explicit BoxContainer(int startX, int startY, int height, int width, int spacing, Alignment align)
+        : m_startX(startX), m_startY(startY), m_height(height), m_width(width), m_spacing(spacing), m_Align(align) {
     }
-
+2
     void AddBox(Box* box) {
         m_Boxes.push_back(box);
     }
 
     void DrawBoxes() {
         Renderer* renderer = Renderer::GetInstance();
-        int offset = m_startX;
-        for (Box* box : m_Boxes) {
+        int offset = 0;
+        int box_x = 0;
+        int box_y = 0;
 
-            SDL_Rect box_around = {offset + renderer->GetCameraX(), renderer->GetCameraY() + m_StartY, m_BoxWidth,
-                                    40};
+        for (Box* box : m_Boxes) {
+            if (m_Align == kHorizontal) {
+                box_x = m_startX + offset;
+            } else {
+                box_y = m_startY + offset;
+            }
+
+            SDL_Rect box_around = {box_x + renderer->GetCameraX(), box_y + renderer->GetCameraY(),
+                                    m_width, m_height};
             renderer->DrawRect(box_around, box->color, box->should_fill);
 
-            SDL_Rect dst_rect = {offset + renderer->GetCameraX(), renderer->GetCameraY() + m_StartY, m_BoxWidth,
-                                    m_Height};
+            SDL_Rect dst_rect = {box_x + renderer->GetCameraX(), box_y + renderer->GetCameraY(),
+                                    m_width, m_height};
             SDL_Rect src_rect = box->src_rect;
             renderer->Draw(box->TextureID, src_rect, dst_rect, 0.0F, nullptr, SDL_FLIP_NONE);
 
             if (dynamic_cast<BoxWithCounter*>(box) != nullptr) {
-                DrawCount(box, offset);
+                DrawCount(box, box_x);
             }
-            offset += m_BoxWidth + m_Spacing;
+
+            if (m_Align == kHorizontal) {
+                offset += m_width + m_spacing;
+            } else {
+                offset += m_height + m_spacing;
+            }
         }
     }
 
@@ -68,8 +86,8 @@ public:
 
         Renderer* renderer = Renderer::GetInstance();
 
-        int count_x = xPos + renderer->GetCameraX() + m_BoxWidth - 20;
-        int count_y = renderer->GetCameraY() + m_StartY;
+        int count_x = xPos + renderer->GetCameraX() + m_width - 20;
+        int count_y = renderer->GetCameraY() + m_startY;
         int count_width = 20;
         int count_height = 20;
 
@@ -80,7 +98,7 @@ public:
         SDL_Rect src_rect = {0, 0, count_texture->GetWidth(), count_texture->GetHeight()};
         int const count_texture_x = count_x + (count_width - count_texture->GetWidth()) / 2;
         int const count_texture_y = count_y + (count_height - count_texture->GetHeight()) / 2;
-        SDL_Rect count_texture_rect = {count_texture_x, count_texture_y, count_texture->GetWidth(), count_texture->GetHeight()};
+        SDL_Rect count_texture_rect = {count_texture_x, count_texture_y, count_texture->GetWidth(),count_texture->GetHeight()};
         renderer->Draw("count", src_rect, count_texture_rect, SDL_FLIP_NONE);
     }
 
@@ -94,10 +112,12 @@ public:
 private:
     std::vector<Box*> m_Boxes;
     int m_startX;
-    int m_StartY;
-    int m_Height;
-    int m_BoxWidth;
-    int m_Spacing;
+    int m_startY;
+    int m_height;
+    int m_width;
+    int m_spacing;
+    Alignment m_Align;
 
-    int GetTotalWidth() { return m_BoxWidth * static_cast<int>(m_Boxes.size()); };
+    int GetTotalWidth() { return m_width * static_cast<int>(m_Boxes.size()); };
+    int GetTotalHeight() { return m_height * static_cast<int>(m_Boxes.size());};
 };

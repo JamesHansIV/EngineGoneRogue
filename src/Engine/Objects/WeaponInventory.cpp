@@ -10,7 +10,7 @@ const DrawColor kWeaponColor{0, 0, 0, 255};
 
 
 void WeaponInventory::Draw() {
-    BoxContainer box_container(0, 0, 40, 50, 0);
+    BoxContainer box_container(0, 0, 40, 50, 0, Alignment::kHorizontal);
 
     for (Weapon* weapon : m_Weapons) {
         SDL_Rect src_rect;
