@@ -49,8 +49,8 @@ public:
     void DrawBoxes() {
         Renderer* renderer = Renderer::GetInstance();
         int offset = 0;
-        int box_x = 0;
-        int box_y = 0;
+        int box_x = m_startX;
+        int box_y = m_startY;
 
         for (Box* box : m_Boxes) {
             if (m_Align == kHorizontal) {
