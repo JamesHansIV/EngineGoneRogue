@@ -318,6 +318,7 @@ EnemyStats GetEnemyStats(tinyxml2::XMLElement* element) {
     stats.speed = atoi(element->Attribute("speed"));
     stats.range = atof(element->Attribute("range"));
     stats.perceptionWidth = atoi(element->Attribute("perception_width"));
+    stats.perceptionHeight = atoi(element->Attribute("perception_height"));
     stats.xpGiven = atoi(element->Attribute("xp"));
 
     return stats;

@@ -54,8 +54,6 @@ bool Enemy::TargetDetected() {
     Rect const target = m_Target->GetDstRect();
 
     if (ColliderHandler::GetInstance()->CheckCollision(m_Perception, target)) {
-        float const direction_x = m_Target->GetMidPointX() - GetMidPointX();
-        float const direction_y = m_Target->GetMidPointY() - GetMidPointY();
         return true;
     }
     return false;

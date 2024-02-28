@@ -182,8 +182,7 @@
                 id="SlimeAttack"
                 texture_id="enemies"
                 frame_count="8"
-                speed="250"
-                loop="1">
+                speed="250">
                 <Tile row="5" col="0" w="16" h="16"/>
             </AnimationInfo>
             <AnimationInfo
@@ -194,7 +193,7 @@
                 <Tile row="3" col="0" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
-        <EnemyStats health="100" damage="1" speed="70" range="50" perception_width="200" perception_height="200" xp="30"/>
+        <EnemyStats health="100" damage="1" speed="70" range="50" perception_width="120" perception_height="80" xp="30"/>
     </Object>
     <Object texture_id="enemies" object_id="ringshotenemy" rotation="0">
         <Types collider="1" ranged_enemy="1" ring_shot_enemy="1"/>
