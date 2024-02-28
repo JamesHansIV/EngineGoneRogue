@@ -41,7 +41,7 @@ public:
     explicit BoxContainer(int startX, int startY, int height, int width, int spacing, Alignment align)
         : m_startX(startX), m_startY(startY), m_height(height), m_width(width), m_spacing(spacing), m_Align(align) {
     }
-2
+
     void AddBox(Box* box) {
         m_Boxes.push_back(box);
     }
