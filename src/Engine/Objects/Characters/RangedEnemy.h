@@ -24,6 +24,8 @@ class RangedEnemy : public Enemy {
 
     void SetAttack(RangedAttack* attack) { m_Attack = attack; }
 
+    RangedEnemyStats GetRangedEnemyStats() { return m_stats; }
+
     virtual void OnCollide(Collider* collidee) override;
 
     virtual ObjectType GetObjectType() override { return ObjectType::Enemy; }

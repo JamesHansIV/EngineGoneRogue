@@ -44,6 +44,14 @@ const RangedEnemyStats kDefaultRangedEnemyStats = {
     4                    // spread};
 };
 
+Slime* SLIME_COPY = nullptr;
+RingShotEnemy* RING_SHOT_ENEMY_COPY = nullptr;
+Mage* MAGE_COPY = nullptr;
+Dog* DOG_COPY = nullptr;
+Skeleton* SKELETON_COPY = nullptr;
+Goblin* GOBLIN_COPY = nullptr;
+HelixEnemy* HELIX_ENEMY_COPY = nullptr;
+
 Game::Game() {
     SDL_Renderer* renderer = Renderer::GetInstance()->GetRenderer();
 
@@ -51,6 +59,46 @@ Game::Game() {
 
     for (auto& obj : m_Objects) {
         if (auto* collider = dynamic_cast<Collider*>(obj)) {
+            EnemyStats enemy_stats;
+            RangedEnemyStats ranged_enemy_stats;
+
+            if (Enemy* enemy = dynamic_cast<Enemy*>(obj)) {
+                enemy_stats = enemy->GetEnemyStats();
+            } else {
+                continue;
+            }
+
+            if (Slime* slime = dynamic_cast<Slime*>(obj)) {
+                SLIME_COPY = new Slime(slime, enemy_stats);
+            }
+
+            if (RangedEnemy* ranged_enemy = dynamic_cast<RangedEnemy*>(obj)) {
+                ranged_enemy_stats = ranged_enemy->GetRangedEnemyStats();
+            } else {
+                continue;
+            }
+
+            if (RingShotEnemy* ring_shot_enemy =
+                    dynamic_cast<RingShotEnemy*>(obj)) {
+                RING_SHOT_ENEMY_COPY =
+                    new RingShotEnemy(ring_shot_enemy, ranged_enemy_stats);
+            }
+            if (Mage* mage = dynamic_cast<Mage*>(obj)) {
+                MAGE_COPY = new Mage(mage, ranged_enemy_stats);
+            }
+            if (Dog* dog = dynamic_cast<Dog*>(obj)) {
+                DOG_COPY = new Dog(dog, ranged_enemy_stats);
+            }
+            if (Skeleton* skeleton = dynamic_cast<Skeleton*>(obj)) {
+                SKELETON_COPY = new Skeleton(skeleton, ranged_enemy_stats);
+            }
+            if (Goblin* goblin = dynamic_cast<Goblin*>(obj)) {
+                GOBLIN_COPY = new Goblin(goblin, ranged_enemy_stats);
+            }
+            if (HelixEnemy* helix_enemy = dynamic_cast<HelixEnemy*>(obj)) {
+                HELIX_ENEMY_COPY =
+                    new HelixEnemy(helix_enemy, ranged_enemy_stats);
+            }
             ColliderHandler::GetInstance()->AddCollider(collider);
         }
     }
@@ -104,40 +152,54 @@ void Game::GenerateRandomEnemyIfNeeded() {
         // Generate random x and y coordinates
         float const generated_x = rand() % 500 + 200;
         float const generated_y = rand() % 300 + 20;
-        Properties generated_props("enemies", {0, 1, 16, 16},
-                                   {generated_x, generated_y, 36, 36}, 0,
-                                   "enemy1");
+
         // Generate random enemy type
         int const enemy_type = rand() % 7;
         Enemy* generated_enemy = nullptr;
+
         switch (enemy_type) {
             case 0:
+                SLIME_COPY->SetX(generated_x);
+                SLIME_COPY->SetY(generated_y);
                 generated_enemy =
-                    new Slime(generated_props, kDefaultEnemyStats);
+                    new Slime(SLIME_COPY, SLIME_COPY->GetEnemyStats());
                 break;
             case 1:
-                generated_enemy = new RingShotEnemy(generated_props,
-                                                    kDefaultRangedEnemyStats);
+                RING_SHOT_ENEMY_COPY->SetX(generated_x);
+                RING_SHOT_ENEMY_COPY->SetY(generated_y);
+                generated_enemy = new RingShotEnemy(
+                    RING_SHOT_ENEMY_COPY,
+                    RING_SHOT_ENEMY_COPY->GetRangedEnemyStats());
                 break;
             case 2:
+                MAGE_COPY->SetX(generated_x);
+                MAGE_COPY->SetY(generated_y);
                 generated_enemy =
-                    new Mage(generated_props, kDefaultRangedEnemyStats);
+                    new Mage(MAGE_COPY, MAGE_COPY->GetRangedEnemyStats());
                 break;
             case 3:
+                DOG_COPY->SetX(generated_x);
+                DOG_COPY->SetY(generated_y);
                 generated_enemy =
-                    new Dog(generated_props, kDefaultRangedEnemyStats);
+                    new Dog(DOG_COPY, DOG_COPY->GetRangedEnemyStats());
                 break;
             case 4:
-                generated_enemy =
-                    new Skeleton(generated_props, kDefaultRangedEnemyStats);
+                SKELETON_COPY->SetX(generated_x);
+                SKELETON_COPY->SetY(generated_y);
+                generated_enemy = new Skeleton(
+                    SKELETON_COPY, SKELETON_COPY->GetRangedEnemyStats());
                 break;
             case 5:
+                GOBLIN_COPY->SetX(generated_x);
+                GOBLIN_COPY->SetY(generated_y);
                 generated_enemy =
-                    new Goblin(generated_props, kDefaultRangedEnemyStats);
+                    new Goblin(GOBLIN_COPY, GOBLIN_COPY->GetRangedEnemyStats());
                 break;
             case 6:
-                generated_enemy =
-                    new HelixEnemy(generated_props, kDefaultRangedEnemyStats);
+                HELIX_ENEMY_COPY->SetX(generated_x);
+                HELIX_ENEMY_COPY->SetY(generated_y);
+                generated_enemy = new HelixEnemy(
+                    HELIX_ENEMY_COPY, HELIX_ENEMY_COPY->GetRangedEnemyStats());
                 break;
             default:
                 break;
@@ -178,7 +240,7 @@ void Game::Update(float dt) {
         }
     }
 
-    //GenerateRandomEnemyIfNeeded();
+    GenerateRandomEnemyIfNeeded();
 }
 
 void Game::Render() {
