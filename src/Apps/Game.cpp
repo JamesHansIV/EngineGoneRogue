@@ -74,8 +74,6 @@ Game::Game() {
 
             if (RangedEnemy* ranged_enemy = dynamic_cast<RangedEnemy*>(obj)) {
                 ranged_enemy_stats = ranged_enemy->GetRangedEnemyStats();
-            } else {
-                continue;
             }
 
             if (RingShotEnemy* ring_shot_enemy =
