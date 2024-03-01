@@ -33,7 +33,7 @@ void Player::Init() {
 
     m_CurrentTilePos = m_StillFrames["face-down"];
 
-    m_stats = new PlayerStats(80, 0, 1.3, 1, 1, 0, 50, 1, 20);
+    m_stats = new PlayerStats(80, 100, 0.5, 1, 1, 0, 50, 1, 20);
     Properties* default_projectile_props = new Properties(
         "weapons", {6, 0, 16, 16},
         {GetMidPointX(), GetMidPointY(), kProjectileWidth, kProjectileHeight},

@@ -18,7 +18,7 @@
             <AnimationInfo
                 id="PlayerIdle"
                 texture_id="player"
-                frame_count="3"
+                frame_count="2"
                 speed="300"
                 loop="1">
                 <Tile row="7" col="0" w="18" h="16"/>
