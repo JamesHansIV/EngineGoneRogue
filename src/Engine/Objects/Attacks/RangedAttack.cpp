@@ -6,15 +6,12 @@
 #include "Engine/Timer/Timer.h"
 
 void RangedAttack::Update(float dt) {
-    m_ProjectileManager.UpdateProjectiles(dt);
     if (m_AttackPattern != nullptr) {
         m_AttackPattern->Update(dt);
     }
 }
 
-void RangedAttack::Draw() {
-    m_ProjectileManager.Draw();
-}
+void RangedAttack::Draw() {}
 
 void RangedAttack::Reset() {
     if (m_AttackPattern != nullptr) {
@@ -34,7 +31,7 @@ void RangedAttack::Shoot(RangedAttackInfo info) {
     std::vector<Projectile*> const bullets = m_CreateBullets(std::move(info));
     m_LastAttack = timer.GetTicks();
     for (auto* bullet : bullets) {
-        m_ProjectileManager.AddProjectile(bullet);
+        ProjectileManager::GetInstance()->AddProjectile(bullet);
         ColliderHandler::GetInstance()->AddCollider(bullet);
     }
 }

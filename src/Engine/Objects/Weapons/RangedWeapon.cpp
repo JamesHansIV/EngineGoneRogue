@@ -13,12 +13,9 @@ RangedWeapon::RangedWeapon(Properties& props, RangedWeaponStats& stats,
 
 void RangedWeapon::Draw() {
     Weapon::Draw();
-    m_ProjectileManager.Draw();
 }
 
-void RangedWeapon::DrawProjectiles() {
-    m_ProjectileManager.Draw();
-}
+void RangedWeapon::DrawProjectiles() {}
 
 void RangedWeapon::Update(float dt) {
     m_CollisionBox.Set(GetX(), GetY(), GetHeight(), GetWidth());
@@ -47,15 +44,13 @@ void RangedWeapon::Update(float dt) {
         // not overpower the projectile velocity.
         projectile->SetVelocity(m_owner->GetRigidBody()->Velocity() * .1 +
                                 projectile->GetVelocity());
-        m_ProjectileManager.AddProjectile(projectile);
+        ProjectileManager::GetInstance()->AddProjectile(projectile);
         ColliderHandler::GetInstance()->AddCollider(projectile);
         InputChecker::SetMouseButtonPressed(SDL_BUTTON_LEFT, false);
     }
 }
 
-void RangedWeapon::UpdateProjectiles(float dt) {
-    m_ProjectileManager.UpdateProjectiles(dt);
-}
+void RangedWeapon::UpdateProjectiles(float dt) {}
 
 void RangedWeapon::Clean() {}
 

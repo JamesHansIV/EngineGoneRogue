@@ -1,6 +1,8 @@
 #include "Engine/Objects/Projectiles/ProjectileManager.h"
 #include "Engine/Objects/ColliderHandler.h"
 
+ProjectileManager* ProjectileManager::s_instance = nullptr;
+
 ProjectileManager::~ProjectileManager() {
     for (auto it = m_Projectiles.begin(); it != m_Projectiles.end();) {
         it = RemoveProjectile(*it, it);

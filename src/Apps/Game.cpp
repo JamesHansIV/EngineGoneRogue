@@ -218,6 +218,7 @@ void Game::GenerateRandomEnemyIfNeeded() {
 
 void Game::Update(float dt) {
     ColliderHandler::GetInstance()->HandleCollisions();
+    ProjectileManager::GetInstance()->UpdateProjectiles(dt);
     if (m_Player != nullptr) {
         m_Player->Update(dt);
         m_HeadsUpDisplay->Update(*m_Player);
@@ -245,9 +246,12 @@ void Game::Update(float dt) {
 
 void Game::Render() {
     Renderer::GetInstance()->RenderClear();
+
     for (auto* obj : m_Objects) {
         obj->Draw();
     }
+
+    ProjectileManager::GetInstance()->Draw();
     if (m_Player != nullptr) {
         m_Player->Draw();
         m_HeadsUpDisplay->Draw();
@@ -280,6 +284,7 @@ Game::~Game() {
     delete m_WeaponInventory;
     delete m_GameEventManager;
     delete m_HeadsUpDisplay;
+    delete ProjectileManager::GetInstance();
     SDL_FreeCursor(SDL_GetCursor());
 }
 
