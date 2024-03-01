@@ -97,8 +97,6 @@ class PlayerStats {
         }
     }
 
-    ~PlayerStats();
-
    protected:
     float m_Speed;
     int m_DodgeCD;
@@ -133,7 +131,7 @@ class Player : public Character {
     void OnKeyReleased(SDL_Event& event);
     void OnCollide(Collider* collidee) override;
 
-    [[nodiscard]] const PlayerStats& GetStats() const { return *m_stats; }
+    [[nodiscard]] PlayerStats& GetStats() const { return *m_stats; }
 
     PlayerStats& GetMutableStats() { return *m_stats; }
 
