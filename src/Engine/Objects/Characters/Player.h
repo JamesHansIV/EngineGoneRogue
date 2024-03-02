@@ -17,12 +17,13 @@
 class PlayerStats {
    public:
     explicit PlayerStats(float speed, int dodgeCD, float dodgeSpeed,
-                         int rangedDamage, int meleeDamage, int piercing,
-                         int armorPercentage, int HPRegenRate,
+                         float dodgeDistance, int rangedDamage, int meleeDamage,
+                         int piercing, int armorPercentage, int HPRegenRate,
                          int lifeStealPercentage) {
         m_Speed = speed;
         m_DodgeCD = dodgeCD;
         m_DodgeSpeed = dodgeSpeed;
+        m_DodgeDistance = dodgeDistance;
         m_RangedDamage = rangedDamage;
         m_MeleeDamage = meleeDamage;
         m_experience = 0;
@@ -38,6 +39,8 @@ class PlayerStats {
     [[nodiscard]] int GetDodgeCd() const { return m_DodgeCD; };
 
     [[nodiscard]] float GetDodgeSpeed() const { return m_DodgeSpeed; };
+
+    [[nodiscard]] float GetDodgeDistance() const { return m_DodgeDistance; };
 
     [[nodiscard]] int GetRangedDamage() const { return m_RangedDamage; }
 
@@ -60,6 +63,10 @@ class PlayerStats {
     void SetDodgeCd(int dodgeCD) { m_DodgeCD = dodgeCD; };
 
     void SetDodgeSpeed(float dodgeSpeed) { m_DodgeSpeed = dodgeSpeed; };
+
+    void SetDodgeDistance(float dodgeDistance) {
+        m_DodgeDistance = dodgeDistance;
+    };
 
     void SetMeleeDamage(int meleeDamage) { m_MeleeDamage = meleeDamage; }
 
@@ -101,6 +108,7 @@ class PlayerStats {
     float m_Speed;
     int m_DodgeCD;
     float m_DodgeSpeed;
+    float m_DodgeDistance;
     int m_RangedDamage;
     int m_MeleeDamage;
     int m_experience;

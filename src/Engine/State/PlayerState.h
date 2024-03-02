@@ -106,6 +106,7 @@ class PlayerDodge : public PlayerState {
 
    private:
     int m_DodgeCD;
+    float m_Distance;
     Vector2D m_Velocity;
 };
 

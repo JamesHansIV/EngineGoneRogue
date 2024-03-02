@@ -278,9 +278,11 @@ void PlayerDodge::Enter() {
 void PlayerDodge::Exit() {}
 
 State* PlayerDodge::Update(float /*dt*/) {
-    if (GetPlayer()->GetAnimation()->Ended()) {
+    if (m_Distance >= GetPlayer()->GetStats().GetDodgeDistance()) {
         return new PlayerIdle(GetPlayer());
     }
+
+    m_Distance += m_Velocity.GetMagnitude();
     GetPlayer()->GetRigidBody()->ApplyVelocity(m_Velocity);
     return nullptr;
 }
