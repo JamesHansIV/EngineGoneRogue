@@ -16,6 +16,8 @@ const int kMoveAnimationSpeed = 20;
 const int kIdleAnimationSpeed = 50;
 const int kProjectileWidth = 10;
 const int kProjectileHeight = 10;
+// Experience multiplier for each level
+double k_experience_multiplier = 9.0 / 10.0;
 
 Player::Player(Properties& props) : Character(props) {
     Init();
@@ -237,6 +239,30 @@ Player::~Player() {
         delete item_pair.second;
     }
     m_Items.clear();
+}
+
+void PlayerStats::AddExperience(int experience) {
+    int experience_to_add = experience;
+    int stored_experience = 0;
+    int cur_experience = m_experience;
+
+    // Add experience based on cur level
+    for (int i = 0; i < m_level; i++) {
+        experience_to_add *= static_cast<int>(k_experience_multiplier);
+    }
+
+    // If there is a level-up experience, need to add experience based on new level
+    // Repeat until there is no level-up (overflow)
+    while (experience_to_add + cur_experience >= 100) {
+        const int experience_added_this_level = 100 - cur_experience;
+        experience_to_add = static_cast<int>(
+            std::round(k_experience_multiplier *
+                       (experience_to_add - experience_added_this_level)));
+        stored_experience += experience_added_this_level;
+        cur_experience = 0;
+    }
+
+    m_experience += experience_to_add + stored_experience;
 }
 
 void Player::Clean() {}

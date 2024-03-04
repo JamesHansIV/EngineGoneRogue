@@ -11,7 +11,6 @@
 #include "Engine/Timer/Timer.h"
 #include "Engine/utils/utils.h"
 
-
 CustomEventType custom_event_type = SDL_RegisterEvents(1);
 
 GameEventManager::GameEventManager(Player* player,
@@ -97,14 +96,17 @@ void GameEventManager::HandleEvents(ItemManager* ItemManager) {
                         EnemyDeathEvent death_event(enemy->GetEnemyStats());
                         if (m_player != nullptr) {
                             m_player->HandleEvent(&death_event);
-                            PlaceChestIfNeededEvent place_chest_event(enemy->GetX(), enemy->GetY());
+                            PlaceChestIfNeededEvent place_chest_event(
+                                enemy->GetX(), enemy->GetY());
                             ItemManager->HandleEvent(&place_chest_event);
                         }
                         return;
                     }
                     case EventType::ChestOpenedEvent: {
-                        auto* item = static_cast<std::vector<ItemType>*>(event.user.data1);
-                        auto *index = static_cast<std::pair<float, float>*>(event.user.data2);
+                        auto* item = static_cast<std::vector<ItemType>*>(
+                            event.user.data1);
+                        auto* index = static_cast<std::pair<float, float>*>(
+                            event.user.data2);
                         ChestOpenedEvent chest_open_event(*item, *index);
                         ItemManager->HandleEvent(&chest_open_event);
                         return;
