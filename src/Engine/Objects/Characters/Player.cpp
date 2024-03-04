@@ -217,6 +217,7 @@ void Player::HandleEvent(Event* event) {
         case EventType::EnemyDeathEvent: {
             auto* death_event = dynamic_cast<EnemyDeathEvent*>(event);
             m_stats->AddExperience(death_event->GetEnemyStats().xpGiven);
+            m_stats->IncrementKillCount();
             break;
         }
         default:

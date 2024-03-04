@@ -44,6 +44,7 @@ class PlayerStats {
         m_RangedDamage = combatInfo.rangedDamage;
         m_MeleeDamage = combatInfo.meleeDamage;
         m_experience = 0;
+        m_killCount = 0;
         m_Piercing = combatInfo.piercing;
         m_ArmorPercentage = combatInfo.armorPercentage;
         m_HPRegenRate = healthInfo.HPRegenRate;
@@ -105,6 +106,10 @@ class PlayerStats {
 
     void AddExperience(int experience);
 
+    void IncrementKillCount() { m_killCount++; }
+
+    [[nodiscard]] int GetKillCount() const { return m_killCount; }
+
     void SetLevel(int level) { m_level = level; }
 
     [[nodiscard]] int GetLevel() const { return m_level; }
@@ -130,6 +135,7 @@ class PlayerStats {
     int m_HPRegenRate;
     int m_level;
     int m_LifeStealPercentage;
+    int m_killCount = 0;
 };
 
 class Player : public Character {
