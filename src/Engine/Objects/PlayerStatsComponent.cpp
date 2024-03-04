@@ -12,7 +12,7 @@ void PlayerStatsComponent::Draw() {
     GridComponent stats_grid(static_cast<int>(m_Stats.size()), 2, 0, 80,
                              kCellHeight, kCellWidth);
     stats_grid.SetColumnWidth(0, 230);
-    stats_grid.SetColumnWidth(1, 150);
+    stats_grid.SetColumnWidth(1, 100);
   
     for (const auto& stat : m_Stats) {
         SDL_Rect src_rect = {0, 0, 16, 16};
