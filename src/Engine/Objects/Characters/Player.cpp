@@ -250,19 +250,19 @@ void PlayerStats::AddExperience(int experience) {
 
     // Add experience based on cur level
     for (int i = 0; i < m_level; i++) {
-        experience_to_add *= static_cast<int>(k_experience_multiplier);
+        experience_to_add *= k_experience_multiplier;
     }
-
     // If there is a level-up experience, need to add experience based on new level
     // Repeat until there is no level-up (overflow)
     while (experience_to_add + cur_experience >= 100) {
         const int experience_added_this_level = 100 - cur_experience;
-        experience_to_add = static_cast<int>(
+        experience_to_add =
             std::round(k_experience_multiplier *
-                       (experience_to_add - experience_added_this_level)));
+                       (experience_to_add - experience_added_this_level));
         stored_experience += experience_added_this_level;
         cur_experience = 0;
     }
+    SDL_Log("Experience added: %d", experience_to_add + stored_experience);
 
     m_experience += experience_to_add + stored_experience;
 }
