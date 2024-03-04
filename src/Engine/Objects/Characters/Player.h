@@ -14,23 +14,40 @@
 #include "Engine/utils/utils.h"
 #include "functional"
 
+struct MovementInfo {
+    float speed;
+    float dodgeSpeed;
+    float dodgeDistance;
+    int dodgeCD;
+};
+
+struct CombatInfo {
+    int rangedDamage;
+    int meleeDamage;
+    int piercing;
+    int armorPercentage;
+};
+
+struct HealthInfo {
+    int HPRegenRate;
+    int lifeStealPercentage;
+};
+
 class PlayerStats {
    public:
-    explicit PlayerStats(float speed, int dodgeCD, float dodgeSpeed,
-                         float dodgeDistance, int rangedDamage, int meleeDamage,
-                         int piercing, int armorPercentage, int HPRegenRate,
-                         int lifeStealPercentage) {
-        m_Speed = speed;
-        m_DodgeCD = dodgeCD;
-        m_DodgeSpeed = dodgeSpeed;
-        m_DodgeDistance = dodgeDistance;
-        m_RangedDamage = rangedDamage;
-        m_MeleeDamage = meleeDamage;
+    explicit PlayerStats(MovementInfo movementInfo, CombatInfo combatInfo,
+                         HealthInfo healthInfo) {
+        m_Speed = movementInfo.speed;
+        m_DodgeCD = movementInfo.dodgeCD;
+        m_DodgeSpeed = movementInfo.dodgeSpeed;
+        m_DodgeDistance = movementInfo.dodgeDistance;
+        m_RangedDamage = combatInfo.rangedDamage;
+        m_MeleeDamage = combatInfo.meleeDamage;
         m_experience = 0;
-        m_Piercing = piercing;
-        m_ArmorPercentage = armorPercentage;
-        m_HPRegenRate = HPRegenRate;
-        m_LifeStealPercentage = lifeStealPercentage;
+        m_Piercing = combatInfo.piercing;
+        m_ArmorPercentage = combatInfo.armorPercentage;
+        m_HPRegenRate = healthInfo.HPRegenRate;
+        m_LifeStealPercentage = healthInfo.lifeStealPercentage;
         m_level = 1;
     }
 
