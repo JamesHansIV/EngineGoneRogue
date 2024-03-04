@@ -11,19 +11,22 @@ void PlayerStatsComponent::Draw() {
 
     GridComponent stats_grid(static_cast<int>(m_Stats.size()), 2, 0, 80,
                              kCellHeight, kCellWidth);
+    stats_grid.SetColumnWidth(0, 230);
+    stats_grid.SetColumnWidth(1, 150);
+  
     for (const auto& stat : m_Stats) {
         SDL_Rect src_rect = {0, 0, 16, 16};
-        auto* box1 = new BoxWithText(stat.first, src_rect, kBoxColor, false);
+        auto* box1 = new BoxWithText(stat.first, src_rect, kBoxColor, false, TextAlign::kLeft);
         BoxWithText* box2 = nullptr;
         if (stat.first == "Speed" || stat.first == "DodgeSpeed") {
             float value = std::get<float>(stat.second);
             std::stringstream ss;
             ss << std::fixed << std::setprecision(2)
                << value;  // Set precision to 2
-            box2 = new BoxWithText(ss.str(), src_rect, kBoxColor, false);
+            box2 = new BoxWithText(ss.str(), src_rect, kBoxColor, false, TextAlign::kCenter);
         } else {
             box2 = new BoxWithText(std::to_string(std::get<int>(stat.second)),
-                                   src_rect, kBoxColor, false);
+                                   src_rect, kBoxColor, false, TextAlign::kCenter);
         }
 
         stats_grid.AddBox(box1, row, 0);
