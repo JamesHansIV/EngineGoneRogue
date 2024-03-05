@@ -4,8 +4,8 @@
 #include <iostream>
 #include "Engine/Application/Application.h"
 #include "Engine/Events/GameEventManager.h"
-#include "Engine/HeadsUpDisplay/HeadsUpDisplay.h"
 #include "Engine/Events/ItemManager.h"
+#include "Engine/HeadsUpDisplay/HeadsUpDisplay.h"
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Objects/WeaponInventory.h"
 
@@ -20,9 +20,19 @@ class Game : public Application {
     void AddObject(GameObject* obj);
     void DeleteObject(GameObject* obj);
 
+    void UpdateObjects(float dt);
+    void DrawObjects();
+
+    void ChangeState(State* state);
+
+    std::vector<GameObject*>::iterator GetObjects() {
+        return m_Objects.begin();
+    }
+
     ~Game();
 
    private:
+    State* m_State;
     std::vector<GameObject*> m_Objects;
     WeaponInventory* m_WeaponInventory;
     int m_tick = 0;

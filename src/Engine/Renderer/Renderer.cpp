@@ -65,9 +65,7 @@ void Renderer::RenderClear() {
 
 void Renderer::Render() {
     SDL_RenderPresent(m_Renderer);
-    if (m_CameraTarget != nullptr) {
-        CenterCameraOnObject();
-    }
+    CenterCameraOnObject();
 }
 
 Texture* Renderer::AddTexture(const std::string& id,
@@ -309,7 +307,11 @@ void Renderer::DrawFrame(const std::string& id, int x, int y, int width,
 }
 
 void Renderer::CenterCameraOnObject() {
-
+    if (m_CameraTarget == nullptr) {
+        m_Camera.x = 0;
+        m_Camera.y = 0;
+        return;
+    }
     int const target_x =
         m_CameraTarget->GetX() + m_CameraTarget->GetWidth() / 2;
     int const target_y =

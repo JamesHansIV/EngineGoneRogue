@@ -21,6 +21,7 @@
 #include "Engine/Objects/WeaponInventory.h"
 #include "Engine/Objects/Weapons/Weapon.h"
 #include "Engine/Renderer/Renderer.h"
+#include "Engine/State/GameState.h"
 #include "Engine/Timer/Timer.h"
 #include "SDL2/SDL_log.h"
 
@@ -132,10 +133,15 @@ Game::Game() {
 
     SDL_Cursor* cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR);
     SDL_SetCursor(cursor);
+
+    ChangeState(new StartState(this));
 }
 
 void Game::Events() {
-    m_GameEventManager->HandleEvents(m_ItemManager);
+    State* state = m_GameEventManager->HandleEvents(m_ItemManager, m_State);
+    if (state != nullptr) {
+        ChangeState(state);
+    }
 }
 
 void Game::GenerateRandomEnemyIfNeeded() {
@@ -215,6 +221,10 @@ void Game::GenerateRandomEnemyIfNeeded() {
 }
 
 void Game::Update(float dt) {
+    m_State->Update(dt);
+}
+
+void Game::UpdateObjects(float dt) {
     ColliderHandler::GetInstance()->HandleCollisions();
     ProjectileManager::GetInstance()->UpdateProjectiles(dt);
     if (m_Player != nullptr) {
@@ -244,7 +254,11 @@ void Game::Update(float dt) {
 
 void Game::Render() {
     Renderer::GetInstance()->RenderClear();
+    m_State->Draw();
+    Renderer::GetInstance()->Render();
+}
 
+void Game::DrawObjects() {
     for (auto* obj : m_Objects) {
         obj->Draw();
     }
@@ -254,7 +268,16 @@ void Game::Render() {
         m_Player->Draw();
         m_HeadsUpDisplay->Draw();
     }
-    Renderer::GetInstance()->Render();
+}
+
+void Game::ChangeState(State* state) {
+    if (m_State != nullptr) {
+        m_State->Exit();
+        delete m_State;
+    }
+
+    m_State = state;
+    m_State->Enter();
 }
 
 void Game::AddObject(GameObject* obj) {

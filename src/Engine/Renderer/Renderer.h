@@ -83,7 +83,10 @@ class Renderer {
 
     void CenterCameraOnObject();
 
-    void SetCameraTarget(GameObject* target) { m_CameraTarget = target; }
+    void SetCameraTarget(GameObject* target) {
+        m_CameraTarget = target;
+        CenterCameraOnObject();
+    }
 
     int GetCameraX() const { return m_Camera.x; };
 

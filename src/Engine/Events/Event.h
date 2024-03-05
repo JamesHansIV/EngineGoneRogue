@@ -18,6 +18,9 @@ enum class EventType {
     PlayerLevelUpEvent,
     PlaceChestIfNeededEvent,
     ChestOpenedEvent,
+
+    StartGameEvent,
+    MouseDownEvent,
 };
 
 class Event {
@@ -90,31 +93,69 @@ class TargetLostEvent : public Event {
 };
 
 class PlaceChestIfNeededEvent : public Event {
-public:
-    explicit PlaceChestIfNeededEvent(float x, float y)
-    : m_X(x), m_Y(y) {};
+   public:
+    explicit PlaceChestIfNeededEvent(float x, float y) : m_X(x), m_Y(y){};
 
-    virtual EventType GetEventType() override { return EventType::PlaceChestIfNeededEvent; }
+    virtual EventType GetEventType() override {
+        return EventType::PlaceChestIfNeededEvent;
+    }
 
-    float GetX() { return m_X;};
-    float GetY() { return m_Y;};
+    float GetX() { return m_X; };
 
-    private:
-        float m_X;
-        float m_Y;
+    float GetY() { return m_Y; };
+
+   private:
+    float m_X;
+    float m_Y;
 };
 
-class ChestOpenedEvent: public Event {
-    public:
-    explicit ChestOpenedEvent(std::vector<ItemType>& itemTypes, std::pair<float, float>& index ) 
-        : m_ItemTypes(itemTypes), m_Index(index) {} 
+class ChestOpenedEvent : public Event {
+   public:
+    explicit ChestOpenedEvent(std::vector<ItemType>& itemTypes,
+                              std::pair<float, float>& index)
+        : m_ItemTypes(itemTypes), m_Index(index) {}
 
-    virtual EventType GetEventType() override{ return EventType::ChestOpenedEvent; };
+    virtual EventType GetEventType() override {
+        return EventType::ChestOpenedEvent;
+    };
 
-    std::vector<ItemType> GetItemTypes() {return m_ItemTypes;};
-    std::pair<float,float> GetIndex() {return m_Index;};
-    
-    private:
-        std::vector<ItemType> m_ItemTypes;
-        std::pair<float, float> m_Index;
+    std::vector<ItemType> GetItemTypes() { return m_ItemTypes; };
+
+    std::pair<float, float> GetIndex() { return m_Index; };
+
+   private:
+    std::vector<ItemType> m_ItemTypes;
+    std::pair<float, float> m_Index;
+};
+
+class StartGameEvent : public Event {
+   public:
+    explicit StartGameEvent() {}
+
+    virtual EventType GetEventType() override {
+        return EventType::StartGameEvent;
+    }
+
+   private:
+};
+
+class MouseDownEvent : public Event {
+   public:
+    explicit MouseDownEvent(int x, int y, int button)
+        : m_X(x), m_Y(y), m_Button(button) {}
+
+    virtual EventType GetEventType() override {
+        return EventType::MouseDownEvent;
+    }
+
+    int GetX() { return m_X; }
+
+    int GetY() { return m_Y; }
+
+    int GetButton() { return m_Button; }
+
+   private:
+    int m_X;
+    int m_Y;
+    int m_Button;
 };

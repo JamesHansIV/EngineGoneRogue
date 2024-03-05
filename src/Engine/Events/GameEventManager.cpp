@@ -11,14 +11,14 @@
 #include "Engine/Timer/Timer.h"
 #include "Engine/utils/utils.h"
 
-
 CustomEventType custom_event_type = SDL_RegisterEvents(1);
 
 GameEventManager::GameEventManager(Player* player,
                                    std::vector<GameObject*>& objects)
     : m_player(player), m_Objects(objects) {}
 
-void GameEventManager::HandleEvents(ItemManager* ItemManager) {
+State* GameEventManager::HandleEvents(ItemManager* ItemManager,
+                                      State* GameState) {
     SDL_Event event;
     UserEvent event_wrapper;
     event_wrapper.SetSDLEvent(&event);
@@ -26,7 +26,7 @@ void GameEventManager::HandleEvents(ItemManager* ItemManager) {
         switch (event.type) {
             case SDL_QUIT:
                 Application::Get()->Quit();
-                return;
+                return nullptr;
             case SDL_KEYDOWN:
                 InputChecker::SetKeyPressed(event.key.keysym.sym, true);
                 switch (event.key.keysym.sym) {
@@ -45,9 +45,17 @@ void GameEventManager::HandleEvents(ItemManager* ItemManager) {
                 InputChecker::SetKeyPressed(event.key.keysym.sym, false);
                 //player->OnKeyReleased(event);
                 break;
-            case SDL_MOUSEBUTTONDOWN:
+            case SDL_MOUSEBUTTONDOWN: {
                 InputChecker::SetMouseButtonPressed(event.button.button, true);
+                const int x = event.button.x;
+                const int y = event.button.y;
+                MouseDownEvent e(x, y, event.button.button);
+                State* state = GameState->HandleEvent(&e);
+                if (state != nullptr) {
+                    return state;
+                }
                 break;
+            }
             case SDL_MOUSEBUTTONUP:
                 InputChecker::SetMouseButtonPressed(event.button.button, false);
                 break;
@@ -97,17 +105,20 @@ void GameEventManager::HandleEvents(ItemManager* ItemManager) {
                         EnemyDeathEvent death_event(enemy->GetEnemyStats());
                         if (m_player != nullptr) {
                             m_player->HandleEvent(&death_event);
-                            PlaceChestIfNeededEvent place_chest_event(enemy->GetX(), enemy->GetY());
+                            PlaceChestIfNeededEvent place_chest_event(
+                                enemy->GetX(), enemy->GetY());
                             ItemManager->HandleEvent(&place_chest_event);
                         }
-                        return;
+                        return nullptr;
                     }
                     case EventType::ChestOpenedEvent: {
-                        auto* item = static_cast<std::vector<ItemType>*>(event.user.data1);
-                        auto *index = static_cast<std::pair<float, float>*>(event.user.data2);
+                        auto* item = static_cast<std::vector<ItemType>*>(
+                            event.user.data1);
+                        auto* index = static_cast<std::pair<float, float>*>(
+                            event.user.data2);
                         ChestOpenedEvent chest_open_event(*item, *index);
                         ItemManager->HandleEvent(&chest_open_event);
-                        return;
+                        return nullptr;
                     }
                     case EventType::PlayerLevelUpEvent:
                         timer.Pause();
@@ -119,12 +130,13 @@ void GameEventManager::HandleEvents(ItemManager* ItemManager) {
                 break;
         }
         if (timer.IsPaused()) {
-            return;
+            return nullptr;
         }
         if (m_player != nullptr) {
             m_player->HandleEvent(&event_wrapper);
         }
     }
+    return nullptr;
 }
 
 // void GameEventManager::PlaceChestIfNeeded(float chest_x, float chest_y) {

@@ -10,7 +10,7 @@ class GameEventManager : public virtual EventManager {
     GameEventManager(const GameEventManager&&) = delete;
     virtual GameEventManager& operator=(const GameEventManager&) = delete;
 
-    void HandleEvents(ItemManager* ItemManager);
+    State* HandleEvents(ItemManager* ItemManager, State* GameState);
 
     void SetPlayer(Player* player) { m_player = player; }
 

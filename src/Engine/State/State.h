@@ -4,8 +4,11 @@
 
 enum class GlobalState {
     None = 0,
+    Running,
+    Start,
     GameOver,
     Pause,
+    Shop,
     Combat,
     LowHealth,
     ClearedLevel,
@@ -13,6 +16,13 @@ enum class GlobalState {
 };
 
 enum class StateType {
+    //Global state
+    Running,
+    Start,
+    GameOver,
+    Pause,
+    Shop,
+
     //General state
     Idle,
     IsHit,
