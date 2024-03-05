@@ -1,7 +1,9 @@
 #include "GameState.h"
 #include "Apps/Game.h"
 
-void RunningState::Enter() {}
+void RunningState::Enter() {
+    Renderer::GetInstance()->SetCameraTarget(GetGame()->GetPlayer());
+}
 
 void RunningState::Exit() {}
 

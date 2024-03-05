@@ -229,7 +229,7 @@
                 id="Hit"
                 texture_id="enemies"
                 frame_count="3"
-                speed="500">
+                speed="100">
                 <Tile row="10" col="0" w="16" h="16"/>
             </AnimationInfo>
             <AnimationInfo
@@ -276,7 +276,7 @@
                 id="Hit"
                 texture_id="enemies"
                 frame_count="3"
-                speed="400">
+                speed="100">
                 <Tile row="7" col="0" w="16" h="16"/>
             </AnimationInfo>
             <AnimationInfo
@@ -370,7 +370,7 @@
                 id="Hit"
                 texture_id="enemies"
                 frame_count="3"
-                speed="500">
+                speed="100">
                 <Tile row="14" col="0" w="16" h="16"/>
             </AnimationInfo>
             <AnimationInfo
@@ -467,7 +467,7 @@
                 id="Hit"
                 texture_id="enemies"
                 frame_count="3"
-                speed="400">
+                speed="100">
                 >
                 <Tile row="10" col="0" w="16" h="16"/>
             </AnimationInfo>

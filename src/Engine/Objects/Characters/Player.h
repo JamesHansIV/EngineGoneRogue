@@ -14,23 +14,41 @@
 #include "Engine/utils/utils.h"
 #include "functional"
 
+struct MovementInfo {
+    float speed;
+    float dodgeSpeed;
+    float dodgeDistance;
+    int dodgeCD;
+};
+
+struct CombatInfo {
+    int rangedDamage;
+    int meleeDamage;
+    int piercing;
+    int armorPercentage;
+};
+
+struct HealthInfo {
+    int HPRegenRate;
+    int lifeStealPercentage;
+};
+
 class PlayerStats {
    public:
-    explicit PlayerStats(float speed, int dodgeCD, float dodgeSpeed,
-                         float dodgeDistance, int rangedDamage, int meleeDamage,
-                         int piercing, int armorPercentage, int HPRegenRate,
-                         int lifeStealPercentage) {
-        m_Speed = speed;
-        m_DodgeCD = dodgeCD;
-        m_DodgeSpeed = dodgeSpeed;
-        m_DodgeDistance = dodgeDistance;
-        m_RangedDamage = rangedDamage;
-        m_MeleeDamage = meleeDamage;
+    explicit PlayerStats(MovementInfo movementInfo, CombatInfo combatInfo,
+                         HealthInfo healthInfo) {
+        m_Speed = movementInfo.speed;
+        m_DodgeCD = movementInfo.dodgeCD;
+        m_DodgeSpeed = movementInfo.dodgeSpeed;
+        m_DodgeDistance = movementInfo.dodgeDistance;
+        m_RangedDamage = combatInfo.rangedDamage;
+        m_MeleeDamage = combatInfo.meleeDamage;
         m_experience = 0;
-        m_Piercing = piercing;
-        m_ArmorPercentage = armorPercentage;
-        m_HPRegenRate = HPRegenRate;
-        m_LifeStealPercentage = lifeStealPercentage;
+        m_killCount = 0;
+        m_Piercing = combatInfo.piercing;
+        m_ArmorPercentage = combatInfo.armorPercentage;
+        m_HPRegenRate = healthInfo.HPRegenRate;
+        m_LifeStealPercentage = healthInfo.lifeStealPercentage;
         m_level = 1;
     }
 
@@ -86,20 +104,20 @@ class PlayerStats {
         m_LifeStealPercentage = lifeSteal;
     }
 
-    void AddExperience(int experience) { m_experience += experience; };
+    void AddExperience(int experience);
+
+    void IncrementKillCount() { m_killCount++; }
+
+    [[nodiscard]] int GetKillCount() const { return m_killCount; }
 
     void SetLevel(int level) { m_level = level; }
 
     [[nodiscard]] int GetLevel() const { return m_level; }
 
     void Update() {
-        const int total_experience = m_experience;
-        m_experience = total_experience % 100;
-        int potential_levels = total_experience / 100;
-        while (potential_levels > 0) {
+        if (m_experience >= 100) {
             PushNewEvent(EventType::PlayerLevelUpEvent);
-
-            potential_levels--;
+            m_experience -= 100;
             m_level++;
         }
     }
@@ -117,6 +135,7 @@ class PlayerStats {
     int m_HPRegenRate;
     int m_level;
     int m_LifeStealPercentage;
+    int m_killCount = 0;
 };
 
 class Player : public Character {

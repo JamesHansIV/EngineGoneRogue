@@ -91,7 +91,7 @@ class PlayerMoving : public PlayerState {
 class PlayerDodge : public PlayerState {
    public:
     explicit PlayerDodge(Player* player)
-        : PlayerState(player), m_DodgeCD(10), m_Velocity(0, 0) {}
+        : PlayerState(player), m_DodgeCD(120), m_Velocity(0, 0) {}
 
     virtual void Enter() override;
     virtual void Exit() override;

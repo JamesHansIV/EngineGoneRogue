@@ -43,6 +43,8 @@ class Application {
 
     int& GetMutableWindowHeight() { return m_WindowHeight; }
 
+    Player* GetPlayer() { return m_Player; }
+
     inline static Application* Get() { return m_instance; }
 
    protected:

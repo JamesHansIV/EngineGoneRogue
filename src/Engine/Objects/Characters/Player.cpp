@@ -16,6 +16,8 @@ const int kMoveAnimationSpeed = 20;
 const int kIdleAnimationSpeed = 50;
 const int kProjectileWidth = 10;
 const int kProjectileHeight = 10;
+// Experience multiplier for each level
+double k_experience_multiplier = 9.0 / 10.0;
 
 Player::Player(Properties& props) : Character(props) {
     Init();
@@ -33,7 +35,8 @@ void Player::Init() {
 
     m_CurrentTilePos = m_StillFrames["face-down"];
 
-    m_stats = new PlayerStats(80, 100, 0.75, 120, 1, 1, 0, 50, 1, 20);
+    m_stats = new PlayerStats(MovementInfo{80, 0.75, 100, 120},
+                              CombatInfo{1, 1, 0, 50}, HealthInfo{1, 20});
     Properties* default_projectile_props = new Properties(
         "weapons", {6, 0, 16, 16},
         {GetMidPointX(), GetMidPointY(), kProjectileWidth, kProjectileHeight},
@@ -214,6 +217,7 @@ void Player::HandleEvent(Event* event) {
         case EventType::EnemyDeathEvent: {
             auto* death_event = dynamic_cast<EnemyDeathEvent*>(event);
             m_stats->AddExperience(death_event->GetEnemyStats().xpGiven);
+            m_stats->IncrementKillCount();
             break;
         }
         default:
@@ -237,6 +241,30 @@ Player::~Player() {
         delete item_pair.second;
     }
     m_Items.clear();
+}
+
+void PlayerStats::AddExperience(int experience) {
+    int experience_to_add = experience;
+    int stored_experience = 0;
+    int cur_experience = m_experience;
+
+    // Add experience based on cur level
+    for (int i = 0; i < m_level; i++) {
+        experience_to_add *= k_experience_multiplier;
+    }
+    // If there is a level-up experience, need to add experience based on new level
+    // Repeat until there is no level-up (overflow)
+    while (experience_to_add + cur_experience >= 100) {
+        const int experience_added_this_level = 100 - cur_experience;
+        experience_to_add =
+            std::round(k_experience_multiplier *
+                       (experience_to_add - experience_added_this_level));
+        stored_experience += experience_added_this_level;
+        cur_experience = 0;
+    }
+    SDL_Log("Experience added: %d", experience_to_add + stored_experience);
+
+    m_experience += experience_to_add + stored_experience;
 }
 
 void Player::Clean() {}
