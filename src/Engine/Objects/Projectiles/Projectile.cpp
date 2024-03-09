@@ -53,12 +53,14 @@ void Projectile::OnCollide(Collider* collidee) {
     }
 
     switch (collidee->GetObjectType()) {
-        case ObjectType::Player:
-            if (!m_PlayerOwned) {
+        case ObjectType::Player: {
+            StateType state = dynamic_cast<Player*>(collidee)->GetStateType();
+            if (!m_PlayerOwned && state != StateType::Dodge) {
                 m_MarkedForDeletion = true;
                 //dynamic_cast<Character*>(collidee)->GetHealth()->SetDamage(10);
             }
             break;
+        }
         case ObjectType::Enemy:
             if (m_PlayerOwned) {
                 // TODO: Piercing is broke, needs to be fixed

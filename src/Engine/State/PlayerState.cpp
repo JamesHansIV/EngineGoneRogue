@@ -266,7 +266,6 @@ void PlayerMoving::PollInput(float dt) {
 }
 
 void PlayerDodge::Enter() {
-    SDL_Log("enter dodge state");
     GetPlayer()->GetMutableStats().SetDodgeCd(m_DodgeCD);
     UpdateAnimationDirection(GetPlayer(), GetDodgeAnimationIDs());
     Vector2D const velocity = GetPlayer()->GetRigidBody()->Velocity();
@@ -316,6 +315,8 @@ State* PlayerDodge::OnCollideEvent(CollideEvent* event) {
                                          dynamic_cast<Entrance*>(collidee));
             break;
         }
+        case ObjectType::Projectile:
+            break;
         case ObjectType::Collider:
             GetPlayer()->UnCollide(collidee);
             break;
