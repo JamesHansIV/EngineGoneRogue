@@ -19,7 +19,6 @@ struct MovementInfo {
     float speed;
     float dodgeSpeed;
     float dodgeDistance;
-    int dodgeCD;
     int dodgeInvincibilityTime;
 };
 
@@ -40,7 +39,8 @@ class PlayerStats {
     explicit PlayerStats(MovementInfo movementInfo, CombatInfo combatInfo,
                          HealthInfo healthInfo) {
         m_Speed = movementInfo.speed;
-        m_DodgeCD = movementInfo.dodgeCD;
+        // Default Dodge CD is set in PlayerDodgeState
+        m_DodgeCD = 0;
         m_DodgeSpeed = movementInfo.dodgeSpeed;
         m_DodgeDistance = movementInfo.dodgeDistance;
         m_DodgeInvincibilityTime = movementInfo.dodgeInvincibilityTime;
