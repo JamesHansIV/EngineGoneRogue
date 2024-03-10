@@ -54,8 +54,9 @@ void Projectile::OnCollide(Collider* collidee) {
 
     switch (collidee->GetObjectType()) {
         case ObjectType::Player: {
-            StateType state = dynamic_cast<Player*>(collidee)->GetStateType();
-            if (!m_PlayerOwned && state != StateType::Dodge) {
+            Player* player = dynamic_cast<Player*>(collidee);
+            if (!m_PlayerOwned && player->GetStateType() != StateType::Dodge &&
+                !player->GetStats().GetDodgeInvincibility()) {
                 m_MarkedForDeletion = true;
                 //dynamic_cast<Character*>(collidee)->GetHealth()->SetDamage(10);
             }

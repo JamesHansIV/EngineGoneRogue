@@ -11,6 +11,7 @@
 #include "Engine/Objects/Weapons/Weapon.h"
 #include "Engine/Physics/RigidBody.h"
 #include "Engine/State/PlayerState.h"
+#include "Engine/Timer/Timer.h"
 #include "Engine/utils/utils.h"
 #include "functional"
 
@@ -19,6 +20,7 @@ struct MovementInfo {
     float dodgeSpeed;
     float dodgeDistance;
     int dodgeCD;
+    int dodgeInvincibilityTime;
 };
 
 struct CombatInfo {
@@ -41,6 +43,8 @@ class PlayerStats {
         m_DodgeCD = movementInfo.dodgeCD;
         m_DodgeSpeed = movementInfo.dodgeSpeed;
         m_DodgeDistance = movementInfo.dodgeDistance;
+        m_DodgeInvincibilityTime = movementInfo.dodgeInvincibilityTime;
+        m_LastDodgeTime = 0;
         m_RangedDamage = combatInfo.rangedDamage;
         m_MeleeDamage = combatInfo.meleeDamage;
         m_experience = 0;
@@ -59,6 +63,12 @@ class PlayerStats {
     [[nodiscard]] float GetDodgeSpeed() const { return m_DodgeSpeed; };
 
     [[nodiscard]] float GetDodgeDistance() const { return m_DodgeDistance; };
+
+    [[nodiscard]] int GetDodgeInvincibility() const {
+        return timer.GetTicks() - m_LastDodgeTime <= m_DodgeInvincibilityTime;
+    }
+
+    int GetLastDodgeTime() { return m_LastDodgeTime; }
 
     [[nodiscard]] int GetRangedDamage() const { return m_RangedDamage; }
 
@@ -85,6 +95,8 @@ class PlayerStats {
     void SetDodgeDistance(float dodgeDistance) {
         m_DodgeDistance = dodgeDistance;
     };
+
+    void SetLastDodgeTime(int time) { m_LastDodgeTime = time; }
 
     void SetMeleeDamage(int meleeDamage) { m_MeleeDamage = meleeDamage; }
 
@@ -127,6 +139,8 @@ class PlayerStats {
     int m_DodgeCD;
     float m_DodgeSpeed;
     float m_DodgeDistance;
+    int m_DodgeInvincibilityTime;
+    int m_LastDodgeTime;
     int m_RangedDamage;
     int m_MeleeDamage;
     int m_experience;

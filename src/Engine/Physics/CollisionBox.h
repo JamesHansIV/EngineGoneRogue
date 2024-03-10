@@ -4,7 +4,10 @@
 
 class CollisionBox {
    public:
-    CollisionBox() {}
+    CollisionBox() {
+        // Collision boxes are 2 pixels smaller on every side by default
+        m_Buffer = {2, 2, 4, 4};
+    }
 
     inline Rect GetRect() { return m_Box; }
 

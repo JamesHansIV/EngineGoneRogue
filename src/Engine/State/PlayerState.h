@@ -3,6 +3,7 @@
 #include <SDL2/SDL.h>
 #include <string>
 #include "Engine/Events/Event.h"
+#include "Engine/Objects/Characters/Player.h"
 #include "Engine/Physics/Vector2D.h"
 #include "Engine/State/State.h"
 
@@ -91,7 +92,7 @@ class PlayerMoving : public PlayerState {
 class PlayerDodge : public PlayerState {
    public:
     explicit PlayerDodge(Player* player)
-        : PlayerState(player), m_DodgeCD(120), m_Velocity(0, 0) {}
+        : PlayerState(player), m_DodgeCD(60), m_Velocity(0, 0) {}
 
     virtual void Enter() override;
     virtual void Exit() override;

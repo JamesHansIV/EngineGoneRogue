@@ -73,14 +73,16 @@ State* UpdateAnimationDirection(Player* player,
 State* HandleEnemyCollide(Player* player, Enemy* enemy) {
     player->UnCollide(enemy);
     if (enemy->GetCurrentState()->GetType() == StateType::Attack &&
-        enemy->GetAnimation()->OnKeyFrame()) {
+        enemy->GetAnimation()->OnKeyFrame() &&
+        !player->GetStats().GetDodgeInvincibility()) {
         return new PlayerIsHit(player, 1);
     }
     return nullptr;
 }
 
 State* HandleProjectileCollide(Player* player, Projectile* projectile) {
-    if (projectile->IsPlayerOwned()) {
+    if (projectile->IsPlayerOwned() ||
+        player->GetStats().GetDodgeInvincibility()) {
         return nullptr;
     }
     return new PlayerIsHit(player, 10);
@@ -274,7 +276,9 @@ void PlayerDodge::Enter() {
     m_Velocity = velocity * dodge_speed;
 }
 
-void PlayerDodge::Exit() {}
+void PlayerDodge::Exit() {
+    GetPlayer()->GetStats().SetLastDodgeTime(timer.GetTicks());
+}
 
 State* PlayerDodge::Update(float /*dt*/) {
     if (m_Distance >= GetPlayer()->GetStats().GetDodgeDistance()) {
