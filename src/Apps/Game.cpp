@@ -56,8 +56,6 @@ HelixEnemy* helix_enemy_copy = nullptr;
 // Todo: try to clean this up
 // https://stackoverflow.com/questions/27451776/dynamic-cast-for-multiple-derived-classes
 void Game::InitObjects() {
-    m_objects = Application::m_Rooms[m_BaseRoomID];
-
     for (auto& obj : m_objects) {
         if (auto* collider = dynamic_cast<Collider*>(obj)) {
             EnemyStats enemy_stats;
@@ -108,9 +106,6 @@ Game::Game() {
     m_objects = Application::m_Rooms[m_BaseRoomID];
 
     InitObjects();
-
-    // specific stats replaced with defaults for easy refactor. can be changed later
-    // specific enemy stats changed in commit on 2/4.
 
     Properties props11("healthpotion", {1, 1, 16, 16}, {250, 150, 25, 25}, 0,
                        "healthpotion");
@@ -312,7 +307,6 @@ Game::~Game() {
         obj->Clean();
         delete obj;
     }
-    m_objects.clear();
     delete m_weapon_inventory;
     delete m_game_event_manager;
     delete m_heads_up_display;

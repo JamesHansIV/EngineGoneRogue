@@ -17,7 +17,7 @@ void RangedWeapon::Draw() {
 
 void RangedWeapon::DrawProjectiles() {}
 
-void RangedWeapon::Update(float  /*dt*/) {
+void RangedWeapon::Update(float /*dt*/) {
     m_CollisionBox.Set(GetX(), GetY(), GetHeight(), GetWidth());
     if (InputChecker::IsKeyPressed(SDLK_f)) {
         m_auto_fire_enabled = !m_auto_fire_enabled;
@@ -54,6 +54,4 @@ void RangedWeapon::UpdateProjectiles(float dt) {}
 
 void RangedWeapon::Clean() {}
 
-RangedWeapon::~RangedWeapon() {
-    delete m_projectile_props;
-}
+RangedWeapon::~RangedWeapon() = default;

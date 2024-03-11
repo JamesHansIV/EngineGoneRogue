@@ -142,6 +142,10 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
                         return new RunningState(
                             static_cast<Game*>(Application::Get()));
                     }
+                    case EventType::GameOverEvent: {
+                        return new GameOverState(
+                            static_cast<Game*>(Application::Get()));
+                    }
                     case EventType::PlayerLevelUpEvent:
                         timer.Pause();
                         return new LevelUpState(

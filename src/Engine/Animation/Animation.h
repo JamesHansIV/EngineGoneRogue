@@ -2,6 +2,7 @@
 #include <SDL2/SDL.h>
 #include <string>
 #include <unordered_map>
+#include <utility>
 #include "Engine/Renderer/TileMap.h"
 #include "Engine/utils/utils.h"
 
@@ -25,23 +26,25 @@ class Animation {
     void Update();
     void Draw(const Rect& dstRect, float angle = 0.0F);
 
-    void SetProps(AnimationInfo info) { m_info = info; }
+    void SetProps(AnimationInfo info) { m_info = std::move(info); }
 
-    std::string GetTextureID() const { return m_info.TextureID; }
+    [[nodiscard]] std::string GetTextureID() const { return m_info.TextureID; }
 
-    int GetCurrentFrame() const { return m_sprite_frame; }
+    [[nodiscard]] int GetCurrentFrame() const { return m_sprite_frame; }
 
-    int GetSpriteRow() const { return m_info.Tile.row; }
+    [[nodiscard]] int GetSpriteRow() const { return m_info.Tile.row; }
 
-    int GetSpriteCol() const { return m_info.Tile.col; }
+    [[nodiscard]] int GetSpriteCol() const { return m_info.Tile.col; }
 
-    int GetSpriteWidth() const { return m_info.Tile.w; }
+    [[nodiscard]] int GetSpriteWidth() const { return m_info.Tile.w; }
 
-    int GetSpriteHeight() const { return m_info.Tile.h; }
+    [[nodiscard]] int GetSpriteHeight() const { return m_info.Tile.h; }
 
-    int GetFrameCount() const { return m_info.FrameCount; }
+    [[nodiscard]] int GetFrameCount() const { return m_info.FrameCount; }
 
-    int GetAnimationSpeed() const { return m_info.AnimationSpeed; }
+    [[nodiscard]] int GetAnimationSpeed() const {
+        return m_info.AnimationSpeed;
+    }
 
     std::string GetAnimationID() { return m_current_animation_id; }
 
@@ -63,21 +66,23 @@ class Animation {
         m_info.KeyFramesEnd = end;
     }
 
-    bool OnKeyFrame() const {
+    [[nodiscard]] bool OnKeyFrame() const {
         return m_info.KeyFramesStart <= m_sprite_frame &&
                m_sprite_frame < m_info.KeyFramesEnd;
     }
 
-    bool Ended() const { return m_ended; }
+    [[nodiscard]] bool Ended() const { return m_ended; }
 
     void StopAnimation();
 
-    bool LastFrame() const { return m_sprite_frame + 1 == m_info.FrameCount; }
+    [[nodiscard]] bool LastFrame() const {
+        return m_sprite_frame + 1 == m_info.FrameCount;
+    }
 
     void SelectAnimation(const std::string& id);
 
-    void AddAnimation(std::string id, AnimationInfo info) {
-        m_animations[id] = info;
+    void AddAnimation(const std::string& id, AnimationInfo info) {
+        m_animations[id] = std::move(info);
         m_current_animation_id = id;
 
         SDL_Log("added animation %s in texture id: %s",

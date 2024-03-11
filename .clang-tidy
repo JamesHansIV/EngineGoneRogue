@@ -57,6 +57,10 @@ CheckOptions:
   - { key: readability-identifier-naming.VariableCase, value: lower_case }
   - { key: readability-identifier-naming.PrivateMemberPrefix, value: m_ }
   - { key: readability-identifier-naming.PrivateMemberCase, value: lower_case }
+  - {
+      key: readability-identifier-naming.ProtectedMemberCase,
+      value: lower_case,
+    }
   - { key: readability-identifier-naming.ProtectedMemberPrefix, value: m_ }
   - {
       key: readability-identifier-naming.MacroDefinitionCase,

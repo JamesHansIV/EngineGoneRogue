@@ -16,6 +16,7 @@ enum class EventType {
     TargetLostEvent,
     EnemyDeathEvent,
     PlayerLevelUpEvent,
+    GameOverEvent,
     PlaceChestIfNeededEvent,
     ChestOpenedEvent,
 

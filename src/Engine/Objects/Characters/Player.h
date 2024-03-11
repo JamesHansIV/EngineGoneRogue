@@ -65,7 +65,8 @@ class PlayerStats {
     [[nodiscard]] float GetDodgeDistance() const { return m_DodgeDistance; };
 
     [[nodiscard]] int GetDodgeInvincibility() const {
-        return static_cast<int>(timer.GetTicks() - m_LastDodgeTime <= m_DodgeInvincibilityTime);
+        return static_cast<int>(timer.GetTicks() - m_LastDodgeTime <=
+                                m_DodgeInvincibilityTime);
     }
 
     int GetLastDodgeTime() const { return m_LastDodgeTime; }
@@ -201,4 +202,5 @@ class Player : public Character {
     bool m_is_dashing = false;
     int m_multiplier = 1;
     int m_last_health_regen = 0;
+    std::vector<Properties*> m_projectile_props;
 };

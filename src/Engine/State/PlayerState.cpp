@@ -421,6 +421,7 @@ void PlayerDead::Exit() {}
 State* PlayerDead::Update(float /*dt*/) {
     if (GetPlayer()->GetAnimation()->Ended()) {
         GetPlayer()->MarkForDeletion();
+        PushNewEvent(EventType::GameOverEvent);
     }
     return nullptr;
 }

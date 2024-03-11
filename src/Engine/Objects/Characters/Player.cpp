@@ -46,6 +46,8 @@ void Player::Init() {
                        {GetMidPointX() * 2, GetMidPointY() * 2,
                         kProjectileWidth * 2, kProjectileHeight * 2},
                        GetRotation(), "arrow");
+    m_projectile_props.push_back(default_projectile_props);
+    m_projectile_props.push_back(bow_projectile_props);
 
     ChangeState(new PlayerIdle(this));
     // m_Collider->SetCorrection(-45, -20, 60, 80 )
@@ -239,6 +241,9 @@ Player::~Player() {
     }
     for (auto& item_pair : m_items) {
         delete item_pair.second;
+    }
+    for (auto& props : m_projectile_props) {
+        delete props;
     }
     m_items.clear();
 }
