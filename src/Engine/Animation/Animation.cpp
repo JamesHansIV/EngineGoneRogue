@@ -7,7 +7,7 @@
 #include "SDL2/SDL_render.h"
 
 Animation::Animation(Animation& rhs) {
-    m_CurrentAnimationID = rhs.m_CurrentAnimationID;
+    m_current_animation_id = rhs.m_current_animation_id;
     m_info = rhs.m_info;
 
     for (const auto& item : rhs.m_animations) {
@@ -69,5 +69,5 @@ void Animation::SelectAnimation(const std::string& id) {
     m_sprite_frame = 0;
     m_ended = false;
     SetProps(m_animations[id]);
-    m_CurrentAnimationID = id;
+    m_current_animation_id = id;
 }

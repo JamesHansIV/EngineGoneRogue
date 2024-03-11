@@ -18,12 +18,7 @@ struct AnimationInfo {
 
 class Animation {
    public:
-    Animation()
-        : m_info({"", {0, 0, 0, 0}, 0, 0, SDL_FLIP_NONE, false}),
-          m_ended(false),
-          m_sprite_frame(0),
-          
-          m_last_update_time(0) {}
+    Animation() : m_info({"", {0, 0, 0, 0}, 0, 0, SDL_FLIP_NONE, false}) {}
 
     Animation(Animation& rhs);
 
@@ -48,7 +43,7 @@ class Animation {
 
     int GetAnimationSpeed() const { return m_info.AnimationSpeed; }
 
-    std::string GetAnimationID() { return m_CurrentAnimationID; }
+    std::string GetAnimationID() { return m_current_animation_id; }
 
     std::unordered_map<std::string, AnimationInfo> GetAnimations() {
         return m_animations;
@@ -83,18 +78,18 @@ class Animation {
 
     void AddAnimation(std::string id, AnimationInfo info) {
         m_animations[id] = info;
-        m_CurrentAnimationID = id;
+        m_current_animation_id = id;
 
         SDL_Log("added animation %s in texture id: %s",
                 m_CurrentAnimationID.c_str(),
-                m_Animations[id].TextureID.c_str());
+                m_animations[id].TextureID.c_str());
     }
 
    private:
     std::unordered_map<std::string, AnimationInfo> m_animations;
     AnimationInfo m_info;
-    std::string m_CurrentAnimationID;
-    int m_sprite_frame;
-    bool m_ended;
-    double m_last_update_time;
+    std::string m_current_animation_id;
+    int m_sprite_frame{};
+    bool m_ended{};
+    double m_last_update_time{};
 };
