@@ -71,6 +71,30 @@ class GameOverState : public GameState {
    private:
 };
 
+class LevelUpState : public GameState {
+   public:
+    LevelUpState(Game* game) : GameState(game) {
+        int x = (Application::Get()->GetWindowWidth() - 100) / 2;
+        int y = (Application::Get()->GetWindowHeight() - 60) / 2;
+        m_button = Button(SDL_Rect{x, y, 100, 60}, "Continue", []() {
+            SDL_Log("Continue button clicked");
+            timer.Unpause();
+            PushNewEvent(EventType::ContinueGameEvent);
+        });
+    }
+
+    void Enter() override;
+    void Exit() override;
+    State* Update(float dt) override;
+    void Draw() override;
+    State* HandleEvent(Event* event) override;
+
+    StateType GetType() override { return StateType::Pause; }
+
+   private:
+    Button m_button;
+};
+
 class PauseState : public GameState {
    public:
     PauseState(Game* game) : GameState(game) {

@@ -11,11 +11,13 @@ class HUD {
    public:
     explicit HUD(const Player& player);
 
-    void Draw();
+    void Draw(State& state);
 
     void Update(const Player& player);
 
    private:
+    void PausedDraw();
+
     TimerElement m_TimerElement{};
     WeaponInventory m_WeaponInventory;
     ItemInventory m_ItemInventory;

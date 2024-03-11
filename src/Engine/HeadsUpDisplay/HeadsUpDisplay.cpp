@@ -2,20 +2,26 @@
 #include "Engine/Renderer/Renderer.h"
 #include "Engine/Timer/Timer.h"
 
-
 HUD::HUD(const Player& player)
-    : m_WeaponInventory(player.GetPlayerWeapons()), 
-    m_ItemInventory(player.GetPlayerItems()), 
-    m_ExperienceBar(100, 0), 
-    m_PlayerStatsComponent(player.GetStats()){};
+    : m_WeaponInventory(player.GetPlayerWeapons()),
+      m_ItemInventory(player.GetPlayerItems()),
+      m_ExperienceBar(100, 0),
+      m_PlayerStatsComponent(player.GetStats()){};
 
-void HUD::Draw() {
-    Renderer* renderer = Renderer::GetInstance();
+void HUD::Draw(State& state) {
     // Timer
     TimerElement::Draw();
     m_WeaponInventory.Draw();
     m_ExperienceBar.Draw();
     m_ItemInventory.Draw();
+
+    if (state.GetType() == StateType::Pause) {
+        PausedDraw();
+    }
+}
+
+void HUD::PausedDraw() {
+    // Timer
     m_PlayerStatsComponent.Draw();
 }
 
