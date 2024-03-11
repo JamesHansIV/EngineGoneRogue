@@ -29,9 +29,10 @@ class Game : public Application {
         return m_objects.begin();
     }
 
-    ~Game();
+    ~Game() override;
 
    private:
+    void InitObjects();
     State* m_state;
     std::vector<GameObject*> m_objects;
     WeaponInventory* m_weapon_inventory;

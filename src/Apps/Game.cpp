@@ -53,9 +53,9 @@ Skeleton* skeleton_copy = nullptr;
 Goblin* goblin_copy = nullptr;
 HelixEnemy* helix_enemy_copy = nullptr;
 
-Game::Game() {
-    SDL_Renderer* renderer = Renderer::GetInstance()->GetRenderer();
-
+// Todo: try to clean this up
+// https://stackoverflow.com/questions/27451776/dynamic-cast-for-multiple-derived-classes
+void Game::InitObjects() {
     m_objects = Application::m_Rooms[m_BaseRoomID];
 
     for (auto& obj : m_objects) {
@@ -77,8 +77,7 @@ Game::Game() {
                 ranged_enemy_stats = ranged_enemy->GetRangedEnemyStats();
             }
 
-            if (auto* ring_shot_enemy =
-                    dynamic_cast<RingShotEnemy*>(obj)) {
+            if (auto* ring_shot_enemy = dynamic_cast<RingShotEnemy*>(obj)) {
                 ring_shot_enemy_copy =
                     new RingShotEnemy(ring_shot_enemy, ranged_enemy_stats);
             }
@@ -101,6 +100,14 @@ Game::Game() {
             ColliderHandler::GetInstance()->AddCollider(collider);
         }
     }
+}
+
+Game::Game() {
+    SDL_Renderer* renderer = Renderer::GetInstance()->GetRenderer();
+
+    m_objects = Application::m_Rooms[m_BaseRoomID];
+
+    InitObjects();
 
     // specific stats replaced with defaults for easy refactor. can be changed later
     // specific enemy stats changed in commit on 2/4.
