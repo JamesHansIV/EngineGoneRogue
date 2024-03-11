@@ -74,13 +74,29 @@ class GameOverState : public GameState {
 class LevelUpState : public GameState {
    public:
     LevelUpState(Game* game) : GameState(game) {
-        int x = (Application::Get()->GetWindowWidth() - 100) / 2;
-        int y = (Application::Get()->GetWindowHeight() - 60) / 2;
-        m_button = Button(SDL_Rect{x, y, 100, 60}, "Continue", []() {
-            SDL_Log("Continue button clicked");
+        const int w = 200;
+        const int h = 120;
+        const int x = (Application::Get()->GetWindowWidth() - w * 2) / 3;
+        const int y = (Application::Get()->GetWindowHeight() - h) / 2;
+        // Todo: Have LevelUpSelected have functionality to add the side effects
+        // of the level up option selected
+        m_option_one_button = Button(SDL_Rect{x, y, w, h}, "OptionOne", []() {
+            SDL_Log("OptionOne button clicked");
             timer.Unpause();
-            PushNewEvent(EventType::ContinueGameEvent);
+            PushNewEvent(EventType::LevelUpSelectedGameEvent);
         });
+        m_option_two_button =
+            Button(SDL_Rect{x * 2, y, w, h}, "OptionTwo", []() {
+                SDL_Log("OptionTwo button clicked");
+                timer.Unpause();
+                PushNewEvent(EventType::LevelUpSelectedGameEvent);
+            });
+        m_option_three_button =
+            Button(SDL_Rect{x * 3, y, w, h}, "OptionThree", []() {
+                SDL_Log("OptionThree button clicked");
+                timer.Unpause();
+                PushNewEvent(EventType::LevelUpSelectedGameEvent);
+            });
     }
 
     void Enter() override;
@@ -89,10 +105,12 @@ class LevelUpState : public GameState {
     void Draw() override;
     State* HandleEvent(Event* event) override;
 
-    StateType GetType() override { return StateType::Pause; }
+    StateType GetType() override { return StateType::LevelUp; }
 
    private:
-    Button m_button;
+    Button m_option_one_button;
+    Button m_option_two_button;
+    Button m_option_three_button;
 };
 
 class PauseState : public GameState {

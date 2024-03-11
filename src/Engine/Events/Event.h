@@ -20,6 +20,7 @@ enum class EventType {
     ChestOpenedEvent,
 
     StartGameEvent,
+    LevelUpSelectedGameEvent,
     ContinueGameEvent,
     MouseDownEvent,
 };

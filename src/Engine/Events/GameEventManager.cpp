@@ -34,11 +34,9 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
                 switch (event.key.keysym.sym) {
                     case SDLK_ESCAPE:
                         if (timer.IsPaused()) {
-                            timer.Unpause();
                             return new RunningState(
                                 static_cast<Game*>(Application::Get()));
                         } else {
-                            timer.Pause();
                             return new PauseState(
                                 static_cast<Game*>(Application::Get()));
                         }
@@ -140,8 +138,14 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
                             GameState->HandleEvent(&continue_game_event);
                         return state;
                     }
+                    case EventType::LevelUpSelectedGameEvent: {
+                        return new RunningState(
+                            static_cast<Game*>(Application::Get()));
+                    }
                     case EventType::PlayerLevelUpEvent:
                         timer.Pause();
+                        return new LevelUpState(
+                            static_cast<Game*>(Application::Get()));
                         break;
                     default:
                         break;

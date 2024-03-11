@@ -67,7 +67,9 @@ State* GameOverState::HandleEvent(Event* event) {
     return nullptr;
 }
 
-void PauseState::Enter() {}
+void PauseState::Enter() {
+    timer.Pause();
+}
 
 void PauseState::Exit() {}
 
@@ -89,6 +91,29 @@ State* PauseState::HandleEvent(Event* event) {
         default:
             break;
     }
+    return nullptr;
+}
+
+void LevelUpState::Enter() {}
+
+void LevelUpState::Exit() {}
+
+void LevelUpState::Draw() {
+    GetGame()->DrawObjects();
+    m_option_one_button.Draw();
+    m_option_two_button.Draw();
+    m_option_three_button.Draw();
+}
+
+State* LevelUpState::Update(float dt) {
+    GetGame()->UpdateObjects(dt);
+    m_option_one_button.Update();
+    m_option_two_button.Update();
+    m_option_three_button.Update();
+    return nullptr;
+}
+
+State* LevelUpState::HandleEvent(Event* event) {
     return nullptr;
 }
 

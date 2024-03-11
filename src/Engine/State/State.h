@@ -20,6 +20,7 @@ enum class StateType {
     Running,
     Start,
     GameOver,
+    LevelUp,
     Pause,
     Shop,
 
