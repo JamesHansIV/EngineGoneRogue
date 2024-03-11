@@ -30,11 +30,6 @@ std::vector<Collider*> colliders;
 
 int max_tick_interval = 500;
 int cur_enemy_generation_interval = 5000;
-// Temporary button for testing
-Button button =
-    Button({0, 0, 100, 100}, "Test", []() { SDL_Log("Button pressed"); });
-bool show_button = true;
-
 const EnemyStats kDefaultEnemyStats = {
     100,  // health
     1,    // damage
@@ -230,6 +225,10 @@ void Game::Update(float dt) {
 }
 
 void Game::UpdateObjects(float dt) {
+    // Note: not needed if GameState is in sync with timer
+    if (timer.IsPaused()) {
+        return;
+    }
     ColliderHandler::GetInstance()->HandleCollisions();
     ProjectileManager::GetInstance()->UpdateProjectiles(dt);
     if (m_Player != nullptr) {
@@ -253,7 +252,6 @@ void Game::UpdateObjects(float dt) {
             ++it;
         }
     }
-    button.Update();
 
     GenerateRandomEnemyIfNeeded();
 }
@@ -274,7 +272,6 @@ void Game::DrawObjects() {
         m_Player->Draw();
         m_HeadsUpDisplay->Draw();
     }
-    button.Draw();
 }
 
 void Game::ChangeState(State* state) {

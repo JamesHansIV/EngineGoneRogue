@@ -45,4 +45,5 @@ class Timer {
     bool m_is_started;
 };
 
+// Global timers
 extern Timer timer;

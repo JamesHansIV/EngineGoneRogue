@@ -1,6 +1,7 @@
 #include "Timer.h"
 
 Timer timer = Timer();
+Timer game_timer = Timer();
 
 Timer::Timer() {
     m_start_time = 0;

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Engine/UI/Button.h"
 #include "State.h"
 
 class Game;
@@ -33,7 +34,15 @@ class RunningState : public GameState {
 
 class StartState : public GameState {
    public:
-    StartState(Game* game) : GameState(game) {}
+    StartState(Game* game) : GameState(game) {
+        int x = (Application::Get()->GetWindowWidth() - 100) / 2;
+        int y = (Application::Get()->GetWindowHeight() - 60) / 2;
+        m_button = Button(SDL_Rect{x, y, 100, 60}, "Start", []() {
+            SDL_Log("Start button clicked");
+            timer.Unpause();
+            PushNewEvent(EventType::StartGameEvent);
+        });
+    }
 
     virtual void Enter() override;
     virtual void Exit() override;
@@ -44,10 +53,7 @@ class StartState : public GameState {
     virtual StateType GetType() override { return StateType::Start; }
 
    private:
-    int m_ButtonX;
-    int m_ButtonY;
-    int m_ButtonW;
-    int m_ButtonH;
+    Button m_button;
 };
 
 class GameOverState : public GameState {
@@ -67,7 +73,15 @@ class GameOverState : public GameState {
 
 class PauseState : public GameState {
    public:
-    PauseState(Game* game) : GameState(game) {}
+    PauseState(Game* game) : GameState(game) {
+        int x = (Application::Get()->GetWindowWidth() - 100) / 2;
+        int y = (Application::Get()->GetWindowHeight() - 60) / 2;
+        m_button = Button(SDL_Rect{x, y, 100, 60}, "Continue", []() {
+            SDL_Log("Continue button clicked");
+            timer.Unpause();
+            PushNewEvent(EventType::ContinueGameEvent);
+        });
+    }
 
     virtual void Enter() override;
     virtual void Exit() override;
@@ -78,6 +92,7 @@ class PauseState : public GameState {
     virtual StateType GetType() override { return StateType::Pause; }
 
    private:
+    Button m_button;
 };
 
 class ShopState : public GameState {

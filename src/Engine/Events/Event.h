@@ -20,6 +20,7 @@ enum class EventType {
     ChestOpenedEvent,
 
     StartGameEvent,
+    ContinueGameEvent,
     MouseDownEvent,
 };
 
@@ -134,6 +135,17 @@ class StartGameEvent : public Event {
 
     virtual EventType GetEventType() override {
         return EventType::StartGameEvent;
+    }
+
+   private:
+};
+
+class ContinueGameEvent : public Event {
+   public:
+    explicit ContinueGameEvent() {}
+
+    virtual EventType GetEventType() override {
+        return EventType::ContinueGameEvent;
     }
 
    private:

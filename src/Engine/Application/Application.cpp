@@ -7,6 +7,7 @@
 #include "Engine/Input/InputChecker.h"
 
 #include "Engine/Timer/Timer.h"
+#include "SDL2/SDL_timer.h"
 #include "backends/imgui_impl_sdl2.h"
 #include "backends/imgui_impl_sdlrenderer2.h"
 
@@ -171,39 +172,37 @@ void Application::Events() {
 
 void Application::Run() {
     timer.Start();
+    timer.Pause();
     float accumulator = 0.0;
     int count_until_next_second = 1000;
     int fps = 0;
     int updates_per_second = 0;
     while (m_IsRunning) {
-
         Events();
         bool render = false;
-        if (!timer.IsPaused()) {
-            if (timer.GetTicks() > count_until_next_second) {
-                SDL_Log("FPS: %d", fps);
-                count_until_next_second += 1000;
-                fps = 0;
-                SDL_Log("Updates per second: %d", updates_per_second);
-                updates_per_second = 0;
-            }
-            double const new_time = timer.GetTicks();
-            auto frame_time = static_cast<double>(
-                new_time / 1000.0F - timer.GetCurrentTime() / 1000.0F);
-            timer.SetCurrentTime(new_time);
-            // Necessary for slow computers
-            // Todo: implement this if slowness ever becomes an issue.
-            //if (frame_time > 0.25F) {
-            //    frame_time = 0.25F;
-            //}
+        if (SDL_GetTicks() > count_until_next_second) {
+            SDL_Log("FPS: %d", fps);
+            count_until_next_second += 1000;
+            fps = 0;
+            SDL_Log("Updates per second: %d", updates_per_second);
+            updates_per_second = 0;
+        }
+        double const new_time = SDL_GetTicks();
+        auto frame_time =
+            static_cast<double>(new_time / 1000.0F - m_LastTick / 1000.0F);
+        m_LastTick = new_time;
+        // Necessary for slow computers
+        // Todo: implement this if slowness ever becomes an issue.
+        //if (frame_time > 0.25F) {
+        //    frame_time = 0.25F;
+        //}
 
-            accumulator += frame_time;
-            while (accumulator >= kDt) {
-                Update(kDt);
-                updates_per_second++;
-                render = true;
-                accumulator -= kDt;
-            }
+        accumulator += frame_time;
+        while (accumulator >= kDt) {
+            Update(kDt);
+            updates_per_second++;
+            render = true;
+            accumulator -= kDt;
         }
 
         if (render) {

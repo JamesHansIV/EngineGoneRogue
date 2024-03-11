@@ -2,11 +2,13 @@
 #include <random>
 #include <utility>
 #include <vector>
+#include "Apps/Game.h"
 #include "Engine/Application/Application.h"
 #include "Engine/Events/Event.h"
 #include "Engine/Objects/Characters/Enemy.h"
 #include "Engine/Objects/Chests/Chest.h"
 #include "Engine/Objects/Item.h"
+#include "Engine/State/GameState.h"
 #include "Engine/State/State.h"
 #include "Engine/Timer/Timer.h"
 #include "Engine/utils/utils.h"
@@ -33,8 +35,12 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
                     case SDLK_ESCAPE:
                         if (timer.IsPaused()) {
                             timer.Unpause();
+                            return new RunningState(
+                                static_cast<Game*>(Application::Get()));
                         } else {
                             timer.Pause();
+                            return new PauseState(
+                                static_cast<Game*>(Application::Get()));
                         }
                     default:
                         break;
@@ -67,9 +73,11 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
                 InputChecker::SetMouseWheelDirection(event.wheel.y);
                 break;
             case SDL_WINDOWEVENT:
-                // TODO: Add pause menu to render when focus is lost
                 if (event.window.event == SDL_WINDOWEVENT_FOCUS_LOST) {
                     timer.Pause();
+                    // Todo: Only pause after start state
+                    //return new PauseState(
+                    //    static_cast<Game*>(Application::Get()));
                 }
                 if (event.window.event == SDL_WINDOWEVENT_RESIZED) {
                     SDL_GetWindowSize(
@@ -119,6 +127,18 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
                         ChestOpenedEvent chest_open_event(*item, *index);
                         ItemManager->HandleEvent(&chest_open_event);
                         return nullptr;
+                    }
+                    case EventType::StartGameEvent: {
+                        StartGameEvent start_game_event;
+                        State* state =
+                            GameState->HandleEvent(&start_game_event);
+                        return state;
+                    }
+                    case EventType::ContinueGameEvent: {
+                        ContinueGameEvent continue_game_event;
+                        State* state =
+                            GameState->HandleEvent(&continue_game_event);
+                        return state;
                     }
                     case EventType::PlayerLevelUpEvent:
                         timer.Pause();

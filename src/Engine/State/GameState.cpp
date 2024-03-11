@@ -2,6 +2,7 @@
 #include "Apps/Game.h"
 
 void RunningState::Enter() {
+    timer.Unpause();
     Renderer::GetInstance()->SetCameraTarget(GetGame()->GetPlayer());
 }
 
@@ -22,42 +23,29 @@ State* RunningState::HandleEvent(Event* event) {
 
 void StartState::Enter() {
     Renderer::GetInstance()->SetCameraTarget(nullptr);
-    m_ButtonW = 100;
-    m_ButtonH = 60;
-    m_ButtonX = (Application::Get()->GetWindowWidth() - m_ButtonW) / 2;
-    m_ButtonY = (Application::Get()->GetWindowHeight() - m_ButtonH) / 2;
+    timer.Pause();
 }
 
 void StartState::Exit() {}
 
 void StartState::Draw() {
-    SDL_Rect src = {0, 0, m_ButtonW, m_ButtonH};
-    SDL_Rect dst = {m_ButtonX, m_ButtonY, m_ButtonW, m_ButtonH};
-
-    Renderer::GetInstance()->AddTextTexture("start_button", "Start",
-                                            {255, 255, 255, 255});
-
-    Renderer::GetInstance()->DrawRect(dst, {255, 255, 255, 255});
-    Renderer::GetInstance()->Draw("start_button", src, dst);
+    GetGame()->DrawObjects();
+    m_button.Draw();
 }
 
 State* StartState::Update(float dt) {
-    //GetGame()->UpdateObjects(dt);
+    GetGame()->UpdateObjects(dt);
+    m_button.Update();
     return nullptr;
 }
 
 State* StartState::HandleEvent(Event* event) {
     switch (event->GetEventType()) {
-        case EventType::MouseDownEvent:
-            auto* e = dynamic_cast<MouseDownEvent*>(event);
-            if (e->GetButton() == SDL_BUTTON_LEFT) {
-                if (m_ButtonX <= e->GetX() &&
-                    e->GetX() <= m_ButtonX + m_ButtonW &&
-                    m_ButtonY <= e->GetY() &&
-                    e->GetY() <= m_ButtonY + m_ButtonH) {
-                    return new RunningState(GetGame());
-                }
-            }
+        case EventType::StartGameEvent: {
+            return new RunningState(GetGame());
+        }
+        default:
+            break;
     }
     return nullptr;
 }
@@ -85,14 +73,22 @@ void PauseState::Exit() {}
 
 void PauseState::Draw() {
     GetGame()->DrawObjects();
+    m_button.Draw();
 }
 
 State* PauseState::Update(float dt) {
+    m_button.Update();
     GetGame()->UpdateObjects(dt);
     return nullptr;
 }
 
 State* PauseState::HandleEvent(Event* event) {
+    switch (event->GetEventType()) {
+        case EventType::ContinueGameEvent:
+            return new RunningState(GetGame());
+        default:
+            break;
+    }
     return nullptr;
 }
 

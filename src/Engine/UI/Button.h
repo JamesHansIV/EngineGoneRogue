@@ -16,8 +16,11 @@ enum ButtonState {
 // Maybe inherit from Game Object?
 class Button {
    public:
+    Button() = default;
+
     Button(SDL_Rect rect, const std::string text, void (*callback)())
         : m_shape(rect) {
+        m_relative_pos = Position{rect.x, rect.y};
         m_callback = callback;
         m_text = text;
     };
@@ -27,12 +30,19 @@ class Button {
     void Draw() {
 
         Renderer* renderer = Renderer::GetInstance();
-        const Position pos{renderer->GetCameraX() - m_shape.w +
-                               Application::Get()->GetWindowWidth(),
-                           renderer->GetCameraY()};
+
+        const Position pos{renderer->GetCameraX() + m_relative_pos.x,
+                           renderer->GetCameraY() + m_relative_pos.y};
+        Texture* text_texture = Renderer::GetInstance()->AddTextTexture(
+            m_text, m_text, {255, 255, 255, 255});
+        SDL_Rect src_rect = {0, 0, text_texture->GetWidth(),
+                             text_texture->GetHeight()};
 
         m_shape = DrawBar(pos, Size{m_shape.w, m_shape.h});
-
+        SDL_Rect text_shape = {
+            m_shape.x + m_shape.w / 2 - text_texture->GetWidth() / 2,
+            m_shape.y + m_shape.h / 2 - text_texture->GetHeight() / 2,
+            text_texture->GetWidth(), text_texture->GetHeight()};
         switch (m_state) {
             case BUTTON_STATE_NORMAL:
                 renderer->DrawRect(m_shape, {0, 0, 0, 255}, true);
@@ -44,6 +54,7 @@ class Button {
                 renderer->DrawRect(m_shape, {0, 0, 0, 235}, true);
                 break;
         }
+        renderer->Draw(m_text, src_rect, text_shape);
     };
 
     void Update() {
@@ -62,6 +73,7 @@ class Button {
     };
 
    private:
+    Position m_relative_pos;
     SDL_Rect m_shape;
     std::string m_text;
     ButtonState m_state;
