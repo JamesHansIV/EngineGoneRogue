@@ -8,6 +8,7 @@
 #include "Engine/HeadsUpDisplay/HeadsUpDisplay.h"
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Objects/WeaponInventory.h"
+#include "Engine/State/State.h"
 
 class Game : public Application {
    public:
@@ -24,6 +25,8 @@ class Game : public Application {
     void DrawObjects();
 
     void ChangeState(State* state);
+
+    StateType GetStateType() override {return m_State->GetType();};
 
     std::vector<GameObject*>::iterator GetObjects() {
         return m_Objects.begin();

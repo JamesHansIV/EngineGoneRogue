@@ -272,7 +272,7 @@ void Game::DrawObjects() {
     ProjectileManager::GetInstance()->Draw();
     if (m_Player != nullptr) {
         m_Player->Draw();
-        m_HeadsUpDisplay->Draw();
+        m_HeadsUpDisplay->Draw(m_State);
     }
     button.Draw();
 }

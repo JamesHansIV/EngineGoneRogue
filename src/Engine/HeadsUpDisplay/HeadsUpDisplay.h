@@ -11,7 +11,7 @@ class HUD {
    public:
     explicit HUD(const Player& player);
 
-    void Draw();
+    void Draw(State* state);
 
     void Update(const Player& player);
 

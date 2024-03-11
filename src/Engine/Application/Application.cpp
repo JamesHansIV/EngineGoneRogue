@@ -6,6 +6,7 @@
 
 #include "Engine/Input/InputChecker.h"
 
+#include "Engine/State/State.h"
 #include "Engine/Timer/Timer.h"
 #include "backends/imgui_impl_sdl2.h"
 #include "backends/imgui_impl_sdlrenderer2.h"
@@ -176,10 +177,9 @@ void Application::Run() {
     int fps = 0;
     int updates_per_second = 0;
     while (m_IsRunning) {
-
         Events();
         bool render = false;
-        if (!timer.IsPaused()) {
+        if (GetStateType() != StateType::Pause) {
             if (timer.GetTicks() > count_until_next_second) {
                 SDL_Log("FPS: %d", fps);
                 count_until_next_second += 1000;
@@ -206,7 +206,7 @@ void Application::Run() {
             }
         }
 
-        if (render) {
+        if (render || GetStateType() == StateType::Pause) {
             m_Frame++;
             Render();
             fps++;

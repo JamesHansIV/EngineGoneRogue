@@ -1,5 +1,6 @@
 #include "Engine/HeadsUpDisplay/HeadsUpDisplay.h"
 #include "Engine/Renderer/Renderer.h"
+#include "Engine/State/State.h"
 #include "Engine/Timer/Timer.h"
 
 
@@ -9,14 +10,18 @@ HUD::HUD(const Player& player)
     m_ExperienceBar(100, 0), 
     m_PlayerStatsComponent(player.GetStats()){};
 
-void HUD::Draw() {
+void HUD::Draw(State* state) {
     Renderer* renderer = Renderer::GetInstance();
     // Timer
     TimerElement::Draw();
     m_WeaponInventory.Draw();
     m_ExperienceBar.Draw();
     m_ItemInventory.Draw();
-    m_PlayerStatsComponent.Draw();
+    if(state->GetType() == StateType::Pause)
+    {
+        SDL_Log("Here");
+        m_PlayerStatsComponent.Draw();
+    }
 }
 
 void HUD::Update(const Player& player) {

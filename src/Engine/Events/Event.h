@@ -21,6 +21,7 @@ enum class EventType {
 
     StartGameEvent,
     MouseDownEvent,
+    ButtonDownEvent
 };
 
 class Event {
@@ -128,6 +129,15 @@ class ChestOpenedEvent : public Event {
     std::pair<float, float> m_Index;
 };
 
+class PlayerLevelUpEvent: public Event {
+    public:
+    explicit PlayerLevelUpEvent(){};
+    virtual EventType GetEventType() override {
+        return EventType::PlayerLevelUpEvent;
+    };
+    private:
+};
+
 class StartGameEvent : public Event {
    public:
     explicit StartGameEvent() {}
@@ -157,5 +167,20 @@ class MouseDownEvent : public Event {
    private:
     int m_X;
     int m_Y;
+    int m_Button;
+};
+
+class ButtonDownEvent : public Event {
+    public:
+    explicit ButtonDownEvent(int button)
+        : m_Button(button) {}
+
+    virtual EventType GetEventType() override {
+        return EventType::ButtonDownEvent;
+    }
+
+    int GetButton() { return m_Button; }
+
+   private:
     int m_Button;
 };

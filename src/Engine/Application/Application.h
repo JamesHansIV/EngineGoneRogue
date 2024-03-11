@@ -6,6 +6,7 @@
 #include "Engine/Events/EventManager.h"
 #include "Engine/Layers/Layer.h"
 #include "Engine/Objects/Characters/Player.h"
+#include "Engine/State/State.h"
 
 class Application {
    public:
@@ -26,6 +27,8 @@ class Application {
     virtual void Render() {}
 
     virtual void Events();
+
+    virtual StateType GetStateType() {};
 
     [[nodiscard]] inline int GetFrame() const { return m_Frame; }
 

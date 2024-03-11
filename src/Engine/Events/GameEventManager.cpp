@@ -7,6 +7,7 @@
 #include "Engine/Objects/Characters/Enemy.h"
 #include "Engine/Objects/Chests/Chest.h"
 #include "Engine/Objects/Item.h"
+#include "Engine/State/GameState.h"
 #include "Engine/State/State.h"
 #include "Engine/Timer/Timer.h"
 #include "Engine/utils/utils.h"
@@ -18,7 +19,7 @@ GameEventManager::GameEventManager(Player* player,
     : m_player(player), m_Objects(objects) {}
 
 State* GameEventManager::HandleEvents(ItemManager* ItemManager,
-                                      State* GameState) {
+                                      State* GameStateManager) {
     SDL_Event event;
     UserEvent event_wrapper;
     event_wrapper.SetSDLEvent(&event);
@@ -27,20 +28,16 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
             case SDL_QUIT:
                 Application::Get()->Quit();
                 return nullptr;
-            case SDL_KEYDOWN:
+            case SDL_KEYDOWN:{
                 InputChecker::SetKeyPressed(event.key.keysym.sym, true);
-                switch (event.key.keysym.sym) {
-                    case SDLK_ESCAPE:
-                        if (timer.IsPaused()) {
-                            timer.Unpause();
-                        } else {
-                            timer.Pause();
-                        }
-                    default:
-                        break;
+                ButtonDownEvent e(event.key.keysym.sym);
+                State* state = GameStateManager->HandleEvent(&e);
+                if (state != nullptr) {
+                    return state;
                 }
                 //player->OnKeyPressed(event);
                 break;
+            }
             case SDL_KEYUP:
                 InputChecker::SetKeyPressed(event.key.keysym.sym, false);
                 //player->OnKeyReleased(event);
@@ -50,7 +47,7 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
                 const int x = event.button.x;
                 const int y = event.button.y;
                 MouseDownEvent e(x, y, event.button.button);
-                State* state = GameState->HandleEvent(&e);
+                State* state = GameStateManager->HandleEvent(&e);
                 if (state != nullptr) {
                     return state;
                 }
@@ -69,7 +66,9 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
             case SDL_WINDOWEVENT:
                 // TODO: Add pause menu to render when focus is lost
                 if (event.window.event == SDL_WINDOWEVENT_FOCUS_LOST) {
-                    timer.Pause();
+                    if(Application::Get()->GetFrame() != 0){
+                         return new PauseState(dynamic_cast<GameState*>(GameStateManager)->GetGame());
+                    }
                 }
                 if (event.window.event == SDL_WINDOWEVENT_RESIZED) {
                     SDL_GetWindowSize(
@@ -120,9 +119,14 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
                         ItemManager->HandleEvent(&chest_open_event);
                         return nullptr;
                     }
-                    case EventType::PlayerLevelUpEvent:
-                        timer.Pause();
+                    case EventType::PlayerLevelUpEvent:{
+                        PlayerLevelUpEvent player_level_up;
+                        State* state = GameStateManager->HandleEvent(&player_level_up);
+                        if (state != nullptr) {
+                            return state;
+                        }
                         break;
+                    }
                     default:
                         break;
                 }

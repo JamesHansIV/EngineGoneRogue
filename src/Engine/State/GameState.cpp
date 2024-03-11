@@ -1,7 +1,11 @@
 #include "GameState.h"
 #include "Apps/Game.h"
+#include "Engine/Events/Event.h"
+#include "Engine/State/State.h"
+#include "SDL2/SDL_keycode.h"
 
 void RunningState::Enter() {
+    timer.Unpause();
     Renderer::GetInstance()->SetCameraTarget(GetGame()->GetPlayer());
 }
 
@@ -17,6 +21,21 @@ State* RunningState::Update(float dt) {
 }
 
 State* RunningState::HandleEvent(Event* event) {
+    switch (event->GetEventType()) {
+        case EventType::ButtonDownEvent:
+            switch (dynamic_cast<ButtonDownEvent*>(event)->GetButton()) {
+                case SDLK_ESCAPE:
+                    return new PauseState(GetGame());
+                default:
+                    break;
+            }
+            break;
+        case EventType::PlayerLevelUpEvent:
+            return new PauseState(GetGame());
+            break;
+        default:
+            break;
+    }
     return nullptr;
 }
 
@@ -79,20 +98,33 @@ State* GameOverState::HandleEvent(Event* event) {
     return nullptr;
 }
 
-void PauseState::Enter() {}
+void PauseState::Enter() {
+    timer.Pause();
+}
 
-void PauseState::Exit() {}
+void PauseState::Exit() {
+}
 
 void PauseState::Draw() {
     GetGame()->DrawObjects();
 }
 
 State* PauseState::Update(float dt) {
-    GetGame()->UpdateObjects(dt);
     return nullptr;
 }
 
 State* PauseState::HandleEvent(Event* event) {
+    switch (event->GetEventType()) {
+        case EventType::ButtonDownEvent:
+            switch (dynamic_cast<ButtonDownEvent*>(event)->GetButton()) {
+                case SDLK_ESCAPE:
+                    return new RunningState(GetGame());
+                default:
+                    break;
+            }
+        default:
+            break;
+    }
     return nullptr;
 }
 
