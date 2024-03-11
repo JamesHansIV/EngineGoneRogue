@@ -23,7 +23,6 @@ enum class EventType {
     StartGameEvent,
     LevelUpSelectedGameEvent,
     ContinueGameEvent,
-    MouseDownEvent,
 };
 
 class Event {
@@ -151,25 +150,4 @@ class ContinueGameEvent : public Event {
     }
 
    private:
-};
-
-class MouseDownEvent : public Event {
-   public:
-    explicit MouseDownEvent(int x, int y, int button)
-        : m_x(x), m_y(y), m_button(button) {}
-
-    virtual EventType GetEventType() override {
-        return EventType::MouseDownEvent;
-    }
-
-    int GetX() const { return m_x; }
-
-    int GetY() const { return m_y; }
-
-    int GetButton() const { return m_button; }
-
-   private:
-    int m_x;
-    int m_y;
-    int m_button;
 };

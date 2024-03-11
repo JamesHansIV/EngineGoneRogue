@@ -15,7 +15,8 @@ class GameEventManager : public virtual EventManager {
     void SetPlayer(Player* player) { m_player = player; }
 
    private:
-    void HandleCustomEvents();
+    State* HandleCustomEvents(const SDL_Event& event, ItemManager* ItemManager,
+                              State* GameState);
     void HandleSDLEvents();
     Player* m_player;
     std::vector<GameObject*>& m_objects;

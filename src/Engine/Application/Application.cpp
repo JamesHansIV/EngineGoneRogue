@@ -114,7 +114,7 @@ bool Application::LoadRooms(const char* projectPath) {
         }
     }
 
-    SDL_Log("room %s has size %d", room_id.c_str(), m_Rooms[room_id].size());
+    SDL_Log("room %s has size %d", room_id.c_str(), m_rooms[room_id].size());
 
     closedir(dp);
     return true;

@@ -23,6 +23,7 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
                                       State* GameState) {
     SDL_Event event;
     UserEvent event_wrapper;
+    State* state = nullptr;
     event_wrapper.SetSDLEvent(&event);
     while (SDL_PollEvent(&event) != 0) {
         switch (event.type) {
@@ -34,12 +35,17 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
                 switch (event.key.keysym.sym) {
                     case SDLK_ESCAPE:
                         if (timer.IsPaused()) {
-                            return new RunningState(
-                                static_cast<Game*>(Application::Get()));
+                            if (GameState->GetType() == StateType::Pause) {
+                                state = new RunningState(
+                                    static_cast<Game*>(Application::Get()));
+                            }
                         } else {
-                            return new PauseState(
-                                static_cast<Game*>(Application::Get()));
+                            if (GameState->GetType() == StateType::Running) {
+                                state = new PauseState(
+                                    static_cast<Game*>(Application::Get()));
+                            }
                         }
+                        break;
                     default:
                         break;
                 }
@@ -51,13 +57,6 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
                 break;
             case SDL_MOUSEBUTTONDOWN: {
                 InputChecker::SetMouseButtonPressed(event.button.button, true);
-                const int x = event.button.x;
-                const int y = event.button.y;
-                MouseDownEvent e(x, y, event.button.button);
-                State* state = GameState->HandleEvent(&e);
-                if (state != nullptr) {
-                    return state;
-                }
                 break;
             }
             case SDL_MOUSEBUTTONUP:
@@ -72,10 +71,10 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
                 break;
             case SDL_WINDOWEVENT:
                 if (event.window.event == SDL_WINDOWEVENT_FOCUS_LOST) {
-                    timer.Pause();
-                    // Todo: Only pause after start state
-                    //return new PauseState(
-                    //    static_cast<Game*>(Application::Get()));
+                    if (GameState->GetType() == StateType::Running) {
+                        state = new PauseState(
+                            static_cast<Game*>(Application::Get()));
+                    }
                 }
                 if (event.window.event == SDL_WINDOWEVENT_RESIZED) {
                     SDL_GetWindowSize(
@@ -89,81 +88,83 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
                 }
                 break;
             case SDL_USEREVENT:
-                switch (static_cast<EventType>(event.user.code)) {
-                    case EventType::UserEvent: {
-                        // Todo: once UserEvent is implemented to use
-                        // SDL_USEREVENT, uncomment this
-                        // UserEvent user_event = UserEvent();
-                        // user_event.SetSDLEvent(&event);
-                        // event_wrapper = user_event;
-                        break;
-                    }
-                    case EventType::CollideEvent:
-                    case EventType::TargetFoundEvent:
-                    case EventType::TargetLostEvent:
-                        break;
-                    case EventType::EnemyDeathEvent: {
-                        auto* enemy = static_cast<Enemy*>(event.user.data1);
-                        if (enemy == nullptr) {
-                            SDL_Log(
-                                "ERROR: Enemy from EnemyDeathEvent is null");
-                        }
-                        EnemyDeathEvent death_event(enemy->GetEnemyStats());
-                        if (m_player != nullptr) {
-                            m_player->HandleEvent(&death_event);
-                            PlaceChestIfNeededEvent place_chest_event(
-                                enemy->GetX(), enemy->GetY());
-                            ItemManager->HandleEvent(&place_chest_event);
-                        }
-                        return nullptr;
-                    }
-                    case EventType::ChestOpenedEvent: {
-                        auto* item = static_cast<std::vector<ItemType>*>(
-                            event.user.data1);
-                        auto* index = static_cast<std::pair<float, float>*>(
-                            event.user.data2);
-                        ChestOpenedEvent chest_open_event(*item, *index);
-                        ItemManager->HandleEvent(&chest_open_event);
-                        return nullptr;
-                    }
-                    case EventType::StartGameEvent: {
-                        StartGameEvent start_game_event;
-                        State* state =
-                            GameState->HandleEvent(&start_game_event);
-                        return state;
-                    }
-                    case EventType::ContinueGameEvent: {
-                        ContinueGameEvent continue_game_event;
-                        State* state =
-                            GameState->HandleEvent(&continue_game_event);
-                        return state;
-                    }
-                    case EventType::LevelUpSelectedGameEvent: {
-                        return new RunningState(
-                            static_cast<Game*>(Application::Get()));
-                    }
-                    case EventType::GameOverEvent: {
-                        return new GameOverState(
-                            static_cast<Game*>(Application::Get()));
-                    }
-                    case EventType::PlayerLevelUpEvent:
-                        timer.Pause();
-                        return new LevelUpState(
-                            static_cast<Game*>(Application::Get()));
-                        break;
-                    default:
-                        break;
-                }
+                state = HandleCustomEvents(event, ItemManager, GameState);
             default:
                 break;
         }
         if (timer.IsPaused()) {
-            return nullptr;
+            continue;
         }
         if (m_player != nullptr) {
             m_player->HandleEvent(&event_wrapper);
         }
     }
+
+    return state;
+}
+
+State* GameEventManager::HandleCustomEvents(const SDL_Event& event,
+                                            ItemManager* ItemManager,
+                                            State* GameState) {
+    switch (static_cast<EventType>(event.user.code)) {
+        case EventType::UserEvent: {
+            // Todo: once UserEvent is implemented to use
+            // SDL_USEREVENT, uncomment this
+            // UserEvent user_event = UserEvent();
+            // user_event.SetSDLEvent(&event);
+            // event_wrapper = user_event;
+            break;
+        }
+        case EventType::CollideEvent:
+        case EventType::TargetFoundEvent:
+        case EventType::TargetLostEvent:
+            break;
+        case EventType::EnemyDeathEvent: {
+            auto* enemy = static_cast<Enemy*>(event.user.data1);
+            if (enemy == nullptr) {
+                SDL_Log("ERROR: Enemy from EnemyDeathEvent is null");
+            }
+            EnemyDeathEvent death_event(enemy->GetEnemyStats());
+            if (m_player != nullptr) {
+                m_player->HandleEvent(&death_event);
+                PlaceChestIfNeededEvent place_chest_event(enemy->GetX(),
+                                                          enemy->GetY());
+                ItemManager->HandleEvent(&place_chest_event);
+            }
+            return nullptr;
+        }
+        case EventType::ChestOpenedEvent: {
+            auto* item = static_cast<std::vector<ItemType>*>(event.user.data1);
+            auto* index =
+                static_cast<std::pair<float, float>*>(event.user.data2);
+            ChestOpenedEvent chest_open_event(*item, *index);
+            ItemManager->HandleEvent(&chest_open_event);
+            return nullptr;
+        }
+        case EventType::StartGameEvent: {
+            StartGameEvent start_game_event;
+            State* state = GameState->HandleEvent(&start_game_event);
+            return state;
+        }
+        case EventType::ContinueGameEvent: {
+            ContinueGameEvent continue_game_event;
+            State* state = GameState->HandleEvent(&continue_game_event);
+            return state;
+        }
+        case EventType::LevelUpSelectedGameEvent: {
+            return new RunningState(static_cast<Game*>(Application::Get()));
+        }
+        case EventType::GameOverEvent: {
+            return new GameOverState(static_cast<Game*>(Application::Get()));
+        }
+        case EventType::PlayerLevelUpEvent:
+            timer.Pause();
+            return new LevelUpState(static_cast<Game*>(Application::Get()));
+            break;
+        default:
+            break;
+    }
+
     return nullptr;
 }
 

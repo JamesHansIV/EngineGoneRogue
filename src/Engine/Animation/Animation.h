@@ -86,7 +86,7 @@ class Animation {
         m_current_animation_id = id;
 
         SDL_Log("added animation %s in texture id: %s",
-                m_CurrentAnimationID.c_str(),
+                m_current_animation_id.c_str(),
                 m_animations[id].TextureID.c_str());
     }
 
