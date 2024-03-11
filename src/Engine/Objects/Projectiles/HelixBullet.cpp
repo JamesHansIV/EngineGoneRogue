@@ -36,7 +36,7 @@ void HelixBullet::Update(float /*dt*/) {
     SetX(rotated_x + m_origin.X);
     SetY(rotated_y + m_origin.Y);
 
-    m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
+    m_collision_box.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
     CheckOutOfBounds();
 }
 

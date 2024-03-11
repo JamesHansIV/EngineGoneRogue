@@ -18,7 +18,7 @@ void RangedWeapon::Draw() {
 void RangedWeapon::DrawProjectiles() {}
 
 void RangedWeapon::Update(float /*dt*/) {
-    m_CollisionBox.Set(GetX(), GetY(), GetHeight(), GetWidth());
+    m_collision_box.Set(GetX(), GetY(), GetHeight(), GetWidth());
     if (InputChecker::IsKeyPressed(SDLK_f)) {
         m_auto_fire_enabled = !m_auto_fire_enabled;
         InputChecker::SetKeyPressed(SDLK_f, false);

@@ -22,7 +22,7 @@ Application* Application::m_instance = nullptr;
 //const float kDt = 0.0083;
 const float kDt = 0.01;
 
-Application::Application() : m_ProjectName("test_project"), m_Frame(0) {
+Application::Application() : m_project_name("test_project"), m_frame(0) {
     // std::cout << "DEBUG MESSAGE FLAG " << DEBUG_MESSAGES << std::endl;
     // SDL_Log("Something going on");
     // exit(0);
@@ -47,7 +47,7 @@ Application::Application() : m_ProjectName("test_project"), m_Frame(0) {
 
     m_instance = this;
 
-    SDL_GetWindowSize(m_window, &m_WindowWidth, &m_WindowHeight);
+    SDL_GetWindowSize(m_window, &m_window_width, &m_window_height);
 
     //TODO: note that the cwd is <projectDir>/build instead of <projectDir>.
     //      Set a working directory path macro to use absolute file paths
@@ -75,11 +75,11 @@ bool Application::LoadCharacters(const char* projectPath) {
 
     for (auto* obj : objects) {
         if (obj->GetID() == "player") {
-            m_Player = static_cast<Player*>(obj);
+            m_player = static_cast<Player*>(obj);
             continue;
         }
         SDL_Log("adding obj %s", obj->GetID().c_str());
-        m_Rooms[m_BaseRoomID].push_back(obj);
+        m_rooms[m_base_room_id].push_back(obj);
     }
 
     return true;
@@ -108,7 +108,7 @@ bool Application::LoadRooms(const char* projectPath) {
             room_path += entry->d_name;
             room_id = file_name.substr(0, file_name.rfind('.'));
             std::vector<GameObject*> objects = LoadObjects(room_path.c_str());
-            m_Rooms[room_id].insert(m_Rooms[room_id].begin(), objects.begin(),
+            m_rooms[room_id].insert(m_rooms[room_id].begin(), objects.begin(),
                                     objects.end());
             room_path = rooms_path;
         }
@@ -123,7 +123,7 @@ bool Application::LoadRooms(const char* projectPath) {
 bool Application::LoadProject() {
     char project_path[FILEPATH_LEN + 1];
     snprintf(project_path, FILEPATH_LEN, "../assets/projects/%s",
-             m_ProjectName.c_str());
+             m_project_name.c_str());
     if (!LoadTextures(project_path)) {
         return false;
     }
@@ -189,8 +189,8 @@ void Application::Run() {
         }
         double const new_time = SDL_GetTicks();
         auto frame_time =
-            static_cast<double>(new_time / 1000.0F - m_LastTick / 1000.0F);
-        m_LastTick = new_time;
+            static_cast<double>(new_time / 1000.0F - m_last_tick / 1000.0F);
+        m_last_tick = new_time;
         // Necessary for slow computers
         // Todo: implement this if slowness ever becomes an issue.
         //if (frame_time > 0.25F) {
@@ -206,7 +206,7 @@ void Application::Run() {
         }
 
         if (render) {
-            m_Frame++;
+            m_frame++;
             Render();
             fps++;
         }

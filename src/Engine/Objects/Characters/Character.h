@@ -14,11 +14,11 @@ class Character : public Collider {
     void Clean() override = 0;
     virtual void Update(float dt) override = 0;
 
-    Health* GetHealth() { return m_Health; }
+    Health* GetHealth() { return m_health; }
 
-    void SetHealth(Health* health) { m_Health = health; }
+    void SetHealth(Health* health) { m_health = health; }
 
    protected:
-    Health* m_Health{};
-    std::string m_Name;
+    Health* m_health{};
+    std::string m_name;
 };

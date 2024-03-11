@@ -19,7 +19,7 @@ class WeaponStats {
         m_fire_rate = fireRate;
         m_projectile_speed = projectileSpeed;
         m_damage = damage;
-        m_ownerStats = ownerStats;
+        m_owner_stats = ownerStats;
     }
 
     WeaponStats(const WeaponStats& prop) = default;
@@ -46,14 +46,14 @@ class WeaponStats {
 
     void SetDamage(int damage) { m_damage = damage; }
 
-    PlayerStats* GetOwnerStats() { return m_ownerStats; };
+    PlayerStats* GetOwnerStats() { return m_owner_stats; };
 
    protected:
     bool m_player_owned;
     Uint32 m_fire_rate;
     Uint32 m_projectile_speed;
     int m_damage;
-    PlayerStats* m_ownerStats;
+    PlayerStats* m_owner_stats;
 };
 
 class Weapon : public Collider {

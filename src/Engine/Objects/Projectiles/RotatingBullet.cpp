@@ -25,7 +25,7 @@ void RotatingBullet::Update(float /*dt*/) {
     SetX(next_x);
     SetY(next_y);
 
-    m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
+    m_collision_box.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
     CheckOutOfBounds();
 }
 

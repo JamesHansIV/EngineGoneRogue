@@ -103,7 +103,7 @@ void Game::InitObjects() {
 Game::Game() {
     SDL_Renderer* renderer = Renderer::GetInstance()->GetRenderer();
 
-    m_objects = Application::m_Rooms[m_BaseRoomID];
+    m_objects = Application::m_rooms[m_base_room_id];
 
     InitObjects();
 
@@ -117,21 +117,21 @@ Game::Game() {
 
     m_objects.push_back(healthpotion);
     m_objects.push_back(healthpotion2);
-    ColliderHandler::GetInstance()->AddCollider(m_Player);
+    ColliderHandler::GetInstance()->AddCollider(m_player);
     ColliderHandler::GetInstance()->AddCollider(healthpotion);
     ColliderHandler::GetInstance()->AddCollider(healthpotion2);
 
     srand(time(nullptr));
 
-    m_weapon_inventory = new WeaponInventory(m_Player->GetPlayerWeapons());
-    m_weapon_inventory->SetSelectedWeapon(m_Player->GetCurrentWeapon());
+    m_weapon_inventory = new WeaponInventory(m_player->GetPlayerWeapons());
+    m_weapon_inventory->SetSelectedWeapon(m_player->GetCurrentWeapon());
 
-    Renderer::GetInstance()->SetCameraTarget(m_Player);
-    m_game_event_manager = new GameEventManager(m_Player, m_objects);
+    Renderer::GetInstance()->SetCameraTarget(m_player);
+    m_game_event_manager = new GameEventManager(m_player, m_objects);
 
-    m_heads_up_display = new HUD(*m_Player);
+    m_heads_up_display = new HUD(*m_player);
 
-    m_item_manager = new ItemManager(m_objects, m_Player);
+    m_item_manager = new ItemManager(m_objects, m_player);
 
     SDL_Cursor* cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR);
     SDL_SetCursor(cursor);
@@ -233,19 +233,19 @@ void Game::UpdateObjects(float dt) {
     }
     ColliderHandler::GetInstance()->HandleCollisions();
     ProjectileManager::GetInstance()->UpdateProjectiles(dt);
-    if (m_Player != nullptr) {
-        m_Player->Update(dt);
-        m_heads_up_display->Update(*m_Player);
-        if (m_Player->MarkedForDeletion()) {
-            DeleteObject(m_Player);
-            m_Player = nullptr;
+    if (m_player != nullptr) {
+        m_player->Update(dt);
+        m_heads_up_display->Update(*m_player);
+        if (m_player->MarkedForDeletion()) {
+            DeleteObject(m_player);
+            m_player = nullptr;
             m_game_event_manager->SetPlayer(nullptr);
         }
     }
     for (auto it = m_objects.begin(); it != m_objects.end();) {
         auto* enemy = dynamic_cast<Enemy*>(*it);  // Cast to Enemy type
         if (enemy != nullptr) {
-            enemy->SetTarget(m_Player);
+            enemy->SetTarget(m_player);
         }
         (*it)->Update(dt);
         if ((*it)->MarkedForDeletion()) {
@@ -270,8 +270,8 @@ void Game::DrawObjects() {
     }
 
     ProjectileManager::GetInstance()->Draw();
-    if (m_Player != nullptr) {
-        m_Player->Draw();
+    if (m_player != nullptr) {
+        m_player->Draw();
         m_heads_up_display->Draw(*m_state);
     }
 }

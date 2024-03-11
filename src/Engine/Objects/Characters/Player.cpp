@@ -33,7 +33,7 @@ void Player::Init() {
     AddStillFrame("face-right-up", {3, 0, 18, 16});
     AddStillFrame("face-up", {4, 0, 18, 16});
 
-    m_CurrentTilePos = m_StillFrames["face-down"];
+    m_current_tile_pos = m_still_frames["face-down"];
 
     m_stats = new PlayerStats(MovementInfo{80, .90, 110, 500},
                               CombatInfo{1, 1, 0, 50}, HealthInfo{1, 20});
@@ -51,7 +51,7 @@ void Player::Init() {
 
     ChangeState(new PlayerIdle(this));
     // m_Collider->SetCorrection(-45, -20, 60, 80 )
-    m_Health = new Health(100);
+    m_health = new Health(100);
 
     Properties props_uzi("weapons", {0, 3, 16, 16}, {0, 0, 18, 18}, 0.0);
     RangedWeaponStats stats_uzi = {true, 200, 30, 16, m_stats};
@@ -90,8 +90,8 @@ void Player::Init() {
 }
 
 void Player::Draw() {
-    m_CurrentState->Draw();
-    m_Health->Draw(GetX(), GetY(), GetWidth());
+    m_current_state->Draw();
+    m_health->Draw(GetX(), GetY(), GetWidth());
     m_current_weapon->Draw();
     for (auto& weapon : m_weapons) {
         if (auto* ranged = dynamic_cast<RangedWeapon*>(weapon)) {
@@ -110,23 +110,23 @@ void Player::AddItem(Item* item) {
 }
 
 void Player::Update(float dt) {
-    State* state = m_CurrentState->Update(dt);
+    State* state = m_current_state->Update(dt);
     if (state != nullptr) {
         ChangeState(state);
     }
 
     if (SDL_GetTicks() - m_last_health_regen > 1000) {
         m_last_health_regen = SDL_GetTicks();
-        m_Health->IncreaseHealth(m_stats->GetHPRegenRate());
+        m_health->IncreaseHealth(m_stats->GetHPRegenRate());
     }
     m_stats->Update();
-    m_Animation->Update();
-    m_RigidBody->Update(dt);
+    m_animation->Update();
+    m_rigid_body->Update(dt);
 
-    SetX(m_RigidBody->Position().X);
-    SetY(m_RigidBody->Position().Y);
+    SetX(m_rigid_body->Position().X);
+    SetY(m_rigid_body->Position().Y);
     //SDL_Log("Player position: %f, %f", GetX(), GetY());
-    m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
+    m_collision_box.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
 
     UpdateWeapon(dt);
 }
@@ -203,7 +203,7 @@ void Player::OnCollide(Collider* collidee) {
     }
 
     CollideEvent event(collidee);
-    State* state = m_CurrentState->HandleEvent(&event);
+    State* state = m_current_state->HandleEvent(&event);
 
     if (state != nullptr) {
         ChangeState(state);
@@ -223,8 +223,8 @@ void Player::HandleEvent(Event* event) {
             break;
         }
         default:
-            if (m_CurrentState != nullptr) {
-                state = m_CurrentState->HandleEvent(event);
+            if (m_current_state != nullptr) {
+                state = m_current_state->HandleEvent(event);
             }
     }
     if (state != nullptr) {
@@ -233,9 +233,9 @@ void Player::HandleEvent(Event* event) {
 }
 
 Player::~Player() {
-    delete m_Health;
-    delete m_CurrentState;
-    delete m_Animation;
+    delete m_health;
+    delete m_current_state;
+    delete m_animation;
     for (auto& weapon : m_weapons) {
         delete weapon;
     }

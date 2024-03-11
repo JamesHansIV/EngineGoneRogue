@@ -1,24 +1,24 @@
 #include "GameObject.h"
 
 GameObject::GameObject(GameObject* rhs) {
-    m_CurrentState = nullptr;
-    m_TextureID = rhs->m_TextureID;
-    m_CurrentTilePos = rhs->m_CurrentTilePos;
-    m_DstRect = rhs->m_DstRect;
-    m_Rotation = rhs->m_Rotation;
-    m_Flip = rhs->m_Flip;
-    m_ObjectID = rhs->m_ObjectID;
-    m_MarkedForDeletion = false;
+    m_current_state = nullptr;
+    m_texture_id = rhs->m_texture_id;
+    m_current_tile_pos = rhs->m_current_tile_pos;
+    m_dst_rect = rhs->m_dst_rect;
+    m_rotation = rhs->m_rotation;
+    m_flip = rhs->m_flip;
+    m_object_id = rhs->m_object_id;
+    m_marked_for_deletion = false;
 
-    if (rhs->m_Animation != nullptr) {
-        m_Animation = new Animation(*rhs->m_Animation);
+    if (rhs->m_animation != nullptr) {
+        m_animation = new Animation(*rhs->m_animation);
     }
 }
 
 GameObject::~GameObject() = default;
 
 void GameObject::Draw() {
-    if (m_Animation != nullptr) {
+    if (m_animation != nullptr) {
         DrawAnimation();
     } else {
         DrawRect();
@@ -26,50 +26,50 @@ void GameObject::Draw() {
 };
 
 void GameObject::DrawRect() {
-    SDL_Rect src_rect = {m_CurrentTilePos.col * m_CurrentTilePos.w,
-                         m_CurrentTilePos.row * m_CurrentTilePos.h,
-                         m_CurrentTilePos.w, m_CurrentTilePos.h};
-    SDL_Rect dst_rect = {static_cast<int>(m_DstRect.x),
-                         static_cast<int>(m_DstRect.y), m_DstRect.w,
-                         m_DstRect.h};
-    Renderer::GetInstance()->Draw(m_TextureID, src_rect, dst_rect, m_Rotation,
-                                  nullptr, m_Flip);
+    SDL_Rect src_rect = {m_current_tile_pos.col * m_current_tile_pos.w,
+                         m_current_tile_pos.row * m_current_tile_pos.h,
+                         m_current_tile_pos.w, m_current_tile_pos.h};
+    SDL_Rect dst_rect = {static_cast<int>(m_dst_rect.x),
+                         static_cast<int>(m_dst_rect.y), m_dst_rect.w,
+                         m_dst_rect.h};
+    Renderer::GetInstance()->Draw(m_texture_id, src_rect, dst_rect, m_rotation,
+                                  nullptr, m_flip);
 }
 
 void GameObject::DrawAnimation() {
-    m_Animation->Draw(m_DstRect, m_Rotation);
+    m_animation->Draw(m_dst_rect, m_rotation);
 }
 
 void GameObject::Update(float /*dt*/) {
-    if (m_Animation != nullptr) {
-        m_Animation->Update();
+    if (m_animation != nullptr) {
+        m_animation->Update();
     }
 }
 
 void GameObject::AddStillFrame(const std::string& id, TilePos tilePos) {
-    if (m_StillFrames.find(id) != m_StillFrames.end()) {
+    if (m_still_frames.find(id) != m_still_frames.end()) {
         SDL_Log("TilePos with id %s already exists for object %s", id.c_str(),
                 GetID().c_str());
         assert(false);
     }
-    m_StillFrames[id] = tilePos;
+    m_still_frames[id] = tilePos;
 }
 
 void GameObject::SelectStillFrame(const std::string& id) {
-    if (m_StillFrames.find(id) == m_StillFrames.end()) {
+    if (m_still_frames.find(id) == m_still_frames.end()) {
         SDL_Log("TilePos with id=%s does not exist for object %s", id.c_str(),
                 GetID().c_str());
         assert(false);
     }
-    m_CurrentTilePos = m_StillFrames[id];
+    m_current_tile_pos = m_still_frames[id];
 }
 
 void GameObject::ChangeState(State* state) {
-    if (m_CurrentState != nullptr) {
-        m_CurrentState->Exit();
-        delete m_CurrentState;
+    if (m_current_state != nullptr) {
+        m_current_state->Exit();
+        delete m_current_state;
     }
 
-    m_CurrentState = state;
-    m_CurrentState->Enter();
+    m_current_state = state;
+    m_current_state->Enter();
 }

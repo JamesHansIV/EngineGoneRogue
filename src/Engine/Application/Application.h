@@ -27,38 +27,38 @@ class Application {
 
     virtual void Events();
 
-    [[nodiscard]] inline int GetFrame() const { return m_Frame; }
+    [[nodiscard]] inline int GetFrame() const { return m_frame; }
 
     [[nodiscard]] inline bool IsRunning() const { return m_is_running; }
 
     inline SDL_Window* GetWindow() { return m_window; }
 
-    inline std::string GetProjectName() { return m_ProjectName; }
+    inline std::string GetProjectName() { return m_project_name; }
 
-    [[nodiscard]] int GetWindowWidth() const { return m_WindowWidth; }
+    [[nodiscard]] int GetWindowWidth() const { return m_window_width; }
 
-    [[nodiscard]] int GetWindowHeight() const { return m_WindowHeight; }
+    [[nodiscard]] int GetWindowHeight() const { return m_window_height; }
 
-    int& GetMutableWindowWidth() { return m_WindowWidth; }
+    int& GetMutableWindowWidth() { return m_window_width; }
 
-    int& GetMutableWindowHeight() { return m_WindowHeight; }
+    int& GetMutableWindowHeight() { return m_window_height; }
 
-    Player* GetPlayer() { return m_Player; }
+    Player* GetPlayer() { return m_player; }
 
     inline static Application* Get() { return m_instance; }
 
    protected:
-    std::string m_ProjectName;
-    std::string m_BaseRoomID = "room1";
-    std::unordered_map<std::string, std::vector<GameObject*>> m_Rooms;
-    Uint32 m_LastTick;
+    std::string m_project_name;
+    std::string m_base_room_id = "room1";
+    std::unordered_map<std::string, std::vector<GameObject*>> m_rooms;
+    Uint32 m_last_tick;
     bool m_is_paused;
     bool m_has_focus;
-    int m_WindowWidth = 0;
-    int m_WindowHeight = 0;
-    int m_Frame;
-    EventManager m_EventManager;
-    Player* m_Player;
+    int m_window_width = 0;
+    int m_window_height = 0;
+    int m_frame;
+    EventManager m_event_manager;
+    Player* m_player;
 
    private:
     bool m_is_running;

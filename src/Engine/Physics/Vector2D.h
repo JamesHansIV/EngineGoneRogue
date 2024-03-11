@@ -62,7 +62,7 @@ class Matrix2D {
             return x1 * x4 - x2 * x3;
         }
 
-        inline Matrix2D Inverse() {
+        inline Matrix2D Inverse() const {
             if (Determinant() == 0.0F) {
                 SDL_Log("ERROR: determinant is 0 for matrix:");
                 Log();

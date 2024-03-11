@@ -219,7 +219,7 @@ Editor::Editor() {
     ImGui_ImplSDLRenderer2_Init(renderer);
 
     SDL_Log("editor constructor");
-    m_Rooms = Application::m_Rooms;
+    m_rooms = Application::m_rooms;
     m_layers.emplace_back();
 
     // load editor textures
@@ -267,7 +267,7 @@ void Editor::SaveRoom(const char* roomName) {
 
     char file_path[FILEPATH_LEN + 1];
     snprintf(file_path, FILEPATH_LEN, "../assets/projects/%s/rooms/%s.xml",
-             m_ProjectName.c_str(), roomName);
+             m_project_name.c_str(), roomName);
 
     int const success = SaveObjects(file_path, objects);
     SDL_Log("Saving room a success: %d", success);
@@ -281,7 +281,7 @@ void Editor::SaveProject() {
              GetProjectName().c_str());
     Renderer::GetInstance()->SaveTextures(dst_path);
 
-    for (const auto& room : m_Rooms) {
+    for (const auto& room : m_rooms) {
         SaveRoom(room.first.c_str());
     }
 }
@@ -292,7 +292,7 @@ void Editor::CreateProjectFolder() {
 
     char project_path[FILEPATH_LEN + 1];
     snprintf(project_path, FILEPATH_LEN, "../assets/projects/%s",
-             m_ProjectName.c_str());
+             m_project_name.c_str());
     dp = opendir(project_path);
     if (dp == nullptr) {
         char command[FILEPATH_LEN + 1];
@@ -341,7 +341,7 @@ void Editor::AddRoom() {
             objects.push_back(new GameObject(obj));
         }
     }
-    m_Rooms[m_current_room_id] = std::vector<GameObject*>(objects);
+    m_rooms[m_current_room_id] = std::vector<GameObject*>(objects);
 }
 
 void Editor::ShowFileManager() {
@@ -401,7 +401,7 @@ void Editor::ShowFileManager() {
         }
 
         if (ImGui::BeginPopup("load_room")) {
-            for (const auto& item : m_Rooms) {
+            for (const auto& item : m_rooms) {
                 std::string const id = item.first;
                 SDL_Log("Room: %s", id.c_str());
                 if (strcmp(id.c_str(), "") != 0) {
@@ -409,7 +409,7 @@ void Editor::ShowFileManager() {
 
                         CleanLayers();
 
-                        m_layers.push_back(CopyObjects(m_Rooms[id]));
+                        m_layers.push_back(CopyObjects(m_rooms[id]));
                         m_current_room_id = id;
                         ImGui::CloseCurrentPopup();
                     }

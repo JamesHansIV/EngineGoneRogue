@@ -66,15 +66,15 @@ class Properties {
 class GameObject : public IObject {
    public:
     explicit GameObject(Properties& props)
-        : m_TextureID(props.TextureID),
-          m_CurrentTilePos(props.TilePosition),
-          m_DstRect(props.DstRect),
-          m_Rotation(props.Rotation),
-          m_Flip(props.Flip),
-          m_ObjectID(props.ObjectID),
-          m_Animation(nullptr),
-          m_CurrentState(nullptr),
-          m_MarkedForDeletion(false) {}
+        : m_texture_id(props.TextureID),
+          m_current_tile_pos(props.TilePosition),
+          m_dst_rect(props.DstRect),
+          m_rotation(props.Rotation),
+          m_flip(props.Flip),
+          m_object_id(props.ObjectID),
+          m_animation(nullptr),
+          m_current_state(nullptr),
+          m_marked_for_deletion(false) {}
 
     explicit GameObject(GameObject* rhs);
     virtual ~GameObject();
@@ -89,83 +89,83 @@ class GameObject : public IObject {
 
     virtual ObjectType GetObjectType() { return ObjectType::Base; }
 
-    TilePos& GetTilePos() { return m_CurrentTilePos; }
+    TilePos& GetTilePos() { return m_current_tile_pos; }
 
-    void SetTilePos(TilePos tilePos) { m_CurrentTilePos = tilePos; }
+    void SetTilePos(TilePos tilePos) { m_current_tile_pos = tilePos; }
 
     void AddStillFrame(const std::string& id, TilePos tilePos);
 
     void SelectStillFrame(const std::string& id);
 
-    Rect& GetDstRect() { return m_DstRect; }
+    Rect& GetDstRect() { return m_dst_rect; }
 
-    float& GetX() { return m_DstRect.x; }
+    float& GetX() { return m_dst_rect.x; }
 
-    float& GetY() { return m_DstRect.y; }
+    float& GetY() { return m_dst_rect.y; }
 
-    void SetX(float x) { m_DstRect.x = x; }
+    void SetX(float x) { m_dst_rect.x = x; }
 
-    void SetY(float y) { m_DstRect.y = y; }
+    void SetY(float y) { m_dst_rect.y = y; }
 
-    void MoveX(float x) { m_DstRect.x += x; }
+    void MoveX(float x) { m_dst_rect.x += x; }
 
-    void MoveY(float y) { m_DstRect.y += y; }
+    void MoveY(float y) { m_dst_rect.y += y; }
 
     float GetMidPointX() const {
-        return (m_DstRect.x + static_cast<float>(m_DstRect.w) / 2);
+        return (m_dst_rect.x + static_cast<float>(m_dst_rect.w) / 2);
     };
 
     float GetMidPointY() const {
-        return (m_DstRect.y + static_cast<float>(m_DstRect.h) / 2);
+        return (m_dst_rect.y + static_cast<float>(m_dst_rect.h) / 2);
     };
 
-    int& GetWidth() { return m_DstRect.w; }
+    int& GetWidth() { return m_dst_rect.w; }
 
-    int& GetHeight() { return m_DstRect.h; }
+    int& GetHeight() { return m_dst_rect.h; }
 
-    void SetWidth(int width) { m_DstRect.w = width; }
+    void SetWidth(int width) { m_dst_rect.w = width; }
 
-    void SetHeight(int height) { m_DstRect.h = height; }
+    void SetHeight(int height) { m_dst_rect.h = height; }
 
-    float& GetRotation() { return m_Rotation; }
+    float& GetRotation() { return m_rotation; }
 
-    float GetRadians() const { return m_Rotation * (M_PI / 180); }
+    float GetRadians() const { return m_rotation * (M_PI / 180); }
 
-    void SetRotation(float rotation) { m_Rotation = rotation; }
+    void SetRotation(float rotation) { m_rotation = rotation; }
 
-    std::string GetTextureID() { return m_TextureID; }
+    std::string GetTextureID() { return m_texture_id; }
 
-    void SetTextureID(std::string texture) { m_TextureID = texture; };
+    void SetTextureID(std::string texture) { m_texture_id = texture; };
 
-    std::string GetID() { return m_ObjectID; }
+    std::string GetID() { return m_object_id; }
 
-    void SetID(std::string id) { m_ObjectID = std::move(id); }
+    void SetID(std::string id) { m_object_id = std::move(id); }
 
-    SDL_RendererFlip GetFlip() { return m_Flip; }
+    SDL_RendererFlip GetFlip() { return m_flip; }
 
-    void SetFlip(SDL_RendererFlip flip) { m_Flip = flip; }
+    void SetFlip(SDL_RendererFlip flip) { m_flip = flip; }
 
-    Animation* GetAnimation() { return m_Animation; }
+    Animation* GetAnimation() { return m_animation; }
 
-    void SetAnimation(Animation* animation) { m_Animation = animation; }
+    void SetAnimation(Animation* animation) { m_animation = animation; }
 
-    State* GetCurrentState() { return m_CurrentState; }
+    State* GetCurrentState() { return m_current_state; }
 
-    StateType GetStateType() { return m_CurrentState->GetType(); }
+    StateType GetStateType() { return m_current_state->GetType(); }
 
-    bool MarkedForDeletion() const { return m_MarkedForDeletion; }
+    bool MarkedForDeletion() const { return m_marked_for_deletion; }
 
-    void MarkForDeletion() { m_MarkedForDeletion = true; }
+    void MarkForDeletion() { m_marked_for_deletion = true; }
 
    protected:
-    TilePos m_CurrentTilePos;
-    std::unordered_map<std::string, TilePos> m_StillFrames;
-    Rect m_DstRect;
-    float m_Rotation;
-    std::string m_TextureID;
-    std::string m_ObjectID;
-    SDL_RendererFlip m_Flip;
-    Animation* m_Animation;
-    State* m_CurrentState;
-    bool m_MarkedForDeletion;
+    TilePos m_current_tile_pos;
+    std::unordered_map<std::string, TilePos> m_still_frames;
+    Rect m_dst_rect;
+    float m_rotation;
+    std::string m_texture_id;
+    std::string m_object_id;
+    SDL_RendererFlip m_flip;
+    Animation* m_animation;
+    State* m_current_state;
+    bool m_marked_for_deletion;
 };

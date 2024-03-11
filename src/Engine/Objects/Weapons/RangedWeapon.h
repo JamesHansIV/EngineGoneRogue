@@ -41,7 +41,7 @@ class RangedWeapon : public Weapon {
     Projectile* BuildProjectile();
 
    protected:
-    ProjectileManager m_ProjectileManager;
+    ProjectileManager m_projectile_manager;
     bool m_auto_fire_enabled = false;
     RangedWeaponStats m_stats;
     Uint32 m_last_fired = 0;

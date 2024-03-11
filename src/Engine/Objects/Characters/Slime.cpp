@@ -20,24 +20,24 @@ void Slime::Init() {
 }
 
 void Slime::Draw() {
-    m_CurrentState->Draw();
+    m_current_state->Draw();
 
     //Todo(Ahmni): Add flag to only show enemy health bar in dev mode.
-    m_Health->Draw(GetX(), GetY(), GetWidth());
+    m_health->Draw(GetX(), GetY(), GetWidth());
 }
 
 void Slime::Update(float dt) {
-    State* state = m_CurrentState->Update(dt);
+    State* state = m_current_state->Update(dt);
     if (state != nullptr) {
         ChangeState(state);
     }
 
-    m_RigidBody->Update(dt);
-    m_Animation->Update();
+    m_rigid_body->Update(dt);
+    m_animation->Update();
 
-    SetX(m_RigidBody->Position().X);
-    SetY(m_RigidBody->Position().Y);
-    m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
+    SetX(m_rigid_body->Position().X);
+    SetY(m_rigid_body->Position().Y);
+    m_collision_box.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
 }
 
 void Slime::OnCollide(Collider* collidee) {
@@ -46,14 +46,14 @@ void Slime::OnCollide(Collider* collidee) {
     }
 
     CollideEvent event(collidee);
-    State* state = m_CurrentState->HandleEvent(&event);
+    State* state = m_current_state->HandleEvent(&event);
     if (state != nullptr) {
         ChangeState(state);
     }
 }
 
 void Slime::Clean() {
-    delete m_Animation;
-    delete m_CurrentState;
-    delete m_Health;
+    delete m_animation;
+    delete m_current_state;
+    delete m_health;
 }

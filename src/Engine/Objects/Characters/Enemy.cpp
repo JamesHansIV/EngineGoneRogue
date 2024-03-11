@@ -72,7 +72,7 @@ bool Enemy::MoveTowardsTarget(float dt) {
             direction.Y = direction_y /= direction_length;
         }
 
-        m_RigidBody->ApplyVelocity(direction * dt * m_stats.speed);
+        m_rigid_body->ApplyVelocity(direction * dt * m_stats.speed);
         if (direction_length <= m_stats.range) {
             return true;
         }
@@ -110,6 +110,6 @@ void Enemy::OnCollide(Collider* collidee) {
 }
 
 void Enemy::Clean() {
-    delete m_Animation;
-    delete m_Health;
+    delete m_animation;
+    delete m_health;
 }

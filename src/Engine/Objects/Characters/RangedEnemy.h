@@ -20,9 +20,9 @@ class RangedEnemy : public Enemy {
 
     int GetFireInterval() const { return m_stats.fireInterval; }
 
-    RangedAttack* GetAttack() { return m_Attack; }
+    RangedAttack* GetAttack() { return m_attack; }
 
-    void SetAttack(RangedAttack* attack) { m_Attack = attack; }
+    void SetAttack(RangedAttack* attack) { m_attack = attack; }
 
     RangedEnemyStats GetRangedEnemyStats() { return m_stats; }
 
@@ -31,6 +31,6 @@ class RangedEnemy : public Enemy {
     virtual ObjectType GetObjectType() override { return ObjectType::Enemy; }
 
    protected:
-    RangedAttack* m_Attack;
+    RangedAttack* m_attack;
     RangedEnemyStats m_stats;
 };

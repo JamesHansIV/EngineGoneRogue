@@ -38,90 +38,90 @@ class PlayerStats {
    public:
     explicit PlayerStats(MovementInfo movementInfo, CombatInfo combatInfo,
                          HealthInfo healthInfo) {
-        m_Speed = movementInfo.speed;
+        m_speed = movementInfo.speed;
         // Default Dodge CD is set in PlayerDodgeState
-        m_DodgeCD = 0;
-        m_DodgeSpeed = movementInfo.dodgeSpeed;
-        m_DodgeDistance = movementInfo.dodgeDistance;
-        m_DodgeInvincibilityTime = movementInfo.dodgeInvincibilityTime;
-        m_LastDodgeTime = 0;
-        m_RangedDamage = combatInfo.rangedDamage;
-        m_MeleeDamage = combatInfo.meleeDamage;
+        m_dodge_cd = 0;
+        m_dodge_speed = movementInfo.dodgeSpeed;
+        m_dodge_distance = movementInfo.dodgeDistance;
+        m_dodge_invincibility_time = movementInfo.dodgeInvincibilityTime;
+        m_last_dodge_time = 0;
+        m_ranged_damage = combatInfo.rangedDamage;
+        m_melee_damage = combatInfo.meleeDamage;
         m_experience = 0;
-        m_killCount = 0;
-        m_Piercing = combatInfo.piercing;
-        m_ArmorPercentage = combatInfo.armorPercentage;
-        m_HPRegenRate = healthInfo.HPRegenRate;
-        m_LifeStealPercentage = healthInfo.lifeStealPercentage;
+        m_kill_count = 0;
+        m_piercing = combatInfo.piercing;
+        m_armor_percentage = combatInfo.armorPercentage;
+        m_hp_regen_rate = healthInfo.HPRegenRate;
+        m_life_steal_percentage = healthInfo.lifeStealPercentage;
         m_level = 1;
     }
 
-    [[nodiscard]] float GetSpeed() const { return m_Speed; };
+    [[nodiscard]] float GetSpeed() const { return m_speed; };
 
-    [[nodiscard]] int GetDodgeCd() const { return m_DodgeCD; };
+    [[nodiscard]] int GetDodgeCd() const { return m_dodge_cd; };
 
-    [[nodiscard]] float GetDodgeSpeed() const { return m_DodgeSpeed; };
+    [[nodiscard]] float GetDodgeSpeed() const { return m_dodge_speed; };
 
-    [[nodiscard]] float GetDodgeDistance() const { return m_DodgeDistance; };
+    [[nodiscard]] float GetDodgeDistance() const { return m_dodge_distance; };
 
     [[nodiscard]] int GetDodgeInvincibility() const {
-        return static_cast<int>(timer.GetTicks() - m_LastDodgeTime <=
-                                m_DodgeInvincibilityTime);
+        return static_cast<int>(timer.GetTicks() - m_last_dodge_time <=
+                                m_dodge_invincibility_time);
     }
 
-    int GetLastDodgeTime() const { return m_LastDodgeTime; }
+    int GetLastDodgeTime() const { return m_last_dodge_time; }
 
-    [[nodiscard]] int GetRangedDamage() const { return m_RangedDamage; }
+    [[nodiscard]] int GetRangedDamage() const { return m_ranged_damage; }
 
-    [[nodiscard]] int GetMeleeDamage() const { return m_MeleeDamage; }
+    [[nodiscard]] int GetMeleeDamage() const { return m_melee_damage; }
 
     [[nodiscard]] int GetExperience() const { return m_experience; }
 
-    [[nodiscard]] int GetPiercing() const { return m_Piercing; };
+    [[nodiscard]] int GetPiercing() const { return m_piercing; };
 
-    [[nodiscard]] int GetArmorPercentage() const { return m_ArmorPercentage; }
+    [[nodiscard]] int GetArmorPercentage() const { return m_armor_percentage; }
 
-    [[nodiscard]] int GetHPRegenRate() const { return m_HPRegenRate; }
+    [[nodiscard]] int GetHPRegenRate() const { return m_hp_regen_rate; }
 
     [[nodiscard]] int GetLifeStealPercentage() const {
-        return m_LifeStealPercentage;
+        return m_life_steal_percentage;
     }
 
-    void SetSpeed(float speed) { m_Speed = speed; };
+    void SetSpeed(float speed) { m_speed = speed; };
 
-    void SetDodgeCd(int dodgeCD) { m_DodgeCD = dodgeCD; };
+    void SetDodgeCd(int dodgeCD) { m_dodge_cd = dodgeCD; };
 
-    void SetDodgeSpeed(float dodgeSpeed) { m_DodgeSpeed = dodgeSpeed; };
+    void SetDodgeSpeed(float dodgeSpeed) { m_dodge_speed = dodgeSpeed; };
 
     void SetDodgeDistance(float dodgeDistance) {
-        m_DodgeDistance = dodgeDistance;
+        m_dodge_distance = dodgeDistance;
     };
 
-    void SetLastDodgeTime(int time) { m_LastDodgeTime = time; }
+    void SetLastDodgeTime(int time) { m_last_dodge_time = time; }
 
-    void SetMeleeDamage(int meleeDamage) { m_MeleeDamage = meleeDamage; }
+    void SetMeleeDamage(int meleeDamage) { m_melee_damage = meleeDamage; }
 
-    void SetRangedDamage(int rangedDamage) { m_RangedDamage = rangedDamage; }
+    void SetRangedDamage(int rangedDamage) { m_ranged_damage = rangedDamage; }
 
     void SetExperience(int experience) { m_experience = experience; }
 
-    void SetPiercing(int piercing) { m_Piercing = piercing; }
+    void SetPiercing(int piercing) { m_piercing = piercing; }
 
     void SetArmorPercentage(int armorPercentage) {
-        m_ArmorPercentage = armorPercentage;
+        m_armor_percentage = armorPercentage;
     }
 
-    void SetHpRegenRate(int regenRate) { m_HPRegenRate = regenRate; }
+    void SetHpRegenRate(int regenRate) { m_hp_regen_rate = regenRate; }
 
     void SetLifeStealPercentage(int lifeSteal) {
-        m_LifeStealPercentage = lifeSteal;
+        m_life_steal_percentage = lifeSteal;
     }
 
     void AddExperience(int experience);
 
-    void IncrementKillCount() { m_killCount++; }
+    void IncrementKillCount() { m_kill_count++; }
 
-    [[nodiscard]] int GetKillCount() const { return m_killCount; }
+    [[nodiscard]] int GetKillCount() const { return m_kill_count; }
 
     void SetLevel(int level) { m_level = level; }
 
@@ -136,21 +136,21 @@ class PlayerStats {
     }
 
    protected:
-    float m_Speed;
-    int m_DodgeCD;
-    float m_DodgeSpeed;
-    float m_DodgeDistance;
-    int m_DodgeInvincibilityTime;
-    int m_LastDodgeTime;
-    int m_RangedDamage;
-    int m_MeleeDamage;
+    float m_speed;
+    int m_dodge_cd;
+    float m_dodge_speed;
+    float m_dodge_distance;
+    int m_dodge_invincibility_time;
+    int m_last_dodge_time;
+    int m_ranged_damage;
+    int m_melee_damage;
     int m_experience;
-    int m_Piercing;
-    int m_ArmorPercentage;
-    int m_HPRegenRate;
+    int m_piercing;
+    int m_armor_percentage;
+    int m_hp_regen_rate;
     int m_level;
-    int m_LifeStealPercentage;
-    int m_killCount = 0;
+    int m_life_steal_percentage;
+    int m_kill_count = 0;
 };
 
 class Player : public Character {

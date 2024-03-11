@@ -21,7 +21,7 @@ Projectile::Projectile(Properties& props, float speed, float angle,
     Vector2D const direction = Vector2D(cos(m_angle), sin(m_angle));
     Vector2D const velocity = direction * m_speed;
     m_velocity = velocity;
-    m_RigidBody->SetVelocity(m_velocity);
+    m_rigid_body->SetVelocity(m_velocity);
     m_damage = damage;
 }
 
@@ -30,12 +30,12 @@ void Projectile::Draw() {
 }
 
 void Projectile::Update(float dt) {
-    m_RigidBody->SetVelocity(m_velocity);
-    m_RigidBody->Update(dt);
-    SetX(m_RigidBody->Position().X);
-    SetY(m_RigidBody->Position().Y);
+    m_rigid_body->SetVelocity(m_velocity);
+    m_rigid_body->Update(dt);
+    SetX(m_rigid_body->Position().X);
+    SetY(m_rigid_body->Position().Y);
 
-    m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
+    m_collision_box.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
     CheckOutOfBounds();
 }
 
@@ -43,7 +43,7 @@ void Projectile::CheckOutOfBounds() {
     if (GetX() < 0.0F || GetY() < 0.0F ||
         GetX() + this->GetWidth() > Application::Get()->GetWindowWidth() ||
         GetY() + this->GetHeight() > Application::Get()->GetWindowHeight()) {
-        m_MarkedForDeletion = true;
+        m_marked_for_deletion = true;
     }
 }
 
@@ -57,7 +57,7 @@ void Projectile::OnCollide(Collider* collidee) {
             auto* player = dynamic_cast<Player*>(collidee);
             if (!m_player_owned && player->GetStateType() != StateType::Dodge &&
                 (player->GetStats().GetDodgeInvincibility() == 0)) {
-                m_MarkedForDeletion = true;
+                m_marked_for_deletion = true;
                 //dynamic_cast<Character*>(collidee)->GetHealth()->SetDamage(10);
             }
             break;
@@ -65,7 +65,7 @@ void Projectile::OnCollide(Collider* collidee) {
         case ObjectType::Enemy:
             if (m_player_owned) {
                 // TODO: Piercing is broke, needs to be fixed
-                m_MarkedForDeletion = true;
+                m_marked_for_deletion = true;
                 AddNumberofEnemiesHit();
                 double const life_steal_multiplier =
                     m_owner->GetStats().GetLifeStealPercentage() / 100.0;
@@ -78,7 +78,7 @@ void Projectile::OnCollide(Collider* collidee) {
         case ObjectType::Projectile:
             break;
         case ObjectType::Collider:
-            m_MarkedForDeletion = true;
+            m_marked_for_deletion = true;
             break;
         default:
             break;
