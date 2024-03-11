@@ -29,20 +29,20 @@ class Cursor {
 
 
     private:
-        SDL_Rect m_Cursor_Rect;
-        int m_Width;
-        int m_Height;
-        double m_Scale;
-        CursorType m_Cursor_Type;
+        SDL_Rect m_cursor_rect;
+        int m_width;
+        int m_height;
+        double m_scale;
+        CursorType m_cursor_type;
 
-        std::unordered_map<int, CursorType>edit_mode_to_cursor_type_map{
+        std::unordered_map<int, CursorType>m_edit_mode_to_cursor_type_map{
             {0, CursorType::POINT}, 
             {1, CursorType::DRAW}, 
             {2, CursorType::ERASE},
             {3, CursorType::POINT}
         };
 
-        std::unordered_map<CursorType, std::string>cursor_type_to_texture_id_map {
+        std::unordered_map<CursorType, std::string>m_cursor_type_to_texture_id_map {
             {CursorType::POINT, "editor-cursor-point"},
             {CursorType::DRAW, "editor-cursor-draw"},
             {CursorType::ERASE, "editor-cursor-erase"}

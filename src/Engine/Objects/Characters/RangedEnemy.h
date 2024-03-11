@@ -18,7 +18,7 @@ class RangedEnemy : public Enemy {
 
     virtual void Shoot() = 0;
 
-    int GetFireInterval() { return m_stats.fireInterval; }
+    int GetFireInterval() const { return m_stats.fireInterval; }
 
     RangedAttack* GetAttack() { return m_Attack; }
 

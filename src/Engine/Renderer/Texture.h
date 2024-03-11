@@ -11,28 +11,28 @@ class Texture {
     Texture(const std::string& text, SDL_Color text_color, std::string id);
     virtual ~Texture();
 
-    std::string GetID() const { return m_ID; }
+    std::string GetID() const { return m_id; }
 
-    std::string GetFilePath() const { return m_FilePath; }
+    std::string GetFilePath() const { return m_file_path; }
 
-    std::string GetText() const { return m_curText; }
+    std::string GetText() const { return m_cur_text; }
 
-    int GetWidth() const { return m_Width; }
+    int GetWidth() const { return m_width; }
 
-    int GetHeight() const { return m_Height; }
+    int GetHeight() const { return m_height; }
 
-    int GetObjectCount() const { return m_ObjectCount; }
+    int GetObjectCount() const { return m_object_count; }
 
-    void IncObjectCount() { m_ObjectCount++; }
+    void IncObjectCount() { m_object_count++; }
 
-    SDL_Texture* GetTexture() { return m_Texture; }
+    SDL_Texture* GetTexture() { return m_texture; }
 
    private:
-    std::string m_ID;
-    std::string m_FilePath;
-    SDL_Texture* m_Texture;
-    int m_ObjectCount;
-    int m_Width;
-    int m_Height;
-    std::string m_curText;
+    std::string m_id;
+    std::string m_file_path;
+    SDL_Texture* m_texture;
+    int m_object_count;
+    int m_width;
+    int m_height;
+    std::string m_cur_text;
 };

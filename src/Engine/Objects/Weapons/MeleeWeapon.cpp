@@ -5,7 +5,7 @@
 #include "Engine/Objects/Characters/Character.h"
 
 MeleeWeapon::MeleeWeapon(Properties& props, MeleeWeaponStats& stats,
-                         Player* owner, const std::string name)
+                         Player* owner, const std::string& name)
     : Weapon(props, stats, owner, name), m_stats(stats) {}
 
 void MeleeWeapon::Draw() {
@@ -19,7 +19,7 @@ void MeleeWeapon::Update(float dt) {
         m_CollisionBox.Set(GetX() - 12, GetY() - 12, GetHeight(), GetWidth());
     }
 
-    Uint32 const time_since_last_attack = SDL_GetTicks() - m_LastAttackTime;
+    Uint32 const time_since_last_attack = SDL_GetTicks() - m_last_attack_time;
 
     if ((InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT) ||
          (time_since_last_attack) < m_duration)) {
@@ -32,7 +32,7 @@ void MeleeWeapon::Update(float dt) {
         const float radians = GetRadians();
         SetRotation(swing_angle);
         if (InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT)) {
-            m_LastAttackTime = SDL_GetTicks();
+            m_last_attack_time = SDL_GetTicks();
         }
         m_CollisionBox.Set(GetX(), GetY(), GetHeight(), GetWidth());
         m_RigidBody->SetPosition(Vector2D{GetX(), GetY()});
@@ -46,7 +46,7 @@ void MeleeWeapon::Update(float dt) {
         InputChecker::SetMouseButtonPressed(SDL_BUTTON_LEFT, false);
     } else {
         m_RigidBody->SetVelocity(Vector2D{0.0F, 0.0F});
-        m_CollisionBox.clear();
+        m_CollisionBox.Clear();
         //SetRotation(0.0);
     }
 }

@@ -21,5 +21,5 @@ class Mage : public RangedEnemy {
     virtual ObjectType GetObjectType() override { return ObjectType::Enemy; }
 
    private:
-    int m_BulletCount;
+    int m_bullet_count;
 };

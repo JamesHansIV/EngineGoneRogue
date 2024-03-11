@@ -44,26 +44,23 @@ bool Enemy::TargetDetected() {
     float const rect_y = GetY() - m_stats.perceptionHeight;
     int const rect_h = GetHeight() + 2 * m_stats.perceptionHeight;
 
-    m_Perception = {rect_x, rect_y, rect_w, rect_h};
+    m_perception = {rect_x, rect_y, rect_w, rect_h};
 
-    if (m_Target == nullptr) {
+    if (m_target == nullptr) {
         SDL_Log("Target is null for object %s", GetID().c_str());
         return false;
     }
 
-    Rect const target = m_Target->GetDstRect();
+    Rect const target = m_target->GetDstRect();
 
-    if (ColliderHandler::GetInstance()->CheckCollision(m_Perception, target)) {
-        return true;
-    }
-    return false;
+    return ColliderHandler::GetInstance()->CheckCollision(m_perception, target);
 }
 
 // Returns true if in target is in range
 bool Enemy::MoveTowardsTarget(float dt) {
     if (TargetDetected()) {
-        float direction_x = m_Target->GetMidPointX() - GetMidPointX();
-        float direction_y = m_Target->GetMidPointY() - GetMidPointY();
+        float direction_x = m_target->GetMidPointX() - GetMidPointX();
+        float direction_y = m_target->GetMidPointY() - GetMidPointY();
 
         float const direction_length =
             sqrt(direction_x * direction_x + direction_y * direction_y);

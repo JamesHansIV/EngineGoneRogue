@@ -15,21 +15,21 @@ class TileMap : public Texture {
             int rows, int cols);
     TileMap(const char* path, std::string id, int tileSize, int rows, int cols);
 
-    inline int GetTileSize() const { return m_TileSize; }
+    inline int GetTileSize() const { return m_tile_size; }
 
-    inline int GetRows() const { return m_Rows; }
+    inline int GetRows() const { return m_rows; }
 
-    inline int GetCols() const { return m_Cols; }
+    inline int GetCols() const { return m_cols; }
 
     std::vector<std::vector<bool>>& GetActiveButtons() {
-        return m_ActiveTileButtons;
+        return m_active_tile_buttons;
     }
 
     void ClearButtons();
 
    private:
-    int m_TileSize;
-    int m_Rows;
-    int m_Cols;
-    std::vector<std::vector<bool>> m_ActiveTileButtons;
+    int m_tile_size;
+    int m_rows;
+    int m_cols;
+    std::vector<std::vector<bool>> m_active_tile_buttons;
 };

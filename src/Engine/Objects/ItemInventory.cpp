@@ -7,12 +7,12 @@ const int kCellHeight = 40;
 const int kCellWidth = 50;
 
 void ItemInventory::Draw() {
-    GridComponent box_container(1, static_cast<int>(m_Items.size()), 0, 40, kCellHeight, kCellWidth);
+    GridComponent box_container(1, static_cast<int>(m_items.size()), 0, 40, kCellHeight, kCellWidth);
 
     int column = 0;
-    for (const auto& pair : m_Items) {
+    for (const auto& pair : m_items) {
         const Item& item = *pair.second;
-        SDL_Rect src_rect = {0, 0, 16, 16};
+        SDL_Rect const src_rect = {0, 0, 16, 16};
         auto* item_box = new BoxWithCounter( item.GetCount(),item.GetTexture(), src_rect, kColor, false);
         box_container.AddBox(item_box, 0, column);
         column++;
@@ -22,5 +22,5 @@ void ItemInventory::Draw() {
 }
 
 void ItemInventory::Update(const Player& player) {
-    m_Items = player.GetPlayerItems();
+    m_items = player.GetPlayerItems();
 }

@@ -220,16 +220,16 @@ Editor::Editor() {
 
     SDL_Log("editor constructor");
     m_Rooms = Application::m_Rooms;
-    m_Layers.emplace_back();
+    m_layers.emplace_back();
 
     // load editor textures
     LoadEditorTextures();
 
     // create keymap
-    m_KeyMap = new KeyMap();
+    m_key_map = new KeyMap();
 
     // create cursor
-    m_Cursor = new Cursor();
+    m_cursor = new Cursor();
 }
 
 Editor::~Editor() {
@@ -240,26 +240,26 @@ Editor::~Editor() {
 
     CleanLayers();
 
-    delete m_KeyMap;
-    delete m_Cursor;
+    delete m_key_map;
+    delete m_cursor;
 }
 
 void Editor::CleanLayers() {
-    m_HiddenLayers.clear();
-    m_CurrentTexture = nullptr;
-    m_CurrentObject = nullptr;
-    for (auto& m_layer : m_Layers) {
+    m_hidden_layers.clear();
+    m_current_texture = nullptr;
+    m_current_object = nullptr;
+    for (auto& m_layer : m_layers) {
         for (auto* obj : m_layer) {
             delete obj;
         }
     }
-    m_Layers.clear();
+    m_layers.clear();
 }
 
 void Editor::SaveRoom(const char* roomName) {
     std::vector<GameObject*> objects;
 
-    for (const auto& layer : m_Layers) {
+    for (const auto& layer : m_layers) {
         for (auto* obj : layer) {
             objects.push_back(obj);
         }
@@ -303,16 +303,16 @@ void Editor::CreateProjectFolder() {
 }
 
 void Editor::SetObjectInfo() {
-    auto* tile_map = dynamic_cast<TileMap*>(m_CurrentTexture);
+    auto* tile_map = dynamic_cast<TileMap*>(m_current_texture);
     if (tile_map != nullptr) {
-        m_ObjectInfo.Tile = {0, 0, tile_map->GetTileSize(),
+        m_object_info.Tile = {0, 0, tile_map->GetTileSize(),
                              tile_map->GetTileSize()};
-        m_ObjectInfo.DstRect = {0, 0, TILE_SIZE, TILE_SIZE};
+        m_object_info.DstRect = {0, 0, TILE_SIZE, TILE_SIZE};
     } else {
-        m_ObjectInfo.Tile = {0, 0, m_CurrentTexture->GetWidth(),
-                             m_CurrentTexture->GetHeight()};
-        m_ObjectInfo.DstRect = {0, 0, m_CurrentTexture->GetWidth(),
-                                m_CurrentTexture->GetHeight()};
+        m_object_info.Tile = {0, 0, m_current_texture->GetWidth(),
+                             m_current_texture->GetHeight()};
+        m_object_info.DstRect = {0, 0, m_current_texture->GetWidth(),
+                                m_current_texture->GetHeight()};
     }
 }
 
@@ -325,7 +325,7 @@ void Editor::ShowTextureIDs() {
         if (ImGui::TreeNode("Select texture")) {
             for (const auto& id : texture_i_ds) {
                 if (ImGui::Button(id.c_str(), ImVec2(100, 30))) {
-                    m_CurrentTexture = Renderer::GetInstance()->GetTexture(id);
+                    m_current_texture = Renderer::GetInstance()->GetTexture(id);
                     SetObjectInfo();
                 }
             }
@@ -336,17 +336,17 @@ void Editor::ShowTextureIDs() {
 
 void Editor::AddRoom() {
     std::vector<GameObject*> objects;
-    for (const auto& row : m_Layers) {
+    for (const auto& row : m_layers) {
         for (auto* obj : row) {
             objects.push_back(new GameObject(obj));
         }
     }
-    m_Rooms[m_CurrentRoomID] = std::vector<GameObject*>(objects);
+    m_Rooms[m_current_room_id] = std::vector<GameObject*>(objects);
 }
 
 void Editor::ShowFileManager() {
     if (ImGui::BeginTabItem("File")) {
-        ImGui::Text("Current room: %s", m_CurrentRoomID.c_str());
+        ImGui::Text("Current room: %s", m_current_room_id.c_str());
 
         if (ImGui::Button("Save SDFSDFSDProject", ImVec2(150, 20))) {
             SaveProject();
@@ -362,7 +362,7 @@ void Editor::ShowFileManager() {
             if (strcmp(room_name, "") != 0) {
                 if (ImGui::Button("Create room", ImVec2(100, 30))) {
                     CleanLayers();
-                    m_CurrentRoomID = room_name;
+                    m_current_room_id = room_name;
                     AddRoom();
                     ImGui::CloseCurrentPopup();
                 }
@@ -383,8 +383,8 @@ void Editor::ShowFileManager() {
             ImGui::InputText("Input room name", room_name, sizeof(room_name));
             if (strcmp(room_name, "") != 0) {
                 if (ImGui::Button("Save room", ImVec2(100, 30))) {
-                    m_CurrentRoomID = room_name;
-                    SaveRoom(m_CurrentRoomID.c_str());
+                    m_current_room_id = room_name;
+                    SaveRoom(m_current_room_id.c_str());
                     AddRoom();
                     ImGui::CloseCurrentPopup();
                 }
@@ -409,8 +409,8 @@ void Editor::ShowFileManager() {
 
                         CleanLayers();
 
-                        m_Layers.push_back(CopyObjects(m_Rooms[id]));
-                        m_CurrentRoomID = id;
+                        m_layers.push_back(CopyObjects(m_Rooms[id]));
+                        m_current_room_id = id;
                         ImGui::CloseCurrentPopup();
                     }
                 }
@@ -423,21 +423,21 @@ void Editor::ShowFileManager() {
 }
 
 void Editor::ShowAddCollider() {
-    auto* collider = dynamic_cast<Collider*>(m_CurrentObject);
+    auto* collider = dynamic_cast<Collider*>(m_current_object);
     if (collider == nullptr && ImGui::TreeNode("Add CollisionBox")) {
 
-        ImGui::InputInt("Set collider width", &m_ObjectInfo.CollisionBox.w);
+        ImGui::InputInt("Set collider width", &m_object_info.CollisionBox.w);
 
-        ImGui::InputInt("Set collider height", &m_ObjectInfo.CollisionBox.h);
+        ImGui::InputInt("Set collider height", &m_object_info.CollisionBox.h);
 
         if (ImGui::Button("Add collider", ImVec2(100, 30))) {
-            collider = new Collider(m_CurrentObject);
+            collider = new Collider(m_current_object);
             collider->GetCollisionBox().Set(
-                m_CurrentObject->GetX(), m_CurrentObject->GetY(),
-                m_ObjectInfo.CollisionBox.w, m_ObjectInfo.CollisionBox.h);
-            DeleteObject(m_CurrentObject);
-            m_Layers[m_CurrentLayer].push_back(collider);
-            m_CurrentObject = collider;
+                m_current_object->GetX(), m_current_object->GetY(),
+                m_object_info.CollisionBox.w, m_object_info.CollisionBox.h);
+            DeleteObject(m_current_object);
+            m_layers[m_current_layer].push_back(collider);
+            m_current_object = collider;
         }
         ImGui::TreePop();
     }
@@ -448,7 +448,7 @@ void Editor::ShowAddAnimation() {
     char button_label[LABEL_LEN + 1];
     char status_label[LABEL_LEN + 1];
 
-    if (m_CurrentObject->GetAnimation() == nullptr) {
+    if (m_current_object->GetAnimation() == nullptr) {
         snprintf(animation_label, LABEL_LEN, "%s idle animation", "Add");
         snprintf(button_label, LABEL_LEN, "%s animation", "Add");
         snprintf(status_label, LABEL_LEN, "Successfully %s animation", "added");
@@ -463,24 +463,24 @@ void Editor::ShowAddAnimation() {
 
     if (ImGui::TreeNode(animation_label)) {
 
-        ImGui::InputInt("Set sprite row", &m_ObjectInfo.Animation.Tile.row);
-        ImGui::InputInt("Set sprite col", &m_ObjectInfo.Animation.Tile.col);
-        ImGui::InputInt("Set sprite width", &m_ObjectInfo.Animation.Tile.w);
-        ImGui::InputInt("Set sprite height", &m_ObjectInfo.Animation.Tile.h);
+        ImGui::InputInt("Set sprite row", &m_object_info.Animation.Tile.row);
+        ImGui::InputInt("Set sprite col", &m_object_info.Animation.Tile.col);
+        ImGui::InputInt("Set sprite width", &m_object_info.Animation.Tile.w);
+        ImGui::InputInt("Set sprite height", &m_object_info.Animation.Tile.h);
 
-        ImGui::InputInt("Set frame count", &m_ObjectInfo.Animation.FrameCount);
+        ImGui::InputInt("Set frame count", &m_object_info.Animation.FrameCount);
         ImGui::InputInt("Set animation speed",
-                        &m_ObjectInfo.Animation.AnimationSpeed);
+                        &m_object_info.Animation.AnimationSpeed);
 
         if (ImGui::Button(button_label, ImVec2(100, 30))) {
-            if (m_CurrentObject->GetAnimation() == nullptr) {
-                m_CurrentObject->SetAnimation(new Animation());
+            if (m_current_object->GetAnimation() == nullptr) {
+                m_current_object->SetAnimation(new Animation());
             }
 
-            m_CurrentObject->GetAnimation()->SetProps(
-                {m_CurrentObject->GetTextureID(), m_ObjectInfo.Animation.Tile,
-                 m_ObjectInfo.Animation.FrameCount,
-                 m_ObjectInfo.Animation.AnimationSpeed});
+            m_current_object->GetAnimation()->SetProps(
+                {m_current_object->GetTextureID(), m_object_info.Animation.Tile,
+                 m_object_info.Animation.FrameCount,
+                 m_object_info.Animation.AnimationSpeed});
             show_status_timer = 300;
         }
         ImGui::TreePop();
@@ -494,21 +494,21 @@ void Editor::ShowAddAnimation() {
 void Editor::ShowObjectEditor() {
     if (ImGui::BeginTabItem("Object Editor")) {
         if (ImGui::TreeNode("Object list")) {
-            for (auto it = m_Layers[m_CurrentLayer].begin();
-                 it != m_Layers[m_CurrentLayer].end(); it++) {
+            for (auto it = m_layers[m_current_layer].begin();
+                 it != m_layers[m_current_layer].end(); it++) {
                 if (ImGui::Button((*it)->GetID().c_str(), ImVec2(100, 30))) {
-                    m_CurrentObject = *it;
-                    m_Layers[m_CurrentLayer].erase(it);
-                    m_Layers[m_CurrentLayer].insert(
-                        m_Layers[m_CurrentLayer].end(), m_CurrentObject);
+                    m_current_object = *it;
+                    m_layers[m_current_layer].erase(it);
+                    m_layers[m_current_layer].insert(
+                        m_layers[m_current_layer].end(), m_current_object);
                 }
             }
             ImGui::TreePop();
         }
 
-        if (!m_SelectedObjects.empty()) {
+        if (!m_selected_objects.empty()) {
             if (ImGui::Button("Rotate left", ImVec2(100, 30))) {
-                for (const auto& obj : m_SelectedObjects) {
+                for (const auto& obj : m_selected_objects) {
                     obj->GetRotation() -= 90.0F;
                     obj->SetRotation(static_cast<int>(obj->GetRotation()) %
                                      360);
@@ -516,7 +516,7 @@ void Editor::ShowObjectEditor() {
             }
             ImGui::SameLine();
             if (ImGui::Button("Rotate right", ImVec2(100, 30))) {
-                for (const auto& obj : m_SelectedObjects) {
+                for (const auto& obj : m_selected_objects) {
                     obj->GetRotation() += 90.0F;
                     obj->SetRotation(static_cast<int>(obj->GetRotation()) %
                                      360);
@@ -525,18 +525,18 @@ void Editor::ShowObjectEditor() {
 
             if (ImGui::Button("Delete objects", ImVec2(100, 30))) {
 
-                for (const auto& obj : m_SelectedObjects) {
+                for (const auto& obj : m_selected_objects) {
                     DeleteObject(obj);
                 }
-                m_SelectedObjects.clear();
+                m_selected_objects.clear();
             }
 
-        } else if (m_CurrentObject != nullptr) {
+        } else if (m_current_object != nullptr) {
             ImGui::Text("Selected object: %s",
-                        m_CurrentObject->GetID().c_str());
+                        m_current_object->GetID().c_str());
             ImGui::Text("Texture:");
             Texture* obj_texture = Renderer::GetInstance()->GetTexture(
-                m_CurrentObject->GetTextureID());
+                m_current_object->GetTextureID());
 
             ImVec2 size;
             ImVec2 uv0;
@@ -545,13 +545,13 @@ void Editor::ShowObjectEditor() {
             if (auto* tile_map = dynamic_cast<TileMap*>(obj_texture)) {
                 size = {static_cast<float>(tile_map->GetTileSize()) * 10,
                         static_cast<float>(tile_map->GetTileSize()) * 10};
-                uv0 = ImVec2(m_CurrentObject->GetTilePos().col /
+                uv0 = ImVec2(m_current_object->GetTilePos().col /
                                  static_cast<float>(tile_map->GetCols()),
-                             m_CurrentObject->GetTilePos().row /
+                             m_current_object->GetTilePos().row /
                                  static_cast<float>(tile_map->GetRows()));
-                uv1 = ImVec2((m_CurrentObject->GetTilePos().col + 1) /
+                uv1 = ImVec2((m_current_object->GetTilePos().col + 1) /
                                  static_cast<float>(tile_map->GetCols()),
-                             (m_CurrentObject->GetTilePos().row + 1) /
+                             (m_current_object->GetTilePos().row + 1) /
                                  static_cast<float>(tile_map->GetRows()));
             } else {
                 size =
@@ -562,30 +562,30 @@ void Editor::ShowObjectEditor() {
 
             ImGui::Image((void*)obj_texture->GetTexture(), size, uv0, uv1);
 
-            ImGui::SliderFloat("X position", &m_CurrentObject->GetX(), 0,
-                               LEVEL_WIDTH - m_CurrentObject->GetWidth());
-            ImGui::SliderFloat("Y position", &m_CurrentObject->GetY(), 0,
-                               LEVEL_HEIGHT - m_CurrentObject->GetHeight());
+            ImGui::SliderFloat("X position", &m_current_object->GetX(), 0,
+                               LEVEL_WIDTH - m_current_object->GetWidth());
+            ImGui::SliderFloat("Y position", &m_current_object->GetY(), 0,
+                               LEVEL_HEIGHT - m_current_object->GetHeight());
 
-            ImGui::SliderInt("Width", &m_CurrentObject->GetWidth(), 0,
+            ImGui::SliderInt("Width", &m_current_object->GetWidth(), 0,
                              LEVEL_WIDTH);
-            ImGui::SliderInt("Height", &m_CurrentObject->GetHeight(), 0,
+            ImGui::SliderInt("Height", &m_current_object->GetHeight(), 0,
                              LEVEL_HEIGHT);
 
             if (ImGui::Button("Rotate left", ImVec2(100, 30))) {
-                m_CurrentObject->GetRotation() -= 90.0F;
-                m_CurrentObject->GetRotation() =
-                    static_cast<int>(m_CurrentObject->GetRotation()) % 360;
+                m_current_object->GetRotation() -= 90.0F;
+                m_current_object->GetRotation() =
+                    static_cast<int>(m_current_object->GetRotation()) % 360;
             }
             ImGui::SameLine();
             if (ImGui::Button("Rotate right", ImVec2(100, 30))) {
-                m_CurrentObject->GetRotation() += 90.0F;
-                m_CurrentObject->GetRotation() =
-                    static_cast<int>(m_CurrentObject->GetRotation()) % 360;
+                m_current_object->GetRotation() += 90.0F;
+                m_current_object->GetRotation() =
+                    static_cast<int>(m_current_object->GetRotation()) % 360;
             }
 
             if (ImGui::Button("Delete object", ImVec2(100, 30))) {
-                DeleteObject(m_CurrentObject);
+                DeleteObject(m_current_object);
             }
 
             ShowAddCollider();
@@ -594,31 +594,31 @@ void Editor::ShowObjectEditor() {
 
         ImGui::Text("Snap to grid: ");
         ImGui::SameLine();
-        const char* snap_to_grid = m_ObjectInfo.SnapToGrid ? "True" : "False";
+        const char* snap_to_grid = m_object_info.SnapToGrid ? "True" : "False";
         if (ImGui::Button(snap_to_grid, ImVec2(80, 30))) {
-            m_ObjectInfo.SnapToGrid = !m_ObjectInfo.SnapToGrid;
+            m_object_info.SnapToGrid = !m_object_info.SnapToGrid;
         }
 
         std::string const select_label =
-            m_EditState.EditMode == EditMode::SELECT ? "Stop Select"
+            m_edit_state.EditMode == EditMode::SELECT ? "Stop Select"
                                                      : "Begin Select";
         if (ImGui::Button(select_label.c_str())) {
-            m_CurrentObject = nullptr;
-            m_EditState.EditMode = m_EditState.EditMode == EditMode::SELECT
+            m_current_object = nullptr;
+            m_edit_state.EditMode = m_edit_state.EditMode == EditMode::SELECT
                                        ? EditMode::NONE
                                        : EditMode::SELECT;
         }
 
         if (ImGui::Button("Deselect")) {
-            m_SelectedObjects.clear();
-            m_EditState.EditMode = EditMode::NONE;
+            m_selected_objects.clear();
+            m_edit_state.EditMode = EditMode::NONE;
         }
 
-        std::string const erase_label = m_EditState.EditMode == EditMode::ERASE
+        std::string const erase_label = m_edit_state.EditMode == EditMode::ERASE
                                             ? "Stop Erase"
                                             : "Begin Erase";
         if (ImGui::Button(erase_label.c_str())) {
-            m_EditState.EditMode = m_EditState.EditMode == EditMode::ERASE
+            m_edit_state.EditMode = m_edit_state.EditMode == EditMode::ERASE
                                        ? EditMode::NONE
                                        : EditMode::ERASE;
         }
@@ -649,14 +649,14 @@ void Editor::ShowLoadTexture() {
         if (strcmp(filepath, "") != 0 && strcmp(texture_id, "") != 0) {
             if (ImGui::Button("Load texture", ImVec2(100, 30))) {
 
-                m_CurrentTexture =
+                m_current_texture =
                     (is_tile_map)
                         ? Renderer::GetInstance()->AddTileMap(
                               texture_id, filepath, tile_size, rows, cols)
                         : Renderer::GetInstance()->AddTexture(texture_id,
                                                               filepath);
 
-                if (m_CurrentTexture == nullptr) {
+                if (m_current_texture == nullptr) {
                     strcpy(invalid_filepath, filepath);
                 } else {
                     SetObjectInfo();
@@ -684,20 +684,21 @@ void Editor::AddObject(float x, float y) {
     GameObject* new_object;
 
     // safety check
-    if (m_CurrentTexture == nullptr)
+    if (m_current_texture == nullptr) {
         return;
+}
     
     // std::cout << "Current texture: " << m_CurrentTexture << '\n';
-    std::string obj_id = m_CurrentTexture->GetID();
-    obj_id += std::to_string(m_CurrentTexture->GetObjectCount());
+    std::string obj_id = m_current_texture->GetID();
+    obj_id += std::to_string(m_current_texture->GetObjectCount());
 
-    m_ObjectInfo.DstRect.x = x;
-    m_ObjectInfo.DstRect.y = y;
+    m_object_info.DstRect.x = x;
+    m_object_info.DstRect.y = y;
 
-    Properties props(m_CurrentTexture->GetID(), m_ObjectInfo.Tile,
-                     m_ObjectInfo.DstRect, m_ObjectInfo.Rotation, obj_id);
+    Properties props(m_current_texture->GetID(), m_object_info.Tile,
+                     m_object_info.DstRect, m_object_info.Rotation, obj_id);
 
-    switch (m_ObjectInfo.type) {
+    switch (m_object_info.type) {
         case ObjectType::Base:
             new_object = new GameObject(props);
             break;
@@ -713,24 +714,24 @@ void Editor::AddObject(float x, float y) {
             assert(false);
             break;
     }
-    m_CurrentTexture->IncObjectCount();
-    m_Layers[m_CurrentLayer].push_back(new_object);
+    m_current_texture->IncObjectCount();
+    m_layers[m_current_layer].push_back(new_object);
 }
 
 void Editor::PrintLayer() {
-    for (GameObject* obj : m_Layers[m_CurrentLayer]) {
+    for (GameObject* obj : m_layers[m_current_layer]) {
         std::cout << obj->GetID() << "\tTILE: " << obj->GetTilePos().col << ","
-                  << obj->GetTilePos().row << "\tLAYER: " << m_CurrentLayer
-                  << std::endl;
+                  << obj->GetTilePos().row << "\tLAYER: " << m_current_layer
+                  << '\n';
     }
 }
 
-void Editor::PrintLayer(int row, int col) {
-    for (GameObject* obj : m_Layers[m_CurrentLayer]) {
+void Editor::PrintLayer(int  /*row*/, int  /*col*/) {
+    for (GameObject* obj : m_layers[m_current_layer]) {
         std::cout << obj->GetID() << "\tTILE: " << obj->GetTilePos().row << ","
                   << obj->GetTilePos().col << "\tW" << obj->GetTilePos().w
                   << "\tH" << obj->GetTilePos().h
-                  << "\tLAYER: " << m_CurrentLayer << std::endl;
+                  << "\tLAYER: " << m_current_layer << '\n';
     }
 }
 
@@ -742,7 +743,7 @@ void Editor::DeleteObject(GameObject* obj) {
     //         room.erase(it);
     //     }
     // }
-    for (auto& layer : m_Layers) {
+    for (auto& layer : m_layers) {
         auto it = std::find(layer.begin(), layer.end(), obj);
         if (it != layer.end()) {
             SDL_Log("found obj in layer: %s", (*it)->GetID().c_str());
@@ -761,8 +762,8 @@ void Editor::ShowBuildPlayer() {
 
 void Editor::ShowBuildEnemy() {
 
-    ImGui::InputInt("Input perception width", &m_EnemyInfo.PerceptionWidth);
-    ImGui::InputInt("Input perception height", &m_EnemyInfo.PerceptionHeight);
+    ImGui::InputInt("Input perception width", &m_enemy_info.PerceptionWidth);
+    ImGui::InputInt("Input perception height", &m_enemy_info.PerceptionHeight);
 }
 
 ObjectType Editor::ShowSelectObjectType() {
@@ -783,7 +784,7 @@ ObjectType Editor::ShowSelectObjectType() {
         }
         ImGui::EndCombo();
     }
-    m_ObjectInfo.type = static_cast<ObjectType>(current_index + 1);
+    m_object_info.type = static_cast<ObjectType>(current_index + 1);
     return static_cast<ObjectType>(current_index + 1);
 }
 
@@ -815,8 +816,8 @@ void Editor::ShowTiles(TileMap* tileMap) {
                                    uv0, uv1) ||
                 ImGui::IsItemClicked()) {
                 tileMap->ClearButtons();
-                m_ObjectInfo.Tile.row = i;
-                m_ObjectInfo.Tile.col = j;
+                m_object_info.Tile.row = i;
+                m_object_info.Tile.col = j;
                 tileMap->GetActiveButtons()[i][j] = !is_active;
             }
 
@@ -832,18 +833,18 @@ void Editor::ShowCreateObject() {
     if (ImGui::BeginTabItem("Create object")) {
         ShowTextureIDs();
 
-        if (m_CurrentTexture == nullptr) {
+        if (m_current_texture == nullptr) {
             ImGui::Text("Please select a texture to create an object");
         } else {
             ImGui::Text("Selected texture: %s",
-                        m_CurrentTexture->GetID().c_str());
-            ImGui::Image((void*)m_CurrentTexture->GetTexture(),
-                         ImVec2(m_CurrentTexture->GetWidth(),
-                                m_CurrentTexture->GetHeight()));
-            ImGui::Text("size = %d x %d", m_CurrentTexture->GetWidth(),
-                        m_CurrentTexture->GetHeight());
+                        m_current_texture->GetID().c_str());
+            ImGui::Image((void*)m_current_texture->GetTexture(),
+                         ImVec2(m_current_texture->GetWidth(),
+                                m_current_texture->GetHeight()));
+            ImGui::Text("size = %d x %d", m_current_texture->GetWidth(),
+                        m_current_texture->GetHeight());
 
-            auto* tile_map = dynamic_cast<TileMap*>(m_CurrentTexture);
+            auto* tile_map = dynamic_cast<TileMap*>(m_current_texture);
             if (tile_map != nullptr) {
                 // ImGui::SliderInt("Select tile row", &m_ObjectInfo.Tile.row, 0, tileMap->GetRows() - 1);
                 // ImGui::SliderInt("Select tile column", &m_ObjectInfo.Tile.col, 0, tileMap->GetCols() - 1);
@@ -852,9 +853,9 @@ void Editor::ShowCreateObject() {
 
             ImGui::SeparatorText("Select dimensions");
             ImGui::SliderInt("Select destination width: ",
-                             &m_ObjectInfo.DstRect.w, 0, LEVEL_WIDTH);
+                             &m_object_info.DstRect.w, 0, LEVEL_WIDTH);
             ImGui::SliderInt("Select destination height: ",
-                             &m_ObjectInfo.DstRect.h, 0, LEVEL_HEIGHT);
+                             &m_object_info.DstRect.h, 0, LEVEL_HEIGHT);
 
             ObjectType const type = ShowSelectObjectType();
             switch (type) {
@@ -871,11 +872,11 @@ void Editor::ShowCreateObject() {
                     assert(false);
             }
             std::string const draw_label =
-                m_EditState.EditMode == EditMode::DRAW ? "Stop Draw"
+                m_edit_state.EditMode == EditMode::DRAW ? "Stop Draw"
                                                        : "Begin Draw";
 
             if (ImGui::Button(draw_label.c_str())) {
-                m_EditState.EditMode = m_EditState.EditMode == EditMode::DRAW
+                m_edit_state.EditMode = m_edit_state.EditMode == EditMode::DRAW
                                            ? EditMode::NONE
                                            : EditMode::DRAW;
             }
@@ -887,28 +888,28 @@ void Editor::ShowCreateObject() {
 void Editor::ShowChooseLayer() {
     if (ImGui::BeginTabItem("Layers")) {
         if (ImGui::Button("Add Layer", ImVec2(100, 30))) {
-            m_Layers.emplace_back();
+            m_layers.emplace_back();
         }
         ImGui::SeparatorText("Select Layer");
-        for (int i = 0; i < m_Layers.size(); i++) {
+        for (int i = 0; i < m_layers.size(); i++) {
             char layer_label[LABEL_LEN + 1];
             snprintf(layer_label, LABEL_LEN, "Layer %d", i);
-            if (ImGui::Selectable(layer_label, m_CurrentLayer == i)) {
-                m_CurrentLayer = i;
-                m_CurrentObject = nullptr;
+            if (ImGui::Selectable(layer_label, m_current_layer == i)) {
+                m_current_layer = i;
+                m_current_object = nullptr;
             }
 
             char button_label[LABEL_LEN + 1];
-            if (m_HiddenLayers.find(i) == m_HiddenLayers.end()) {
+            if (m_hidden_layers.find(i) == m_hidden_layers.end()) {
                 snprintf(button_label, LABEL_LEN, "Hide %d", i);
                 if (ImGui::Button(button_label, ImVec2(60, 20))) {
                     SDL_Log("layer %d should be hidden", i);
-                    m_HiddenLayers.insert(i);
+                    m_hidden_layers.insert(i);
                 }
             } else {
                 snprintf(button_label, LABEL_LEN, "Show %d", i);
                 if (ImGui::Button(button_label, ImVec2(60, 20))) {
-                    m_HiddenLayers.erase(i);
+                    m_hidden_layers.erase(i);
                 }
             }
         }
@@ -940,27 +941,27 @@ void Editor::Update(float /*dt*/) {
     // Now includes checks for previous keys
 
     // basing input off of editor acction allows us to use bindings and easier rebinds in the future
-    if (m_KeyMap->CheckInputs(EditorAction::PAN_CAMERA_UP)) {
+    if (m_key_map->CheckInputs(EditorAction::PanCameraUp)) {
         Renderer::GetInstance()->MoveCameraY(-10.0F);
     }
-    if (m_KeyMap->CheckInputs(EditorAction::PAN_CAMERA_DOWN)) {
+    if (m_key_map->CheckInputs(EditorAction::PanCameraDown)) {
         Renderer::GetInstance()->MoveCameraY(10.0F);
     }
-    if (m_KeyMap->CheckInputs(EditorAction::PAN_CAMERA_LEFT)) {
+    if (m_key_map->CheckInputs(EditorAction::PanCameraLeft)) {
         Renderer::GetInstance()->MoveCameraX(-10.0F);
     }
-    if (m_KeyMap->CheckInputs(EditorAction::PAN_CAMERA_RIGHT)) {
+    if (m_key_map->CheckInputs(EditorAction::PanCameraRight)) {
         Renderer::GetInstance()->MoveCameraX(10.0F);
     }
 
     // Check and handle tool selection / deselection via keybinds
     // the EditorAction param is the result of a satisfied keybind input, with the EditMode param being the tool selection
-    CheckForToolSelection(EditorAction::ENTER_DRAW_TOOL, EditMode::DRAW);
-    CheckForToolSelection(EditorAction::ENTER_ERASE_TOOL, EditMode::ERASE);
+    CheckForToolSelection(EditorAction::EnterDrawTool, EditMode::DRAW);
+    CheckForToolSelection(EditorAction::EnterEraseTool, EditMode::ERASE);
 
     // Tool deselection
-    if (m_KeyMap->CheckInputs(EditorAction::EXIT_CURRENT_TOOL)) {
-        m_EditState.EditMode = EditMode::NONE;
+    if (m_key_map->CheckInputs(EditorAction::ExitCurrentTool)) {
+        m_edit_state.EditMode = EditMode::NONE;
     }
 
     InputChecker::SetPrevFrameKeys();
@@ -977,12 +978,12 @@ void Editor::Render() {
     ImGui::Render();
 
     Renderer::GetInstance()->RenderClear();
-    for (int i = 0; i < m_Layers.size(); i++) {
-        if (m_HiddenLayers.find(i) == m_HiddenLayers.end()) {
-            for (auto* obj : m_Layers[i]) {
+    for (int i = 0; i < m_layers.size(); i++) {
+        if (m_hidden_layers.find(i) == m_hidden_layers.end()) {
+            for (auto* obj : m_layers[i]) {
                 obj->Update(0.0);
                 obj->Draw();
-                if (m_SelectedObjects.find(obj) != m_SelectedObjects.end()) {
+                if (m_selected_objects.find(obj) != m_selected_objects.end()) {
                     std::vector<SDL_Rect> rects;
                     rects.reserve(4);
                     for (int i = 0; i < 4; i++) {
@@ -1001,13 +1002,13 @@ void Editor::Render() {
     ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
 
     // draw cursor
-    if (m_EditState.EditMode != EditMode::NONE) {
+    if (m_edit_state.EditMode != EditMode::NONE) {
         ImGui::SetMouseCursor(ImGuiMouseCursor_None);  // hide default cursor
 
-        SDL_Rect const cursor_rect = m_Cursor->UpdateAndGetRect();
+        SDL_Rect const cursor_rect = m_cursor->UpdateAndGetRect();
 
         std::string const cursor_texture_id =
-            m_Cursor->GetTextureId(static_cast<int>(m_EditState.EditMode));
+            m_cursor->GetTextureId(static_cast<int>(m_edit_state.EditMode));
 
         SDL_RenderCopy(Renderer::GetInstance()->GetRenderer(),
                        Renderer::GetInstance()
@@ -1026,8 +1027,8 @@ void Editor::Render() {
 
 GameObject* Editor::GetObjectUnderMouse() {
     GameObject* obj = nullptr;
-    auto it = m_Layers[m_CurrentLayer].end();
-    while (it != m_Layers[m_CurrentLayer].begin()) {
+    auto it = m_layers[m_current_layer].end();
+    while (it != m_layers[m_current_layer].begin()) {
         --it;
         if (CheckMouseOver(*it)) {
             obj = *it;
@@ -1038,8 +1039,8 @@ GameObject* Editor::GetObjectUnderMouse() {
 }
 
 void Editor::OnMouseClicked(SDL_Event& /*event*/) {
-    if (m_EditState.EditMode != EditMode::NONE) {
-        m_EditState.IsEditing = true;
+    if (m_edit_state.EditMode != EditMode::NONE) {
+        m_edit_state.IsEditing = true;
 
         float const x = ((InputChecker::GetMouseX() +
                           Renderer::GetInstance()->GetCameraX()) /
@@ -1050,17 +1051,17 @@ void Editor::OnMouseClicked(SDL_Event& /*event*/) {
                          TILE_SIZE) *
                         TILE_SIZE;
 
-        if (m_EditState.EditMode == EditMode::DRAW) {
+        if (m_edit_state.EditMode == EditMode::DRAW) {
             AddObject(x, y);
-        } else if (m_EditState.EditMode == EditMode::ERASE) {
+        } else if (m_edit_state.EditMode == EditMode::ERASE) {
             // delete all objects on mousedover tile, in current layer.
-            std::pair<int, int> tile_coords = PixelToTilePos(x, y);
+            std::pair<int, int> const tile_coords = PixelToTilePos(x, y);
 
             // create list of objects to delete on that tile and layer
             std::vector<GameObject*> objects_to_delete;
 
-            for (GameObject* obj : m_Layers[m_CurrentLayer]) {
-                std::pair<int, int> curr_tile_coords =
+            for (GameObject* obj : m_layers[m_current_layer]) {
+                std::pair<int, int> const curr_tile_coords =
                     PixelToTilePos(obj->GetX(), obj->GetY());
 
                 if (curr_tile_coords.first == tile_coords.first &&
@@ -1078,24 +1079,24 @@ void Editor::OnMouseClicked(SDL_Event& /*event*/) {
             GameObject* obj = GetObjectUnderMouse();
 
             if (obj != nullptr) {
-                m_SelectedObjects.insert(obj);
+                m_selected_objects.insert(obj);
             }
-            for (const auto& obj : m_SelectedObjects) {
+            for (const auto& obj : m_selected_objects) {
                 SDL_Log("%s", obj->GetID().c_str());
             }
             SDL_Log("\n");
         }
-        m_EditState.PrevX = x;
-        m_EditState.PrevY = y;
+        m_edit_state.PrevX = x;
+        m_edit_state.PrevY = y;
 
     } else {
         GameObject* obj = GetObjectUnderMouse();
         if (obj != nullptr) {
-            auto it = std::find(m_Layers[m_CurrentLayer].begin(),
-                                m_Layers[m_CurrentLayer].end(), obj);
-            m_Layers[m_CurrentLayer].erase(it);
-            m_Layers[m_CurrentLayer].push_back(obj);
-            m_CurrentObject = obj;
+            auto it = std::find(m_layers[m_current_layer].begin(),
+                                m_layers[m_current_layer].end(), obj);
+            m_layers[m_current_layer].erase(it);
+            m_layers[m_current_layer].push_back(obj);
+            m_current_object = obj;
         }
     }
 }
@@ -1103,7 +1104,7 @@ void Editor::OnMouseClicked(SDL_Event& /*event*/) {
 void Editor::OnMouseMoved(SDL_Event& event) {
     if (InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT)) {
 
-        if (m_EditState.IsEditing) {
+        if (m_edit_state.IsEditing) {
             float const x = ((InputChecker::GetMouseX() +
                               Renderer::GetInstance()->GetCameraX()) /
                              TILE_SIZE) *
@@ -1113,19 +1114,19 @@ void Editor::OnMouseMoved(SDL_Event& event) {
                              TILE_SIZE) *
                             TILE_SIZE;
 
-            if ((x != m_EditState.PrevX || y != m_EditState.PrevY)) {
-                if (m_EditState.EditMode == EditMode::DRAW) {
+            if ((x != m_edit_state.PrevX || y != m_edit_state.PrevY)) {
+                if (m_edit_state.EditMode == EditMode::DRAW) {
                     AddObject(x, y);
 
-                } else if (m_EditState.EditMode == EditMode::ERASE) {
+                } else if (m_edit_state.EditMode == EditMode::ERASE) {
                     // delete all objects on mousedover tile, in current layer.
-                    std::pair<int, int> tile_coords = PixelToTilePos(x, y);
+                    std::pair<int, int> const tile_coords = PixelToTilePos(x, y);
 
                     // create list of objects to delete on that tile and layer
                     std::vector<GameObject*> objects_to_delete;
 
-                    for (GameObject* obj : m_Layers[m_CurrentLayer]) {
-                        std::pair<int, int> curr_tile_coords =
+                    for (GameObject* obj : m_layers[m_current_layer]) {
+                        std::pair<int, int> const curr_tile_coords =
                             PixelToTilePos(obj->GetX(), obj->GetY());
 
                         if (curr_tile_coords.first == tile_coords.first &&
@@ -1147,15 +1148,15 @@ void Editor::OnMouseMoved(SDL_Event& event) {
                     GameObject* obj = GetObjectUnderMouse();
 
                     if (obj != nullptr) {
-                        m_SelectedObjects.insert(obj);
+                        m_selected_objects.insert(obj);
                     }
                 }
-                m_EditState.PrevX = x;
-                m_EditState.PrevY = y;
+                m_edit_state.PrevX = x;
+                m_edit_state.PrevY = y;
             }
-        } else if (!m_SelectedObjects.empty()) {
+        } else if (!m_selected_objects.empty()) {
             bool mouse_over_any = false;
-            for (const auto& obj : m_SelectedObjects) {
+            for (const auto& obj : m_selected_objects) {
                 if (CheckMouseOver(obj)) {
                     mouse_over_any = true;
                 }
@@ -1164,28 +1165,28 @@ void Editor::OnMouseMoved(SDL_Event& event) {
                 float const dx = event.button.x - InputChecker::GetMouseX();
                 float const dy = event.button.y - InputChecker::GetMouseY();
 
-                for (const auto& obj : m_SelectedObjects) {
+                for (const auto& obj : m_selected_objects) {
                     MoveObject(obj, dx, dy);
                 }
             }
 
-        } else if (m_CurrentObject != nullptr &&
-                   CheckMouseOver(m_CurrentObject)) {
+        } else if (m_current_object != nullptr &&
+                   CheckMouseOver(m_current_object)) {
             float const dx = event.button.x - InputChecker::GetMouseX();
             float const dy = event.button.y - InputChecker::GetMouseY();
-            MoveObject(m_CurrentObject, dx, dy);
+            MoveObject(m_current_object, dx, dy);
         }
     }
 }
 
 void Editor::OnMouseUp(SDL_Event& /*event*/) {
     if (InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT)) {
-        if (m_EditState.IsEditing) {
-            m_EditState.IsEditing = false;
+        if (m_edit_state.IsEditing) {
+            m_edit_state.IsEditing = false;
 
-        } else if (!m_SelectedObjects.empty()) {
-            if (m_ObjectInfo.SnapToGrid) {
-                for (const auto& obj : m_SelectedObjects) {
+        } else if (!m_selected_objects.empty()) {
+            if (m_object_info.SnapToGrid) {
+                for (const auto& obj : m_selected_objects) {
                     std::pair<float, float> const coords =
                         SnapToGrid(obj->GetX(), obj->GetY());
                     obj->SetX(coords.first);
@@ -1193,14 +1194,14 @@ void Editor::OnMouseUp(SDL_Event& /*event*/) {
                 }
             }
 
-        } else if (m_CurrentObject != nullptr &&
-                   CheckMouseOver(m_CurrentObject)) {
+        } else if (m_current_object != nullptr &&
+                   CheckMouseOver(m_current_object)) {
 
-            if (m_ObjectInfo.SnapToGrid) {
+            if (m_object_info.SnapToGrid) {
                 std::pair<float, float> const coords = SnapToGrid(
-                    m_CurrentObject->GetX(), m_CurrentObject->GetY());
-                m_CurrentObject->SetX(coords.first);
-                m_CurrentObject->SetY(coords.second);
+                    m_current_object->GetX(), m_current_object->GetY());
+                m_current_object->SetX(coords.first);
+                m_current_object->SetY(coords.second);
             }
         }
     }
@@ -1216,7 +1217,8 @@ std::pair<float, float> Editor::SnapToGrid(float x, float y) {
 }
 
 std::pair<int, int> Editor::PixelToTilePos(float x, float y) {
-    int row, col;
+    int row;
+    int col;
     row = y / TILE_SIZE;
     col = x / TILE_SIZE;
 
@@ -1261,10 +1263,10 @@ void Editor::Events() {
 // removes boilerplate needed to handle tool selection via keybinds.
 void Editor::CheckForToolSelection(EditorAction editor_action,
                                    EditMode edit_mode) {
-    if (m_KeyMap->CheckInputs(editor_action)) {
-        m_EditState.EditMode =
-            m_EditState.EditMode != edit_mode ? edit_mode : EditMode::NONE;
-        m_Cursor->SetCursor(static_cast<int>(m_EditState.EditMode));
+    if (m_key_map->CheckInputs(editor_action)) {
+        m_edit_state.EditMode =
+            m_edit_state.EditMode != edit_mode ? edit_mode : EditMode::NONE;
+        m_cursor->SetCursor(static_cast<int>(m_edit_state.EditMode));
     }
 }
 

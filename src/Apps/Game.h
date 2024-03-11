@@ -26,19 +26,19 @@ class Game : public Application {
     void ChangeState(State* state);
 
     std::vector<GameObject*>::iterator GetObjects() {
-        return m_Objects.begin();
+        return m_objects.begin();
     }
 
     ~Game();
 
    private:
-    State* m_State;
-    std::vector<GameObject*> m_Objects;
-    WeaponInventory* m_WeaponInventory;
+    State* m_state;
+    std::vector<GameObject*> m_objects;
+    WeaponInventory* m_weapon_inventory;
     int m_tick = 0;
     Uint32 m_last_enemy_spawn_time = 0;
-    GameEventManager* m_GameEventManager;
-    HUD* m_HeadsUpDisplay;
-    ItemManager* m_ItemManager;
+    GameEventManager* m_game_event_manager;
+    HUD* m_heads_up_display;
+    ItemManager* m_item_manager;
     void GenerateRandomEnemyIfNeeded();
 };

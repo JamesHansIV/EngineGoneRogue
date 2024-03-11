@@ -29,7 +29,7 @@ class Collider : public GameObject {
 
     CollisionBox& GetCollisionBox() { return m_CollisionBox; }
 
-    bool IsImmovable() { return m_Immovable; }
+    bool IsImmovable() const { return m_Immovable; }
 
     virtual ObjectType GetObjectType() override { return ObjectType::Collider; }
 

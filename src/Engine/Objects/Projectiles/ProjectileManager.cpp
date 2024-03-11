@@ -4,7 +4,7 @@
 ProjectileManager* ProjectileManager::s_instance = nullptr;
 
 ProjectileManager::~ProjectileManager() {
-    for (auto it = m_Projectiles.begin(); it != m_Projectiles.end();) {
+    for (auto it = m_projectiles.begin(); it != m_projectiles.end();) {
         it = RemoveProjectile(*it, it);
     }
 }
@@ -15,7 +15,7 @@ void ProjectileManager::AddProjectile(Projectile* projectile) {
         return;
     }
 
-    m_Projectiles.push_back(projectile);
+    m_projectiles.push_back(projectile);
 }
 
 p_iterator ProjectileManager::RemoveProjectile(Projectile* projectile,
@@ -23,17 +23,17 @@ p_iterator ProjectileManager::RemoveProjectile(Projectile* projectile,
     ColliderHandler::GetInstance()->RemoveCollider(projectile);
     (projectile)->Clean();
     delete projectile;
-    return m_Projectiles.erase(it);
+    return m_projectiles.erase(it);
 }
 
 void ProjectileManager::Draw() {
-    for (auto* projectile : m_Projectiles) {
+    for (auto* projectile : m_projectiles) {
         projectile->Draw();
     }
 }
 
 void ProjectileManager::UpdateProjectiles(float dt) {
-    for (auto it = m_Projectiles.begin(); it != m_Projectiles.end();) {
+    for (auto it = m_projectiles.begin(); it != m_projectiles.end();) {
         Projectile* projectile = *it;
         (projectile)->Update(dt);
         if ((projectile)->MarkedForDeletion()) {

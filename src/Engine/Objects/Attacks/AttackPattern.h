@@ -14,33 +14,37 @@ class AttackPattern {
 class Burst : public AttackPattern {
    public:
     Burst(int count, float cd)
-        : PrevBurstTime(0), _Count(count), Count(count), CD(cd) {}
+        : m_prev_burst_time(0),
+          m_fixed_count(count),
+          m_cur_count(count),
+          m_cd(cd) {}
 
-    void ResetCount() { Count = _Count; }
+    void ResetCount() { m_cur_count = m_fixed_count; }
 
     void Reset() override { ResetCount(); }
 
     void Update(float dt) override {
-        if (Count <= 0) {
+        if (m_cur_count <= 0) {
             int ticks = timer.GetTicks();
-            if ((ticks - PrevBurstTime) > CD) {
+            if ((ticks - m_prev_burst_time) > m_cd) {
                 ResetCount();
             }
         }
     }
 
     bool Attack() override {
-        if (Count > 0) {
-            Count--;
-            PrevBurstTime = Count == 0 ? timer.GetTicks() : PrevBurstTime;
+        if (m_cur_count > 0) {
+            m_cur_count--;
+            m_prev_burst_time =
+                m_cur_count == 0 ? timer.GetTicks() : m_prev_burst_time;
             return true;
         }
         return false;
     }
 
    private:
-    double PrevBurstTime;
-    int _Count;
-    int Count;
-    double CD;
+    double m_prev_burst_time;
+    int m_fixed_count;
+    int m_cur_count;
+    double m_cd;
 };

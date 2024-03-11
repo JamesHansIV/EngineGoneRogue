@@ -8,11 +8,11 @@
 HelixBullet::HelixBullet(Properties& props, float speed, float angle,
                          bool playerOwned, bool flipped)
     : Projectile(props, speed, angle, playerOwned),
-      m_Flipped(static_cast<int>(flipped)),
-      m_Origin(Vector2D(GetX(), GetY())),
-      m_TPos(0, 0),
-      m_WaveMagnitude(1),
-      m_Scale(30.0F) {
+      m_flipped(static_cast<int>(flipped)),
+      m_origin(Vector2D(GetX(), GetY())),
+      m_t_pos(0, 0),
+      m_wave_magnitude(1),
+      m_scale(30.0F) {
 
     SetSpeed(speed / 25);
 }
@@ -22,19 +22,19 @@ void HelixBullet::Draw() {
 }
 
 void HelixBullet::Update(float /*dt*/) {
-    m_TPos.X += GetSpeed();
-    m_TPos.Y = m_Flipped != 0 ? sin(m_TPos.X + M_PI) : sin(m_TPos.X);
+    m_t_pos.X += GetSpeed();
+    m_t_pos.Y = m_flipped != 0 ? sin(m_t_pos.X + M_PI) : sin(m_t_pos.X);
 
-    const float scaled_x = m_TPos.X * m_Scale;
-    const float scaled_y = m_TPos.Y * m_Scale;
+    const float scaled_x = m_t_pos.X * m_scale;
+    const float scaled_y = m_t_pos.Y * m_scale;
 
     const float rotated_x =
         scaled_x * cos(GetAngle()) - scaled_y * sin(GetAngle());
     const float rotated_y =
         scaled_x * sin(GetAngle()) + scaled_y * cos(GetAngle());
 
-    SetX(rotated_x + m_Origin.X);
-    SetY(rotated_y + m_Origin.Y);
+    SetX(rotated_x + m_origin.X);
+    SetY(rotated_y + m_origin.Y);
 
     m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
     CheckOutOfBounds();

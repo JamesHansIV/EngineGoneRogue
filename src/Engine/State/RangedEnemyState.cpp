@@ -93,7 +93,7 @@ State* RangedEnemyIdle::OnCollideEvent(CollideEvent* event) {
 }
 
 void RangedEnemyMoving::Enter() {
-    m_Direction == 1 ? GetEnemy()->GetAnimation()->SelectAnimation("Move-down")
+    m_direction == 1 ? GetEnemy()->GetAnimation()->SelectAnimation("Move-down")
                      : GetEnemy()->GetAnimation()->SelectAnimation("Move-up");
 }
 
@@ -122,9 +122,9 @@ void RangedEnemyMoving::SelectDirection() {
         direction = 1;
     }
 
-    if (m_Direction != direction) {
-        m_Direction = direction;
-        m_Direction == 1
+    if (m_direction != direction) {
+        m_direction = direction;
+        m_direction == 1
             ? GetEnemy()->GetAnimation()->SelectAnimation("Move-down")
             : GetEnemy()->GetAnimation()->SelectAnimation("Move-up");
     }

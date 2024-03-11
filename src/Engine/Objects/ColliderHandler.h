@@ -19,7 +19,7 @@ class ColliderHandler {
     }
 
    private:
-    std::vector<Collider*> m_Colliders;
+    std::vector<Collider*> m_colliders;
     ColliderHandler();
     static ColliderHandler* s_instance;
 };

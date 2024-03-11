@@ -11,13 +11,13 @@
 enum class InputType { CONTINUOUS, LATCH };
 
 enum class EditorAction { 
-    EXIT_CURRENT_TOOL, 
-    ENTER_DRAW_TOOL, 
-    ENTER_ERASE_TOOL,
-    PAN_CAMERA_UP,
-    PAN_CAMERA_RIGHT,
-    PAN_CAMERA_LEFT, 
-    PAN_CAMERA_DOWN
+    ExitCurrentTool, 
+    EnterDrawTool, 
+    EnterEraseTool,
+    PanCameraUp,
+    PanCameraRight,
+    PanCameraLeft, 
+    PanCameraDown
 };
 
 struct Bind {

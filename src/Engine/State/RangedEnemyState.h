@@ -4,14 +4,14 @@
 
 class RangedEnemyState : public State {
    public:
-    explicit RangedEnemyState(RangedEnemy* enemy) : m_Enemy(enemy) {}
+    explicit RangedEnemyState(RangedEnemy* enemy) : m_enemy(enemy) {}
 
-    RangedEnemy* GetEnemy() { return m_Enemy; }
+    RangedEnemy* GetEnemy() { return m_enemy; }
 
-    void SetEnemy(RangedEnemy* enemy) { m_Enemy = enemy; }
+    void SetEnemy(RangedEnemy* enemy) { m_enemy = enemy; }
 
    private:
-    RangedEnemy* m_Enemy;
+    RangedEnemy* m_enemy;
 };
 
 class RangedEnemyIdle : public RangedEnemyState {
@@ -33,7 +33,7 @@ class RangedEnemyIdle : public RangedEnemyState {
 class RangedEnemyMoving : public RangedEnemyState {
    public:
     explicit RangedEnemyMoving(RangedEnemy* enemy)
-        : RangedEnemyState(enemy), m_Direction(0) {}
+        : RangedEnemyState(enemy), m_direction(0) {}
 
     virtual void Enter() override;
     virtual void Exit() override;
@@ -49,7 +49,7 @@ class RangedEnemyMoving : public RangedEnemyState {
 
    private:
     //0 is up and 1 is down
-    int m_Direction;
+    int m_direction;
 };
 
 class RangedEnemyAttack : public RangedEnemyState {
@@ -70,7 +70,7 @@ class RangedEnemyAttack : public RangedEnemyState {
 class RangedEnemyIsHit : public RangedEnemyState {
    public:
     explicit RangedEnemyIsHit(RangedEnemy* enemy, int damage)
-        : RangedEnemyState(enemy), m_Damage(damage) {}
+        : RangedEnemyState(enemy), m_damage(damage) {}
 
     virtual void Enter() override;
     virtual void Exit() override;
@@ -82,12 +82,12 @@ class RangedEnemyIsHit : public RangedEnemyState {
 
     virtual StateType GetType() override { return StateType::IsHit; }
 
-    void SetDamage(int damage) { m_Damage = damage; }
+    void SetDamage(int damage) { m_damage = damage; }
 
-    void ApplyDamage() { GetEnemy()->GetHealth()->SetDamage(m_Damage); }
+    void ApplyDamage() { GetEnemy()->GetHealth()->SetDamage(m_damage); }
 
    private:
-    int m_Damage;
+    int m_damage;
 };
 
 class RangedEnemyDead : public RangedEnemyState {

@@ -9,7 +9,7 @@ class Player;
 class ItemInventory {
    public:
     explicit ItemInventory(std::unordered_map<std::string, Item*> items)
-        : m_Items(std::move(items)){}; 
+        : m_items(std::move(items)){}; 
 
     void Draw();
 
@@ -20,5 +20,5 @@ class ItemInventory {
     void AddItem(Item& item);
 
    private:
-    std::unordered_map<std::string, Item*> m_Items;
+    std::unordered_map<std::string, Item*> m_items;
 };

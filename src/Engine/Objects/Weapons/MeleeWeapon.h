@@ -18,7 +18,7 @@ class MeleeWeaponStats : public WeaponStats {
 
 class MeleeWeapon : public Weapon {
    public:
-    MeleeWeapon(Properties& props, MeleeWeaponStats& stats, Player* owner, const std::string name);
+    MeleeWeapon(Properties& props, MeleeWeaponStats& stats, Player* owner, const std::string& name);
 
     void Draw() override;
     void Clean() override;
@@ -33,5 +33,5 @@ class MeleeWeapon : public Weapon {
    private:
     MeleeWeaponStats m_stats;
     Uint32 m_duration = 100;
-    Uint32 m_LastAttackTime = 0;
+    Uint32 m_last_attack_time = 0;
 };

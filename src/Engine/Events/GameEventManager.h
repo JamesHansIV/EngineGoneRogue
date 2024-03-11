@@ -18,5 +18,5 @@ class GameEventManager : public virtual EventManager {
     void HandleCustomEvents();
     void HandleSDLEvents();
     Player* m_player;
-    std::vector<GameObject*>& m_Objects;
+    std::vector<GameObject*>& m_objects;
 };

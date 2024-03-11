@@ -17,11 +17,11 @@ void WriteColliderInfo(tinyxml2::XMLDocument& doc, tinyxml2::XMLElement* xmlObj,
 void WriteBaseObjectInfo(tinyxml2::XMLDocument& doc,
                          tinyxml2::XMLElement* xmlObj, GameObject* obj);
 
-int SaveObjects(const char* filepath, std::vector<GameObject*> tiles);
+int SaveObjects(const char* filepath, const std::vector<GameObject*>& objects);
 
 int SaveTextureMap(const char* filepath,
-                   std::map<std::string, Texture*> textureMap);
+                   const std::map<std::string, Texture*>& textureMap);
 
 std::vector<GameObject*> LoadObjects(const char* filepath);
 
-bool LoadTextures(const char* filepath);
+bool LoadTextures(const char* projectPath);

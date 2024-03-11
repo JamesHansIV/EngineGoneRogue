@@ -17,7 +17,7 @@ State* RunningState::Update(float dt) {
     return nullptr;
 }
 
-State* RunningState::HandleEvent(Event* event) {
+State* RunningState::HandleEvent(Event*  /*event*/) {
     return nullptr;
 }
 
@@ -63,7 +63,7 @@ State* GameOverState::Update(float dt) {
     return nullptr;
 }
 
-State* GameOverState::HandleEvent(Event* event) {
+State* GameOverState::HandleEvent(Event*  /*event*/) {
     return nullptr;
 }
 
@@ -113,7 +113,7 @@ State* LevelUpState::Update(float dt) {
     return nullptr;
 }
 
-State* LevelUpState::HandleEvent(Event* event) {
+State* LevelUpState::HandleEvent(Event*  /*event*/) {
     return nullptr;
 }
 
@@ -130,6 +130,6 @@ State* ShopState::Update(float dt) {
     return nullptr;
 }
 
-State* ShopState::HandleEvent(Event* event) {
+State* ShopState::HandleEvent(Event*  /*event*/) {
     return nullptr;
 }

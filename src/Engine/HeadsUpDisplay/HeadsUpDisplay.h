@@ -18,9 +18,9 @@ class HUD {
    private:
     void PausedDraw();
 
-    TimerElement m_TimerElement{};
-    WeaponInventory m_WeaponInventory;
-    ItemInventory m_ItemInventory;
-    ExperienceBar m_ExperienceBar;
-    PlayerStatsComponent m_PlayerStatsComponent;
+    TimerElement m_timer_element{};
+    WeaponInventory m_weapon_inventory;
+    ItemInventory m_item_inventory;
+    ExperienceBar m_experience_bar;
+    PlayerStatsComponent m_player_stats_component;
 };

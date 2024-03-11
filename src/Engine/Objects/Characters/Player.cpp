@@ -37,11 +37,11 @@ void Player::Init() {
 
     m_stats = new PlayerStats(MovementInfo{80, .90, 110, 500},
                               CombatInfo{1, 1, 0, 50}, HealthInfo{1, 20});
-    Properties* default_projectile_props = new Properties(
+    auto* default_projectile_props = new Properties(
         "weapons", {6, 0, 16, 16},
         {GetMidPointX(), GetMidPointY(), kProjectileWidth, kProjectileHeight},
         GetRotation(), "bullet");
-    Properties* bow_projectile_props =
+    auto* bow_projectile_props =
         new Properties("weapons", {2, 6, 16, 16},
                        {GetMidPointX() * 2, GetMidPointY() * 2,
                         kProjectileWidth * 2, kProjectileHeight * 2},
@@ -55,43 +55,43 @@ void Player::Init() {
     RangedWeaponStats stats_uzi = {true, 200, 30, 16, m_stats};
     Weapon* uzi = new RangedWeapon(props_uzi, stats_uzi, this, "Uzi",
                                    default_projectile_props);
-    m_Weapons.push_back(uzi);
+    m_weapons.push_back(uzi);
 
     Properties props_pistol("weapons", {0, 1, 16, 16}, {0, 0, 18, 18}, 0.0);
     RangedWeaponStats stats_pistol = {true, 400, 28, 34, m_stats};
     Weapon* pistol = new RangedWeapon(props_pistol, stats_pistol, this,
                                       "Pistol", default_projectile_props);
-    m_Weapons.push_back(pistol);
+    m_weapons.push_back(pistol);
 
     Properties props_sniper("sniper", {0, 0, 32, 16}, {0, 0, 36, 16}, 0.0);
     RangedWeaponStats stats_sniper = {true, 1000, 40, 100, m_stats};
     Weapon* sniper =
         new RangedWeapon(props_sniper, stats_sniper, this,
                          std::string("Sniper"), default_projectile_props);
-    m_Weapons.push_back(sniper);
+    m_weapons.push_back(sniper);
 
     Properties props_m("weapons", {4, 6, 16, 16}, {0, 0, 16, 20}, 0.0);
     MeleeWeaponStats stats_m = {true, 200, 10, 10, m_stats};
     Weapon* w2 = new MeleeWeapon(props_m, stats_m, this, std::string("Sword"));
     w2->SetRotation(50);
-    m_Weapons.push_back(w2);
+    m_weapons.push_back(w2);
 
     Properties props_bow("weapons", {2, 5, 16, 16}, {0, 0, 18, 18}, 45.0);
     RangedWeaponStats stats_bow = {true, 750, 35, 75, m_stats};
     Weapon* bow = new RangedWeapon(props_bow, stats_bow, this,
                                    std::string("Bow"), bow_projectile_props);
-    m_Weapons.push_back(bow);
+    m_weapons.push_back(bow);
 
     ColliderHandler::GetInstance()->AddCollider(w2);
 
-    m_CurrentWeapon = m_Weapons[0];
+    m_current_weapon = m_weapons[0];
 }
 
 void Player::Draw() {
     m_CurrentState->Draw();
     m_Health->Draw(GetX(), GetY(), GetWidth());
-    m_CurrentWeapon->Draw();
-    for (auto& weapon : m_Weapons) {
+    m_current_weapon->Draw();
+    for (auto& weapon : m_weapons) {
         if (auto* ranged = dynamic_cast<RangedWeapon*>(weapon)) {
             ranged->DrawProjectiles();
         }
@@ -99,11 +99,11 @@ void Player::Draw() {
 }
 
 void Player::AddItem(Item* item) {
-    if (m_Items.size() >= 12) {
+    if (m_items.size() >= 12) {
         SDL_Log("Inventory is full. Cannot add more items");
         return;
     }
-    m_Items[item->GetName()] = item;
+    m_items[item->GetName()] = item;
     item->AddCount();
 }
 
@@ -113,8 +113,8 @@ void Player::Update(float dt) {
         ChangeState(state);
     }
 
-    if (SDL_GetTicks() - m_lastHealthRegen > 1000) {
-        m_lastHealthRegen = SDL_GetTicks();
+    if (SDL_GetTicks() - m_last_health_regen > 1000) {
+        m_last_health_regen = SDL_GetTicks();
         m_Health->IncreaseHealth(m_stats->GetHPRegenRate());
     }
     m_stats->Update();
@@ -138,12 +138,12 @@ bool IsLookingBehind(float angle) {
 void Player::UpdateWeapon(float dt) {
     if (InputChecker::GetMouseWheelDirection() > 0) {
         auto it =
-            std::find(m_Weapons.begin(), m_Weapons.end(), m_CurrentWeapon);
+            std::find(m_weapons.begin(), m_weapons.end(), m_current_weapon);
         it++;
-        if (it == m_Weapons.end()) {
-            it = m_Weapons.begin();
+        if (it == m_weapons.end()) {
+            it = m_weapons.begin();
         }
-        m_CurrentWeapon = *it;
+        m_current_weapon = *it;
 
         // Reset the mouse wheel direction to avoid toggling multiple times
         InputChecker::SetMouseWheelDirection(0);
@@ -151,12 +151,12 @@ void Player::UpdateWeapon(float dt) {
 
     if (InputChecker::GetMouseWheelDirection() < 0) {
         auto it =
-            std::find(m_Weapons.rbegin(), m_Weapons.rend(), m_CurrentWeapon);
+            std::find(m_weapons.rbegin(), m_weapons.rend(), m_current_weapon);
         it++;
-        if (it == m_Weapons.rend()) {
-            it = m_Weapons.rbegin();
+        if (it == m_weapons.rend()) {
+            it = m_weapons.rbegin();
         }
-        m_CurrentWeapon = *it;
+        m_current_weapon = *it;
 
         // Reset the mouse wheel direction to avoid toggling multiple times
         InputChecker::SetMouseWheelDirection(0);
@@ -183,12 +183,12 @@ void Player::UpdateWeapon(float dt) {
 
     double const weapon_x = GetX() + GetWidth() / 2.5;
     double const weapon_y = GetY() + GetHeight() / 2.5;
-    m_CurrentWeapon->SetX(weapon_x);
-    m_CurrentWeapon->SetY(weapon_y);
-    m_CurrentWeapon->SetRotation(angle * (180 / M_PI));
-    m_CurrentWeapon->SetFlip(weapon_flip);
-    m_CurrentWeapon->Update(dt);
-    for (auto& weapon : m_Weapons) {
+    m_current_weapon->SetX(weapon_x);
+    m_current_weapon->SetY(weapon_y);
+    m_current_weapon->SetRotation(angle * (180 / M_PI));
+    m_current_weapon->SetFlip(weapon_flip);
+    m_current_weapon->Update(dt);
+    for (auto& weapon : m_weapons) {
         if (auto* ranged = dynamic_cast<RangedWeapon*>(weapon)) {
             ranged->UpdateProjectiles(dt);
         }
@@ -234,13 +234,13 @@ Player::~Player() {
     delete m_Health;
     delete m_CurrentState;
     delete m_Animation;
-    for (auto& weapon : m_Weapons) {
+    for (auto& weapon : m_weapons) {
         delete weapon;
     }
-    for (auto& item_pair : m_Items) {
+    for (auto& item_pair : m_items) {
         delete item_pair.second;
     }
-    m_Items.clear();
+    m_items.clear();
 }
 
 void PlayerStats::AddExperience(int experience) {

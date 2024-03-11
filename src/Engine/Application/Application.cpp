@@ -37,17 +37,17 @@ Application::Application() : m_ProjectName("test_project"), m_Frame(0) {
         assert(false);
     }
 
-    m_Window = SDL_CreateWindow("Engine Gone Rogue", SDL_WINDOWPOS_CENTERED,
+    m_window = SDL_CreateWindow("Engine Gone Rogue", SDL_WINDOWPOS_CENTERED,
                                 SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH,
                                 SCREEN_HEIGHT, SDL_WINDOW_RESIZABLE);
-    if (m_Window == nullptr) {
+    if (m_window == nullptr) {
         SDL_Log("Failed to create Window: %s", SDL_GetError());
         assert(false);
     }
 
     m_instance = this;
 
-    SDL_GetWindowSize(m_Window, &m_WindowWidth, &m_WindowHeight);
+    SDL_GetWindowSize(m_window, &m_WindowWidth, &m_WindowHeight);
 
     //TODO: note that the cwd is <projectDir>/build instead of <projectDir>.
     //      Set a working directory path macro to use absolute file paths
@@ -60,14 +60,14 @@ Application::Application() : m_ProjectName("test_project"), m_Frame(0) {
         }
     }
 
-    m_IsRunning = true;
+    m_is_running = true;
 }
 
 bool Application::LoadCharacters(const char* projectPath) {
     std::string objects_path = projectPath;
     objects_path += "/objects.xml";
 
-    std::vector<GameObject*> objects = LoadObjects(objects_path.c_str());
+    std::vector<GameObject*> const objects = LoadObjects(objects_path.c_str());
 
     if (objects.empty()) {
         return false;
@@ -177,7 +177,7 @@ void Application::Run() {
     int count_until_next_second = 1000;
     int fps = 0;
     int updates_per_second = 0;
-    while (m_IsRunning) {
+    while (m_is_running) {
         Events();
         bool render = false;
         if (SDL_GetTicks() > count_until_next_second) {
@@ -218,7 +218,7 @@ bool Application::Clean() {
     Renderer::GetInstance()->Destroy();
     delete Renderer::GetInstance();
 
-    SDL_DestroyWindow(m_Window);
+    SDL_DestroyWindow(m_window);
     TTF_Quit();
     IMG_Quit();
     SDL_Quit();
@@ -226,5 +226,5 @@ bool Application::Clean() {
 }
 
 void Application::Quit() {
-    m_IsRunning = false;
+    m_is_running = false;
 }

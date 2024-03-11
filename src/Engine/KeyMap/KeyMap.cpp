@@ -29,18 +29,18 @@ Bind KeyMap::CreateBind(EditorAction action, InputType input_type, std::vector<S
 
 KeyMap::KeyMap() {
     m_Default_Bindings_Map = { 
-        {EditorAction::EXIT_CURRENT_TOOL, CreateBind(EditorAction::EXIT_CURRENT_TOOL, InputType::LATCH, std::vector<SDL_KeyCode>{SDLK_ESCAPE})},
-        {EditorAction::ENTER_DRAW_TOOL, CreateBind(EditorAction::ENTER_DRAW_TOOL, InputType::LATCH, std::vector<SDL_KeyCode>{SDLK_d})}, 
-        {EditorAction::ENTER_ERASE_TOOL, CreateBind(EditorAction::ENTER_ERASE_TOOL, InputType::LATCH, std::vector<SDL_KeyCode>{SDLK_e})},
-        {EditorAction::PAN_CAMERA_DOWN, CreateBind(EditorAction::PAN_CAMERA_DOWN, InputType::CONTINUOUS, std::vector<SDL_KeyCode>{SDLK_DOWN})},
-        {EditorAction::PAN_CAMERA_UP, CreateBind(EditorAction::PAN_CAMERA_UP, InputType::CONTINUOUS, std::vector<SDL_KeyCode>{SDLK_UP})},
-        {EditorAction::PAN_CAMERA_RIGHT, CreateBind(EditorAction::PAN_CAMERA_RIGHT, InputType::CONTINUOUS, std::vector<SDL_KeyCode>{SDLK_RIGHT})},
-        {EditorAction::PAN_CAMERA_LEFT, CreateBind(EditorAction::PAN_CAMERA_LEFT, InputType::CONTINUOUS, std::vector<SDL_KeyCode>{SDLK_LEFT})}
+        {EditorAction::ExitCurrentTool, CreateBind(EditorAction::ExitCurrentTool, InputType::LATCH, std::vector<SDL_KeyCode>{SDLK_ESCAPE})},
+        {EditorAction::EnterDrawTool, CreateBind(EditorAction::EnterDrawTool, InputType::LATCH, std::vector<SDL_KeyCode>{SDLK_d})}, 
+        {EditorAction::EnterEraseTool, CreateBind(EditorAction::EnterEraseTool, InputType::LATCH, std::vector<SDL_KeyCode>{SDLK_e})},
+        {EditorAction::PanCameraDown, CreateBind(EditorAction::PanCameraDown, InputType::CONTINUOUS, std::vector<SDL_KeyCode>{SDLK_DOWN})},
+        {EditorAction::PanCameraUp, CreateBind(EditorAction::PanCameraUp, InputType::CONTINUOUS, std::vector<SDL_KeyCode>{SDLK_UP})},
+        {EditorAction::PanCameraRight, CreateBind(EditorAction::PanCameraRight, InputType::CONTINUOUS, std::vector<SDL_KeyCode>{SDLK_RIGHT})},
+        {EditorAction::PanCameraLeft, CreateBind(EditorAction::PanCameraLeft, InputType::CONTINUOUS, std::vector<SDL_KeyCode>{SDLK_LEFT})}
     };
 
     BuildMapFromFile();
 
-    Bind bind = m_Bindings_Map[EditorAction::ENTER_DRAW_TOOL];
+    Bind bind = m_Bindings_Map[EditorAction::EnterDrawTool];
     std::cout << " " << bind.keys[0] << " " << bind.action << '\n';
     std::cout << m_Bindings_Map.size() << '\n';
     std::cout << m_Default_Bindings_Map.size() << '\n';
@@ -78,7 +78,8 @@ void KeyMap::BuildMapFromFile() {
         // read lines and add them to line vector
         std::string str;
         std::vector<std::string> lines;
-        while(std::getline(file, str)) lines.push_back(str);
+        while(std::getline(file, str)) { lines.push_back(str);
+}
 
         // pull data out of each line
         for (std::string line : lines) {

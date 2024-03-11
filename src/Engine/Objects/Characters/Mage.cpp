@@ -5,12 +5,12 @@
 #include "Engine/State/RangedEnemyState.h"
 
 Mage::Mage(Properties& props, const RangedEnemyStats& stats, int bulletCount)
-    : RangedEnemy(props, stats), m_BulletCount(bulletCount) {
+    : RangedEnemy(props, stats), m_bullet_count(bulletCount) {
     Init();
 }
 
 Mage::Mage(Collider* rhs, RangedEnemyStats stats, int bulletCount)
-    : RangedEnemy(rhs, stats), m_BulletCount(bulletCount) {
+    : RangedEnemy(rhs, stats), m_bullet_count(bulletCount) {
     Init();
 }
 
@@ -38,7 +38,7 @@ void Mage::Shoot() {
 
     GetAttack()->Shoot(RangedAttackInfo{
         GetMidPointX(), GetMidPointY(), GetTarget()->GetMidPointX(),
-        GetTarget()->GetMidPointY(), props, 1, m_BulletCount});
+        GetTarget()->GetMidPointY(), props, 1, m_bullet_count});
 }
 
 void Mage::OnCollide(Collider* collidee) {

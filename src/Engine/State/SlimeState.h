@@ -3,14 +3,14 @@
 
 class SlimeState : public State {
    public:
-    explicit SlimeState(Slime* enemy) : m_Enemy(enemy) {}
+    explicit SlimeState(Slime* enemy) : m_enemy(enemy) {}
 
-    Slime* GetEnemy() { return m_Enemy; }
+    Slime* GetEnemy() { return m_enemy; }
 
-    void SetEnemy(Slime* enemy) { m_Enemy = enemy; }
+    void SetEnemy(Slime* enemy) { m_enemy = enemy; }
 
    private:
-    Slime* m_Enemy;
+    Slime* m_enemy;
 };
 
 class SlimeIdle : public SlimeState {
@@ -62,7 +62,7 @@ class SlimeAttack : public SlimeState {
 class SlimeIsHit : public SlimeState {
    public:
     explicit SlimeIsHit(Slime* enemy, int damage)
-        : SlimeState(enemy), m_Damage(damage) {}
+        : SlimeState(enemy), m_damage(damage) {}
 
     virtual void Enter() override;
     virtual void Exit() override;
@@ -74,12 +74,12 @@ class SlimeIsHit : public SlimeState {
 
     virtual StateType GetType() override { return StateType::IsHit; }
 
-    void SetDamage(int damage) { m_Damage = damage; }
+    void SetDamage(int damage) { m_damage = damage; }
 
-    void ApplyDamage() { GetEnemy()->GetHealth()->SetDamage(m_Damage); }
+    void ApplyDamage() { GetEnemy()->GetHealth()->SetDamage(m_damage); }
 
    private:
-    int m_Damage;
+    int m_damage;
 };
 
 class SlimeDead : public SlimeState {

@@ -87,7 +87,7 @@ void WriteBaseObjectInfo(tinyxml2::XMLDocument& doc,
     xmlObj->InsertEndChild(dst_rect);
 }
 
-int SaveObjects(const char* filepath, std::vector<GameObject*> objects) {
+int SaveObjects(const char* filepath, const std::vector<GameObject*>& objects) {
     tinyxml2::XMLDocument doc;
     tinyxml2::XMLElement* root = doc.NewElement("Root");
     doc.InsertFirstChild(root);
@@ -118,7 +118,7 @@ int SaveObjects(const char* filepath, std::vector<GameObject*> objects) {
 }
 
 int SaveTextureMap(const char* filepath,
-                   std::map<std::string, Texture*> textureMap) {
+                   const std::map<std::string, Texture*>& textureMap) {
     tinyxml2::XMLDocument doc;
     tinyxml2::XMLElement* root = doc.NewElement("Root");
     doc.InsertFirstChild(root);
@@ -132,7 +132,7 @@ int SaveTextureMap(const char* filepath,
     tinyxml2::XMLElement* rows;
     tinyxml2::XMLElement* cols;
 
-    for (auto& it : textureMap) {
+    for (const auto& it : textureMap) {
         texture = doc.NewElement("Texture");
         type = doc.NewElement("Type");
         id = doc.NewElement("ID");
@@ -208,7 +208,7 @@ void AddAnimation(tinyxml2::XMLElement* xmlObj, GameObject* obj) {
 
         info.Loop = curr->Attribute("loop") != nullptr &&
                     strcmp(curr->Attribute("loop"), "1") == 0;
-        SDL_Log("info loop: %d", info.Loop);
+        SDL_Log("info loop: %d", static_cast<int>(info.Loop));
 
         SDL_Log("checked loop attribute");
 
@@ -348,9 +348,9 @@ GameObject* BuildRangedEnemy(tinyxml2::XMLElement* types,
                              tinyxml2::XMLElement* xmlObj, GameObject* obj) {
 
     GameObject* new_obj = nullptr;
-    EnemyStats stats =
+    EnemyStats const stats =
         GetEnemyStats(xmlObj->FirstChildElement("RangedEnemyStats"));
-    RangedEnemyStats ranged_stats = GetRangedEnemyStats(
+    RangedEnemyStats const ranged_stats = GetRangedEnemyStats(
         xmlObj->FirstChildElement("RangedEnemyStats"), stats);
 
     if (types->Attribute("ring_shot_enemy") != nullptr) {
@@ -396,7 +396,7 @@ GameObject* BuildObjectOnType(tinyxml2::XMLElement* types,
     }
 
     if (types->Attribute("slime") != nullptr) {
-        EnemyStats stats =
+        EnemyStats const stats =
             GetEnemyStats(xmlObj->FirstChildElement("EnemyStats"));
         new_obj = new Slime(static_cast<Collider*>(new_obj), stats);
     }

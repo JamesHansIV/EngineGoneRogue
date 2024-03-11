@@ -20,36 +20,36 @@ struct AnimationIDs {
 
 class PlayerState : public State {
    public:
-    explicit PlayerState(Player* player) : m_Player(player) {
-        m_Move.Up = "move-up";
-        m_Move.LeftUp = "move-left-up";
-        m_Move.Left = "move-left";
-        m_Move.RightUp = "move-right-up";
-        m_Move.Right = "move-right";
-        m_Move.Down = "move-down";
+    explicit PlayerState(Player* player) : m_player(player) {
+        m_move.Up = "move-up";
+        m_move.LeftUp = "move-left-up";
+        m_move.Left = "move-left";
+        m_move.RightUp = "move-right-up";
+        m_move.Right = "move-right";
+        m_move.Down = "move-down";
 
-        m_Dodge.Up = "dodge-up";
-        m_Dodge.LeftUp = "dodge-left-up";
-        m_Dodge.Left = "dodge-left";
-        m_Dodge.RightUp = "dodge-right-up";
-        m_Dodge.Right = "dodge-right";
-        m_Dodge.Down = "dodge-down";
+        m_dodge.Up = "dodge-up";
+        m_dodge.LeftUp = "dodge-left-up";
+        m_dodge.Left = "dodge-left";
+        m_dodge.RightUp = "dodge-right-up";
+        m_dodge.Right = "dodge-right";
+        m_dodge.Down = "dodge-down";
     }
 
     virtual ~PlayerState() {}
 
-    Player* GetPlayer() { return m_Player; }
+    Player* GetPlayer() { return m_player; }
 
-    void SetPlayer(Player* p) { m_Player = p; }
+    void SetPlayer(Player* p) { m_player = p; }
 
-    AnimationIDs& GetMoveAnimationIDs() { return m_Move; }
+    AnimationIDs& GetMoveAnimationIDs() { return m_move; }
 
-    AnimationIDs& GetDodgeAnimationIDs() { return m_Dodge; }
+    AnimationIDs& GetDodgeAnimationIDs() { return m_dodge; }
 
    private:
-    Player* m_Player;
-    AnimationIDs m_Move;
-    AnimationIDs m_Dodge;
+    Player* m_player;
+    AnimationIDs m_move;
+    AnimationIDs m_dodge;
 };
 
 class PlayerIdle : public PlayerState {
@@ -92,7 +92,7 @@ class PlayerMoving : public PlayerState {
 class PlayerDodge : public PlayerState {
    public:
     explicit PlayerDodge(Player* player)
-        : PlayerState(player), m_DodgeCD(60), m_Velocity(0, 0) {}
+        : PlayerState(player), m_dodge_cd(60), m_velocity(0, 0) {}
 
     virtual void Enter() override;
     virtual void Exit() override;
@@ -106,15 +106,15 @@ class PlayerDodge : public PlayerState {
     virtual StateType GetType() override { return StateType::Dodge; }
 
    private:
-    int m_DodgeCD;
-    float m_Distance;
-    Vector2D m_Velocity;
+    int m_dodge_cd;
+    float m_distance;
+    Vector2D m_velocity;
 };
 
 class PlayerIsHit : public PlayerState {
    public:
     explicit PlayerIsHit(Player* player, int damage)
-        : PlayerState(player), m_Damage(damage) {}
+        : PlayerState(player), m_damage(damage) {}
 
     virtual void Enter() override;
     virtual void Exit() override;
@@ -127,14 +127,14 @@ class PlayerIsHit : public PlayerState {
 
     void PollInput(float dt);
 
-    void SetDamage(int damage) { m_Damage = damage; }
+    void SetDamage(int damage) { m_damage = damage; }
 
     void ApplyDamage();
 
     virtual StateType GetType() override { return StateType::IsHit; }
 
    private:
-    int m_Damage;
+    int m_damage;
 };
 
 class PlayerDead : public PlayerState {

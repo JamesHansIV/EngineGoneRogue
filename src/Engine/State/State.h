@@ -43,22 +43,22 @@ enum class StateType {
 
 class BitFieldState {
    public:
-    BitFieldState() : m_CurrentStates(0) {}
+    BitFieldState() : m_current_states(0) {}
 
-    int GetCurrentStates() const { return m_CurrentStates; }
+    int GetCurrentStates() const { return m_current_states; }
 
-    void SetState(int state) { m_CurrentStates = state; }
+    void SetState(int state) { m_current_states = state; }
 
-    void ToggleState(int state) { m_CurrentStates ^= state; }
+    void ToggleState(int state) { m_current_states ^= state; }
 
-    void AddState(int state) { m_CurrentStates |= state; }
+    void AddState(int state) { m_current_states |= state; }
 
-    void RemoveState(int state) { m_CurrentStates &= ~state; }
+    void RemoveState(int state) { m_current_states &= ~state; }
 
-    bool HasState(int state) const { return m_CurrentStates & state; }
+    bool HasState(int state) const { return (m_current_states & state) != 0; }
 
    private:
-    int m_CurrentStates;
+    int m_current_states;
 };
 
 class State {

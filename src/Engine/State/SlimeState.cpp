@@ -62,7 +62,7 @@ void SlimeSplit(Slime* enemy) {
     slime1->SetID(id1);
     slime2->SetID(id2);
 
-    float offset = static_cast<float>(enemy->GetWidth()) / 2;
+    float const offset = static_cast<float>(enemy->GetWidth()) / 2;
 
     slime1->GetRigidBody()->MovePosition(Vector2D(-offset, 0));
     slime2->GetRigidBody()->MovePosition(Vector2D(offset, 0));

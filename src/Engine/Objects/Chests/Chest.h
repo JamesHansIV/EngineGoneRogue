@@ -24,18 +24,18 @@ class Chest : public Collider {
 
     ObjectType GetObjectType() override { return ObjectType::Chest; }
 
-    ChestType GetChestType() { return m_ChestType; };
+    ChestType GetChestType() { return m_chest_type; };
     
     void Update(float dt) override;
 
-    std::vector<ItemType>* GetChestItems()  { return m_ChestItems; }
+    std::vector<ItemType>* GetChestItems()  { return m_chest_items; }
 
     void OnCollide(Collider* collidee) override;
     
    private:
-    std::vector<ItemType>* m_ChestItems;
-    ChestType m_ChestType;
-    std::string m_IdleTexture;
-    std::string m_OpeningTexture;
-    float m_DistanceToPlayer;
+    std::vector<ItemType>* m_chest_items;
+    ChestType m_chest_type;
+    std::string m_idle_texture;
+    std::string m_opening_texture;
+    float m_distance_to_player;
 };

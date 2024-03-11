@@ -7,9 +7,9 @@ RingShotEnemy::RingShotEnemy(Properties& props, RangedEnemyStats stats,
                              float outerRadius, float innerRadius,
                              int shotCount)
     : RangedEnemy(props, stats),
-      m_OuterRadius(outerRadius),
-      m_InnerRadius(innerRadius),
-      m_ShotCount(shotCount) {
+      m_outer_radius(outerRadius),
+      m_inner_radius(innerRadius),
+      m_shot_count(shotCount) {
     Init();
 }
 
@@ -17,9 +17,9 @@ RingShotEnemy::RingShotEnemy(Collider* rhs, RangedEnemyStats stats,
                              float outerRadius, float innerRadius,
                              int shotCount)
     : RangedEnemy(rhs, stats),
-      m_OuterRadius(outerRadius),
-      m_InnerRadius(innerRadius),
-      m_ShotCount(shotCount) {
+      m_outer_radius(outerRadius),
+      m_inner_radius(innerRadius),
+      m_shot_count(shotCount) {
     Init();
 }
 
@@ -45,7 +45,7 @@ void RingShotEnemy::Shoot() {
 
     GetAttack()->Shoot(RangedAttackInfo{
         GetMidPointX(), GetMidPointY(), GetTarget()->GetMidPointX(),
-        GetTarget()->GetMidPointY(), props, 9, m_ShotCount});
+        GetTarget()->GetMidPointY(), props, 9, m_shot_count});
 }
 
 void RingShotEnemy::OnCollide(Collider* collidee) {

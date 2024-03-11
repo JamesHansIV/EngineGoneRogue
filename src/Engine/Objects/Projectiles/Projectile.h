@@ -26,23 +26,23 @@ class Projectile : public Collider {
 
     void OnCollide(Collider* collidee) override;
 
-    [[nodiscard]] bool IsPlayerOwned() const { return m_PlayerOwned; }
+    [[nodiscard]] bool IsPlayerOwned() const { return m_player_owned; }
 
-    [[nodiscard]] float GetSpeed() const { return m_Speed; }
+    [[nodiscard]] float GetSpeed() const { return m_speed; }
 
-    void SetSpeed(float speed) { m_Speed = speed; }
+    void SetSpeed(float speed) { m_speed = speed; }
 
-    [[nodiscard]] float GetAngle() const { return m_Angle; }
+    [[nodiscard]] float GetAngle() const { return m_angle; }
 
-    void SetAngle(float angle) { m_Angle = angle; }
+    void SetAngle(float angle) { m_angle = angle; }
 
-    Vector2D GetVelocity() { return m_Velocity; }
+    Vector2D GetVelocity() { return m_velocity; }
 
-    void SetVelocity(Vector2D velocity) { m_Velocity = velocity; }
+    void SetVelocity(Vector2D velocity) { m_velocity = velocity; }
 
-    [[nodiscard]] int GetDamage() const { return m_Damage; }
+    [[nodiscard]] int GetDamage() const { return m_damage; }
 
-    void SetDamage(int damage) { m_Damage = damage; }
+    void SetDamage(int damage) { m_damage = damage; }
 
     ObjectType GetObjectType() override { return ObjectType::Projectile; }
 
@@ -50,23 +50,23 @@ class Projectile : public Collider {
         return ProjectileType::Standard;
     }
 
-    void SetPiercing(int piercing) { m_Piercing = piercing; }
+    void SetPiercing(int piercing) { m_piercing = piercing; }
 
-    int GetPiercing() const { return m_Piercing; }
+    int GetPiercing() const { return m_piercing; }
 
-    void AddNumberofEnemiesHit() { m_NumberofEnemiesHit++; }
+    void AddNumberofEnemiesHit() { m_numberof_enemies_hit++; }
 
-    int GetNumberofEnemiesHit() const { return m_NumberofEnemiesHit; };
+    int GetNumberofEnemiesHit() const { return m_numberof_enemies_hit; };
 
-    Player* GetOwner() { return m_Owner; };
+    Player* GetOwner() { return m_owner; };
 
    private:
-    bool m_PlayerOwned;
-    float m_Speed;
-    float m_Angle;
-    Vector2D m_Velocity;
-    int m_Damage;
-    int m_Piercing;
-    int m_NumberofEnemiesHit = 0;
-    Player* m_Owner;
+    bool m_player_owned;
+    float m_speed;
+    float m_angle;
+    Vector2D m_velocity;
+    int m_damage;
+    int m_piercing;
+    int m_numberof_enemies_hit = 0;
+    Player* m_owner;
 };

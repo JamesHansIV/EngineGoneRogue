@@ -8,9 +8,9 @@
 #include "SDL2/SDL_rect.h"
 
 enum ButtonState {
-    BUTTON_STATE_NORMAL = 0,
-    BUTTON_STATE_HOVER = 1,
-    BUTTON_STATE_PRESSED = 2,
+    ButtonStateNormal = 0,
+    ButtonStateHover = 1,
+    ButtonStatePressed = 2,
 };
 
 // Maybe inherit from Game Object?
@@ -44,13 +44,13 @@ class Button {
             m_shape.y + m_shape.h / 2 - text_texture->GetHeight() / 2,
             text_texture->GetWidth(), text_texture->GetHeight()};
         switch (m_state) {
-            case BUTTON_STATE_NORMAL:
+            case ButtonStateNormal:
                 renderer->DrawRect(m_shape, {0, 0, 0, 255}, true);
                 break;
-            case BUTTON_STATE_HOVER:
+            case ButtonStateHover:
                 renderer->DrawRect(m_shape, {0, 255, 0, 255}, true);
                 break;
-            case BUTTON_STATE_PRESSED:
+            case ButtonStatePressed:
                 renderer->DrawRect(m_shape, {0, 0, 0, 235}, true);
                 break;
         }
@@ -62,13 +62,13 @@ class Button {
                                  static_cast<float>(InputChecker::GetMouseY())};
         if (mouse_pos.X > m_shape.x && mouse_pos.X < m_shape.x + m_shape.w &&
             mouse_pos.Y > m_shape.y && mouse_pos.Y < m_shape.y + m_shape.h) {
-            m_state = BUTTON_STATE_HOVER;
+            m_state = ButtonStateHover;
             if (InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT)) {
-                m_state = BUTTON_STATE_PRESSED;
+                m_state = ButtonStatePressed;
                 m_callback();
             }
         } else {
-            m_state = BUTTON_STATE_NORMAL;
+            m_state = ButtonStateNormal;
         }
     };
 

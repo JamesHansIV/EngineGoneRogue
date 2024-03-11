@@ -19,6 +19,6 @@ class ProjectileManager {
     }
 
    private:
-    std::vector<Projectile*> m_Projectiles;
+    std::vector<Projectile*> m_projectiles;
     static ProjectileManager* s_instance;
 };

@@ -3,12 +3,12 @@
 
 class EntranceState : public State {
    public:
-    explicit EntranceState(Entrance* entrance) : m_Entrance(entrance) {}
+    explicit EntranceState(Entrance* entrance) : m_entrance(entrance) {}
 
-    Entrance* GetEntrance() { return m_Entrance; }
+    Entrance* GetEntrance() { return m_entrance; }
 
    private:
-    Entrance* m_Entrance;
+    Entrance* m_entrance;
 };
 
 class EntranceOpened : public EntranceState {

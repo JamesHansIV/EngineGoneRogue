@@ -12,7 +12,7 @@ bool IsPlayerDead(Player* player) {
 }
 
 void MovePlayer(Player* player, float dt) {
-    float speed = player->GetStats().GetSpeed();
+    float const speed = player->GetStats().GetSpeed();
     if (InputChecker::IsKeyPressed(SDLK_w)) {
         player->GetRigidBody()->ApplyVelocity(Vector2D(0, -speed * dt));
     }
@@ -74,7 +74,7 @@ State* HandleEnemyCollide(Player* player, Enemy* enemy) {
     player->UnCollide(enemy);
     if (enemy->GetCurrentState()->GetType() == StateType::Attack &&
         enemy->GetAnimation()->OnKeyFrame() &&
-        !player->GetStats().GetDodgeInvincibility()) {
+        (player->GetStats().GetDodgeInvincibility() == 0)) {
         return new PlayerIsHit(player, 1);
     }
     return nullptr;
@@ -82,7 +82,7 @@ State* HandleEnemyCollide(Player* player, Enemy* enemy) {
 
 State* HandleProjectileCollide(Player* player, Projectile* projectile) {
     if (projectile->IsPlayerOwned() ||
-        player->GetStats().GetDodgeInvincibility()) {
+        (player->GetStats().GetDodgeInvincibility() != 0)) {
         return nullptr;
     }
     return new PlayerIsHit(player, 10);
@@ -268,12 +268,12 @@ void PlayerMoving::PollInput(float dt) {
 }
 
 void PlayerDodge::Enter() {
-    GetPlayer()->GetMutableStats().SetDodgeCd(m_DodgeCD);
+    GetPlayer()->GetMutableStats().SetDodgeCd(m_dodge_cd);
     UpdateAnimationDirection(GetPlayer(), GetDodgeAnimationIDs());
     Vector2D const velocity = GetPlayer()->GetRigidBody()->Velocity();
     float const dodge_speed = GetPlayer()->GetStats().GetDodgeSpeed();
 
-    m_Velocity = velocity * dodge_speed;
+    m_velocity = velocity * dodge_speed;
 }
 
 void PlayerDodge::Exit() {
@@ -281,12 +281,12 @@ void PlayerDodge::Exit() {
 }
 
 State* PlayerDodge::Update(float /*dt*/) {
-    if (m_Distance >= GetPlayer()->GetStats().GetDodgeDistance()) {
+    if (m_distance >= GetPlayer()->GetStats().GetDodgeDistance()) {
         return new PlayerIdle(GetPlayer());
     }
 
-    m_Distance += m_Velocity.GetMagnitude();
-    GetPlayer()->GetRigidBody()->ApplyVelocity(m_Velocity);
+    m_distance += m_velocity.GetMagnitude();
+    GetPlayer()->GetRigidBody()->ApplyVelocity(m_velocity);
     return nullptr;
 }
 
@@ -407,7 +407,7 @@ void PlayerIsHit::ApplyDamage() {
     int const armor_percentage = GetPlayer()->GetStats().GetArmorPercentage();
     float const damage_multiplier =
         1.0F - (static_cast<float>(armor_percentage) / 100.0F);
-    int const modified_damage = m_Damage * damage_multiplier;
+    int const modified_damage = m_damage * damage_multiplier;
 
     GetPlayer()->GetHealth()->SetDamage(modified_damage);
 }

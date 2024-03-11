@@ -102,10 +102,10 @@ void ColliderHandler::MoveToEdge(Collider* c1, Collider* c2) {
 void ColliderHandler::HandleCollisions() {
     // this is probably causing slowdown when there are many colliders.
     // Todo: optimize this somehow
-    for (int i = 0; i < m_Colliders.size(); i++) {
-        for (int j = i + 1; j < m_Colliders.size(); j++) {
-            Collider* c1 = m_Colliders[i];
-            Collider* c2 = m_Colliders[j];
+    for (int i = 0; i < m_colliders.size(); i++) {
+        for (int j = i + 1; j < m_colliders.size(); j++) {
+            Collider* c1 = m_colliders[i];
+            Collider* c2 = m_colliders[j];
 
             if (c1 == nullptr || c2 == nullptr) {
                 continue;
@@ -142,10 +142,10 @@ void ColliderHandler::HandleCollisions() {
 }
 
 void ColliderHandler::AddCollider(Collider* collider) {
-    m_Colliders.push_back(collider);
+    m_colliders.push_back(collider);
 }
 
 void ColliderHandler::RemoveCollider(Collider* collider) {
-    auto it = std::find(m_Colliders.begin(), m_Colliders.end(), collider);
-    m_Colliders.erase(it);
+    auto it = std::find(m_colliders.begin(), m_colliders.end(), collider);
+    m_colliders.erase(it);
 }

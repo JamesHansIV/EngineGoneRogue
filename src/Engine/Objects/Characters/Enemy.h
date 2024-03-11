@@ -18,15 +18,15 @@ class Enemy : public Character {
 
     bool TargetInRange();
 
-    Rect& GetPerception() { return m_Perception; }
+    Rect& GetPerception() { return m_perception; }
 
-    void SetTarget(Collider* target) { m_Target = target; }
+    void SetTarget(Collider* target) { m_target = target; }
 
-    inline Collider* GetTarget() { return m_Target; }
+    inline Collider* GetTarget() { return m_target; }
 
     [[nodiscard]] EnemyStats GetEnemyStats() const { return m_stats; }
 
-    void setEnemyStats(const EnemyStats& stats) { m_stats = stats; }
+    void SetEnemyStats(const EnemyStats& stats) { m_stats = stats; }
 
     virtual void OnCollide(Collider* collidee) override;
 
@@ -34,6 +34,6 @@ class Enemy : public Character {
 
    private:
     EnemyStats m_stats;
-    Rect m_Perception;
-    Collider* m_Target;
+    Rect m_perception;
+    Collider* m_target;
 };

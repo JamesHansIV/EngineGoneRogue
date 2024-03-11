@@ -3,9 +3,9 @@
 #include "Engine/Objects/Item.h"
 
 void CollideEvent::SetCollidee(Collider* collidee) {
-    m_Collidee = collidee;
+    m_collidee = collidee;
 }
 
 Collider* CollideEvent::GetCollidee() {
-    return m_Collidee;
+    return m_collidee;
 }

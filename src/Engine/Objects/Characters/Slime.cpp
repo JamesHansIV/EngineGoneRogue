@@ -4,12 +4,12 @@
 #include "Engine/State/SlimeState.h"
 
 Slime::Slime(Properties& props, const EnemyStats& stats, bool split)
-    : Enemy(props, stats), m_Split(split) {
+    : Enemy(props, stats), m_split(split) {
     Init();
 }
 
 Slime::Slime(Collider* rhs, EnemyStats stats, bool split)
-    : Enemy(rhs, stats), m_Split(split) {
+    : Enemy(rhs, stats), m_split(split) {
     Init();
 }
 

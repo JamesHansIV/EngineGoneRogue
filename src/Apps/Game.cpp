@@ -45,57 +45,57 @@ const RangedEnemyStats kDefaultRangedEnemyStats = {
     4                    // spread};
 };
 
-Slime* SLIME_COPY = nullptr;
-RingShotEnemy* RING_SHOT_ENEMY_COPY = nullptr;
-Mage* MAGE_COPY = nullptr;
-Dog* DOG_COPY = nullptr;
-Skeleton* SKELETON_COPY = nullptr;
-Goblin* GOBLIN_COPY = nullptr;
-HelixEnemy* HELIX_ENEMY_COPY = nullptr;
+Slime* slime_copy = nullptr;
+RingShotEnemy* ring_shot_enemy_copy = nullptr;
+Mage* mage_copy = nullptr;
+Dog* dog_copy = nullptr;
+Skeleton* skeleton_copy = nullptr;
+Goblin* goblin_copy = nullptr;
+HelixEnemy* helix_enemy_copy = nullptr;
 
 Game::Game() {
     SDL_Renderer* renderer = Renderer::GetInstance()->GetRenderer();
 
-    m_Objects = Application::m_Rooms[m_BaseRoomID];
+    m_objects = Application::m_Rooms[m_BaseRoomID];
 
-    for (auto& obj : m_Objects) {
+    for (auto& obj : m_objects) {
         if (auto* collider = dynamic_cast<Collider*>(obj)) {
             EnemyStats enemy_stats;
             RangedEnemyStats ranged_enemy_stats;
 
-            if (Enemy* enemy = dynamic_cast<Enemy*>(obj)) {
+            if (auto* enemy = dynamic_cast<Enemy*>(obj)) {
                 enemy_stats = enemy->GetEnemyStats();
             } else {
                 continue;
             }
 
-            if (Slime* slime = dynamic_cast<Slime*>(obj)) {
-                SLIME_COPY = new Slime(slime, enemy_stats);
+            if (auto* slime = dynamic_cast<Slime*>(obj)) {
+                slime_copy = new Slime(slime, enemy_stats);
             }
 
-            if (RangedEnemy* ranged_enemy = dynamic_cast<RangedEnemy*>(obj)) {
+            if (auto* ranged_enemy = dynamic_cast<RangedEnemy*>(obj)) {
                 ranged_enemy_stats = ranged_enemy->GetRangedEnemyStats();
             }
 
-            if (RingShotEnemy* ring_shot_enemy =
+            if (auto* ring_shot_enemy =
                     dynamic_cast<RingShotEnemy*>(obj)) {
-                RING_SHOT_ENEMY_COPY =
+                ring_shot_enemy_copy =
                     new RingShotEnemy(ring_shot_enemy, ranged_enemy_stats);
             }
             if (Mage* mage = dynamic_cast<Mage*>(obj)) {
-                MAGE_COPY = new Mage(mage, ranged_enemy_stats);
+                mage_copy = new Mage(mage, ranged_enemy_stats);
             }
             if (Dog* dog = dynamic_cast<Dog*>(obj)) {
-                DOG_COPY = new Dog(dog, ranged_enemy_stats);
+                dog_copy = new Dog(dog, ranged_enemy_stats);
             }
-            if (Skeleton* skeleton = dynamic_cast<Skeleton*>(obj)) {
-                SKELETON_COPY = new Skeleton(skeleton, ranged_enemy_stats);
+            if (auto* skeleton = dynamic_cast<Skeleton*>(obj)) {
+                skeleton_copy = new Skeleton(skeleton, ranged_enemy_stats);
             }
-            if (Goblin* goblin = dynamic_cast<Goblin*>(obj)) {
-                GOBLIN_COPY = new Goblin(goblin, ranged_enemy_stats);
+            if (auto* goblin = dynamic_cast<Goblin*>(obj)) {
+                goblin_copy = new Goblin(goblin, ranged_enemy_stats);
             }
-            if (HelixEnemy* helix_enemy = dynamic_cast<HelixEnemy*>(obj)) {
-                HELIX_ENEMY_COPY =
+            if (auto* helix_enemy = dynamic_cast<HelixEnemy*>(obj)) {
+                helix_enemy_copy =
                     new HelixEnemy(helix_enemy, ranged_enemy_stats);
             }
             ColliderHandler::GetInstance()->AddCollider(collider);
@@ -113,23 +113,23 @@ Game::Game() {
                        "healthpotion2");
     auto* healthpotion2 = new HealthPotion(props12, 20);
 
-    m_Objects.push_back(healthpotion);
-    m_Objects.push_back(healthpotion2);
+    m_objects.push_back(healthpotion);
+    m_objects.push_back(healthpotion2);
     ColliderHandler::GetInstance()->AddCollider(m_Player);
     ColliderHandler::GetInstance()->AddCollider(healthpotion);
     ColliderHandler::GetInstance()->AddCollider(healthpotion2);
 
     srand(time(nullptr));
 
-    m_WeaponInventory = new WeaponInventory(m_Player->GetPlayerWeapons());
-    m_WeaponInventory->SetSelectedWeapon(m_Player->GetCurrentWeapon());
+    m_weapon_inventory = new WeaponInventory(m_Player->GetPlayerWeapons());
+    m_weapon_inventory->SetSelectedWeapon(m_Player->GetCurrentWeapon());
 
     Renderer::GetInstance()->SetCameraTarget(m_Player);
-    m_GameEventManager = new GameEventManager(m_Player, m_Objects);
+    m_game_event_manager = new GameEventManager(m_Player, m_objects);
 
-    m_HeadsUpDisplay = new HUD(*m_Player);
+    m_heads_up_display = new HUD(*m_Player);
 
-    m_ItemManager = new ItemManager(m_Objects, m_Player);
+    m_item_manager = new ItemManager(m_objects, m_Player);
 
     SDL_Cursor* cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR);
     SDL_SetCursor(cursor);
@@ -138,7 +138,7 @@ Game::Game() {
 }
 
 void Game::Events() {
-    State* state = m_GameEventManager->HandleEvents(m_ItemManager, m_State);
+    State* state = m_game_event_manager->HandleEvents(m_item_manager, m_state);
     if (state != nullptr) {
         ChangeState(state);
     }
@@ -163,54 +163,54 @@ void Game::GenerateRandomEnemyIfNeeded() {
 
         switch (enemy_type) {
             case 0:
-                SLIME_COPY->SetX(generated_x);
-                SLIME_COPY->SetY(generated_y);
+                slime_copy->SetX(generated_x);
+                slime_copy->SetY(generated_y);
                 generated_enemy =
-                    new Slime(SLIME_COPY, SLIME_COPY->GetEnemyStats());
+                    new Slime(slime_copy, slime_copy->GetEnemyStats());
                 break;
             case 1:
-                RING_SHOT_ENEMY_COPY->SetX(generated_x);
-                RING_SHOT_ENEMY_COPY->SetY(generated_y);
+                ring_shot_enemy_copy->SetX(generated_x);
+                ring_shot_enemy_copy->SetY(generated_y);
                 generated_enemy = new RingShotEnemy(
-                    RING_SHOT_ENEMY_COPY,
-                    RING_SHOT_ENEMY_COPY->GetRangedEnemyStats());
+                    ring_shot_enemy_copy,
+                    ring_shot_enemy_copy->GetRangedEnemyStats());
                 break;
             case 2:
-                MAGE_COPY->SetX(generated_x);
-                MAGE_COPY->SetY(generated_y);
+                mage_copy->SetX(generated_x);
+                mage_copy->SetY(generated_y);
                 generated_enemy =
-                    new Mage(MAGE_COPY, MAGE_COPY->GetRangedEnemyStats());
+                    new Mage(mage_copy, mage_copy->GetRangedEnemyStats());
                 break;
             case 3:
-                DOG_COPY->SetX(generated_x);
-                DOG_COPY->SetY(generated_y);
+                dog_copy->SetX(generated_x);
+                dog_copy->SetY(generated_y);
                 generated_enemy =
-                    new Dog(DOG_COPY, DOG_COPY->GetRangedEnemyStats());
+                    new Dog(dog_copy, dog_copy->GetRangedEnemyStats());
                 break;
             case 4:
-                SKELETON_COPY->SetX(generated_x);
-                SKELETON_COPY->SetY(generated_y);
+                skeleton_copy->SetX(generated_x);
+                skeleton_copy->SetY(generated_y);
                 generated_enemy = new Skeleton(
-                    SKELETON_COPY, SKELETON_COPY->GetRangedEnemyStats());
+                    skeleton_copy, skeleton_copy->GetRangedEnemyStats());
                 break;
             case 5:
-                GOBLIN_COPY->SetX(generated_x);
-                GOBLIN_COPY->SetY(generated_y);
+                goblin_copy->SetX(generated_x);
+                goblin_copy->SetY(generated_y);
                 generated_enemy =
-                    new Goblin(GOBLIN_COPY, GOBLIN_COPY->GetRangedEnemyStats());
+                    new Goblin(goblin_copy, goblin_copy->GetRangedEnemyStats());
                 break;
             case 6:
-                HELIX_ENEMY_COPY->SetX(generated_x);
-                HELIX_ENEMY_COPY->SetY(generated_y);
+                helix_enemy_copy->SetX(generated_x);
+                helix_enemy_copy->SetY(generated_y);
                 generated_enemy = new HelixEnemy(
-                    HELIX_ENEMY_COPY, HELIX_ENEMY_COPY->GetRangedEnemyStats());
+                    helix_enemy_copy, helix_enemy_copy->GetRangedEnemyStats());
                 break;
             default:
                 break;
         }
 
         ColliderHandler::GetInstance()->AddCollider(generated_enemy);
-        m_Objects.push_back(generated_enemy);
+        m_objects.push_back(generated_enemy);
     }
 
     if (timer.GetTicks() % 5000 <= 10 &&
@@ -221,7 +221,7 @@ void Game::GenerateRandomEnemyIfNeeded() {
 }
 
 void Game::Update(float dt) {
-    m_State->Update(dt);
+    m_state->Update(dt);
 }
 
 void Game::UpdateObjects(float dt) {
@@ -233,14 +233,14 @@ void Game::UpdateObjects(float dt) {
     ProjectileManager::GetInstance()->UpdateProjectiles(dt);
     if (m_Player != nullptr) {
         m_Player->Update(dt);
-        m_HeadsUpDisplay->Update(*m_Player);
+        m_heads_up_display->Update(*m_Player);
         if (m_Player->MarkedForDeletion()) {
             DeleteObject(m_Player);
             m_Player = nullptr;
-            m_GameEventManager->SetPlayer(nullptr);
+            m_game_event_manager->SetPlayer(nullptr);
         }
     }
-    for (auto it = m_Objects.begin(); it != m_Objects.end();) {
+    for (auto it = m_objects.begin(); it != m_objects.end();) {
         auto* enemy = dynamic_cast<Enemy*>(*it);  // Cast to Enemy type
         if (enemy != nullptr) {
             enemy->SetTarget(m_Player);
@@ -258,42 +258,42 @@ void Game::UpdateObjects(float dt) {
 
 void Game::Render() {
     Renderer::GetInstance()->RenderClear();
-    m_State->Draw();
+    m_state->Draw();
     Renderer::GetInstance()->Render();
 }
 
 void Game::DrawObjects() {
-    for (auto* obj : m_Objects) {
+    for (auto* obj : m_objects) {
         obj->Draw();
     }
 
     ProjectileManager::GetInstance()->Draw();
     if (m_Player != nullptr) {
         m_Player->Draw();
-        m_HeadsUpDisplay->Draw(*m_State);
+        m_heads_up_display->Draw(*m_state);
     }
 }
 
 void Game::ChangeState(State* state) {
-    if (m_State != nullptr) {
-        m_State->Exit();
-        delete m_State;
+    if (m_state != nullptr) {
+        m_state->Exit();
+        delete m_state;
     }
 
-    m_State = state;
-    m_State->Enter();
+    m_state = state;
+    m_state->Enter();
 }
 
 void Game::AddObject(GameObject* obj) {
     SDL_Log("Adding object: %s", obj->GetID().c_str());
-    m_Objects.push_back(obj);
+    m_objects.push_back(obj);
 }
 
 void Game::DeleteObject(GameObject* obj) {
-    auto it = std::find(m_Objects.begin(), m_Objects.end(), obj);
-    if (it != m_Objects.end()) {
+    auto it = std::find(m_objects.begin(), m_objects.end(), obj);
+    if (it != m_objects.end()) {
         SDL_Log("delete object: %s", (*it)->GetID().c_str());
-        m_Objects.erase(it);
+        m_objects.erase(it);
     }
     obj->Clean();
     delete obj;
@@ -301,14 +301,14 @@ void Game::DeleteObject(GameObject* obj) {
 }
 
 Game::~Game() {
-    for (auto* obj : m_Objects) {
+    for (auto* obj : m_objects) {
         obj->Clean();
         delete obj;
     }
-    m_Objects.clear();
-    delete m_WeaponInventory;
-    delete m_GameEventManager;
-    delete m_HeadsUpDisplay;
+    m_objects.clear();
+    delete m_weapon_inventory;
+    delete m_game_event_manager;
+    delete m_heads_up_display;
     delete ProjectileManager::GetInstance();
     SDL_FreeCursor(SDL_GetCursor());
 }

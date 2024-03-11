@@ -7,7 +7,7 @@
 class PlayerStatsComponent {
    public:
     PlayerStatsComponent(const PlayerStats& p_stats) : 
-        m_playerStats(p_stats) {
+        m_player_stats(p_stats) {
             FillStatsVector();
     };
 
@@ -18,7 +18,7 @@ class PlayerStatsComponent {
     void Update(const Player& player);
 
    private:
-    std::vector<std::pair<std::string, std::variant<float, int>>> m_Stats;
-    PlayerStats m_playerStats;
+    std::vector<std::pair<std::string, std::variant<float, int>>> m_stats;
+    PlayerStats m_player_stats;
     void FillStatsVector();
 };

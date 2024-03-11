@@ -15,10 +15,10 @@ class Slime : public Enemy {
 
     virtual void OnCollide(Collider* collidee) override;
 
-    bool IsSplit() { return m_Split; }
+    bool IsSplit() const { return m_split; }
 
     virtual ObjectType GetObjectType() override { return ObjectType::Enemy; }
 
    private:
-    bool m_Split;
+    bool m_split;
 };

@@ -29,9 +29,9 @@ class HelixBullet : public Projectile {
     }
 
    private:
-    Vector2D m_Origin;
-    Vector2D m_TPos;
-    float m_WaveMagnitude;
-    float m_Scale;
-    int m_Flipped;
+    Vector2D m_origin;
+    Vector2D m_t_pos;
+    float m_wave_magnitude;
+    float m_scale;
+    int m_flipped;
 };

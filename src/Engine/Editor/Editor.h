@@ -8,26 +8,25 @@
 #include "Engine/Renderer/Texture.h"
 #include "Engine/Cursors/Cursor.h"
 #include "Engine/KeyMap/KeyMap.h"
-#include "Engine/Cursors/Cursor.h"
 
-struct E_EnemyInfo {
+struct EEnemyInfo {
     int PerceptionWidth;
     int PerceptionHeight;
 };
 
-struct E_AnimationInfo {
+struct EAnimationInfo {
     TilePos Tile;
     int FrameCount;
     int AnimationSpeed;
 };
 
-struct E_ObjectInfo {
+struct EObjectInfo {
     TilePos Tile;
     Rect DstRect;
     float Rotation = 0.0F;
     ObjectType type = ObjectType::Base;
     SDL_Rect CollisionBox;
-    E_AnimationInfo Animation;
+    EAnimationInfo Animation;
     bool SnapToGrid = true;
 };
 
@@ -55,7 +54,7 @@ class Editor : public Application {
     void Events() override;
 
     static std::pair<float, float> SnapToGrid(float x, float y);
-    std::pair<int, int>PixelToTilePos(float x, float y);
+    static std::pair<int, int>PixelToTilePos(float x, float y);
 
     GameObject* GetObjectUnderMouse();
 
@@ -94,23 +93,23 @@ class Editor : public Application {
     static bool LoadEditorTextures();
 
    private:
-    std::string m_CurrentRoomID;
-    Texture* m_CurrentTexture{nullptr};
-    GameObject* m_CurrentObject;
-    std::set<GameObject*> m_SelectedObjects;
-    EditState m_EditState;
-    E_ObjectInfo m_ObjectInfo;
-    E_EnemyInfo m_EnemyInfo;
-    std::vector<std::vector<GameObject*>> m_Layers;
-    std::set<int> m_HiddenLayers;
-    int m_CurrentLayer{0};
+    std::string m_current_room_id;
+    Texture* m_current_texture{nullptr};
+    GameObject* m_current_object;
+    std::set<GameObject*> m_selected_objects;
+    EditState m_edit_state;
+    EObjectInfo m_object_info;
+    EEnemyInfo m_enemy_info;
+    std::vector<std::vector<GameObject*>> m_layers;
+    std::set<int> m_hidden_layers;
+    int m_current_layer{0};
 
 
     void CheckForToolSelection(EditorAction editor_action, EditMode edit_mode);
 
     // keymap
-    KeyMap* m_KeyMap;
+    KeyMap* m_key_map;
 
     // map
-    Cursor* m_Cursor;
+    Cursor* m_cursor;
 };

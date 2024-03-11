@@ -29,9 +29,9 @@ class Application {
 
     [[nodiscard]] inline int GetFrame() const { return m_Frame; }
 
-    [[nodiscard]] inline bool IsRunning() const { return m_IsRunning; }
+    [[nodiscard]] inline bool IsRunning() const { return m_is_running; }
 
-    inline SDL_Window* GetWindow() { return m_Window; }
+    inline SDL_Window* GetWindow() { return m_window; }
 
     inline std::string GetProjectName() { return m_ProjectName; }
 
@@ -61,7 +61,7 @@ class Application {
     Player* m_Player;
 
    private:
-    bool m_IsRunning;
-    SDL_Window* m_Window;
+    bool m_is_running;
+    SDL_Window* m_window;
     static Application* m_instance;
 };

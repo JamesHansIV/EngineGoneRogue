@@ -65,10 +65,10 @@ class PlayerStats {
     [[nodiscard]] float GetDodgeDistance() const { return m_DodgeDistance; };
 
     [[nodiscard]] int GetDodgeInvincibility() const {
-        return timer.GetTicks() - m_LastDodgeTime <= m_DodgeInvincibilityTime;
+        return static_cast<int>(timer.GetTicks() - m_LastDodgeTime <= m_DodgeInvincibilityTime);
     }
 
-    int GetLastDodgeTime() { return m_LastDodgeTime; }
+    int GetLastDodgeTime() const { return m_LastDodgeTime; }
 
     [[nodiscard]] int GetRangedDamage() const { return m_RangedDamage; }
 
@@ -177,10 +177,10 @@ class Player : public Character {
     PlayerStats& GetMutableStats() { return *m_stats; }
 
     [[nodiscard]] const std::vector<Weapon*>& GetPlayerWeapons() const {
-        return m_Weapons;
+        return m_weapons;
     };
 
-    [[nodiscard]] Weapon* GetCurrentWeapon() const { return m_CurrentWeapon; };
+    [[nodiscard]] Weapon* GetCurrentWeapon() const { return m_current_weapon; };
 
     ObjectType GetObjectType() override { return ObjectType::Player; }
 
@@ -188,17 +188,17 @@ class Player : public Character {
 
     [[nodiscard]] const std::unordered_map<std::string, Item*>& GetPlayerItems()
         const {
-        return m_Items;
+        return m_items;
     };
 
    private:
-    std::vector<Weapon*> m_Weapons;
-    std::unordered_map<std::string, Item*> m_Items;
+    std::vector<Weapon*> m_weapons;
+    std::unordered_map<std::string, Item*> m_items;
     PlayerStats* m_stats;
-    Weapon* m_CurrentWeapon;
+    Weapon* m_current_weapon;
     // TODO: add this to player state when game state is added.
     int m_able_to_dash = 0;
     bool m_is_dashing = false;
     int m_multiplier = 1;
-    int m_lastHealthRegen = 0;
+    int m_last_health_regen = 0;
 };

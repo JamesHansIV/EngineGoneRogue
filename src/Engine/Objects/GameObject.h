@@ -129,7 +129,7 @@ class GameObject : public IObject {
 
     float& GetRotation() { return m_Rotation; }
 
-    float GetRadians() { return m_Rotation * (M_PI / 180); }
+    float GetRadians() const { return m_Rotation * (M_PI / 180); }
 
     void SetRotation(float rotation) { m_Rotation = rotation; }
 
@@ -153,7 +153,7 @@ class GameObject : public IObject {
 
     StateType GetStateType() { return m_CurrentState->GetType(); }
 
-    bool MarkedForDeletion() { return m_MarkedForDeletion; }
+    bool MarkedForDeletion() const { return m_MarkedForDeletion; }
 
     void MarkForDeletion() { m_MarkedForDeletion = true; }
 

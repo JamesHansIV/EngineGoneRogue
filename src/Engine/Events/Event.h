@@ -35,21 +35,21 @@ class Event {
 
 class UserEvent : public Event {
    public:
-    explicit UserEvent() : m_Event(nullptr) {}
+    explicit UserEvent() : m_event(nullptr) {}
 
-    void SetSDLEvent(SDL_Event* event) { m_Event = event; }
+    void SetSDLEvent(SDL_Event* event) { m_event = event; }
 
-    SDL_Event* GetSDLEvent() { return m_Event; }
+    SDL_Event* GetSDLEvent() { return m_event; }
 
     virtual EventType GetEventType() { return EventType::UserEvent; }
 
    private:
-    SDL_Event* m_Event;
+    SDL_Event* m_event;
 };
 
 class CollideEvent : public Event {
    public:
-    explicit CollideEvent(Collider* collidee) : m_Collidee(collidee) {}
+    explicit CollideEvent(Collider* collidee) : m_collidee(collidee) {}
 
     void SetCollidee(Collider* collidee);
 
@@ -58,19 +58,19 @@ class CollideEvent : public Event {
     virtual EventType GetEventType() { return EventType::CollideEvent; }
 
    private:
-    Collider* m_Collidee;
+    Collider* m_collidee;
 };
 
 class TargetFoundEvent : public Event {
    public:
     explicit TargetFoundEvent(float targetX, float targetY)
-        : m_TargetX(targetX), m_TargetY(targetY) {}
+        : m_target_x(targetX), m_target_y(targetY) {}
 
     virtual EventType GetEventType() { return EventType::TargetFoundEvent; }
 
    private:
-    float m_TargetX;
-    float m_TargetY;
+    float m_target_x;
+    float m_target_y;
 };
 
 class EnemyDeathEvent : public Event {
@@ -96,38 +96,38 @@ class TargetLostEvent : public Event {
 
 class PlaceChestIfNeededEvent : public Event {
    public:
-    explicit PlaceChestIfNeededEvent(float x, float y) : m_X(x), m_Y(y){};
+    explicit PlaceChestIfNeededEvent(float x, float y) : m_x(x), m_y(y){};
 
     virtual EventType GetEventType() override {
         return EventType::PlaceChestIfNeededEvent;
     }
 
-    float GetX() { return m_X; };
+    float GetX() const { return m_x; };
 
-    float GetY() { return m_Y; };
+    float GetY() const { return m_y; };
 
    private:
-    float m_X;
-    float m_Y;
+    float m_x;
+    float m_y;
 };
 
 class ChestOpenedEvent : public Event {
    public:
     explicit ChestOpenedEvent(std::vector<ItemType>& itemTypes,
                               std::pair<float, float>& index)
-        : m_ItemTypes(itemTypes), m_Index(index) {}
+        : m_item_types(itemTypes), m_index(index) {}
 
     virtual EventType GetEventType() override {
         return EventType::ChestOpenedEvent;
     };
 
-    std::vector<ItemType> GetItemTypes() { return m_ItemTypes; };
+    std::vector<ItemType> GetItemTypes() { return m_item_types; };
 
-    std::pair<float, float> GetIndex() { return m_Index; };
+    std::pair<float, float> GetIndex() { return m_index; };
 
    private:
-    std::vector<ItemType> m_ItemTypes;
-    std::pair<float, float> m_Index;
+    std::vector<ItemType> m_item_types;
+    std::pair<float, float> m_index;
 };
 
 class StartGameEvent : public Event {
@@ -155,20 +155,20 @@ class ContinueGameEvent : public Event {
 class MouseDownEvent : public Event {
    public:
     explicit MouseDownEvent(int x, int y, int button)
-        : m_X(x), m_Y(y), m_Button(button) {}
+        : m_x(x), m_y(y), m_button(button) {}
 
     virtual EventType GetEventType() override {
         return EventType::MouseDownEvent;
     }
 
-    int GetX() { return m_X; }
+    int GetX() const { return m_x; }
 
-    int GetY() { return m_Y; }
+    int GetY() const { return m_y; }
 
-    int GetButton() { return m_Button; }
+    int GetButton() const { return m_button; }
 
    private:
-    int m_X;
-    int m_Y;
-    int m_Button;
+    int m_x;
+    int m_y;
+    int m_button;
 };

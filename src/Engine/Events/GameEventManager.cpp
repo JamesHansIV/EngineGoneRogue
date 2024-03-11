@@ -17,7 +17,7 @@ CustomEventType custom_event_type = SDL_RegisterEvents(1);
 
 GameEventManager::GameEventManager(Player* player,
                                    std::vector<GameObject*>& objects)
-    : m_player(player), m_Objects(objects) {}
+    : m_player(player), m_objects(objects) {}
 
 State* GameEventManager::HandleEvents(ItemManager* ItemManager,
                                       State* GameState) {

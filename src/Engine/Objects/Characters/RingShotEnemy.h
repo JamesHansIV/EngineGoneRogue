@@ -3,21 +3,21 @@
 #include "RangedEnemy.h"
 
 class RangedAttack;
-const float RING_SHOT_OUTER_RADIUS = 40.0f;
-const float RING_SHOT_INNER_RADIUS = 20.0f;
-const int RING_SHOT_COUNT = 24;
+const float kRingShotOuterRadius = 40.0F;
+const float kRingShotInnerRadius = 20.0F;
+const int kRingShotCount = 24;
 
 class RingShotEnemy : public RangedEnemy {
    public:
     explicit RingShotEnemy(Properties& props, RangedEnemyStats stats,
-                           float outerRadius = RING_SHOT_OUTER_RADIUS,
-                           float innerRadius = RING_SHOT_INNER_RADIUS,
-                           int shotCount = RING_SHOT_COUNT);
+                           float outerRadius = kRingShotOuterRadius,
+                           float innerRadius = kRingShotInnerRadius,
+                           int shotCount = kRingShotCount);
 
     RingShotEnemy(Collider* rhs, RangedEnemyStats stats,
-                  float outerRadius = RING_SHOT_OUTER_RADIUS,
-                  float innerRadius = RING_SHOT_INNER_RADIUS,
-                  int shotCount = RING_SHOT_COUNT);
+                  float outerRadius = kRingShotOuterRadius,
+                  float innerRadius = kRingShotInnerRadius,
+                  int shotCount = kRingShotCount);
 
     void Init();
 
@@ -31,7 +31,7 @@ class RingShotEnemy : public RangedEnemy {
     virtual ObjectType GetObjectType() override { return ObjectType::Enemy; }
 
    private:
-    int m_ShotCount;
-    float m_OuterRadius;
-    float m_InnerRadius;
+    int m_shot_count;
+    float m_outer_radius;
+    float m_inner_radius;
 };
