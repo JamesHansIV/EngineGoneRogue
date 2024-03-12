@@ -12,6 +12,7 @@ AudioManager::AudioManager() {
 
     SDL_Log("Loading music");
     LoadMusic("title-screen", "../assets/music/title-screen.wav");
+    LoadMusic("thinking-music", "../assets/music/thinking-music.wav");
     LoadMusic("beat", "../assets/music/beat.wav");
     LoadMusic("background-intense", "../assets/music/background-intense.wav");
     SetMusicVolume(100);
@@ -48,6 +49,7 @@ void AudioManager::PlayMusicOverride(const MusicId& id, bool loop) {
         return;
     }
 
+    SDL_Log("loop: %d", loop ? -1 : 0);
     Mix_FadeOutMusic(250);
     Mix_FadeInMusic(m_music[id], loop ? -1 : 0, 250);
     m_current_music_id = id;

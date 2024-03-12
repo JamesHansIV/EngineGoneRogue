@@ -105,7 +105,12 @@ State* PauseState::HandleEvent(Event* event) {
     return nullptr;
 }
 
-void LevelUpState::Enter() {}
+void LevelUpState::Enter() {
+    Renderer::GetInstance()->SetCameraTarget(GetGame()->GetPlayer());
+    Application::Get()->GetAudioManager().SetMusicVolume(75);
+    Application::Get()->GetAudioManager().PlayMusicOverride("thinking-music",
+                                                            true);
+}
 
 void LevelUpState::Exit() {}
 
