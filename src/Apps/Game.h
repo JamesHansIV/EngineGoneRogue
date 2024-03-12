@@ -34,7 +34,6 @@ class Game : public Application {
 
    private:
     void InitObjects();
-    AudioManager m_audio_manager;
     State* m_state;
     std::vector<GameObject*> m_objects;
     WeaponInventory* m_weapon_inventory;

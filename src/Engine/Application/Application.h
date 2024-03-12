@@ -3,6 +3,7 @@
 #include <SDL2_image/SDL_image.h>
 
 #include <unordered_map>
+#include "Engine/Audio/AudioManager.h"
 #include "Engine/Events/EventManager.h"
 #include "Engine/Layers/Layer.h"
 #include "Engine/Objects/Characters/Player.h"
@@ -39,6 +40,8 @@ class Application {
 
     [[nodiscard]] int GetWindowHeight() const { return m_window_height; }
 
+    [[nodiscard]] AudioManager& GetAudioManager() { return m_audio_manager; }
+
     int& GetMutableWindowWidth() { return m_window_width; }
 
     int& GetMutableWindowHeight() { return m_window_height; }
@@ -59,6 +62,7 @@ class Application {
     int m_frame;
     EventManager m_event_manager;
     Player* m_player;
+    AudioManager m_audio_manager;
 
    private:
     bool m_is_running;

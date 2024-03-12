@@ -9,6 +9,7 @@ class AudioManager {
    public:
     AudioManager();
     ~AudioManager();
+    void PlayMusicOverride(const MusicId& id, bool loop);
     void PlayMusic(const MusicId& id, bool loop);
     void PlaySound(const MusicId& id, bool loop);
     void StopMusic();
@@ -27,4 +28,6 @@ class AudioManager {
 
    private:
     std::unordered_map<MusicId, Mix_Music*> m_music;
+    MusicId m_current_music_id;
+    void LoadMusic(const MusicId&, const std::string& filename);
 };

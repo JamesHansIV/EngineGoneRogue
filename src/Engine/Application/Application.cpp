@@ -38,13 +38,6 @@ Application::Application() : m_project_name("test_project"), m_frame(0) {
         assert(false);
     }
 
-    //Initialize SDL_mixer
-    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
-        printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n",
-               Mix_GetError());
-        assert(false);
-    }
-
     m_window = SDL_CreateWindow("Engine Gone Rogue", SDL_WINDOWPOS_CENTERED,
                                 SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH,
                                 SCREEN_HEIGHT, SDL_WINDOW_RESIZABLE);

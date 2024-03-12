@@ -1,9 +1,13 @@
 #include "GameState.h"
 #include "Apps/Game.h"
+#include "SDL2_mixer/SDL_mixer.h"
 
 void RunningState::Enter() {
     timer.Unpause();
     Renderer::GetInstance()->SetCameraTarget(GetGame()->GetPlayer());
+    Application::Get()->GetAudioManager().SetMusicVolume(100);
+    Application::Get()->GetAudioManager().PlayMusicOverride(
+        "background-intense", true);
 }
 
 void RunningState::Exit() {}
@@ -23,6 +27,8 @@ State* RunningState::HandleEvent(Event* /*event*/) {
 
 void StartState::Enter() {
     Renderer::GetInstance()->SetCameraTarget(nullptr);
+    Application::Get()->GetAudioManager().SetMusicVolume(80);
+    Application::Get()->GetAudioManager().PlayMusic("title-screen", true);
     timer.Pause();
 }
 
@@ -71,6 +77,9 @@ State* GameOverState::HandleEvent(Event* /*event*/) {
 
 void PauseState::Enter() {
     timer.Pause();
+    Mix_VolumeMusic(80);
+    Application::Get()->GetAudioManager().PlayMusicOverride("title-screen",
+                                                            true);
 }
 
 void PauseState::Exit() {}

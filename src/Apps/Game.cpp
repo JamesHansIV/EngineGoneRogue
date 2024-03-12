@@ -145,10 +145,6 @@ void Game::Events() {
     if (state != nullptr) {
         ChangeState(state);
     }
-
-    if (Mix_PlayingMusic() == 0) {
-        m_audio_manager.PlayMusic("running-background", true);
-    }
 }
 
 void Game::GenerateRandomEnemyIfNeeded() {
