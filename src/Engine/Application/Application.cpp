@@ -14,6 +14,7 @@
 #include "Engine/Config/Config.h"
 #include "Engine/utils/utils.h"
 
+#include <SDL2_mixer/SDL_mixer.h>
 #include <dirent.h>
 #include <unistd.h>
 
@@ -26,7 +27,7 @@ Application::Application() : m_project_name("test_project"), m_frame(0) {
     // std::cout << "DEBUG MESSAGE FLAG " << DEBUG_MESSAGES << std::endl;
     // SDL_Log("Something going on");
     // exit(0);
-    if (SDL_Init(SDL_INIT_VIDEO) != 0 &&
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0 &&
         IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG) != 0) {
         SDL_Log("Failed to initialize SDL: %s", SDL_GetError());
         assert(false);
@@ -34,6 +35,13 @@ Application::Application() : m_project_name("test_project"), m_frame(0) {
 
     if (TTF_Init() != 0) {
         SDL_Log("Failed to initialize TTF: %s", TTF_GetError());
+        assert(false);
+    }
+
+    //Initialize SDL_mixer
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
+        printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n",
+               Mix_GetError());
         assert(false);
     }
 

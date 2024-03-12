@@ -3,6 +3,7 @@
 #include <tinyxml2.h>
 #include <iostream>
 #include "Engine/Application/Application.h"
+#include "Engine/Audio/AudioManager.h"
 #include "Engine/Events/GameEventManager.h"
 #include "Engine/Events/ItemManager.h"
 #include "Engine/HeadsUpDisplay/HeadsUpDisplay.h"
@@ -33,6 +34,7 @@ class Game : public Application {
 
    private:
     void InitObjects();
+    AudioManager m_audio_manager;
     State* m_state;
     std::vector<GameObject*> m_objects;
     WeaponInventory* m_weapon_inventory;

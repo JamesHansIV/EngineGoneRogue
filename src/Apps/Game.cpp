@@ -134,6 +134,7 @@ Game::Game() {
     m_item_manager = new ItemManager(m_objects, m_player);
 
     SDL_Cursor* cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR);
+
     SDL_SetCursor(cursor);
 
     ChangeState(new StartState(this));
@@ -143,6 +144,10 @@ void Game::Events() {
     State* state = m_game_event_manager->HandleEvents(m_item_manager, m_state);
     if (state != nullptr) {
         ChangeState(state);
+    }
+
+    if (Mix_PlayingMusic() == 0) {
+        m_audio_manager.PlayMusic("running-background", true);
     }
 }
 
