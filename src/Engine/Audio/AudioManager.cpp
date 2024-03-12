@@ -48,7 +48,8 @@ void AudioManager::PlayMusicOverride(const MusicId& id, bool loop) {
         return;
     }
 
-    Mix_PlayMusic(m_music[id], loop ? -1 : 0);
+    Mix_FadeOutMusic(250);
+    Mix_FadeInMusic(m_music[id], loop ? -1 : 0, 250);
     m_current_music_id = id;
 }
 
