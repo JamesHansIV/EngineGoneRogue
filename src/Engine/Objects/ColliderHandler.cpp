@@ -29,7 +29,7 @@ bool ColliderHandler::CheckCollision(Rect a, Rect b) {
 float ColliderHandler::FindIntersection(Vector2D p1, Vector2D d1, Vector2D p2,
                                         Vector2D d2) {
     Vector2D const b{p2.X - p1.X, p2.Y - p1.Y};
-    Matrix2D a{d1.X, -d2.X, d1.Y, -d2.Y};
+    Matrix2D const a{d1.X, -d2.X, d1.Y, -d2.Y};
 
     if (a.Determinant() == 0.0F) {
         return 0.0F;

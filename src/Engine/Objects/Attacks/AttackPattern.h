@@ -23,9 +23,9 @@ class Burst : public AttackPattern {
 
     void Reset() override { ResetCount(); }
 
-    void Update(float dt) override {
+    void Update(float  /*dt*/) override {
         if (m_cur_count <= 0) {
-            int ticks = timer.GetTicks();
+            int const ticks = timer.GetTicks();
             if ((ticks - m_prev_burst_time) > m_cd) {
                 ResetCount();
             }

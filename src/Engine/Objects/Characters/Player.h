@@ -157,7 +157,7 @@ class Player : public Character {
 
    public:
     explicit Player(Properties& props);
-    Player(Collider* rhs);
+    explicit Player(Collider* rhs);
     ~Player() override;
     Player(const Player&) = delete;
 

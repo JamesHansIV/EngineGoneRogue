@@ -6,7 +6,7 @@
 
 class PlayerStatsComponent {
    public:
-    PlayerStatsComponent(const PlayerStats& p_stats) : 
+    explicit PlayerStatsComponent(const PlayerStats& p_stats) : 
         m_player_stats(p_stats) {
             FillStatsVector();
     };

@@ -3,34 +3,23 @@
 #include "Engine/Events/Event.h"
 #include "SDL2/SDL.h"
 
-enum {
-SCREEN_WIDTH = 1024,
-SCREEN_HEIGHT = 768
-};
+enum { ScreenWidth = 1024, ScreenHeight = 768 };
 
-enum {
-LEVEL_WIDTH = 1280,
-LEVEL_HEIGHT = 960
-};
+enum { LevelWidth = 1280, LevelHeight = 960 };
 
-enum {
-TILE_SIZE = 32
-};
+enum { TileSize = 32 };
 
-enum {
-LOAD_PROJECT = 1
-};
+enum { ShouldLoadProject = 1 };
 
-enum {
-FILEPATH_LEN = 128,
-LABEL_LEN = 32
-};
+enum { FilepathLen = 128, LabelLen = 32 };
 
+// NOLINTBEGIN
 #ifdef DEBUG_MESSAGES
-#if DEBUG_MESSAGES == 0 
-    #define SDL_Log(...)(void)0
+#if DEBUG_MESSAGES == 0
+#define SDL_Log(...) (void)0
 #endif
 #endif
+// NOLINTEND
 
 struct Rect {
     float x;

@@ -4,7 +4,7 @@
 
 class WeaponInventory {
    public:
-    WeaponInventory(std::vector<Weapon*> weapons)
+    explicit WeaponInventory(std::vector<Weapon*> weapons)
         : m_weapons(std::move(weapons)){};
 
     void Draw();

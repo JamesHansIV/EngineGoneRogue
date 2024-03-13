@@ -7,7 +7,7 @@ class Game;
 
 class GameState : public State {
    public:
-    GameState(Game* game) : m_game(game) {}
+    explicit GameState(Game* game) : m_game(game) {}
 
     ~GameState() override = default;
 
@@ -19,7 +19,7 @@ class GameState : public State {
 
 class RunningState : public GameState {
    public:
-    RunningState(Game* game) : GameState(game) {}
+    explicit RunningState(Game* game) : GameState(game) {}
 
     void Enter() override;
     void Exit() override;
@@ -34,9 +34,9 @@ class RunningState : public GameState {
 
 class StartState : public GameState {
    public:
-    StartState(Game* game) : GameState(game) {
-        int x = (Application::Get()->GetWindowWidth() - 100) / 2;
-        int y = (Application::Get()->GetWindowHeight() - 60) / 2;
+    explicit StartState(Game* game) : GameState(game) {
+        int const x = (Application::Get()->GetWindowWidth() - 100) / 2;
+        int const y = (Application::Get()->GetWindowHeight() - 60) / 2;
         m_button = Button(SDL_Rect{x, y, 100, 60}, "Start", []() {
             SDL_Log("Start button clicked");
             timer.Unpause();
@@ -58,7 +58,7 @@ class StartState : public GameState {
 
 class GameOverState : public GameState {
    public:
-    GameOverState(Game* game) : GameState(game) {}
+    explicit GameOverState(Game* game) : GameState(game) {}
 
     void Enter() override;
     void Exit() override;
@@ -73,7 +73,7 @@ class GameOverState : public GameState {
 
 class LevelUpState : public GameState {
    public:
-    LevelUpState(Game* game) : GameState(game) {
+    explicit LevelUpState(Game* game) : GameState(game) {
         const int w = 200;
         const int h = 120;
         const int x = (Application::Get()->GetWindowWidth() - w * 2) / 3;
@@ -115,9 +115,9 @@ class LevelUpState : public GameState {
 
 class PauseState : public GameState {
    public:
-    PauseState(Game* game) : GameState(game) {
-        int x = (Application::Get()->GetWindowWidth() - 100) / 2;
-        int y = (Application::Get()->GetWindowHeight() - 60) / 2;
+    explicit PauseState(Game* game) : GameState(game) {
+        int const x = (Application::Get()->GetWindowWidth() - 100) / 2;
+        int const y = (Application::Get()->GetWindowHeight() - 60) / 2;
         m_button = Button(SDL_Rect{x, y, 100, 60}, "Continue", []() {
             SDL_Log("Continue button clicked");
             timer.Unpause();
@@ -139,7 +139,7 @@ class PauseState : public GameState {
 
 class ShopState : public GameState {
    public:
-    ShopState(Game* game) : GameState(game) {}
+    explicit ShopState(Game* game) : GameState(game) {}
 
     void Enter() override;
     void Exit() override;

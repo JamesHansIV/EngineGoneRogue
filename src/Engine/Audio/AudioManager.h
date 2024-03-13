@@ -18,7 +18,7 @@ class AudioManager {
     void PauseSound();
     void ResumeMusic();
     void ResumeSound();
-    void SetMusicVolume(int volume);
+    static void SetMusicVolume(int volume);
     void SetSoundVolume(int volume);
     void MuteMusic();
     void MuteSound();

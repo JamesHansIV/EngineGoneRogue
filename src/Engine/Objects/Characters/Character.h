@@ -8,7 +8,7 @@ class Character : public Collider {
    public:
     explicit Character(Properties& props) : Collider(props) {}
 
-    Character(Collider* rhs) : Collider(rhs) {}
+    explicit Character(Collider* rhs) : Collider(rhs) {}
 
     void Draw() override = 0;
     void Clean() override = 0;

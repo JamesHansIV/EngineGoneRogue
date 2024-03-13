@@ -18,7 +18,7 @@ class Button {
    public:
     Button() = default;
 
-    Button(SDL_Rect rect, const std::string text, void (*callback)())
+    Button(SDL_Rect rect, const std::string& text, void (*callback)())
         : m_shape(rect) {
         m_relative_pos = Position{rect.x, rect.y};
         m_callback = callback;

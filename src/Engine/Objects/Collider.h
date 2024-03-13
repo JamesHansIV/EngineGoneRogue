@@ -8,14 +8,14 @@
 
 class Collider : public GameObject {
    public:
-    Collider(Properties& props, bool immovable = false)
+    explicit Collider(Properties& props, bool immovable = false)
         : GameObject(props), m_immovable(immovable), m_do_un_collide(false) {
         m_rigid_body = new RigidBody(GetX(), GetY());
         m_collision_box.Set(GetX(), GetY(), GetWidth(), GetHeight());
     }
 
-    Collider(Collider* rhs);
-    Collider(GameObject* rhs);
+    explicit Collider(Collider* rhs);
+    explicit Collider(GameObject* rhs);
 
     void SetDoUnCollide(bool doUnCollide) { m_do_un_collide = doUnCollide; }
 

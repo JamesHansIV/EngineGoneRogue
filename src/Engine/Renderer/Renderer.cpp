@@ -326,8 +326,8 @@ void Renderer::MoveCameraX(float x) {
     if (m_camera.x < 0) {
         m_camera.x = 0;
     }
-    if (m_camera.x + m_camera.w > LEVEL_WIDTH) {
-        m_camera.x = LEVEL_WIDTH - m_camera.w;
+    if (m_camera.x + m_camera.w > LevelWidth) {
+        m_camera.x = LevelWidth - m_camera.w;
     }
 }
 
@@ -336,8 +336,8 @@ void Renderer::MoveCameraY(float y) {
     if (m_camera.y < 0) {
         m_camera.y = 0;
     }
-    if (m_camera.y + m_camera.h > LEVEL_HEIGHT) {
-        m_camera.y = LEVEL_HEIGHT - m_camera.h;
+    if (m_camera.y + m_camera.h > LevelHeight) {
+        m_camera.y = LevelHeight - m_camera.h;
     }
 }
 

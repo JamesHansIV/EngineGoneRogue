@@ -158,11 +158,11 @@ struct stat info;
 const char* object_type_strs[] = {"Base", "Projectile", "Player"};
 
 void DrawGrid() {
-    for (int i = 0; i < LEVEL_WIDTH; i += TILE_SIZE) {
-        Renderer::GetInstance()->DrawLine(i, 0, i, LEVEL_HEIGHT);
+    for (int i = 0; i < LevelWidth; i += TileSize) {
+        Renderer::GetInstance()->DrawLine(i, 0, i, LevelHeight);
     }
-    for (int i = 0; i < LEVEL_HEIGHT; i += TILE_SIZE) {
-        Renderer::GetInstance()->DrawLine(0, i, LEVEL_WIDTH, i);
+    for (int i = 0; i < LevelHeight; i += TileSize) {
+        Renderer::GetInstance()->DrawLine(0, i, LevelWidth, i);
     }
 }
 
@@ -265,8 +265,8 @@ void Editor::SaveRoom(const char* roomName) {
         }
     }
 
-    char file_path[FILEPATH_LEN + 1];
-    snprintf(file_path, FILEPATH_LEN, "../assets/projects/%s/rooms/%s.xml",
+    char file_path[FilepathLen + 1];
+    snprintf(file_path, FilepathLen, "../assets/projects/%s/rooms/%s.xml",
              m_project_name.c_str(), roomName);
 
     int const success = SaveObjects(file_path, objects);
@@ -276,8 +276,8 @@ void Editor::SaveRoom(const char* roomName) {
 void Editor::SaveProject() {
     CreateProjectFolder();
 
-    char dst_path[FILEPATH_LEN + 1];
-    snprintf(dst_path, FILEPATH_LEN, "../assets/projects/%s/textures.xml",
+    char dst_path[FilepathLen + 1];
+    snprintf(dst_path, FilepathLen, "../assets/projects/%s/textures.xml",
              GetProjectName().c_str());
     Renderer::GetInstance()->SaveTextures(dst_path);
 
@@ -290,13 +290,13 @@ void Editor::CreateProjectFolder() {
     struct dirent* entry;
     DIR* dp;
 
-    char project_path[FILEPATH_LEN + 1];
-    snprintf(project_path, FILEPATH_LEN, "../assets/projects/%s",
+    char project_path[FilepathLen + 1];
+    snprintf(project_path, FilepathLen, "../assets/projects/%s",
              m_project_name.c_str());
     dp = opendir(project_path);
     if (dp == nullptr) {
-        char command[FILEPATH_LEN + 1];
-        snprintf(command, FILEPATH_LEN, "mkdir %s", project_path);
+        char command[FilepathLen + 1];
+        snprintf(command, FilepathLen, "mkdir %s", project_path);
         system(command);
     }
     closedir(dp);
@@ -307,7 +307,7 @@ void Editor::SetObjectInfo() {
     if (tile_map != nullptr) {
         m_object_info.Tile = {0, 0, tile_map->GetTileSize(),
                              tile_map->GetTileSize()};
-        m_object_info.DstRect = {0, 0, TILE_SIZE, TILE_SIZE};
+        m_object_info.DstRect = {0, 0, TileSize, TileSize};
     } else {
         m_object_info.Tile = {0, 0, m_current_texture->GetWidth(),
                              m_current_texture->GetHeight()};
@@ -444,18 +444,18 @@ void Editor::ShowAddCollider() {
 }
 
 void Editor::ShowAddAnimation() {
-    char animation_label[LABEL_LEN + 1];
-    char button_label[LABEL_LEN + 1];
-    char status_label[LABEL_LEN + 1];
+    char animation_label[LabelLen + 1];
+    char button_label[LabelLen + 1];
+    char status_label[LabelLen + 1];
 
     if (m_current_object->GetAnimation() == nullptr) {
-        snprintf(animation_label, LABEL_LEN, "%s idle animation", "Add");
-        snprintf(button_label, LABEL_LEN, "%s animation", "Add");
-        snprintf(status_label, LABEL_LEN, "Successfully %s animation", "added");
+        snprintf(animation_label, LabelLen, "%s idle animation", "Add");
+        snprintf(button_label, LabelLen, "%s animation", "Add");
+        snprintf(status_label, LabelLen, "Successfully %s animation", "added");
     } else {
-        snprintf(animation_label, LABEL_LEN, "%s idle animation", "Change");
-        snprintf(button_label, LABEL_LEN, "%s animation", "Change");
-        snprintf(status_label, LABEL_LEN, "Successfully %s animation",
+        snprintf(animation_label, LabelLen, "%s idle animation", "Change");
+        snprintf(button_label, LabelLen, "%s animation", "Change");
+        snprintf(status_label, LabelLen, "Successfully %s animation",
                  "changed");
     }
 
@@ -563,14 +563,14 @@ void Editor::ShowObjectEditor() {
             ImGui::Image((void*)obj_texture->GetTexture(), size, uv0, uv1);
 
             ImGui::SliderFloat("X position", &m_current_object->GetX(), 0,
-                               LEVEL_WIDTH - m_current_object->GetWidth());
+                               LevelWidth - m_current_object->GetWidth());
             ImGui::SliderFloat("Y position", &m_current_object->GetY(), 0,
-                               LEVEL_HEIGHT - m_current_object->GetHeight());
+                               LevelHeight - m_current_object->GetHeight());
 
             ImGui::SliderInt("Width", &m_current_object->GetWidth(), 0,
-                             LEVEL_WIDTH);
+                             LevelWidth);
             ImGui::SliderInt("Height", &m_current_object->GetHeight(), 0,
-                             LEVEL_HEIGHT);
+                             LevelHeight);
 
             if (ImGui::Button("Rotate left", ImVec2(100, 30))) {
                 m_current_object->GetRotation() -= 90.0F;
@@ -853,9 +853,9 @@ void Editor::ShowCreateObject() {
 
             ImGui::SeparatorText("Select dimensions");
             ImGui::SliderInt("Select destination width: ",
-                             &m_object_info.DstRect.w, 0, LEVEL_WIDTH);
+                             &m_object_info.DstRect.w, 0, LevelWidth);
             ImGui::SliderInt("Select destination height: ",
-                             &m_object_info.DstRect.h, 0, LEVEL_HEIGHT);
+                             &m_object_info.DstRect.h, 0, LevelHeight);
 
             ObjectType const type = ShowSelectObjectType();
             switch (type) {
@@ -892,22 +892,22 @@ void Editor::ShowChooseLayer() {
         }
         ImGui::SeparatorText("Select Layer");
         for (int i = 0; i < m_layers.size(); i++) {
-            char layer_label[LABEL_LEN + 1];
-            snprintf(layer_label, LABEL_LEN, "Layer %d", i);
+            char layer_label[LabelLen + 1];
+            snprintf(layer_label, LabelLen, "Layer %d", i);
             if (ImGui::Selectable(layer_label, m_current_layer == i)) {
                 m_current_layer = i;
                 m_current_object = nullptr;
             }
 
-            char button_label[LABEL_LEN + 1];
+            char button_label[LabelLen + 1];
             if (m_hidden_layers.find(i) == m_hidden_layers.end()) {
-                snprintf(button_label, LABEL_LEN, "Hide %d", i);
+                snprintf(button_label, LabelLen, "Hide %d", i);
                 if (ImGui::Button(button_label, ImVec2(60, 20))) {
                     SDL_Log("layer %d should be hidden", i);
                     m_hidden_layers.insert(i);
                 }
             } else {
-                snprintf(button_label, LABEL_LEN, "Show %d", i);
+                snprintf(button_label, LabelLen, "Show %d", i);
                 if (ImGui::Button(button_label, ImVec2(60, 20))) {
                     m_hidden_layers.erase(i);
                 }
@@ -1044,12 +1044,12 @@ void Editor::OnMouseClicked(SDL_Event& /*event*/) {
 
         float const x = ((InputChecker::GetMouseX() +
                           Renderer::GetInstance()->GetCameraX()) /
-                         TILE_SIZE) *
-                        TILE_SIZE;
+                         TileSize) *
+                        TileSize;
         float const y = ((InputChecker::GetMouseY() +
                           Renderer::GetInstance()->GetCameraY()) /
-                         TILE_SIZE) *
-                        TILE_SIZE;
+                         TileSize) *
+                        TileSize;
 
         if (m_edit_state.EditMode == EditMode::DRAW) {
             AddObject(x, y);
@@ -1107,12 +1107,12 @@ void Editor::OnMouseMoved(SDL_Event& event) {
         if (m_edit_state.IsEditing) {
             float const x = ((InputChecker::GetMouseX() +
                               Renderer::GetInstance()->GetCameraX()) /
-                             TILE_SIZE) *
-                            TILE_SIZE;
+                             TileSize) *
+                            TileSize;
             float const y = ((InputChecker::GetMouseY() +
                               Renderer::GetInstance()->GetCameraY()) /
-                             TILE_SIZE) *
-                            TILE_SIZE;
+                             TileSize) *
+                            TileSize;
 
             if ((x != m_edit_state.PrevX || y != m_edit_state.PrevY)) {
                 if (m_edit_state.EditMode == EditMode::DRAW) {
@@ -1210,8 +1210,8 @@ void Editor::OnMouseUp(SDL_Event& /*event*/) {
 std::pair<float, float> Editor::SnapToGrid(float x, float y) {
     float next_x;
     float next_y;
-    next_x = (static_cast<int>(x + TILE_SIZE / 2) / TILE_SIZE) * TILE_SIZE;
-    next_y = (static_cast<int>(y + TILE_SIZE / 2) / TILE_SIZE) * TILE_SIZE;
+    next_x = (static_cast<int>(x + TileSize / 2) / TileSize) * TileSize;
+    next_y = (static_cast<int>(y + TileSize / 2) / TileSize) * TileSize;
 
     return {next_x, next_y};
 }
@@ -1219,8 +1219,8 @@ std::pair<float, float> Editor::SnapToGrid(float x, float y) {
 std::pair<int, int> Editor::PixelToTilePos(float x, float y) {
     int row;
     int col;
-    row = y / TILE_SIZE;
-    col = x / TILE_SIZE;
+    row = y / TileSize;
+    col = x / TileSize;
 
     return {row, col};
 }

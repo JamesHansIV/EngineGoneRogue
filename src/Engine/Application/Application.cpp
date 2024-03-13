@@ -39,8 +39,8 @@ Application::Application() : m_project_name("test_project") {
     }
 
     m_window = SDL_CreateWindow("Engine Gone Rogue", SDL_WINDOWPOS_CENTERED,
-                                SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH,
-                                SCREEN_HEIGHT, SDL_WINDOW_RESIZABLE);
+                                SDL_WINDOWPOS_CENTERED, ScreenWidth,
+                                ScreenHeight, SDL_WINDOW_RESIZABLE);
     if (m_window == nullptr) {
         SDL_Log("Failed to create Window: %s", SDL_GetError());
         assert(false);
@@ -54,7 +54,7 @@ Application::Application() : m_project_name("test_project") {
     //      Set a working directory path macro to use absolute file paths
     Renderer::GetInstance()->Init();
 
-    if (LOAD_PROJECT) {
+    if (ShouldLoadProject != 0U) {
         if (!LoadProject()) {
             SDL_Log("Failed to load project");
             assert(false);
@@ -122,8 +122,8 @@ bool Application::LoadRooms(const char* projectPath) {
 }
 
 bool Application::LoadProject() {
-    char project_path[FILEPATH_LEN + 1];
-    snprintf(project_path, FILEPATH_LEN, "../assets/projects/%s",
+    char project_path[FilepathLen + 1];
+    snprintf(project_path, FilepathLen, "../assets/projects/%s",
              m_project_name.c_str());
     if (!LoadTextures(project_path)) {
         return false;

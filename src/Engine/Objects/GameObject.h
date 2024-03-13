@@ -135,7 +135,7 @@ class GameObject : public IObject {
 
     std::string GetTextureID() { return m_texture_id; }
 
-    void SetTextureID(std::string texture) { m_texture_id = texture; };
+    void SetTextureID(std::string texture) { m_texture_id = std::move(texture); };
 
     std::string GetID() { return m_object_id; }
 
