@@ -10,15 +10,15 @@ class RangedEnemy : public Enemy {
 
     RangedEnemy(Collider* rhs, RangedEnemyStats stats);
 
-    ~RangedEnemy();
+    ~RangedEnemy() override;
 
-    virtual void Draw() override;
-    virtual void Clean() override;
-    virtual void Update(float dt) override;
+    void Draw() override;
+    void Clean() override;
+    void Update(float dt) override;
 
     virtual void Shoot() = 0;
 
-    int GetFireInterval() const { return m_stats.fireInterval; }
+    [[nodiscard]] int GetFireInterval() const { return m_stats.fireInterval; }
 
     RangedAttack* GetAttack() { return m_attack; }
 
@@ -26,9 +26,9 @@ class RangedEnemy : public Enemy {
 
     RangedEnemyStats GetRangedEnemyStats() { return m_stats; }
 
-    virtual void OnCollide(Collider* collidee) override;
+    void OnCollide(Collider* collidee) override;
 
-    virtual ObjectType GetObjectType() override { return ObjectType::Enemy; }
+    ObjectType GetObjectType() override { return ObjectType::Enemy; }
 
    protected:
     RangedAttack* m_attack;

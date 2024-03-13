@@ -12,7 +12,7 @@ class Character : public Collider {
 
     void Draw() override = 0;
     void Clean() override = 0;
-    virtual void Update(float dt) override = 0;
+    void Update(float dt) override = 0;
 
     Health* GetHealth() { return m_health; }
 

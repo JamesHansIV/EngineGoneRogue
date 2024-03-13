@@ -10,9 +10,8 @@ HelixBullet::HelixBullet(Properties& props, float speed, float angle,
     : Projectile(props, speed, angle, playerOwned),
       m_flipped(static_cast<int>(flipped)),
       m_origin(Vector2D(GetX(), GetY())),
-      m_t_pos(0, 0),
-      m_wave_magnitude(1),
-      m_scale(30.0F) {
+      m_t_pos(0, 0)
+      {
 
     SetSpeed(speed / 25);
 }

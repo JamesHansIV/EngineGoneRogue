@@ -40,17 +40,17 @@ class RigidBody {
 
     inline void SetPositionY(float y) { m_position.Y = y; }
 
-    inline float GetMass() const { return m_mass; }
+    [[nodiscard]] inline float GetMass() const { return m_mass; }
 
-    inline Vector2D GetForce() const { return m_force; }
+    [[nodiscard]] inline Vector2D GetForce() const { return m_force; }
 
-    inline Vector2D GetFriction() const { return m_friction; }
+    [[nodiscard]] inline Vector2D GetFriction() const { return m_friction; }
 
     [[nodiscard]] inline Vector2D Position() const { return m_position; }
 
-    inline Vector2D Velocity() const { return m_velocity; }
+    [[nodiscard]] inline Vector2D Velocity() const { return m_velocity; }
 
-    inline Vector2D Acceleration() const { return m_acceleration; }
+    [[nodiscard]] inline Vector2D Acceleration() const { return m_acceleration; }
 
     void Update(float dt);
 

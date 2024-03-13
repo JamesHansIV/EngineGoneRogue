@@ -88,9 +88,9 @@ class Renderer {
         CenterCameraOnObject();
     }
 
-    int GetCameraX() const { return m_camera.x; };
+    [[nodiscard]] int GetCameraX() const { return m_camera.x; };
 
-    int GetCameraY() const { return m_camera.y; };
+    [[nodiscard]] int GetCameraY() const { return m_camera.y; };
 
     [[nodiscard]] TTF_Font* GetFont() const { return m_font; };
 
@@ -98,7 +98,7 @@ class Renderer {
     void SetCameraSize(int width, int height);
 
    private:
-    Renderer() {}
+    Renderer() = default;
 
     SDL_Renderer* m_renderer;
     SDL_Rect m_camera;

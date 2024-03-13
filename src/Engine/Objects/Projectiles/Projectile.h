@@ -52,11 +52,11 @@ class Projectile : public Collider {
 
     void SetPiercing(int piercing) { m_piercing = piercing; }
 
-    int GetPiercing() const { return m_piercing; }
+    [[nodiscard]] int GetPiercing() const { return m_piercing; }
 
     void AddNumberofEnemiesHit() { m_numberof_enemies_hit++; }
 
-    int GetNumberofEnemiesHit() const { return m_numberof_enemies_hit; };
+    [[nodiscard]] int GetNumberofEnemiesHit() const { return m_numberof_enemies_hit; };
 
     Player* GetOwner() { return m_owner; };
 

@@ -36,7 +36,7 @@ class PlayerState : public State {
         m_dodge.Down = "dodge-down";
     }
 
-    virtual ~PlayerState() {}
+    ~PlayerState() override = default;
 
     Player* GetPlayer() { return m_player; }
 
@@ -56,18 +56,18 @@ class PlayerIdle : public PlayerState {
    public:
     explicit PlayerIdle(Player* player) : PlayerState(player) {}
 
-    virtual void Enter() override;
-    virtual void Exit() override;
-    virtual State* Update(float dt) override;
-    virtual void Draw() override;
-    virtual State* HandleEvent(Event* event) override;
+    void Enter() override;
+    void Exit() override;
+    State* Update(float dt) override;
+    void Draw() override;
+    State* HandleEvent(Event* event) override;
 
     State* OnUserEvent(UserEvent* event);
     State* OnCollideEvent(CollideEvent* event);
 
     State* PollInput(float dt);
 
-    virtual StateType GetType() override { return StateType::Idle; }
+    StateType GetType() override { return StateType::Idle; }
 };
 
 //TODO: player move up and down animations skip some frames...
@@ -75,38 +75,38 @@ class PlayerMoving : public PlayerState {
    public:
     explicit PlayerMoving(Player* player) : PlayerState(player) {}
 
-    virtual void Enter() override;
-    virtual void Exit() override;
-    virtual State* Update(float dt) override;
-    virtual void Draw() override;
-    virtual State* HandleEvent(Event* event) override;
+    void Enter() override;
+    void Exit() override;
+    State* Update(float dt) override;
+    void Draw() override;
+    State* HandleEvent(Event* event) override;
 
     State* OnUserEvent(UserEvent* event);
     State* OnCollideEvent(CollideEvent* event);
 
     void PollInput(float dt);
 
-    virtual StateType GetType() override { return StateType::Moving; }
+    StateType GetType() override { return StateType::Moving; }
 };
 
 class PlayerDodge : public PlayerState {
    public:
     explicit PlayerDodge(Player* player)
-        : PlayerState(player), m_dodge_cd(60), m_velocity(0, 0) {}
+        : PlayerState(player),  m_velocity(0, 0) {}
 
-    virtual void Enter() override;
-    virtual void Exit() override;
-    virtual State* Update(float dt) override;
-    virtual void Draw() override;
-    virtual State* HandleEvent(Event* event) override;
+    void Enter() override;
+    void Exit() override;
+    State* Update(float dt) override;
+    void Draw() override;
+    State* HandleEvent(Event* event) override;
 
     State* OnUserEvent(UserEvent* event);
     State* OnCollideEvent(CollideEvent* event);
 
-    virtual StateType GetType() override { return StateType::Dodge; }
+    StateType GetType() override { return StateType::Dodge; }
 
    private:
-    int m_dodge_cd;
+    int m_dodge_cd{60};
     float m_distance;
     Vector2D m_velocity;
 };
@@ -116,11 +116,11 @@ class PlayerIsHit : public PlayerState {
     explicit PlayerIsHit(Player* player, int damage)
         : PlayerState(player), m_damage(damage) {}
 
-    virtual void Enter() override;
-    virtual void Exit() override;
-    virtual State* Update(float dt) override;
-    virtual void Draw() override;
-    virtual State* HandleEvent(Event* event) override;
+    void Enter() override;
+    void Exit() override;
+    State* Update(float dt) override;
+    void Draw() override;
+    State* HandleEvent(Event* event) override;
 
     static State* OnUserEvent(UserEvent* event);
     State* OnCollideEvent(CollideEvent* event);
@@ -131,7 +131,7 @@ class PlayerIsHit : public PlayerState {
 
     void ApplyDamage();
 
-    virtual StateType GetType() override { return StateType::IsHit; }
+    StateType GetType() override { return StateType::IsHit; }
 
    private:
     int m_damage;
@@ -141,11 +141,11 @@ class PlayerDead : public PlayerState {
    public:
     explicit PlayerDead(Player* player) : PlayerState(player) {}
 
-    virtual void Enter() override;
-    virtual void Exit() override;
-    virtual State* Update(float dt) override;
-    virtual void Draw() override;
-    virtual State* HandleEvent(Event* event) override;
+    void Enter() override;
+    void Exit() override;
+    State* Update(float dt) override;
+    void Draw() override;
+    State* HandleEvent(Event* event) override;
 
-    virtual StateType GetType() override { return StateType::Dead; }
+    StateType GetType() override { return StateType::Dead; }
 };

@@ -8,8 +8,8 @@ class Skeleton : public RangedEnemy {
     Skeleton(Collider* rhs, RangedEnemyStats stats);
     void Init();
 
-    virtual void Draw() override;
-    virtual void Update(float dt) override;
+    void Draw() override;
+    void Update(float dt) override;
 
     void Shoot() override;
 

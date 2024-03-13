@@ -9,15 +9,15 @@ class Slime : public Enemy {
     Slime(Collider* rhs, EnemyStats stats, bool split = false);
     void Init();
 
-    virtual void Draw() override;
-    virtual void Clean() override;
-    virtual void Update(float dt) override;
+    void Draw() override;
+    void Clean() override;
+    void Update(float dt) override;
 
-    virtual void OnCollide(Collider* collidee) override;
+    void OnCollide(Collider* collidee) override;
 
-    bool IsSplit() const { return m_split; }
+    [[nodiscard]] bool IsSplit() const { return m_split; }
 
-    virtual ObjectType GetObjectType() override { return ObjectType::Enemy; }
+    ObjectType GetObjectType() override { return ObjectType::Enemy; }
 
    private:
     bool m_split;

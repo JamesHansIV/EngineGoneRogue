@@ -79,9 +79,9 @@ class GameObject : public IObject {
     explicit GameObject(GameObject* rhs);
     virtual ~GameObject();
 
-    virtual void Draw() override;
-    virtual void Clean() override{};
-    virtual void Update(float dt) override;
+    void Draw() override;
+    void Clean() override{};
+    void Update(float dt) override;
 
     void DrawRect();
     void DrawAnimation();
@@ -111,11 +111,11 @@ class GameObject : public IObject {
 
     void MoveY(float y) { m_dst_rect.y += y; }
 
-    float GetMidPointX() const {
+    [[nodiscard]] float GetMidPointX() const {
         return (m_dst_rect.x + static_cast<float>(m_dst_rect.w) / 2);
     };
 
-    float GetMidPointY() const {
+    [[nodiscard]] float GetMidPointY() const {
         return (m_dst_rect.y + static_cast<float>(m_dst_rect.h) / 2);
     };
 
@@ -129,7 +129,7 @@ class GameObject : public IObject {
 
     float& GetRotation() { return m_rotation; }
 
-    float GetRadians() const { return m_rotation * (M_PI / 180); }
+    [[nodiscard]] float GetRadians() const { return m_rotation * (M_PI / 180); }
 
     void SetRotation(float rotation) { m_rotation = rotation; }
 
@@ -153,7 +153,7 @@ class GameObject : public IObject {
 
     StateType GetStateType() { return m_current_state->GetType(); }
 
-    bool MarkedForDeletion() const { return m_marked_for_deletion; }
+    [[nodiscard]] bool MarkedForDeletion() const { return m_marked_for_deletion; }
 
     void MarkForDeletion() { m_marked_for_deletion = true; }
 

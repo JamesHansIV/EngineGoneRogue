@@ -11,17 +11,17 @@ class Texture {
     Texture(const std::string& text, SDL_Color text_color, std::string id);
     virtual ~Texture();
 
-    std::string GetID() const { return m_id; }
+    [[nodiscard]] std::string GetID() const { return m_id; }
 
-    std::string GetFilePath() const { return m_file_path; }
+    [[nodiscard]] std::string GetFilePath() const { return m_file_path; }
 
-    std::string GetText() const { return m_cur_text; }
+    [[nodiscard]] std::string GetText() const { return m_cur_text; }
 
-    int GetWidth() const { return m_width; }
+    [[nodiscard]] int GetWidth() const { return m_width; }
 
-    int GetHeight() const { return m_height; }
+    [[nodiscard]] int GetHeight() const { return m_height; }
 
-    int GetObjectCount() const { return m_object_count; }
+    [[nodiscard]] int GetObjectCount() const { return m_object_count; }
 
     void IncObjectCount() { m_object_count++; }
 

@@ -10,8 +10,8 @@ class Goblin : public RangedEnemy {
 
     void Init();
 
-    virtual void Draw() override;
-    virtual void Update(float dt) override;
+    void Draw() override;
+    void Update(float dt) override;
 
     void Shoot() override;
 

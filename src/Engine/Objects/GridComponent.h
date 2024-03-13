@@ -33,8 +33,8 @@ struct Box {
 };
 
 struct BoxWithText : public Box {
-    BoxWithText(const std::string& text, const SDL_Rect& srcRect, const DrawColor& boxColor, bool fill, TextAlign alignment)
-        : Box(srcRect, boxColor, fill), text(text), text_align(alignment) {
+    BoxWithText(std::string  text, const SDL_Rect& srcRect, const DrawColor& boxColor, bool fill, TextAlign alignment)
+        : Box(srcRect, boxColor, fill), text(std::move(text)), text_align(alignment) {
     }
 
     std::string text;
@@ -78,14 +78,14 @@ public:
         }
     }
 
-    int GetColumnWidth(int column) const {
+    [[nodiscard]] int GetColumnWidth(int column) const {
         if (column >= 0 && column < m_columns) {
             return m_column_widths[column];
         }
         return m_cell_width;
     }
 
-    int GetColumnStartX(int column) const {
+    [[nodiscard]] int GetColumnStartX(int column) const {
         int start_x = m_start_x;
         for (int i = 0; i < column; i++) {
             start_x += GetColumnWidth(i);

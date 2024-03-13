@@ -18,53 +18,53 @@ class RangedEnemyIdle : public RangedEnemyState {
    public:
     explicit RangedEnemyIdle(RangedEnemy* enemy) : RangedEnemyState(enemy) {}
 
-    virtual void Enter() override;
-    virtual void Exit() override;
-    virtual State* Update(float dt) override;
-    virtual void Draw() override;
-    virtual State* HandleEvent(Event* event) override;
+    void Enter() override;
+    void Exit() override;
+    State* Update(float dt) override;
+    void Draw() override;
+    State* HandleEvent(Event* event) override;
 
     State* OnTargetFoundEvent(TargetFoundEvent* event);
     State* OnCollideEvent(CollideEvent* event);
 
-    virtual StateType GetType() override { return StateType::Idle; }
+    StateType GetType() override { return StateType::Idle; }
 };
 
 class RangedEnemyMoving : public RangedEnemyState {
    public:
     explicit RangedEnemyMoving(RangedEnemy* enemy)
-        : RangedEnemyState(enemy), m_direction(0) {}
+        : RangedEnemyState(enemy) {}
 
-    virtual void Enter() override;
-    virtual void Exit() override;
-    virtual State* Update(float dt) override;
-    virtual void Draw() override;
-    virtual State* HandleEvent(Event* event) override;
+    void Enter() override;
+    void Exit() override;
+    State* Update(float dt) override;
+    void Draw() override;
+    State* HandleEvent(Event* event) override;
 
     State* OnCollideEvent(CollideEvent* event);
 
     void SelectDirection();
 
-    virtual StateType GetType() override { return StateType::Moving; }
+    StateType GetType() override { return StateType::Moving; }
 
    private:
     //0 is up and 1 is down
-    int m_direction;
+    int m_direction{0};
 };
 
 class RangedEnemyAttack : public RangedEnemyState {
    public:
     explicit RangedEnemyAttack(RangedEnemy* enemy) : RangedEnemyState(enemy) {}
 
-    virtual void Enter() override;
-    virtual void Exit() override;
-    virtual State* Update(float dt) override;
-    virtual void Draw() override;
-    virtual State* HandleEvent(Event* event) override;
+    void Enter() override;
+    void Exit() override;
+    State* Update(float dt) override;
+    void Draw() override;
+    State* HandleEvent(Event* event) override;
 
     State* OnCollideEvent(CollideEvent* event);
 
-    virtual StateType GetType() override { return StateType::Attack; }
+    StateType GetType() override { return StateType::Attack; }
 };
 
 class RangedEnemyIsHit : public RangedEnemyState {
@@ -72,15 +72,15 @@ class RangedEnemyIsHit : public RangedEnemyState {
     explicit RangedEnemyIsHit(RangedEnemy* enemy, int damage)
         : RangedEnemyState(enemy), m_damage(damage) {}
 
-    virtual void Enter() override;
-    virtual void Exit() override;
-    virtual State* Update(float dt) override;
-    virtual void Draw() override;
-    virtual State* HandleEvent(Event* event) override;
+    void Enter() override;
+    void Exit() override;
+    State* Update(float dt) override;
+    void Draw() override;
+    State* HandleEvent(Event* event) override;
 
     State* OnCollideEvent(CollideEvent* event);
 
-    virtual StateType GetType() override { return StateType::IsHit; }
+    StateType GetType() override { return StateType::IsHit; }
 
     void SetDamage(int damage) { m_damage = damage; }
 
@@ -94,11 +94,11 @@ class RangedEnemyDead : public RangedEnemyState {
    public:
     explicit RangedEnemyDead(RangedEnemy* enemy) : RangedEnemyState(enemy) {}
 
-    virtual void Enter() override;
-    virtual void Exit() override;
-    virtual State* Update(float dt) override;
-    virtual void Draw() override;
-    virtual State* HandleEvent(Event* event) override;
+    void Enter() override;
+    void Exit() override;
+    State* Update(float dt) override;
+    void Draw() override;
+    State* HandleEvent(Event* event) override;
 
-    virtual StateType GetType() override { return StateType::Dead; }
+    StateType GetType() override { return StateType::Dead; }
 };

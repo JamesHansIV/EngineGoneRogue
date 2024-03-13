@@ -3,18 +3,28 @@
 #include "Engine/Events/Event.h"
 #include "SDL2/SDL.h"
 
-#define SCREEN_WIDTH 1024
-#define SCREEN_HEIGHT 768
+enum {
+SCREEN_WIDTH = 1024,
+SCREEN_HEIGHT = 768
+};
 
-#define LEVEL_WIDTH 1280
-#define LEVEL_HEIGHT 960
+enum {
+LEVEL_WIDTH = 1280,
+LEVEL_HEIGHT = 960
+};
 
-#define TILE_SIZE 32
+enum {
+TILE_SIZE = 32
+};
 
-#define LOAD_PROJECT 1
+enum {
+LOAD_PROJECT = 1
+};
 
-#define FILEPATH_LEN 128
-#define LABEL_LEN 32
+enum {
+FILEPATH_LEN = 128,
+LABEL_LEN = 32
+};
 
 #ifdef DEBUG_MESSAGES
 #if DEBUG_MESSAGES == 0 

@@ -39,17 +39,17 @@ class Item : public GameObject {
         return kItemTypeToName.at(m_item_type);
     }
 
-    const std::string& GetDescription() const {
+    [[nodiscard]] const std::string& GetDescription() const {
         return kItemTypeToDescription.at(m_item_type);
     }
 
-    ItemType GetType() const {return m_item_type;};
+    [[nodiscard]] ItemType GetType() const {return m_item_type;};
 
     bool operator==(const Item& other) const {
         return (m_item_type == other.m_item_type);
     }
 
-    int GetCount() const {return m_count;};
+    [[nodiscard]] int GetCount() const {return m_count;};
 
     void AddCount() {m_count = m_count + 1;};
 

@@ -26,11 +26,11 @@ class Vector2D {
         return X * v2.X + Y * v2.Y;
     }
 
-    inline float GetMagnitude() const {
+    [[nodiscard]] inline float GetMagnitude() const {
         return sqrt(X * X + Y * Y);
     }
 
-    inline bool IsZero() const {
+    [[nodiscard]] inline bool IsZero() const {
         return X == 0.0F && Y == 0.0F;
     }
 
@@ -58,11 +58,11 @@ class Matrix2D {
             return Matrix2D(x1 * s, x2 * s, x3 * s, x4 * s);
         }
 
-        inline float Determinant() const {
+        [[nodiscard]] inline float Determinant() const {
             return x1 * x4 - x2 * x3;
         }
 
-        inline Matrix2D Inverse() const {
+        [[nodiscard]] inline Matrix2D Inverse() const {
             if (Determinant() == 0.0F) {
                 SDL_Log("ERROR: determinant is 0 for matrix:");
                 Log();

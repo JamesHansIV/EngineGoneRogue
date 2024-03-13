@@ -19,7 +19,7 @@ class Collider : public GameObject {
 
     void SetDoUnCollide(bool doUnCollide) { m_do_un_collide = doUnCollide; }
 
-    bool GetDoUnCollide() const { return m_do_un_collide; }
+    [[nodiscard]] bool GetDoUnCollide() const { return m_do_un_collide; }
 
     void UnCollide(Collider* collidee);
 
@@ -29,9 +29,9 @@ class Collider : public GameObject {
 
     CollisionBox& GetCollisionBox() { return m_collision_box; }
 
-    bool IsImmovable() const { return m_immovable; }
+    [[nodiscard]] bool IsImmovable() const { return m_immovable; }
 
-    virtual ObjectType GetObjectType() override { return ObjectType::Collider; }
+    ObjectType GetObjectType() override { return ObjectType::Collider; }
 
    protected:
     RigidBody* m_rigid_body;

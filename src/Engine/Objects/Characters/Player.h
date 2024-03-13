@@ -69,7 +69,7 @@ class PlayerStats {
                                 m_dodge_invincibility_time);
     }
 
-    int GetLastDodgeTime() const { return m_last_dodge_time; }
+    [[nodiscard]] int GetLastDodgeTime() const { return m_last_dodge_time; }
 
     [[nodiscard]] int GetRangedDamage() const { return m_ranged_damage; }
 

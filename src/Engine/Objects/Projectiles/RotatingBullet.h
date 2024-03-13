@@ -9,17 +9,17 @@ class RotatingBullet : public Projectile {
     RotatingBullet(Properties& props, float speed, float angle,
                    bool playerOwned = false, float rotationAngle = 0.0F,
                    float rotationSpeed = M_PI / 64, float radius = 40);
-    virtual void Draw() override;
-    virtual void Clean() override;
-    virtual void Update(float dt) override;
+    void Draw() override;
+    void Clean() override;
+    void Update(float dt) override;
 
-    virtual void OnCollide(Collider* collidee) override;
+    void OnCollide(Collider* collidee) override;
 
-    virtual ObjectType GetObjectType() override {
+    ObjectType GetObjectType() override {
         return ObjectType::Projectile;
     }
 
-    virtual ProjectileType GetProjectileType() override {
+    ProjectileType GetProjectileType() override {
         return ProjectileType::Rotating;
     }
 

@@ -14,7 +14,7 @@ class AttackPattern {
 class Burst : public AttackPattern {
    public:
     Burst(int count, float cd)
-        : m_prev_burst_time(0),
+        : 
           m_fixed_count(count),
           m_cur_count(count),
           m_cd(cd) {}
@@ -43,7 +43,7 @@ class Burst : public AttackPattern {
     }
 
    private:
-    double m_prev_burst_time;
+    double m_prev_burst_time{0};
     int m_fixed_count;
     int m_cur_count;
     double m_cd;

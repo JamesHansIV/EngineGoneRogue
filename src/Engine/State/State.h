@@ -43,9 +43,9 @@ enum class StateType {
 
 class BitFieldState {
    public:
-    BitFieldState() : m_current_states(0) {}
+    BitFieldState()  = default;
 
-    int GetCurrentStates() const { return m_current_states; }
+    [[nodiscard]] int GetCurrentStates() const { return m_current_states; }
 
     void SetState(int state) { m_current_states = state; }
 
@@ -55,10 +55,10 @@ class BitFieldState {
 
     void RemoveState(int state) { m_current_states &= ~state; }
 
-    bool HasState(int state) const { return (m_current_states & state) != 0; }
+    [[nodiscard]] bool HasState(int state) const { return (m_current_states & state) != 0; }
 
    private:
-    int m_current_states;
+    int m_current_states{0};
 };
 
 class State {

@@ -35,16 +35,16 @@ class Event {
 
 class UserEvent : public Event {
    public:
-    explicit UserEvent() : m_event(nullptr) {}
+    explicit UserEvent() = default;
 
     void SetSDLEvent(SDL_Event* event) { m_event = event; }
 
     SDL_Event* GetSDLEvent() { return m_event; }
 
-    virtual EventType GetEventType() { return EventType::UserEvent; }
+    EventType GetEventType() override { return EventType::UserEvent; }
 
    private:
-    SDL_Event* m_event;
+    SDL_Event* m_event{nullptr};
 };
 
 class CollideEvent : public Event {
@@ -55,7 +55,7 @@ class CollideEvent : public Event {
 
     Collider* GetCollidee();
 
-    virtual EventType GetEventType() { return EventType::CollideEvent; }
+    EventType GetEventType() override { return EventType::CollideEvent; }
 
    private:
     Collider* m_collidee;
@@ -66,7 +66,7 @@ class TargetFoundEvent : public Event {
     explicit TargetFoundEvent(float targetX, float targetY)
         : m_target_x(targetX), m_target_y(targetY) {}
 
-    virtual EventType GetEventType() { return EventType::TargetFoundEvent; }
+    EventType GetEventType() override { return EventType::TargetFoundEvent; }
 
    private:
     float m_target_x;
@@ -89,22 +89,22 @@ class EnemyDeathEvent : public Event {
 
 class TargetLostEvent : public Event {
    public:
-    explicit TargetLostEvent() {}
+    explicit TargetLostEvent() = default;
 
-    virtual EventType GetEventType() { return EventType::TargetLostEvent; }
+    EventType GetEventType() override { return EventType::TargetLostEvent; }
 };
 
 class PlaceChestIfNeededEvent : public Event {
    public:
     explicit PlaceChestIfNeededEvent(float x, float y) : m_x(x), m_y(y){};
 
-    virtual EventType GetEventType() override {
+    EventType GetEventType() override {
         return EventType::PlaceChestIfNeededEvent;
     }
 
-    float GetX() const { return m_x; };
+    [[nodiscard]] [[nodiscard]] float GetX() const { return m_x; };
 
-    float GetY() const { return m_y; };
+    [[nodiscard]] [[nodiscard]] float GetY() const { return m_y; };
 
    private:
     float m_x;
@@ -117,9 +117,7 @@ class ChestOpenedEvent : public Event {
                               std::pair<float, float>& index)
         : m_item_types(itemTypes), m_index(index) {}
 
-    virtual EventType GetEventType() override {
-        return EventType::ChestOpenedEvent;
-    };
+    EventType GetEventType() override { return EventType::ChestOpenedEvent; };
 
     std::vector<ItemType> GetItemTypes() { return m_item_types; };
 
@@ -132,22 +130,18 @@ class ChestOpenedEvent : public Event {
 
 class StartGameEvent : public Event {
    public:
-    explicit StartGameEvent() {}
+    explicit StartGameEvent() = default;
 
-    virtual EventType GetEventType() override {
-        return EventType::StartGameEvent;
-    }
+    EventType GetEventType() override { return EventType::StartGameEvent; }
 
    private:
 };
 
 class ContinueGameEvent : public Event {
    public:
-    explicit ContinueGameEvent() {}
+    explicit ContinueGameEvent() = default;
 
-    virtual EventType GetEventType() override {
-        return EventType::ContinueGameEvent;
-    }
+    EventType GetEventType() override { return EventType::ContinueGameEvent; }
 
    private:
 };

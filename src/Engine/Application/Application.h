@@ -59,7 +59,7 @@ class Application {
     bool m_has_focus;
     int m_window_width = 0;
     int m_window_height = 0;
-    int m_frame;
+    int m_frame{0};
     EventManager m_event_manager;
     Player* m_player;
     AudioManager m_audio_manager;

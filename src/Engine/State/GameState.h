@@ -9,7 +9,7 @@ class GameState : public State {
    public:
     GameState(Game* game) : m_game(game) {}
 
-    ~GameState() override {}
+    ~GameState() override = default;
 
     Game* GetGame() { return m_game; }
 
