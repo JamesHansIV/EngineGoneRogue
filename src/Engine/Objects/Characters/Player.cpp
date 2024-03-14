@@ -17,7 +17,7 @@ const int kIdleAnimationSpeed = 50;
 const int kProjectileWidth = 10;
 const int kProjectileHeight = 10;
 // Experience multiplier for each level
-double k_experience_multiplier = 9.0 / 10.0;
+double k_experience_multiplier = 7.5 / 10.0;
 
 Player::Player(Properties& props) : Character(props) {
     Init();
