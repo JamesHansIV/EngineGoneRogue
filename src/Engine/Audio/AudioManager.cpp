@@ -2,6 +2,14 @@
 #include <cassert>
 #include "SDL2/SDL_log.h"
 
+using std::string;
+
+std::vector<std::pair<string, string>> music_files = {
+    {"title-screen", "../assets/music/title-screen.wav"},
+    {"thinking-music", "../assets/music/thinking-music.wav"},
+    {"beat", "../assets/music/beat.wav"},
+    {"background-intense", "../assets/music/background-intense.wav"}};
+
 AudioManager::AudioManager() {
     //Initialize SDL_mixer
     if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
@@ -10,15 +18,13 @@ AudioManager::AudioManager() {
         assert(false);
     }
 
-    SDL_Log("Loading music");
-    LoadMusic("title-screen", "../assets/music/title-screen.wav");
-    LoadMusic("thinking-music", "../assets/music/thinking-music.wav");
-    LoadMusic("beat", "../assets/music/beat.wav");
-    LoadMusic("background-intense", "../assets/music/background-intense.wav");
+    for (auto& music : music_files) {
+        LoadMusic(music.first, music.second);
+    }
     SetMusicVolume(100);
 }
 
-void AudioManager::LoadMusic(const MusicId& id, const std::string& filename) {
+void AudioManager::LoadMusic(const MusicId& id, const string& filename) {
     Mix_Music* music = nullptr;
     music = Mix_LoadMUS(filename.c_str());
     SDL_Log("Loading music: %s", filename.c_str());
@@ -49,7 +55,6 @@ void AudioManager::PlayMusicOverride(const MusicId& id, bool loop) {
         return;
     }
 
-    SDL_Log("loop: %d", loop ? -1 : 0);
     Mix_FadeOutMusic(250);
     Mix_FadeInMusic(m_music[id], loop ? -1 : 0, 250);
     m_current_music_id = id;
