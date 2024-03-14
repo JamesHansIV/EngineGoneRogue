@@ -28,7 +28,7 @@ State* RunningState::HandleEvent(Event* /*event*/) {
 void StartState::Enter() {
     Renderer::GetInstance()->SetCameraTarget(nullptr);
     AudioManager::SetMusicVolume(80);
-    Application::Get()->GetAudioManager().PlayMusic("title-screen", true);
+    Application::Get()->GetAudioManager().PlayMusic("pause-screen", true);
     timer.Pause();
 }
 
@@ -78,7 +78,7 @@ State* GameOverState::HandleEvent(Event* /*event*/) {
 void PauseState::Enter() {
     timer.Pause();
     Mix_VolumeMusic(50);
-    Application::Get()->GetAudioManager().PlayMusicOverride("title-screen",
+    Application::Get()->GetAudioManager().PlayMusicOverride("pause-screen",
                                                             true);
 }
 
