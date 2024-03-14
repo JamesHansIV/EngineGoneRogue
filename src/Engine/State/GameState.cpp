@@ -5,7 +5,7 @@
 void RunningState::Enter() {
     timer.Unpause();
     Renderer::GetInstance()->SetCameraTarget(GetGame()->GetPlayer());
-    AudioManager::SetMusicVolume(100);
+    Application::Get()->GetAudioManager().SetMusicVolume(100);
     Application::Get()->GetAudioManager().PlayMusicOverride(
         "background-intense", true);
 }
@@ -27,7 +27,7 @@ State* RunningState::HandleEvent(Event* /*event*/) {
 
 void StartState::Enter() {
     Renderer::GetInstance()->SetCameraTarget(nullptr);
-    AudioManager::SetMusicVolume(80);
+    Application::Get()->GetAudioManager().SetMusicVolume(80);
     Application::Get()->GetAudioManager().PlayMusic("pause-screen", true);
     timer.Pause();
 }
@@ -107,7 +107,7 @@ State* PauseState::HandleEvent(Event* event) {
 
 void LevelUpState::Enter() {
     Renderer::GetInstance()->SetCameraTarget(GetGame()->GetPlayer());
-    AudioManager::SetMusicVolume(65);
+    Application::Get()->GetAudioManager().SetMusicVolume(65);
     Application::Get()->GetAudioManager().PlayMusicOverride("thinking-music",
                                                             true);
 }

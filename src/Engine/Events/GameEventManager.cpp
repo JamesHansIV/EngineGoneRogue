@@ -46,6 +46,9 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
                             }
                         }
                         break;
+                    case SDLK_m:
+                        Application::Get()->GetAudioManager().ToggleMusic();
+                        break;
                     default:
                         break;
                 }

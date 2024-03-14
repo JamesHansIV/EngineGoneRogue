@@ -18,16 +18,15 @@ class AudioManager {
     void PauseSound();
     void ResumeMusic();
     void ResumeSound();
-    static void SetMusicVolume(int volume);
+    void SetMusicVolume(int volume);
     void SetSoundVolume(int volume);
-    void MuteMusic();
-    void MuteSound();
-    void UnmuteMusic();
-    void UnmuteSound();
+    void ToggleMusic();
     void Clean();
 
    private:
     std::unordered_map<MusicId, Mix_Music*> m_music;
     MusicId m_current_music_id;
+    bool m_is_music_muted;
+    int m_music_volume;
     void LoadMusic(const MusicId&, const std::string& filename);
 };

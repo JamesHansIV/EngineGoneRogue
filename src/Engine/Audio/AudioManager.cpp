@@ -37,6 +37,7 @@ void AudioManager::LoadMusic(const MusicId& id, const string& filename) {
 }
 
 void AudioManager::SetMusicVolume(int volume) {
+    m_music_volume = volume;
     Mix_VolumeMusic(volume);
 }
 
@@ -58,6 +59,17 @@ void AudioManager::PlayMusicOverride(const MusicId& id, bool loop) {
     Mix_FadeOutMusic(250);
     Mix_FadeInMusic(m_music[id], loop ? -1 : 0, 250);
     m_current_music_id = id;
+}
+
+void AudioManager::ToggleMusic() {
+    if (m_is_music_muted) {
+        Mix_VolumeMusic(m_music_volume);
+    } else {
+        // Save the current volume
+        m_music_volume = Mix_VolumeMusic(-1);
+        Mix_VolumeMusic(0);
+    }
+    m_is_music_muted = !m_is_music_muted;
 }
 
 AudioManager::~AudioManager() {
