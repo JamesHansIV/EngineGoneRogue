@@ -49,6 +49,22 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
                     case SDLK_m:
                         Application::Get()->GetAudioManager().ToggleMusic();
                         break;
+                    case SDLK_COMMA:
+                        Application::Get()->GetAudioManager().ToggleSound();
+                        break;
+                    case SDLK_SEMICOLON:
+                        Application::Get()->GetAudioManager().MuteMusic();
+                        AudioManager::StopSound(-1);
+                        Application::Get()->GetAudioManager().PlaySound(
+                            "easter-egg", 75, 0);
+                        Application::Get()->GetAudioManager().ToggleSound();
+                        Mix_ChannelFinished([](int /*channel*/) {
+                            Application::Get()->GetAudioManager().ToggleMusic();
+                            Application::Get()->GetAudioManager().ToggleSound();
+                            // remove callback
+                            Mix_ChannelFinished(nullptr);
+                        });
+                        break;
                     default:
                         break;
                 }

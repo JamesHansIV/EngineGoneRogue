@@ -107,12 +107,20 @@ State* PauseState::HandleEvent(Event* event) {
 
 void LevelUpState::Enter() {
     Renderer::GetInstance()->SetCameraTarget(GetGame()->GetPlayer());
-    Application::Get()->GetAudioManager().SetMusicVolume(65);
-    Application::Get()->GetAudioManager().PlayMusicOverride("thinking-music",
-                                                            true);
+    Application::Get()->GetAudioManager().MuteMusic();
+    // save channel and  create callback. then halt sound on exit
+    Application::Get()->GetAudioManager().PlaySound("thinking-music", 65, 10);
 }
 
-void LevelUpState::Exit() {}
+void LevelUpState::Exit() {
+    Mix_ChannelFinished([](int /*channel*/) {
+        Application::Get()->GetAudioManager().ToggleMusic();
+        // remove callback
+        Mix_ChannelFinished(nullptr);
+    });
+
+    AudioManager::StopSound(-1);
+}
 
 void LevelUpState::Draw() {
     GetGame()->DrawObjects();

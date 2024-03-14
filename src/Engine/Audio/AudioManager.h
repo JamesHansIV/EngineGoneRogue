@@ -21,9 +21,11 @@ class AudioManager {
     static void PauseSound(ChannelId id);
     static void ResumeMusic();
     static void ResumeSound(ChannelId id);
+    void MuteMusic();
     void SetMusicVolume(int volume);
     void SetSoundVolume(int volume);
     void ToggleMusic();
+    void ToggleSound();
     void Clean();
 
    private:
@@ -31,6 +33,7 @@ class AudioManager {
     std::unordered_map<MusicId, Mix_Chunk*> m_sound;
     MusicId m_current_music_id;
     bool m_is_music_muted;
+    bool m_is_sound_muted;
     int m_music_volume;
     void LoadMusic(const MusicId&, const std::string& filename);
     void LoadSound(const MusicId&, const std::string& filename);

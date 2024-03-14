@@ -6,13 +6,14 @@ using std::string;
 
 std::vector<std::pair<string, string>> music_files = {
     {"pause-screen", "../assets/music/pause-screen.wav"},
-    {"thinking-music", "../assets/music/thinking-music.wav"},
     {"beat", "../assets/music/beat.wav"},
     {"background-intense", "../assets/music/background-intense.wav"}};
 
 std::vector<std::pair<string, string>> sound_files = {
     {"scratch", "../assets/sound/scratch.wav"},
     {"high", "../assets/sound/high.wav"},
+    {"easter-egg", "../assets/music/easter-egg.wav"},
+    {"thinking-music", "../assets/music/thinking-music.wav"},
     {"low", "../assets/sound/low.wav"}};
 
 AudioManager::AudioManager() {
@@ -87,6 +88,15 @@ void AudioManager::ToggleMusic() {
     m_is_music_muted = !m_is_music_muted;
 }
 
+void AudioManager::MuteMusic() {
+    if (m_is_music_muted) {
+        return;
+    }
+    m_is_music_muted = true;
+    m_music_volume = Mix_VolumeMusic(-1);
+    Mix_VolumeMusic(0);
+}
+
 void AudioManager::LoadSound(const MusicId& id, const string& filename) {
     Mix_Chunk* sound = nullptr;
     sound = Mix_LoadWAV(filename.c_str());
@@ -99,6 +109,10 @@ void AudioManager::LoadSound(const MusicId& id, const string& filename) {
 }
 
 ChannelId AudioManager::PlaySound(const MusicId& id, int volume, int loops) {
+    if (m_is_sound_muted) {
+        return -1;
+    }
+
     const ChannelId channel_id = Mix_PlayChannel(-1, m_sound[id], loops);
     Mix_Volume(channel_id, volume);
     return channel_id;
@@ -114,6 +128,10 @@ void AudioManager::ResumeSound(ChannelId id) {
 
 void AudioManager::StopSound(ChannelId id) {
     Mix_HaltChannel(id);
+}
+
+void AudioManager::ToggleSound() {
+    m_is_sound_muted = !m_is_sound_muted;
 }
 
 void AudioManager::StopMusic() {
