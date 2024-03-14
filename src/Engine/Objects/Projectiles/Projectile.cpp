@@ -59,6 +59,7 @@ void Projectile::OnCollide(Collider* collidee) {
                 (player->GetStats().GetDodgeInvincibility() == 0)) {
                 m_marked_for_deletion = true;
                 //dynamic_cast<Character*>(collidee)->GetHealth()->SetDamage(10);
+                Application::Get()->GetAudioManager().PlaySound("high", 5, 0);
             }
             break;
         }
@@ -72,6 +73,7 @@ void Projectile::OnCollide(Collider* collidee) {
                 int const increase_health_amount =
                     static_cast<float>(m_damage) * life_steal_multiplier;
                 m_owner->GetHealth()->IncreaseHealth(increase_health_amount);
+                Application::Get()->GetAudioManager().PlaySound("low", 20, 0);
             }
             break;
         case ObjectType::MeleeWeapon:

@@ -10,6 +10,11 @@ std::vector<std::pair<string, string>> music_files = {
     {"beat", "../assets/music/beat.wav"},
     {"background-intense", "../assets/music/background-intense.wav"}};
 
+std::vector<std::pair<string, string>> sound_files = {
+    {"scratch", "../assets/sound/scratch.wav"},
+    {"high", "../assets/sound/high.wav"},
+    {"low", "../assets/sound/low.wav"}};
+
 AudioManager::AudioManager() {
     //Initialize SDL_mixer
     if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
@@ -21,6 +26,11 @@ AudioManager::AudioManager() {
     for (auto& music : music_files) {
         LoadMusic(music.first, music.second);
     }
+
+    for (auto& sound : sound_files) {
+        LoadSound(sound.first, sound.second);
+    }
+
     SetMusicVolume(100);
 }
 
@@ -75,6 +85,47 @@ void AudioManager::ToggleMusic() {
         Mix_VolumeMusic(0);
     }
     m_is_music_muted = !m_is_music_muted;
+}
+
+void AudioManager::LoadSound(const MusicId& id, const string& filename) {
+    Mix_Chunk* sound = nullptr;
+    sound = Mix_LoadWAV(filename.c_str());
+    if (sound == nullptr) {
+        printf("Failed to load %s sound! SDL_mixer Error: %s\n", id.c_str(),
+               Mix_GetError());
+        assert(false);
+    }
+    m_sound[id] = sound;
+}
+
+ChannelId AudioManager::PlaySound(const MusicId& id, int volume, int loops) {
+    const ChannelId channel_id = Mix_PlayChannel(-1, m_sound[id], loops);
+    Mix_Volume(channel_id, volume);
+    return channel_id;
+}
+
+void AudioManager::PauseSound(ChannelId id) {
+    Mix_Pause(id);
+}
+
+void AudioManager::ResumeSound(ChannelId id) {
+    Mix_Resume(id);
+}
+
+void AudioManager::StopSound(ChannelId id) {
+    Mix_HaltChannel(id);
+}
+
+void AudioManager::StopMusic() {
+    Mix_HaltMusic();
+}
+
+void AudioManager::PauseMusic() {
+    Mix_PauseMusic();
+}
+
+void AudioManager::ResumeMusic() {
+    Mix_ResumeMusic();
 }
 
 AudioManager::~AudioManager() {
