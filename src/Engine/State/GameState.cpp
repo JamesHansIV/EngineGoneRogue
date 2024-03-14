@@ -77,7 +77,7 @@ State* GameOverState::HandleEvent(Event* /*event*/) {
 
 void PauseState::Enter() {
     timer.Pause();
-    Mix_VolumeMusic(50);
+    Application::Get()->GetAudioManager().SetMusicVolume(50);
     Application::Get()->GetAudioManager().PlayMusicOverride("pause-screen",
                                                             true);
 }

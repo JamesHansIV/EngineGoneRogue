@@ -37,6 +37,11 @@ void AudioManager::LoadMusic(const MusicId& id, const string& filename) {
 }
 
 void AudioManager::SetMusicVolume(int volume) {
+    if (m_is_music_muted) {
+        m_music_volume = volume;
+        return;
+    }
+
     m_music_volume = volume;
     Mix_VolumeMusic(volume);
 }
