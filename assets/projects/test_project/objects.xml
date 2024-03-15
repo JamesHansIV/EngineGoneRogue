@@ -193,7 +193,7 @@
                 <Tile row="3" col="0" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
-        <EnemyStats health="100" damage="1" speed="70" range="50" perception_width="120" perception_height="80" xp="30"/>
+        <EnemyStats health="100" damage="25" speed="70" range="50" perception_width="120" perception_height="80" xp="30"/>
     </Object>
     <Object texture_id="enemies" object_id="ringshotenemy" rotation="0">
         <Types collider="1" ranged_enemy="1" ring_shot_enemy="1"/>
@@ -240,7 +240,7 @@
                 <Tile row="9" col="0" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
-        <RangedEnemyStats health="100" damage="1" speed="70" range="150" perception_width="160" perception_height="150" xp="30" fire_interval="5000"/>
+        <RangedEnemyStats health="100" damage="25" speed="70" range="150" perception_width="160" perception_height="150" xp="30" fire_interval="5000"/>
     </Object>
     <Object texture_id="enemies" object_id="dog" rotation="0">
         <Types collider="1" ranged_enemy="1" dog="1"/>
@@ -287,7 +287,7 @@
                 <Tile row="6" col="0" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
-        <RangedEnemyStats health="100" damage="1" speed="70" range="150" perception_width="160" perception_height="150" xp="30" fire_interval="1000"/>
+        <RangedEnemyStats health="100" damage="25" speed="70" range="150" perception_width="160" perception_height="150" xp="30" fire_interval="1000"/>
     </Object>
     <Object texture_id="enemies" object_id="goblin" rotation="0">
         <Types collider="1" ranged_enemy="1" goblin="1"/>
@@ -334,7 +334,7 @@
                 <Tile row="12" col="0" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
-        <RangedEnemyStats health="100" damage="1" speed="80" range="150" perception_width="160" perception_height="150" xp="30" fire_interval="250" spread="0.4" spread_count="8"/>
+        <RangedEnemyStats health="100" damage="25" speed="80" range="150" perception_width="160" perception_height="150" xp="30" fire_interval="250" spread="0.4" spread_count="8"/>
     </Object>
     <Object texture_id="enemies" object_id="helixenemy" rotation="0">
         <Types collider="1" ranged_enemy="1" helix_enemy="1"/>
@@ -381,7 +381,7 @@
                 <Tile row="12" col="0" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
-        <RangedEnemyStats health="100" damage="1" speed="70" range="180" perception_width="250" perception_height="200" xp="30" fire_interval="2000"/>
+        <RangedEnemyStats health="100" damage="25" speed="70" range="180" perception_width="250" perception_height="200" xp="30" fire_interval="2000"/>
     </Object>
     <Object texture_id="enemies" object_id="mage" rotation="0">
         <Types collider="1" ranged_enemy="1" mage="1"/>
@@ -430,7 +430,7 @@
                 <Tile row="6" col="0" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
-        <RangedEnemyStats health="100" damage="1" speed="80" range="150" perception_width="160" perception_height="150" xp="30" fire_interval="3000"/>
+        <RangedEnemyStats health="100" damage="25" speed="80" range="150" perception_width="160" perception_height="150" xp="30" fire_interval="3000"/>
     </Object>
     <Object texture_id="enemies" object_id="skeleton" rotation="0">
         <Types collider="1" ranged_enemy="1" skeleton="1"/>
@@ -480,6 +480,6 @@
                 <Tile row="9" col="0" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
-        <RangedEnemyStats health="100" damage="1" speed="80" range="150" perception_width="160" perception_height="150" xp="30" fire_interval="2000" spread="0.1" spread_count="1"/>
+        <RangedEnemyStats health="100" damage="25" speed="80" range="150" perception_width="160" perception_height="150" xp="30" fire_interval="2000" spread="0.1" spread_count="1"/>
     </Object>
 </Root>

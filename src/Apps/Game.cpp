@@ -153,10 +153,13 @@ void Game::GenerateRandomEnemyIfNeeded() {
     // Have a wave manager that will spaw100enemies
     // have a wave multiplier that will increase the stats of the enemies
     // Auto generate enemies
-    if ((SDL_GetTicks() - m_last_enemy_spawn_time) >=
+    const Uint32 current_time = timer.GetTicks();
+    if ((current_time - m_last_enemy_spawn_time) >=
         cur_enemy_generation_interval) {
-        m_last_enemy_spawn_time = SDL_GetTicks();
+        m_last_enemy_spawn_time = current_time;
         // Generate random x and y coordinates
+        // Todo: make sure the x and y coordinates are not on top of the Player
+        // and only spawn in current viewing area
         float const generated_x = rand() % 500 + 200;
         float const generated_y = rand() % 300 + 20;
 
@@ -222,7 +225,7 @@ void Game::GenerateRandomEnemyIfNeeded() {
         ColliderHandler::GetInstance()->AddCollider(generated_enemy);
         m_objects.push_back(generated_enemy);
 
-        m_enemy_stat_multiplier += 0.05;
+        m_enemy_stat_multiplier += 0.0025;
     }
 
     if (timer.GetTicks() % 5000 <= 10 &&
