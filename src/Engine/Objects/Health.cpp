@@ -7,8 +7,9 @@
 void Health::Draw(int objX, int objY, int objWidth) const {
 
     const int health_bar_container_width = objWidth + 15;
-    int health_bar_width = static_cast<int>(
-        (objWidth + 15) * (m_hp / static_cast<float>(m_total_health)));
+    int health_bar_width =
+        static_cast<int>(health_bar_container_width *
+                         (m_hp / static_cast<float>(m_total_health)));
 
     if (health_bar_width <= 0) {
         health_bar_width = 0;

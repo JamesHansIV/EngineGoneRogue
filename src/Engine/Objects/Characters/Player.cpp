@@ -120,6 +120,7 @@ void Player::Update(float dt) {
         m_health->IncreaseHealth(m_stats->GetHPRegenRate());
     }
     m_stats->Update();
+    m_health->SetMaxHealth(m_stats->GetMaxHealth());
     m_animation->Update();
     m_rigid_body->Update(dt);
 

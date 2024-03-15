@@ -139,6 +139,23 @@ class PlayerStats {
         }
     }
 
+    void ToggleGodMode() {
+        m_god_mode = !m_god_mode;
+        if (m_god_mode) {
+            m_max_health = 100000;
+            m_hp_regen_rate = 0;
+            m_melee_damage = 1000000;
+            m_ranged_damage = 1000000;
+        } else {
+            m_max_health = 100;
+            m_hp_regen_rate = 1;
+            m_melee_damage = 10;
+            m_ranged_damage = 10;
+        }
+    }
+
+    [[nodiscard]] bool IsGodMode() const { return m_god_mode; }
+
    protected:
     float m_speed;
     int m_dodge_cd;
@@ -156,6 +173,7 @@ class PlayerStats {
     int m_level;
     int m_life_steal_percentage;
     int m_kill_count = 0;
+    bool m_god_mode = false;
 };
 
 class Player : public Character {
@@ -196,6 +214,8 @@ class Player : public Character {
         const {
         return m_items;
     };
+
+    void ToggleGodMode() { m_stats->ToggleGodMode(); }
 
    private:
     std::vector<Weapon*> m_weapons;
