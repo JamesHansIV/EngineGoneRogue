@@ -226,6 +226,6 @@ class Player : public Character {
     int m_able_to_dash = 0;
     bool m_is_dashing = false;
     int m_multiplier = 1;
-    int m_last_health_regen = 0;
+    Uint32 m_last_health_regen = 0;
     std::vector<Properties*> m_projectile_props;
 };

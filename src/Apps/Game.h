@@ -43,5 +43,8 @@ class Game : public Application {
     HUD* m_heads_up_display;
     ItemManager* m_item_manager;
     float m_enemy_stat_multiplier = 1.0;
+    Uint32 m_enemies_to_spawn = 1;
+    Uint32 m_wave_count = 0;
     void GenerateRandomEnemyIfNeeded();
+    void GenerateRandomEnemy();
 };

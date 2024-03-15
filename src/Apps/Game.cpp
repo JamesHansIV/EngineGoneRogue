@@ -29,7 +29,7 @@
 std::vector<Collider*> colliders;
 
 int max_tick_interval = 500;
-int cur_enemy_generation_interval = 5000;
+int cur_enemy_generation_interval = 4000;
 const EnemyStats kDefaultEnemyStats = {
     100,  // health
     1,    // damage
@@ -160,79 +160,90 @@ void Game::GenerateRandomEnemyIfNeeded() {
         // Generate random x and y coordinates
         // Todo: make sure the x and y coordinates are not on top of the Player
         // and only spawn in current viewing area
-        float const generated_x = rand() % 500 + 200;
-        float const generated_y = rand() % 300 + 20;
-
-        // Generate random enemy type
-        int const enemy_type = rand() % 7;
-        Enemy* generated_enemy = nullptr;
-
-        switch (enemy_type) {
-            case 0:
-                slime_copy->SetX(generated_x);
-                slime_copy->SetY(generated_y);
-                generated_enemy =
-                    new Slime(slime_copy, slime_copy->GetEnemyStats() *
-                                              m_enemy_stat_multiplier);
-                break;
-            case 1:
-                ring_shot_enemy_copy->SetX(generated_x);
-                ring_shot_enemy_copy->SetY(generated_y);
-                generated_enemy = new RingShotEnemy(
-                    ring_shot_enemy_copy,
-                    ring_shot_enemy_copy->GetRangedEnemyStats() *
-                        m_enemy_stat_multiplier);
-                break;
-            case 2:
-                mage_copy->SetX(generated_x);
-                mage_copy->SetY(generated_y);
-                generated_enemy =
-                    new Mage(mage_copy, mage_copy->GetRangedEnemyStats() *
-                                            m_enemy_stat_multiplier);
-                break;
-            case 3:
-                dog_copy->SetX(generated_x);
-                dog_copy->SetY(generated_y);
-                generated_enemy =
-                    new Dog(dog_copy, dog_copy->GetRangedEnemyStats() *
-                                          m_enemy_stat_multiplier);
-                break;
-            case 4:
-                skeleton_copy->SetX(generated_x);
-                skeleton_copy->SetY(generated_y);
-                generated_enemy = new Skeleton(
-                    skeleton_copy, skeleton_copy->GetRangedEnemyStats() *
-                                       m_enemy_stat_multiplier);
-                break;
-            case 5:
-                goblin_copy->SetX(generated_x);
-                goblin_copy->SetY(generated_y);
-                generated_enemy =
-                    new Goblin(goblin_copy, goblin_copy->GetRangedEnemyStats() *
-                                                m_enemy_stat_multiplier);
-                break;
-            case 6:
-                helix_enemy_copy->SetX(generated_x);
-                helix_enemy_copy->SetY(generated_y);
-                generated_enemy = new HelixEnemy(
-                    helix_enemy_copy, helix_enemy_copy->GetRangedEnemyStats() *
-                                          m_enemy_stat_multiplier);
-                break;
-            default:
-                break;
+        for (int i = 0; i < m_enemies_to_spawn; i++) {
+            GenerateRandomEnemy();
         }
 
-        ColliderHandler::GetInstance()->AddCollider(generated_enemy);
-        m_objects.push_back(generated_enemy);
-
         m_enemy_stat_multiplier += 0.0025;
+        m_wave_count += 1;
+
+        if (m_wave_count % 5 == 0 &&
+            max_tick_interval > cur_enemy_generation_interval) {
+            SDL_Log("Increasing enemy generation interval");
+            cur_enemy_generation_interval -= 100;
+        }
+
+        if (m_wave_count % 10 == 0) {
+            m_enemies_to_spawn += 1;
+        }
+    }
+}
+
+void Game::GenerateRandomEnemy() {
+    float const generated_x = rand() % 500 + 200;
+    float const generated_y = rand() % 300 + 20;
+
+    // Generate random enemy type
+    int const enemy_type = rand() % 7;
+    Enemy* generated_enemy = nullptr;
+
+    switch (enemy_type) {
+        case 0:
+            slime_copy->SetX(generated_x);
+            slime_copy->SetY(generated_y);
+            generated_enemy =
+                new Slime(slime_copy, slime_copy->GetEnemyStats() *
+                                          m_enemy_stat_multiplier);
+            break;
+        case 1:
+            ring_shot_enemy_copy->SetX(generated_x);
+            ring_shot_enemy_copy->SetY(generated_y);
+            generated_enemy =
+                new RingShotEnemy(ring_shot_enemy_copy,
+                                  ring_shot_enemy_copy->GetRangedEnemyStats() *
+                                      m_enemy_stat_multiplier);
+            break;
+        case 2:
+            mage_copy->SetX(generated_x);
+            mage_copy->SetY(generated_y);
+            generated_enemy =
+                new Mage(mage_copy, mage_copy->GetRangedEnemyStats() *
+                                        m_enemy_stat_multiplier);
+            break;
+        case 3:
+            dog_copy->SetX(generated_x);
+            dog_copy->SetY(generated_y);
+            generated_enemy =
+                new Dog(dog_copy, dog_copy->GetRangedEnemyStats() *
+                                      m_enemy_stat_multiplier);
+            break;
+        case 4:
+            skeleton_copy->SetX(generated_x);
+            skeleton_copy->SetY(generated_y);
+            generated_enemy = new Skeleton(
+                skeleton_copy,
+                skeleton_copy->GetRangedEnemyStats() * m_enemy_stat_multiplier);
+            break;
+        case 5:
+            goblin_copy->SetX(generated_x);
+            goblin_copy->SetY(generated_y);
+            generated_enemy =
+                new Goblin(goblin_copy, goblin_copy->GetRangedEnemyStats() *
+                                            m_enemy_stat_multiplier);
+            break;
+        case 6:
+            helix_enemy_copy->SetX(generated_x);
+            helix_enemy_copy->SetY(generated_y);
+            generated_enemy = new HelixEnemy(
+                helix_enemy_copy, helix_enemy_copy->GetRangedEnemyStats() *
+                                      m_enemy_stat_multiplier);
+            break;
+        default:
+            break;
     }
 
-    if (timer.GetTicks() % 5000 <= 10 &&
-        max_tick_interval < cur_enemy_generation_interval) {
-        SDL_Log("Increasing enemy generation interval");
-        cur_enemy_generation_interval -= 200;
-    }
+    ColliderHandler::GetInstance()->AddCollider(generated_enemy);
+    m_objects.push_back(generated_enemy);
 }
 
 void Game::Update(float dt) {
