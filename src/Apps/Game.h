@@ -42,5 +42,6 @@ class Game : public Application {
     GameEventManager* m_game_event_manager;
     HUD* m_heads_up_display;
     ItemManager* m_item_manager;
+    float m_enemy_stat_multiplier = 1.0;
     void GenerateRandomEnemyIfNeeded();
 };

@@ -15,7 +15,7 @@ Goblin::Goblin(Collider* rhs, RangedEnemyStats stats)
 
 void Goblin::Init() {
     ChangeState(new RangedEnemyIdle(this));
-    SetHealth(new Health(100));
+    SetHealth(new Health(m_stats.health));
     SetAttack(new RangedAttack(CreateSpreadBullet, GetFireInterval(),
                                new Burst(5, 1000)));
 }

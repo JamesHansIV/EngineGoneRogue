@@ -174,7 +174,7 @@ void Application::Events() {
 void Application::Run() {
     timer.Start();
     timer.Pause();
-    float accumulator = 0.0;
+    double accumulator = 0.0;
     int count_until_next_second = 1000;
     int fps = 0;
     int updates_per_second = 0;
@@ -189,9 +189,9 @@ void Application::Run() {
             updates_per_second = 0;
         }
         double const new_time = SDL_GetTicks();
-        auto frame_time =
-            static_cast<double>(new_time / 1000.0F - m_last_tick / 1000.0F);
-        m_last_tick = new_time;
+        auto frame_time = static_cast<double>(
+            new_time / 1000.0F - static_cast<double>(m_last_tick) / 1000.0F);
+        m_last_tick = static_cast<Uint32>(new_time);
         // Necessary for slow computers
         // Todo: implement this if slowness ever becomes an issue.
         //if (frame_time > 0.25F) {

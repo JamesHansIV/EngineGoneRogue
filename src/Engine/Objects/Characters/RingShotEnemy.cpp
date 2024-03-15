@@ -25,7 +25,7 @@ RingShotEnemy::RingShotEnemy(Collider* rhs, RangedEnemyStats stats,
 
 void RingShotEnemy::Init() {
     ChangeState(new RangedEnemyIdle(this));
-    SetHealth(new Health(100));
+    SetHealth(new Health(m_stats.health));
     SetAttack(new RangedAttack(CreateRingBullets, GetFireInterval()));
 }
 

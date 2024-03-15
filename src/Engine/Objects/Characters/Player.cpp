@@ -36,7 +36,7 @@ void Player::Init() {
     m_current_tile_pos = m_still_frames["face-down"];
 
     m_stats = new PlayerStats(MovementInfo{80, .90, 110, 500},
-                              CombatInfo{1, 1, 0, 50}, HealthInfo{1, 20});
+                              CombatInfo{1, 1, 0, 50}, HealthInfo{100, 1, 20});
     auto* default_projectile_props = new Properties(
         "weapons", {6, 0, 16, 16},
         {GetMidPointX(), GetMidPointY(), kProjectileWidth, kProjectileHeight},
@@ -51,7 +51,7 @@ void Player::Init() {
 
     ChangeState(new PlayerIdle(this));
     // m_Collider->SetCorrection(-45, -20, 60, 80 )
-    m_health = new Health(100);
+    m_health = new Health(m_stats->GetMaxHealth());
 
     Properties props_uzi("weapons", {0, 3, 16, 16}, {0, 0, 18, 18}, 0.0);
     RangedWeaponStats stats_uzi = {true, 200, 30, 16, m_stats};

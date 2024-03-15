@@ -16,7 +16,7 @@ Skeleton::Skeleton(Collider* rhs, RangedEnemyStats stats)
 
 void Skeleton::Init() {
     ChangeState(new RangedEnemyIdle(this));
-    SetHealth(new Health(100));
+    SetHealth(new Health(m_stats.health));
     SetAttack(new RangedAttack(CreateSpreadBullets, GetFireInterval()));
 }
 

@@ -32,7 +32,7 @@ class Enemy : public Character {
 
     ObjectType GetObjectType() override { return ObjectType::Enemy; }
 
-   private:
+   protected:
     EnemyStats m_stats;
     Rect m_perception;
     Collider* m_target;

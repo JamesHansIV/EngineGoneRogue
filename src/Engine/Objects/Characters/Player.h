@@ -30,6 +30,7 @@ struct CombatInfo {
 };
 
 struct HealthInfo {
+    int health = 100;
     int HPRegenRate;
     int lifeStealPercentage;
 };
@@ -51,6 +52,7 @@ class PlayerStats {
         m_kill_count = 0;
         m_piercing = combatInfo.piercing;
         m_armor_percentage = combatInfo.armorPercentage;
+        m_max_health = healthInfo.health;
         m_hp_regen_rate = healthInfo.HPRegenRate;
         m_life_steal_percentage = healthInfo.lifeStealPercentage;
         m_level = 1;
@@ -86,6 +88,8 @@ class PlayerStats {
     [[nodiscard]] int GetLifeStealPercentage() const {
         return m_life_steal_percentage;
     }
+
+    [[nodiscard]] int GetMaxHealth() const { return m_max_health; }
 
     void SetSpeed(float speed) { m_speed = speed; };
 
@@ -147,6 +151,7 @@ class PlayerStats {
     int m_experience;
     int m_piercing;
     int m_armor_percentage;
+    int m_max_health;
     int m_hp_regen_rate;
     int m_level;
     int m_life_steal_percentage;

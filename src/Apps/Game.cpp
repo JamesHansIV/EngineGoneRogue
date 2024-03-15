@@ -169,44 +169,51 @@ void Game::GenerateRandomEnemyIfNeeded() {
                 slime_copy->SetX(generated_x);
                 slime_copy->SetY(generated_y);
                 generated_enemy =
-                    new Slime(slime_copy, slime_copy->GetEnemyStats());
+                    new Slime(slime_copy, slime_copy->GetEnemyStats() *
+                                              m_enemy_stat_multiplier);
                 break;
             case 1:
                 ring_shot_enemy_copy->SetX(generated_x);
                 ring_shot_enemy_copy->SetY(generated_y);
                 generated_enemy = new RingShotEnemy(
                     ring_shot_enemy_copy,
-                    ring_shot_enemy_copy->GetRangedEnemyStats());
+                    ring_shot_enemy_copy->GetRangedEnemyStats() *
+                        m_enemy_stat_multiplier);
                 break;
             case 2:
                 mage_copy->SetX(generated_x);
                 mage_copy->SetY(generated_y);
                 generated_enemy =
-                    new Mage(mage_copy, mage_copy->GetRangedEnemyStats());
+                    new Mage(mage_copy, mage_copy->GetRangedEnemyStats() *
+                                            m_enemy_stat_multiplier);
                 break;
             case 3:
                 dog_copy->SetX(generated_x);
                 dog_copy->SetY(generated_y);
                 generated_enemy =
-                    new Dog(dog_copy, dog_copy->GetRangedEnemyStats());
+                    new Dog(dog_copy, dog_copy->GetRangedEnemyStats() *
+                                          m_enemy_stat_multiplier);
                 break;
             case 4:
                 skeleton_copy->SetX(generated_x);
                 skeleton_copy->SetY(generated_y);
                 generated_enemy = new Skeleton(
-                    skeleton_copy, skeleton_copy->GetRangedEnemyStats());
+                    skeleton_copy, skeleton_copy->GetRangedEnemyStats() *
+                                       m_enemy_stat_multiplier);
                 break;
             case 5:
                 goblin_copy->SetX(generated_x);
                 goblin_copy->SetY(generated_y);
                 generated_enemy =
-                    new Goblin(goblin_copy, goblin_copy->GetRangedEnemyStats());
+                    new Goblin(goblin_copy, goblin_copy->GetRangedEnemyStats() *
+                                                m_enemy_stat_multiplier);
                 break;
             case 6:
                 helix_enemy_copy->SetX(generated_x);
                 helix_enemy_copy->SetY(generated_y);
                 generated_enemy = new HelixEnemy(
-                    helix_enemy_copy, helix_enemy_copy->GetRangedEnemyStats());
+                    helix_enemy_copy, helix_enemy_copy->GetRangedEnemyStats() *
+                                          m_enemy_stat_multiplier);
                 break;
             default:
                 break;
@@ -214,6 +221,8 @@ void Game::GenerateRandomEnemyIfNeeded() {
 
         ColliderHandler::GetInstance()->AddCollider(generated_enemy);
         m_objects.push_back(generated_enemy);
+
+        m_enemy_stat_multiplier += 0.05;
     }
 
     if (timer.GetTicks() % 5000 <= 10 &&
