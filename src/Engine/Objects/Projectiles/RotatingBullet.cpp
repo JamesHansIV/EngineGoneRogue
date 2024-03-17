@@ -3,9 +3,10 @@
 #include "Engine/Renderer/Renderer.h"
 
 RotatingBullet::RotatingBullet(Properties& props, float speed, float angle,
-                               bool playerOwned, float rotationAngle,
-                               float rotationSpeed, float radius)
-    : Projectile(props, speed, angle, playerOwned),
+                               AnimationInfo hitAnimationInfo, bool playerOwned,
+                               float rotationAngle, float rotationSpeed,
+                               float radius)
+    : Projectile(props, speed, angle, hitAnimationInfo, playerOwned),
       m_center(GetX(), GetY()),
       m_rotation_angle(rotationAngle),
       m_rotation_speed(rotationSpeed),
@@ -16,6 +17,9 @@ void RotatingBullet::Draw() {
 }
 
 void RotatingBullet::Update(float /*dt*/) {
+    if (Hit()) {
+        return;
+    }
     m_center = m_center + GetVelocity();
     m_rotation_angle += m_rotation_speed;
 
@@ -30,30 +34,7 @@ void RotatingBullet::Update(float /*dt*/) {
 }
 
 void RotatingBullet::OnCollide(Collider* collidee) {
-    if (this == collidee) {
-        return;
-    }
-
-    switch (collidee->GetObjectType()) {
-        case ObjectType::Player:
-            if (!IsPlayerOwned()) {
-                MarkForDeletion();
-                //dynamic_cast<Character*>(collidee)->GetHealth()->SetDamage(10);
-            }
-            break;
-        case ObjectType::Enemy:
-            if (IsPlayerOwned()) {
-                MarkForDeletion();
-                dynamic_cast<Character*>(collidee)->GetHealth()->SetDamage(10);
-            }
-            break;
-        case ObjectType::MeleeWeapon:
-        case ObjectType::Collider:
-            MarkForDeletion();
-            break;
-        default:
-            break;
-    }
+    Projectile::OnCollide(collidee);
 }
 
 void RotatingBullet::Clean() {}

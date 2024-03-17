@@ -54,19 +54,19 @@ void Player::Init() {
     m_health = new Health(m_stats->GetMaxHealth());
 
     Properties props_uzi("weapons", {0, 3, 16, 16}, {0, 0, 18, 18}, 0.0);
-    RangedWeaponStats stats_uzi = {true, 200, 30, 16, m_stats};
+    RangedWeaponStats stats_uzi = {true, 200, 25, 16, m_stats};
     Weapon* uzi = new RangedWeapon(props_uzi, stats_uzi, this, "Uzi",
                                    default_projectile_props);
     m_weapons.push_back(uzi);
 
     Properties props_pistol("weapons", {0, 1, 16, 16}, {0, 0, 18, 18}, 0.0);
-    RangedWeaponStats stats_pistol = {true, 400, 28, 34, m_stats};
+    RangedWeaponStats stats_pistol = {true, 400, 25, 34, m_stats};
     Weapon* pistol = new RangedWeapon(props_pistol, stats_pistol, this,
                                       "Pistol", default_projectile_props);
     m_weapons.push_back(pistol);
 
     Properties props_sniper("sniper", {0, 0, 32, 16}, {0, 0, 36, 16}, 0.0);
-    RangedWeaponStats stats_sniper = {true, 1000, 40, 100, m_stats};
+    RangedWeaponStats stats_sniper = {true, 1000, 25, 100, m_stats};
     Weapon* sniper =
         new RangedWeapon(props_sniper, stats_sniper, this,
                          std::string("Sniper"), default_projectile_props);
@@ -79,7 +79,7 @@ void Player::Init() {
     m_weapons.push_back(w2);
 
     Properties props_bow("weapons", {2, 5, 16, 16}, {0, 0, 18, 18}, 45.0);
-    RangedWeaponStats stats_bow = {true, 750, 35, 75, m_stats};
+    RangedWeaponStats stats_bow = {true, 750, 25, 75, m_stats};
     Weapon* bow = new RangedWeapon(props_bow, stats_bow, this,
                                    std::string("Bow"), bow_projectile_props);
     m_weapons.push_back(bow);

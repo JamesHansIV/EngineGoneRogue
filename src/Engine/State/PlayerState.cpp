@@ -80,7 +80,8 @@ State* HandleEnemyCollide(Player* player, Enemy* enemy) {
 
 State* HandleProjectileCollide(Player* player, Projectile* projectile) {
     if (projectile->IsPlayerOwned() ||
-        (player->GetStats().GetDodgeInvincibility() != 0)) {
+        (player->GetStats().GetDodgeInvincibility() != 0) ||
+        projectile->Hit()) {
         return nullptr;
     }
     return new PlayerIsHit(player, projectile->GetDamage());

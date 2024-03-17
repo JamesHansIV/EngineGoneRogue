@@ -58,4 +58,8 @@
         <FilePath>../assets/textures/spritesheets/chest.png</FilePath>
         <ID>wooden-chest-opening</ID>
     </Texture>
+    <Texture type="base">
+        <FilePath>../assets/textures/spritesheets/bullet_explosion2.png</FilePath>
+        <ID>bullet-explosion</ID>
+    </Texture>
 </Root>

@@ -1,4 +1,7 @@
 #include "ColliderHandler.h"
+#include "Apps/Game.h"
+#include "Engine/Objects/Projectiles/Projectile.h";
+#include "Engine/State/GameState.h"
 
 ColliderHandler* ColliderHandler::s_instance = nullptr;
 
