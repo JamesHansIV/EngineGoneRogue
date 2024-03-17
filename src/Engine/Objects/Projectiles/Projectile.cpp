@@ -69,6 +69,7 @@ void Projectile::HitTarget() {
     m_animation->SelectAnimation(m_hit_animation_info.TextureID);
     SetX(GetX() + m_rigid_body->Velocity().X);
     SetY(GetY() + m_rigid_body->Velocity().Y);
+    ColliderHandler::GetInstance()->RemoveCollider(this);
 }
 
 void Projectile::OnCollide(Collider* collidee) {

@@ -91,6 +91,8 @@ class PlayerStats {
 
     [[nodiscard]] int GetMaxHealth() const { return m_max_health; }
 
+    void SetMaxHealth(int maxHealth) { m_max_health = maxHealth; }
+
     void SetSpeed(float speed) { m_speed = speed; };
 
     void SetDodgeCd(int dodgeCD) { m_dodge_cd = dodgeCD; };

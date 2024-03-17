@@ -1,7 +1,9 @@
 #pragma once
 
+#include <unordered_map>
 #include <vector>
 #include "Engine/Events/Event.h"
+#include "Engine/Objects/Characters/Player.h"
 #include "Engine/Objects/ChestDropModal.h"
 #include "Engine/UI/Button.h"
 #include "State.h"
@@ -74,35 +76,17 @@ class GameOverState : public GameState {
    private:
 };
 
+struct Option {
+    std::string text;
+    std::string description;
+    void (*side_effect)();
+};
+
 class LevelUpState : public GameState {
    public:
-    explicit LevelUpState(Game* game) : GameState(game) {
-        const int w = 200;
-        const int h = 120;
-        const int x = (Application::Get()->GetWindowWidth() - w * 2) / 3;
-        const int y = (Application::Get()->GetWindowHeight() - h) / 2;
-        // Todo: Have LevelUpSelected have functionality to add the side effects
-        // of the level up option selected
-        m_option_one_button = Button(SDL_Rect{x, y, w, h}, "OptionOne", []() {
-            SDL_Log("OptionOne button clicked");
-            timer.Unpause();
-            PushNewEvent(EventType::LevelUpSelectedGameEvent);
-        });
-        m_option_two_button =
-            Button(SDL_Rect{x * 2, y, w, h}, "OptionTwo", []() {
-                SDL_Log("OptionTwo button clicked");
-                timer.Unpause();
-                PushNewEvent(EventType::LevelUpSelectedGameEvent);
-            });
-        m_option_three_button =
-            Button(SDL_Rect{x * 3, y, w, h}, "OptionThree", []() {
-                SDL_Log("OptionThree button clicked");
-                timer.Unpause();
-                PushNewEvent(EventType::LevelUpSelectedGameEvent);
-            });
-    }
-
+    explicit LevelUpState(Game* game);
     void Enter() override;
+
     void Exit() override;
     State* Update(float dt) override;
     void Draw() override;
@@ -115,6 +99,7 @@ class LevelUpState : public GameState {
     Button m_option_two_button;
     Button m_option_three_button;
     std::vector<int> m_sounds_playing;
+    std::vector<Option> m_options;
 };
 
 class PauseState : public GameState {
@@ -143,7 +128,8 @@ class PauseState : public GameState {
 
 class ChestDropState : public GameState {
    public:
-    explicit ChestDropState(Game* game, std::vector<ItemType> items) : GameState(game) {
+    explicit ChestDropState(Game* game, std::vector<ItemType> items)
+        : GameState(game) {
         m_chest_drop_modal = ChestDropModal(items);
     }
 
@@ -158,8 +144,6 @@ class ChestDropState : public GameState {
    private:
     ChestDropModal m_chest_drop_modal;
 };
-
-
 
 class ShopState : public GameState {
    public:
