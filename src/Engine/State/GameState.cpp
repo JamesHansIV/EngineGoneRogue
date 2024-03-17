@@ -130,6 +130,65 @@ void LevelUpState::Exit() {
     }
 }
 
+const std::unordered_map<std::string, Option> kLevelUpOptions = {
+    {"damage",
+     {"+10% Damage", "Increases damage by 10%",
+      []() {
+          auto& stats = Application::Get()->GetPlayer()->GetMutableStats();
+
+          stats.SetRangedDamage(stats.GetRangedDamage() +
+                                stats.GetRangedDamage() * 0.1);
+          PushNewEvent(EventType::LevelUpSelectedGameEvent);
+      }}},
+    {"health",
+     {"+10% Health", "Increases health by 10%",
+      []() {
+          auto& stats = Application::Get()->GetPlayer()->GetMutableStats();
+
+          stats.SetMaxHealth(stats.GetMaxHealth() + stats.GetMaxHealth() * 0.1);
+          PushNewEvent(EventType::LevelUpSelectedGameEvent);
+      }}},
+    {"speed",
+     {"+10% Speed", "Increases speed by 10%",
+      []() {
+          auto& stats = Application::Get()->GetPlayer()->GetMutableStats();
+
+          stats.SetSpeed(stats.GetSpeed() + stats.GetSpeed() * 0.1);
+
+          PushNewEvent(EventType::LevelUpSelectedGameEvent);
+      }}},
+};
+
+LevelUpState::LevelUpState(Game* game) : GameState(game) {
+    {
+        const int w = 200;
+        const int h = 120;
+        const int x = (Application::Get()->GetWindowWidth() - w * 2) / 3;
+        const int y = (Application::Get()->GetWindowHeight() - h) / 2;
+
+        for (auto const& [key, value] : kLevelUpOptions) {
+            m_options.push_back(value);
+        }
+
+        // Todo: Randomly select 3 options from list
+        // List of upgrade options that will be randomly selected
+        // Option: {text, description, side effect callback}
+        // Ex: {"+10% Damage", "Increases damage by 10%", []() { m_melee_damage += m_melee_damage * 0.1; }}
+        // Maintain list of references to options so that we can call the side effect
+        // This way we can have a list of options that are randomly selected and change probability
+        // without copying data
+
+        m_option_one_button = Button(SDL_Rect{x, y, w, h}, m_options[0].text,
+                                     m_options[0].side_effect);
+        m_option_two_button =
+            Button(SDL_Rect{x * 2, y, w, h}, m_options[1].text,
+                   m_options[1].side_effect);
+        m_option_three_button =
+            Button(SDL_Rect{x * 3, y, w, h}, m_options[2].text,
+                   m_options[2].side_effect);
+    }
+}
+
 void LevelUpState::Draw() {
     GetGame()->DrawObjects();
     m_option_one_button.Draw();
@@ -148,6 +207,38 @@ State* LevelUpState::Update(float dt) {
 State* LevelUpState::HandleEvent(Event* /*event*/) {
     return nullptr;
 }
+
+
+void ChestDropState::Enter() {
+    timer.Pause();
+    Application::Get()->GetAudioManager().SetMusicVolume(50);
+    Application::Get()->GetAudioManager().PlayMusicOverride("pause-screen",
+                                                            true);
+}
+
+void ChestDropState::Exit() {}
+
+void ChestDropState::Draw() {
+    GetGame()->DrawObjects();
+    m_chest_drop_modal.Draw();
+}
+
+State* ChestDropState::Update(float dt) {
+    m_chest_drop_modal.Update();
+    GetGame()->UpdateObjects(dt);
+    return nullptr;
+}
+
+State* ChestDropState::HandleEvent(Event* event) {
+    switch (event->GetEventType()) {
+        case EventType::ContinueGameEvent:
+            return new RunningState(GetGame());
+        default:
+            break;
+    }
+    return nullptr;
+}
+
 
 void ShopState::Enter() {}
 

@@ -22,6 +22,7 @@ enum class StateType {
     GameOver,
     LevelUp,
     Pause,
+    ChestDrop,
     Shop,
 
     //General state

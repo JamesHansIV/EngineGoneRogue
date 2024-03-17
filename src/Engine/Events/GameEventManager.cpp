@@ -39,6 +39,10 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
                                 state = new RunningState(
                                     static_cast<Game*>(Application::Get()));
                             }
+                            if (GameState->GetType() == StateType::ChestDrop) {
+                                state = new RunningState(
+                                    static_cast<Game*>(Application::Get()));
+                            }
                         } else {
                             if (GameState->GetType() == StateType::Running) {
                                 state = new PauseState(
@@ -112,7 +116,7 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
                 State* potential_state =
                     HandleCustomEvents(event, ItemManager, GameState);
                 if (potential_state != nullptr) {
-                    state = HandleCustomEvents(event, ItemManager, GameState);
+                    state = potential_state;
                 }
             }
             default:
@@ -160,12 +164,13 @@ State* GameEventManager::HandleCustomEvents(const SDL_Event& event,
             return nullptr;
         }
         case EventType::ChestOpenedEvent: {
+            SDL_Log("ChestDropEvent");
             auto* item = static_cast<std::vector<ItemType>*>(event.user.data1);
             auto* index =
                 static_cast<std::pair<float, float>*>(event.user.data2);
             ChestOpenedEvent chest_open_event(*item, *index);
             ItemManager->HandleEvent(&chest_open_event);
-            return nullptr;
+            return new ChestDropState(static_cast<Game*>(Application::Get()), *item);
         }
         case EventType::StartGameEvent: {
             StartGameEvent start_game_event;
