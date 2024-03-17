@@ -13,16 +13,15 @@
 class HelixBullet : public Projectile {
    public:
     HelixBullet(Properties& props, float speed, float angle,
-                bool playerOwned = false, bool flipped = false);
+                AnimationInfo hitAnimationInfo, bool playerOwned = false,
+                bool flipped = false);
     void Draw() override;
     void Clean() override;
     void Update(float dt) override;
 
     void OnCollide(Collider* collidee) override;
 
-    ObjectType GetObjectType() override {
-        return ObjectType::Projectile;
-    }
+    ObjectType GetObjectType() override { return ObjectType::Projectile; }
 
     ProjectileType GetProjectileType() override {
         return ProjectileType::Helix;

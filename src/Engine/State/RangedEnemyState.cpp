@@ -11,12 +11,14 @@
 
 State* RangedEnemyHandleCollide(RangedEnemy* enemy, Collider* collidee) {
     switch (collidee->GetObjectType()) {
-        case ObjectType::Projectile:
-            if (dynamic_cast<Projectile*>(collidee)->IsPlayerOwned()) {
+        case ObjectType::Projectile: {
+            Projectile* p = dynamic_cast<Projectile*>(collidee);
+            if (p->IsPlayerOwned() && !p->Hit()) {
                 return new RangedEnemyIsHit(
                     enemy, dynamic_cast<Projectile*>(collidee)->GetDamage());
             }
             break;
+        }
         case ObjectType::MeleeWeapon: {
             auto* melee_weapon = dynamic_cast<class MeleeWeapon*>(collidee);
             return new RangedEnemyIsHit(enemy,

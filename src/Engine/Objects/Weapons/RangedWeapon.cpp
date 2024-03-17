@@ -33,10 +33,13 @@ void RangedWeapon::Update(float /*dt*/) {
         m_projectile_props->DstRect.y = GetMidPointY() - 6;
         m_projectile_props->Rotation = GetRotation();
 
+        AnimationInfo hit_animation_info = {
+            "bullet-explosion", {0, 0, 16, 16}, 4, 150};
+
         auto* projectile = new Projectile(
             *m_projectile_props,
             static_cast<float>(m_stats.GetProjectileSpeed()), GetRadians(),
-            IsPlayerOwned(),
+            hit_animation_info, IsPlayerOwned(),
             m_stats.GetDamage() + m_stats.GetOwnerStats()->GetRangedDamage(),
             m_stats.GetOwnerStats()->GetPiercing(), GetOwner());
         // Add player velocity to projectile. Have to multiply by .1 to make the

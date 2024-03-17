@@ -16,13 +16,18 @@ class Projectile : public Collider {
    public:
     bool m_Active = true;
     Projectile(Properties& props, float speed, float angle,
-               bool playerOwned = false, int damage = 10, int piercing = 0,
-               Player* owner = nullptr);
+               AnimationInfo m_hitAnimationInfo, bool playerOwned = false,
+               int damage = 10, int piercing = 0, Player* owner = nullptr);
     void Draw() override;
     void Clean() override;
     void Update(float dt) override;
 
     void CheckOutOfBounds();
+
+    //Called when an opposing character is hit
+    void HitTarget();
+
+    bool Hit() { return m_hit; }
 
     void OnCollide(Collider* collidee) override;
 
@@ -56,12 +61,16 @@ class Projectile : public Collider {
 
     void AddNumberofEnemiesHit() { m_numberof_enemies_hit++; }
 
-    [[nodiscard]] int GetNumberofEnemiesHit() const { return m_numberof_enemies_hit; };
+    [[nodiscard]] int GetNumberofEnemiesHit() const {
+        return m_numberof_enemies_hit;
+    };
 
     Player* GetOwner() { return m_owner; };
 
    private:
     bool m_player_owned;
+    bool m_hit;
+    AnimationInfo m_hit_animation_info;
     float m_speed;
     float m_angle;
     Vector2D m_velocity;

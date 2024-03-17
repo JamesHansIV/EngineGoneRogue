@@ -6,12 +6,12 @@
 #include "Engine/Renderer/Renderer.h"
 
 HelixBullet::HelixBullet(Properties& props, float speed, float angle,
-                         bool playerOwned, bool flipped)
-    : Projectile(props, speed, angle, playerOwned),
+                         AnimationInfo hitAnimationInfo, bool playerOwned,
+                         bool flipped)
+    : Projectile(props, speed, angle, hitAnimationInfo, playerOwned),
       m_flipped(static_cast<int>(flipped)),
       m_origin(Vector2D(GetX(), GetY())),
-      m_t_pos(0, 0)
-      {
+      m_t_pos(0, 0) {
 
     SetSpeed(speed / 25);
 }
@@ -21,6 +21,9 @@ void HelixBullet::Draw() {
 }
 
 void HelixBullet::Update(float /*dt*/) {
+    if (Hit()) {
+        return;
+    }
     m_t_pos.X += GetSpeed();
     m_t_pos.Y = m_flipped != 0 ? sin(m_t_pos.X + M_PI) : sin(m_t_pos.X);
 
@@ -40,30 +43,7 @@ void HelixBullet::Update(float /*dt*/) {
 }
 
 void HelixBullet::OnCollide(Collider* collidee) {
-    if (this == collidee) {
-        return;
-    }
-
-    switch (collidee->GetObjectType()) {
-        case ObjectType::Player:
-            if (!IsPlayerOwned()) {
-                MarkForDeletion();
-                //dynamic_cast<Character*>(collidee)->GetHealth()->SetDamage(10);
-            }
-            break;
-        case ObjectType::Enemy:
-            if (IsPlayerOwned()) {
-                MarkForDeletion();
-                dynamic_cast<Character*>(collidee)->GetHealth()->SetDamage(10);
-            }
-            break;
-        case ObjectType::MeleeWeapon:
-        case ObjectType::Collider:
-            MarkForDeletion();
-            break;
-        default:
-            break;
-    }
+    Projectile::OnCollide(collidee);
 }
 
 void HelixBullet::Clean() {}
