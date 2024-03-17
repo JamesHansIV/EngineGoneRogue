@@ -11,6 +11,8 @@ class Health {
 
     void IncreaseHealth(int amount);
 
+    void SetMaxHealth(int max_health) { m_total_health = max_health; }
+
     void Draw(int objX, int objY, int objWidth) const;
 
    private:

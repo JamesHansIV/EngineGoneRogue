@@ -109,17 +109,25 @@ void LevelUpState::Enter() {
     Renderer::GetInstance()->SetCameraTarget(GetGame()->GetPlayer());
     Application::Get()->GetAudioManager().MuteMusic();
     // save channel and  create callback. then halt sound on exit
-    Application::Get()->GetAudioManager().PlaySound("thinking-music", 65, 10);
+    const int channel = Application::Get()->GetAudioManager().PlaySound(
+        "thinking-music", 65, 10);
+    if (channel != -1) {
+        m_sounds_playing.push_back(channel);
+    }
 }
 
 void LevelUpState::Exit() {
     Mix_ChannelFinished([](int /*channel*/) {
         Application::Get()->GetAudioManager().ToggleMusic();
+        // Need to enable sound incase it was disabled by easter-egg
+        Application::Get()->GetAudioManager().EnableSound();
         // remove callback
         Mix_ChannelFinished(nullptr);
     });
 
-    AudioManager::StopSound(-1);
+    for (const int channel : m_sounds_playing) {
+        AudioManager::StopSound(channel);
+    }
 }
 
 void LevelUpState::Draw() {

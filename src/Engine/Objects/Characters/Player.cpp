@@ -36,7 +36,7 @@ void Player::Init() {
     m_current_tile_pos = m_still_frames["face-down"];
 
     m_stats = new PlayerStats(MovementInfo{80, .90, 110, 500},
-                              CombatInfo{1, 1, 0, 50}, HealthInfo{1, 20});
+                              CombatInfo{1, 1, 0, 50}, HealthInfo{100, 0, 0});
     auto* default_projectile_props = new Properties(
         "weapons", {6, 0, 16, 16},
         {GetMidPointX(), GetMidPointY(), kProjectileWidth, kProjectileHeight},
@@ -51,7 +51,7 @@ void Player::Init() {
 
     ChangeState(new PlayerIdle(this));
     // m_Collider->SetCorrection(-45, -20, 60, 80 )
-    m_health = new Health(100);
+    m_health = new Health(m_stats->GetMaxHealth());
 
     Properties props_uzi("weapons", {0, 3, 16, 16}, {0, 0, 18, 18}, 0.0);
     RangedWeaponStats stats_uzi = {true, 200, 25, 16, m_stats};
@@ -115,11 +115,12 @@ void Player::Update(float dt) {
         ChangeState(state);
     }
 
-    if (SDL_GetTicks() - m_last_health_regen > 1000) {
-        m_last_health_regen = SDL_GetTicks();
+    if (timer.GetTicks() - m_last_health_regen > 1000) {
+        m_last_health_regen = timer.GetTicks();
         m_health->IncreaseHealth(m_stats->GetHPRegenRate());
     }
     m_stats->Update();
+    m_health->SetMaxHealth(m_stats->GetMaxHealth());
     m_animation->Update();
     m_rigid_body->Update(dt);
 

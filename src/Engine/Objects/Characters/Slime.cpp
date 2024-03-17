@@ -14,7 +14,7 @@ Slime::Slime(Collider* rhs, EnemyStats stats, bool split)
 }
 
 void Slime::Init() {
-    SetHealth(new Health(100));
+    SetHealth(new Health(m_stats.health));
 
     ChangeState(new SlimeIdle(this));
 }

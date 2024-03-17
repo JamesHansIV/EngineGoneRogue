@@ -111,6 +111,7 @@ class LevelUpState : public GameState {
     Button m_option_one_button;
     Button m_option_two_button;
     Button m_option_three_button;
+    std::vector<int> m_sounds_playing;
 };
 
 class PauseState : public GameState {

@@ -5,11 +5,12 @@
 #include "Engine/Objects/GameObject.h"
 
 class ItemManager : public virtual EventManager {
-    public:
-        ItemManager(std::vector<GameObject*>& objects,Player* player);
-        void HandleEvent(Event* event); 
-    private:
-        std::vector<GameObject*>& m_objects;
-        float m_chance_of_drop = 1;
-        Player* m_player;
+   public:
+    ItemManager(std::vector<GameObject*>& objects, Player* player);
+    void HandleEvent(Event* event);
+
+   private:
+    std::vector<GameObject*>& m_objects;
+    float m_chance_of_drop = .15;
+    Player* m_player;
 };

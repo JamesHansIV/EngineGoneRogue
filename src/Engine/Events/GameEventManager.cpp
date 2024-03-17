@@ -49,6 +49,8 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
                     case SDLK_m:
                         Application::Get()->GetAudioManager().ToggleMusic();
                         break;
+                    case SDLK_g:
+                        m_player->ToggleGodMode();
                     case SDLK_COMMA:
                         Application::Get()->GetAudioManager().ToggleSound();
                         break;
@@ -106,8 +108,13 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
                         Application::Get()->GetWindowHeight());
                 }
                 break;
-            case SDL_USEREVENT:
-                state = HandleCustomEvents(event, ItemManager, GameState);
+            case SDL_USEREVENT: {
+                State* potential_state =
+                    HandleCustomEvents(event, ItemManager, GameState);
+                if (potential_state != nullptr) {
+                    state = HandleCustomEvents(event, ItemManager, GameState);
+                }
+            }
             default:
                 break;
         }

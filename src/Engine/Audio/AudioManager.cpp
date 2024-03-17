@@ -134,6 +134,10 @@ void AudioManager::ToggleSound() {
     m_is_sound_muted = !m_is_sound_muted;
 }
 
+void AudioManager::EnableSound() {
+    m_is_sound_muted = false;
+}
+
 void AudioManager::StopMusic() {
     Mix_HaltMusic();
 }

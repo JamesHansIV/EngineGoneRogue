@@ -21,6 +21,7 @@ class AudioManager {
     static void PauseSound(ChannelId id);
     static void ResumeMusic();
     static void ResumeSound(ChannelId id);
+    void EnableSound();
     void MuteMusic();
     void SetMusicVolume(int volume);
     void SetSoundVolume(int volume);

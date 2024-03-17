@@ -14,7 +14,7 @@ Dog::Dog(Collider* rhs, RangedEnemyStats stats) : RangedEnemy(rhs, stats) {
 
 void Dog::Init() {
     ChangeState(new RangedEnemyIdle(this));
-    SetHealth(new Health(100));
+    SetHealth(new Health(m_stats.health));
     SetAttack(new RangedAttack(CreateBullet, GetFireInterval()));
 }
 
