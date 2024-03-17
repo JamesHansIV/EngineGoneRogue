@@ -72,7 +72,9 @@ State* UpdateAnimationDirection(Player* player,
 
 State* HandleEnemyCollide(Player* player, Enemy* enemy) {
     player->UnCollide(enemy);
-    if ((player->GetStats().GetDodgeInvincibility() == 0)) {
+    if (enemy->GetCurrentState()->GetType() == StateType::Attack &&
+        enemy->GetAnimation()->OnKeyFrame() &&
+        (player->GetStats().GetDodgeInvincibility() == 0)) {
         return new PlayerIsHit(player, enemy->GetEnemyStats().damage);
     }
     return nullptr;
@@ -104,7 +106,6 @@ State* HandleCollide(Player* player, CollideEvent* event) {
 
     switch (collidee->GetObjectType()) {
         case ObjectType::Enemy: {
-            SDL_Log("Player collided with enemy");
             return HandleEnemyCollide(player, dynamic_cast<Enemy*>(collidee));
             break;
         }

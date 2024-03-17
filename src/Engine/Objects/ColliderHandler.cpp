@@ -150,5 +150,7 @@ void ColliderHandler::AddCollider(Collider* collider) {
 
 void ColliderHandler::RemoveCollider(Collider* collider) {
     auto it = std::find(m_colliders.begin(), m_colliders.end(), collider);
-    m_colliders.erase(it);
+    if (it != m_colliders.end()) {
+        m_colliders.erase(it);
+    }
 }
