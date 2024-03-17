@@ -149,6 +149,38 @@ State* LevelUpState::HandleEvent(Event* /*event*/) {
     return nullptr;
 }
 
+
+void ChestDropState::Enter() {
+    timer.Pause();
+    Application::Get()->GetAudioManager().SetMusicVolume(50);
+    Application::Get()->GetAudioManager().PlayMusicOverride("pause-screen",
+                                                            true);
+}
+
+void ChestDropState::Exit() {}
+
+void ChestDropState::Draw() {
+    GetGame()->DrawObjects();
+    m_chest_drop_modal.Draw();
+}
+
+State* ChestDropState::Update(float dt) {
+    m_chest_drop_modal.Update();
+    GetGame()->UpdateObjects(dt);
+    return nullptr;
+}
+
+State* ChestDropState::HandleEvent(Event* event) {
+    switch (event->GetEventType()) {
+        case EventType::ContinueGameEvent:
+            return new RunningState(GetGame());
+        default:
+            break;
+    }
+    return nullptr;
+}
+
+
 void ShopState::Enter() {}
 
 void ShopState::Exit() {}

@@ -1,5 +1,8 @@
 #pragma once
 
+#include <vector>
+#include "Engine/Events/Event.h"
+#include "Engine/Objects/ChestDropModal.h"
 #include "Engine/UI/Button.h"
 #include "State.h"
 
@@ -137,6 +140,26 @@ class PauseState : public GameState {
    private:
     Button m_button;
 };
+
+class ChestDropState : public GameState {
+   public:
+    explicit ChestDropState(Game* game, std::vector<ItemType> items) : GameState(game) {
+        m_chest_drop_modal = ChestDropModal(items);
+    }
+
+    void Enter() override;
+    void Exit() override;
+    State* Update(float dt) override;
+    void Draw() override;
+    State* HandleEvent(Event* event) override;
+
+    StateType GetType() override { return StateType::ChestDrop; }
+
+   private:
+    ChestDropModal m_chest_drop_modal;
+};
+
+
 
 class ShopState : public GameState {
    public:
