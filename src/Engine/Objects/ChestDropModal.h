@@ -17,13 +17,10 @@ class ChestDropModal {
 
         int const grid_height = static_cast<int>(m_items.size()) * kCellHeight;
 
-        int const x = (window_width - 100) / 4;
-        int const y = (window_height + grid_height) / 2;
-
         int const button_width = 100;
         int const button_height = 60;
         int const button_x = (window_width - button_width) / 2;
-        int const button_y = y;
+        int const button_y = (window_height + grid_height) / 2;
 
         m_button = Button(SDL_Rect{
             button_x,
