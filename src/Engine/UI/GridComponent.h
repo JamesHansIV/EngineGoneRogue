@@ -93,6 +93,12 @@ public:
         return start_x;
     }
 
+    void SetGridBorderColor(DrawColor& color)
+    {
+        m_border_color = color;
+        m_has_border = true;
+    }
+
     void DrawGrid() {
         Renderer* renderer = Renderer::GetInstance();
         int const offset_x = m_start_x;
@@ -109,6 +115,12 @@ public:
                                             m_column_widths[j], m_cell_height};
                     renderer->DrawRect(box_around, box->color, box->should_fill);
 
+                    if (m_has_border){
+                        SDL_Rect box_border = {box_x + renderer->GetCameraX(), box_y + renderer->GetCameraY(),
+                                            m_column_widths[j], m_cell_height};
+                        renderer->DrawRect(box_border, m_border_color, false);
+                    }
+                
                     if (dynamic_cast<BoxWithTexture*>(box) != nullptr) {
                         DrawTextureOnBox(dynamic_cast<BoxWithTexture*>(box), box_x, box_y);
                     }  
@@ -197,16 +209,12 @@ private:
     int m_columns;
     int m_cell_height;
     int m_cell_width;
+    bool m_has_border = false;
+    DrawColor m_border_color = {255,255,255,255};
 
-    [[nodiscard]] int GetTotalWidth() const {
-    return m_columns * m_cell_width;
-    }
-
-    [[nodiscard]] int GetTotalHeight() const {
-        return m_rows * m_cell_height;
-    }
 
     void InitializeGrid() {
         m_grid = std::vector<std::vector<Box*>>(m_rows, std::vector<Box*>(m_columns, nullptr));
     }
+
 };

@@ -1,9 +1,17 @@
 #include "Engine/Objects/ChestDropModal.h"
 #include "Engine/Events/Event.h"
-#include "Engine/Objects/GridComponent.h"
+#include "Engine/Renderer/Renderer.h"
+#include "Engine/UI/GridComponent.h"
 #include "Apps/Game.h"
 
 const DrawColor kColor{0, 0, 0, 255};
+const DrawColor kTransparentColor { 0, 0, 0, 0};
+
+const int kColumn1Width = 170;
+const int kColumn2Width = 450;
+
+const int kChestTextureHeight = 150;
+const int kChestTextureWidth = 250;
 
 void ChestDropModal::Draw()
 {
@@ -11,7 +19,7 @@ void ChestDropModal::Draw()
     int const window_height = Application::Get()->GetWindowHeight();
 
     int const grid_height = static_cast<int>(m_items.size()) * kCellHeight;
-    int const grid_width = kCellWidth + 550;
+    int const grid_width = kCellWidth + kColumn1Width + kColumn2Width;
 
     int const x = (window_width - grid_width) / 4;
     int const y = (window_height - grid_height) / 2 ;
@@ -21,26 +29,30 @@ void ChestDropModal::Draw()
     grid_container.AddBox(message_box, 0, 0);
     grid_container.DrawGrid();
     
-    GridComponent box_container(static_cast<int>(m_items.size()),2, x, y, kCellHeight, kCellWidth);
-    box_container.SetColumnWidth(1, 550);
+    GridComponent box_container(static_cast<int>(m_items.size()),3, x, y, kCellHeight, kCellWidth);
+    box_container.SetColumnWidth(1, kColumn1Width);
+    box_container.SetColumnWidth(2, kColumn2Width);
     int row = 0;
     for (ItemType const item_t: m_items) {
-        Properties props("", {0, 0, 16, 16}, {0,0, 32, 32}, 0, "");
+        Properties props("", {0, 0, 18, 16}, {0,0, 32, 32}, 0, "");
         Item item(props, item_t);
         SDL_Rect const src_rect = {0, 0, 16, 16};
-        Box* item_box = new BoxWithTexture(item.GetTextureID(), src_rect,kColor,true);
+        Box* item_box = new BoxWithTexture(item.GetTextureID(), src_rect,kColor,false);
+        Box* item_name = new BoxWithText(item.GetName(), src_rect, kColor, true, TextAlign::KCenter);
         Box* item_description = new BoxWithText(item.GetDescription(), src_rect, kColor, true, TextAlign::KLeft);
         box_container.AddBox(item_box, row, 0);
-        box_container.AddBox(item_description, row, 1);
+        box_container.AddBox(item_name, row, 1);
+        box_container.AddBox(item_description, row, 2);
         row++;
     }
-    
+    DrawColor border_color = {255,255,255,255};
+    box_container.SetGridBorderColor(border_color);
     box_container.DrawGrid();
     
-    int const chest_x = (window_width - 150)/4;
-    int const chest_y = (window_height - grid_height)/2 - kCellHeight - 150;
-    GridComponent chest_grid(1, 1, chest_x, chest_y, 150, 150); // Adjust the size to 100x100
-    Box* chest_box = new BoxWithTexture("wooden-chest-idle", {0, 0, 16, 16}, kColor, false);
+    int const chest_x = (window_width - kChestTextureWidth)/4;
+    int const chest_y = (window_height - grid_height)/2 - kCellHeight - kChestTextureHeight;
+    GridComponent chest_grid(1, 1, chest_x, chest_y, kChestTextureHeight, kChestTextureWidth); // Adjust the size to 100x100
+    Box* chest_box = new BoxWithTexture("wooden-chest-idle", {1, 5, 18, 16}, kTransparentColor, false);
     chest_grid.AddBox(chest_box, 0, 0);
     chest_grid.DrawGrid();
     

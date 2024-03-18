@@ -1,6 +1,6 @@
 #include "WeaponInventory.h"
 #include "Engine/Objects/Characters/Player.h"
-#include "Engine/Objects/GridComponent.h"
+#include "Engine/UI/GridComponent.h"
 #include "Engine/Objects/IObject.h"
 #include "Engine/Objects/Weapons/Weapon.h"
 #include "SDL2/SDL_render.h"

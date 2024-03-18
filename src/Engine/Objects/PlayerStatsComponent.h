@@ -2,7 +2,6 @@
 #include <vector>
 #include "Weapons/Weapon.h"
 #include "Engine/Objects/Characters/Player.h"
-#include "GridComponent.h"
 
 class PlayerStatsComponent {
    public:

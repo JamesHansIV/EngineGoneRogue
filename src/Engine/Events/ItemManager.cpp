@@ -19,7 +19,8 @@ void ItemManager::HandleEvent(Event* event) {
             std::random_device rd;
             std::mt19937 gen(rd());
             std::uniform_real_distribution<float> dis(0.0F, 1.0F);
-            std::uniform_int_distribution<int> dis2(0, 11);
+            std::uniform_int_distribution<int> dis2(0, 7);
+
             float const random_number = dis(gen);
 
             if (random_number <= m_chance_of_drop) {

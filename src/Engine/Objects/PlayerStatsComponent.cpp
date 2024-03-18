@@ -1,7 +1,7 @@
 #include "PlayerStatsComponent.h"
 #include <iomanip>
 #include <sstream>
-#include "Engine/Objects/GridComponent.h"
+#include "Engine/UI/GridComponent.h"
 const DrawColor kBoxColor = {0, 0, 0, 255};
 const int kCellWidth = 200;
 const int kCellHeight = 30;
