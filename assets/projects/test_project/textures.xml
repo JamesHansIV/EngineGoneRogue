@@ -62,4 +62,8 @@
         <FilePath>../assets/textures/spritesheets/bullet_explosion2.png</FilePath>
         <ID>bullet-explosion</ID>
     </Texture>
+    <Texture type="base">
+        <FilePath>../assets/textures/spritesheets/enemy_bullet_explosion.png</FilePath>
+        <ID>enemy-bullet-explosion</ID>
+    </Texture>
 </Root>

@@ -1,5 +1,6 @@
 #include "RingShotEnemy.h"
 #include "Engine/Application/Application.h"
+#include "Engine/Objects/Characters/RangedEnemy.h"
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/State/RangedEnemyState.h"
 
@@ -41,11 +42,12 @@ void RingShotEnemy::Update(float dt) {
 
 void RingShotEnemy::Shoot() {
     Properties const props = {
-        "weapons", {6, 0, 16, 16}, {GetX(), GetY(), 12, 12}};
+        "weapons", {5, 0, 16, 16}, {GetX(), GetY(), 12, 12}};
 
     GetAttack()->Shoot(RangedAttackInfo{
         GetMidPointX(), GetMidPointY(), GetTarget()->GetMidPointX(),
-        GetTarget()->GetMidPointY(), props, 9, m_shot_count});
+        GetTarget()->GetMidPointY(), props, kDefaultHitAnimationInfo, 9,
+        m_shot_count});
 }
 
 void RingShotEnemy::OnCollide(Collider* collidee) {

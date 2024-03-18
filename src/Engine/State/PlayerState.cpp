@@ -72,9 +72,7 @@ State* UpdateAnimationDirection(Player* player,
 
 State* HandleEnemyCollide(Player* player, Enemy* enemy) {
     player->UnCollide(enemy);
-    if (enemy->GetCurrentState()->GetType() == StateType::Attack &&
-        enemy->GetAnimation()->OnKeyFrame() &&
-        (player->GetStats().GetDodgeInvincibility() == 0)) {
+    if ((player->GetStats().GetDodgeInvincibility() == 0)) {
         return new PlayerIsHit(player, enemy->GetEnemyStats().damage);
     }
     return nullptr;

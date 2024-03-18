@@ -264,6 +264,8 @@ void Game::UpdateObjects(float dt) {
             DeleteObject(m_player);
             m_player = nullptr;
             m_game_event_manager->SetPlayer(nullptr);
+            ChangeState(new StartState(this));
+            return;
         }
     }
     for (auto it = m_objects.begin(); it != m_objects.end();) {

@@ -13,6 +13,7 @@ struct RangedAttackInfo {
     float TargetX;
     float TargetY;
     Properties ProjProps;
+    AnimationInfo HitAnimation;
     float ProjSpeed = 400;
     int ProjCount = 1;
     float Spread = 0;

@@ -1,5 +1,6 @@
 #include "Mage.h"
 #include "Engine/Application/Application.h"
+#include "Engine/Objects/Characters/RangedEnemy.h"
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Objects/Projectiles/RotatingBullet.h"
 #include "Engine/State/RangedEnemyState.h"
@@ -34,11 +35,12 @@ void Mage::Shoot() {
     RotatingBullet* bullet;
 
     Properties const props = {
-        "weapons", {6, 1, 16, 16}, {GetX(), GetY(), 12, 12}};
+        "weapons", {5, 1, 16, 16}, {GetX(), GetY(), 12, 12}};
 
     GetAttack()->Shoot(RangedAttackInfo{
         GetMidPointX(), GetMidPointY(), GetTarget()->GetMidPointX(),
-        GetTarget()->GetMidPointY(), props, 1, m_bullet_count});
+        GetTarget()->GetMidPointY(), props, kDefaultHitAnimationInfo, 1,
+        m_bullet_count});
 }
 
 void Mage::OnCollide(Collider* collidee) {
