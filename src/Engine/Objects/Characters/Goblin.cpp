@@ -1,5 +1,6 @@
 #include "Goblin.h"
 #include "Engine/Application/Application.h"
+#include "Engine/Objects/Characters/RangedEnemy.h"
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/State/RangedEnemyState.h"
 
@@ -36,7 +37,8 @@ void Goblin::Shoot() {
 
     GetAttack()->Shoot(RangedAttackInfo{
         GetMidPointX(), GetMidPointY(), GetTarget()->GetMidPointX(),
-        GetTarget()->GetMidPointY(), props, 18, 1, m_stats.spread});
+        GetTarget()->GetMidPointY(), props, kDefaultHitAnimationInfo, 18, 1,
+        m_stats.spread});
 }
 
 void Goblin::OnCollide(Collider* collidee) {

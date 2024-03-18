@@ -2,11 +2,6 @@
 #include "Engine/Objects/Projectiles/HelixBullet.h"
 #include "Engine/Objects/Projectiles/RotatingBullet.h"
 
-const AnimationInfo kDefaultHitAnimationInfo = {"enemy-bullet-explosion",
-                                                {0, 0, 32, 32},
-                                                4,
-                                                150};
-
 float CalculateAngle(RangedAttackInfo& info) {
     float const delta_y = info.TargetY - info.Y;
     float const delta_x = info.TargetX - info.X;
@@ -24,7 +19,7 @@ std::vector<Projectile*> CreateBullet(RangedAttackInfo info) {
     float const angle = CalculateAngle(info);
 
     auto* bullet = new Projectile(info.ProjProps, info.ProjSpeed, angle,
-                                  kDefaultHitAnimationInfo, info.IsPlayerOwned);
+                                  info.HitAnimation, info.IsPlayerOwned);
 
     bullets.push_back(bullet);
 
@@ -44,7 +39,7 @@ std::vector<Projectile*> CreateSpreadBullet(RangedAttackInfo info) {
     float const angle = range_start + offset;
 
     auto* bullet = new Projectile(info.ProjProps, info.ProjSpeed, angle,
-                                  kDefaultHitAnimationInfo, info.IsPlayerOwned);
+                                  info.HitAnimation, info.IsPlayerOwned);
 
     bullets.push_back(bullet);
 
@@ -58,10 +53,10 @@ std::vector<Projectile*> CreateHelixBullets(RangedAttackInfo info) {
 
     auto* bullet1 =
         new HelixBullet(info.ProjProps, info.ProjSpeed, angle,
-                        kDefaultHitAnimationInfo, info.IsPlayerOwned, false);
+                        info.HitAnimation, info.IsPlayerOwned, false);
     auto* bullet2 =
         new HelixBullet(info.ProjProps, info.ProjSpeed, angle,
-                        kDefaultHitAnimationInfo, info.IsPlayerOwned, true);
+                        info.HitAnimation, info.IsPlayerOwned, true);
 
     bullets.push_back(bullet1);
     bullets.push_back(bullet2);
@@ -80,9 +75,8 @@ std::vector<Projectile*> CreateRotatingBullets(RangedAttackInfo info) {
 
     for (float i = 0; i < 2 * M_PI; i += bullet_separation) {
 
-        bullet =
-            new RotatingBullet(info.ProjProps, info.ProjSpeed, angle,
-                               kDefaultHitAnimationInfo, info.IsPlayerOwned, i);
+        bullet = new RotatingBullet(info.ProjProps, info.ProjSpeed, angle,
+                                    info.HitAnimation, info.IsPlayerOwned, i);
 
         bullets.push_back(bullet);
     }
@@ -105,7 +99,7 @@ std::vector<Projectile*> CreateSpreadBullets(RangedAttackInfo info) {
         angle = spread_start + interval * i;
 
         bullet = new Projectile(info.ProjProps, info.ProjSpeed, angle,
-                                kDefaultHitAnimationInfo, info.IsPlayerOwned);
+                                info.HitAnimation, info.IsPlayerOwned);
         bullets.push_back(bullet);
     }
 
@@ -132,7 +126,7 @@ std::vector<Projectile*> CreateRingBullets(RangedAttackInfo info) {
         info.ProjProps.DstRect.y = outer_radius * sin(i) + info.Y;
 
         bullet = new Projectile(info.ProjProps, info.ProjSpeed, i,
-                                kDefaultHitAnimationInfo, info.IsPlayerOwned);
+                                info.HitAnimation, info.IsPlayerOwned);
 
         bullets.push_back(bullet);
     }
@@ -146,7 +140,7 @@ std::vector<Projectile*> CreateRingBullets(RangedAttackInfo info) {
         info.ProjProps.DstRect.y = inner_radius * sin(i) + info.Y;
 
         bullet = new Projectile(info.ProjProps, info.ProjSpeed, i,
-                                kDefaultHitAnimationInfo, info.IsPlayerOwned);
+                                info.HitAnimation, info.IsPlayerOwned);
 
         bullets.push_back(bullet);
     }

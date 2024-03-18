@@ -1,5 +1,6 @@
 #include "RingShotEnemy.h"
 #include "Engine/Application/Application.h"
+#include "Engine/Objects/Characters/RangedEnemy.h"
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/State/RangedEnemyState.h"
 
@@ -45,7 +46,8 @@ void RingShotEnemy::Shoot() {
 
     GetAttack()->Shoot(RangedAttackInfo{
         GetMidPointX(), GetMidPointY(), GetTarget()->GetMidPointX(),
-        GetTarget()->GetMidPointY(), props, 9, m_shot_count});
+        GetTarget()->GetMidPointY(), props, kDefaultHitAnimationInfo, 9,
+        m_shot_count});
 }
 
 void RingShotEnemy::OnCollide(Collider* collidee) {

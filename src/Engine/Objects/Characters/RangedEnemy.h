@@ -3,6 +3,11 @@
 #include "Enemy.h"
 #include "Engine/Objects/Attacks/AttackFunctions.h"
 
+const AnimationInfo kDefaultHitAnimationInfo = {"enemy-bullet-explosion",
+                                                {0, 0, 16, 16},
+                                                4,
+                                                150};
+
 class RangedEnemy : public Enemy {
    public:
     explicit RangedEnemy(Properties& props, const RangedEnemyStats& enemyStats)

@@ -1,5 +1,6 @@
 #include "HelixEnemy.h"
 #include "Engine/Application/Application.h"
+#include "Engine/Objects/Characters/RangedEnemy.h"
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Objects/Projectiles/HelixBullet.h"
 #include "Engine/State/RangedEnemyState.h"
@@ -34,9 +35,9 @@ void HelixEnemy::Update(float dt) {
 void HelixEnemy::Shoot() {
     Properties const props("weapons", {5, 1, 16, 16}, {GetX(), GetY(), 12, 12});
 
-    GetAttack()->Shoot(RangedAttackInfo{GetMidPointX(), GetMidPointY(),
-                                        GetTarget()->GetMidPointX(),
-                                        GetTarget()->GetMidPointY(), props, 2});
+    GetAttack()->Shoot(RangedAttackInfo{
+        GetMidPointX(), GetMidPointY(), GetTarget()->GetMidPointX(),
+        GetTarget()->GetMidPointY(), props, kDefaultHitAnimationInfo, 2});
 }
 
 void HelixEnemy::OnCollide(Collider* collidee) {

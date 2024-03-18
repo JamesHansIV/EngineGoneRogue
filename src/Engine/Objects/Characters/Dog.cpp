@@ -1,5 +1,6 @@
 #include "Dog.h"
 #include "Engine/Application/Application.h"
+#include "Engine/Objects/Characters/RangedEnemy.h"
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/State/RangedEnemyState.h"
 
@@ -34,7 +35,7 @@ void Dog::Shoot() {
 
     GetAttack()->Shoot(RangedAttackInfo{
         GetMidPointX(), GetMidPointY(), GetTarget()->GetMidPointX(),
-        GetTarget()->GetMidPointY(), props, 18});
+        GetTarget()->GetMidPointY(), props, kDefaultHitAnimationInfo, 18});
 }
 
 void Dog::OnCollide(Collider* collidee) {
