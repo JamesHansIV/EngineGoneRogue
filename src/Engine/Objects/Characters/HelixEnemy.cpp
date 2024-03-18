@@ -32,7 +32,7 @@ void HelixEnemy::Update(float dt) {
 }
 
 void HelixEnemy::Shoot() {
-    Properties const props("weapons", {6, 1, 16, 16}, {GetX(), GetY(), 12, 12});
+    Properties const props("weapons", {5, 1, 16, 16}, {GetX(), GetY(), 12, 12});
 
     GetAttack()->Shoot(RangedAttackInfo{GetMidPointX(), GetMidPointY(),
                                         GetTarget()->GetMidPointX(),

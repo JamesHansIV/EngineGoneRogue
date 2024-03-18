@@ -32,7 +32,7 @@ void Skeleton::Update(float dt) {
 
 void Skeleton::Shoot() {
     Properties const props = {
-        "weapons", {6, 3, 16, 16}, {GetX(), GetY(), 16, 16}};
+        "weapons", {5, 3, 16, 16}, {GetX(), GetY(), 16, 16}};
 
     GetAttack()->Shoot(RangedAttackInfo{GetMidPointX(), GetMidPointY(),
                                         GetTarget()->GetMidPointX(),

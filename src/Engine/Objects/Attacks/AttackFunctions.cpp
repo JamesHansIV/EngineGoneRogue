@@ -2,7 +2,7 @@
 #include "Engine/Objects/Projectiles/HelixBullet.h"
 #include "Engine/Objects/Projectiles/RotatingBullet.h"
 
-const AnimationInfo kDefaultHitAnimationInfo = {"bullet-explosion",
+const AnimationInfo kDefaultHitAnimationInfo = {"enemy-bullet-explosion",
                                                 {0, 0, 32, 32},
                                                 4,
                                                 150};
