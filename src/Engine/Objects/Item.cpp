@@ -10,7 +10,8 @@ const std::unordered_map<ItemType, std::string> Item::kItemTypeToTexture = {
     {ItemType::ArmorEssence, "armor"},
     {ItemType::SwiftBoots, "swift-boots"},
     {ItemType::DodgeCharm, "dodge-charm"},
-    {ItemType::FireRateBoost, "fire-rate"}
+    {ItemType::FireRateBoost, "fire-rate"},
+    {ItemType::ProjectileSpeedBoost, "projectile-speed"}
 };
 
 const std::unordered_map<ItemType, std::string> Item::kItemTypeToDescription = {
@@ -22,8 +23,10 @@ const std::unordered_map<ItemType, std::string> Item::kItemTypeToDescription = {
     {ItemType::ArmorEssence, "Increase your Armor Percentage by 10"},
     {ItemType::SwiftBoots, "Increase your Speed by 20"},
     {ItemType::DodgeCharm, "Increase your Dodge Speed by 1"},
-    {ItemType::FireRateBoost, "Increases Fire Rate of all weapons by 10%"}
+    {ItemType::FireRateBoost, "Increases Fire Rate of all weapons by 10%"},
+    {ItemType::ProjectileSpeedBoost, "Increases Projectile Speed of all weapons by 10%"}
 };
+
 
 const std::unordered_map<ItemType, std::string> Item::kItemTypeToName = {
     {ItemType::PiercingShard, "Piercing Shard"},
@@ -34,7 +37,8 @@ const std::unordered_map<ItemType, std::string> Item::kItemTypeToName = {
     {ItemType::ArmorEssence, "Armor Essence"},
     {ItemType::SwiftBoots, "Swift Boots"},
     {ItemType::DodgeCharm, "Dodge Charm"},
-    {ItemType::FireRateBoost, "Fire Rate Boost"}
+    {ItemType::FireRateBoost, "Fire Rate Boost"},
+    {ItemType::ProjectileSpeedBoost, "Projectile Speed"}
 };
 
 void Item::Apply(Player* player) {
@@ -98,8 +102,15 @@ void Item::Apply(Player* player) {
         case ItemType::FireRateBoost:{
             for(auto *weapon: player->GetPlayerWeapons()){
                 Uint32 const cur_rate = weapon->GetStats()->GetFireRate();
-                Uint32 const new_rate = cur_rate - (cur_rate/10);
+                Uint32 const new_rate = cur_rate - (cur_rate*.1);
                 weapon->GetStats()->SetFireRate(new_rate);
+            }
+        }
+        case ItemType::ProjectileSpeedBoost:{
+            for(auto *weapon: player->GetPlayerWeapons()){
+                Uint32 const cur_speed = weapon->GetStats()->GetProjectileSpeed();
+                Uint32 const new_speed = cur_speed + (cur_speed*.1);
+                weapon->GetStats()->SetProjectileSpeed(new_speed);
             }
         }
         default:

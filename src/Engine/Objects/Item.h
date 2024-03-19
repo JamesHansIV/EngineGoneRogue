@@ -11,7 +11,8 @@ enum class ItemType {
     ArmorEssence,
     SwiftBoots,
     DodgeCharm,
-    FireRateBoost
+    FireRateBoost,
+    ProjectileSpeedBoost
 };
 
 class Player;

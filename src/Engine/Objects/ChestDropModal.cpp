@@ -7,8 +7,8 @@
 const DrawColor kColor{0, 0, 0, 255};
 const DrawColor kTransparentColor { 0, 0, 0, 0};
 
-const int kColumn1Width = 170;
-const int kColumn2Width = 450;
+const int kColumn1Width = 190;
+const int kColumn2Width = 550;
 
 const int kChestTextureHeight = 150;
 const int kChestTextureWidth = 250;

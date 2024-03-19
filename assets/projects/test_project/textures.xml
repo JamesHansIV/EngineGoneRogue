@@ -102,4 +102,8 @@
         <FilePath>../assets/textures/items/red.png</FilePath>
         <ID>fire-rate</ID>
     </Texture> 
+    <Texture type = "base">
+        <FilePath>../assets/textures/items/turquiose.png</FilePath>
+        <ID>projectile-speed</ID>
+    </Texture> 
 </Root>
