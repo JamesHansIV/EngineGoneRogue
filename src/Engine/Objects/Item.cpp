@@ -10,6 +10,7 @@ const std::unordered_map<ItemType, std::string> Item::kItemTypeToTexture = {
     {ItemType::ArmorEssence, "armor"},
     {ItemType::SwiftBoots, "swift-boots"},
     {ItemType::DodgeCharm, "dodge-charm"},
+    {ItemType::FireRateBoost, "fire-rate"}
 };
 
 const std::unordered_map<ItemType, std::string> Item::kItemTypeToDescription = {
@@ -21,6 +22,7 @@ const std::unordered_map<ItemType, std::string> Item::kItemTypeToDescription = {
     {ItemType::ArmorEssence, "Increase your Armor Percentage by 10"},
     {ItemType::SwiftBoots, "Increase your Speed by 20"},
     {ItemType::DodgeCharm, "Increase your Dodge Speed by 1"},
+    {ItemType::FireRateBoost, "Increases Fire Rate of all weapons by 10%"}
 };
 
 const std::unordered_map<ItemType, std::string> Item::kItemTypeToName = {
@@ -32,6 +34,7 @@ const std::unordered_map<ItemType, std::string> Item::kItemTypeToName = {
     {ItemType::ArmorEssence, "Armor Essence"},
     {ItemType::SwiftBoots, "Swift Boots"},
     {ItemType::DodgeCharm, "Dodge Charm"},
+    {ItemType::FireRateBoost, "Fire Rate Boost"}
 };
 
 void Item::Apply(Player* player) {
@@ -91,6 +94,13 @@ void Item::Apply(Player* player) {
             float const new_dodge_speed = player->GetMutableStats().GetDodgeSpeed();
             SDL_Log("Increased dodge speed from %.2f to %.2f", dodge_speed, new_dodge_speed);
             break;
+        }
+        case ItemType::FireRateBoost:{
+            for(auto *weapon: player->GetPlayerWeapons()){
+                Uint32 const cur_rate = weapon->GetStats()->GetFireRate();
+                Uint32 const new_rate = cur_rate - (cur_rate/10);
+                weapon->GetStats()->SetFireRate(new_rate);
+            }
         }
         default:
             break;

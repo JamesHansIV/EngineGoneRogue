@@ -71,7 +71,7 @@ class Weapon : public Collider {
     void Clean() override = 0;
     void Update(float dt) override = 0;
 
-    WeaponStats GetStats() { return m_stats; };
+    virtual WeaponStats* GetStats() { return &m_stats; };
 
     inline bool IsPlayerOwned() { return m_stats.IsPlayerOwned(); }
 

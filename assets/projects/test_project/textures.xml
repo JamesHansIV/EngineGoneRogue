@@ -98,4 +98,8 @@
         <FilePath>../assets/textures/items/purple.png</FilePath>
         <ID>dodge-charm</ID>
     </Texture>  
+    <Texture type = "base">
+        <FilePath>../assets/textures/items/red.png</FilePath>
+        <ID>fire-rate</ID>
+    </Texture> 
 </Root>
