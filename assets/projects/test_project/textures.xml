@@ -66,4 +66,36 @@
         <FilePath>../assets/textures/spritesheets/enemy_bullet_explosion.png</FilePath>
         <ID>enemy-bullet-explosion</ID>
     </Texture>
+    <Texture type = "base">
+        <FilePath>../assets/textures/items/black.png</FilePath>
+        <ID>piercing</ID>
+    </Texture>  
+    <Texture type = "base">
+        <FilePath>../assets/textures/items/blue.png</FilePath>
+        <ID>hp-regen</ID>
+    </Texture>  
+    <Texture type = "base">
+        <FilePath>../assets/textures/items/gold.png</FilePath>
+        <ID>life-steal</ID>
+    </Texture>  
+    <Texture type = "base">
+        <FilePath>../assets/textures/items/green.png</FilePath>
+        <ID>ranged-boost</ID>
+    </Texture>  
+    <Texture type = "base">
+        <FilePath>../assets/textures/items/lime.png</FilePath>
+        <ID>melee-boost</ID>
+    </Texture>  
+    <Texture type = "base">
+        <FilePath>../assets/textures/items/magenta.png</FilePath>
+        <ID>armor</ID>
+    </Texture>  
+    <Texture type = "base">
+        <FilePath>../assets/textures/items/orange.png</FilePath>
+        <ID>swift-boots</ID>
+    </Texture>  
+    <Texture type = "base">
+        <FilePath>../assets/textures/items/purple.png</FilePath>
+        <ID>dodge-charm</ID>
+    </Texture>  
 </Root>

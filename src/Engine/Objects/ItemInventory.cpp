@@ -12,7 +12,7 @@ void ItemInventory::Draw() {
     int column = 0;
     for (const auto& pair : m_items) {
         const Item& item = *pair.second;
-        SDL_Rect const src_rect = {0, 0, 16, 16};
+        SDL_Rect const src_rect = {0, 0, 19, 38};
         auto* item_box = new BoxWithCounter( item.GetCount(),item.GetTexture(), src_rect, kColor, false);
         box_container.AddBox(item_box, 0, column);
         column++;

@@ -34,9 +34,9 @@ void ChestDropModal::Draw()
     box_container.SetColumnWidth(2, kColumn2Width);
     int row = 0;
     for (ItemType const item_t: m_items) {
-        Properties props("", {0, 0, 18, 16}, {0,0, 32, 32}, 0, "");
+        Properties props("", {0, 0, 16, 16}, {0,0, 32, 32}, 0, "");
         Item item(props, item_t);
-        SDL_Rect const src_rect = {0, 0, 16, 16};
+        SDL_Rect const src_rect = {0, 0, 19, 38};
         Box* item_box = new BoxWithTexture(item.GetTextureID(), src_rect,kColor,false);
         Box* item_name = new BoxWithText(item.GetName(), src_rect, kColor, true, TextAlign::KCenter);
         Box* item_description = new BoxWithText(item.GetDescription(), src_rect, kColor, true, TextAlign::KLeft);

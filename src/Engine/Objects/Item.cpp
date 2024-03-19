@@ -2,14 +2,14 @@
 #include "Engine/Objects/Characters/Player.h"
 
 const std::unordered_map<ItemType, std::string> Item::kItemTypeToTexture = {
-    {ItemType::PiercingShard, "sniper"},
-    {ItemType::RegenElixir, "wooden-chest-idle"},
-    {ItemType::LifestealStone, "healthpotion"},
-    {ItemType::RangedBoost, "healthpotion"},
-    {ItemType::MeleeBoost, "wooden-chest-idle"},
-    {ItemType::ArmorEssence, "sniper"},
-    {ItemType::SwiftBoots, "sniper"},
-    {ItemType::DodgeCharm, "sniper"},
+    {ItemType::PiercingShard, "piercing"},
+    {ItemType::RegenElixir, "hp-regen"},
+    {ItemType::LifestealStone, "life-steal"},
+    {ItemType::RangedBoost, "ranged-boost"},
+    {ItemType::MeleeBoost, "melee-boost"},
+    {ItemType::ArmorEssence, "armor"},
+    {ItemType::SwiftBoots, "swift-boots"},
+    {ItemType::DodgeCharm, "dodge-charm"},
 };
 
 const std::unordered_map<ItemType, std::string> Item::kItemTypeToDescription = {
