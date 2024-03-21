@@ -3,6 +3,7 @@
 #include "Engine/HeadsUpDisplay/TimerElement.h"
 #include "Engine/Objects/Characters/Player.h"
 #include "Engine/Objects/ExperienceBar.h"
+#include "Engine/Objects/InventoryComponent.h"
 #include "Engine/Objects/ItemInventory.h"
 #include "Engine/Objects/PlayerStatsComponent.h"
 #include "Engine/Objects/WeaponInventory.h"
@@ -23,4 +24,5 @@ class HUD {
     ItemInventory m_item_inventory;
     ExperienceBar m_experience_bar;
     PlayerStatsComponent m_player_stats_component;
+    InventoryComponent m_inventory_component;
 };

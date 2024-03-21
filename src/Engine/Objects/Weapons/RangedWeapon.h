@@ -36,6 +36,8 @@ class RangedWeapon : public Weapon {
 
     ObjectType GetObjectType() override { return ObjectType::RangedWeapon; }
 
+    RangedWeaponStats* GetStats() override { return &m_stats; };
+
     ~RangedWeapon() override;
 
     Projectile* BuildProjectile();

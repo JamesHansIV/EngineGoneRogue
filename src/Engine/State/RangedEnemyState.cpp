@@ -22,7 +22,7 @@ State* RangedEnemyHandleCollide(RangedEnemy* enemy, Collider* collidee) {
         case ObjectType::MeleeWeapon: {
             auto* melee_weapon = dynamic_cast<class MeleeWeapon*>(collidee);
             return new RangedEnemyIsHit(enemy,
-                                        melee_weapon->GetStats().GetDamage());
+                                        melee_weapon->GetStats()->GetDamage());
             break;
         }
         case ObjectType::Entrance: {

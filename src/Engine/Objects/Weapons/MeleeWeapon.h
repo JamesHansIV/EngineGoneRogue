@@ -28,6 +28,8 @@ class MeleeWeapon : public Weapon {
 
     ObjectType GetObjectType() override { return ObjectType::MeleeWeapon; }
 
+    MeleeWeaponStats* GetStats() override { return &m_stats; };
+
     ~MeleeWeapon() override = default;
 
    private:

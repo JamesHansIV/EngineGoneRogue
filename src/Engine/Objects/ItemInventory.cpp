@@ -3,7 +3,7 @@
 #include "Engine/UI/GridComponent.h"
 
 const DrawColor kColor{0, 0, 0, 255};
-const int kCellHeight = 40;
+const int kCellHeight = 60;
 const int kCellWidth = 50;
 
 void ItemInventory::Draw() {

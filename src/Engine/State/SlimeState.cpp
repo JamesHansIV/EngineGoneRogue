@@ -35,7 +35,7 @@ State* SlimeHandleCollide(Slime* enemy, Collider* collidee) {
             auto* melee_weapon = dynamic_cast<class MeleeWeapon*>(collidee);
             if (melee_weapon->IsPlayerOwned()) {
                 return new SlimeIsHit(enemy,
-                                      melee_weapon->GetStats().GetDamage());
+                                      melee_weapon->GetStats()->GetDamage());
             }
             break;
         }
