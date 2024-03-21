@@ -52,7 +52,7 @@ class Application {
 
    protected:
     std::string m_project_name;
-    std::string m_base_room_id = "room1";
+    std::string m_base_room_id = "room2";
     std::unordered_map<std::string, std::vector<GameObject*>> m_rooms;
     Uint32 m_last_tick;
     bool m_is_paused;

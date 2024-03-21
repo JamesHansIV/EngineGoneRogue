@@ -8,6 +8,7 @@
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Objects/Weapons/Weapon.h"
 #include "Engine/Renderer/Renderer.h"
+#include "Engine/utils/utils.h"
 
 Projectile::Projectile(Properties& props, float speed, float angle,
                        AnimationInfo hitAnimationInfo, bool playerOwned,
@@ -58,8 +59,8 @@ void Projectile::Update(float dt) {
 
 void Projectile::CheckOutOfBounds() {
     if (GetX() < 0.0F || GetY() < 0.0F ||
-        GetX() + this->GetWidth() > Application::Get()->GetWindowWidth() ||
-        GetY() + this->GetHeight() > Application::Get()->GetWindowHeight()) {
+        GetX() + this->GetWidth() > LevelWidth ||
+        GetY() + this->GetHeight() > LevelHeight) {
         m_marked_for_deletion = true;
     }
 }

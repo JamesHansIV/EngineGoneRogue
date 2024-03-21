@@ -17,6 +17,12 @@ Collider::Collider(GameObject* rhs) : GameObject(rhs) {
     m_collision_box.Set(GetX(), GetY(), GetWidth(), GetHeight());
 }
 
+Collider::~Collider() {
+    if (m_rigid_body) {
+        delete m_rigid_body;
+    }
+}
+
 void Collider::UnCollide(Collider* collidee) {
     if (!m_do_un_collide) {
         return;

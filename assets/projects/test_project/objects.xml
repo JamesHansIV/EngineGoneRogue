@@ -5,7 +5,7 @@
     <Object texture_id="player" object_id="player" rotation="0">
         <Types collider="1" player="1"/>
         <SrcRect row="0" col="0" w="16" h="16"/>
-        <DstRect x="0" y="0" w="30" h="30"/>
+        <DstRect x="300" y="300" w="30" h="30"/>
         <CollisionBox x="0" y="0" w="30" h="30"/>
         <Animation>
             <AnimationInfo

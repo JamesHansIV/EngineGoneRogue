@@ -95,7 +95,6 @@ void Game::InitObjects() {
                 helix_enemy_copy =
                     new HelixEnemy(helix_enemy, ranged_enemy_stats);
             }
-            ColliderHandler::GetInstance()->AddCollider(collider);
         }
     }
 }
@@ -104,6 +103,13 @@ Game::Game() {
     SDL_Renderer* renderer = Renderer::GetInstance()->GetRenderer();
 
     m_objects = Application::m_rooms[m_base_room_id];
+
+    Collider* c = nullptr;
+    for (auto* obj : m_objects) {
+        if ((c = dynamic_cast<Collider*>(obj)) != nullptr) {
+            ColliderHandler::GetInstance()->AddCollider(c);
+        }
+    }
 
     InitObjects();
 

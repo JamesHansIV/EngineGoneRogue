@@ -313,6 +313,8 @@ void Editor::SetObjectInfo() {
                               m_current_texture->GetHeight()};
         m_object_info.DstRect = {0, 0, m_current_texture->GetWidth(),
                                  m_current_texture->GetHeight()};
+        m_object_info.CollisionBox = {0, 0, m_object_info.DstRect.w,
+                                      m_object_info.DstRect.h};
     }
 }
 
@@ -424,7 +426,7 @@ void Editor::ShowFileManager() {
 
 void Editor::ShowAddCollider() {
     auto* collider = dynamic_cast<Collider*>(m_current_object);
-    if (collider == nullptr && ImGui::TreeNode("Add CollisionBox")) {
+    if (collider == nullptr && ImGui::TreeNode("Add Collider")) {
 
         ImGui::InputInt("Set collider width", &m_object_info.CollisionBox.w);
 
@@ -528,6 +530,24 @@ void Editor::ShowObjectEditor() {
 
                 for (const auto& obj : m_selected_objects) {
                     DeleteObject(obj);
+                }
+                m_selected_objects.clear();
+            }
+
+            bool addColliders = true;
+            for (auto* obj : m_selected_objects) {
+                auto* c = dynamic_cast<Collider*>(obj);
+                if (c != nullptr) {
+                    addColliders = false;
+                }
+            }
+            if (addColliders &&
+                ImGui::Button("Add Colliders", ImVec2(150, 30))) {
+                Collider* c = nullptr;
+                for (auto* obj : m_selected_objects) {
+                    c = new Collider(obj);
+                    DeleteObject(obj);
+                    m_layers[m_current_layer].push_back(c);
                 }
                 m_selected_objects.clear();
             }
@@ -860,6 +880,8 @@ void Editor::ShowCreateObject() {
                              &m_object_info.DstRect.w, 0, LevelWidth);
             ImGui::SliderInt("Select destination height: ",
                              &m_object_info.DstRect.h, 0, LevelHeight);
+            m_object_info.CollisionBox = {0, 0, m_object_info.DstRect.w,
+                                          m_object_info.DstRect.h};
 
             ObjectType const type = ShowSelectObjectType();
             switch (type) {

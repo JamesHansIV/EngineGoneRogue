@@ -109,7 +109,7 @@ int SaveObjects(const char* filepath, const std::vector<GameObject*>& objects) {
 
         if (auto* collider = dynamic_cast<Collider*>(obj)) {
             WriteColliderInfo(doc, curr_xml_object, collider);
-            types->SetAttribute("Collider", "1");
+            types->SetAttribute("collider", "1");
         }
         root->InsertEndChild(curr_xml_object);
     }
