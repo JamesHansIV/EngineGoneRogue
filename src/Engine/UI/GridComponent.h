@@ -93,7 +93,7 @@ public:
         return start_x;
     }
 
-    void SetGridBorderColor(DrawColor& color)
+    void SetGridBorderColor(const DrawColor& color)
     {
         m_border_color = color;
         m_has_border = true;

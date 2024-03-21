@@ -6,6 +6,7 @@
 
 const DrawColor kColor{0, 0, 0, 255};
 const DrawColor kTransparentColor { 0, 0, 0, 0};
+const DrawColor kBorderColor = {255,255,255,255};
 
 const int kColumn1Width = 190;
 const int kColumn2Width = 550;
@@ -45,8 +46,8 @@ void ChestDropModal::Draw()
         box_container.AddBox(item_description, row, 2);
         row++;
     }
-    DrawColor border_color = {255,255,255,255};
-    box_container.SetGridBorderColor(border_color);
+
+    box_container.SetGridBorderColor(kBorderColor);
     box_container.DrawGrid();
     
     int const chest_x = (window_width - kChestTextureWidth)/4;

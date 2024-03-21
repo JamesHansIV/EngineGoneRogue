@@ -1,21 +1,24 @@
 #include "PlayerStatsComponent.h"
 #include <iomanip>
 #include <sstream>
+#include "Engine/Events/Event.h"
 #include "Engine/UI/GridComponent.h"
 const DrawColor kBoxColor = {0, 0, 0, 255};
+const DrawColor kBorderColor = {255,255,255,255};
 const int kCellWidth = 200;
 const int kCellHeight = 30;
 
 void PlayerStatsComponent::Draw() {
     int row = 0;
 
-    GridComponent stats_grid(static_cast<int>(m_stats.size()), 2, 0, 80,
+    GridComponent stats_grid(static_cast<int>(m_stats.size()), 2, 0, 130,
                              kCellHeight, kCellWidth);
     stats_grid.SetColumnWidth(0, 230);
     stats_grid.SetColumnWidth(1, 100);
+    SDL_Rect const src_rect = {0, 0, 16, 16};
   
     for (const auto& stat : m_stats) {
-        SDL_Rect const src_rect = {0, 0, 16, 16};
+
         auto* box1 = new BoxWithText(stat.first, src_rect, kBoxColor, false, TextAlign::KLeft);
         BoxWithText* box2 = nullptr;
         if (stat.first == "Speed" || stat.first == "DodgeSpeed") {
@@ -33,8 +36,17 @@ void PlayerStatsComponent::Draw() {
         stats_grid.AddBox(box2, row, 1);
         row += 1;
     }
-
+    stats_grid.SetGridBorderColor(kBorderColor);
     stats_grid.DrawGrid();
+
+    GridComponent box_container2(1, 1, 0, 100, kCellHeight, kCellWidth);
+    auto* header = new BoxWithText("Player Stats", src_rect, kBoxColor, false, KCenter);
+    box_container2.AddBox(header, 0, 0);
+    int const total_width = stats_grid.GetColumnWidth(0) + stats_grid.GetColumnWidth(1); 
+    box_container2.SetColumnWidth(0, total_width);
+    box_container2.SetGridBorderColor(kBorderColor);
+    box_container2.DrawGrid();
+    
 }
 
 void PlayerStatsComponent::Update(const Player& player) {
