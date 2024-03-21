@@ -308,8 +308,6 @@ void Renderer::DrawFrame(const std::string& id, int x, int y, int width,
 
 void Renderer::CenterCameraOnObject() {
     if (m_camera_target == nullptr) {
-        m_camera.x = 0;
-        m_camera.y = 0;
         return;
     }
     int const target_x =

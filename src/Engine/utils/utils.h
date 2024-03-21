@@ -5,7 +5,7 @@
 
 enum { ScreenWidth = 1024, ScreenHeight = 768 };
 
-enum { LevelWidth = 1280, LevelHeight = 960 };
+enum { LevelWidth = 4096, LevelHeight = 3072 };
 
 enum { TileSize = 32 };
 

@@ -27,6 +27,7 @@ State* RunningState::HandleEvent(Event* /*event*/) {
 
 void StartState::Enter() {
     Renderer::GetInstance()->SetCameraTarget(nullptr);
+    Renderer::GetInstance()->SetCamera(0, 0);
     Application::Get()->GetAudioManager().SetMusicVolume(80);
     Application::Get()->GetAudioManager().PlayMusic("pause-screen", true);
     timer.Pause();
@@ -208,7 +209,6 @@ State* LevelUpState::HandleEvent(Event* /*event*/) {
     return nullptr;
 }
 
-
 void ChestDropState::Enter() {
     timer.Pause();
     Application::Get()->GetAudioManager().SetMusicVolume(50);
@@ -238,7 +238,6 @@ State* ChestDropState::HandleEvent(Event* event) {
     }
     return nullptr;
 }
-
 
 void ShopState::Enter() {}
 

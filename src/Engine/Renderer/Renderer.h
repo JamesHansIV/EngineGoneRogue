@@ -50,7 +50,7 @@ class Renderer {
 
     Texture* GetTexture(const std::string& id) {
         return m_texture_map.find(id) != m_texture_map.end() ? m_texture_map[id]
-                                                           : nullptr;
+                                                             : nullptr;
     }
 
     void Drop(const std::string& id);
@@ -80,6 +80,15 @@ class Renderer {
 
     void MoveCameraX(float x);
     void MoveCameraY(float y);
+
+    void SetCameraX(float x) { m_camera.x = x; }
+
+    void SetCameraY(float y) { m_camera.y = y; }
+
+    void SetCamera(float x, float y) {
+        m_camera.x = x;
+        m_camera.y = y;
+    }
 
     void CenterCameraOnObject();
 

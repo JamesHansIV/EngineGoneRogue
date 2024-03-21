@@ -1,7 +1,7 @@
 #include "Cursor.h"
-#include "imgui.h"
+#include <iostream>
 #include "Engine/Application/Application.h"
-#include<iostream>
+#include "imgui.h"
 
 Cursor::Cursor() {
     m_width = 24;
@@ -13,7 +13,7 @@ Cursor::Cursor() {
 Cursor::~Cursor() = default;
 
 SDL_Rect Cursor::UpdateAndGetRect() {
-    ImGuiIO const& io = ImGui::GetIO();  
+    ImGuiIO const& io = ImGui::GetIO();
 
     m_cursor_rect.h = m_height * m_scale;
     m_cursor_rect.w = m_width * m_scale;
@@ -23,8 +23,11 @@ SDL_Rect Cursor::UpdateAndGetRect() {
     return m_cursor_rect;
 }
 
-std::string Cursor::GetTextureId(int  /*edit_mode*/) {
-    return m_cursor_type_to_texture_id_map[m_cursor_type];
+std::string Cursor::GetTextureId(int edit_mode) {
+    if (edit_mode == 3) {
+        edit_mode = 0;
+    }
+    return m_cursor_type_to_texture_id_map[static_cast<CursorType>(edit_mode)];
 }
 
 void Cursor::SetCursor(CursorType cursor_type) {
