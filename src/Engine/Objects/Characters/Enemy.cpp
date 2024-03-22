@@ -110,6 +110,5 @@ void Enemy::OnCollide(Collider* collidee) {
 }
 
 void Enemy::Clean() {
-    delete m_animation;
     delete m_health;
 }

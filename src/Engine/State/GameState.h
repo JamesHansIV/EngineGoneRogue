@@ -6,6 +6,7 @@
 #include "Engine/Objects/Characters/Player.h"
 #include "Engine/Objects/ChestDropModal.h"
 #include "Engine/UI/Button.h"
+#include "Engine/UI/StartScreen.h"
 #include "State.h"
 
 class Game;
@@ -58,6 +59,7 @@ class StartState : public GameState {
     StateType GetType() override { return StateType::Start; }
 
    private:
+    StartScreen m_startScreen;
     Button m_button;
 };
 

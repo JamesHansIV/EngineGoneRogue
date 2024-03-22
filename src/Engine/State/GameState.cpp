@@ -37,12 +37,14 @@ void StartState::Exit() {}
 
 void StartState::Draw() {
     GetGame()->DrawObjects();
-    m_button.Draw();
+    m_startScreen.Draw();
+    //m_button.Draw();
 }
 
 State* StartState::Update(float dt) {
     GetGame()->UpdateObjects(dt);
-    m_button.Update();
+    m_startScreen.Update();
+    //m_button.Update();
     return nullptr;
 }
 

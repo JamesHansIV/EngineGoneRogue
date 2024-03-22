@@ -41,6 +41,4 @@ void RangedEnemy::OnCollide(Collider* collidee) {
 void RangedEnemy::Clean() {
     delete m_attack;
     delete m_health;
-    delete m_animation;
-    delete m_current_state;
 }

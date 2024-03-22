@@ -27,6 +27,7 @@ std::string GetFormattedTime() {
 void TimerElement::Draw() {
     const std::string time = GetFormattedTime();
 
+    //TODO: Are we adding a new texture every render?? Maybe this is inefficient
     Texture* timer_texture =
         renderer->AddTextTexture("timer", time, kTimerColor);
     // Timer should be drawn at the top middle of the screen

@@ -7,6 +7,9 @@
 #include "Engine/utils/utils.h"
 #include "SDL2/SDL_rect.h"
 
+const TilePos kDefaultActive = {0, 0, 24, 16};
+const TilePos kDefaultHover = {1, 0, 24, 16};
+
 enum ButtonState {
     ButtonStateNormal = 0,
     ButtonStateHover = 1,
@@ -19,7 +22,9 @@ class Button {
     Button() = default;
 
     Button(SDL_Rect rect, const std::string& text, void (*callback)())
-        : m_shape(rect) {
+        : m_shape(rect),
+          m_active_src(kDefaultActive),
+          m_hover_src(kDefaultHover) {
         m_relative_pos = Position{rect.x, rect.y};
         m_callback = callback;
         m_text = text;
@@ -57,6 +62,12 @@ class Button {
         renderer->Draw(m_text, src_rect, text_shape);
     };
 
+    void Draw(TilePos src) {
+        SDL_Rect src_rect = {src.col * src.w, src.row * src.h, src.w, src.h};
+        Renderer::GetInstance()->Draw(m_texture_id, src_rect, m_dst, 0,
+                                      nullptr);
+    }
+
     void Update() {
         Vector2D const mouse_pos{static_cast<float>(InputChecker::GetMouseX()),
                                  static_cast<float>(InputChecker::GetMouseY())};
@@ -73,6 +84,10 @@ class Button {
     };
 
    private:
+    std::string m_texture_id;
+    TilePos m_active_src;
+    TilePos m_hover_src;
+    SDL_Rect m_dst;
     Position m_relative_pos;
     SDL_Rect m_shape;
     std::string m_text;

@@ -106,4 +106,8 @@
         <FilePath>../assets/textures/items/turquiose.png</FilePath>
         <ID>projectile-speed</ID>
     </Texture> 
+    <Texture type = "base">
+        <FilePath>../assets/textures/start_background.png</FilePath>
+        <ID>start-background</ID>
+    </Texture>
 </Root>

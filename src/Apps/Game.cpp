@@ -339,6 +339,14 @@ Game::~Game() {
         obj->Clean();
         delete obj;
     }
+    delete slime_copy;
+    delete dog_copy;
+    delete ring_shot_enemy_copy;
+    delete mage_copy;
+    delete dog_copy;
+    delete skeleton_copy;
+    delete goblin_copy;
+    delete helix_enemy_copy;
     delete m_weapon_inventory;
     delete m_game_event_manager;
     delete m_heads_up_display;

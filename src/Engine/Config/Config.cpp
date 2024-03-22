@@ -97,6 +97,9 @@ int SaveObjects(const char* filepath, const std::vector<GameObject*>& objects) {
     tinyxml2::XMLElement* type;
 
     for (auto* obj : objects) {
+        if (obj->GetObjectType() == ObjectType::Enemy) {
+            continue;
+        }
         curr_xml_object = doc.NewElement("Object");
         types = doc.NewElement("Types");
         curr_xml_object->InsertEndChild(types);
@@ -382,6 +385,7 @@ GameObject* BuildRangedEnemy(tinyxml2::XMLElement* types,
 GameObject* BuildObjectOnType(tinyxml2::XMLElement* types,
                               tinyxml2::XMLElement* xmlObj, GameObject* obj) {
     GameObject* new_obj = obj;
+    GameObject* to_delete = obj;
 
     if (types->Attribute("collider") != nullptr) {
         new_obj = LoadCollider(xmlObj, new_obj);
@@ -391,14 +395,19 @@ GameObject* BuildObjectOnType(tinyxml2::XMLElement* types,
 
     if (types->Attribute("player") != nullptr) {
         SDL_Log("Adding new player");
+        to_delete = new_obj;
         new_obj = new Player(static_cast<Collider*>(new_obj));
+
+        delete to_delete;
         return new_obj;
     }
 
     if (types->Attribute("slime") != nullptr) {
         EnemyStats const stats =
             GetEnemyStats(xmlObj->FirstChildElement("EnemyStats"));
+        to_delete = new_obj;
         new_obj = new Slime(static_cast<Collider*>(new_obj), stats);
+        delete to_delete;
     }
 
     if (types->Attribute("ranged_enemy") != nullptr) {

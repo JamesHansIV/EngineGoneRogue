@@ -15,7 +15,14 @@ GameObject::GameObject(GameObject* rhs) {
     }
 }
 
-GameObject::~GameObject() = default;
+GameObject::~GameObject() {
+    if (m_animation == nullptr) {
+        delete m_animation;
+    }
+    if (m_current_state == nullptr) {
+        delete m_current_state;
+    }
+}
 
 void GameObject::Draw() {
     if (m_animation != nullptr) {

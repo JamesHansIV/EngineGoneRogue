@@ -53,7 +53,5 @@ void Slime::OnCollide(Collider* collidee) {
 }
 
 void Slime::Clean() {
-    delete m_animation;
-    delete m_current_state;
     delete m_health;
 }
