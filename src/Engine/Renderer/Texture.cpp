@@ -62,6 +62,7 @@ Texture::Texture(const std::string& text, SDL_Color text_color,
 
     m_id = std::move(id);
     m_texture = texture;
+    m_surface = surface;
     m_width = surface->w;
     m_height = surface->h;
     m_object_count = 0;

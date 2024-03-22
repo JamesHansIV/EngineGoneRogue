@@ -33,7 +33,7 @@ class Renderer {
 
     SDL_Renderer* GetRenderer() { return m_renderer; }
 
-    std::vector<std::string>& GetTextureIDs() { return m_texture_i_ds; }
+    std::vector<std::string>& GetTextureIDs() { return m_texture_ids; }
 
     void Render();
     void RenderClear();
@@ -112,7 +112,7 @@ class Renderer {
     SDL_Renderer* m_renderer;
     SDL_Rect m_camera;
     std::map<std::string, Texture*> m_texture_map;
-    std::vector<std::string> m_texture_i_ds;
+    std::vector<std::string> m_texture_ids;
     std::set<std::string> m_filepaths;
     static Renderer* m_instance;
     GameObject* m_camera_target;
