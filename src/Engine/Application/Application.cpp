@@ -192,11 +192,10 @@ void Application::Run() {
         auto frame_time = static_cast<double>(
             new_time / 1000.0F - static_cast<double>(m_last_tick) / 1000.0F);
         m_last_tick = static_cast<Uint32>(new_time);
-        // Necessary for slow computers
-        // Todo: implement this if slowness ever becomes an issue.
-        //if (frame_time > 0.25F) {
-        //    frame_time = 0.25F;
-        //}
+
+        if (frame_time > 0.25F) {
+            frame_time = 0.25F;
+        }
 
         accumulator += frame_time;
         while (accumulator >= kDt) {

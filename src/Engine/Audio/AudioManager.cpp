@@ -154,4 +154,8 @@ AudioManager::~AudioManager() {
     for (auto& music : m_music) {
         Mix_FreeMusic(music.second);
     }
+
+    for (auto& sound : m_sound) {
+        Mix_FreeChunk(sound.second);
+    }
 }
