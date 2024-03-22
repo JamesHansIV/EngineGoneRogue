@@ -153,9 +153,13 @@ void AudioManager::ResumeMusic() {
 AudioManager::~AudioManager() {
     for (auto& music : m_music) {
         Mix_FreeMusic(music.second);
+        music.second = nullptr;
     }
 
     for (auto& sound : m_sound) {
         Mix_FreeChunk(sound.second);
+        sound.second = nullptr;
     }
+
+    Mix_Quit();
 }
