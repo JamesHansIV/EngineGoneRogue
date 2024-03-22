@@ -16,6 +16,7 @@ Texture::Texture(const std::string& filename, std::string id) {
         throw std::runtime_error("Failed to create texture from surface");
     }
 
+    m_surface = surface;
     m_id = std::move(id);
     m_texture = texture;
     m_width = surface->w;
@@ -68,4 +69,5 @@ Texture::Texture(const std::string& text, SDL_Color text_color,
 
 Texture::~Texture() {
     SDL_DestroyTexture(m_texture);
+    SDL_FreeSurface(m_surface);
 }

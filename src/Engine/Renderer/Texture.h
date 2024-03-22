@@ -34,5 +34,6 @@ class Texture {
     int m_object_count;
     int m_width;
     int m_height;
+    SDL_Surface* m_surface;
     std::string m_cur_text;
 };
