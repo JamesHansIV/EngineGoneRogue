@@ -350,6 +350,7 @@ Game::~Game() {
     delete m_weapon_inventory;
     delete m_game_event_manager;
     delete m_heads_up_display;
+    delete m_state;
     delete ProjectileManager::GetInstance();
     SDL_FreeCursor(SDL_GetCursor());
 }
