@@ -6,23 +6,12 @@
 #include "Engine/Timer/Timer.h"
 #include "SDL2/SDL_render.h"
 
-Animation::Animation(Animation& rhs) {
-    m_current_animation_id = rhs.m_current_animation_id;
-    m_info = rhs.m_info;
+Animation::Animation(Animation* rhs) {
+    m_current_animation_id = rhs->m_current_animation_id;
+    m_info = rhs->m_info;
 
-    for (const auto& item : rhs.m_animations) {
-        SDL_Log("copying %s", item.first.c_str());
-        SDL_Log("info: %s, %d, %d", item.second.TextureID.c_str(),
-                item.second.FrameCount, item.second.AnimationSpeed);
+    m_animations = rhs->m_animations;
 
-        AnimationInfo const info = {
-            item.second.TextureID,      item.second.Tile,
-            item.second.FrameCount,     item.second.AnimationSpeed,
-            item.second.Flip,           item.second.Loop,
-            item.second.KeyFramesStart, item.second.KeyFramesEnd};
-
-        m_animations[item.first] = info;
-    }
     m_ended = false;
     m_last_update_time = 0;
     m_sprite_frame = 0;

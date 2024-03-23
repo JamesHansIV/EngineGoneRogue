@@ -219,6 +219,15 @@ bool Application::Clean() {
     Renderer::GetInstance()->Destroy();
     delete Renderer::GetInstance();
 
+    for (const auto it : m_rooms) {
+        if (it.first == m_base_room_id) {
+            continue;
+        }
+        for (auto* obj : it.second) {
+            delete obj;
+        }
+    }
+
     SDL_DestroyWindow(m_window);
     TTF_Quit();
     IMG_Quit();

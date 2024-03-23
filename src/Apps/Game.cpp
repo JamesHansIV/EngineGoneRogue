@@ -347,6 +347,7 @@ Game::~Game() {
     delete skeleton_copy;
     delete goblin_copy;
     delete helix_enemy_copy;
+    delete m_item_manager;
     delete m_weapon_inventory;
     delete m_game_event_manager;
     delete m_heads_up_display;

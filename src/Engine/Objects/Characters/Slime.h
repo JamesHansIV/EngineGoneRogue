@@ -7,6 +7,9 @@ class Slime : public Enemy {
     explicit Slime(Properties& props, const EnemyStats& stats,
                    bool split = false);
     Slime(Collider* rhs, EnemyStats stats, bool split = false);
+
+    ~Slime();
+
     void Init();
 
     void Draw() override;

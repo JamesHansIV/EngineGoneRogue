@@ -13,6 +13,16 @@ Slime::Slime(Collider* rhs, EnemyStats stats, bool split)
     Init();
 }
 
+Slime::~Slime() {
+    if (m_health != nullptr) {
+        delete m_health;
+    }
+    if (m_current_state != nullptr) {
+        delete m_current_state;
+        m_current_state = nullptr;
+    }
+}
+
 void Slime::Init() {
     SetHealth(new Health(m_stats.health));
 
@@ -52,6 +62,4 @@ void Slime::OnCollide(Collider* collidee) {
     }
 }
 
-void Slime::Clean() {
-    delete m_health;
-}
+void Slime::Clean() {}

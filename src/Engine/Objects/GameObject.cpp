@@ -11,15 +11,15 @@ GameObject::GameObject(GameObject* rhs) {
     m_marked_for_deletion = false;
 
     if (rhs->m_animation != nullptr) {
-        m_animation = new Animation(*rhs->m_animation);
+        m_animation = new Animation(rhs->m_animation);
     }
 }
 
 GameObject::~GameObject() {
-    if (m_animation == nullptr) {
+    if (m_animation != nullptr) {
         delete m_animation;
     }
-    if (m_current_state == nullptr) {
+    if (m_current_state != nullptr) {
         delete m_current_state;
     }
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include <SDL2/SDL.h>
+#include <map>
 #include <string>
 #include <unordered_map>
 #include <utility>
@@ -21,7 +22,9 @@ class Animation {
    public:
     Animation() : m_info({"", {0, 0, 0, 0}, 0, 0, SDL_FLIP_NONE, false}) {}
 
-    Animation(Animation& rhs);
+    Animation(Animation* rhs);
+
+    ~Animation() = default;
 
     void Update();
     void Draw(const Rect& dstRect, float angle = 0.0F);
@@ -48,11 +51,11 @@ class Animation {
 
     std::string GetAnimationID() { return m_current_animation_id; }
 
-    std::unordered_map<std::string, AnimationInfo> GetAnimations() {
+    std::map<std::string, AnimationInfo> GetAnimations() {
         return m_animations;
     }
 
-    std::unordered_map<std::string, AnimationInfo> GetAnimationInfo() {
+    std::map<std::string, AnimationInfo> GetAnimationInfo() {
         return m_animations;
     }
 
@@ -91,7 +94,7 @@ class Animation {
     }
 
    private:
-    std::unordered_map<std::string, AnimationInfo> m_animations;
+    std::map<std::string, AnimationInfo> m_animations;
     AnimationInfo m_info;
     std::string m_current_animation_id;
     int m_sprite_frame{};

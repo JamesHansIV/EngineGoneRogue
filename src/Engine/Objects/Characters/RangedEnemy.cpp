@@ -3,7 +3,18 @@
 RangedEnemy::RangedEnemy(Collider* rhs, RangedEnemyStats stats)
     : Enemy(rhs, stats), m_stats(stats) {}
 
-RangedEnemy::~RangedEnemy() = default;
+RangedEnemy::~RangedEnemy() {
+    if (m_attack != nullptr) {
+        delete m_attack;
+    }
+    if (m_health != nullptr) {
+        delete m_health;
+    }
+    if (m_current_state != nullptr) {
+        delete m_current_state;
+        m_current_state = nullptr;
+    }
+}
 
 void RangedEnemy::Draw() {
     m_current_state->Draw();
@@ -38,7 +49,4 @@ void RangedEnemy::OnCollide(Collider* collidee) {
     }
 }
 
-void RangedEnemy::Clean() {
-    delete m_attack;
-    delete m_health;
-}
+void RangedEnemy::Clean() {}
