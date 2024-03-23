@@ -211,6 +211,7 @@ void Application::Run() {
             fps++;
         }
     }
+
     Clean();
 }
 
