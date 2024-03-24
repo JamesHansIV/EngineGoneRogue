@@ -190,8 +190,8 @@ void Game::GenerateRandomEnemyIfNeeded() {
 }
 
 void Game::GenerateRandomEnemy() {
-    float const generated_x = rand() % 500 + 200;
-    float const generated_y = rand() % 300 + 20;
+    float const generated_x = rand() % 1500 + 200;
+    float const generated_y = rand() % 1800 + 20;
 
     // Generate random enemy type
     int const enemy_type = rand() % 7;
