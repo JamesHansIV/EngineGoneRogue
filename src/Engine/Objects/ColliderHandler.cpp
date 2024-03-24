@@ -142,10 +142,20 @@ void ColliderHandler::HandleCollisions() {
             }
         }
     }
+    m_colliders.clear();
 }
 
 void ColliderHandler::AddCollider(Collider* collider) {
-    m_colliders.push_back(collider);
+    if (collider == nullptr) {
+        SDL_Log("collider %s was nullptr", collider->GetID().c_str());
+        assert(false);
+    }
+    const Rect r = collider->GetDstRect();
+    const SDL_Rect camera = Renderer::GetInstance()->GetCamera();
+    if (CheckCollision(r, {static_cast<float>(camera.x),
+                           static_cast<float>(camera.y), camera.w, camera.h})) {
+        m_colliders.push_back(collider);
+    }
 }
 
 void ColliderHandler::RemoveCollider(Collider* collider) {

@@ -26,16 +26,11 @@ class Game : public Application {
 
     void ChangeState(State* state);
 
-    std::vector<GameObject*>::iterator GetObjects() {
-        return m_objects.begin();
-    }
-
     ~Game() override;
 
    private:
     void InitObjects();
     State* m_state;
-    std::vector<GameObject*> m_objects;
     WeaponInventory* m_weapon_inventory;
     int m_tick = 0;
     Uint32 m_last_enemy_spawn_time = 0;

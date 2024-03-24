@@ -80,7 +80,7 @@ bool Application::LoadCharacters(const char* projectPath) {
             continue;
         }
         SDL_Log("adding obj %s", obj->GetID().c_str());
-        m_rooms[m_base_room_id].push_back(obj);
+        m_objects.push_back(static_cast<Collider*>(obj));
     }
 
     return true;
@@ -92,6 +92,12 @@ bool Application::LoadRooms(const char* projectPath) {
 
     std::string rooms_path = projectPath;
     rooms_path += "/rooms";
+
+    std::string base_room_path = rooms_path + "/" + m_base_room_id + ".xml";
+    m_tiles = LoadObjects(base_room_path.c_str());
+
+    return true;
+
     dp = opendir(rooms_path.c_str());
     if (dp == nullptr) {
         perror("Rooms path does not exist");

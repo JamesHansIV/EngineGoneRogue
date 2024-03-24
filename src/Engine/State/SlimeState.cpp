@@ -323,7 +323,6 @@ State* SlimeDead::Update(float /*dt*/) {
         if (!GetEnemy()->IsSplit()) {
             SlimeSplit(GetEnemy());
         }
-        ColliderHandler::GetInstance()->RemoveCollider(GetEnemy());
         GetEnemy()->MarkForDeletion();
     }
     return nullptr;

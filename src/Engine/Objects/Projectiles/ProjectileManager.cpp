@@ -20,7 +20,6 @@ void ProjectileManager::AddProjectile(Projectile* projectile) {
 
 p_iterator ProjectileManager::RemoveProjectile(Projectile* projectile,
                                                p_iterator it) {
-    ColliderHandler::GetInstance()->RemoveCollider(projectile);
     (projectile)->Clean();
     delete projectile;
     return m_projectiles.erase(it);
@@ -39,6 +38,7 @@ void ProjectileManager::UpdateProjectiles(float dt) {
         if ((projectile)->MarkedForDeletion()) {
             it = RemoveProjectile(projectile, it);
         } else {
+            ColliderHandler::GetInstance()->AddCollider(projectile);
             it++;
         }
     }

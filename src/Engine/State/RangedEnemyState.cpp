@@ -276,7 +276,6 @@ void RangedEnemyDead::Exit() {}
 
 State* RangedEnemyDead::Update(float /*dt*/) {
     if (GetEnemy()->GetAnimation()->Ended()) {
-        ColliderHandler::GetInstance()->RemoveCollider(GetEnemy());
         GetEnemy()->MarkForDeletion();
     }
     return nullptr;

@@ -54,6 +54,8 @@ class Application {
     std::string m_project_name;
     std::string m_base_room_id = "room2";
     std::unordered_map<std::string, std::vector<GameObject*>> m_rooms;
+    std::vector<GameObject*> m_objects;
+    std::vector<GameObject*> m_tiles;
     Uint32 m_last_tick;
     bool m_is_paused;
     bool m_has_focus;
