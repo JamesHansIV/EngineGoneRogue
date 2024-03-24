@@ -115,7 +115,7 @@ void Player::Update(float dt) {
         ChangeState(state);
     }
 
-    if (timer.GetTicks() - m_last_health_regen > 1000) {
+    if (timer.GetTicks() - m_last_health_regen > 10000) {
         m_last_health_regen = timer.GetTicks();
         m_health->IncreaseHealth(m_stats->GetHPRegenRate());
     }
