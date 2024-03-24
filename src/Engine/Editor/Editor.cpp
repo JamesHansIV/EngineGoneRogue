@@ -964,33 +964,33 @@ void Editor::ShowObjectManager() {
 }
 
 void Editor::Update(float /*dt*/) {
-    // Now includes checks for previous keys
+    if (!m_IsInputCapturedByImGUI) {
+        // basing input off of editor acction allows us to use bindings and easier rebinds in the future
+        if (m_key_map->CheckInputs(EditorAction::PanCameraUp)) {
+            Renderer::GetInstance()->MoveCameraY(-10.0F);
+        }
+        if (m_key_map->CheckInputs(EditorAction::PanCameraDown)) {
+            Renderer::GetInstance()->MoveCameraY(10.0F);
+        }
+        if (m_key_map->CheckInputs(EditorAction::PanCameraLeft)) {
+            Renderer::GetInstance()->MoveCameraX(-10.0F);
+        }
+        if (m_key_map->CheckInputs(EditorAction::PanCameraRight)) {
+            Renderer::GetInstance()->MoveCameraX(10.0F);
+        }
 
-    // basing input off of editor acction allows us to use bindings and easier rebinds in the future
-    if (m_key_map->CheckInputs(EditorAction::PanCameraUp)) {
-        Renderer::GetInstance()->MoveCameraY(-10.0F);
-    }
-    if (m_key_map->CheckInputs(EditorAction::PanCameraDown)) {
-        Renderer::GetInstance()->MoveCameraY(10.0F);
-    }
-    if (m_key_map->CheckInputs(EditorAction::PanCameraLeft)) {
-        Renderer::GetInstance()->MoveCameraX(-10.0F);
-    }
-    if (m_key_map->CheckInputs(EditorAction::PanCameraRight)) {
-        Renderer::GetInstance()->MoveCameraX(10.0F);
-    }
+        // Check and handle tool selection / deselection via keybinds
+        // the EditorAction param is the result of a satisfied keybind input, with the EditMode param being the tool selection
+        CheckForToolSelection(EditorAction::EnterDrawTool, EditMode::DRAW);
+        CheckForToolSelection(EditorAction::EnterEraseTool, EditMode::ERASE);
 
-    // Check and handle tool selection / deselection via keybinds
-    // the EditorAction param is the result of a satisfied keybind input, with the EditMode param being the tool selection
-    CheckForToolSelection(EditorAction::EnterDrawTool, EditMode::DRAW);
-    CheckForToolSelection(EditorAction::EnterEraseTool, EditMode::ERASE);
+        // Tool deselection
+        if (m_key_map->CheckInputs(EditorAction::ExitCurrentTool)) {
+            m_edit_state.EditMode = EditMode::NONE;
+        }
 
-    // Tool deselection
-    if (m_key_map->CheckInputs(EditorAction::ExitCurrentTool)) {
-        m_edit_state.EditMode = EditMode::NONE;
+        InputChecker::SetPrevFrameKeys();
     }
-
-    InputChecker::SetPrevFrameKeys();
 }
 
 void Editor::Render() {
@@ -1256,9 +1256,12 @@ std::pair<int, int> Editor::PixelToTilePos(float x, float y) {
 void Editor::Events() {
     SDL_Event event;
     while (SDL_PollEvent(&event) != 0) {
+        m_IsInputCapturedByImGUI = false;
+
         ImGui_ImplSDL2_ProcessEvent(&event);
         ImGuiIO const& io = ImGui::GetIO();
         if (io.WantCaptureKeyboard || io.WantCaptureMouse) {
+            m_IsInputCapturedByImGUI = true;
             return;
         }
         switch (event.type) {

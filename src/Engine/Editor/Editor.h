@@ -103,6 +103,7 @@ class Editor : public Application {
     std::vector<std::vector<GameObject*>> m_layers;
     std::set<int> m_hidden_layers;
     int m_current_layer{0};
+    bool m_IsInputCapturedByImGUI = false;
 
 
     void CheckForToolSelection(EditorAction editor_action, EditMode edit_mode);
