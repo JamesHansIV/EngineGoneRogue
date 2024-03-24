@@ -77,6 +77,8 @@ std::unordered_map<EditorAction, Bind> KeyMap::default_bindings = {
     {EditorAction::EXIT_CURRENT_TOOL, CreateBind(EditorAction::EXIT_CURRENT_TOOL, InputType::LATCH, std::vector<SDL_KeyCode>{SDLK_ESCAPE})},
     {EditorAction::ENTER_DRAW_TOOL, CreateBind(EditorAction::ENTER_DRAW_TOOL, InputType::LATCH, std::vector<SDL_KeyCode>{SDLK_d})}, 
     {EditorAction::ENTER_ERASE_TOOL, CreateBind(EditorAction::ENTER_ERASE_TOOL, InputType::LATCH, std::vector<SDL_KeyCode>{SDLK_e})},
+    {EditorAction::ENTER_TILE_SELECT_TOOL, CreateBind(EditorAction::ENTER_TILE_SELECT_TOOL, InputType::LATCH, std::vector<SDL_KeyCode>{SDLK_t})},
+    {EditorAction::ENTER_SELECTION_MOVE_TOOL, CreateBind(EditorAction::ENTER_SELECTION_MOVE_TOOL, InputType::LATCH, std::vector<SDL_KeyCode>{SDLK_m})},
     
     // Camera controls
     {EditorAction::PAN_CAMERA_DOWN, CreateBind(EditorAction::PAN_CAMERA_DOWN, InputType::CONTINUOUS, std::vector<SDL_KeyCode>{SDLK_DOWN})},
@@ -105,6 +107,7 @@ std::unordered_set<SDL_KeyCode> KeyMap::InitModifierKeys() {
 }
 
 bool KeyMap::CheckInputs(EditorAction action) {
+
     Bind const bind = m_Bindings_Map[action];
 
     for (SDL_KeyCode const key : bind.keys) {
@@ -145,8 +148,8 @@ bool KeyMap::CheckInputs(EditorAction action) {
         }
     }
 
-    // if (bind.input_type != InputType::CONTINUOUS)
-        // std::cout << "ACTION " << action << " SUCCCESS\n";
+    if (bind.input_type != InputType::CONTINUOUS)
+        std::cout << "ACTION " << action << " SUCCCESS\n";
     return true;
 }
 

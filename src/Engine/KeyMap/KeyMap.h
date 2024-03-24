@@ -17,6 +17,7 @@ enum class EditorAction {
     EXIT_CURRENT_TOOL, 
     ENTER_DRAW_TOOL, 
     ENTER_ERASE_TOOL,
+    ENTER_TILE_SELECT_TOOL,
     PAN_CAMERA_UP,
     PAN_CAMERA_RIGHT,
     PAN_CAMERA_LEFT, 
@@ -24,7 +25,8 @@ enum class EditorAction {
     COPY_SELECTION,
     PASTE_SELECTION,
     UNDO_ACTION,
-    REDO_ACTION
+    REDO_ACTION,
+    ENTER_SELECTION_MOVE_TOOL
 };
 
 struct Bind {
