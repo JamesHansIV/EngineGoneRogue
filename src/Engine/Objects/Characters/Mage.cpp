@@ -32,14 +32,12 @@ void Mage::Update(float dt) {
 }
 
 void Mage::Shoot() {
-    RotatingBullet* bullet;
-
     Properties const props = {
         "weapons", {5, 1, 16, 16}, {GetX(), GetY(), 12, 12}};
 
     GetAttack()->Shoot(RangedAttackInfo{
         GetMidPointX(), GetMidPointY(), GetTarget()->GetMidPointX(),
-        GetTarget()->GetMidPointY(), props, kDefaultHitAnimationInfo, 1,
+        GetTarget()->GetMidPointY(), props, kDefaultHitAnimationInfo, 2,
         m_bullet_count});
 }
 

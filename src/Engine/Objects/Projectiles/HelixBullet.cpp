@@ -22,6 +22,10 @@ void HelixBullet::Draw() {
 
 void HelixBullet::Update(float /*dt*/) {
     if (Hit()) {
+        m_animation->Update();
+        if (m_animation && m_animation->Ended()) {
+            m_marked_for_deletion = true;
+        }
         return;
     }
     m_t_pos.X += GetSpeed();

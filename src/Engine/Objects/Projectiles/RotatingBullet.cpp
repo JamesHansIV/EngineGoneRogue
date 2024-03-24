@@ -18,6 +18,10 @@ void RotatingBullet::Draw() {
 
 void RotatingBullet::Update(float /*dt*/) {
     if (Hit()) {
+        m_animation->Update();
+        if (m_animation && m_animation->Ended()) {
+            m_marked_for_deletion = true;
+        }
         return;
     }
     m_center = m_center + GetVelocity();
