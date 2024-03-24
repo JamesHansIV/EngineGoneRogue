@@ -56,6 +56,7 @@ struct EditState {
     bool IsEditing = false;
     float PrevX = -1;
     float PrevY = -1;
+    TileCoords PrevCoords {};
 };
 
 class Editor : public Application {

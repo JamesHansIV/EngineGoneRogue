@@ -1055,6 +1055,7 @@ GameObject* Editor::GetObjectUnderMouse() {
 
 void Editor::OnMouseClicked(SDL_Event& event) {
     m_MouseInputOrigin = GetMouseTilePos();
+    m_EditState.PrevCoords = m_MouseInputOrigin;
 
     switch(m_EditState.EditMode) {
         case EditMode::DRAW:
@@ -1098,6 +1099,9 @@ void Editor::OnMouseMoved(SDL_Event& event) {
             default:
                 throw(std::runtime_error("No EditMode assigned to m_Editstate"));
         }
+        m_EditState.PrevCoords = GetMouseTilePos();
+        if (m_EditState.EditMode != EditMode::NONE)
+            m_EditState.IsEditing = true;
     }
 }
 
@@ -1121,9 +1125,9 @@ void Editor::OnMouseUp(SDL_Event& event) {
             break;
         default:
             throw(std::runtime_error("No EditMode assigned to m_Editstate"));
-
-        m_EditState.IsEditing = false;
     }
+    m_EditState.IsEditing = false;
+    m_EditState.PrevCoords = GetMouseTilePos();
 }
 
 void Editor::SnapToGrid(float x, float y, GameObject* obj) {
@@ -1214,7 +1218,6 @@ bool Editor::SelectTile(int row, int col) {
             selectedOrDeselectedATile = true;
 
             if (m_SelectedObjects.contains(obj)) {
-                std::cout << "isediting " << m_EditState.IsEditing << std::endl;
                 if (!m_EditState.IsEditing) {
                     m_SelectedObjects.erase(obj);                    
                 }
@@ -1293,9 +1296,16 @@ void Editor::HandleNoToolActions(bool mouse_moved, SDL_Event& event) {
         m_MouseInputOrigin = mouse_tile_coords;        
     }
 
-    if (event.button.type == SDL_MOUSEBUTTONUP) {     
+    if (event.button.type == SDL_MOUSEBUTTONUP) {
+        bool clickedEmptyTile = false;
+
+        // toggle tile selection
         if (m_MouseInputOrigin == mouse_tile_coords)
-            SelectTile(mouse_tile_coords.row, mouse_tile_coords.col);
+            clickedEmptyTile = !SelectTile(mouse_tile_coords.row, mouse_tile_coords.col);
+
+        // deslect all
+        if (clickedEmptyTile)
+            m_SelectedObjects.clear();
 
         m_EditState.IsEditing = false;
     }
@@ -1305,12 +1315,17 @@ void Editor::HandleNoToolActions(bool mouse_moved, SDL_Event& event) {
 void Editor::HandleTileSelectAction(bool mouse_moved, SDL_Event& event) {
     // update if needed
     if (m_EditState.EditMode != EditMode::TILE_SELECT)
-        UpdateEditMode(EditMode::DRAG_MOVE, true);
+        UpdateEditMode(EditMode::TILE_SELECT, true);
 
     TileCoords mouse_tile_coords = GetMouseTilePos();
-    bool foundObj = SelectTile(mouse_tile_coords.row, mouse_tile_coords.col);
+    // std::cout << "prev " << m_EditState.PrevCoords.col << ", " << m_EditState.PrevCoords.row 
+        // << "  \tcurr " << mouse_tile_coords.col <<  ", " << mouse_tile_coords.row 
+        // << "  \tisediting " << m_EditState.IsEditing << std::endl;
+    if (m_EditState.PrevCoords == mouse_tile_coords && m_EditState.IsEditing)
+        return;
 
     // if found nothing deselect all && change edit mode
+    bool foundObj = SelectTile(mouse_tile_coords.row, mouse_tile_coords.col);
     if (!foundObj && !mouse_moved) {
         m_SelectedObjects.clear();
         StopEditing();
