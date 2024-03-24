@@ -1,5 +1,6 @@
 #pragma once
-
+#include <vector>
+#include <unordered_map>
 #include <string>
 #include "SDL2_mixer/SDL_mixer.h"
 
