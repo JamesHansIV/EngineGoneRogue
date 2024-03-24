@@ -237,6 +237,9 @@ Player::~Player() {
     delete m_health;
     delete m_current_state;
     delete m_animation;
+    m_animation = nullptr;
+    m_current_state = nullptr;
+    m_health = nullptr;
     for (auto& weapon : m_weapons) {
         delete weapon;
     }
