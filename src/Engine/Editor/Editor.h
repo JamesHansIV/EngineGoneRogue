@@ -11,13 +11,20 @@
 #include "Engine/Cursors/Cursor.h"
 
 #include "Engine/Editor/EditMode.h"
+#include "Engine/utils/utils.h"
 
 #include <tuple>
 
 struct TileCoords {
-    int row;
-    int col;
+    int row{}, col{};
 
+    bool IsInBounds() {
+        return !(row < 0 || col < 0 || row >= LEVEL_ROWS || col >= LEVEL_COLS);
+    }
+
+    bool operator()(const TileCoords& coords) const {
+        return std::hash<int>()(coords.row) ^ std::hash<int>()(coords.col);
+    }
 
     bool operator==(const TileCoords& rhs) const {
         return (row == rhs.row && col == rhs.col);
@@ -77,6 +84,7 @@ class Editor : public Application {
     static void SnapToGrid(float x, float y, GameObject* obj);
     std::pair<int, int>PixelToTilePos(float x, float y);
     TileCoords PixelToTileCoords(float x, float y);
+    std::pair<float, float>TileCoordsToPixels(TileCoords coords); // returns {x,y}
 
     GameObject* GetObjectUnderMouse();
 
@@ -137,10 +145,12 @@ class Editor : public Application {
     void HandleNoToolActions(bool mouse_moved, SDL_Event& event); // handles logic when editmode is none
     void HandleTileSelectAction(bool mouse_moved,  SDL_Event& event);
     void HandleDragMoveAction(SDL_Event& event);
+    void HandlePaintBucketAction(SDL_Event& event);
 
     // action handler helpers
     bool SelectTile(int x, int y); // returns true if selection is made, false if no selection is made, x & y are tile coords
     bool IsMouseOverASelectedTile (TileCoords coords);
+    bool IsTileEmpty(TileCoords coords);
     void StopEditing();
     void UpdateEditMode(EditMode mode, bool isEditing);
 

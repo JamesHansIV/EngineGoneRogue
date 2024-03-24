@@ -26,7 +26,8 @@ enum class EditorAction {
     PASTE_SELECTION,
     UNDO_ACTION,
     REDO_ACTION,
-    ENTER_SELECTION_MOVE_TOOL
+    ENTER_SELECTION_MOVE_TOOL,
+    ENTER_PAINT_BUCKET_TOOL,
 };
 
 struct Bind {

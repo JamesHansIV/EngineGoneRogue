@@ -10,7 +10,9 @@ enum class CursorType {
     POINT = 0,
     DRAW,
     ERASE,
-    MULTI_SELECT
+    MULTI_SELECT,
+    DRAG_MOVE,
+    PAINT_BUCKET
 };
 
 
@@ -38,19 +40,8 @@ class Cursor {
         SDL_Rect m_Cursor_Rect;
         int m_Width;
         int m_Height;
-        // int m_Offset_X;
-        // int m_Offset_Y;
         double m_Scale;
         CursorType m_Cursor_Type;
-
-        // std::unordered_map<int, CursorType>edit_mode_to_cursor_type_map{
-        //     {0, CursorType::POINT}, 
-        //     {1, CursorType::DRAW}, 
-        //     {2, CursorType::ERASE},
-        //     {3, CursorType::POINT},
-        //     {4, CursorType::POINT},
-        //     {5, CursorType::POINT}
-        // };
 
         std::unordered_map<EditMode, CursorType>edit_mode_to_cursor_type_map {
             {EditMode::NONE, CursorType::POINT}, 
@@ -59,13 +50,16 @@ class Cursor {
             {EditMode::OBJECT_SELECT, CursorType::POINT},
             {EditMode::TILE_SELECT, CursorType::MULTI_SELECT},
             {EditMode::LAYER_SELECT, CursorType::POINT},
-            {EditMode::DRAG_MOVE, CursorType::DRAW}
+            {EditMode::DRAG_MOVE, CursorType::DRAG_MOVE},
+            {EditMode::PAINT_BUCKET, CursorType::PAINT_BUCKET}
         };
 
         std::unordered_map<CursorType, std::string>cursor_type_to_texture_id_map {
             {CursorType::POINT, "editor-cursor-point"},
             {CursorType::DRAW, "editor-cursor-draw"},
             {CursorType::ERASE, "editor-cursor-erase"},
-            {CursorType::MULTI_SELECT, "editor-cursor-multi-select"}
+            {CursorType::MULTI_SELECT, "editor-cursor-multi-select"},
+            {CursorType::DRAG_MOVE, "editor-cursor-drag-move"},
+            {CursorType::PAINT_BUCKET, "editor-cursor-paint-bucket"}
         };
 };

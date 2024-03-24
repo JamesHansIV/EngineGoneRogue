@@ -27,4 +27,18 @@
         <OffsetX>-5</OffsetX>
         <OffsetY>15</OffsetY>
     </Texture>
+    <Texture type="cursor">
+        <CursorType>DRAG_MOVE</CursorType>
+        <FilePath>../assets/editor/cursors/drag_move_cursor.png</FilePath>
+        <ID>editor-cursor-drag-move</ID>
+        <OffsetX>-10</OffsetX>
+        <OffsetY>20</OffsetY>
+    </Texture>
+    <Texture type="cursor">
+        <CursorType>PAINT_BUCKET</CursorType>
+        <FilePath>../assets/editor/cursors/paint_bucket_cursor.png</FilePath>
+        <ID>editor-cursor-paint-bucket</ID>
+        <OffsetX>-2</OffsetX>
+        <OffsetY>20</OffsetY>
+    </Texture>
 </Root>

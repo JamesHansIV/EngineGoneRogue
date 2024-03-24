@@ -8,5 +8,6 @@ enum class EditMode {
     OBJECT_SELECT, 
     TILE_SELECT, 
     LAYER_SELECT,
-    DRAG_MOVE
+    DRAG_MOVE,
+    PAINT_BUCKET
 };

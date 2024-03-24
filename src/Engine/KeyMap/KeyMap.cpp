@@ -79,6 +79,7 @@ std::unordered_map<EditorAction, Bind> KeyMap::default_bindings = {
     {EditorAction::ENTER_ERASE_TOOL, CreateBind(EditorAction::ENTER_ERASE_TOOL, InputType::LATCH, std::vector<SDL_KeyCode>{SDLK_e})},
     {EditorAction::ENTER_TILE_SELECT_TOOL, CreateBind(EditorAction::ENTER_TILE_SELECT_TOOL, InputType::LATCH, std::vector<SDL_KeyCode>{SDLK_t})},
     {EditorAction::ENTER_SELECTION_MOVE_TOOL, CreateBind(EditorAction::ENTER_SELECTION_MOVE_TOOL, InputType::LATCH, std::vector<SDL_KeyCode>{SDLK_m})},
+    {EditorAction::ENTER_PAINT_BUCKET_TOOL, CreateBind(EditorAction::ENTER_PAINT_BUCKET_TOOL, InputType::LATCH, std::vector<SDL_KeyCode>{SDLK_p})},
     
     // Camera controls
     {EditorAction::PAN_CAMERA_DOWN, CreateBind(EditorAction::PAN_CAMERA_DOWN, InputType::CONTINUOUS, std::vector<SDL_KeyCode>{SDLK_DOWN})},

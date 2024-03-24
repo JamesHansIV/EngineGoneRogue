@@ -15,6 +15,7 @@
 #include <sys/stat.h>
 #include <cstdlib>
 #include <memory>
+#include <queue>
 
 /*
 TODO list
@@ -164,6 +165,8 @@ void DrawGrid() {
     for (int i = 0; i < LEVEL_HEIGHT; i += TILE_SIZE) {
         Renderer::GetInstance()->DrawLine(0, i, LEVEL_WIDTH, i);
     }
+    // std::cout << "LEVEL r,c " << LEVEL_ROWS << ", " << LEVEL_COLS << std::endl;
+    // exit(0);
 }
 
 bool CheckMouseOver(GameObject* obj) {
@@ -961,6 +964,7 @@ void Editor::Update(float /*dt*/) {
     CheckForToolSelection(EditorAction::ENTER_ERASE_TOOL, EditMode::ERASE);
     CheckForToolSelection(EditorAction::ENTER_TILE_SELECT_TOOL, EditMode::TILE_SELECT);
     CheckForToolSelection(EditorAction::ENTER_SELECTION_MOVE_TOOL, EditMode::DRAG_MOVE);
+    CheckForToolSelection(EditorAction::ENTER_PAINT_BUCKET_TOOL, EditMode::PAINT_BUCKET);
 
     // Tool deselection
     if (m_KeyMap->CheckInputs(EditorAction::EXIT_CURRENT_TOOL)) {
@@ -1073,8 +1077,11 @@ void Editor::OnMouseClicked(SDL_Event& event) {
         case EditMode::NONE:
             HandleNoToolActions(false, event);
             break;
+        case EditMode::PAINT_BUCKET:
+            HandlePaintBucketAction(event);
+            break;
         default:
-            throw(std::runtime_error("No EditMode assigned to m_Editstate"));
+            throw(std::runtime_error("Unsupported or missing EditMode assigned to m_Editstate"));
     }
 }
 
@@ -1096,8 +1103,10 @@ void Editor::OnMouseMoved(SDL_Event& event) {
             case EditMode::NONE:
                 HandleNoToolActions(true, event);
                 break;
+            case EditMode::PAINT_BUCKET:
+                break;
             default:
-                throw(std::runtime_error("No EditMode assigned to m_Editstate"));
+                throw(std::runtime_error("Unsupported or missing EditMode assigned to m_Editstate"));
         }
         m_EditState.PrevCoords = GetMouseTilePos();
         if (m_EditState.EditMode != EditMode::NONE)
@@ -1123,8 +1132,11 @@ void Editor::OnMouseUp(SDL_Event& event) {
         case EditMode::NONE:
             HandleNoToolActions(false, event);
             break;
+        case EditMode::PAINT_BUCKET:
+            HandlePaintBucketAction(event);
+            break;
         default:
-            throw(std::runtime_error("No EditMode assigned to m_Editstate"));
+            throw(std::runtime_error("Unsupported or missing EditMode assigned to m_Editstate"));
     }
     m_EditState.IsEditing = false;
     m_EditState.PrevCoords = GetMouseTilePos();
@@ -1160,6 +1172,12 @@ TileCoords Editor::PixelToTileCoords(float x, float y) {
     col = x / TILE_SIZE;
 
     return {row, col};
+}
+
+std::pair<float, float> Editor::TileCoordsToPixels(TileCoords coords) {
+    float y = coords.row * TILE_SIZE;
+    float x = coords.col * TILE_SIZE;
+    return {x,y};
 }
 
 void Editor::Events() {
@@ -1361,6 +1379,55 @@ void Editor::HandleDragMoveAction(SDL_Event& event) {
             MoveObject(obj, dx, dy);
     }
 
+}
+
+void Editor::HandlePaintBucketAction(SDL_Event& event) {
+    TileCoords mouse_tile_coords = GetMouseTilePos();
+
+    // on mouse down do nothing
+
+    // on mouse up check validity and paint
+    if (event.button.type == SDL_MOUSEBUTTONUP && m_MouseInputOrigin == mouse_tile_coords) {
+        // search
+        std::unordered_set<TileCoords, TileCoords>visited;
+        std::queue<TileCoords>tile_queue;
+        tile_queue.push(mouse_tile_coords);
+
+        int count=0;
+
+        while (!tile_queue.empty()) {
+            TileCoords curr = tile_queue.front();
+            tile_queue.pop();
+
+            // paint
+            const auto [x,y] = TileCoordsToPixels(curr);
+            AddObject(x,y);
+
+            std::vector<TileCoords> neighbors = {{curr.row-1, curr.col}, {curr.row, curr.col+1},
+                                                {curr.row+1, curr.col}, {curr.row, curr.col-1}};
+
+            // check neighbors
+            for(auto n : neighbors) {
+                if (!visited.contains(n)) {
+                    visited.insert(n);
+                    if (!n.IsInBounds())
+                        continue;
+                    if (IsTileEmpty(n))
+                        tile_queue.push(n);
+                }
+            }
+        }
+    }
+}
+
+bool Editor::IsTileEmpty(TileCoords coords) {
+    for (const auto& obj : m_Layers[m_CurrentLayer]) {
+        TileCoords obj_coords = PixelToTileCoords(obj->GetX(), obj->GetY());
+
+        if (obj_coords == coords)
+            return false;
+    }
+    return true;
 }
 
 bool Editor::IsMouseOverASelectedTile(TileCoords coords) {
