@@ -10,6 +10,26 @@
 #include "Engine/KeyMap/KeyMap.h"
 #include "Engine/Cursors/Cursor.h"
 
+#include "Engine/Editor/EditMode.h"
+
+#include <tuple>
+
+struct TileCoords {
+    int row;
+    int col;
+
+
+    bool operator==(const TileCoords& rhs) const {
+        return (row == rhs.row && col == rhs.col);
+    }
+
+    bool operator!=(const TileCoords& rhs) const {
+        return !(row == rhs.row && col == rhs.col);
+    }
+};
+
+
+
 struct E_EnemyInfo {
     int PerceptionWidth;
     int PerceptionHeight;
@@ -30,8 +50,6 @@ struct E_ObjectInfo {
     E_AnimationInfo Animation;
     bool SnapToGrid = true;
 };
-
-enum class EditMode { NONE = 0, DRAW, ERASE, SELECT };
 
 struct EditState {
     EditMode EditMode = EditMode::NONE;
@@ -55,7 +73,9 @@ class Editor : public Application {
     void Events() override;
 
     static std::pair<float, float> SnapToGrid(float x, float y);
+    static void SnapToGrid(float x, float y, GameObject* obj);
     std::pair<int, int>PixelToTilePos(float x, float y);
+    TileCoords PixelToTileCoords(float x, float y);
 
     GameObject* GetObjectUnderMouse();
 
@@ -91,7 +111,7 @@ class Editor : public Application {
     void SaveRoom(const char* roomName);
     void SaveProject();
 
-    static bool LoadEditorTextures();
+    bool LoadEditorTextures();
 
    private:
     std::string m_CurrentRoomID;
@@ -103,10 +123,28 @@ class Editor : public Application {
     E_EnemyInfo m_EnemyInfo;
     std::vector<std::vector<GameObject*>> m_Layers;
     std::set<int> m_HiddenLayers;
+    std::unordered_map<std::string, std::pair<int,int>>m_CursorOffsets;
     int m_CurrentLayer{0};
+    TileCoords m_MouseInputOrigin;
 
 
     void CheckForToolSelection(EditorAction editor_action, EditMode edit_mode);
+
+    // Action Handlers
+    void HandleDrawAction();
+    void HandleEraseAction();
+    void HandleNoToolActions(bool mouse_moved, SDL_Event& event); // handles logic when editmode is none
+    void HandleTileSelectAction(bool mouse_moved,  SDL_Event& event);
+    void HandleDragMoveAction(SDL_Event& event);
+
+    // action handler helpers
+    bool SelectTile(int x, int y); // returns true if selection is made, false if no selection is made, x & y are tile coords
+    bool IsMouseOverASelectedTile (TileCoords coords);
+    void StopEditing();
+    void UpdateEditMode(EditMode mode, bool isEditing);
+
+    std::tuple<float, float>GetMousePixelPos();
+    TileCoords GetMouseTilePos();
 
     // keymap
     KeyMap* m_KeyMap;

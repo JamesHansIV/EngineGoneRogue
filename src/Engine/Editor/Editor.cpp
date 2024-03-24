@@ -604,14 +604,16 @@ void Editor::ShowObjectEditor() {
                                                      : "Begin Select";
         if (ImGui::Button(select_label.c_str())) {
             m_CurrentObject = nullptr;
+            std::cout << "edit state " << static_cast<int>(m_EditState.EditMode) << std::endl;
             m_EditState.EditMode = m_EditState.EditMode == EditMode::SELECT
                                        ? EditMode::NONE
                                        : EditMode::SELECT;
+            std::cout << "state chagned " << static_cast<int>(m_EditState.EditMode) << std::endl;
         }
 
         if (ImGui::Button("Deselect")) {
             m_SelectedObjects.clear();
-            m_EditState.EditMode = EditMode::NONE;
+            StopEditing();
         }
 
         std::string const erase_label = m_EditState.EditMode == EditMode::ERASE
@@ -957,10 +959,15 @@ void Editor::Update(float /*dt*/) {
     // the EditorAction param is the result of a satisfied keybind input, with the EditMode param being the tool selection
     CheckForToolSelection(EditorAction::ENTER_DRAW_TOOL, EditMode::DRAW);
     CheckForToolSelection(EditorAction::ENTER_ERASE_TOOL, EditMode::ERASE);
+    CheckForToolSelection(EditorAction::ENTER_TILE_SELECT_TOOL, EditMode::TILE_SELECT);
+    CheckForToolSelection(EditorAction::ENTER_SELECTION_MOVE_TOOL, EditMode::DRAG_MOVE);
 
     // Tool deselection
     if (m_KeyMap->CheckInputs(EditorAction::EXIT_CURRENT_TOOL)) {
-        m_EditState.EditMode = EditMode::NONE;
+        StopEditing();
+
+        // deselect all
+        m_SelectedObjects.clear();
     }
 
     // COPY & PASTE COMBOS
@@ -1009,13 +1016,14 @@ void Editor::Render() {
     ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
 
     // draw cursor
-    if (m_EditState.EditMode != EditMode::NONE) {
-        // ImGui::SetMouseCursor(ImGuiMouseCursor_None);  // hide default cursor
+    if (static_cast<int>(m_Cursor->GetCursorType()) != 0) {
+        ImGui::SetMouseCursor(ImGuiMouseCursor_None);  // hide default cursor
 
-        SDL_Rect const cursor_rect = m_Cursor->UpdateAndGetRect();
+        std::string const cursor_texture_id = m_Cursor->GetTextureId(static_cast<int>(m_EditState.EditMode));
 
-        std::string const cursor_texture_id =
-            m_Cursor->GetTextureId(static_cast<int>(m_EditState.EditMode));
+        SDL_Rect const cursor_rect = m_Cursor->UpdateAndGetRect(
+            m_CursorOffsets[cursor_texture_id].first, m_CursorOffsets[cursor_texture_id].second);
+
 
         SDL_RenderCopy(Renderer::GetInstance()->GetRenderer(),
                        Renderer::GetInstance()
@@ -1045,173 +1053,84 @@ GameObject* Editor::GetObjectUnderMouse() {
     return obj;
 }
 
-void Editor::OnMouseClicked(SDL_Event& /*event*/) {
-    if (m_EditState.EditMode != EditMode::NONE) {
-        m_EditState.IsEditing = true;
+void Editor::OnMouseClicked(SDL_Event& event) {
+    m_MouseInputOrigin = GetMouseTilePos();
 
-        float const x = ((InputChecker::GetMouseX() +
-                          Renderer::GetInstance()->GetCameraX()) /
-                         TILE_SIZE) *
-                        TILE_SIZE;
-        float const y = ((InputChecker::GetMouseY() +
-                          Renderer::GetInstance()->GetCameraY()) /
-                         TILE_SIZE) *
-                        TILE_SIZE;
-
-        if (m_EditState.EditMode == EditMode::DRAW) {
-            AddObject(x, y);
-        } else if (m_EditState.EditMode == EditMode::ERASE) {
-            // delete all objects on mousedover tile, in current layer.
-            std::pair<int, int> tile_coords = PixelToTilePos(x, y);
-
-            // create list of objects to delete on that tile and layer
-            std::vector<GameObject*> objects_to_delete;
-
-            for (GameObject* obj : m_Layers[m_CurrentLayer]) {
-                std::pair<int, int> curr_tile_coords =
-                    PixelToTilePos(obj->GetX(), obj->GetY());
-
-                if (curr_tile_coords.first == tile_coords.first &&
-                    curr_tile_coords.second == tile_coords.second) {
-                    objects_to_delete.push_back(obj);
-                }
-            }
-
-            // delete all the objects
-            for (GameObject* obj : objects_to_delete) {
-                DeleteObject(obj);
-            }
-
-        } else {
-            GameObject* obj = GetObjectUnderMouse();
-
-            if (obj != nullptr) {
-                m_SelectedObjects.insert(obj);
-            }
-            for (const auto& obj : m_SelectedObjects) {
-                SDL_Log("%s", obj->GetID().c_str());
-            }
-            SDL_Log("\n");
-        }
-        m_EditState.PrevX = x;
-        m_EditState.PrevY = y;
-
-    } else {
-        GameObject* obj = GetObjectUnderMouse();
-        if (obj != nullptr) {
-            auto it = std::find(m_Layers[m_CurrentLayer].begin(),
-                                m_Layers[m_CurrentLayer].end(), obj);
-            m_Layers[m_CurrentLayer].erase(it);
-            m_Layers[m_CurrentLayer].push_back(obj);
-            m_CurrentObject = obj;
-        }
+    switch(m_EditState.EditMode) {
+        case EditMode::DRAW:
+            HandleDrawAction();
+            break;
+        case EditMode::ERASE:
+            HandleEraseAction();
+            break;
+        case EditMode::TILE_SELECT:
+            // HandleTileSelectAction(false, event);
+            break;
+        case EditMode::DRAG_MOVE:
+            HandleDragMoveAction(event);
+            break;
+        case EditMode::NONE:
+            HandleNoToolActions(false, event);
+            break;
+        default:
+            throw(std::runtime_error("No EditMode assigned to m_Editstate"));
     }
 }
 
 void Editor::OnMouseMoved(SDL_Event& event) {
     if (InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT)) {
-
-        if (m_EditState.IsEditing) {
-            float const x = ((InputChecker::GetMouseX() +
-                              Renderer::GetInstance()->GetCameraX()) /
-                             TILE_SIZE) *
-                            TILE_SIZE;
-            float const y = ((InputChecker::GetMouseY() +
-                              Renderer::GetInstance()->GetCameraY()) /
-                             TILE_SIZE) *
-                            TILE_SIZE;
-
-            if ((x != m_EditState.PrevX || y != m_EditState.PrevY)) {
-                if (m_EditState.EditMode == EditMode::DRAW) {
-                    AddObject(x, y);
-
-                } else if (m_EditState.EditMode == EditMode::ERASE) {
-                    // delete all objects on mousedover tile, in current layer.
-                    std::pair<int, int> tile_coords = PixelToTilePos(x, y);
-
-                    // create list of objects to delete on that tile and layer
-                    std::vector<GameObject*> objects_to_delete;
-
-                    for (GameObject* obj : m_Layers[m_CurrentLayer]) {
-                        std::pair<int, int> curr_tile_coords =
-                            PixelToTilePos(obj->GetX(), obj->GetY());
-
-                        if (curr_tile_coords.first == tile_coords.first &&
-                            curr_tile_coords.second == tile_coords.second) {
-                            objects_to_delete.push_back(obj);
-                        }
-                    }
-
-                    // delete all the objects
-                    for (GameObject* obj : objects_to_delete) {
-                        DeleteObject(obj);
-                    }
-                    // GameObject* obj = GetObjectUnderMouse();
-
-                    // if (obj != nullptr) {
-                    //     DeleteObject(obj);
-                    // }
-                } else {
-                    GameObject* obj = GetObjectUnderMouse();
-
-                    if (obj != nullptr) {
-                        m_SelectedObjects.insert(obj);
-                    }
-                }
-                m_EditState.PrevX = x;
-                m_EditState.PrevY = y;
-            }
-        } else if (!m_SelectedObjects.empty()) {
-            bool mouse_over_any = false;
-            for (const auto& obj : m_SelectedObjects) {
-                if (CheckMouseOver(obj)) {
-                    mouse_over_any = true;
-                }
-            }
-            if (mouse_over_any) {
-                float const dx = event.button.x - InputChecker::GetMouseX();
-                float const dy = event.button.y - InputChecker::GetMouseY();
-
-                for (const auto& obj : m_SelectedObjects) {
-                    MoveObject(obj, dx, dy);
-                }
-            }
-
-        } else if (m_CurrentObject != nullptr &&
-                   CheckMouseOver(m_CurrentObject)) {
-            float const dx = event.button.x - InputChecker::GetMouseX();
-            float const dy = event.button.y - InputChecker::GetMouseY();
-            MoveObject(m_CurrentObject, dx, dy);
+        switch(m_EditState.EditMode) {
+            case EditMode::DRAW:
+                HandleDrawAction();
+                break;
+            case EditMode::ERASE:
+                HandleEraseAction();
+                break;
+            case EditMode::TILE_SELECT:
+                HandleTileSelectAction(true, event);
+                break;
+            case EditMode::DRAG_MOVE:
+                HandleDragMoveAction(event);
+                break;
+            case EditMode::NONE:
+                HandleNoToolActions(true, event);
+                break;
+            default:
+                throw(std::runtime_error("No EditMode assigned to m_Editstate"));
         }
     }
 }
 
-void Editor::OnMouseUp(SDL_Event& /*event*/) {
-    if (InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT)) {
-        if (m_EditState.IsEditing) {
-            m_EditState.IsEditing = false;
+void Editor::OnMouseUp(SDL_Event& event) {
 
-        } else if (!m_SelectedObjects.empty()) {
-            if (m_ObjectInfo.SnapToGrid) {
-                for (const auto& obj : m_SelectedObjects) {
-                    std::pair<float, float> const coords =
-                        SnapToGrid(obj->GetX(), obj->GetY());
-                    obj->SetX(coords.first);
-                    obj->SetY(coords.second);
-                }
-            }
+    switch(m_EditState.EditMode) {
+        case EditMode::DRAW:
+            // HandleDrawAction();
+            break;
+        case EditMode::ERASE:
+            // HandleEraseAction();
+            break;
+        case EditMode::TILE_SELECT:
+            HandleTileSelectAction(false, event);
+            break;
+        case EditMode::DRAG_MOVE:
+            HandleDragMoveAction(event);
+            break;
+        case EditMode::NONE:
+            HandleNoToolActions(false, event);
+            break;
+        default:
+            throw(std::runtime_error("No EditMode assigned to m_Editstate"));
 
-        } else if (m_CurrentObject != nullptr &&
-                   CheckMouseOver(m_CurrentObject)) {
-
-            if (m_ObjectInfo.SnapToGrid) {
-                std::pair<float, float> const coords = SnapToGrid(
-                    m_CurrentObject->GetX(), m_CurrentObject->GetY());
-                m_CurrentObject->SetX(coords.first);
-                m_CurrentObject->SetY(coords.second);
-            }
-        }
+        m_EditState.IsEditing = false;
     }
+}
+
+void Editor::SnapToGrid(float x, float y, GameObject* obj) {
+    float next_x = (static_cast<int>(x + TILE_SIZE / 2) / TILE_SIZE) * TILE_SIZE;
+    float next_y = (static_cast<int>(y + TILE_SIZE / 2) / TILE_SIZE) * TILE_SIZE;
+    obj->SetX(next_x);
+    obj->SetY(next_y);
 }
 
 std::pair<float, float> Editor::SnapToGrid(float x, float y) {
@@ -1224,6 +1143,14 @@ std::pair<float, float> Editor::SnapToGrid(float x, float y) {
 }
 
 std::pair<int, int> Editor::PixelToTilePos(float x, float y) {
+    int row, col;
+    row = y / TILE_SIZE;
+    col = x / TILE_SIZE;
+
+    return {row, col};
+}
+
+TileCoords Editor::PixelToTileCoords(float x, float y) {
     int row, col;
     row = y / TILE_SIZE;
     col = x / TILE_SIZE;
@@ -1267,13 +1194,199 @@ void Editor::Events() {
 }
 
 // removes boilerplate needed to handle tool selection via keybinds.
-void Editor::CheckForToolSelection(EditorAction editor_action,
-                                   EditMode edit_mode) {
+void Editor::CheckForToolSelection(EditorAction editor_action, EditMode edit_mode) {
     if (m_KeyMap->CheckInputs(editor_action)) {
-        m_EditState.EditMode =
-            m_EditState.EditMode != edit_mode ? edit_mode : EditMode::NONE;
-        m_Cursor->SetCursor(static_cast<int>(m_EditState.EditMode));
+        m_EditState.EditMode = m_EditState.EditMode != edit_mode ? edit_mode : EditMode::NONE;
+        m_Cursor->SetCursor(m_EditState.EditMode);
     }
+}
+
+// x and y are tile coords
+bool Editor::SelectTile(int row, int col) {
+    bool selectedOrDeselectedATile = false;
+
+    for (GameObject* obj : m_Layers[m_CurrentLayer]) {
+        if (obj == nullptr) continue;
+
+        std::pair<int, int> obj_tile_coords = PixelToTilePos(obj->GetX(), obj->GetY());
+
+        if (obj_tile_coords.first == row && obj_tile_coords.second == col) {
+            selectedOrDeselectedATile = true;
+
+            if (m_SelectedObjects.contains(obj)) {
+                std::cout << "isediting " << m_EditState.IsEditing << std::endl;
+                if (!m_EditState.IsEditing) {
+                    m_SelectedObjects.erase(obj);                    
+                }
+            } else { m_SelectedObjects.insert(obj); }
+        }
+    }
+
+    return selectedOrDeselectedATile;
+}
+
+void Editor::HandleDrawAction() {
+    const auto [x,y] = GetMousePixelPos();
+
+    if (m_EditState.IsEditing && x == m_EditState.PrevX && y == m_EditState.PrevY)
+        return;
+
+    AddObject(x, y);
+
+    m_EditState.PrevX = x;
+    m_EditState.PrevY = y;
+    m_EditState.IsEditing = true;
+
+}
+
+void Editor::HandleEraseAction() {
+    const auto [x,y] = GetMousePixelPos();
+
+    if (m_EditState.IsEditing && x == m_EditState.PrevX && y == m_EditState.PrevY)
+        return;
+
+    // delete all objects on mousedover tile, in current layer.
+    std::pair<int, int> tile_coords = PixelToTilePos(x, y);
+
+    // create list of objects to delete on that tile and layer
+    std::vector<GameObject*> objects_to_delete;
+
+    for (GameObject* obj : m_Layers[m_CurrentLayer]) {
+        std::pair<int, int> curr_tile_coords =
+            PixelToTilePos(obj->GetX(), obj->GetY());
+
+        if (curr_tile_coords.first == tile_coords.first &&
+            curr_tile_coords.second == tile_coords.second) {
+            objects_to_delete.push_back(obj);
+        }
+    }
+
+    // delete all the objects
+    for (GameObject* obj : objects_to_delete) {
+        DeleteObject(obj);
+    }
+
+    
+}
+
+void Editor::HandleNoToolActions(bool mouse_moved, SDL_Event& event) {
+    TileCoords mouse_tile_coords = GetMouseTilePos();
+    // do we need to drag anything?
+        // conditions for this:
+            // must have some tiles selected, must have mouse over a selected tile
+    if (!m_SelectedObjects.empty() && IsMouseOverASelectedTile(mouse_tile_coords) && mouse_moved) {
+        HandleDragMoveAction(event);
+        return;
+    }
+    
+
+    // do we need to select anything?
+        // conditions for this:
+            // mouse over unselected tile, mouse_moved == false
+        // deselect all, then make selection
+
+    // if the mouse moved, then no select takes place
+    if (mouse_moved)
+        return;
+
+    if (event.button.type == SDL_MOUSEBUTTONDOWN) {
+        m_MouseInputOrigin = mouse_tile_coords;        
+    }
+
+    if (event.button.type == SDL_MOUSEBUTTONUP) {     
+        if (m_MouseInputOrigin == mouse_tile_coords)
+            SelectTile(mouse_tile_coords.row, mouse_tile_coords.col);
+
+        m_EditState.IsEditing = false;
+    }
+}
+
+// tile select
+void Editor::HandleTileSelectAction(bool mouse_moved, SDL_Event& event) {
+    // update if needed
+    if (m_EditState.EditMode != EditMode::TILE_SELECT)
+        UpdateEditMode(EditMode::DRAG_MOVE, true);
+
+    TileCoords mouse_tile_coords = GetMouseTilePos();
+    bool foundObj = SelectTile(mouse_tile_coords.row, mouse_tile_coords.col);
+
+    // if found nothing deselect all && change edit mode
+    if (!foundObj && !mouse_moved) {
+        m_SelectedObjects.clear();
+        StopEditing();
+    }
+
+    // stop editing on mouse up
+    if (event.button.type == SDL_MOUSEBUTTONUP)
+        m_EditState.IsEditing = false;
+}
+
+void Editor::HandleDragMoveAction(SDL_Event& event) {
+    const auto [x,y] = GetMousePixelPos();
+    TileCoords mouse_tile_coords = GetMouseTilePos();
+
+    // update if needed
+    if (m_EditState.EditMode != EditMode::DRAG_MOVE)
+        UpdateEditMode(EditMode::DRAG_MOVE, true);
+
+    // finish move on mouse up
+    if (event.button.type == SDL_MOUSEBUTTONUP) {
+        for (const auto& obj : m_SelectedObjects) 
+            SnapToGrid(x, y, obj);
+
+        StopEditing();
+        return;
+    }
+
+    // on mouse move, move selection
+    if (event.button.type == SDL_MOUSEMOTION) {
+        float const dx = event.button.x - InputChecker::GetMouseX();
+        float const dy = event.button.y - InputChecker::GetMouseY();
+        for (const auto& obj : m_SelectedObjects)
+            MoveObject(obj, dx, dy);
+    }
+
+}
+
+bool Editor::IsMouseOverASelectedTile(TileCoords coords) {
+    for (const auto& obj : m_SelectedObjects) {
+        TileCoords obj_coords = PixelToTileCoords(obj->GetX(), obj->GetY());
+        
+        if (obj_coords == coords) 
+            return true;
+    }
+    return false;
+}
+
+std::tuple<float,float>Editor::GetMousePixelPos() {
+    float const x = ((InputChecker::GetMouseX() + Renderer::GetInstance()->GetCameraX()) / TILE_SIZE) * TILE_SIZE;
+    float const y = ((InputChecker::GetMouseY() + Renderer::GetInstance()->GetCameraY()) / TILE_SIZE) * TILE_SIZE;
+
+    return {x,y};
+}
+
+TileCoords Editor::GetMouseTilePos() {
+    // pixel pos
+    float const pixelX = ((InputChecker::GetMouseX() + Renderer::GetInstance()->GetCameraX()) / TILE_SIZE) * TILE_SIZE;
+    float const pixelY = ((InputChecker::GetMouseY() + Renderer::GetInstance()->GetCameraY()) / TILE_SIZE) * TILE_SIZE;
+
+    // conversion
+    int row = pixelY / TILE_SIZE;
+    int col = pixelX / TILE_SIZE;
+
+    return {row, col};
+}
+
+void Editor::UpdateEditMode(EditMode mode, bool isEditing) {
+    m_EditState.IsEditing = isEditing;
+    m_EditState.EditMode = mode;
+    m_Cursor->SetCursor(m_EditState.EditMode);
+}
+
+void Editor::StopEditing() {
+    m_EditState.IsEditing = false;
+    m_EditState.EditMode = EditMode::NONE;
+    m_Cursor->SetCursor(m_EditState.EditMode);
 }
 
 bool Editor::LoadEditorTextures() {
@@ -1299,9 +1412,13 @@ bool Editor::LoadEditorTextures() {
         id = curr_texture->FirstChildElement("ID")->GetText();
 
         if (curr_texture->FirstChildElement("FilePath")->GetText() != nullptr) {
-            texture_path =
-                curr_texture->FirstChildElement("FilePath")->GetText();
+            texture_path = curr_texture->FirstChildElement("FilePath")->GetText();
             Renderer::GetInstance()->AddTexture(id, texture_path);
+
+            int offsetX = std::stoi(curr_texture->FirstChildElement("OffsetX")->GetText());
+            int offsetY = std::stoi(curr_texture->FirstChildElement("OffsetY")->GetText());
+
+            m_CursorOffsets[id] = {offsetX, offsetY};
         }
 
         curr_texture = curr_texture->NextSiblingElement("Texture");
