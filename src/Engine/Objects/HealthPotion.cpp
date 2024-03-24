@@ -27,7 +27,6 @@ void HealthPotion::OnCollide(Collider* collidee) {
             dynamic_cast<Character*>(collidee)->GetHealth()->IncreaseHealth(
                 GetHealth());
             m_marked_for_deletion = true;
-            ColliderHandler::GetInstance()->RemoveCollider(this);
             break;
         default:
             break;

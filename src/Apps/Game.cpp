@@ -102,11 +102,15 @@ void Game::InitObjects() {
 Game::Game() {
     SDL_Renderer* renderer = Renderer::GetInstance()->GetRenderer();
 
-    m_objects = Application::m_rooms[m_base_room_id];
-
     Collider* c = nullptr;
     for (auto* obj : m_objects) {
         if ((c = dynamic_cast<Collider*>(obj)) != nullptr) {
+            ColliderHandler::GetInstance()->AddCollider(c);
+        }
+    }
+    c = nullptr;
+    for (auto* tile : m_tiles) {
+        if ((c = dynamic_cast<Collider*>(tile)) != nullptr) {
             ColliderHandler::GetInstance()->AddCollider(c);
         }
     }
@@ -273,16 +277,28 @@ void Game::UpdateObjects(float dt) {
             ChangeState(new StartState(this));
             return;
         }
+        ColliderHandler::GetInstance()->AddCollider(m_player);
     }
+
+    for (auto* tile : m_tiles) {
+        auto* t = dynamic_cast<Collider*>(tile);
+        if (t != nullptr) {
+            ColliderHandler::GetInstance()->AddCollider(t);
+        }
+    }
+
     for (auto it = m_objects.begin(); it != m_objects.end();) {
         auto* enemy = dynamic_cast<Enemy*>(*it);  // Cast to Enemy type
         if (enemy != nullptr) {
             enemy->SetTarget(m_player);
         }
         (*it)->Update(dt);
+
         if ((*it)->MarkedForDeletion()) {
             DeleteObject(*it);
         } else {
+            ColliderHandler::GetInstance()->AddCollider(
+                dynamic_cast<Collider*>(*it));
             ++it;
         }
     }
@@ -297,6 +313,9 @@ void Game::Render() {
 }
 
 void Game::DrawObjects() {
+    for (auto* tile : m_tiles) {
+        tile->Draw();
+    }
     for (auto* obj : m_objects) {
         obj->Draw();
     }

@@ -97,6 +97,8 @@ class Renderer {
         CenterCameraOnObject();
     }
 
+    SDL_Rect GetCamera() const { return m_camera; }
+
     [[nodiscard]] int GetCameraX() const { return m_camera.x; };
 
     [[nodiscard]] int GetCameraY() const { return m_camera.y; };
