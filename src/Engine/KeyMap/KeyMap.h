@@ -5,6 +5,8 @@
 #include<unordered_set>
 #include<unordered_map>
 
+#include "Engine/Editor/ActionRecordHandling/EditorAction.h"
+
 // add default map 
 // add save to map file
 // add load from map file (one editor load and file modified);
@@ -12,23 +14,6 @@
 enum class InputType { CONTINUOUS, LATCH, ON_UP_LATCH};
 
 enum class MacKeys { LSHIFT, RSHIFT, CONTROL, LOPTION, ROPTION, LCOMMAND, RCOMMAND };
-
-enum class EditorAction { 
-    EXIT_CURRENT_TOOL, 
-    ENTER_DRAW_TOOL, 
-    ENTER_ERASE_TOOL,
-    ENTER_TILE_SELECT_TOOL,
-    PAN_CAMERA_UP,
-    PAN_CAMERA_RIGHT,
-    PAN_CAMERA_LEFT, 
-    PAN_CAMERA_DOWN,
-    COPY_SELECTION,
-    PASTE_SELECTION,
-    UNDO_ACTION,
-    REDO_ACTION,
-    ENTER_SELECTION_MOVE_TOOL,
-    ENTER_PAINT_BUCKET_TOOL,
-};
 
 struct Bind {
     EditorAction action;

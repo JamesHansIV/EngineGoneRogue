@@ -8,6 +8,7 @@
 #include "Engine/Renderer/Texture.h"
 #include "Engine/Cursors/Cursor.h"
 #include "Engine/KeyMap/KeyMap.h"
+#include "ActionRecordHandling/ActionRecordHandler.h"
 
 #include "Engine/Editor/EditMode.h"
 #include "Engine/utils/utils.h"
@@ -121,6 +122,8 @@ class Editor : public Application {
 
     bool LoadEditorTextures();
 
+    // static std::vector<std::vector<GameObject*>>GetLayers() { return m_layers; }
+
    private:
     std::string m_current_room_id;
     Texture* m_current_texture{nullptr};
@@ -135,6 +138,7 @@ class Editor : public Application {
     std::unordered_map<std::string, std::pair<int,int>>m_cursor_offsets;
     TileCoords m_mouse_input_origin;
 
+    // static std::vector<std::vector<GameObject*>>* s_layers;
 
     void CheckForToolSelection(EditorAction editor_action, EditMode edit_mode);
 
@@ -161,4 +165,7 @@ class Editor : public Application {
 
     // map
     Cursor* m_cursor;
+
+    // undo redo
+    ActionRecordHandler* m_action_record_handler;
 };
