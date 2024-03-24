@@ -1,28 +1,39 @@
 #include "RangedEnemy.h"
 
-RangedEnemy::RangedEnemy(Collider& rhs, RangedEnemyStats stats)
+RangedEnemy::RangedEnemy(Collider* rhs, RangedEnemyStats stats)
     : Enemy(rhs, stats), m_stats(stats) {}
 
-RangedEnemy::~RangedEnemy() = default;
+RangedEnemy::~RangedEnemy() {
+    if (m_attack != nullptr) {
+        delete m_attack;
+    }
+    if (m_health != nullptr) {
+        delete m_health;
+    }
+    if (m_current_state != nullptr) {
+        delete m_current_state;
+        m_current_state = nullptr;
+    }
+}
 
 void RangedEnemy::Draw() {
-    m_CurrentState->Draw();
-    m_Health->Draw(GetX(), GetY(), GetWidth());
+    m_current_state->Draw();
+    m_health->Draw(GetX(), GetY(), GetWidth());
 }
 
 void RangedEnemy::Update(float dt) {
-    State* state = m_CurrentState->Update(dt);
+    State* state = m_current_state->Update(dt);
 
     if (state != nullptr) {
         ChangeState(state);
     }
 
-    m_Animation->Update();
-    m_RigidBody->Update(dt);
+    m_animation->Update();
+    m_rigid_body->Update(dt);
 
-    SetX(m_RigidBody->Position().X);
-    SetY(m_RigidBody->Position().Y);
-    m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
+    SetX(m_rigid_body->Position().X);
+    SetY(m_rigid_body->Position().Y);
+    m_collision_box.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
 }
 
 void RangedEnemy::OnCollide(Collider* collidee) {
@@ -31,16 +42,11 @@ void RangedEnemy::OnCollide(Collider* collidee) {
     }
 
     CollideEvent event(collidee);
-    State* state = m_CurrentState->HandleEvent(&event);
+    State* state = m_current_state->HandleEvent(&event);
 
     if (state != nullptr) {
         ChangeState(state);
     }
 }
 
-void RangedEnemy::Clean() {
-    delete m_Attack;
-    delete m_Health;
-    delete m_Animation;
-    delete m_CurrentState;
-}
+void RangedEnemy::Clean() {}

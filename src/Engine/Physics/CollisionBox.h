@@ -4,26 +4,29 @@
 
 class CollisionBox {
    public:
-    CollisionBox() {}
+    CollisionBox() {
+        // Collision boxes are 2 pixels smaller on every side by default
+        m_buffer = {6, 6, 12, 12};
+    }
 
-    inline Rect GetRect() { return m_Box; }
+    inline Rect GetRect() { return m_box; }
 
-    inline Rect GetPrevRect() { return m_PrevBox; }
+    inline Rect GetPrevRect() { return m_prev_box; }
 
     inline void SetCorrection(float x, float y, int w, int h) {
-        m_Buffer = {x, y, w, h};
+        m_buffer = {x, y, w, h};
     }
 
     void Set(float x, float y, int w, int h) {
-        m_PrevBox = m_Box;
-        m_Box = {x - m_Buffer.x, y - m_Buffer.y, w - m_Buffer.w,
-                 h - m_Buffer.h};
+        m_prev_box = m_box;
+        m_box = {x + m_buffer.x, y + m_buffer.y, w - m_buffer.w,
+                 h - m_buffer.h};
     }
 
-    void clear() { m_Box = {}; }
+    void Clear() { m_box = {}; }
 
    private:
-    Rect m_Box;
-    Rect m_PrevBox;
-    Rect m_Buffer;
+    Rect m_box;
+    Rect m_prev_box;
+    Rect m_buffer;
 };

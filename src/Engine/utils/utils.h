@@ -3,27 +3,23 @@
 #include "Engine/Events/Event.h"
 #include "SDL2/SDL.h"
 
-#define SCREEN_WIDTH 960
-#define SCREEN_HEIGHT 520
+enum { ScreenWidth = 1024, ScreenHeight = 768 };
 
-#define TILE_SIZE 32
+enum { LevelWidth = 4096, LevelHeight = 3072 };
 
-#define LEVEL_WIDTH 1280
-#define LEVEL_HEIGHT 960
+enum { TileSize = 32 };
 
-#define LEVEL_COLS (LEVEL_WIDTH/TILE_SIZE)
-#define LEVEL_ROWS (LEVEL_HEIGHT/TILE_SIZE)
+enum { ShouldLoadProject = 1 };
 
-#define LOAD_PROJECT 1
+enum { FilepathLen = 128, LabelLen = 32 };
 
-#define FILEPATH_LEN 128
-#define LABEL_LEN 32
-
+// NOLINTBEGIN
 #ifdef DEBUG_MESSAGES
-#if DEBUG_MESSAGES == 0 
-    #define SDL_Log(...)(void)0
+#if DEBUG_MESSAGES == 0
+#define SDL_Log(...) (void)0
 #endif
 #endif
+// NOLINTEND
 
 struct Rect {
     float x;
@@ -32,7 +28,7 @@ struct Rect {
     int h;
 };
 
-const int HEALTH_BAR_HEIGHT = 5;
+const int kHealthBarHeight = 5;
 
 using CustomEventType = Uint32;
 

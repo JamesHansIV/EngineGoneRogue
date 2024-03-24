@@ -4,7 +4,7 @@
 
 class ExperienceBar {
    public:
-    ExperienceBar(int max_xp, int xp = 0) : m_max_xp(max_xp), m_xp(xp) {}
+    explicit ExperienceBar(int max_xp, int xp = 0) : m_max_xp(max_xp), m_xp(xp) {}
 
     void SetExperience(int xp) { m_xp = xp; }
 
@@ -17,4 +17,5 @@ class ExperienceBar {
    private:
     int m_max_xp;
     int m_xp;
+    int m_level;
 };

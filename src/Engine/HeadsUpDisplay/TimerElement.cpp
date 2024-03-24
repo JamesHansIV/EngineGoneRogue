@@ -1,4 +1,5 @@
 #include "TimerElement.h"
+#include "Engine/Application/Application.h"
 #include "Engine/Renderer/Renderer.h"
 #include "Engine/Timer/Timer.h"
 
@@ -26,12 +27,14 @@ std::string GetFormattedTime() {
 void TimerElement::Draw() {
     const std::string time = GetFormattedTime();
 
+    //TODO: Are we adding a new texture every render?? Maybe this is inefficient
     Texture* timer_texture =
         renderer->AddTextTexture("timer", time, kTimerColor);
     // Timer should be drawn at the top middle of the screen
-    const Position timer_position{
-        renderer->GetCameraX() + SCREEN_WIDTH / 2 - timer_texture->GetWidth(),
-        renderer->GetCameraY()};
+    const Position timer_position{renderer->GetCameraX() +
+                                      Application::Get()->GetWindowWidth() / 2 -
+                                      timer_texture->GetWidth(),
+                                  renderer->GetCameraY()};
 
     SDL_Rect src_rect = {0, 0, timer_texture->GetWidth(),
                          timer_texture->GetHeight()};

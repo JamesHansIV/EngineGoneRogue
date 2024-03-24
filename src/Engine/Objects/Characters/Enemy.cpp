@@ -1,9 +1,6 @@
 #include "Enemy.h"
-#include "Engine/Input/InputChecker.h"
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Objects/Environment/Entrance.h"
-#include "Engine/Renderer/Renderer.h"
-#include "Player.h"
 
 #include <cmath>
 
@@ -23,8 +20,9 @@ DEVELOPING BASIC ENEMY BEHAVIOUR:
 Enemy::Enemy(Properties& props, EnemyStats const& stats)
     : Character(props), m_stats(stats) {}
 
-Enemy::Enemy(Collider& rhs, EnemyStats stats)
-    : Character(rhs), m_stats(stats) {}
+Enemy::Enemy(Collider* rhs, EnemyStats stats) : Character(rhs), m_stats(stats) {
+    SDL_Log("enemy copy constructor: %s", rhs->GetID().c_str());
+}
 
 bool Enemy::TargetInRange() {
     if (GetTarget() == nullptr) {
@@ -46,39 +44,35 @@ bool Enemy::TargetDetected() {
     float const rect_y = GetY() - m_stats.perceptionHeight;
     int const rect_h = GetHeight() + 2 * m_stats.perceptionHeight;
 
-    m_Perception = {rect_x, rect_y, rect_w, rect_h};
+    m_perception = {rect_x, rect_y, rect_w, rect_h};
 
-    if (m_Target == nullptr) {
+    if (m_target == nullptr) {
         SDL_Log("Target is null for object %s", GetID().c_str());
         return false;
     }
 
-    Rect const target = m_Target->GetDstRect();
+    Rect const target = m_target->GetDstRect();
 
-    if (ColliderHandler::GetInstance()->CheckCollision(m_Perception, target)) {
-        float const direction_x = m_Target->GetMidPointX() - GetMidPointX();
-        float const direction_y = m_Target->GetMidPointY() - GetMidPointY();
-        return true;
-    }
-    return false;
+    return ColliderHandler::GetInstance()->CheckCollision(m_perception, target);
 }
 
 // Returns true if in target is in range
 bool Enemy::MoveTowardsTarget(float dt) {
     if (TargetDetected()) {
-        float direction_x = m_Target->GetMidPointX() - GetMidPointX();
-        float direction_y = m_Target->GetMidPointY() - GetMidPointY();
+        float direction_x = m_target->GetMidPointX() - GetMidPointX();
+        float direction_y = m_target->GetMidPointY() - GetMidPointY();
 
         float const direction_length =
             sqrt(direction_x * direction_x + direction_y * direction_y);
 
+        Vector2D direction;
         if (direction_length != 0) {
-            direction_x /= direction_length;
-            direction_y /= direction_length;
+
+            direction.X = direction_x /= direction_length;
+            direction.Y = direction_y /= direction_length;
         }
 
-        m_RigidBody->ApplyVelocity(
-            Vector2D(direction_x * 1.5, direction_y * 1.5) * dt);
+        m_rigid_body->ApplyVelocity(direction * dt * m_stats.speed);
         if (direction_length <= m_stats.range) {
             return true;
         }
@@ -116,6 +110,5 @@ void Enemy::OnCollide(Collider* collidee) {
 }
 
 void Enemy::Clean() {
-    delete m_Animation;
-    delete m_Health;
+    delete m_health;
 }

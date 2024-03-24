@@ -3,6 +3,7 @@
 #include <SDL2/SDL.h>
 #include <string>
 #include "Engine/Events/Event.h"
+#include "Engine/Objects/Characters/Player.h"
 #include "Engine/Physics/Vector2D.h"
 #include "Engine/State/State.h"
 
@@ -19,54 +20,54 @@ struct AnimationIDs {
 
 class PlayerState : public State {
    public:
-    explicit PlayerState(Player* player) : m_Player(player) {
-        m_Move.Up = "move-up";
-        m_Move.LeftUp = "move-left-up";
-        m_Move.Left = "move-left";
-        m_Move.RightUp = "move-right-up";
-        m_Move.Right = "move-right";
-        m_Move.Down = "move-down";
+    explicit PlayerState(Player* player) : m_player(player) {
+        m_move.Up = "move-up";
+        m_move.LeftUp = "move-left-up";
+        m_move.Left = "move-left";
+        m_move.RightUp = "move-right-up";
+        m_move.Right = "move-right";
+        m_move.Down = "move-down";
 
-        m_Dodge.Up = "dodge-up";
-        m_Dodge.LeftUp = "dodge-left-up";
-        m_Dodge.Left = "dodge-left";
-        m_Dodge.RightUp = "dodge-right-up";
-        m_Dodge.Right = "dodge-right";
-        m_Dodge.Down = "dodge-down";
+        m_dodge.Up = "dodge-up";
+        m_dodge.LeftUp = "dodge-left-up";
+        m_dodge.Left = "dodge-left";
+        m_dodge.RightUp = "dodge-right-up";
+        m_dodge.Right = "dodge-right";
+        m_dodge.Down = "dodge-down";
     }
 
-    virtual ~PlayerState() {}
+    ~PlayerState() override = default;
 
-    Player* GetPlayer() { return m_Player; }
+    Player* GetPlayer() { return m_player; }
 
-    void SetPlayer(Player* p) { m_Player = p; }
+    void SetPlayer(Player* p) { m_player = p; }
 
-    AnimationIDs& GetMoveAnimationIDs() { return m_Move; }
+    AnimationIDs& GetMoveAnimationIDs() { return m_move; }
 
-    AnimationIDs& GetDodgeAnimationIDs() { return m_Dodge; }
+    AnimationIDs& GetDodgeAnimationIDs() { return m_dodge; }
 
    private:
-    Player* m_Player;
-    AnimationIDs m_Move;
-    AnimationIDs m_Dodge;
+    Player* m_player;
+    AnimationIDs m_move;
+    AnimationIDs m_dodge;
 };
 
 class PlayerIdle : public PlayerState {
    public:
     explicit PlayerIdle(Player* player) : PlayerState(player) {}
 
-    virtual void Enter() override;
-    virtual void Exit() override;
-    virtual State* Update(float dt) override;
-    virtual void Draw() override;
-    virtual State* HandleEvent(Event* event) override;
+    void Enter() override;
+    void Exit() override;
+    State* Update(float dt) override;
+    void Draw() override;
+    State* HandleEvent(Event* event) override;
 
     State* OnUserEvent(UserEvent* event);
     State* OnCollideEvent(CollideEvent* event);
 
     State* PollInput(float dt);
 
-    virtual StateType GetType() override { return StateType::Idle; }
+    StateType GetType() override { return StateType::Idle; }
 };
 
 //TODO: player move up and down animations skip some frames...
@@ -74,76 +75,77 @@ class PlayerMoving : public PlayerState {
    public:
     explicit PlayerMoving(Player* player) : PlayerState(player) {}
 
-    virtual void Enter() override;
-    virtual void Exit() override;
-    virtual State* Update(float dt) override;
-    virtual void Draw() override;
-    virtual State* HandleEvent(Event* event) override;
+    void Enter() override;
+    void Exit() override;
+    State* Update(float dt) override;
+    void Draw() override;
+    State* HandleEvent(Event* event) override;
 
     State* OnUserEvent(UserEvent* event);
     State* OnCollideEvent(CollideEvent* event);
 
     void PollInput(float dt);
 
-    virtual StateType GetType() override { return StateType::Moving; }
+    StateType GetType() override { return StateType::Moving; }
 };
 
 class PlayerDodge : public PlayerState {
    public:
     explicit PlayerDodge(Player* player)
-        : PlayerState(player), m_DodgeCD(10), m_Velocity(0, 0) {}
+        : PlayerState(player),  m_velocity(0, 0) {}
 
-    virtual void Enter() override;
-    virtual void Exit() override;
-    virtual State* Update(float dt) override;
-    virtual void Draw() override;
-    virtual State* HandleEvent(Event* event) override;
+    void Enter() override;
+    void Exit() override;
+    State* Update(float dt) override;
+    void Draw() override;
+    State* HandleEvent(Event* event) override;
 
     State* OnUserEvent(UserEvent* event);
     State* OnCollideEvent(CollideEvent* event);
 
-    virtual StateType GetType() override { return StateType::Dodge; }
+    StateType GetType() override { return StateType::Dodge; }
 
    private:
-    int m_DodgeCD;
-    Vector2D m_Velocity;
+    int m_dodge_cd{60};
+    float m_distance;
+    Vector2D m_velocity;
 };
 
 class PlayerIsHit : public PlayerState {
    public:
     explicit PlayerIsHit(Player* player, int damage)
-        : PlayerState(player), m_Damage(damage) {}
+        : PlayerState(player), m_damage(damage) {}
 
-    virtual void Enter() override;
-    virtual void Exit() override;
-    virtual State* Update(float dt) override;
-    virtual void Draw() override;
-    virtual State* HandleEvent(Event* event) override;
+    void Enter() override;
+    void Exit() override;
+    State* Update(float dt) override;
+    void Draw() override;
+    State* HandleEvent(Event* event) override;
 
     static State* OnUserEvent(UserEvent* event);
     State* OnCollideEvent(CollideEvent* event);
 
     void PollInput(float dt);
 
-    void SetDamage(int damage) { m_Damage = damage; }
+    void SetDamage(int damage) { m_damage = damage; }
 
     void ApplyDamage();
 
-    virtual StateType GetType() override { return StateType::IsHit; }
+    StateType GetType() override { return StateType::IsHit; }
 
    private:
-    int m_Damage;
+    int m_damage;
 };
 
 class PlayerDead : public PlayerState {
    public:
     explicit PlayerDead(Player* player) : PlayerState(player) {}
 
-    virtual void Enter() override;
-    virtual void Exit() override;
-    virtual State* Update(float dt) override;
-    virtual void Draw() override;
-    virtual State* HandleEvent(Event* event) override;
+    void Enter() override;
+    void Exit() override;
+    State* Update(float dt) override;
+    void Draw() override;
+    State* HandleEvent(Event* event) override;
 
-    virtual StateType GetType() override { return StateType::Dead; }
+    StateType GetType() override { return StateType::Dead; }
 };

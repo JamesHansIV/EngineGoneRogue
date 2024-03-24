@@ -11,17 +11,18 @@
 
 State* RangedEnemyHandleCollide(RangedEnemy* enemy, Collider* collidee) {
     switch (collidee->GetObjectType()) {
-        case ObjectType::Projectile:
-            if (dynamic_cast<Projectile*>(collidee)->IsPlayerOwned()) {
-                dynamic_cast<Projectile*>(collidee)->AddNumberofEnemiesHit();
+        case ObjectType::Projectile: {
+            Projectile* p = dynamic_cast<Projectile*>(collidee);
+            if (p->IsPlayerOwned()) {
                 return new RangedEnemyIsHit(
                     enemy, dynamic_cast<Projectile*>(collidee)->GetDamage());
             }
             break;
+        }
         case ObjectType::MeleeWeapon: {
             auto* melee_weapon = dynamic_cast<class MeleeWeapon*>(collidee);
             return new RangedEnemyIsHit(enemy,
-                                        melee_weapon->GetStats().GetDamage());
+                                        melee_weapon->GetStats()->GetDamage());
             break;
         }
         case ObjectType::Entrance: {
@@ -48,7 +49,6 @@ State* RangedEnemyHandleCollide(RangedEnemy* enemy, Collider* collidee) {
 }
 
 void RangedEnemyIdle::Enter() {
-    SDL_Log("ranged enemy enter");
     GetEnemy()->GetAnimation()->SelectAnimation("Idle");
 }
 
@@ -95,7 +95,7 @@ State* RangedEnemyIdle::OnCollideEvent(CollideEvent* event) {
 }
 
 void RangedEnemyMoving::Enter() {
-    m_Direction == 1 ? GetEnemy()->GetAnimation()->SelectAnimation("Move-down")
+    m_direction == 1 ? GetEnemy()->GetAnimation()->SelectAnimation("Move-down")
                      : GetEnemy()->GetAnimation()->SelectAnimation("Move-up");
 }
 
@@ -124,9 +124,9 @@ void RangedEnemyMoving::SelectDirection() {
         direction = 1;
     }
 
-    if (m_Direction != direction) {
-        m_Direction = direction;
-        m_Direction == 1
+    if (m_direction != direction) {
+        m_direction = direction;
+        m_direction == 1
             ? GetEnemy()->GetAnimation()->SelectAnimation("Move-down")
             : GetEnemy()->GetAnimation()->SelectAnimation("Move-up");
     }
@@ -237,14 +237,13 @@ State* RangedEnemyIsHit::HandleEvent(Event* event) {
 
 State* RangedEnemyIsHit::OnCollideEvent(CollideEvent* event) {
     Collider* collidee = event->GetCollidee();
-
     switch (collidee->GetObjectType()) {
         case ObjectType::Projectile: {
             auto* projectile = dynamic_cast<Projectile*>(collidee);
             if (projectile->IsPlayerOwned()) {
-                // SetDamage(projectile->GetDamage());
-                // SDL_Log("Enemy hit: %d", projectile->GetDamage());
-                // ApplyDamage();
+                //SetDamage(projectile->GetDamage());
+                //SDL_Log("Enemy hit: %d", projectile->GetDamage());
+                //ApplyDamage();
             }
 
             break;
@@ -277,7 +276,6 @@ void RangedEnemyDead::Exit() {}
 
 State* RangedEnemyDead::Update(float /*dt*/) {
     if (GetEnemy()->GetAnimation()->Ended()) {
-        ColliderHandler::GetInstance()->RemoveCollider(GetEnemy());
         GetEnemy()->MarkForDeletion();
     }
     return nullptr;

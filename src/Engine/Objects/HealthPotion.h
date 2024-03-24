@@ -14,7 +14,7 @@ class HealthPotion : public Collider {
     
     void Update(float dt) override;
 
-    int GetHealth()  { return m_health; };
+    [[nodiscard]] int GetHealth() const  { return m_health; };
 
     void OnCollide(Collider* collidee) override;
     

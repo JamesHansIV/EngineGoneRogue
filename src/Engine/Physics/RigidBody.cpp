@@ -1,31 +1,31 @@
 #include "RigidBody.h"
 
 void RigidBody::Update(float dt) {
-    m_Force = m_Force - m_Friction;
+    m_force = m_force - m_friction;
     // m_Acceleration.X = m_Force.X/m_Mass;
     // m_Acceleration.Y = m_Force.Y/m_Mass;
-    m_Acceleration = m_Velocity * -0.2;
-    m_Velocity = m_Velocity + m_Acceleration * dt;
-    if (-0.01 < m_Velocity.X && m_Velocity.X < 0.01) {
-        m_Velocity.X = 0;
+    m_acceleration = m_velocity * -0.2;
+    m_velocity = m_velocity + m_acceleration * dt * 25;
+    if (-0.01 < m_velocity.X && m_velocity.X < 0.01) {
+        m_velocity.X = 0;
     }
-    if (-0.01 < m_Velocity.Y && m_Velocity.Y < 0.01) {
-        m_Velocity.Y = 0;
+    if (-0.01 < m_velocity.Y && m_velocity.Y < 0.01) {
+        m_velocity.Y = 0;
     }
-    m_Position = m_Position + m_Velocity * dt;
+    m_position = m_position + m_velocity * dt * 10;
 }
 
 void RigidBody::ApplyForce(Vector2D f) {
-    m_Force = m_Force + f;
-    m_Friction = m_Force * 0.2;
+    m_force = m_force + f;
+    m_friction = m_force * 0.2;
 }
 
 void RigidBody::ApplyForceX(float fx) {
-    m_Force.X = m_Force.X + fx;
-    m_Friction.X = m_Friction.X + m_Force.X * 0.2;
+    m_force.X = m_force.X + fx;
+    m_friction.X = m_friction.X + m_force.X * 0.2;
 }
 
 void RigidBody::ApplyForceY(float fy) {
-    m_Force.Y = m_Force.Y + fy;
-    m_Friction.X = m_Friction.X + m_Force.Y * 0.2;
+    m_force.Y = m_force.Y + fy;
+    m_friction.X = m_friction.X + m_force.Y * 0.2;
 }

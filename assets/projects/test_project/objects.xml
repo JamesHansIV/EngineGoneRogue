@@ -1,22 +1,25 @@
+<!DOCTYPE resources [
+   <!ENTITY hitAnimationSpeed "10">
+]>
 <Root>
     <Object texture_id="player" object_id="player" rotation="0">
         <Types collider="1" player="1"/>
         <SrcRect row="0" col="0" w="16" h="16"/>
-        <DstRect x="0" y="0" w="30" h="30"/>
+        <DstRect x="300" y="300" w="30" h="30"/>
         <CollisionBox x="0" y="0" w="30" h="30"/>
         <Animation>
             <AnimationInfo
-                id="Dead"
+                id="PlayerDead"
                 texture_id="player"
                 frame_count="6"
-                speed="5">
+                speed="200">
                 <Tile row="0" col="0" w="18" h="16"/>
             </AnimationInfo>
             <AnimationInfo
                 id="PlayerIdle"
                 texture_id="player"
-                frame_count="2"
-                speed="5"
+                frame_count="3"
+                speed="400"
                 loop="1">
                 <Tile row="7" col="0" w="18" h="16"/>
             </AnimationInfo>
@@ -25,7 +28,7 @@
                 id="move-right"
                 texture_id="player"
                 frame_count="6"
-                speed="5"
+                speed="130"
                 loop="1">
                 <Tile row="2" col="0" w="18" h="16"/>
             </AnimationInfo>
@@ -33,7 +36,7 @@
                 id="move-left"
                 texture_id="player"
                 frame_count="6"
-                speed="5"
+                speed="130"
                 flip="1"
                 loop="1">
                 <Tile row="2" col="0" w="18" h="16"/>
@@ -42,7 +45,7 @@
                 id="move-right-up"
                 texture_id="player"
                 frame_count="6"
-                speed="5"
+                speed="130"
                 loop="1">
                 <Tile row="3" col="0" w="18" h="16"/>
             </AnimationInfo>
@@ -50,7 +53,7 @@
                 id="move-left-up"
                 texture_id="player"
                 frame_count="6"
-                speed="5"
+                speed="130"
                 flip="1"
                 loop="1">
                 <Tile row="3" col="0" w="18" h="16"/>
@@ -59,7 +62,7 @@
                 id="move-up"
                 texture_id="player"
                 frame_count="6"
-                speed="5"
+                speed="130"
                 loop="1">
                 <Tile row="4" col="0" w="18" h="16"/>
             </AnimationInfo>
@@ -67,7 +70,7 @@
                 id="move-down"
                 texture_id="player"
                 frame_count="6"
-                speed="5"
+                speed="130"
                 loop="1">
                 <Tile row="1" col="0" w="18" h="16"/>
             </AnimationInfo>
@@ -76,42 +79,42 @@
                 id="dodge-down"
                 texture_id="player-dodge"
                 frame_count="6"
-                speed="2">
+                speed="50">
                 <Tile row="0" col="0" w="20" h="20"/>
             </AnimationInfo>
             <AnimationInfo
                 id="dodge-right"
                 texture_id="player-dodge"
                 frame_count="6"
-                speed="2">
+                speed="50">
                 <Tile row="1" col="0" w="20" h="20"/>
             </AnimationInfo>
             <AnimationInfo
                 id="dodge-right-up"
                 texture_id="player-dodge"
                 frame_count="6"
-                speed="2">
+                speed="50">
                 <Tile row="2" col="0" w="20" h="20"/>
             </AnimationInfo>
             <AnimationInfo
                 id="dodge-up"
                 texture_id="player-dodge"
                 frame_count="6"
-                speed="2">
+                speed="50">
                 <Tile row="3" col="0" w="20" h="20"/>
             </AnimationInfo>
             <AnimationInfo
                 id="dodge-left-up"
                 texture_id="player-dodge"
                 frame_count="6"
-                speed="2">
+                speed="50">
                 <Tile row="4" col="0" w="20" h="20"/>
             </AnimationInfo>
             <AnimationInfo
                 id="dodge-left"
                 texture_id="player-dodge"
                 frame_count="6"
-                speed="2">
+                speed="50">
                 <Tile row="5" col="0" w="20" h="20"/>
             </AnimationInfo>
 
@@ -119,7 +122,7 @@
                 id="front-hit"
                 texture_id="player"
                 frame_count="2"
-                speed="20">
+                speed="500">
                 <Tile row="5" col="0" w="18" h="16"/>
             </AnimationInfo>
         </Animation>
@@ -134,7 +137,7 @@
                 id="MiniSlimeIdle"
                 texture_id="enemies"
                 frame_count="2"
-                speed="15"
+                speed="300"
                 loop="1">
                 <Tile row="0" col="2" w="16" h="16"/>
             </AnimationInfo>
@@ -142,14 +145,14 @@
                 id="MiniSlimeHit"
                 texture_id="enemies"
                 frame_count="3"
-                speed="8">
+                speed="100">
                 <Tile row="1" col="0" w="16" h="16"/>
             </AnimationInfo>
             <AnimationInfo
                 id="MiniSlimeAttack"
                 texture_id="enemies"
                 frame_count="8"
-                speed="15"
+                speed="250"
                 loop="1">
                 <Tile row="2" col="0" w="16" h="16"/>
             </AnimationInfo>
@@ -157,14 +160,14 @@
                 id="MiniSlimeDead"
                 texture_id="enemies"
                 frame_count="2"
-                speed="50">
+                speed="500">
                 <Tile row="0" col="0" w="16" h="16"/>
             </AnimationInfo>
             <AnimationInfo
                 id="SlimeIdle"
                 texture_id="enemies"
                 frame_count="2"
-                speed="15"
+                speed="300"
                 loop="1">
                 <Tile row="3" col="2" w="16" h="16"/>
             </AnimationInfo>
@@ -172,27 +175,25 @@
                 id="SlimeHit"
                 texture_id="enemies"
                 frame_count="3"
-                speed="8"
-                loop="1">
+                speed="100">
                 <Tile row="4" col="0" w="16" h="16"/>
             </AnimationInfo>
             <AnimationInfo
                 id="SlimeAttack"
                 texture_id="enemies"
                 frame_count="8"
-                speed="15"
-                loop="1">
+                speed="250">
                 <Tile row="5" col="0" w="16" h="16"/>
             </AnimationInfo>
             <AnimationInfo
                 id="SlimeDead"
                 texture_id="enemies"
                 frame_count="2"
-                speed="50">
+                speed="500">
                 <Tile row="3" col="0" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
-        <EnemyStats health="100" damage="1" speed="10" range="150" perception_width="160" perception_height="150" xp="15"/>
+        <EnemyStats health="100" damage="25" speed="70" range="50" perception_width="800" perception_height="800" xp="30"/>
     </Object>
     <Object texture_id="enemies" object_id="ringshotenemy" rotation="0">
         <Types collider="1" ranged_enemy="1" ring_shot_enemy="1"/>
@@ -204,7 +205,7 @@
                 id="Idle"
                 texture_id="enemies"
                 frame_count="2"
-                speed="15"
+                speed="500"
                 loop="1">
                 <Tile row="9" col="2" w="16" h="16"/>
             </AnimationInfo>
@@ -212,7 +213,7 @@
                 id="Move-up"
                 texture_id="enemies"
                 frame_count="4"
-                speed="15"
+                speed="250"
                 loop="1">
                 <Tile row="11" col="4" w="16" h="16"/>
             </AnimationInfo>
@@ -220,7 +221,7 @@
                 id="Move-down"
                 texture_id="enemies"
                 frame_count="4"
-                speed="15"
+                speed="250"
                 loop="1">
                 <Tile row="11" col="0" w="16" h="16"/>
             </AnimationInfo>
@@ -228,18 +229,18 @@
                 id="Hit"
                 texture_id="enemies"
                 frame_count="3"
-                speed="8">
+                speed="100">
                 <Tile row="10" col="0" w="16" h="16"/>
             </AnimationInfo>
             <AnimationInfo
                 id="Dead"
                 texture_id="enemies"
                 frame_count="2"
-                speed="50">
+                speed="500">
                 <Tile row="9" col="0" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
-        <RangedEnemyStats health="100" damage="1" speed="10" range="150" perception_width="160" perception_height="150" xp="15" fire_interval="20"/>
+        <RangedEnemyStats health="100" damage="25" speed="70" range="150" perception_width="800" perception_height="800" xp="30" fire_interval="5000"/>
     </Object>
     <Object texture_id="enemies" object_id="dog" rotation="0">
         <Types collider="1" ranged_enemy="1" dog="1"/>
@@ -251,7 +252,7 @@
                 id="Idle"
                 texture_id="enemies"
                 frame_count="2"
-                speed="15"
+                speed="250"
                 loop="1">
                 <Tile row="6" col="2" w="16" h="16"/>
             </AnimationInfo>
@@ -259,7 +260,7 @@
                 id="Move-up"
                 texture_id="enemies"
                 frame_count="4"
-                speed="15"
+                speed="250"
                 loop="1">
                 <Tile row="8" col="4" w="16" h="16"/>
             </AnimationInfo>
@@ -267,7 +268,7 @@
                 id="Move-down"
                 texture_id="enemies"
                 frame_count="4"
-                speed="15"
+                speed="250"
                 loop="1">
                 <Tile row="8" col="0" w="16" h="16"/>
             </AnimationInfo>
@@ -275,18 +276,18 @@
                 id="Hit"
                 texture_id="enemies"
                 frame_count="3"
-                speed="8">
+                speed="100">
                 <Tile row="7" col="0" w="16" h="16"/>
             </AnimationInfo>
             <AnimationInfo
                 id="Dead"
                 texture_id="enemies"
                 frame_count="2"
-                speed="50">
+                speed="500">
                 <Tile row="6" col="0" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
-        <RangedEnemyStats health="100" damage="1" speed="10" range="150" perception_width="160" perception_height="150" xp="15" fire_interval="20"/>
+        <RangedEnemyStats health="100" damage="25" speed="70" range="150" perception_width="800" perception_height="800" xp="30" fire_interval="1000"/>
     </Object>
     <Object texture_id="enemies" object_id="goblin" rotation="0">
         <Types collider="1" ranged_enemy="1" goblin="1"/>
@@ -298,7 +299,7 @@
                 id="Idle"
                 texture_id="enemies"
                 frame_count="2"
-                speed="15"
+                speed="500"
                 loop="1">
                 <Tile row="12" col="2" w="16" h="16"/>
             </AnimationInfo>
@@ -306,7 +307,7 @@
                 id="Move-up"
                 texture_id="enemies"
                 frame_count="4"
-                speed="15"
+                speed="250"
                 loop="1">
                 <Tile row="13" col="4" w="16" h="16"/>
             </AnimationInfo>
@@ -314,7 +315,7 @@
                 id="Move-down"
                 texture_id="enemies"
                 frame_count="4"
-                speed="15"
+                speed="250"
                 loop="1">
                 <Tile row="13" col="0" w="16" h="16"/>
             </AnimationInfo>
@@ -322,18 +323,18 @@
                 id="Hit"
                 texture_id="enemies"
                 frame_count="3"
-                speed="8">
+                speed="100">
                 <Tile row="14" col="0" w="16" h="16"/>
             </AnimationInfo>
             <AnimationInfo
                 id="Dead"
                 texture_id="enemies"
                 frame_count="2"
-                speed="50">
+                speed="500">
                 <Tile row="12" col="0" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
-        <RangedEnemyStats health="100" damage="1" speed="10" range="150" perception_width="160" perception_height="150" xp="15" fire_interval="20" spread="0.4" spread_count="8"/>
+        <RangedEnemyStats health="100" damage="25" speed="80" range="150" perception_width="800" perception_height="800" xp="30" fire_interval="250" spread="0.4" spread_count="8"/>
     </Object>
     <Object texture_id="enemies" object_id="helixenemy" rotation="0">
         <Types collider="1" ranged_enemy="1" helix_enemy="1"/>
@@ -345,7 +346,7 @@
                 id="Idle"
                 texture_id="enemies"
                 frame_count="2"
-                speed="15"
+                speed="500"
                 loop="1">
                 <Tile row="12" col="2" w="16" h="16"/>
             </AnimationInfo>
@@ -353,7 +354,7 @@
                 id="Move-up"
                 texture_id="enemies"
                 frame_count="4"
-                speed="15"
+                speed="250"
                 loop="1">
                 <Tile row="13" col="4" w="16" h="16"/>
             </AnimationInfo>
@@ -361,7 +362,7 @@
                 id="Move-down"
                 texture_id="enemies"
                 frame_count="4"
-                speed="15"
+                speed="250"
                 loop="1">
                 <Tile row="13" col="0" w="16" h="16"/>
             </AnimationInfo>
@@ -369,18 +370,18 @@
                 id="Hit"
                 texture_id="enemies"
                 frame_count="3"
-                speed="8">
+                speed="100">
                 <Tile row="14" col="0" w="16" h="16"/>
             </AnimationInfo>
             <AnimationInfo
                 id="Dead"
                 texture_id="enemies"
                 frame_count="2"
-                speed="50">
+                speed="500">
                 <Tile row="12" col="0" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
-        <RangedEnemyStats health="100" damage="1" speed="10" range="150" perception_width="160" perception_height="150" xp="15" fire_interval="20"/>
+        <RangedEnemyStats health="100" damage="25" speed="70" range="180" perception_width="800" perception_height="800" xp="30" fire_interval="2000"/>
     </Object>
     <Object texture_id="enemies" object_id="mage" rotation="0">
         <Types collider="1" ranged_enemy="1" mage="1"/>
@@ -392,7 +393,7 @@
                 id="Idle"
                 texture_id="enemies"
                 frame_count="2"
-                speed="15"
+                speed="500"
                 loop="1">
                 <Tile row="6" col="2" w="16" h="16"/>
             </AnimationInfo>
@@ -400,7 +401,7 @@
                 id="Move-up"
                 texture_id="enemies"
                 frame_count="4"
-                speed="15"
+                speed="250"
                 loop="1">
                 <Tile row="8" col="4" w="16" h="16"/>
             </AnimationInfo>
@@ -408,7 +409,7 @@
                 id="Move-down"
                 texture_id="enemies"
                 frame_count="4"
-                speed="15"
+                speed="250"
                 loop="1">
                 <Tile row="8" col="0" w="16" h="16"/>
             </AnimationInfo>
@@ -416,20 +417,20 @@
                 id="Hit"
                 texture_id="enemies"
                 frame_count="3"
-                speed="8"
-                loop="1">
+                speed="100">
+                >
                 <Tile row="7" col="0" w="16" h="16"/>
             </AnimationInfo>
             <AnimationInfo
                 id="Dead"
                 texture_id="enemies"
                 frame_count="2"
-                speed="50"
-                loop="1">
+                speed="500"
+                >
                 <Tile row="6" col="0" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
-        <RangedEnemyStats health="100" damage="1" speed="10" range="150" perception_width="160" perception_height="150" xp="15" fire_interval="20"/>
+        <RangedEnemyStats health="100" damage="25" speed="80" range="150" perception_width="800" perception_height="800" xp="30" fire_interval="3000"/>
     </Object>
     <Object texture_id="enemies" object_id="skeleton" rotation="0">
         <Types collider="1" ranged_enemy="1" skeleton="1"/>
@@ -442,7 +443,7 @@
                 id="Idle"
                 texture_id="enemies"
                 frame_count="2"
-                speed="15"
+                speed="500"
                 loop="1">
                 <Tile row="9" col="2" w="16" h="16"/>
             </AnimationInfo>
@@ -450,7 +451,7 @@
                 id="Move-up"
                 texture_id="enemies"
                 frame_count="4"
-                speed="15"
+                speed="250"
                 loop="1">
                 <Tile row="11" col="4" w="16" h="16"/>
             </AnimationInfo>
@@ -458,7 +459,7 @@
                 id="Move-down"
                 texture_id="enemies"
                 frame_count="4"
-                speed="15"
+                speed="250"
                 loop="1">
                 <Tile row="11" col="0" w="16" h="16"/>
             </AnimationInfo>
@@ -466,19 +467,19 @@
                 id="Hit"
                 texture_id="enemies"
                 frame_count="3"
-                speed="8"
-                loop="1">
+                speed="100">
+                >
                 <Tile row="10" col="0" w="16" h="16"/>
             </AnimationInfo>
             <AnimationInfo
                 id="Dead"
                 texture_id="enemies"
                 frame_count="2"
-                speed="50"
-                loop="1">
+                speed="500"
+                >
                 <Tile row="9" col="0" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
-        <RangedEnemyStats health="100" damage="1" speed="10" range="150" perception_width="160" perception_height="150" xp="15" fire_interval="20" spread="0.1" spread_count="1"/>
+        <RangedEnemyStats health="100" damage="25" speed="80" range="150" perception_width="800" perception_height="800" xp="30" fire_interval="2000" spread="0.1" spread_count="1"/>
     </Object>
 </Root>

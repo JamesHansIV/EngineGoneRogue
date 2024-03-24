@@ -1,5 +1,6 @@
 #include "RingShotEnemy.h"
 #include "Engine/Application/Application.h"
+#include "Engine/Objects/Characters/RangedEnemy.h"
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/State/RangedEnemyState.h"
 
@@ -7,25 +8,25 @@ RingShotEnemy::RingShotEnemy(Properties& props, RangedEnemyStats stats,
                              float outerRadius, float innerRadius,
                              int shotCount)
     : RangedEnemy(props, stats),
-      m_OuterRadius(outerRadius),
-      m_InnerRadius(innerRadius),
-      m_ShotCount(shotCount) {
+      m_outer_radius(outerRadius),
+      m_inner_radius(innerRadius),
+      m_shot_count(shotCount) {
     Init();
 }
 
-RingShotEnemy::RingShotEnemy(Collider& rhs, RangedEnemyStats stats,
+RingShotEnemy::RingShotEnemy(Collider* rhs, RangedEnemyStats stats,
                              float outerRadius, float innerRadius,
                              int shotCount)
     : RangedEnemy(rhs, stats),
-      m_OuterRadius(outerRadius),
-      m_InnerRadius(innerRadius),
-      m_ShotCount(shotCount) {
+      m_outer_radius(outerRadius),
+      m_inner_radius(innerRadius),
+      m_shot_count(shotCount) {
     Init();
 }
 
 void RingShotEnemy::Init() {
     ChangeState(new RangedEnemyIdle(this));
-    SetHealth(new Health(100));
+    SetHealth(new Health(m_stats.health));
     SetAttack(new RangedAttack(CreateRingBullets, GetFireInterval()));
 }
 
@@ -41,11 +42,12 @@ void RingShotEnemy::Update(float dt) {
 
 void RingShotEnemy::Shoot() {
     Properties const props = {
-        "weapons", {6, 0, 16, 16}, {GetX(), GetY(), 12, 12}};
+        "weapons", {5, 0, 16, 16}, {GetX(), GetY(), 12, 12}};
 
     GetAttack()->Shoot(RangedAttackInfo{
         GetMidPointX(), GetMidPointY(), GetTarget()->GetMidPointX(),
-        GetTarget()->GetMidPointY(), props, 9, m_ShotCount});
+        GetTarget()->GetMidPointY(), props, kDefaultHitAnimationInfo, 9,
+        m_shot_count});
 }
 
 void RingShotEnemy::OnCollide(Collider* collidee) {

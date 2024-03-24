@@ -13,7 +13,8 @@ struct RangedAttackInfo {
     float TargetX;
     float TargetY;
     Properties ProjProps;
-    float ProjSpeed = 3;
+    AnimationInfo HitAnimation;
+    float ProjSpeed = 400;
     int ProjCount = 1;
     float Spread = 0;
     bool IsPlayerOwned = false;
@@ -24,28 +25,28 @@ class RangedAttack : public Attack {
    public:
     RangedAttack(std::vector<Projectile*> (*createBullets)(RangedAttackInfo),
                  int interval, AttackPattern* attackPattern = nullptr)
-        : m_CreateBullets(createBullets),
-          m_Interval(interval),
-          m_AttackPattern(attackPattern) {}
+        : m_create_bullets(createBullets),
+          m_interval(interval),
+          m_attack_pattern(attackPattern) {}
 
     void Update(float dt);
     void Draw();
 
     void Reset();
 
-    AttackPattern* GetAttackPattern() { return m_AttackPattern; }
+    AttackPattern* GetAttackPattern() { return m_attack_pattern; }
 
-    void SetAttackPattern(AttackPattern* burst) { m_AttackPattern = burst; }
+    void SetAttackPattern(AttackPattern* burst) { m_attack_pattern = burst; }
 
-    virtual void Perform() override;
+    void Perform() override;
 
     virtual void Shoot(RangedAttackInfo info);
     ~RangedAttack();
 
    private:
-    int m_Interval;
-    std::vector<Projectile*> (*m_CreateBullets)(RangedAttackInfo);
-    ProjectileManager m_ProjectileManager;
-    AttackPattern* m_AttackPattern;
-    Uint32 m_LastAttack = 0;
+    int m_interval;
+    std::vector<Projectile*> (*m_create_bullets)(RangedAttackInfo);
+    ProjectileManager m_projectile_manager;
+    AttackPattern* m_attack_pattern;
+    Uint32 m_last_attack = 0;
 };

@@ -3,19 +3,26 @@
 #include "Engine/HeadsUpDisplay/TimerElement.h"
 #include "Engine/Objects/Characters/Player.h"
 #include "Engine/Objects/ExperienceBar.h"
+#include "Engine/Objects/InventoryComponent.h"
+#include "Engine/Objects/ItemInventory.h"
+#include "Engine/Objects/PlayerStatsComponent.h"
 #include "Engine/Objects/WeaponInventory.h"
 
 class HUD {
    public:
     explicit HUD(const Player& player);
 
-    void Draw();
+    void Draw(State& state);
 
     void Update(const Player& player);
 
    private:
-    TimerElement m_TimerElement{};
+    void PausedDraw();
 
-    WeaponInventory m_WeaponInventory;
-    ExperienceBar m_ExperienceBar;
+    TimerElement m_timer_element{};
+    WeaponInventory m_weapon_inventory;
+    ItemInventory m_item_inventory;
+    ExperienceBar m_experience_bar;
+    PlayerStatsComponent m_player_stats_component;
+    InventoryComponent m_inventory_component;
 };

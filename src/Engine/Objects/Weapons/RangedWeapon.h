@@ -24,21 +24,26 @@ class RangedWeaponStats : public WeaponStats {
 
 class RangedWeapon : public Weapon {
    public:
-    RangedWeapon(Properties& props, RangedWeaponStats& stats, Player* owner);
+    RangedWeapon(Properties& props, RangedWeaponStats& stats, Player* owner,
+                 const std::string& name, Properties* projectile_props);
     void Draw() override;
     void Clean() override;
     void Update(float dt) override;
 
     void UpdateProjectiles(float dt);
 
+    void DrawProjectiles();
+
     ObjectType GetObjectType() override { return ObjectType::RangedWeapon; }
+
+    RangedWeaponStats* GetStats() override { return &m_stats; };
 
     ~RangedWeapon() override;
 
     Projectile* BuildProjectile();
 
    protected:
-    ProjectileManager m_ProjectileManager;
+    ProjectileManager m_projectile_manager;
     bool m_auto_fire_enabled = false;
     RangedWeaponStats m_stats;
     Uint32 m_last_fired = 0;

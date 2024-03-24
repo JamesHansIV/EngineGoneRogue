@@ -37,24 +37,24 @@ struct TileCoords {
 
 
 
-struct E_EnemyInfo {
+struct EEnemyInfo {
     int PerceptionWidth;
     int PerceptionHeight;
 };
 
-struct E_AnimationInfo {
+struct EAnimationInfo {
     TilePos Tile;
     int FrameCount;
     int AnimationSpeed;
 };
 
-struct E_ObjectInfo {
+struct EObjectInfo {
     TilePos Tile;
     Rect DstRect;
     float Rotation = 0.0F;
     ObjectType type = ObjectType::Base;
     SDL_Rect CollisionBox;
-    E_AnimationInfo Animation;
+    EAnimationInfo Animation;
     bool SnapToGrid = true;
 };
 
@@ -158,8 +158,8 @@ class Editor : public Application {
     TileCoords GetMouseTilePos();
 
     // keymap
-    KeyMap* m_KeyMap;
+    KeyMap* m_key_map;
 
     // map
-    Cursor* m_Cursor;
+    Cursor* m_cursor;
 };

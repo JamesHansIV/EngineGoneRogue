@@ -6,19 +6,22 @@ class Slime : public Enemy {
    public:
     explicit Slime(Properties& props, const EnemyStats& stats,
                    bool split = false);
-    Slime(Collider& rhs, EnemyStats stats);
+    Slime(Collider* rhs, EnemyStats stats, bool split = false);
+
+    ~Slime();
+
     void Init();
 
-    virtual void Draw() override;
-    virtual void Clean() override;
-    virtual void Update(float dt) override;
+    void Draw() override;
+    void Clean() override;
+    void Update(float dt) override;
 
-    virtual void OnCollide(Collider* collidee) override;
+    void OnCollide(Collider* collidee) override;
 
-    bool IsSplit() { return m_Split; }
+    [[nodiscard]] bool IsSplit() const { return m_split; }
 
-    virtual ObjectType GetObjectType() override { return ObjectType::Enemy; }
+    ObjectType GetObjectType() override { return ObjectType::Enemy; }
 
    private:
-    bool m_Split;
+    bool m_split;
 };

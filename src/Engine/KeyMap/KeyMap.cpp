@@ -168,7 +168,8 @@ void KeyMap::BuildMapFromFile() {
         // read lines and add them to line vector
         std::string str;
         std::vector<std::string> lines;
-        while(std::getline(file, str)) lines.push_back(str);
+        while(std::getline(file, str)) { lines.push_back(str);
+}
 
         // pull data out of each line
         for (std::string line : lines) {

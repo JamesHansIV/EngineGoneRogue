@@ -1,9 +1,13 @@
 #pragma once
 
 #include <SDL2/SDL.h>
+#include <tuple>
+#include <vector>
 #include "Engine/Objects/Characters/EnemyStats.h"
 
 class Collider;
+
+enum class ItemType;
 
 enum class EventType {
     UserEvent = 0,
@@ -12,6 +16,13 @@ enum class EventType {
     TargetLostEvent,
     EnemyDeathEvent,
     PlayerLevelUpEvent,
+    GameOverEvent,
+    PlaceChestIfNeededEvent,
+    ChestOpenedEvent,
+
+    StartGameEvent,
+    LevelUpSelectedGameEvent,
+    ContinueGameEvent,
 };
 
 class Event {
@@ -24,42 +35,42 @@ class Event {
 
 class UserEvent : public Event {
    public:
-    explicit UserEvent() : m_Event(nullptr) {}
+    explicit UserEvent() = default;
 
-    void SetSDLEvent(SDL_Event* event) { m_Event = event; }
+    void SetSDLEvent(SDL_Event* event) { m_event = event; }
 
-    SDL_Event* GetSDLEvent() { return m_Event; }
+    SDL_Event* GetSDLEvent() { return m_event; }
 
-    virtual EventType GetEventType() { return EventType::UserEvent; }
+    EventType GetEventType() override { return EventType::UserEvent; }
 
    private:
-    SDL_Event* m_Event;
+    SDL_Event* m_event{nullptr};
 };
 
 class CollideEvent : public Event {
    public:
-    explicit CollideEvent(Collider* collidee) : m_Collidee(collidee) {}
+    explicit CollideEvent(Collider* collidee) : m_collidee(collidee) {}
 
     void SetCollidee(Collider* collidee);
 
     Collider* GetCollidee();
 
-    virtual EventType GetEventType() { return EventType::CollideEvent; }
+    EventType GetEventType() override { return EventType::CollideEvent; }
 
    private:
-    Collider* m_Collidee;
+    Collider* m_collidee;
 };
 
 class TargetFoundEvent : public Event {
    public:
     explicit TargetFoundEvent(float targetX, float targetY)
-        : m_TargetX(targetX), m_TargetY(targetY) {}
+        : m_target_x(targetX), m_target_y(targetY) {}
 
-    virtual EventType GetEventType() { return EventType::TargetFoundEvent; }
+    EventType GetEventType() override { return EventType::TargetFoundEvent; }
 
    private:
-    float m_TargetX;
-    float m_TargetY;
+    float m_target_x;
+    float m_target_y;
 };
 
 class EnemyDeathEvent : public Event {
@@ -78,7 +89,59 @@ class EnemyDeathEvent : public Event {
 
 class TargetLostEvent : public Event {
    public:
-    explicit TargetLostEvent() {}
+    explicit TargetLostEvent() = default;
 
-    virtual EventType GetEventtype() { return EventType::TargetLostEvent; }
+    EventType GetEventType() override { return EventType::TargetLostEvent; }
+};
+
+class PlaceChestIfNeededEvent : public Event {
+   public:
+    explicit PlaceChestIfNeededEvent(float x, float y) : m_x(x), m_y(y){};
+
+    EventType GetEventType() override {
+        return EventType::PlaceChestIfNeededEvent;
+    }
+
+    [[nodiscard]] [[nodiscard]] float GetX() const { return m_x; };
+
+    [[nodiscard]] [[nodiscard]] float GetY() const { return m_y; };
+
+   private:
+    float m_x;
+    float m_y;
+};
+
+class ChestOpenedEvent : public Event {
+   public:
+    explicit ChestOpenedEvent(std::vector<ItemType>& itemTypes,
+                              std::pair<float, float>& index)
+        : m_item_types(itemTypes), m_index(index) {}
+
+    EventType GetEventType() override { return EventType::ChestOpenedEvent; };
+
+    std::vector<ItemType> GetItemTypes() { return m_item_types; };
+
+    std::pair<float, float> GetIndex() { return m_index; };
+
+   private:
+    std::vector<ItemType> m_item_types;
+    std::pair<float, float> m_index;
+};
+
+class StartGameEvent : public Event {
+   public:
+    explicit StartGameEvent() = default;
+
+    EventType GetEventType() override { return EventType::StartGameEvent; }
+
+   private:
+};
+
+class ContinueGameEvent : public Event {
+   public:
+    explicit ContinueGameEvent() = default;
+
+    EventType GetEventType() override { return EventType::ContinueGameEvent; }
+
+   private:
 };

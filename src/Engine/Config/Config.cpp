@@ -87,7 +87,7 @@ void WriteBaseObjectInfo(tinyxml2::XMLDocument& doc,
     xmlObj->InsertEndChild(dst_rect);
 }
 
-int SaveObjects(const char* filepath, std::vector<GameObject*> objects) {
+int SaveObjects(const char* filepath, const std::vector<GameObject*>& objects) {
     tinyxml2::XMLDocument doc;
     tinyxml2::XMLElement* root = doc.NewElement("Root");
     doc.InsertFirstChild(root);
@@ -97,6 +97,9 @@ int SaveObjects(const char* filepath, std::vector<GameObject*> objects) {
     tinyxml2::XMLElement* type;
 
     for (auto* obj : objects) {
+        if (obj->GetObjectType() == ObjectType::Enemy) {
+            continue;
+        }
         curr_xml_object = doc.NewElement("Object");
         types = doc.NewElement("Types");
         curr_xml_object->InsertEndChild(types);
@@ -109,7 +112,7 @@ int SaveObjects(const char* filepath, std::vector<GameObject*> objects) {
 
         if (auto* collider = dynamic_cast<Collider*>(obj)) {
             WriteColliderInfo(doc, curr_xml_object, collider);
-            types->SetAttribute("Collider", "1");
+            types->SetAttribute("collider", "1");
         }
         root->InsertEndChild(curr_xml_object);
     }
@@ -118,7 +121,7 @@ int SaveObjects(const char* filepath, std::vector<GameObject*> objects) {
 }
 
 int SaveTextureMap(const char* filepath,
-                   std::map<std::string, Texture*> textureMap) {
+                   const std::map<std::string, Texture*>& textureMap) {
     tinyxml2::XMLDocument doc;
     tinyxml2::XMLElement* root = doc.NewElement("Root");
     doc.InsertFirstChild(root);
@@ -132,7 +135,7 @@ int SaveTextureMap(const char* filepath,
     tinyxml2::XMLElement* rows;
     tinyxml2::XMLElement* cols;
 
-    for (auto& it : textureMap) {
+    for (const auto& it : textureMap) {
         texture = doc.NewElement("Texture");
         type = doc.NewElement("Type");
         id = doc.NewElement("ID");
@@ -208,7 +211,7 @@ void AddAnimation(tinyxml2::XMLElement* xmlObj, GameObject* obj) {
 
         info.Loop = curr->Attribute("loop") != nullptr &&
                     strcmp(curr->Attribute("loop"), "1") == 0;
-        SDL_Log("info loop: %d", info.Loop);
+        SDL_Log("info loop: %d", static_cast<int>(info.Loop));
 
         SDL_Log("checked loop attribute");
 
@@ -318,6 +321,7 @@ EnemyStats GetEnemyStats(tinyxml2::XMLElement* element) {
     stats.speed = atoi(element->Attribute("speed"));
     stats.range = atof(element->Attribute("range"));
     stats.perceptionWidth = atoi(element->Attribute("perception_width"));
+    stats.perceptionHeight = atoi(element->Attribute("perception_height"));
     stats.xpGiven = atoi(element->Attribute("xp"));
 
     return stats;
@@ -347,30 +351,30 @@ GameObject* BuildRangedEnemy(tinyxml2::XMLElement* types,
                              tinyxml2::XMLElement* xmlObj, GameObject* obj) {
 
     GameObject* new_obj = nullptr;
-    EnemyStats stats =
+    EnemyStats const stats =
         GetEnemyStats(xmlObj->FirstChildElement("RangedEnemyStats"));
-    RangedEnemyStats ranged_stats = GetRangedEnemyStats(
+    RangedEnemyStats const ranged_stats = GetRangedEnemyStats(
         xmlObj->FirstChildElement("RangedEnemyStats"), stats);
 
     if (types->Attribute("ring_shot_enemy") != nullptr) {
         SDL_Log("creating ring shot enemy %f", ranged_stats.spread);
-        new_obj = new RingShotEnemy(*static_cast<Collider*>(obj), ranged_stats);
+        new_obj = new RingShotEnemy(static_cast<Collider*>(obj), ranged_stats);
         SDL_Log("ring shot enemy spread %s", new_obj->GetID().c_str());
     }
     if (types->Attribute("dog") != nullptr) {
-        new_obj = new Dog(*static_cast<Collider*>(obj), ranged_stats);
+        new_obj = new Dog(static_cast<Collider*>(obj), ranged_stats);
     }
     if (types->Attribute("goblin") != nullptr) {
-        new_obj = new Goblin(*static_cast<Collider*>(obj), ranged_stats);
+        new_obj = new Goblin(static_cast<Collider*>(obj), ranged_stats);
     }
     if (types->Attribute("helix_enemy") != nullptr) {
-        new_obj = new HelixEnemy(*static_cast<Collider*>(obj), ranged_stats);
+        new_obj = new HelixEnemy(static_cast<Collider*>(obj), ranged_stats);
     }
     if (types->Attribute("skeleton") != nullptr) {
-        new_obj = new Skeleton(*static_cast<Collider*>(obj), ranged_stats);
+        new_obj = new Skeleton(static_cast<Collider*>(obj), ranged_stats);
     }
     if (types->Attribute("mage") != nullptr) {
-        new_obj = new Mage(*static_cast<Collider*>(obj), ranged_stats);
+        new_obj = new Mage(static_cast<Collider*>(obj), ranged_stats);
     }
 
     delete obj;
@@ -381,6 +385,7 @@ GameObject* BuildRangedEnemy(tinyxml2::XMLElement* types,
 GameObject* BuildObjectOnType(tinyxml2::XMLElement* types,
                               tinyxml2::XMLElement* xmlObj, GameObject* obj) {
     GameObject* new_obj = obj;
+    GameObject* to_delete = obj;
 
     if (types->Attribute("collider") != nullptr) {
         new_obj = LoadCollider(xmlObj, new_obj);
@@ -390,14 +395,19 @@ GameObject* BuildObjectOnType(tinyxml2::XMLElement* types,
 
     if (types->Attribute("player") != nullptr) {
         SDL_Log("Adding new player");
-        new_obj = new Player(*static_cast<Collider*>(new_obj));
+        to_delete = new_obj;
+        new_obj = new Player(static_cast<Collider*>(new_obj));
+
+        delete to_delete;
         return new_obj;
     }
 
     if (types->Attribute("slime") != nullptr) {
-        EnemyStats stats =
+        EnemyStats const stats =
             GetEnemyStats(xmlObj->FirstChildElement("EnemyStats"));
-        new_obj = new Slime(*static_cast<Collider*>(new_obj), stats);
+        to_delete = new_obj;
+        new_obj = new Slime(static_cast<Collider*>(new_obj), stats);
+        delete to_delete;
     }
 
     if (types->Attribute("ranged_enemy") != nullptr) {

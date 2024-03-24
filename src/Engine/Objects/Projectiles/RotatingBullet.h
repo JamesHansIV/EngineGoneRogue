@@ -7,25 +7,24 @@ class RotatingBullet : public Projectile {
 
    public:
     RotatingBullet(Properties& props, float speed, float angle,
-                   bool playerOwned = false, float rotationAngle = 0.0f,
-                   float rotationSpeed = M_PI / 36, float radius = 40);
-    virtual void Draw() override;
-    virtual void Clean() override;
-    virtual void Update(float dt) override;
+                   AnimationInfo hitAnimationInfo, bool playerOwned = false,
+                   float rotationAngle = 0.0F, float rotationSpeed = M_PI / 64,
+                   float radius = 40);
+    void Draw() override;
+    void Clean() override;
+    void Update(float dt) override;
 
-    virtual void OnCollide(Collider* collidee) override;
+    void OnCollide(Collider* collidee) override;
 
-    virtual ObjectType GetObjectType() override {
-        return ObjectType::Projectile;
-    }
+    ObjectType GetObjectType() override { return ObjectType::Projectile; }
 
-    virtual ProjectileType GetProjectileType() override {
+    ProjectileType GetProjectileType() override {
         return ProjectileType::Rotating;
     }
 
    private:
-    Vector2D m_Center;
-    float m_RotationSpeed;
-    float m_RotationAngle;
-    float m_Radius;
+    Vector2D m_center;
+    float m_rotation_speed;
+    float m_rotation_angle;
+    float m_radius;
 };

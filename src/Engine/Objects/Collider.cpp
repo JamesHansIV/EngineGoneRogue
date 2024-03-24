@@ -3,28 +3,34 @@
 
 Collider::Collider(Collider* rhs) : GameObject(rhs) {
     //needs testing
-    m_RigidBody = new RigidBody(GetX(), GetY());
+    m_rigid_body = new RigidBody(GetX(), GetY());
 
-    m_Immovable = rhs->IsImmovable();
-    Rect const rect = rhs->m_CollisionBox.GetRect();
-    m_CollisionBox.Set(rect.x, rect.y, rect.w, rect.y);
+    m_immovable = rhs->IsImmovable();
+    Rect const rect = rhs->m_collision_box.GetRect();
+    m_collision_box.Set(rect.x, rect.y, rect.w, rect.y);
 }
 
 Collider::Collider(GameObject* rhs) : GameObject(rhs) {
     //needs testing
-    m_RigidBody = new RigidBody(GetX(), GetY());
+    m_rigid_body = new RigidBody(GetX(), GetY());
 
-    m_CollisionBox.Set(GetX(), GetY(), GetWidth(), GetHeight());
+    m_collision_box.Set(GetX(), GetY(), GetWidth(), GetHeight());
+}
+
+Collider::~Collider() {
+    if (m_rigid_body) {
+        delete m_rigid_body;
+    }
 }
 
 void Collider::UnCollide(Collider* collidee) {
-    if (!m_DoUnCollide) {
+    if (!m_do_un_collide) {
         return;
     }
 
     Vector2D velocity = GetRigidBody()->Velocity();
     Vector2D const position_diff =
-        collidee->GetRigidBody()->Position() - m_RigidBody->Position();
+        collidee->GetRigidBody()->Position() - m_rigid_body->Position();
 
     if (position_diff * velocity <= 0) {
         return;
@@ -53,5 +59,5 @@ void Collider::UnCollide(Collider* collidee) {
 
     GetRigidBody()->SetVelocity(velocity);
 
-    m_DoUnCollide = false;
+    m_do_un_collide = false;
 }

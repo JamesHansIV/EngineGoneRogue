@@ -1,4 +1,7 @@
 #include "ColliderHandler.h"
+#include "Apps/Game.h"
+#include "Engine/Objects/Projectiles/Projectile.h"
+#include "Engine/State/GameState.h"
 
 ColliderHandler* ColliderHandler::s_instance = nullptr;
 
@@ -29,7 +32,7 @@ bool ColliderHandler::CheckCollision(Rect a, Rect b) {
 float ColliderHandler::FindIntersection(Vector2D p1, Vector2D d1, Vector2D p2,
                                         Vector2D d2) {
     Vector2D const b{p2.X - p1.X, p2.Y - p1.Y};
-    Matrix2D a{d1.X, -d2.X, d1.Y, -d2.Y};
+    Matrix2D const a{d1.X, -d2.X, d1.Y, -d2.Y};
 
     if (a.Determinant() == 0.0F) {
         return 0.0F;
@@ -102,10 +105,10 @@ void ColliderHandler::MoveToEdge(Collider* c1, Collider* c2) {
 void ColliderHandler::HandleCollisions() {
     // this is probably causing slowdown when there are many colliders.
     // Todo: optimize this somehow
-    for (int i = 0; i < m_Colliders.size(); i++) {
-        for (int j = i + 1; j < m_Colliders.size(); j++) {
-            Collider* c1 = m_Colliders[i];
-            Collider* c2 = m_Colliders[j];
+    for (int i = 0; i < m_colliders.size(); i++) {
+        for (int j = i + 1; j < m_colliders.size(); j++) {
+            Collider* c1 = m_colliders[i];
+            Collider* c2 = m_colliders[j];
 
             if (c1 == nullptr || c2 == nullptr) {
                 continue;
@@ -139,13 +142,25 @@ void ColliderHandler::HandleCollisions() {
             }
         }
     }
+    m_colliders.clear();
 }
 
 void ColliderHandler::AddCollider(Collider* collider) {
-    m_Colliders.push_back(collider);
+    if (collider == nullptr) {
+        SDL_Log("collider %s was nullptr", collider->GetID().c_str());
+        assert(false);
+    }
+    const Rect r = collider->GetDstRect();
+    const SDL_Rect camera = Renderer::GetInstance()->GetCamera();
+    if (CheckCollision(r, {static_cast<float>(camera.x),
+                           static_cast<float>(camera.y), camera.w, camera.h})) {
+        m_colliders.push_back(collider);
+    }
 }
 
 void ColliderHandler::RemoveCollider(Collider* collider) {
-    auto it = std::find(m_Colliders.begin(), m_Colliders.end(), collider);
-    m_Colliders.erase(it);
+    auto it = std::find(m_colliders.begin(), m_colliders.end(), collider);
+    if (it != m_colliders.end()) {
+        m_colliders.erase(it);
+    }
 }

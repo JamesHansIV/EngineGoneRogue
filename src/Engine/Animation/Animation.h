@@ -1,7 +1,9 @@
 #pragma once
 #include <SDL2/SDL.h>
+#include <map>
 #include <string>
 #include <unordered_map>
+#include <utility>
 #include "Engine/Renderer/TileMap.h"
 #include "Engine/utils/utils.h"
 
@@ -18,79 +20,80 @@ struct AnimationInfo {
 
 class Animation {
    public:
-    Animation()
-        : m_Info({"", {0, 0, 0, 0}, 0, 0, SDL_FLIP_NONE, false}),
-          m_Ended(false),
-          m_SpriteFrame(0),
-          m_CurrentAnimationID("") {}
+    Animation() : m_info({"", {0, 0, 0, 0}, 0, 0, SDL_FLIP_NONE, false}) {}
+
+    Animation(Animation* rhs);
+
+    ~Animation() = default;
 
     void Update();
-    void Draw(const Rect& dstRect, float angle = 0.0f);
+    void Draw(const Rect& dstRect, float angle = 0.0F);
 
-    void SetProps(AnimationInfo info) { m_Info = info; }
+    void SetProps(AnimationInfo info) { m_info = std::move(info); }
 
-    std::string GetTextureID() const { return m_Info.TextureID; }
+    [[nodiscard]] std::string GetTextureID() const { return m_info.TextureID; }
 
-    int GetCurrentFrame() const { return m_SpriteFrame; }
+    [[nodiscard]] int GetCurrentFrame() const { return m_sprite_frame; }
 
-    int GetSpriteRow() const { return m_Info.Tile.row; }
+    [[nodiscard]] int GetSpriteRow() const { return m_info.Tile.row; }
 
-    int GetSpriteCol() const { return m_Info.Tile.col; }
+    [[nodiscard]] int GetSpriteCol() const { return m_info.Tile.col; }
 
-    int GetSpriteWidth() const { return m_Info.Tile.w; }
+    [[nodiscard]] int GetSpriteWidth() const { return m_info.Tile.w; }
 
-    int GetSpriteHeight() const { return m_Info.Tile.h; }
+    [[nodiscard]] int GetSpriteHeight() const { return m_info.Tile.h; }
 
-    int GetFrameCount() const { return m_Info.FrameCount; }
+    [[nodiscard]] int GetFrameCount() const { return m_info.FrameCount; }
 
-    int GetAnimationSpeed() const { return m_Info.AnimationSpeed; }
-
-    std::string GetAnimationID() { return m_CurrentAnimationID; }
-
-    std::unordered_map<std::string, AnimationInfo> GetAnimations() {
-        return m_Animations;
+    [[nodiscard]] int GetAnimationSpeed() const {
+        return m_info.AnimationSpeed;
     }
 
-    std::unordered_map<std::string, AnimationInfo> GetAnimationInfo() {
-        return m_Animations;
+    std::string GetAnimationID() { return m_current_animation_id; }
+
+    std::map<std::string, AnimationInfo> GetAnimations() {
+        return m_animations;
+    }
+
+    std::map<std::string, AnimationInfo> GetAnimationInfo() {
+        return m_animations;
     }
 
     void GetKeyFrameRange(int& start, int& end) const {
-        start = m_Info.KeyFramesStart;
-        end = m_Info.KeyFramesEnd;
+        start = m_info.KeyFramesStart;
+        end = m_info.KeyFramesEnd;
     }
 
     void SetKeyFrameRange(int start, int end) {
-        m_Info.KeyFramesStart = start;
-        m_Info.KeyFramesEnd = end;
+        m_info.KeyFramesStart = start;
+        m_info.KeyFramesEnd = end;
     }
 
-    bool OnKeyFrame() const {
-        return m_Info.KeyFramesStart <= m_SpriteFrame &&
-               m_SpriteFrame < m_Info.KeyFramesEnd;
+    [[nodiscard]] bool OnKeyFrame() const {
+        return m_info.KeyFramesStart <= m_sprite_frame &&
+               m_sprite_frame < m_info.KeyFramesEnd;
     }
 
-    bool Ended() const { return m_Ended; }
+    [[nodiscard]] bool Ended() const { return m_ended; }
 
     void StopAnimation();
 
-    bool LastFrame() { return m_SpriteFrame + 1 == m_Info.FrameCount; }
+    [[nodiscard]] bool LastFrame() const {
+        return m_sprite_frame + 1 == m_info.FrameCount;
+    }
 
     void SelectAnimation(const std::string& id);
 
-    void AddAnimation(std::string id, AnimationInfo info) {
-        m_Animations[id] = info;
-        m_CurrentAnimationID = id;
-
-        SDL_Log("added animation %s in texture id: %s",
-                m_CurrentAnimationID.c_str(),
-                m_Animations[id].TextureID.c_str());
+    void AddAnimation(const std::string& id, AnimationInfo info) {
+        m_animations[id] = std::move(info);
+        m_current_animation_id = id;
     }
 
    private:
-    std::unordered_map<std::string, AnimationInfo> m_Animations;
-    AnimationInfo m_Info;
-    std::string m_CurrentAnimationID;
-    int m_SpriteFrame;
-    bool m_Ended;
+    std::map<std::string, AnimationInfo> m_animations;
+    AnimationInfo m_info;
+    std::string m_current_animation_id;
+    int m_sprite_frame{};
+    bool m_ended{};
+    double m_last_update_time{};
 };

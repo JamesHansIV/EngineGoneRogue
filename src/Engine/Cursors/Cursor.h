@@ -32,18 +32,18 @@ class Cursor {
         SDL_Rect UpdateAndGetRect(int offsetX, int offsetY);
         std::string GetTextureId(int edit_mode);
 
-        CursorType GetCursorType() {return m_Cursor_Type;}
+        CursorType GetCursorType() {return m_cursor_type;}
 
 
 
     private:
-        SDL_Rect m_Cursor_Rect;
-        int m_Width;
-        int m_Height;
-        double m_Scale;
-        CursorType m_Cursor_Type;
+        SDL_Rect m_cursor_rect;
+        int m_width;
+        int m_height;
+        double m_scale;
+        CursorType m_cursor_type;
 
-        std::unordered_map<EditMode, CursorType>edit_mode_to_cursor_type_map {
+        std::unordered_map<EditMode, CursorType>m_edit_mode_to_cursor_type_map {
             {EditMode::NONE, CursorType::POINT}, 
             {EditMode::DRAW, CursorType::DRAW}, 
             {EditMode::ERASE, CursorType::ERASE},
@@ -54,7 +54,7 @@ class Cursor {
             {EditMode::PAINT_BUCKET, CursorType::PAINT_BUCKET}
         };
 
-        std::unordered_map<CursorType, std::string>cursor_type_to_texture_id_map {
+        std::unordered_map<CursorType, std::string>m_cursor_type_to_texture_id_map {
             {CursorType::POINT, "editor-cursor-point"},
             {CursorType::DRAW, "editor-cursor-draw"},
             {CursorType::ERASE, "editor-cursor-erase"},

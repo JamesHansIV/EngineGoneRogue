@@ -3,6 +3,7 @@
 #include <SDL2_image/SDL_image.h>
 
 #include <unordered_map>
+#include "Engine/Audio/AudioManager.h"
 #include "Engine/Events/EventManager.h"
 #include "Engine/Layers/Layer.h"
 #include "Engine/Objects/Characters/Player.h"
@@ -27,29 +28,46 @@ class Application {
 
     virtual void Events();
 
-    [[nodiscard]] inline int GetFrame() const { return m_Frame; }
+    [[nodiscard]] inline int GetFrame() const { return m_frame; }
 
-    [[nodiscard]] inline bool IsRunning() const { return m_IsRunning; }
+    [[nodiscard]] inline bool IsRunning() const { return m_is_running; }
 
-    inline SDL_Window* GetWindow() { return m_Window; }
+    inline SDL_Window* GetWindow() { return m_window; }
 
-    inline std::string GetProjectName() { return m_ProjectName; }
+    inline std::string GetProjectName() { return m_project_name; }
+
+    [[nodiscard]] int GetWindowWidth() const { return m_window_width; }
+
+    [[nodiscard]] int GetWindowHeight() const { return m_window_height; }
+
+    [[nodiscard]] AudioManager& GetAudioManager() { return m_audio_manager; }
+
+    int& GetMutableWindowWidth() { return m_window_width; }
+
+    int& GetMutableWindowHeight() { return m_window_height; }
+
+    Player* GetPlayer() { return m_player; }
 
     inline static Application* Get() { return m_instance; }
 
    protected:
-    std::string m_ProjectName;
-    std::string m_BaseRoomID = "room1";
-    std::unordered_map<std::string, std::vector<GameObject*>> m_Rooms;
-    Uint32 m_LastTick;
+    std::string m_project_name;
+    std::string m_base_room_id = "room2";
+    std::unordered_map<std::string, std::vector<GameObject*>> m_rooms;
+    std::vector<GameObject*> m_objects;
+    std::vector<GameObject*> m_tiles;
+    Uint32 m_last_tick;
     bool m_is_paused;
     bool m_has_focus;
-    int m_Frame;
-    EventManager m_EventManager;
-    Player* m_Player;
+    int m_window_width = 0;
+    int m_window_height = 0;
+    int m_frame{0};
+    EventManager m_event_manager;
+    Player* m_player;
+    AudioManager m_audio_manager;
 
    private:
-    bool m_IsRunning;
-    SDL_Window* m_Window;
+    bool m_is_running;
+    SDL_Window* m_window;
     static Application* m_instance;
 };

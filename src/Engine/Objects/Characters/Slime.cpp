@@ -4,39 +4,50 @@
 #include "Engine/State/SlimeState.h"
 
 Slime::Slime(Properties& props, const EnemyStats& stats, bool split)
-    : Enemy(props, stats), m_Split(split) {
+    : Enemy(props, stats), m_split(split) {
     Init();
 }
 
-Slime::Slime(Collider& rhs, EnemyStats stats) : Enemy(rhs, stats) {
+Slime::Slime(Collider* rhs, EnemyStats stats, bool split)
+    : Enemy(rhs, stats), m_split(split) {
     Init();
+}
+
+Slime::~Slime() {
+    if (m_health != nullptr) {
+        delete m_health;
+    }
+    if (m_current_state != nullptr) {
+        delete m_current_state;
+        m_current_state = nullptr;
+    }
 }
 
 void Slime::Init() {
-    SetHealth(new Health(100));
+    SetHealth(new Health(m_stats.health));
 
     ChangeState(new SlimeIdle(this));
 }
 
 void Slime::Draw() {
-    m_CurrentState->Draw();
+    m_current_state->Draw();
 
     //Todo(Ahmni): Add flag to only show enemy health bar in dev mode.
-    m_Health->Draw(GetX(), GetY(), GetWidth());
+    m_health->Draw(GetX(), GetY(), GetWidth());
 }
 
 void Slime::Update(float dt) {
-    State* state = m_CurrentState->Update(dt);
+    State* state = m_current_state->Update(dt);
     if (state != nullptr) {
         ChangeState(state);
     }
 
-    m_RigidBody->Update(dt);
-    m_Animation->Update();
+    m_rigid_body->Update(dt);
+    m_animation->Update();
 
-    SetX(m_RigidBody->Position().X);
-    SetY(m_RigidBody->Position().Y);
-    m_CollisionBox.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
+    SetX(m_rigid_body->Position().X);
+    SetY(m_rigid_body->Position().Y);
+    m_collision_box.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
 }
 
 void Slime::OnCollide(Collider* collidee) {
@@ -45,14 +56,10 @@ void Slime::OnCollide(Collider* collidee) {
     }
 
     CollideEvent event(collidee);
-    State* state = m_CurrentState->HandleEvent(&event);
+    State* state = m_current_state->HandleEvent(&event);
     if (state != nullptr) {
         ChangeState(state);
     }
 }
 
-void Slime::Clean() {
-    delete m_Animation;
-    delete m_CurrentState;
-    delete m_Health;
-}
+void Slime::Clean() {}

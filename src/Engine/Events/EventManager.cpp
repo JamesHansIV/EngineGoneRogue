@@ -7,7 +7,6 @@ void EventManager::HandleEvents() {
     SDL_Log("Event");
     while (SDL_PollEvent(&event) != 0) {
         switch (event.type) {
-            SDL_Log("Event type: %d", event.type);
             case SDL_QUIT:
                 Application::Get()->Quit();
                 return;

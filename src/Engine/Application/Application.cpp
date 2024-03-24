@@ -7,12 +7,14 @@
 #include "Engine/Input/InputChecker.h"
 
 #include "Engine/Timer/Timer.h"
+#include "SDL2/SDL_timer.h"
 #include "backends/imgui_impl_sdl2.h"
 #include "backends/imgui_impl_sdlrenderer2.h"
 
 #include "Engine/Config/Config.h"
 #include "Engine/utils/utils.h"
 
+#include <SDL2_mixer/SDL_mixer.h>
 #include <dirent.h>
 #include <unistd.h>
 
@@ -21,11 +23,11 @@ Application* Application::m_instance = nullptr;
 //const float kDt = 0.0083;
 const float kDt = 0.01;
 
-Application::Application() : m_ProjectName("test_project"), m_Frame(0) {
+Application::Application() : m_project_name("test_project") {
     // std::cout << "DEBUG MESSAGE FLAG " << DEBUG_MESSAGES << std::endl;
     // SDL_Log("Something going on");
     // exit(0);
-    if (SDL_Init(SDL_INIT_VIDEO) != 0 &&
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0 &&
         IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG) != 0) {
         SDL_Log("Failed to initialize SDL: %s", SDL_GetError());
         assert(false);
@@ -36,35 +38,37 @@ Application::Application() : m_ProjectName("test_project"), m_Frame(0) {
         assert(false);
     }
 
-    m_Window = SDL_CreateWindow("Engine Gone Rogue", SDL_WINDOWPOS_CENTERED,
-                                SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH,
-                                SCREEN_HEIGHT, 0);
-    if (m_Window == nullptr) {
+    m_window = SDL_CreateWindow("Engine Gone Rogue", SDL_WINDOWPOS_CENTERED,
+                                SDL_WINDOWPOS_CENTERED, ScreenWidth,
+                                ScreenHeight, SDL_WINDOW_RESIZABLE);
+    if (m_window == nullptr) {
         SDL_Log("Failed to create Window: %s", SDL_GetError());
         assert(false);
     }
 
     m_instance = this;
 
+    SDL_GetWindowSize(m_window, &m_window_width, &m_window_height);
+
     //TODO: note that the cwd is <projectDir>/build instead of <projectDir>.
     //      Set a working directory path macro to use absolute file paths
     Renderer::GetInstance()->Init();
 
-    if (LOAD_PROJECT) {
+    if (ShouldLoadProject != 0U) {
         if (!LoadProject()) {
             SDL_Log("Failed to load project");
             assert(false);
         }
     }
 
-    m_IsRunning = true;
+    m_is_running = true;
 }
 
 bool Application::LoadCharacters(const char* projectPath) {
     std::string objects_path = projectPath;
     objects_path += "/objects.xml";
 
-    std::vector<GameObject*> objects = LoadObjects(objects_path.c_str());
+    std::vector<GameObject*> const objects = LoadObjects(objects_path.c_str());
 
     if (objects.empty()) {
         return false;
@@ -72,11 +76,11 @@ bool Application::LoadCharacters(const char* projectPath) {
 
     for (auto* obj : objects) {
         if (obj->GetID() == "player") {
-            m_Player = static_cast<Player*>(obj);
+            m_player = static_cast<Player*>(obj);
             continue;
         }
         SDL_Log("adding obj %s", obj->GetID().c_str());
-        m_Rooms[m_BaseRoomID].push_back(obj);
+        m_objects.push_back(static_cast<Collider*>(obj));
     }
 
     return true;
@@ -88,6 +92,12 @@ bool Application::LoadRooms(const char* projectPath) {
 
     std::string rooms_path = projectPath;
     rooms_path += "/rooms";
+
+    std::string base_room_path = rooms_path + "/" + m_base_room_id + ".xml";
+    m_tiles = LoadObjects(base_room_path.c_str());
+
+    return true;
+
     dp = opendir(rooms_path.c_str());
     if (dp == nullptr) {
         perror("Rooms path does not exist");
@@ -105,22 +115,22 @@ bool Application::LoadRooms(const char* projectPath) {
             room_path += entry->d_name;
             room_id = file_name.substr(0, file_name.rfind('.'));
             std::vector<GameObject*> objects = LoadObjects(room_path.c_str());
-            m_Rooms[room_id].insert(m_Rooms[room_id].begin(), objects.begin(),
+            m_rooms[room_id].insert(m_rooms[room_id].begin(), objects.begin(),
                                     objects.end());
             room_path = rooms_path;
         }
     }
 
-    SDL_Log("room %s has size %d", room_id.c_str(), m_Rooms[room_id].size());
+    SDL_Log("room %s has size %d", room_id.c_str(), m_rooms[room_id].size());
 
     closedir(dp);
     return true;
 }
 
 bool Application::LoadProject() {
-    char project_path[FILEPATH_LEN + 1];
-    snprintf(project_path, FILEPATH_LEN, "../assets/projects/%s",
-             m_ProjectName.c_str());
+    char project_path[FilepathLen + 1];
+    snprintf(project_path, FilepathLen, "../assets/projects/%s",
+             m_project_name.c_str());
     if (!LoadTextures(project_path)) {
         return false;
     }
@@ -169,46 +179,51 @@ void Application::Events() {
 
 void Application::Run() {
     timer.Start();
-    float accumulator = 0.0;
+    timer.Pause();
+    double accumulator = 0.0;
     int count_until_next_second = 1000;
     int fps = 0;
     int updates_per_second = 0;
-    while (m_IsRunning) {
+    while (m_is_running) {
         Events();
         bool render = false;
-        if (!timer.IsPaused()) {
-            if (timer.GetTicks() > count_until_next_second) {
-                SDL_Log("FPS: %d", fps);
-                count_until_next_second += 1000;
-                fps = 0;
-                SDL_Log("Updates per second: %d", updates_per_second);
-                updates_per_second = 0;
-            }
-            float const new_time = timer.GetTicks();
-            auto frame_time = static_cast<float>(
-                new_time / 1000.0F - timer.GetCurrentTime() / 1000.0F);
-            timer.SetCurrentTime(new_time);
-            // Necessary for slow computers
-            // Todo: implement this if slowness ever becomes an issue.
-            //if (frame_time > 0.25F) {
-            //    frame_time = 0.25F;
-            //}
+        if (SDL_GetTicks() > count_until_next_second) {
+            SDL_Log("FPS: %d", fps);
+            count_until_next_second += 1000;
+            fps = 0;
+            SDL_Log("Updates per second: %d", updates_per_second);
+            updates_per_second = 0;
+        }
+        double const new_time = timer.GetAbsoluteTicks();
+        auto frame_time = static_cast<double>(
+            new_time / 1000.0F -
+            static_cast<double>(timer.GetCurrentTime()) / 1000.0F);
+        timer.SetCurrentTime(static_cast<Uint32>(new_time));
 
-            accumulator += frame_time;
-            while (accumulator >= kDt) {
-                Update(kDt);
-                updates_per_second++;
-                render = true;
-                accumulator -= kDt;
-            }
+        SDL_Log("current time: %f", new_time);
+        SDL_Log("current time: %d", timer.GetCurrentTime());
+
+        SDL_Log("Frame time: %f", frame_time);
+
+        if (frame_time > 0.25F) {
+            frame_time = 0.25F;
+        }
+
+        accumulator += frame_time;
+        while (accumulator >= kDt) {
+            Update(kDt);
+            updates_per_second++;
+            render = true;
+            accumulator -= kDt;
         }
 
         if (render) {
-            m_Frame++;
+            m_frame++;
             Render();
             fps++;
         }
     }
+
     Clean();
 }
 
@@ -216,13 +231,23 @@ bool Application::Clean() {
     Renderer::GetInstance()->Destroy();
     delete Renderer::GetInstance();
 
-    SDL_DestroyWindow(m_Window);
+    for (const auto& it : m_rooms) {
+        if (it.first == m_base_room_id) {
+            continue;
+        }
+        for (auto* obj : it.second) {
+            delete obj;
+        }
+    }
+
+    SDL_DestroyWindow(m_window);
     TTF_Quit();
     IMG_Quit();
+    Mix_Quit();
     SDL_Quit();
     return true;
 }
 
 void Application::Quit() {
-    m_IsRunning = false;
+    m_is_running = false;
 }

@@ -2,27 +2,23 @@
 #include "Engine/Objects/Characters/Player.h"
 #include "Engine/Objects/ColliderHandler.h"
 
-int k_projectile_width = 10;
-int k_projectile_height = 10;
-
 RangedWeapon::RangedWeapon(Properties& props, RangedWeaponStats& stats,
-                           Player* owner)
-    : Weapon(props, stats, owner), m_stats(stats) {
-    m_projectile_props =
-        new Properties("weapons", {6, 0, 16, 16},
-                       {GetMidPointX(), GetMidPointY(), k_projectile_width,
-                        k_projectile_height},
-                       GetRotation(), "bullet");
+                           Player* owner, const std::string& name,
+                           Properties* projectile_props)
+    : Weapon(props, stats, owner, name),
+      m_stats(stats),
+      m_projectile_props(projectile_props) {
     m_auto_fire_enabled = true;
 }
 
 void RangedWeapon::Draw() {
     Weapon::Draw();
-    m_ProjectileManager.Draw();
 }
 
-void RangedWeapon::Update(float dt) {
-    m_CollisionBox.Set(GetX(), GetY(), GetHeight(), GetWidth());
+void RangedWeapon::DrawProjectiles() {}
+
+void RangedWeapon::Update(float /*dt*/) {
+    m_collision_box.Set(GetX(), GetY(), GetHeight(), GetWidth());
     if (InputChecker::IsKeyPressed(SDLK_f)) {
         m_auto_fire_enabled = !m_auto_fire_enabled;
         InputChecker::SetKeyPressed(SDLK_f, false);
@@ -37,21 +33,28 @@ void RangedWeapon::Update(float dt) {
         m_projectile_props->DstRect.y = GetMidPointY() - 6;
         m_projectile_props->Rotation = GetRotation();
 
+        AnimationInfo hit_animation_info = {
+            "bullet-explosion", {0, 0, 16, 16}, 4, 150};
+
         auto* projectile = new Projectile(
             *m_projectile_props,
             static_cast<float>(m_stats.GetProjectileSpeed()), GetRadians(),
-            IsPlayerOwned(),
+            hit_animation_info, IsPlayerOwned(),
             m_stats.GetDamage() + m_stats.GetOwnerStats()->GetRangedDamage(),
             m_stats.GetOwnerStats()->GetPiercing(), GetOwner());
-        m_ProjectileManager.AddProjectile(projectile);
+        // Add player velocity to projectile. Have to multiply by .1 to make the
+        // player velocity to be weaker than the projectile velocity, so that it does
+        // not overpower the projectile velocity.
+        projectile->SetVelocity(m_owner->GetRigidBody()->Velocity() * .1 +
+                                projectile->GetVelocity());
+        ProjectileManager::GetInstance()->AddProjectile(projectile);
         ColliderHandler::GetInstance()->AddCollider(projectile);
         InputChecker::SetMouseButtonPressed(SDL_BUTTON_LEFT, false);
     }
-    m_ProjectileManager.UpdateProjectiles(dt);
 }
+
+void RangedWeapon::UpdateProjectiles(float dt) {}
 
 void RangedWeapon::Clean() {}
 
-RangedWeapon::~RangedWeapon() {
-    delete m_projectile_props;
-}
+RangedWeapon::~RangedWeapon() = default;

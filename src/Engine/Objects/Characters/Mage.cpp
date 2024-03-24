@@ -1,22 +1,23 @@
 #include "Mage.h"
 #include "Engine/Application/Application.h"
+#include "Engine/Objects/Characters/RangedEnemy.h"
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Objects/Projectiles/RotatingBullet.h"
 #include "Engine/State/RangedEnemyState.h"
 
 Mage::Mage(Properties& props, const RangedEnemyStats& stats, int bulletCount)
-    : RangedEnemy(props, stats), m_BulletCount(bulletCount) {
+    : RangedEnemy(props, stats), m_bullet_count(bulletCount) {
     Init();
 }
 
-Mage::Mage(Collider& rhs, RangedEnemyStats stats, int bulletCount)
-    : RangedEnemy(rhs, stats), m_BulletCount(bulletCount) {
+Mage::Mage(Collider* rhs, RangedEnemyStats stats, int bulletCount)
+    : RangedEnemy(rhs, stats), m_bullet_count(bulletCount) {
     Init();
 }
 
 void Mage::Init() {
     ChangeState(new RangedEnemyIdle(this));
-    SetHealth(new Health(100));
+    SetHealth(new Health(m_stats.health));
     SetAttack(new RangedAttack(CreateRotatingBullets, GetFireInterval()));
 }
 
@@ -34,11 +35,12 @@ void Mage::Shoot() {
     RotatingBullet* bullet;
 
     Properties const props = {
-        "weapons", {6, 1, 16, 16}, {GetX(), GetY(), 12, 12}};
+        "weapons", {5, 1, 16, 16}, {GetX(), GetY(), 12, 12}};
 
-    GetAttack()->Shoot(
-        {GetMidPointX(), GetMidPointY(), GetTarget()->GetMidPointX(),
-         GetTarget()->GetMidPointY(), props, .05, m_BulletCount});
+    GetAttack()->Shoot(RangedAttackInfo{
+        GetMidPointX(), GetMidPointY(), GetTarget()->GetMidPointX(),
+        GetTarget()->GetMidPointY(), props, kDefaultHitAnimationInfo, 1,
+        m_bullet_count});
 }
 
 void Mage::OnCollide(Collider* collidee) {

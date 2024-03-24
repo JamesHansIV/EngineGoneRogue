@@ -4,8 +4,8 @@
 
 class WeaponInventory {
    public:
-    WeaponInventory(std::vector<Weapon*> weapons)
-        : m_Weapons(std::move(weapons)){};
+    explicit WeaponInventory(std::vector<Weapon*> weapons)
+        : m_weapons(std::move(weapons)){};
 
     void Draw();
 
@@ -13,9 +13,9 @@ class WeaponInventory {
 
     void Update(const Player& player);
 
-    void SetSelectedWeapon(Weapon* weapon) { m_SelectedWeapon = weapon; };
+    void SetSelectedWeapon(Weapon* weapon) { m_selected_weapon = weapon; };
 
    private:
-    std::vector<Weapon*> m_Weapons;
-    Weapon* m_SelectedWeapon;
+    std::vector<Weapon*> m_weapons;
+    Weapon* m_selected_weapon;
 };

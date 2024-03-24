@@ -12,7 +12,6 @@ State* SlimeHandleCollide(Slime* enemy, Collider* collidee) {
     switch (collidee->GetObjectType()) {
         case ObjectType::Projectile:
             if (dynamic_cast<Projectile*>(collidee)->IsPlayerOwned()) {
-                dynamic_cast<Projectile*>(collidee)->AddNumberofEnemiesHit();
                 return new SlimeIsHit(
                     enemy, dynamic_cast<Projectile*>(collidee)->GetDamage());
             }
@@ -36,7 +35,7 @@ State* SlimeHandleCollide(Slime* enemy, Collider* collidee) {
             auto* melee_weapon = dynamic_cast<class MeleeWeapon*>(collidee);
             if (melee_weapon->IsPlayerOwned()) {
                 return new SlimeIsHit(enemy,
-                                      melee_weapon->GetStats().GetDamage());
+                                      melee_weapon->GetStats()->GetDamage());
             }
             break;
         }
@@ -54,22 +53,19 @@ State* SlimeHandleCollide(Slime* enemy, Collider* collidee) {
 void SlimeSplit(Slime* enemy) {
     std::string const id1 = enemy->GetID() + "1";
     std::string const id2 = enemy->GetID() + "2";
-    Properties props1 = {enemy->GetTextureID(),
-                         enemy->GetTilePos(),
-                         enemy->GetDstRect(),
-                         enemy->GetRotation(),
-                         id1,
-                         enemy->GetFlip()};
-    props1.DstRect.x -= static_cast<float>(enemy->GetWidth()) / 2;
-
-    Properties props2 = props1;
-    props2.ObjectID = id2;
-    props1.DstRect.x += static_cast<float>(enemy->GetWidth()) / 2;
 
     // TODO: When Health et cetra are integrated with EnemyStats, change this
     // to use modified health values.
-    auto* slime1 = new Slime(props1, enemy->GetEnemyStats(), true);
-    auto* slime2 = new Slime(props2, enemy->GetEnemyStats(), true);
+    auto* slime1 = new Slime(enemy, enemy->GetEnemyStats(), true);
+    auto* slime2 = new Slime(enemy, enemy->GetEnemyStats(), true);
+
+    slime1->SetID(id1);
+    slime2->SetID(id2);
+
+    float const offset = static_cast<float>(enemy->GetWidth()) / 2;
+
+    slime1->GetRigidBody()->MovePosition(Vector2D(-offset, 0));
+    slime2->GetRigidBody()->MovePosition(Vector2D(offset, 0));
 
     dynamic_cast<Game*>(Application::Get())->AddObject(slime1);
     dynamic_cast<Game*>(Application::Get())->AddObject(slime2);
@@ -79,7 +75,6 @@ void SlimeSplit(Slime* enemy) {
 }
 
 void BigSlimeSelectAnimation(Slime* enemy, StateType type) {
-    SDL_Log("selecting big slime animation");
     switch (type) {
         case StateType::Idle:
             enemy->GetAnimation()->SelectAnimation("SlimeIdle");
@@ -293,8 +288,8 @@ State* SlimeIsHit::OnCollideEvent(CollideEvent* event) {
         case ObjectType::Projectile: {
             auto* projectile = dynamic_cast<Projectile*>(collidee);
             if (projectile->IsPlayerOwned()) {
-                // SetDamage(projectile->GetDamage());
-                // ApplyDamage();
+                //SetDamage(projectile->GetDamage());
+                //ApplyDamage();
             }
             break;
         }
@@ -328,7 +323,6 @@ State* SlimeDead::Update(float /*dt*/) {
         if (!GetEnemy()->IsSplit()) {
             SlimeSplit(GetEnemy());
         }
-        ColliderHandler::GetInstance()->RemoveCollider(GetEnemy());
         GetEnemy()->MarkForDeletion();
     }
     return nullptr;

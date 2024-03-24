@@ -6,11 +6,11 @@
 class Entrance : public Collider {
    public:
     explicit Entrance(Properties& props);
-    virtual void Draw() override;
-    virtual void Clean() override;
-    virtual void Update(float dt) override;
+    void Draw() override;
+    void Clean() override;
+    void Update(float dt) override;
 
-    virtual void OnCollide(Collider* collidee) override;
+    void OnCollide(Collider* collidee) override;
 
-    virtual ObjectType GetObjectType() override { return ObjectType::Entrance; }
+    ObjectType GetObjectType() override { return ObjectType::Entrance; }
 };

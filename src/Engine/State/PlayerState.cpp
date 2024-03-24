@@ -12,21 +12,17 @@ bool IsPlayerDead(Player* player) {
 }
 
 void MovePlayer(Player* player, float dt) {
-    float speed = 0;
+    float const speed = player->GetStats().GetSpeed();
     if (InputChecker::IsKeyPressed(SDLK_w)) {
-        speed = player->GetStats().GetSpeed();
         player->GetRigidBody()->ApplyVelocity(Vector2D(0, -speed * dt));
     }
     if (InputChecker::IsKeyPressed(SDLK_s)) {
-        speed = player->GetStats().GetSpeed();
         player->GetRigidBody()->ApplyVelocity(Vector2D(0, speed * dt));
     }
     if (InputChecker::IsKeyPressed(SDLK_a)) {
-        speed = player->GetStats().GetSpeed();
         player->GetRigidBody()->ApplyVelocity(Vector2D(-speed * dt, 0));
     }
     if (InputChecker::IsKeyPressed(SDLK_d)) {
-        speed = player->GetStats().GetSpeed();
         player->GetRigidBody()->ApplyVelocity(Vector2D(speed * dt, 0));
     }
 }
@@ -53,27 +49,21 @@ State* UpdateAnimationDirection(Player* player,
     if (moving_up && moving_right) {
         player->GetAnimation()->SelectAnimation(animationIDs.RightUp);
         player->SelectStillFrame("face-right-up");
-        player->SetFlip(SDL_FLIP_NONE);
     } else if (moving_up && moving_left) {
         player->GetAnimation()->SelectAnimation(animationIDs.LeftUp);
         player->SelectStillFrame("face-right-up");
-        player->SetFlip(SDL_FLIP_HORIZONTAL);
     } else if (moving_up) {
         player->GetAnimation()->SelectAnimation(animationIDs.Up);
         player->SelectStillFrame("face-up");
-        player->SetFlip(SDL_FLIP_NONE);
     } else if (moving_right) {
         player->GetAnimation()->SelectAnimation(animationIDs.Right);
         player->SelectStillFrame("face-right");
-        player->SetFlip(SDL_FLIP_NONE);
     } else if (moving_left) {
         player->GetAnimation()->SelectAnimation(animationIDs.Left);
         player->SelectStillFrame("face-right");
-        player->SetFlip(SDL_FLIP_HORIZONTAL);
     } else if (moving_down) {
         player->GetAnimation()->SelectAnimation(animationIDs.Down);
         player->SelectStillFrame("face-down");
-        player->SetFlip(SDL_FLIP_NONE);
     } else {
         player->GetAnimation()->StopAnimation();
     }
@@ -82,18 +72,19 @@ State* UpdateAnimationDirection(Player* player,
 
 State* HandleEnemyCollide(Player* player, Enemy* enemy) {
     player->UnCollide(enemy);
-    if (enemy->GetCurrentState()->GetType() == StateType::Attack &&
-        enemy->GetAnimation()->OnKeyFrame()) {
-        return new PlayerIsHit(player, 1);
+    if ((player->GetStats().GetDodgeInvincibility() == 0)) {
+        return new PlayerIsHit(player, enemy->GetEnemyStats().damage);
     }
     return nullptr;
 }
 
 State* HandleProjectileCollide(Player* player, Projectile* projectile) {
-    if (projectile->IsPlayerOwned()) {
+    if (projectile->IsPlayerOwned() ||
+        (player->GetStats().GetDodgeInvincibility() != 0) ||
+        projectile->Hit()) {
         return nullptr;
     }
-    return new PlayerIsHit(player, 10);
+    return new PlayerIsHit(player, projectile->GetDamage());
 }
 
 State* HandleEntranceCollide(Player* player, Entrance* entrance) {
@@ -276,22 +267,25 @@ void PlayerMoving::PollInput(float dt) {
 }
 
 void PlayerDodge::Enter() {
-    SDL_Log("enter dodge state");
-    GetPlayer()->GetMutableStats().SetDodgeCd(m_DodgeCD);
+    GetPlayer()->GetMutableStats().SetDodgeCd(m_dodge_cd);
     UpdateAnimationDirection(GetPlayer(), GetDodgeAnimationIDs());
     Vector2D const velocity = GetPlayer()->GetRigidBody()->Velocity();
     float const dodge_speed = GetPlayer()->GetStats().GetDodgeSpeed();
 
-    m_Velocity = velocity * dodge_speed;
+    m_velocity = velocity * dodge_speed;
 }
 
-void PlayerDodge::Exit() {}
+void PlayerDodge::Exit() {
+    GetPlayer()->GetStats().SetLastDodgeTime(timer.GetTicks());
+}
 
 State* PlayerDodge::Update(float /*dt*/) {
-    if (GetPlayer()->GetAnimation()->Ended()) {
+    if (m_distance >= GetPlayer()->GetStats().GetDodgeDistance()) {
         return new PlayerIdle(GetPlayer());
     }
-    GetPlayer()->GetRigidBody()->ApplyVelocity(m_Velocity);
+
+    m_distance += m_velocity.GetMagnitude();
+    GetPlayer()->GetRigidBody()->ApplyVelocity(m_velocity);
     return nullptr;
 }
 
@@ -324,6 +318,8 @@ State* PlayerDodge::OnCollideEvent(CollideEvent* event) {
                                          dynamic_cast<Entrance*>(collidee));
             break;
         }
+        case ObjectType::Projectile:
+            break;
         case ObjectType::Collider:
             GetPlayer()->UnCollide(collidee);
             break;
@@ -410,7 +406,7 @@ void PlayerIsHit::ApplyDamage() {
     int const armor_percentage = GetPlayer()->GetStats().GetArmorPercentage();
     float const damage_multiplier =
         1.0F - (static_cast<float>(armor_percentage) / 100.0F);
-    int const modified_damage = m_Damage * damage_multiplier;
+    int const modified_damage = m_damage * damage_multiplier;
 
     GetPlayer()->GetHealth()->SetDamage(modified_damage);
 }
@@ -424,6 +420,7 @@ void PlayerDead::Exit() {}
 State* PlayerDead::Update(float /*dt*/) {
     if (GetPlayer()->GetAnimation()->Ended()) {
         GetPlayer()->MarkForDeletion();
+        PushNewEvent(EventType::GameOverEvent);
     }
     return nullptr;
 }

@@ -3,8 +3,9 @@
 #include <tinyxml2.h>
 #include <iostream>
 #include "Engine/Application/Application.h"
-#include "Engine/Events/Event.h"
+#include "Engine/Audio/AudioManager.h"
 #include "Engine/Events/GameEventManager.h"
+#include "Engine/Events/ItemManager.h"
 #include "Engine/HeadsUpDisplay/HeadsUpDisplay.h"
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Objects/WeaponInventory.h"
@@ -20,14 +21,25 @@ class Game : public Application {
     void AddObject(GameObject* obj);
     void DeleteObject(GameObject* obj);
 
-    ~Game();
+    void UpdateObjects(float dt);
+    void DrawObjects();
+
+    void ChangeState(State* state);
+
+    ~Game() override;
 
    private:
-    std::vector<GameObject*> m_Objects;
-    WeaponInventory* m_WeaponInventory;
+    void InitObjects();
+    State* m_state;
+    WeaponInventory* m_weapon_inventory;
     int m_tick = 0;
     Uint32 m_last_enemy_spawn_time = 0;
-    GameEventManager* m_GameEventManager;
-    HUD* m_HeadsUpDisplay;
+    GameEventManager* m_game_event_manager;
+    HUD* m_heads_up_display;
+    ItemManager* m_item_manager;
+    float m_enemy_stat_multiplier = 1.0;
+    Uint32 m_enemies_to_spawn = 1;
+    Uint32 m_wave_count = 0;
     void GenerateRandomEnemyIfNeeded();
+    void GenerateRandomEnemy();
 };

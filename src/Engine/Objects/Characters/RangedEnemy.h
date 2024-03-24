@@ -3,32 +3,39 @@
 #include "Enemy.h"
 #include "Engine/Objects/Attacks/AttackFunctions.h"
 
+const AnimationInfo kDefaultHitAnimationInfo = {"enemy-bullet-explosion",
+                                                {0, 0, 16, 16},
+                                                4,
+                                                150};
+
 class RangedEnemy : public Enemy {
    public:
     explicit RangedEnemy(Properties& props, const RangedEnemyStats& enemyStats)
         : Enemy(props, enemyStats), m_stats(enemyStats) {}
 
-    RangedEnemy(Collider& rhs, RangedEnemyStats stats);
+    RangedEnemy(Collider* rhs, RangedEnemyStats stats);
 
-    ~RangedEnemy();
+    ~RangedEnemy() override;
 
-    virtual void Draw() override;
-    virtual void Clean() override;
-    virtual void Update(float dt) override;
+    void Draw() override;
+    void Clean() override;
+    void Update(float dt) override;
 
     virtual void Shoot() = 0;
 
-    int GetFireInterval() { return m_stats.fireInterval; }
+    [[nodiscard]] int GetFireInterval() const { return m_stats.fireInterval; }
 
-    RangedAttack* GetAttack() { return m_Attack; }
+    RangedAttack* GetAttack() { return m_attack; }
 
-    void SetAttack(RangedAttack* attack) { m_Attack = attack; }
+    void SetAttack(RangedAttack* attack) { m_attack = attack; }
 
-    virtual void OnCollide(Collider* collidee) override;
+    RangedEnemyStats GetRangedEnemyStats() { return m_stats; }
 
-    virtual ObjectType GetObjectType() override { return ObjectType::Enemy; }
+    void OnCollide(Collider* collidee) override;
+
+    ObjectType GetObjectType() override { return ObjectType::Enemy; }
 
    protected:
-    RangedAttack* m_Attack;
+    RangedAttack* m_attack;
     RangedEnemyStats m_stats;
 };

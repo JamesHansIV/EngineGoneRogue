@@ -31,9 +31,9 @@ class Renderer {
 
     void Init();
 
-    SDL_Renderer* GetRenderer() { return m_Renderer; }
+    SDL_Renderer* GetRenderer() { return m_renderer; }
 
-    std::vector<std::string>& GetTextureIDs() { return m_TextureIDs; }
+    std::vector<std::string>& GetTextureIDs() { return m_texture_ids; }
 
     void Render();
     void RenderClear();
@@ -49,8 +49,8 @@ class Renderer {
                         int tileSize, int rows, int cols);
 
     Texture* GetTexture(const std::string& id) {
-        return m_TextureMap.find(id) != m_TextureMap.end() ? m_TextureMap[id]
-                                                           : nullptr;
+        return m_texture_map.find(id) != m_texture_map.end() ? m_texture_map[id]
+                                                             : nullptr;
     }
 
     void Drop(const std::string& id);
@@ -81,27 +81,42 @@ class Renderer {
     void MoveCameraX(float x);
     void MoveCameraY(float y);
 
+    void SetCameraX(float x) { m_camera.x = x; }
+
+    void SetCameraY(float y) { m_camera.y = y; }
+
+    void SetCamera(float x, float y) {
+        m_camera.x = x;
+        m_camera.y = y;
+    }
+
     void CenterCameraOnObject();
 
-    void SetCameraTarget(GameObject* target) { m_CameraTarget = target; }
+    void SetCameraTarget(GameObject* target) {
+        m_camera_target = target;
+        CenterCameraOnObject();
+    }
 
-    int GetCameraX() const { return m_Camera.x; };
+    SDL_Rect GetCamera() const { return m_camera; }
 
-    int GetCameraY() const { return m_Camera.y; };
+    [[nodiscard]] int GetCameraX() const { return m_camera.x; };
+
+    [[nodiscard]] int GetCameraY() const { return m_camera.y; };
 
     [[nodiscard]] TTF_Font* GetFont() const { return m_font; };
 
     void SaveTextures(const char* filepath);
+    void SetCameraSize(int width, int height);
 
    private:
-    Renderer() {}
+    Renderer() = default;
 
-    SDL_Renderer* m_Renderer;
-    SDL_Rect m_Camera{0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
-    std::map<std::string, Texture*> m_TextureMap;
-    std::vector<std::string> m_TextureIDs;
-    std::set<std::string> m_Filepaths;
+    SDL_Renderer* m_renderer;
+    SDL_Rect m_camera;
+    std::map<std::string, Texture*> m_texture_map;
+    std::vector<std::string> m_texture_ids;
+    std::set<std::string> m_filepaths;
     static Renderer* m_instance;
-    GameObject* m_CameraTarget;
+    GameObject* m_camera_target;
     TTF_Font* m_font;
 };

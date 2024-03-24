@@ -13,25 +13,24 @@
 class HelixBullet : public Projectile {
    public:
     HelixBullet(Properties& props, float speed, float angle,
-                bool playerOwned = false, bool flipped = false);
-    virtual void Draw() override;
-    virtual void Clean() override;
-    virtual void Update(float dt) override;
+                AnimationInfo hitAnimationInfo, bool playerOwned = false,
+                bool flipped = false);
+    void Draw() override;
+    void Clean() override;
+    void Update(float dt) override;
 
-    virtual void OnCollide(Collider* collidee) override;
+    void OnCollide(Collider* collidee) override;
 
-    virtual ObjectType GetObjectType() override {
-        return ObjectType::Projectile;
-    }
+    ObjectType GetObjectType() override { return ObjectType::Projectile; }
 
-    virtual ProjectileType GetProjectileType() override {
+    ProjectileType GetProjectileType() override {
         return ProjectileType::Helix;
     }
 
    private:
-    Vector2D m_Origin;
-    Vector2D m_TPos;
-    float m_WaveMagnitude;
-    float m_Scale;
-    int m_Flipped;
+    Vector2D m_origin;
+    Vector2D m_t_pos;
+    float m_wave_magnitude{1};
+    float m_scale{30.0F};
+    int m_flipped;
 };

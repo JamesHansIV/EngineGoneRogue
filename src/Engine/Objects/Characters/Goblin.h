@@ -6,12 +6,12 @@ class Goblin : public RangedEnemy {
    public:
     explicit Goblin(Properties& props, const RangedEnemyStats& enemyStats);
 
-    Goblin(Collider& rhs, RangedEnemyStats stats);
+    Goblin(Collider* rhs, RangedEnemyStats stats);
 
     void Init();
 
-    virtual void Draw() override;
-    virtual void Update(float dt) override;
+    void Draw() override;
+    void Update(float dt) override;
 
     void Shoot() override;
 

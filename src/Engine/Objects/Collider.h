@@ -8,35 +8,37 @@
 
 class Collider : public GameObject {
    public:
-    Collider(Properties& props, bool immovable = false)
-        : GameObject(props), m_Immovable(immovable), m_DoUnCollide(false) {
-        m_RigidBody = new RigidBody(GetX(), GetY());
-        m_CollisionBox.Set(GetX(), GetY(), GetWidth(), GetHeight());
+    explicit Collider(Properties& props, bool immovable = false)
+        : GameObject(props), m_immovable(immovable), m_do_un_collide(false) {
+        m_rigid_body = new RigidBody(GetX(), GetY());
+        m_collision_box.Set(GetX(), GetY(), GetWidth(), GetHeight());
     }
 
-    Collider(Collider* rhs);
-    Collider(GameObject* rhs);
+    explicit Collider(Collider* rhs);
+    explicit Collider(GameObject* rhs);
 
-    void SetDoUnCollide(bool doUnCollide) { m_DoUnCollide = doUnCollide; }
+    ~Collider();
 
-    bool GetDoUnCollide() const { return m_DoUnCollide; }
+    void SetDoUnCollide(bool doUnCollide) { m_do_un_collide = doUnCollide; }
+
+    [[nodiscard]] bool GetDoUnCollide() const { return m_do_un_collide; }
 
     void UnCollide(Collider* collidee);
 
     virtual void OnCollide(Collider* collider) {}
 
-    RigidBody* GetRigidBody() { return m_RigidBody; }
+    RigidBody* GetRigidBody() { return m_rigid_body; }
 
-    CollisionBox& GetCollisionBox() { return m_CollisionBox; }
+    CollisionBox& GetCollisionBox() { return m_collision_box; }
 
-    bool IsImmovable() { return m_Immovable; }
+    [[nodiscard]] bool IsImmovable() const { return m_immovable; }
 
-    virtual ObjectType GetObjectType() override { return ObjectType::Collider; }
+    ObjectType GetObjectType() override { return ObjectType::Collider; }
 
    protected:
-    RigidBody* m_RigidBody;
-    CollisionBox m_CollisionBox;
-    bool m_Immovable;
+    RigidBody* m_rigid_body;
+    CollisionBox m_collision_box;
+    bool m_immovable;
     //This indicates if a collider should call UnCollide in the OnCollide method
-    bool m_DoUnCollide;
+    bool m_do_un_collide;
 };

@@ -37,12 +37,17 @@ class Timer {
 
     [[nodiscard]] bool IsPaused() const { return m_is_paused; }
 
+    [[nodiscard]] Uint32 GetAbsoluteTicks();
+
    private:
     Uint32 m_start_time;
     Uint32 m_current_time;
     Uint32 m_paused_time;
+    bool m_should_reset_current_time;
     bool m_is_paused;
     bool m_is_started;
 };
 
+// Global timers
 extern Timer timer;
+extern Timer game_loop_timer;

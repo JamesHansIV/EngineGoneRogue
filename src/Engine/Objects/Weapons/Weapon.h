@@ -19,7 +19,7 @@ class WeaponStats {
         m_fire_rate = fireRate;
         m_projectile_speed = projectileSpeed;
         m_damage = damage;
-        m_ownerStats = ownerStats;
+        m_owner_stats = ownerStats;
     }
 
     WeaponStats(const WeaponStats& prop) = default;
@@ -46,22 +46,24 @@ class WeaponStats {
 
     void SetDamage(int damage) { m_damage = damage; }
 
-    PlayerStats* GetOwnerStats() { return m_ownerStats; };
+    PlayerStats* GetOwnerStats() { return m_owner_stats; };
 
    protected:
     bool m_player_owned;
     Uint32 m_fire_rate;
     Uint32 m_projectile_speed;
     int m_damage;
-    PlayerStats* m_ownerStats;
+    PlayerStats* m_owner_stats;
 };
 
 class Weapon : public Collider {
    public:
-    explicit Weapon(Properties& props, WeaponStats& stats, Player* owner)
+    explicit Weapon(Properties& props, WeaponStats& stats, Player* owner,
+                    const std::string& name)
         : Collider(props) {
         m_stats = stats;
         m_owner = owner;
+        m_name = name;
     }
 
     void Draw() override { GameObject::Draw(); }
@@ -69,14 +71,17 @@ class Weapon : public Collider {
     void Clean() override = 0;
     void Update(float dt) override = 0;
 
-    WeaponStats GetStats() { return m_stats; };
+    virtual WeaponStats* GetStats() { return &m_stats; };
 
     inline bool IsPlayerOwned() { return m_stats.IsPlayerOwned(); }
 
     Player* GetOwner() { return m_owner; };
 
-   private:
+    std::string GetName() { return m_name; };
+
+   protected:
     WeaponStats m_stats;
     bool m_auto_fire_enabled = false;
     Player* m_owner;
+    std::string m_name;
 };
