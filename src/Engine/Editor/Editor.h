@@ -9,6 +9,33 @@
 #include "Engine/Cursors/Cursor.h"
 #include "Engine/KeyMap/KeyMap.h"
 
+#include "Engine/Editor/EditMode.h"
+#include "Engine/utils/utils.h"
+
+#include <tuple>
+
+struct TileCoords {
+    int row{}, col{};
+
+    bool IsInBounds() {
+        int levelRows = (int)LevelHeight / (int)TileSize;
+        int levelCols = (int)LevelWidth / (int)TileSize;
+        return !(row < 0 || col < 0 || row >= levelRows || col >= levelRows);
+    }
+
+    bool operator()(const TileCoords& coords) const {
+        return std::hash<int>()(coords.row) ^ std::hash<int>()(coords.col);
+    }
+
+    bool operator==(const TileCoords& rhs) const {
+        return (row == rhs.row && col == rhs.col);
+    }
+
+    bool operator!=(const TileCoords& rhs) const {
+        return !(row == rhs.row && col == rhs.col);
+    }
+};
+
 struct EEnemyInfo {
     int PerceptionWidth;
     int PerceptionHeight;
@@ -30,13 +57,12 @@ struct EObjectInfo {
     bool SnapToGrid = true;
 };
 
-enum class EditMode { NONE = 0, DRAW, ERASE, SELECT };
-
 struct EditState {
     EditMode EditMode = EditMode::NONE;
     bool IsEditing = false;
     float PrevX = -1;
     float PrevY = -1;
+    TileCoords PrevCoords {};
 };
 
 class Editor : public Application {
@@ -54,7 +80,10 @@ class Editor : public Application {
     void Events() override;
 
     static std::pair<float, float> SnapToGrid(float x, float y);
-    static std::pair<int, int>PixelToTilePos(float x, float y);
+    static void SnapToGrid(float x, float y, GameObject* obj);
+    std::pair<int, int>PixelToTilePos(float x, float y);
+    TileCoords PixelToTileCoords(float x, float y);
+    std::pair<float, float>TileCoordsToPixels(TileCoords coords); // returns {x,y}
 
     GameObject* GetObjectUnderMouse();
 
@@ -90,7 +119,7 @@ class Editor : public Application {
     void SaveRoom(const char* roomName);
     void SaveProject();
 
-    static bool LoadEditorTextures();
+    bool LoadEditorTextures();
 
    private:
     std::string m_current_room_id;
@@ -103,9 +132,29 @@ class Editor : public Application {
     std::vector<std::vector<GameObject*>> m_layers;
     std::set<int> m_hidden_layers;
     int m_current_layer{0};
+    std::unordered_map<std::string, std::pair<int,int>>m_cursor_offsets;
+    TileCoords m_mouse_input_origin;
 
 
     void CheckForToolSelection(EditorAction editor_action, EditMode edit_mode);
+
+    // Action Handlers
+    void HandleDrawAction();
+    void HandleEraseAction();
+    void HandleNoToolActions(bool mouse_moved, SDL_Event& event); // handles logic when editmode is none
+    void HandleTileSelectAction(bool mouse_moved,  SDL_Event& event);
+    void HandleDragMoveAction(SDL_Event& event);
+    void HandlePaintBucketAction(SDL_Event& event);
+
+    // action handler helpers
+    bool SelectTile(int x, int y); // returns true if selection is made, false if no selection is made, x & y are tile coords
+    bool IsMouseOverASelectedTile (TileCoords coords);
+    bool IsTileEmpty(TileCoords coords);
+    void StopEditing();
+    void UpdateEditMode(EditMode mode, bool isEditing);
+
+    std::tuple<float, float>GetMousePixelPos();
+    TileCoords GetMouseTilePos();
 
     // keymap
     KeyMap* m_key_map;

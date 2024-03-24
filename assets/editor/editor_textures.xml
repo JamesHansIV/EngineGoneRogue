@@ -3,15 +3,42 @@
         <CursorType>POINT</CursorType>
         <FilePath></FilePath>
         <ID>editor-cursor-point</ID>
+        <OffsetX>0</OffsetX>
+        <OffsetY>0</OffsetY>
     </Texture>
     <Texture type="cursor">
         <CursorType>DRAW</CursorType>
         <FilePath>../assets/editor/cursors/draw_cursor.png</FilePath>
         <ID>editor-cursor-draw</ID>
+        <OffsetX>0</OffsetX>
+        <OffsetY>0</OffsetY>
     </Texture>
     <Texture type="cursor">
         <CursorType>ERASE</CursorType>
         <FilePath>../assets/editor/cursors/erase_cursor.png</FilePath>
         <ID>editor-cursor-erase</ID>
+        <OffsetX>0</OffsetX>
+        <OffsetY>0</OffsetY>
+    </Texture>
+    <Texture type="cursor">
+        <CursorType>MULTI_SELECT</CursorType>
+        <FilePath>../assets/editor/cursors/multi_select_cursor.png</FilePath>
+        <ID>editor-cursor-multi-select</ID>
+        <OffsetX>-5</OffsetX>
+        <OffsetY>15</OffsetY>
+    </Texture>
+    <Texture type="cursor">
+        <CursorType>DRAG_MOVE</CursorType>
+        <FilePath>../assets/editor/cursors/drag_move_cursor.png</FilePath>
+        <ID>editor-cursor-drag-move</ID>
+        <OffsetX>-10</OffsetX>
+        <OffsetY>20</OffsetY>
+    </Texture>
+    <Texture type="cursor">
+        <CursorType>PAINT_BUCKET</CursorType>
+        <FilePath>../assets/editor/cursors/paint_bucket_cursor.png</FilePath>
+        <ID>editor-cursor-paint-bucket</ID>
+        <OffsetX>-2</OffsetX>
+        <OffsetY>20</OffsetY>
     </Texture>
 </Root>
