@@ -31,6 +31,8 @@ class Cursor {
         SDL_Rect UpdateAndGetRect();
         SDL_Rect UpdateAndGetRect(int offsetX, int offsetY);
         std::string GetTextureId(int edit_mode);
+        std::string GetTextureId(EditMode edit_mode);
+        std::string GetTextureId();
 
         CursorType GetCursorType() {return m_cursor_type;}
 

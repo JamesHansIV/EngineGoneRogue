@@ -8,7 +8,6 @@
 #include "Engine/Renderer/Texture.h"
 #include "Engine/Cursors/Cursor.h"
 #include "Engine/KeyMap/KeyMap.h"
-#include "Engine/Cursors/Cursor.h"
 
 #include "Engine/Editor/EditMode.h"
 #include "Engine/utils/utils.h"
@@ -19,7 +18,9 @@ struct TileCoords {
     int row{}, col{};
 
     bool IsInBounds() {
-        return !(row < 0 || col < 0 || row >= LEVEL_ROWS || col >= LEVEL_COLS);
+        int levelRows = (int)LevelHeight / (int)TileSize;
+        int levelCols = (int)LevelWidth / (int)TileSize;
+        return !(row < 0 || col < 0 || row >= levelRows || col >= levelRows);
     }
 
     bool operator()(const TileCoords& coords) const {
@@ -34,8 +35,6 @@ struct TileCoords {
         return !(row == rhs.row && col == rhs.col);
     }
 };
-
-
 
 struct EEnemyInfo {
     int PerceptionWidth;
@@ -123,18 +122,18 @@ class Editor : public Application {
     bool LoadEditorTextures();
 
    private:
-    std::string m_CurrentRoomID;
-    Texture* m_CurrentTexture{nullptr};
-    GameObject* m_CurrentObject;
-    std::set<GameObject*> m_SelectedObjects;
-    EditState m_EditState;
-    E_ObjectInfo m_ObjectInfo;
-    E_EnemyInfo m_EnemyInfo;
-    std::vector<std::vector<GameObject*>> m_Layers;
-    std::set<int> m_HiddenLayers;
-    std::unordered_map<std::string, std::pair<int,int>>m_CursorOffsets;
-    int m_CurrentLayer{0};
-    TileCoords m_MouseInputOrigin;
+    std::string m_current_room_id;
+    Texture* m_current_texture{nullptr};
+    GameObject* m_current_object;
+    std::set<GameObject*> m_selected_objects;
+    EditState m_edit_state;
+    EObjectInfo m_object_info;
+    EEnemyInfo m_enemy_info;
+    std::vector<std::vector<GameObject*>> m_layers;
+    std::set<int> m_hidden_layers;
+    int m_current_layer{0};
+    std::unordered_map<std::string, std::pair<int,int>>m_cursor_offsets;
+    TileCoords m_mouse_input_origin;
 
 
     void CheckForToolSelection(EditorAction editor_action, EditMode edit_mode);

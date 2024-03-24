@@ -34,22 +34,12 @@ SDL_Rect Cursor::UpdateAndGetRect(int offsetX, int offsetY) {
     return m_cursor_rect;
 }
 
-std::string Cursor::GetTextureId(int  /*edit_mode*/) {
+std::string Cursor::GetTextureId(int /* edit_mode */) {
     return m_cursor_type_to_texture_id_map[m_cursor_type];
 }
 
-void Cursor::SetCursor(CursorType cursor_type) {
-    m_cursor_type = cursor_type;
-}
-
-void Cursor::SetCursor(EditMode edit_mode) {
-    m_cursor_type = m_edit_mode_to_cursor_type_map[edit_mode];
-}
-std::string Cursor::GetTextureId(int edit_mode) {
-    if (edit_mode == 3) {
-        edit_mode = 0;
-    }
-    return m_cursor_type_to_texture_id_map[static_cast<CursorType>(edit_mode)];
+std::string Cursor::GetTextureId(EditMode edit_mode) {
+    return m_cursor_type_to_texture_id_map[m_edit_mode_to_cursor_type_map[edit_mode]];
 }
 
 void Cursor::SetCursor(CursorType cursor_type) {

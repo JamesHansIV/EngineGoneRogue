@@ -1047,12 +1047,9 @@ void Editor::Render() {
     // draw cursor
     if (static_cast<int>(m_cursor->GetCursorType()) != 0) {
         ImGui::SetMouseCursor(ImGuiMouseCursor_None);  // hide default cursor
-
         std::string const cursor_texture_id = m_cursor->GetTextureId(static_cast<int>(m_edit_state.EditMode));
-
         SDL_Rect const cursor_rect = m_cursor->UpdateAndGetRect(
             m_cursor_offsets[cursor_texture_id].first, m_cursor_offsets[cursor_texture_id].second);
-
 
         SDL_RenderCopy(Renderer::GetInstance()->GetRenderer(),
                        Renderer::GetInstance()
@@ -1388,7 +1385,7 @@ void Editor::HandleDragMoveAction(SDL_Event& event) {
     // finish move on mouse up
     if (event.button.type == SDL_MOUSEBUTTONUP) {
         for (const auto& obj : m_selected_objects) 
-            SnapToGrid(x, y, obj);
+            SnapToGrid(obj->GetX(), obj->GetY(), obj);
 
         StopEditing();
         return;
