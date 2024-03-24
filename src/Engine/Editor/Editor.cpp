@@ -233,6 +233,8 @@ Editor::Editor() {
 
     // create cursor
     m_cursor = new Cursor();
+
+    m_action_record_handler = new ActionRecordHandler();
 }
 
 Editor::~Editor() {
@@ -1004,8 +1006,12 @@ void Editor::Update(float /*dt*/) {
     m_key_map->CheckInputs(EditorAction::PASTE_SELECTION);
 
     // UNDO & REDO COMBOS
-    m_key_map->CheckInputs(EditorAction::UNDO_ACTION);
-    m_key_map->CheckInputs(EditorAction::REDO_ACTION);
+    if (m_key_map->CheckInputs(EditorAction::UNDO_ACTION)) {
+        m_action_record_handler->UndoAction(m_layers);
+    }
+    if(m_key_map->CheckInputs(EditorAction::REDO_ACTION)) {
+        m_action_record_handler->RedoAction(m_layers);
+    }
 
     InputChecker::SetPrevFrameKeys();
 }
@@ -1281,6 +1287,8 @@ void Editor::HandleDrawAction() {
     m_edit_state.PrevY = y;
     m_edit_state.IsEditing = true;
 
+    ActionRecord* record = new ActionRecord(EditorAction::EXECUTE_DRAW, m_layers[m_current_layer].back(), m_current_layer);
+    m_action_record_handler->RecordAction(record);
 }
 
 void Editor::HandleEraseAction() {
@@ -1305,12 +1313,16 @@ void Editor::HandleEraseAction() {
         }
     }
 
+    std::vector<GameObject*> obj_copies;
+
     // delete all the objects
     for (GameObject* obj : objects_to_delete) {
+        obj_copies.push_back(new GameObject(obj));
         DeleteObject(obj);
     }
 
-    
+    ActionRecord* record = new ActionRecord(EditorAction::EXECUTE_ERASE, obj_copies, m_current_layer);
+    m_action_record_handler->RecordAction(record);
 }
 
 void Editor::HandleNoToolActions(bool mouse_moved, SDL_Event& event) {
@@ -1414,7 +1426,7 @@ void Editor::HandlePaintBucketAction(SDL_Event& event) {
         tile_queue.push(mouse_tile_coords);
 
         int count=0;
-
+        std::vector<GameObject*>objects_added;
         while (!tile_queue.empty()) {
             TileCoords curr = tile_queue.front();
             tile_queue.pop();
@@ -1422,6 +1434,7 @@ void Editor::HandlePaintBucketAction(SDL_Event& event) {
             // paint
             const auto [x,y] = TileCoordsToPixels(curr);
             AddObject(x,y);
+            objects_added.push_back(m_layers[m_current_layer].back());
 
             std::vector<TileCoords> neighbors = {{curr.row-1, curr.col}, {curr.row, curr.col+1},
                                                 {curr.row+1, curr.col}, {curr.row, curr.col-1}};
@@ -1436,6 +1449,11 @@ void Editor::HandlePaintBucketAction(SDL_Event& event) {
                         tile_queue.push(n);
                 }
             }
+        }
+
+        if (objects_added.size() > 0) {
+            ActionRecord* record = new ActionRecord(EditorAction::EXECUTE_PAINT_BUCKET, objects_added, m_current_layer);
+            m_action_record_handler->RecordAction(record);
         }
     }
 }
