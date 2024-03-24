@@ -279,6 +279,14 @@ void Game::UpdateObjects(float dt) {
         }
         ColliderHandler::GetInstance()->AddCollider(m_player);
     }
+
+    for (auto* tile : m_tiles) {
+        auto* t = dynamic_cast<Collider*>(tile);
+        if (t != nullptr) {
+            ColliderHandler::GetInstance()->AddCollider(t);
+        }
+    }
+
     for (auto it = m_objects.begin(); it != m_objects.end();) {
         auto* enemy = dynamic_cast<Enemy*>(*it);  // Cast to Enemy type
         if (enemy != nullptr) {
@@ -306,10 +314,6 @@ void Game::Render() {
 
 void Game::DrawObjects() {
     for (auto* tile : m_tiles) {
-        auto* t = dynamic_cast<Collider*>(tile);
-        if (t != nullptr) {
-            ColliderHandler::GetInstance()->AddCollider(t);
-        }
         tile->Draw();
     }
     for (auto* obj : m_objects) {
