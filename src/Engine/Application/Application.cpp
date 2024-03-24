@@ -188,10 +188,16 @@ void Application::Run() {
             SDL_Log("Updates per second: %d", updates_per_second);
             updates_per_second = 0;
         }
-        double const new_time = SDL_GetTicks();
+        double const new_time = timer.GetAbsoluteTicks();
         auto frame_time = static_cast<double>(
-            new_time / 1000.0F - static_cast<double>(m_last_tick) / 1000.0F);
-        m_last_tick = static_cast<Uint32>(new_time);
+            new_time / 1000.0F -
+            static_cast<double>(timer.GetCurrentTime()) / 1000.0F);
+        timer.SetCurrentTime(static_cast<Uint32>(new_time));
+
+        SDL_Log("current time: %f", new_time);
+        SDL_Log("current time: %d", timer.GetCurrentTime());
+
+        SDL_Log("Frame time: %f", frame_time);
 
         if (frame_time > 0.25F) {
             frame_time = 0.25F;
@@ -219,7 +225,7 @@ bool Application::Clean() {
     Renderer::GetInstance()->Destroy();
     delete Renderer::GetInstance();
 
-    for (const auto it : m_rooms) {
+    for (const auto& it : m_rooms) {
         if (it.first == m_base_room_id) {
             continue;
         }
@@ -231,6 +237,7 @@ bool Application::Clean() {
     SDL_DestroyWindow(m_window);
     TTF_Quit();
     IMG_Quit();
+    Mix_Quit();
     SDL_Quit();
     return true;
 }

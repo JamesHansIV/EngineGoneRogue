@@ -87,10 +87,6 @@ class Animation {
     void AddAnimation(const std::string& id, AnimationInfo info) {
         m_animations[id] = std::move(info);
         m_current_animation_id = id;
-
-        SDL_Log("added animation %s in texture id: %s",
-                m_current_animation_id.c_str(),
-                m_animations[id].TextureID.c_str());
     }
 
    private:

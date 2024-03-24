@@ -170,7 +170,8 @@ State* GameEventManager::HandleCustomEvents(const SDL_Event& event,
                 static_cast<std::pair<float, float>*>(event.user.data2);
             ChestOpenedEvent chest_open_event(*item, *index);
             ItemManager->HandleEvent(&chest_open_event);
-            return new ChestDropState(static_cast<Game*>(Application::Get()), *item);
+            return new ChestDropState(static_cast<Game*>(Application::Get()),
+                                      *item);
         }
         case EventType::StartGameEvent: {
             StartGameEvent start_game_event;

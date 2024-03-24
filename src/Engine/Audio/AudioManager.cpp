@@ -161,5 +161,5 @@ AudioManager::~AudioManager() {
         sound.second = nullptr;
     }
 
-    Mix_Quit();
+    Mix_CloseAudio();
 }
