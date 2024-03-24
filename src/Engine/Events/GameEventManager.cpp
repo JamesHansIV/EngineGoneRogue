@@ -55,6 +55,7 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
                         break;
                     case SDLK_g:
                         m_player->ToggleGodMode();
+                        break;
                     case SDLK_COMMA:
                         Application::Get()->GetAudioManager().ToggleSound();
                         break;
