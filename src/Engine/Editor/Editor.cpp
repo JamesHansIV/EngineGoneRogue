@@ -403,15 +403,17 @@ void Editor::ShowFileManager() {
         }
 
         if (ImGui::BeginPopup("load_room")) {
-            for (const auto& item : m_rooms) {
+            for (const auto& item : m_room_ids_to_room_paths) {
                 std::string const id = item.first;
                 SDL_Log("Room: %s", id.c_str());
                 if (strcmp(id.c_str(), "") != 0) {
                     if (ImGui::Button(id.c_str(), ImVec2(100, 30))) {
 
                         CleanLayers();
+                        m_layers.push_back(CopyObjects(LoadRoom(id)));
 
-                        m_layers.push_back(CopyObjects(m_rooms[id]));
+
+                        // m_layers.push_back(CopyObjects(m_rooms[id]));
                         m_current_room_id = id;
                         ImGui::CloseCurrentPopup();
                     }

@@ -15,6 +15,8 @@ class Application {
 
     bool LoadCharacters(const char* projectPath);
     bool LoadRooms(const char* projectPath);
+    bool BuildRoomIdToPathMap(const char* projectPath);
+    std::vector<GameObject*> LoadRoom(std::string id);
     bool LoadProject();
 
     bool Clean();
@@ -54,8 +56,11 @@ class Application {
     std::string m_project_name;
     std::string m_base_room_id = "room2";
     std::unordered_map<std::string, std::vector<GameObject*>> m_rooms;
+    std::unordered_map<std::string, std::string> m_room_ids_to_room_paths;
+    std::vector<std::string>m_room_ids;
     std::vector<GameObject*> m_objects;
     std::vector<GameObject*> m_tiles;
+    // std::vector<GameObject*>
     Uint32 m_last_tick;
     bool m_is_paused;
     bool m_has_focus;

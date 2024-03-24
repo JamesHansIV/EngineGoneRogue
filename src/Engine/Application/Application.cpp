@@ -18,15 +18,15 @@
 #include <dirent.h>
 #include <unistd.h>
 
+#include <filesystem>
+
 Application* Application::m_instance = nullptr;
 
 //const float kDt = 0.0083;
 const float kDt = 0.01;
 
 Application::Application() : m_project_name("test_project") {
-    // std::cout << "DEBUG MESSAGE FLAG " << DEBUG_MESSAGES << std::endl;
-    // SDL_Log("Something going on");
-    // exit(0);
+
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0 &&
         IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG) != 0) {
         SDL_Log("Failed to initialize SDL: %s", SDL_GetError());
@@ -93,11 +93,6 @@ bool Application::LoadRooms(const char* projectPath) {
     std::string rooms_path = projectPath;
     rooms_path += "/rooms";
 
-    std::string base_room_path = rooms_path + "/" + m_base_room_id + ".xml";
-    m_tiles = LoadObjects(base_room_path.c_str());
-
-    return true;
-
     dp = opendir(rooms_path.c_str());
     if (dp == nullptr) {
         perror("Rooms path does not exist");
@@ -127,6 +122,50 @@ bool Application::LoadRooms(const char* projectPath) {
     return true;
 }
 
+bool Application::BuildRoomIdToPathMap(const char* projectPath) {
+    struct dirent* entry;
+    DIR* dp;
+
+    std::string rooms_path = projectPath;
+    rooms_path += "/rooms";
+
+    dp = opendir(rooms_path.c_str());
+    if (dp == nullptr) {
+        perror("Rooms path does not exist");
+        return false;
+    }
+
+    std::string room_path;
+    std::string room_id;
+    while ((entry = readdir(dp)) != nullptr) {
+        if (strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0) {
+            std::string const file_name = entry->d_name;
+            room_path += "/";
+            room_path += entry->d_name;
+            room_id = file_name.substr(0, file_name.rfind('.'));
+
+            m_room_ids_to_room_paths[room_id] = room_path;
+
+            room_path = rooms_path;
+        }
+    }
+
+    closedir(dp);
+    return true;
+}
+
+std::vector<GameObject*> Application::LoadRoom(std::string id) {
+    std::string room_path = m_room_ids_to_room_paths[id];
+    
+    if (!std::filesystem::exists(room_path) ) {
+        throw std::filesystem::filesystem_error("Could not open room file: "+room_path, std::error_code());
+    }
+
+    std::vector<GameObject*> objects = LoadObjects(room_path.c_str());
+    
+    return objects;
+}
+
 bool Application::LoadProject() {
     char project_path[FilepathLen + 1];
     snprintf(project_path, FilepathLen, "../assets/projects/%s",
@@ -140,7 +179,8 @@ bool Application::LoadProject() {
         SDL_Log("cannot load characters");
         return false;
     }
-    return LoadRooms(project_path);
+    // return LoadRooms(project_path);
+    return BuildRoomIdToPathMap(project_path);
 }
 
 void Application::Events() {
