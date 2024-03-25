@@ -319,13 +319,13 @@ void Editor::SetObjectInfo() {
 }
 
 void Editor::ShowTextureIDs() {
-    std::vector<std::string> const& texture_i_ds =
+    std::vector<std::string> const& texture_ids =
         Renderer::GetInstance()->GetTextureIDs();
-    if (texture_i_ds.empty()) {
+    if (texture_ids.empty()) {
         ImGui::Text("No loaded textures");
     } else {
         if (ImGui::TreeNode("Select texture")) {
-            for (const auto& id : texture_i_ds) {
+            for (const auto& id : texture_ids) {
                 if (ImGui::Button(id.c_str(), ImVec2(100, 30))) {
                     m_current_texture = Renderer::GetInstance()->GetTexture(id);
                     SetObjectInfo();

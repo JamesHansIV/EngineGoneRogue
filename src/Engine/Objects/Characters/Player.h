@@ -145,7 +145,7 @@ class PlayerStats {
         m_god_mode = !m_god_mode;
         if (m_god_mode) {
             m_max_health = 100000;
-            m_hp_regen_rate = 0;
+            m_hp_regen_rate = 100000;
             m_melee_damage = 1000000;
             m_ranged_damage = 1000000;
         } else {

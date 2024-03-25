@@ -193,8 +193,21 @@ void Renderer::DrawRect(SDL_Rect& rect, DrawColor color, bool filled) {
     if (!CheckCollision(rect, m_camera)) {
         return;
     }
-    rect.x -= m_camera.x;
-    rect.y -= m_camera.y;
+    SDL_Rect r = rect;
+    r.x -= m_camera.x;
+    r.y -= m_camera.y;
+    if (filled) {
+        SDL_RenderFillRect(m_renderer, &r);
+    } else {
+        SDL_RenderDrawRect(m_renderer, &r);
+    }
+}
+
+void Renderer::DrawRectRelative(SDL_Rect& rect, DrawColor color, bool filled) {
+    SDL_SetRenderDrawColor(m_renderer, color.r, color.g, color.b, color.a);
+    if (!CheckCollision(rect, m_camera)) {
+        return;
+    }
     if (filled) {
         SDL_RenderFillRect(m_renderer, &rect);
     } else {

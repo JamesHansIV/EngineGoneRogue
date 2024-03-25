@@ -59,6 +59,8 @@ class Renderer {
                   DrawColor color = {0, 0, 0, 255});
     void DrawRect(SDL_Rect& rect, DrawColor color = {0, 0, 0, 255},
                   bool filled = false);
+    void DrawRectRelative(SDL_Rect& rect, DrawColor color = {0, 0, 0, 255},
+                          bool filled = false);
     void DrawRects(std::vector<SDL_Rect> rects,
                    DrawColor color = {0, 0, 0, 255}, bool filled = false);
     void Draw(const std::string& id, SDL_Rect& srcRect, SDL_Rect& dstRect,

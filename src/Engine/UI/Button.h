@@ -36,37 +36,29 @@ class Button {
 
         Renderer* renderer = Renderer::GetInstance();
 
-        const Position pos{renderer->GetCameraX() + m_relative_pos.x,
-                           renderer->GetCameraY() + m_relative_pos.y};
+        const Position pos{m_relative_pos.x, m_relative_pos.y};
         Texture* text_texture = Renderer::GetInstance()->AddTextTexture(
             m_text, m_text, {255, 255, 255, 255});
         SDL_Rect src_rect = {0, 0, text_texture->GetWidth(),
                              text_texture->GetHeight()};
 
-        m_shape = DrawBar(pos, Size{m_shape.w, m_shape.h});
         SDL_Rect text_shape = {
             m_shape.x + m_shape.w / 2 - text_texture->GetWidth() / 2,
             m_shape.y + m_shape.h / 2 - text_texture->GetHeight() / 2,
             text_texture->GetWidth(), text_texture->GetHeight()};
         switch (m_state) {
             case ButtonStateNormal:
-                renderer->DrawRect(m_shape, {0, 0, 0, 255}, true);
+                renderer->DrawRectRelative(m_shape, {0, 0, 0, 255}, true);
                 break;
             case ButtonStateHover:
-                renderer->DrawRect(m_shape, {0, 255, 0, 255}, true);
+                renderer->DrawRectRelative(m_shape, {0, 255, 0, 255}, true);
                 break;
             case ButtonStatePressed:
-                renderer->DrawRect(m_shape, {0, 0, 0, 235}, true);
+                renderer->DrawRectRelative(m_shape, {0, 0, 0, 235}, true);
                 break;
         }
         renderer->Draw(m_text, src_rect, text_shape);
     };
-
-    void Draw(TilePos src) {
-        SDL_Rect src_rect = {src.col * src.w, src.row * src.h, src.w, src.h};
-        Renderer::GetInstance()->Draw(m_texture_id, src_rect, m_dst, 0,
-                                      nullptr);
-    }
 
     void Update() {
         Vector2D const mouse_pos{static_cast<float>(InputChecker::GetMouseX()),
