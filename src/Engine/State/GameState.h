@@ -100,7 +100,7 @@ class PauseState : public GameState {
     explicit PauseState(Game* game) : GameState(game) {
         int const x = (Application::Get()->GetWindowWidth() - 100) / 2;
         int const y = (Application::Get()->GetWindowHeight() - 60) / 2;
-        m_button = Button("buttons", SDL_Rect{x, y, 100, 60}, "Continue", []() {
+        m_button = Button("buttons", SDL_Rect{x, y, 150, 80}, "Continue", []() {
             SDL_Log("Continue button clicked");
             timer.Unpause();
             PushNewEvent(EventType::ContinueGameEvent);

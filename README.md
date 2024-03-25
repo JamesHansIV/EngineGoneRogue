@@ -16,5 +16,15 @@ To build the editor with cmake:
 $ ./build-engine.sh editor
 ```
 
+### Editor Keybinds
+* Deselect current tool and all selected objects - **esc**
+* Draw Tool - **d** (toggleable)
+* Erase Tool - **e** (toggleable)
+* Multi-tile select Tool - **t** (toggleable)
+* Paint Bucket Tool - **p**
+* Move Selection Tool - **m** (toggleable) or click and drag (a) selected tile(s) whith no Tools active
+* Undo - **cmd + z**
+* Redo - **cmd + y**
+
 ### Attributions
 <a href="https://www.flaticon.com/free-icons/edit" title="edit icons">Edit icons created by Freepik - Flaticon</a>

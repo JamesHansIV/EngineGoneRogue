@@ -93,6 +93,7 @@ bool Application::LoadRooms(const char* projectPath) {
     std::string rooms_path = projectPath;
     rooms_path += "/rooms";
 
+    // NOTE: comment these out to load all rooms for the editor
     std::string base_room_path = rooms_path + "/" + m_base_room_id + ".xml";
     m_tiles = LoadObjects(base_room_path.c_str());
 

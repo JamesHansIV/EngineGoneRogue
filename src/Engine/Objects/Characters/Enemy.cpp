@@ -53,7 +53,7 @@ bool Enemy::TargetDetected() {
 
     Rect const target = m_target->GetDstRect();
 
-    return ColliderHandler::GetInstance()->CheckCollision(m_perception, target);
+    return true;
 }
 
 // Returns true if in target is in range
