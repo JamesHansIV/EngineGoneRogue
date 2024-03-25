@@ -1,7 +1,7 @@
 #include "ItemManager.h"
 #include "Engine/Events/Event.h"
 #include "Engine/Objects/Chests/Chest.h"
-#include "Engine/Objects/ItemInventory.h"
+#include "Engine/UI/ItemInventory.h"
 #include "Engine/utils/utils.h"
 #include <random>
 #include <tuple>

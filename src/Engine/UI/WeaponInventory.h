@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "Weapons/Weapon.h"
+#include "Engine/Objects/Weapons/Weapon.h"
 
 class WeaponInventory {
    public:

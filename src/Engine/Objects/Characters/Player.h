@@ -7,7 +7,7 @@
 #include "Engine/Animation/Animation.h"
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Objects/Item.h"
-#include "Engine/Objects/ItemInventory.h"
+#include "Engine/UI/ItemInventory.h"
 #include "Engine/Objects/Weapons/Weapon.h"
 #include "Engine/Physics/RigidBody.h"
 #include "Engine/State/PlayerState.h"

@@ -1,4 +1,4 @@
-#include "Engine/Objects/ChestDropModal.h"
+#include "ChestDropModal.h"
 #include "Engine/Events/Event.h"
 #include "Engine/Renderer/Renderer.h"
 #include "Engine/UI/GridComponent.h"

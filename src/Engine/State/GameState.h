@@ -4,7 +4,7 @@
 #include <vector>
 #include "Engine/Events/Event.h"
 #include "Engine/Objects/Characters/Player.h"
-#include "Engine/Objects/ChestDropModal.h"
+#include "Engine/UI/ChestDropModal.h"
 #include "Engine/UI/Button.h"
 #include "Engine/UI/StartScreen.h"
 #include "State.h"

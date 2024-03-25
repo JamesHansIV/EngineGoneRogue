@@ -3,7 +3,7 @@
 #include <thread>
 #include "Engine/Input/InputChecker.h"
 #include "Engine/Objects/Environment/Entrance.h"
-#include "Engine/Objects/ItemInventory.h"
+#include "Engine/UI/ItemInventory.h"
 #include "Engine/Objects/Projectiles/Projectile.h"
 #include "Engine/Objects/Weapons/MeleeWeapon.h"
 #include "Engine/Objects/Weapons/RangedWeapon.h"

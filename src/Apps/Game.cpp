@@ -18,7 +18,7 @@
 #include "Engine/Objects/GameObject.h"
 #include "Engine/Objects/HealthPotion.h"
 #include "Engine/Objects/Item.h"
-#include "Engine/Objects/WeaponInventory.h"
+#include "Engine/UI/WeaponInventory.h"
 #include "Engine/Objects/Weapons/Weapon.h"
 #include "Engine/Renderer/Renderer.h"
 #include "Engine/State/GameState.h"

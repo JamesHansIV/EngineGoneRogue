@@ -1,4 +1,4 @@
-#include "Engine/Objects/ItemInventory.h"
+#include "ItemInventory.h"
 #include "Engine/Objects/Characters/Player.h"
 #include "Engine/UI/GridComponent.h"
 

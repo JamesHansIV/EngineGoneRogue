@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "Weapons/Weapon.h"
+#include "Engine/Objects/Weapons/Weapon.h"
 #include "Engine/Objects/Characters/Player.h"
 
 class PlayerStatsComponent {

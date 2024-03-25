@@ -8,7 +8,7 @@
 #include "Engine/Events/ItemManager.h"
 #include "Engine/HeadsUpDisplay/HeadsUpDisplay.h"
 #include "Engine/Objects/ColliderHandler.h"
-#include "Engine/Objects/WeaponInventory.h"
+#include "Engine/UI/WeaponInventory.h"
 
 class Game : public Application {
    public:
