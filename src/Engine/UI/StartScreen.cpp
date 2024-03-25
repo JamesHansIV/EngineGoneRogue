@@ -1,28 +1,33 @@
 #include "StartScreen.h"
 
-StartScreen::StartScreen() : m_title(nullptr) {
-    m_title = Renderer::GetInstance()->AddTextTexture(
-        "GameTitle", "Rogue Mansion", {255, 255, 255, 255});
+StartScreen::StartScreen() {
     const int window_width = Application::Get()->GetWindowWidth();
     const int window_height = Application::Get()->GetWindowHeight();
 
-    m_titleRect = {60, 50, window_width - 150, window_height / 6};
+    Texture* texture =
+        Renderer::GetInstance()->GetTexture(kDefaultStartTextureID);
+
+    m_background_src = {0, 0, texture->GetWidth(), texture->GetHeight()};
+
+    m_background = DrawElement(kDefaultStartTextureID,
+                               {0, 0, window_width, window_height});
 
     int const x = (window_width - 100) / 2;
-    int const y = (window_height - 60) / 2;
-    m_startButton = Button(SDL_Rect{x, y, 100, 60}, "Start", []() {
+    int const y = window_height - 125;
+    m_start_button = Button("buttons", SDL_Rect{x, y, 100, 60}, "Start", []() {
         SDL_Log("Start button clicked");
         timer.Unpause();
         PushNewEvent(EventType::StartGameEvent);
     });
 }
 
+StartScreen::~StartScreen() {}
+
 void StartScreen::Draw() {
-    SDL_Rect src = {0, 0, m_title->GetWidth(), m_title->GetHeight()};
-    Renderer::GetInstance()->Draw("GameTitle", src, m_titleRect, SDL_FLIP_NONE);
-    m_startButton.Draw();
+    m_background.Draw(m_background_src);
+    m_start_button.Draw();
 }
 
 void StartScreen::Update() {
-    m_startButton.Update();
+    m_start_button.Update();
 }

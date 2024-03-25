@@ -110,4 +110,8 @@
         <FilePath>../assets/textures/start_background.png</FilePath>
         <ID>start-background</ID>
     </Texture>
+    <Texture type = "base">
+        <FilePath>../assets/textures/GUI/big_buttons.png</FilePath>
+        <ID>buttons</ID>
+    </Texture>
 </Root>

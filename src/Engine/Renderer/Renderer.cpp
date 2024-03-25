@@ -282,6 +282,12 @@ void Renderer::Draw(const std::string& id, int x, int y, int width, int height,
                      &dst_rect, angle, center, flip);
 }
 
+void Renderer::DrawRelative(const std::string& id, SDL_Rect& srcRect,
+                            SDL_Rect& dstRect, SDL_RendererFlip flip) {
+    SDL_RenderCopyEx(m_renderer, m_texture_map[id]->GetTexture(), &srcRect,
+                     &dstRect, 0, nullptr, flip);
+}
+
 void Renderer::DrawFrame(const std::string& id, int x, int y, int width,
                          int height, int row, int col, int frame,
                          SDL_RendererFlip flip) {

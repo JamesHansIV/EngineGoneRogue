@@ -40,15 +40,7 @@ class RunningState : public GameState {
 
 class StartState : public GameState {
    public:
-    explicit StartState(Game* game) : GameState(game) {
-        int const x = (Application::Get()->GetWindowWidth() - 100) / 2;
-        int const y = (Application::Get()->GetWindowHeight() - 60) / 2;
-        m_button = Button(SDL_Rect{x, y, 100, 60}, "Start", []() {
-            SDL_Log("Start button clicked");
-            timer.Unpause();
-            PushNewEvent(EventType::StartGameEvent);
-        });
-    }
+    explicit StartState(Game* game) : GameState(game) {}
 
     void Enter() override;
     void Exit() override;
@@ -60,7 +52,6 @@ class StartState : public GameState {
 
    private:
     StartScreen m_startScreen;
-    Button m_button;
 };
 
 class GameOverState : public GameState {
@@ -109,7 +100,7 @@ class PauseState : public GameState {
     explicit PauseState(Game* game) : GameState(game) {
         int const x = (Application::Get()->GetWindowWidth() - 100) / 2;
         int const y = (Application::Get()->GetWindowHeight() - 60) / 2;
-        m_button = Button(SDL_Rect{x, y, 100, 60}, "Continue", []() {
+        m_button = Button("buttons", SDL_Rect{x, y, 100, 60}, "Continue", []() {
             SDL_Log("Continue button clicked");
             timer.Unpause();
             PushNewEvent(EventType::ContinueGameEvent);

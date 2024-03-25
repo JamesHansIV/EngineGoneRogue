@@ -73,6 +73,8 @@ class Renderer {
     void Draw(const std::string& id, int x, int y, int width, int height,
               double angle, const SDL_Point* center,
               SDL_RendererFlip flip = SDL_FLIP_NONE);
+    void DrawRelative(const std::string& id, SDL_Rect& srcRect,
+                      SDL_Rect& dstRect, SDL_RendererFlip flip = SDL_FLIP_NONE);
     void DrawFrame(const std::string& id, int x, int y, int width, int height,
                    int row, int col, int frame,
                    SDL_RendererFlip flip = SDL_FLIP_NONE);

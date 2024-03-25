@@ -200,10 +200,10 @@ void Application::Run() {
             static_cast<double>(timer.GetCurrentTime()) / 1000.0F);
         timer.SetCurrentTime(static_cast<Uint32>(new_time));
 
-        SDL_Log("current time: %f", new_time);
-        SDL_Log("current time: %d", timer.GetCurrentTime());
+        //SDL_Log("current time: %f", new_time);
+        //SDL_Log("current time: %d", timer.GetCurrentTime());
 
-        SDL_Log("Frame time: %f", frame_time);
+        //SDL_Log("Frame time: %f", frame_time);
 
         if (frame_time > 0.25F) {
             frame_time = 0.25F;

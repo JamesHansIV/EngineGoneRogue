@@ -26,6 +26,7 @@ State* RunningState::HandleEvent(Event* /*event*/) {
 }
 
 void StartState::Enter() {
+    m_startScreen = StartScreen();
     Renderer::GetInstance()->SetCameraTarget(nullptr);
     Renderer::GetInstance()->SetCamera(0, 0);
     Application::Get()->GetAudioManager().SetMusicVolume(80);
@@ -181,13 +182,14 @@ LevelUpState::LevelUpState(Game* game) : GameState(game) {
         // This way we can have a list of options that are randomly selected and change probability
         // without copying data
 
-        m_option_one_button = Button(SDL_Rect{x, y, w, h}, m_options[0].text,
-                                     m_options[0].side_effect);
+        m_option_one_button =
+            Button("buttons", SDL_Rect{x, y, w, h}, m_options[0].text,
+                   m_options[0].side_effect);
         m_option_two_button =
-            Button(SDL_Rect{x * 2, y, w, h}, m_options[1].text,
+            Button("buttons", SDL_Rect{x * 2, y, w, h}, m_options[1].text,
                    m_options[1].side_effect);
         m_option_three_button =
-            Button(SDL_Rect{x * 3, y, w, h}, m_options[2].text,
+            Button("buttons", SDL_Rect{x * 3, y, w, h}, m_options[2].text,
                    m_options[2].side_effect);
     }
 }

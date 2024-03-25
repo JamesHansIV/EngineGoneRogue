@@ -5,7 +5,7 @@
 using std::string;
 
 std::vector<std::pair<string, string>> music_files = {
-    {"pause-screen", "../assets/music/pause-screen.wav"},
+    {"pause-screen", "../assets/music/Dungeon-Crawler.wav"},
     {"beat", "../assets/music/beat.wav"},
     {"background-intense", "../assets/music/background-intense.wav"}};
 
