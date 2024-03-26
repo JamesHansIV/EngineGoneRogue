@@ -18,12 +18,12 @@
 #include "Engine/Objects/GameObject.h"
 #include "Engine/Objects/HealthPotion.h"
 #include "Engine/Objects/Item.h"
-#include "Engine/Objects/WeaponInventory.h"
 #include "Engine/Objects/Weapons/Weapon.h"
 #include "Engine/Renderer/Renderer.h"
 #include "Engine/State/GameState.h"
 #include "Engine/Timer/Timer.h"
 #include "Engine/UI/Button.h"
+#include "Engine/UI/WeaponInventory.h"
 #include "SDL2/SDL_log.h"
 
 std::vector<Collider*> colliders;
@@ -119,17 +119,6 @@ Game::Game() {
     SDL_Cursor* cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR);
 
     SDL_SetCursor(cursor);
-
-    Properties props11("healthpotion", {1, 1, 16, 16}, {250, 150, 25, 25}, 0,
-                       "healthpotion");
-    auto* healthpotion = new HealthPotion(props11, 20);
-
-    Properties props12("healthpotion", {1, 1, 16, 16}, {550, 400, 25, 25}, 0,
-                       "healthpotion2");
-    auto* healthpotion2 = new HealthPotion(props12, 20);
-
-    m_objects.push_back(healthpotion);
-    m_objects.push_back(healthpotion2);
 
     m_weapon_inventory->SetSelectedWeapon(m_player->GetCurrentWeapon());
 
@@ -288,19 +277,20 @@ void Game::UpdateObjects(float dt) {
         }
     }
 
-    for (auto it = m_objects.begin(); it != m_objects.end();) {
-        auto* enemy = dynamic_cast<Enemy*>(*it);  // Cast to Enemy type
+    for (int i = 0; i < m_objects.size(); i++) {
+        auto* object = m_objects[i];
+        auto* enemy = dynamic_cast<Enemy*>(object);  // Cast to Enemy type
         if (enemy != nullptr) {
             enemy->SetTarget(m_player);
         }
-        (*it)->Update(dt);
+        (object)->Update(dt);
 
-        if ((*it)->MarkedForDeletion()) {
-            DeleteObject(*it);
+        if ((object)->MarkedForDeletion()) {
+            DeleteObject(object);
         } else {
             ColliderHandler::GetInstance()->AddCollider(
-                dynamic_cast<Collider*>(*it));
-            ++it;
+                dynamic_cast<Collider*>(object));
+            ++object;
         }
     }
 

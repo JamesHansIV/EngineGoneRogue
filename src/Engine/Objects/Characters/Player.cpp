@@ -3,12 +3,12 @@
 #include <thread>
 #include "Engine/Input/InputChecker.h"
 #include "Engine/Objects/Environment/Entrance.h"
-#include "Engine/Objects/ItemInventory.h"
 #include "Engine/Objects/Projectiles/Projectile.h"
 #include "Engine/Objects/Weapons/MeleeWeapon.h"
 #include "Engine/Objects/Weapons/RangedWeapon.h"
 #include "Engine/Renderer/Renderer.h"
 #include "Engine/State/State.h"
+#include "Engine/UI/ItemInventory.h"
 #include "SDL2/SDL_render.h"
 #include "SDL2/SDL_timer.h"
 
@@ -62,7 +62,7 @@ void Player::Init() {
     m_health = new Health(m_stats->GetMaxHealth());
 
     Properties props_uzi("weapons", {0, 3, 16, 16}, {0, 0, 18, 18}, 0.0);
-    RangedWeaponStats stats_uzi = {true, 200, 25, 16, m_stats};
+    RangedWeaponStats stats_uzi = {true, 200, 25, 20, m_stats};
     Weapon* uzi = new RangedWeapon(props_uzi, stats_uzi, this, "Uzi",
                                    default_projectile_props);
     m_weapons.push_back(uzi);

@@ -10,6 +10,7 @@ class ItemManager : public virtual EventManager {
     void HandleEvent(Event* event);
 
    private:
-    float m_chance_of_drop = 0.05;
+    float m_chance_of_drop_chest = 0.05;
+    float m_chance_of_drop_health_potion = 0.01;
     Player* m_player;
 };

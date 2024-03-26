@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include "Engine/Objects/Characters/Player.h"
-#include "Weapons/Weapon.h"
+#include "Engine/Objects/Weapons/Weapon.h"
 
 class PlayerStatsComponent {
    public:

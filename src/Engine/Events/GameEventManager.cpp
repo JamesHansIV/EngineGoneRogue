@@ -33,11 +33,8 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
                 switch (event.key.keysym.sym) {
                     case SDLK_ESCAPE:
                         if (timer.IsPaused()) {
-                            if (GameState->GetType() == StateType::Pause) {
-                                state = new RunningState(
-                                    static_cast<Game*>(Application::Get()));
-                            }
-                            if (GameState->GetType() == StateType::ChestDrop) {
+                            if (GameState->GetType() == StateType::Pause ||
+                                GameState->GetType() == StateType::ChestDrop) {
                                 state = new RunningState(
                                     static_cast<Game*>(Application::Get()));
                             }
@@ -165,9 +162,9 @@ State* GameEventManager::HandleCustomEvents(const SDL_Event& event,
             EnemyDeathEvent death_event(enemy->GetEnemyStats());
             if (m_player != nullptr) {
                 m_player->HandleEvent(&death_event);
-                PlaceChestIfNeededEvent place_chest_event(enemy->GetX(),
+                PlaceItemIfNeededEvent place_item_event(enemy->GetX(),
                                                           enemy->GetY());
-                ItemManager->HandleEvent(&place_chest_event);
+                ItemManager->HandleEvent(&place_item_event);
             }
             return nullptr;
         }

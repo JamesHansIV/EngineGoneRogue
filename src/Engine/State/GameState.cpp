@@ -157,6 +157,63 @@ const std::unordered_map<std::string, Option> kLevelUpOptions = {
 
           PushNewEvent(EventType::LevelUpSelectedGameEvent);
       }}},
+    {"piercing",
+     {"+1 Piercing", "Increases piercing by 1",
+      []() {
+          auto& stats = Application::Get()->GetPlayer()->GetMutableStats();
+
+          stats.SetPiercing(stats.GetPiercing() + 1);
+          PushNewEvent(EventType::LevelUpSelectedGameEvent);
+      }}},
+    {"armor",
+     {"+10% Armor", "Increases armor by 10%",
+      []() {
+          auto& stats = Application::Get()->GetPlayer()->GetMutableStats();
+
+          stats.SetArmorPercentage(stats.GetArmorPercentage() +
+                                   stats.GetArmorPercentage() * 0.1);
+          PushNewEvent(EventType::LevelUpSelectedGameEvent);
+      }}},
+    {"regen",
+     {"+1 HP Regen", "Increases HP regen by 1",
+      []() {
+          auto& stats = Application::Get()->GetPlayer()->GetMutableStats();
+
+          stats.SetHpRegenRate(stats.GetHPRegenRate() + 1);
+          PushNewEvent(EventType::LevelUpSelectedGameEvent);
+      }}},
+    {"lifesteal",
+     {"+5% Lifesteal", "Increases lifesteal by 5%",
+      []() {
+          auto& stats = Application::Get()->GetPlayer()->GetMutableStats();
+
+          stats.SetLifeStealPercentage(stats.GetLifeStealPercentage() + 5);
+          PushNewEvent(EventType::LevelUpSelectedGameEvent);
+      }}},
+    {"dodge",
+     {"+1 Dodge", "Increases dodge by 1",
+      []() {
+          auto& stats = Application::Get()->GetPlayer()->GetMutableStats();
+
+          stats.SetDodgeCd(stats.GetDodgeCd() - 1);
+          PushNewEvent(EventType::LevelUpSelectedGameEvent);
+      }}},
+    {"ranged",
+     {"+5 Ranged Damage", "Increases ranged damage by 5",
+      []() {
+          auto& stats = Application::Get()->GetPlayer()->GetMutableStats();
+
+          stats.SetRangedDamage(stats.GetRangedDamage() + 5);
+          PushNewEvent(EventType::LevelUpSelectedGameEvent);
+      }}},
+    {"melee",
+     {"+5 Melee Damage", "Increases melee damage by 5",
+      []() {
+          auto& stats = Application::Get()->GetPlayer()->GetMutableStats();
+
+          stats.SetMeleeDamage(stats.GetMeleeDamage() + 5);
+          PushNewEvent(EventType::LevelUpSelectedGameEvent);
+      }}},
 };
 
 LevelUpState::LevelUpState(Game* game) : GameState(game) {
@@ -170,23 +227,27 @@ LevelUpState::LevelUpState(Game* game) : GameState(game) {
             m_options.push_back(value);
         }
 
-        // Todo: Randomly select 3 options from list
-        // List of upgrade options that will be randomly selected
-        // Option: {text, description, side effect callback}
-        // Ex: {"+10% Damage", "Increases damage by 10%", []() { m_melee_damage += m_melee_damage * 0.1; }}
-        // Maintain list of references to options so that we can call the side effect
-        // This way we can have a list of options that are randomly selected and change probability
-        // without copying data
+        // select 3 random options
+        size_t opt_one_index = 0;
+        size_t opt_two_index = 0;
+        size_t opt_three_index = 0;
+        while (opt_one_index == opt_two_index ||
+               opt_one_index == opt_three_index ||
+               opt_two_index == opt_three_index) {
+            opt_one_index = rand() % m_options.size();
+            opt_two_index = rand() % m_options.size();
+            opt_three_index = rand() % m_options.size();
+        }
 
-        m_option_one_button =
-            Button("buttons", SDL_Rect{x, y, w, h}, m_options[0].text,
-                   m_options[0].side_effect);
-        m_option_two_button =
-            Button("buttons", SDL_Rect{x * 2, y, w, h}, m_options[1].text,
-                   m_options[1].side_effect);
-        m_option_three_button =
-            Button("buttons", SDL_Rect{x * 3, y, w, h}, m_options[2].text,
-                   m_options[2].side_effect);
+        m_option_one_button = Button("buttons", SDL_Rect{x, y, w, h},
+                                     m_options[opt_one_index].text,
+                                     m_options[opt_one_index].side_effect);
+        m_option_two_button = Button("buttons", SDL_Rect{x * 2, y, w, h},
+                                     m_options[opt_two_index].text,
+                                     m_options[opt_two_index].side_effect);
+        m_option_three_button = Button("buttons", SDL_Rect{x * 3, y, w, h},
+                                       m_options[opt_three_index].text,
+                                       m_options[opt_three_index].side_effect);
     }
 }
 

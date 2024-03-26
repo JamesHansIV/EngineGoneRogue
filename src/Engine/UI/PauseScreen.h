@@ -1,9 +1,8 @@
 #pragma once
 
-#include "Engine/Objects/InventoryComponent.h"
-#include "Engine/Objects/PlayerStatsComponent.h"
-#include "Engine/Renderer/DrawElement.h"
 #include "Engine/UI/Button.h"
+#include "Engine/UI/InventoryComponent.h"
+#include "Engine/UI/PlayerStatsComponent.h"
 
 class PauseScreen {
    public:

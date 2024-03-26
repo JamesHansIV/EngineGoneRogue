@@ -2,11 +2,11 @@
 
 #include "Engine/HeadsUpDisplay/TimerElement.h"
 #include "Engine/Objects/Characters/Player.h"
-#include "Engine/Objects/ExperienceBar.h"
-#include "Engine/Objects/InventoryComponent.h"
-#include "Engine/Objects/ItemInventory.h"
-#include "Engine/Objects/PlayerStatsComponent.h"
-#include "Engine/Objects/WeaponInventory.h"
+#include "Engine/UI/ExperienceBar.h"
+#include "Engine/UI/InventoryComponent.h"
+#include "Engine/UI/ItemInventory.h"
+#include "Engine/UI/PlayerStatsComponent.h"
+#include "Engine/UI/WeaponInventory.h"
 
 class HUD {
    public:
