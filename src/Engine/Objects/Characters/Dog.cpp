@@ -14,7 +14,7 @@ Dog::Dog(Collider* rhs, RangedEnemyStats stats) : RangedEnemy(rhs, stats) {
 }
 
 void Dog::Init() {
-    ChangeState(new RangedEnemyIdle(this));
+    m_current_state = new RangedEnemyIdle(this);
     SetHealth(new Health(m_stats.health));
     SetAttack(new RangedAttack(CreateBullet, GetFireInterval()));
 }
@@ -27,6 +27,10 @@ void Dog::Draw() {
 void Dog::Update(float dt) {
     RangedEnemy::Update(dt);
     GetAttack()->Update(dt);
+}
+
+GameObject* Dog::Copy() {
+    return new Dog(this, GetRangedEnemyStats());
 }
 
 void Dog::Shoot() {

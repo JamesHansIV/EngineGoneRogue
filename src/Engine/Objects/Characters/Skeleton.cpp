@@ -16,7 +16,7 @@ Skeleton::Skeleton(Collider* rhs, RangedEnemyStats stats)
 }
 
 void Skeleton::Init() {
-    ChangeState(new RangedEnemyIdle(this));
+    m_current_state = new RangedEnemyIdle(this);
     SetHealth(new Health(m_stats.health));
     SetAttack(new RangedAttack(CreateSpreadBullets, GetFireInterval()));
 }
@@ -29,6 +29,10 @@ void Skeleton::Draw() {
 void Skeleton::Update(float dt) {
     RangedEnemy::Update(dt);
     GetAttack()->Update(dt);
+}
+
+GameObject* Skeleton::Copy() {
+    return new Skeleton(this, GetRangedEnemyStats());
 }
 
 void Skeleton::Shoot() {

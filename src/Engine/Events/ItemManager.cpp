@@ -1,21 +1,21 @@
 #include "ItemManager.h"
+#include <random>
+#include <tuple>
+#include "Apps/Game.h"
 #include "Engine/Events/Event.h"
 #include "Engine/Objects/Chests/Chest.h"
 #include "Engine/Objects/ItemInventory.h"
 #include "Engine/utils/utils.h"
-#include <random>
-#include <tuple>
 
-ItemManager::ItemManager(std::vector<GameObject*>& objects, Player* player)
-    : m_objects(objects), m_player(player) {}
-
+ItemManager::ItemManager(Player* player) : m_player(player) {}
 
 void ItemManager::HandleEvent(Event* event) {
     EventType const e_type = event->GetEventType();
-    
-     switch (e_type) {
-        case EventType::PlaceChestIfNeededEvent:{
-            auto* place_chestif_needed_event = dynamic_cast<PlaceChestIfNeededEvent*>(event);
+
+    switch (e_type) {
+        case EventType::PlaceChestIfNeededEvent: {
+            auto* place_chestif_needed_event =
+                dynamic_cast<PlaceChestIfNeededEvent*>(event);
             std::random_device rd;
             std::mt19937 gen(rd());
             std::uniform_real_distribution<float> dis(0.0F, 1.0F);
@@ -30,21 +30,23 @@ void ItemManager::HandleEvent(Event* event) {
                     auto const item = static_cast<ItemType>(random_index);
                     items->push_back(item);
                 }
-                Properties props13("", {1, 1, 18, 16}, 
-                    {place_chestif_needed_event->GetX(), place_chestif_needed_event->GetY(), 32, 32}, 
-                    0,"chest1");
+                Properties props13("", {1, 1, 18, 16},
+                                   {place_chestif_needed_event->GetX(),
+                                    place_chestif_needed_event->GetY(), 32, 32},
+                                   0, "chest1");
                 auto* chest1 = new Chest(props13, ChestType::Wooden, items);
-                m_objects.push_back(chest1);
+                static_cast<Game*>(Application::Get())->AddObject(chest1);
                 ColliderHandler::GetInstance()->AddCollider(chest1);
             }
             break;
         }
-        case EventType::ChestOpenedEvent:{
+        case EventType::ChestOpenedEvent: {
             auto* chest_open_event = dynamic_cast<ChestOpenedEvent*>(event);
-            for(auto entry: chest_open_event->GetItemTypes())
-            {
-                Properties props("", {0, 0, 16, 16}, {chest_open_event->GetIndex().first, 
-                    chest_open_event->GetIndex().second, 32, 32}, 0, "");
+            for (auto entry : chest_open_event->GetItemTypes()) {
+                Properties props("", {0, 0, 16, 16},
+                                 {chest_open_event->GetIndex().first,
+                                  chest_open_event->GetIndex().second, 32, 32},
+                                 0, "");
                 auto* item = new Item(props, entry);
                 auto it = m_player->GetPlayerItems().find(item->GetName());
                 bool added_to_inventory = false;
@@ -55,7 +57,7 @@ void ItemManager::HandleEvent(Event* event) {
                     (*it).second->AddCount();
                 }
                 item->Apply(m_player);
-                if(!added_to_inventory){
+                if (!added_to_inventory) {
                     delete item;
                 }
             }
@@ -65,4 +67,3 @@ void ItemManager::HandleEvent(Event* event) {
             break;
     }
 }
-

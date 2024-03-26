@@ -16,7 +16,7 @@ Mage::Mage(Collider* rhs, RangedEnemyStats stats, int bulletCount)
 }
 
 void Mage::Init() {
-    ChangeState(new RangedEnemyIdle(this));
+    m_current_state = new RangedEnemyIdle(this);
     SetHealth(new Health(m_stats.health));
     SetAttack(new RangedAttack(CreateRotatingBullets, GetFireInterval()));
 }
@@ -29,6 +29,10 @@ void Mage::Draw() {
 void Mage::Update(float dt) {
     RangedEnemy::Update(dt);
     GetAttack()->Update(dt);
+}
+
+GameObject* Mage::Copy() {
+    return new Mage(this, GetRangedEnemyStats());
 }
 
 void Mage::Shoot() {

@@ -7,6 +7,11 @@ class WeaponInventory {
     explicit WeaponInventory(std::vector<Weapon*> weapons)
         : m_weapons(std::move(weapons)){};
 
+    void SetWeapons(std::vector<Weapon*> weapons) {
+        m_weapons.clear();
+        m_weapons = weapons;
+    }
+
     void Draw();
 
     void Clean();

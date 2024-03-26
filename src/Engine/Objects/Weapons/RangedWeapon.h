@@ -30,10 +30,6 @@ class RangedWeapon : public Weapon {
     void Clean() override;
     void Update(float dt) override;
 
-    void UpdateProjectiles(float dt);
-
-    void DrawProjectiles();
-
     ObjectType GetObjectType() override { return ObjectType::RangedWeapon; }
 
     RangedWeaponStats* GetStats() override { return &m_stats; };

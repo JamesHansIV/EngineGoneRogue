@@ -83,6 +83,8 @@ class GameObject : public IObject {
     void Clean() override{};
     void Update(float dt) override;
 
+    virtual GameObject* Copy();
+
     void DrawRect();
     void DrawAnimation();
     void ChangeState(State* state);
@@ -135,7 +137,9 @@ class GameObject : public IObject {
 
     std::string GetTextureID() { return m_texture_id; }
 
-    void SetTextureID(std::string texture) { m_texture_id = std::move(texture); };
+    void SetTextureID(std::string texture) {
+        m_texture_id = std::move(texture);
+    };
 
     std::string GetID() { return m_object_id; }
 
@@ -153,7 +157,9 @@ class GameObject : public IObject {
 
     StateType GetStateType() { return m_current_state->GetType(); }
 
-    [[nodiscard]] bool MarkedForDeletion() const { return m_marked_for_deletion; }
+    [[nodiscard]] bool MarkedForDeletion() const {
+        return m_marked_for_deletion;
+    }
 
     void MarkForDeletion() { m_marked_for_deletion = true; }
 

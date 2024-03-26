@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Engine/Renderer/DrawElement.h"
 #include "Engine/UI/Button.h"
 #include "Engine/utils/utils.h"
@@ -9,9 +11,9 @@ class StartScreen {
     StartScreen();
 
     ~StartScreen();
-    void Init();
     void Draw();
     void Update();
+    State* HandleEvent(Event* event);
 
    private:
     TilePos m_background_src;

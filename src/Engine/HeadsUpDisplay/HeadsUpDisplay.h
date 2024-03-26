@@ -12,6 +12,8 @@ class HUD {
    public:
     explicit HUD(const Player& player);
 
+    void Reset(const Player& player);
+
     void Draw(State& state);
 
     void Update(const Player& player);
@@ -23,6 +25,4 @@ class HUD {
     WeaponInventory m_weapon_inventory;
     ItemInventory m_item_inventory;
     ExperienceBar m_experience_bar;
-    PlayerStatsComponent m_player_stats_component;
-    InventoryComponent m_inventory_component;
 };

@@ -37,6 +37,8 @@ struct HealthInfo {
 
 class PlayerStats {
    public:
+    PlayerStats() = default;
+
     explicit PlayerStats(MovementInfo movementInfo, CombatInfo combatInfo,
                          HealthInfo healthInfo) {
         m_speed = movementInfo.speed;
@@ -186,10 +188,13 @@ class Player : public Character {
     ~Player() override;
     Player(const Player&) = delete;
 
+    void AddStillFrames();
     void Init();
     void Draw() override;
     void Clean() override;
     void Update(float dt) override;
+
+    GameObject* Copy() override;
 
     void UpdateWeapon(float dt);
 

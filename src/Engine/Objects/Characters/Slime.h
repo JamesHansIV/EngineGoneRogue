@@ -16,6 +16,8 @@ class Slime : public Enemy {
     void Clean() override;
     void Update(float dt) override;
 
+    GameObject* Copy() override;
+
     void OnCollide(Collider* collidee) override;
 
     [[nodiscard]] bool IsSplit() const { return m_split; }

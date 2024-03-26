@@ -30,8 +30,7 @@ class Button {
         m_relative_pos = Position{rect.x, rect.y};
         m_callback = callback;
         m_text = text;
-        Renderer::GetInstance()->AddTextTexture(m_text, m_text,
-                                                {255, 255, 255, 255});
+        Renderer::GetInstance()->AddTextTexture(m_text, m_text, {0, 0, 0, 255});
         m_draw_element = DrawElement(textureID, rect);
     };
 
@@ -81,6 +80,15 @@ class Button {
             m_state = ButtonStateNormal;
         }
     };
+
+    void HandleEvent(MouseButtonDownEvent* event) {
+        int mouse_x = event->GetX();
+        int mouse_y = event->GetY();
+        if (mouse_x > m_shape.x && mouse_x < m_shape.x + m_shape.w &&
+            mouse_y > m_shape.y && mouse_y < m_shape.y + m_shape.h) {
+            m_callback();
+        }
+    }
 
    private:
     std::string m_texture_id;

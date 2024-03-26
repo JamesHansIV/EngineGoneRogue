@@ -25,7 +25,7 @@ RingShotEnemy::RingShotEnemy(Collider* rhs, RangedEnemyStats stats,
 }
 
 void RingShotEnemy::Init() {
-    ChangeState(new RangedEnemyIdle(this));
+    m_current_state = new RangedEnemyIdle(this);
     SetHealth(new Health(m_stats.health));
     SetAttack(new RangedAttack(CreateRingBullets, GetFireInterval()));
 }
@@ -38,6 +38,10 @@ void RingShotEnemy::Draw() {
 void RingShotEnemy::Update(float dt) {
     RangedEnemy::Update(dt);
     GetAttack()->Update(dt);
+}
+
+GameObject* RingShotEnemy::Copy() {
+    return new RingShotEnemy(this, GetRangedEnemyStats());
 }
 
 void RingShotEnemy::Shoot() {

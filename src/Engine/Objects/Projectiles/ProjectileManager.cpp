@@ -7,6 +7,7 @@ ProjectileManager::~ProjectileManager() {
     for (auto it = m_projectiles.begin(); it != m_projectiles.end();) {
         it = RemoveProjectile(*it, it);
     }
+    m_projectiles.clear();
 }
 
 void ProjectileManager::AddProjectile(Projectile* projectile) {
@@ -23,6 +24,10 @@ p_iterator ProjectileManager::RemoveProjectile(Projectile* projectile,
     (projectile)->Clean();
     delete projectile;
     return m_projectiles.erase(it);
+}
+
+void ProjectileManager::Clear() {
+    m_projectiles.clear();
 }
 
 void ProjectileManager::Draw() {

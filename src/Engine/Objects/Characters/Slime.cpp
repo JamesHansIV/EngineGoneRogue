@@ -26,7 +26,7 @@ Slime::~Slime() {
 void Slime::Init() {
     SetHealth(new Health(m_stats.health));
 
-    ChangeState(new SlimeIdle(this));
+    m_current_state = new SlimeIdle(this);
 }
 
 void Slime::Draw() {
@@ -48,6 +48,10 @@ void Slime::Update(float dt) {
     SetX(m_rigid_body->Position().X);
     SetY(m_rigid_body->Position().Y);
     m_collision_box.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
+}
+
+GameObject* Slime::Copy() {
+    return new Slime(this, GetEnemyStats());
 }
 
 void Slime::OnCollide(Collider* collidee) {

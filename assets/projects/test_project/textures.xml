@@ -114,4 +114,8 @@
         <FilePath>../assets/textures/GUI/big_buttons.png</FilePath>
         <ID>buttons</ID>
     </Texture>
+    <Texture type = "base">
+        <FilePath>../assets/textures/game_over.png</FilePath>
+        <ID>game-over-background</ID>
+    </Texture>
 </Root>

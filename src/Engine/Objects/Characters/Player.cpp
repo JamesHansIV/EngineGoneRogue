@@ -19,20 +19,28 @@ const int kProjectileHeight = 10;
 // Experience multiplier for each level
 double k_experience_multiplier = 7.5 / 10.0;
 
+const int kPlayerStartX = 300;
+const int kPlayerStartY = 300;
+
 Player::Player(Properties& props) : Character(props) {
+    AddStillFrames();
     Init();
 }
 
 Player::Player(Collider* rhs) : Character(rhs) {
+    AddStillFrames();
     Init();
 }
 
-void Player::Init() {
+void Player::AddStillFrames() {
     AddStillFrame("face-down", {1, 0, 18, 16});
     AddStillFrame("face-right", {2, 0, 18, 16});
     AddStillFrame("face-right-up", {3, 0, 18, 16});
     AddStillFrame("face-up", {4, 0, 18, 16});
+}
 
+void Player::Init() {
+    m_rigid_body->SetPosition(Vector2D(kPlayerStartX, kPlayerStartY));
     m_current_tile_pos = m_still_frames["face-down"];
 
     m_stats = new PlayerStats(MovementInfo{80, .90, 110, 500},
@@ -49,7 +57,7 @@ void Player::Init() {
     m_projectile_props.push_back(default_projectile_props);
     m_projectile_props.push_back(bow_projectile_props);
 
-    ChangeState(new PlayerIdle(this));
+    m_current_state = new PlayerIdle(this);
     // m_Collider->SetCorrection(-45, -20, 60, 80 )
     m_health = new Health(m_stats->GetMaxHealth());
 
@@ -93,11 +101,6 @@ void Player::Draw() {
     m_current_state->Draw();
     m_health->Draw(GetX(), GetY(), GetWidth());
     m_current_weapon->Draw();
-    for (auto& weapon : m_weapons) {
-        if (auto* ranged = dynamic_cast<RangedWeapon*>(weapon)) {
-            ranged->DrawProjectiles();
-        }
-    }
 }
 
 void Player::AddItem(Item* item) {
@@ -130,6 +133,10 @@ void Player::Update(float dt) {
     m_collision_box.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
 
     UpdateWeapon(dt);
+}
+
+GameObject* Player::Copy() {
+    return new Player(this);
 }
 
 bool IsLookingBehind(float angle) {
@@ -191,11 +198,6 @@ void Player::UpdateWeapon(float dt) {
     m_current_weapon->SetRotation(angle * (180 / M_PI));
     m_current_weapon->SetFlip(weapon_flip);
     m_current_weapon->Update(dt);
-    for (auto& weapon : m_weapons) {
-        if (auto* ranged = dynamic_cast<RangedWeapon*>(weapon)) {
-            ranged->UpdateProjectiles(dt);
-        }
-    }
 }
 
 void Player::OnCollide(Collider* collidee) {
@@ -224,32 +226,18 @@ void Player::HandleEvent(Event* event) {
             break;
         }
         default:
-            if (m_current_state != nullptr) {
-                state = m_current_state->HandleEvent(event);
+            if (GetCurrentState() != nullptr) {
+                state = GetCurrentState()->HandleEvent(event);
             }
     }
+
     if (state != nullptr) {
         ChangeState(state);
     }
 }
 
 Player::~Player() {
-    delete m_health;
-    delete m_current_state;
-    delete m_animation;
-    m_animation = nullptr;
-    m_current_state = nullptr;
-    m_health = nullptr;
-    for (auto& weapon : m_weapons) {
-        delete weapon;
-    }
-    for (auto& item_pair : m_items) {
-        delete item_pair.second;
-    }
-    for (auto& props : m_projectile_props) {
-        delete props;
-    }
-    m_items.clear();
+    Clean();
 }
 
 void PlayerStats::AddExperience(int experience) {
@@ -276,4 +264,24 @@ void PlayerStats::AddExperience(int experience) {
     m_experience += experience_to_add + stored_experience;
 }
 
-void Player::Clean() {}
+void Player::Clean() {
+    m_marked_for_deletion = false;
+    delete m_health;
+    delete m_current_state;
+    delete m_stats;
+    m_current_state = nullptr;
+    m_health = nullptr;
+    m_stats = nullptr;
+    for (auto& weapon : m_weapons) {
+        delete weapon;
+    }
+    m_weapons.clear();
+    for (auto& item_pair : m_items) {
+        delete item_pair.second;
+    }
+    for (auto& props : m_projectile_props) {
+        delete props;
+    }
+    m_projectile_props.clear();
+    m_items.clear();
+}

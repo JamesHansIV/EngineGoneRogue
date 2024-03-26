@@ -49,7 +49,9 @@ State* RangedEnemyHandleCollide(RangedEnemy* enemy, Collider* collidee) {
 }
 
 void RangedEnemyIdle::Enter() {
-    GetEnemy()->GetAnimation()->SelectAnimation("Idle");
+    if (GetEnemy()->GetAnimation() != nullptr) {
+        GetEnemy()->GetAnimation()->SelectAnimation("Idle");
+    }
 }
 
 void RangedEnemyIdle::Exit() {}

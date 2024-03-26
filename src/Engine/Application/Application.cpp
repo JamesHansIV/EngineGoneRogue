@@ -23,7 +23,7 @@ Application* Application::m_instance = nullptr;
 //const float kDt = 0.0083;
 const float kDt = 0.01;
 
-Application::Application() : m_project_name("test_project") {
+Application::Application() : m_project_name("test_project"), m_player(nullptr) {
     // std::cout << "DEBUG MESSAGE FLAG " << DEBUG_MESSAGES << std::endl;
     // SDL_Log("Something going on");
     // exit(0);
@@ -246,6 +246,7 @@ bool Application::Clean() {
     IMG_Quit();
     Mix_Quit();
     SDL_Quit();
+
     return true;
 }
 

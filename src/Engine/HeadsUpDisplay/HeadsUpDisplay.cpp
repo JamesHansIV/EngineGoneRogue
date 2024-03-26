@@ -5,10 +5,12 @@
 HUD::HUD(const Player& player)
     : m_weapon_inventory(player.GetPlayerWeapons()),
       m_item_inventory(player.GetPlayerItems()),
-      m_experience_bar(100, 0),
-      m_player_stats_component(player.GetStats()),
-      m_inventory_component(player.GetPlayerItems()){};
+      m_experience_bar(100, 0) {}
 
+void HUD::Reset(const Player& player) {
+    m_weapon_inventory.SetWeapons(player.GetPlayerWeapons());
+    m_item_inventory.SetItems(player.GetPlayerItems());
+}
 
 void HUD::Draw(State& state) {
     // Timer
@@ -22,15 +24,10 @@ void HUD::Draw(State& state) {
     }
 }
 
-void HUD::PausedDraw() {
-    m_player_stats_component.Draw();
-    m_inventory_component.Draw();
-}
+void HUD::PausedDraw() {}
 
 void HUD::Update(const Player& player) {
     m_weapon_inventory.Update(player);
     m_experience_bar.Update(player);
     m_item_inventory.Update(player);
-    m_player_stats_component.Update(player);
-    m_inventory_component.Update(player);
 }

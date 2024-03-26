@@ -313,7 +313,9 @@ State* SlimeIsHit::OnCollideEvent(CollideEvent* event) {
 }
 
 void SlimeDead::Enter() {
-    SlimeSelectAnimation(GetEnemy(), GetType());
+    if (GetEnemy()->GetAnimation() != nullptr) {
+        SlimeSelectAnimation(GetEnemy(), GetType());
+    }
 }
 
 void SlimeDead::Exit() {}
