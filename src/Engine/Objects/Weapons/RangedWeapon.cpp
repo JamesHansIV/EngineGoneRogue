@@ -33,7 +33,7 @@ void RangedWeapon::Update(float /*dt*/) {
         m_projectile_props->DstRect.y = GetMidPointY() - 6;
         m_projectile_props->Rotation = GetRotation();
 
-        AnimationInfo hit_animation_info = {
+        const AnimationInfo hit_animation_info = {
             "bullet-explosion", {0, 0, 16, 16}, 4, 150};
 
         auto* projectile = new Projectile(

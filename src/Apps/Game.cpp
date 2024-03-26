@@ -275,19 +275,20 @@ void Game::UpdateObjects(float dt) {
         }
     }
 
-    for (auto it = m_objects.begin(); it != m_objects.end();) {
-        auto* enemy = dynamic_cast<Enemy*>(*it);  // Cast to Enemy type
+    for (int i = 0; i < m_objects.size(); i++) {
+        auto* object = m_objects[i];
+        auto* enemy = dynamic_cast<Enemy*>(object);  // Cast to Enemy type
         if (enemy != nullptr) {
             enemy->SetTarget(m_player);
         }
-        (*it)->Update(dt);
+        (object)->Update(dt);
 
-        if ((*it)->MarkedForDeletion()) {
-            DeleteObject(*it);
+        if ((object)->MarkedForDeletion()) {
+            DeleteObject(object);
         } else {
             ColliderHandler::GetInstance()->AddCollider(
-                dynamic_cast<Collider*>(*it));
-            ++it;
+                dynamic_cast<Collider*>(object));
+            ++object;
         }
     }
 
