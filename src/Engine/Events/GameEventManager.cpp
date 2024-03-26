@@ -158,9 +158,9 @@ State* GameEventManager::HandleCustomEvents(const SDL_Event& event,
             EnemyDeathEvent death_event(enemy->GetEnemyStats());
             if (m_player != nullptr) {
                 m_player->HandleEvent(&death_event);
-                PlaceChestIfNeededEvent place_chest_event(enemy->GetX(),
+                PlaceItemIfNeededEvent place_item_event(enemy->GetX(),
                                                           enemy->GetY());
-                ItemManager->HandleEvent(&place_chest_event);
+                ItemManager->HandleEvent(&place_item_event);
             }
             return nullptr;
         }

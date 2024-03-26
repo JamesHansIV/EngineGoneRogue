@@ -117,19 +117,7 @@ Game::Game() {
 
     InitObjects();
 
-    Properties props11("healthpotion", {1, 1, 16, 16}, {250, 150, 25, 25}, 0,
-                       "healthpotion");
-    auto* healthpotion = new HealthPotion(props11, 20);
-
-    Properties props12("healthpotion", {1, 1, 16, 16}, {550, 400, 25, 25}, 0,
-                       "healthpotion2");
-    auto* healthpotion2 = new HealthPotion(props12, 20);
-
-    m_objects.push_back(healthpotion);
-    m_objects.push_back(healthpotion2);
     ColliderHandler::GetInstance()->AddCollider(m_player);
-    ColliderHandler::GetInstance()->AddCollider(healthpotion);
-    ColliderHandler::GetInstance()->AddCollider(healthpotion2);
 
     srand(time(nullptr));
 

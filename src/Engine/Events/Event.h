@@ -17,7 +17,7 @@ enum class EventType {
     EnemyDeathEvent,
     PlayerLevelUpEvent,
     GameOverEvent,
-    PlaceChestIfNeededEvent,
+    PlaceItemIfNeededEvent,
     ChestOpenedEvent,
 
     StartGameEvent,
@@ -94,12 +94,12 @@ class TargetLostEvent : public Event {
     EventType GetEventType() override { return EventType::TargetLostEvent; }
 };
 
-class PlaceChestIfNeededEvent : public Event {
+class PlaceItemIfNeededEvent : public Event {
    public:
-    explicit PlaceChestIfNeededEvent(float x, float y) : m_x(x), m_y(y){};
+    explicit PlaceItemIfNeededEvent(float x, float y) : m_x(x), m_y(y){};
 
     EventType GetEventType() override {
-        return EventType::PlaceChestIfNeededEvent;
+        return EventType::PlaceItemIfNeededEvent;
     }
 
     [[nodiscard]] [[nodiscard]] float GetX() const { return m_x; };
