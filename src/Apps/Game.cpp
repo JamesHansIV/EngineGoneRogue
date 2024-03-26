@@ -18,12 +18,12 @@
 #include "Engine/Objects/GameObject.h"
 #include "Engine/Objects/HealthPotion.h"
 #include "Engine/Objects/Item.h"
-#include "Engine/UI/WeaponInventory.h"
 #include "Engine/Objects/Weapons/Weapon.h"
 #include "Engine/Renderer/Renderer.h"
 #include "Engine/State/GameState.h"
 #include "Engine/Timer/Timer.h"
 #include "Engine/UI/Button.h"
+#include "Engine/UI/WeaponInventory.h"
 #include "SDL2/SDL_log.h"
 
 std::vector<Collider*> colliders;

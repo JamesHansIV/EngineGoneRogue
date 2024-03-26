@@ -35,11 +35,8 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
                 switch (event.key.keysym.sym) {
                     case SDLK_ESCAPE:
                         if (timer.IsPaused()) {
-                            if (GameState->GetType() == StateType::Pause) {
-                                state = new RunningState(
-                                    static_cast<Game*>(Application::Get()));
-                            }
-                            if (GameState->GetType() == StateType::ChestDrop) {
+                            if (GameState->GetType() == StateType::Pause ||
+                                GameState->GetType() == StateType::ChestDrop) {
                                 state = new RunningState(
                                     static_cast<Game*>(Application::Get()));
                             }
