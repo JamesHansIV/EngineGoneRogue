@@ -7,11 +7,11 @@
 #include "Engine/Animation/Animation.h"
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Objects/Item.h"
-#include "Engine/UI/ItemInventory.h"
 #include "Engine/Objects/Weapons/Weapon.h"
 #include "Engine/Physics/RigidBody.h"
 #include "Engine/State/PlayerState.h"
 #include "Engine/Timer/Timer.h"
+#include "Engine/UI/ItemInventory.h"
 #include "Engine/utils/utils.h"
 #include "functional"
 
@@ -35,12 +35,18 @@ struct HealthInfo {
     int lifeStealPercentage;
 };
 
+struct InventoryInfo {
+    int maxItems;
+    int maxWeapons;
+    int maxGrenades;
+};
+
 class PlayerStats {
    public:
     PlayerStats() = default;
 
     explicit PlayerStats(MovementInfo movementInfo, CombatInfo combatInfo,
-                         HealthInfo healthInfo) {
+                         HealthInfo healthInfo, InventoryInfo inventoryInfo) {
         m_speed = movementInfo.speed;
         // Default Dodge CD is set in PlayerDodgeState
         m_dodge_cd = 0;
@@ -58,6 +64,7 @@ class PlayerStats {
         m_hp_regen_rate = healthInfo.HPRegenRate;
         m_life_steal_percentage = healthInfo.lifeStealPercentage;
         m_level = 1;
+        m_inventory_info = inventoryInfo;
     }
 
     [[nodiscard]] float GetSpeed() const { return m_speed; };
@@ -115,9 +122,29 @@ class PlayerStats {
 
     void SetPiercing(int piercing) { m_piercing = piercing; }
 
+    [[nodiscard]] int GetMaxItems() const { return m_inventory_info.maxItems; }
+
+    [[nodiscard]] int GetMaxWeapons() const {
+        return m_inventory_info.maxWeapons;
+    }
+
+    [[nodiscard]] int GetMaxGrenades() const {
+        return m_inventory_info.maxGrenades;
+    }
+
     void SetArmorPercentage(int armorPercentage) {
         m_armor_percentage = armorPercentage;
     }
+
+    void SetMaxWeapons(int maxWeapons) {
+        m_inventory_info.maxWeapons = maxWeapons;
+    }
+
+    void SetMaxGrenades(int maxGrenades) {
+        m_inventory_info.maxGrenades = maxGrenades;
+    }
+
+    void SetMaxItems(int maxItems) { m_inventory_info.maxItems = maxItems; }
 
     void SetHpRegenRate(int regenRate) { m_hp_regen_rate = regenRate; }
 
@@ -150,6 +177,7 @@ class PlayerStats {
             m_hp_regen_rate = 100000;
             m_melee_damage = 1000000;
             m_ranged_damage = 1000000;
+            m_armor_percentage = 1000000;
         } else {
             m_max_health = 100;
             m_hp_regen_rate = 1;
@@ -176,6 +204,7 @@ class PlayerStats {
     int m_hp_regen_rate;
     int m_level;
     int m_life_steal_percentage;
+    InventoryInfo m_inventory_info;
     int m_kill_count = 0;
     bool m_god_mode = false;
 };
@@ -222,7 +251,12 @@ class Player : public Character {
         return m_items;
     };
 
-    void ToggleGodMode() { m_stats->ToggleGodMode(); }
+    void DropBomb();
+
+    void ToggleGodMode() {
+        m_stats->ToggleGodMode();
+        m_num_bombs = 1000;
+    }
 
    private:
     std::vector<Weapon*> m_weapons;
@@ -231,6 +265,7 @@ class Player : public Character {
     Weapon* m_current_weapon;
     // TODO: add this to player state when game state is added.
     int m_able_to_dash = 0;
+    int m_num_bombs = 3;
     bool m_is_dashing = false;
     int m_multiplier = 1;
     Uint32 m_last_health_regen = 0;

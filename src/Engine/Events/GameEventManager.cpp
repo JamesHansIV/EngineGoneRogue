@@ -67,6 +67,11 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
                             Mix_ChannelFinished(nullptr);
                         });
                         break;
+                    case SDLK_SPACE:
+                        if (GameState->GetType() == StateType::Running) {
+                            m_player->DropBomb();
+                        }
+                        break;
                     default:
                         break;
                 }
@@ -163,7 +168,7 @@ State* GameEventManager::HandleCustomEvents(const SDL_Event& event,
             if (m_player != nullptr) {
                 m_player->HandleEvent(&death_event);
                 PlaceItemIfNeededEvent place_item_event(enemy->GetX(),
-                                                          enemy->GetY());
+                                                        enemy->GetY());
                 ItemManager->HandleEvent(&place_item_event);
             }
             return nullptr;

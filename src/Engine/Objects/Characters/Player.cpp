@@ -1,8 +1,11 @@
 #include "Player.h"
 #include <string>
 #include <thread>
+#include "Apps/Game.h"
+#include "Engine/Application/Application.h"
 #include "Engine/Input/InputChecker.h"
 #include "Engine/Objects/Environment/Entrance.h"
+#include "Engine/Objects/Grenade.h"
 #include "Engine/Objects/Projectiles/Projectile.h"
 #include "Engine/Objects/Weapons/MeleeWeapon.h"
 #include "Engine/Objects/Weapons/RangedWeapon.h"
@@ -44,7 +47,9 @@ void Player::Init() {
     m_current_tile_pos = m_still_frames["face-down"];
 
     m_stats = new PlayerStats(MovementInfo{80, .90, 110, 500},
-                              CombatInfo{1, 1, 0, 50}, HealthInfo{100, 0, 0});
+                              CombatInfo{1, 1, 0, 50}, HealthInfo{100, 0, 0},
+                              InventoryInfo{12, 3, 3});
+
     auto* default_projectile_props = new Properties(
         "weapons", {6, 0, 16, 16},
         {GetMidPointX(), GetMidPointY(), kProjectileWidth, kProjectileHeight},
@@ -198,6 +203,24 @@ void Player::UpdateWeapon(float dt) {
     m_current_weapon->SetRotation(angle * (180 / M_PI));
     m_current_weapon->SetFlip(weapon_flip);
     m_current_weapon->Update(dt);
+}
+
+void Player::DropBomb() {
+    // player position
+    if (m_num_bombs == 0) {
+        return;
+    }
+
+    float const player_x = GetMidPointX();
+    float const player_y = GetMidPointY();
+
+    Properties grenade_props("weapons", {10, 3, 16, 16},
+                             {player_x, player_y, 36, 36}, 0.0);
+
+    auto* grenade = new Grenade(grenade_props, {80, 3, 50, 50});
+    static_cast<Game*>(Application::Get())->AddObject(grenade);
+    ColliderHandler::GetInstance()->AddCollider(grenade);
+    m_num_bombs--;
 }
 
 void Player::OnCollide(Collider* collidee) {

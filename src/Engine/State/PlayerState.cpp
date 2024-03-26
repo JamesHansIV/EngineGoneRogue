@@ -3,6 +3,7 @@
 #include "Engine/Objects/Characters/Enemy.h"
 #include "Engine/Objects/Characters/Player.h"
 #include "Engine/Objects/Environment/Entrance.h"
+#include "Engine/Objects/Grenade.h"
 #include "Engine/Objects/IObject.h"
 #include "SDL2/SDL_events.h"
 #include "SDL2/SDL_keycode.h"
@@ -117,6 +118,16 @@ State* HandleCollide(Player* player, CollideEvent* event) {
             break;
         }
         case ObjectType::Chest:
+            break;
+        case ObjectType::Grenade: {
+            auto* grenade = dynamic_cast<Grenade*>(collidee);
+            // TODO: figure out why player is being moved back from explosion
+            if (grenade->GetState() == BombState::EXPLODING_DAMAGING) {
+                return new PlayerIsHit(player, grenade->GetDamage() / 2);
+            }
+            player->UnCollide(collidee);
+            break;
+        }
         case ObjectType::Collider:
             player->UnCollide(collidee);
             break;
