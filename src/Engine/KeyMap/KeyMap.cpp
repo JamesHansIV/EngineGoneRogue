@@ -67,7 +67,8 @@ std::unordered_map<MacKeys, SDL_KeyCode> KeyMap::mac_keys_to_sdl = {
     {MacKeys::LOPTION, SDLK_LALT},  
     {MacKeys::ROPTION, SDLK_RALT},  
     {MacKeys::LCOMMAND, SDLK_LGUI}, 
-    {MacKeys::RCOMMAND, SDLK_RGUI}  
+    {MacKeys::RCOMMAND, SDLK_RGUI},
+    {MacKeys::DELETE, SDLK_BACKSPACE}
 };
 
 std::unordered_set<SDL_KeyCode>KeyMap::modifier_keys = InitModifierKeys();
@@ -94,7 +95,10 @@ std::unordered_map<EditorAction, Bind> KeyMap::default_bindings = {
     // Undo and Redo
     {EditorAction::UNDO_ACTION, CreateBind(EditorAction::UNDO_ACTION, InputType::ON_UP_LATCH, std::vector<SDL_KeyCode>{mac_keys_to_sdl[MacKeys::LCOMMAND], SDLK_z})},
     {EditorAction::REDO_ACTION, CreateBind(EditorAction::REDO_ACTION, InputType::ON_UP_LATCH, 
-                                            std::vector<SDL_KeyCode>{mac_keys_to_sdl[MacKeys::LCOMMAND], mac_keys_to_sdl[MacKeys::LSHIFT], SDLK_z})}
+                                            std::vector<SDL_KeyCode>{mac_keys_to_sdl[MacKeys::LCOMMAND], mac_keys_to_sdl[MacKeys::LSHIFT], SDLK_z})},
+
+    // delete selection
+    {EditorAction::EXECUTE_DELETE_SELECTION, CreateBind(EditorAction::EXECUTE_DELETE_SELECTION, InputType::LATCH, std::vector<SDL_KeyCode>{mac_keys_to_sdl[MacKeys::DELETE]})}
 };
 
 std::unordered_set<SDL_KeyCode> KeyMap::InitModifierKeys() {

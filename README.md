@@ -25,6 +25,7 @@ $ ./build-engine.sh editor
 * Move Selection Tool - **m** (toggleable) or click and drag (a) selected tile(s) whith no Tools active
 * Undo - **cmd + z**
 * Redo - **cmd + shift + z**
+* Delete current selection - **delete**
 
 ### Attributions
 <a href="https://www.flaticon.com/free-icons/edit" title="edit icons">Edit icons created by Freepik - Flaticon</a>

@@ -985,6 +985,11 @@ void Editor::Update(float /*dt*/) {
         Renderer::GetInstance()->MoveCameraX(10.0F);
     }
 
+    // Check for selection deletion
+    if (m_key_map->CheckInputs(EditorAction::EXECUTE_DELETE_SELECTION)) {
+        HandleDeleteSelectionAction();
+    }
+
     // Check and handle tool selection / deselection via keybinds
     // the EditorAction param is the result of a satisfied keybind input, with the EditMode param being the tool selection
     CheckForToolSelection(EditorAction::ENTER_DRAW_TOOL, EditMode::DRAW);
@@ -1465,6 +1470,20 @@ void Editor::HandlePaintBucketAction(SDL_Event& event) {
             m_action_record_handler->RecordAction(record);
         }
     }
+}
+
+void Editor::HandleDeleteSelectionAction() {
+    if (m_selected_objects.empty())
+        return;
+
+    std::vector<GameObject*> deleted_objects;
+    for (auto& obj : m_selected_objects) {
+        deleted_objects.push_back(new GameObject(obj));
+        DeleteObject(obj);
+    }
+
+    ActionRecord* record = new ActionRecord(EditorAction::EXECUTE_DELETE_SELECTION, deleted_objects, m_current_layer);
+    m_action_record_handler->RecordAction(record);
 }
 
 bool Editor::IsTileEmpty(TileCoords coords) {
