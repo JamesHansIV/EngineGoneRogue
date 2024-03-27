@@ -8,34 +8,13 @@
 #include "Engine/Renderer/Texture.h"
 #include "Engine/Cursors/Cursor.h"
 #include "Engine/KeyMap/KeyMap.h"
-#include "ActionRecordHandling/ActionRecordHandler.h"
+#include "Engine/Editor/TileCoords.h"
+#include "Engine/Editor/ActionRecordHandling/ActionRecordHandler.h"
 
 #include "Engine/Editor/EditMode.h"
 #include "Engine/utils/utils.h"
 
 #include <tuple>
-
-struct TileCoords {
-    int row{}, col{};
-
-    bool IsInBounds() {
-        int levelRows = (int)LevelHeight / (int)TileSize;
-        int levelCols = (int)LevelWidth / (int)TileSize;
-        return !(row < 0 || col < 0 || row >= levelRows || col >= levelRows);
-    }
-
-    bool operator()(const TileCoords& coords) const {
-        return std::hash<int>()(coords.row) ^ std::hash<int>()(coords.col);
-    }
-
-    bool operator==(const TileCoords& rhs) const {
-        return (row == rhs.row && col == rhs.col);
-    }
-
-    bool operator!=(const TileCoords& rhs) const {
-        return !(row == rhs.row && col == rhs.col);
-    }
-};
 
 struct EEnemyInfo {
     int PerceptionWidth;
@@ -129,6 +108,7 @@ class Editor : public Application {
     Texture* m_current_texture{nullptr};
     GameObject* m_current_object;
     std::set<GameObject*> m_selected_objects;
+    std::unordered_map<GameObject*, std::pair<float, float>>m_selected_obj_origin_map; //x,y
     EditState m_edit_state;
     EObjectInfo m_object_info;
     EEnemyInfo m_enemy_info;

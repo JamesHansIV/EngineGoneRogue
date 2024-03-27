@@ -234,7 +234,7 @@ Editor::Editor() {
     // create cursor
     m_cursor = new Cursor();
 
-    m_action_record_handler = new ActionRecordHandler();
+    m_action_record_handler = new ActionRecordHandler(TileSize);
 }
 
 Editor::~Editor() {
@@ -1266,9 +1266,13 @@ bool Editor::SelectTile(int row, int col) {
 
             if (m_selected_objects.contains(obj)) {
                 if (!m_edit_state.IsEditing) {
-                    m_selected_objects.erase(obj);                    
+                    m_selected_objects.erase(obj);
+                    m_selected_obj_origin_map.erase(obj);
                 }
-            } else { m_selected_objects.insert(obj); }
+            } else { 
+                m_selected_objects.insert(obj); 
+                m_selected_obj_origin_map[obj] = { obj->GetX(), obj->GetY() };
+            }
         }
     }
 
@@ -1396,8 +1400,13 @@ void Editor::HandleDragMoveAction(SDL_Event& event) {
 
     // finish move on mouse up
     if (event.button.type == SDL_MOUSEBUTTONUP) {
-        for (const auto& obj : m_selected_objects) 
+        for (const auto& obj : m_selected_objects)
             SnapToGrid(obj->GetX(), obj->GetY(), obj);
+
+        ActionRecord* record = new ActionRecord(EditorAction::EXECUTE_DRAG_MOVE, m_selected_obj_origin_map, 
+            m_current_layer, m_mouse_input_origin, mouse_tile_coords);
+
+        m_action_record_handler->RecordAction(record);
 
         StopEditing();
         return;
