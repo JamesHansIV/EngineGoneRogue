@@ -43,7 +43,7 @@ void ItemManager::HandleEvent(Event* event) {
             random_number = dis(gen);
 
             if (random_number <= m_chance_of_drop_health_potion) {
-                Properties props11("healthpotion", {1, 1, 16, 16},
+                Properties props11("weapons", {10, 1, 16, 16},
                                    {place_item_if_needed_event->GetX(),
                                     place_item_if_needed_event->GetY(), 25, 25},
                                    0, "healthpotion");

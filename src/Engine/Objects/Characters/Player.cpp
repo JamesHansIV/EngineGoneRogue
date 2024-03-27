@@ -100,6 +100,8 @@ void Player::Init() {
     ColliderHandler::GetInstance()->AddCollider(w2);
 
     m_current_weapon = m_weapons[0];
+
+    m_num_bombs = 3;
 }
 
 void Player::Draw() {
