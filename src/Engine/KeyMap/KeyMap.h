@@ -13,7 +13,7 @@
 
 enum class InputType { CONTINUOUS, LATCH, ON_UP_LATCH};
 
-enum class MacKeys { LSHIFT, RSHIFT, CONTROL, LOPTION, ROPTION, LCOMMAND, RCOMMAND };
+enum class MacKeys { LSHIFT, RSHIFT, CONTROL, LOPTION, ROPTION, LCOMMAND, RCOMMAND, DELETE };
 
 struct Bind {
     EditorAction action;

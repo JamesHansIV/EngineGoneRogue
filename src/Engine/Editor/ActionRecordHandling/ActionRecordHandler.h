@@ -26,11 +26,13 @@ class ActionRecordHandler {
     void UndoErase(ActionRecord* record, std::vector<GameObject*>& layer);
     void UndoPaintBucket(ActionRecord* record, std::vector<GameObject*>& layer);
     void UndoDragMove(ActionRecord* record, std::vector<GameObject*>& layer);
+    void UndoDeleteSelection(ActionRecord* record, std::vector<GameObject*>& layer);
 
     void RedoDraw(ActionRecord* record, std::vector<GameObject*>& layer);
     void RedoErase(ActionRecord* record, std::vector<GameObject*>& layer);
     void RedoPaintBucket(ActionRecord* record, std::vector<GameObject*>& layer);
-    void RedoDragMove(ActionRecord* record, std::vector<GameObject*>& layer);
+    // void RedoDragMove(ActionRecord* record, std::vector<GameObject*>& layer);
+    void RedoDeleteSelection(ActionRecord* record, std::vector<GameObject*>& layer);
 
     void PrintStack(std::stack<ActionRecord*> stack);
 };

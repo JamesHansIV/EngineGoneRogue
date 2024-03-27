@@ -129,6 +129,7 @@ class Editor : public Application {
     void HandleTileSelectAction(bool mouse_moved,  SDL_Event& event);
     void HandleDragMoveAction(SDL_Event& event);
     void HandlePaintBucketAction(SDL_Event& event);
+    void HandleDeleteSelectionAction();
 
     // action handler helpers
     bool SelectTile(int x, int y); // returns true if selection is made, false if no selection is made, x & y are tile coords

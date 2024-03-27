@@ -47,6 +47,9 @@ void ActionRecordHandler::UndoAction(std::vector<std::vector<GameObject*>>& laye
         case EditorAction::EXECUTE_DRAG_MOVE:
             UndoDragMove(record, layers[record->GetLayer()]);
             break;
+        case EditorAction::EXECUTE_DELETE_SELECTION:
+            UndoDeleteSelection(record, layers[record->GetLayer()]);
+            break;
         default:
             std::cout << "not implemented yet undo action\n";
     }
@@ -76,6 +79,9 @@ void ActionRecordHandler::RedoAction(std::vector<std::vector<GameObject*>>& laye
             break;
         case EditorAction::EXECUTE_DRAG_MOVE:
             UndoDragMove(record, layers[record->GetLayer()]);
+            break;
+        case EditorAction::EXECUTE_DELETE_SELECTION:
+            RedoDeleteSelection(record, layers[record->GetLayer()]);
             break;
         default:
             std::cout << "not implemented yet redo action\n";
@@ -153,11 +159,11 @@ void ActionRecordHandler::UndoDragMove(ActionRecord* record, std::vector<GameObj
     }
 
     return;
-
-    // invert coords
-    // record->SwapOrigAndDstCoords();
 }
 
+void ActionRecordHandler::UndoDeleteSelection(ActionRecord* record, std::vector<GameObject*>& layer) {
+    RedoPaintBucket(record, layer);
+}
 
 void ActionRecordHandler::RedoDraw(ActionRecord* record, std::vector<GameObject*>&layer) {
     GameObject* obj = record->GetObjects().front();
@@ -237,6 +243,9 @@ void ActionRecordHandler::RedoPaintBucket(ActionRecord* record, std::vector<Game
     }
 }
 
+void ActionRecordHandler::RedoDeleteSelection(ActionRecord* record, std::vector<GameObject*>& layer) {
+    UndoPaintBucket(record, layer);
+}
 
 void ActionRecordHandler::PrintStack(std::stack<ActionRecord*> stack) {
     std::cout << "TOP: " << stack.top() << "\t| SIZE: " << stack.size() << std::endl;
