@@ -20,12 +20,14 @@ $ ./build-engine.sh editor
 * Deselect current tool and all selected objects - **esc**
 * Draw Tool - **d** (toggleable)
 * Erase Tool - **e** (toggleable)
-* Multi-tile select Tool - **t** (toggleable)
+* Multi-tile select Tool - **t** (toggleable) OR hold **left shift** to use temporarily
 * Paint Bucket Tool - **p**
 * Move Selection Tool - **m** (toggleable) or click and drag (a) selected tile(s) whith no Tools active
 * Undo - **cmd + z**
 * Redo - **cmd + shift + z**
 * Delete current selection - **delete**
+* Copy selection - **cmd + c**
+* Paste from clipboard - **cmd + v**
 
 ### Attributions
 <a href="https://www.flaticon.com/free-icons/edit" title="edit icons">Edit icons created by Freepik - Flaticon</a>
