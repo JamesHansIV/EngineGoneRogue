@@ -121,6 +121,10 @@ State* HandleCollide(Player* player, CollideEvent* event) {
             break;
         case ObjectType::Grenade: {
             auto* grenade = dynamic_cast<Grenade*>(collidee);
+
+            if (grenade->GetState() == BombState::INACTIVE) {
+                return nullptr;
+            }
             // TODO: figure out why player is not being moved back from explosion
             if (grenade->GetState() == BombState::EXPLODING_DAMAGING) {
                 return new PlayerIsHit(player, grenade->GetDamage() / 2);

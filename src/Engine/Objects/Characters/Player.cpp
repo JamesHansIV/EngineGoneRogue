@@ -214,8 +214,8 @@ void Player::DropBomb() {
         return;
     }
 
-    float const player_x = GetMidPointX();
-    float const player_y = GetMidPointY();
+    float const player_x = GetX();
+    float const player_y = GetY();
 
     Properties grenade_props("weapons", {10, 3, 16, 16},
                              {player_x, player_y, 36, 36}, 0.0);

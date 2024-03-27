@@ -12,7 +12,7 @@ Grenade::Grenade(Properties& props, GrenadeStats stats) : Collider(props) {
         "explosion", {"weapons", {6, 0, 32, 32}, 6, 100, SDL_FLIP_NONE, false});
 
     m_animation->SelectAnimation("live_grenade");
-    m_state = BombState::ACTIVE;
+    m_state = BombState::INACTIVE;
 }
 
 void Grenade::Update(float dt) {
@@ -26,6 +26,10 @@ void Grenade::Update(float dt) {
 
     if (m_state == BombState::EXPLODING_DAMAGING) {
         m_state = BombState::EXPLODING;
+    }
+
+    if (m_state == BombState::INACTIVE && m_time_alive > .1) {
+        m_state = BombState::ACTIVE;
     }
 
     if (m_state == BombState::ACTIVE &&
