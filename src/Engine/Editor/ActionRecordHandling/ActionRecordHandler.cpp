@@ -44,6 +44,9 @@ void ActionRecordHandler::UndoAction(std::vector<std::vector<GameObject*>>& laye
         case EditorAction::EXECUTE_ERASE:
             UndoErase(record, layers[record->GetLayer()]);
             break;
+        case EditorAction::EXECUTE_DRAG_MOVE:
+            UndoDragMove(record, layers[record->GetLayer()]);
+            break;
         default:
             std::cout << "not implemented yet undo action\n";
     }
@@ -70,6 +73,9 @@ void ActionRecordHandler::RedoAction(std::vector<std::vector<GameObject*>>& laye
             break;
         case EditorAction::EXECUTE_ERASE:
             RedoErase(record, layers[record->GetLayer()]);
+            break;
+        case EditorAction::EXECUTE_DRAG_MOVE:
+            UndoDragMove(record, layers[record->GetLayer()]);
             break;
         default:
             std::cout << "not implemented yet redo action\n";
@@ -119,6 +125,37 @@ void ActionRecordHandler::UndoPaintBucket(ActionRecord* record, std::vector<Game
 
         i++;
     }
+}
+
+void ActionRecordHandler::UndoDragMove(ActionRecord* record, std::vector<GameObject*>& layer) {
+    TileCoords orig_coords = record->GetOrigCoords();
+    TileCoords dst_coords = record->GetDstCoords();
+    
+    TileCoords delta_coords = dst_coords - orig_coords;
+
+    // sanity check
+    if (record->GetObjects().size() != record->GetObjectPositions().size())
+        throw std::runtime_error("Object vector and Positions vector size mismatch!");
+
+    // update positions
+    std::vector<std::pair<float, float>>obj_origins = record->GetObjectPositions();
+    for (int i=0; GameObject* obj : record->GetObjects()) {
+        const float curr_x = obj->GetX();
+        const float curr_y = obj->GetY();
+
+        obj->SetX(obj_origins[i].first);
+        obj->SetY(obj_origins[i].second);
+
+        // update record for redo
+        record->SetObjectPos({curr_x, curr_y}, i);
+
+        i++;
+    }
+
+    return;
+
+    // invert coords
+    // record->SwapOrigAndDstCoords();
 }
 
 
