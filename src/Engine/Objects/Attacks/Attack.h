@@ -23,6 +23,8 @@ struct RangedAttackInfo {
 
 class RangedAttack : public Attack {
    public:
+    RangedAttack() = default;
+
     RangedAttack(std::vector<Projectile*> (*createBullets)(RangedAttackInfo),
                  int interval, AttackPattern* attackPattern = nullptr)
         : m_create_bullets(createBullets),

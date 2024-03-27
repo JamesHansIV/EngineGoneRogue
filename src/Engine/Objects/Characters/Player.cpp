@@ -9,6 +9,7 @@
 #include "Engine/Objects/Projectiles/Projectile.h"
 #include "Engine/Objects/Weapons/MeleeWeapon.h"
 #include "Engine/Objects/Weapons/RangedWeapon.h"
+#include "Engine/Objects/Weapons/Shotgun.h"
 #include "Engine/Renderer/Renderer.h"
 #include "Engine/State/State.h"
 #include "Engine/UI/ItemInventory.h"
@@ -71,6 +72,12 @@ void Player::Init() {
     Weapon* uzi = new RangedWeapon(props_uzi, stats_uzi, this, "Uzi",
                                    default_projectile_props);
     m_weapons.push_back(uzi);
+
+    Properties props_shotgun("weapons", {0, 2, 16, 16}, {0, 0, 18, 18}, 0.0);
+    RangedWeaponStats stats_shotgun = {true, 200, 25, 20, m_stats};
+    Weapon* shotgun = new Shotgun(props_shotgun, stats_shotgun, this, "Shotgun",
+                                  default_projectile_props);
+    m_weapons.push_back(shotgun);
 
     Properties props_pistol("weapons", {0, 1, 16, 16}, {0, 0, 18, 18}, 0.0);
     RangedWeaponStats stats_pistol = {true, 400, 25, 34, m_stats};
