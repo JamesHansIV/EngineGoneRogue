@@ -133,6 +133,11 @@ class PlayerStats {
     }
 
     void SetArmorPercentage(int armorPercentage) {
+        if (armorPercentage > 100) {
+            armorPercentage = 100;
+        } else if (armorPercentage < 0) {
+            armorPercentage = 0;
+        }
         m_armor_percentage = armorPercentage;
     }
 
@@ -177,11 +182,13 @@ class PlayerStats {
             m_hp_regen_rate = 100000;
             m_melee_damage = 1000000;
             m_ranged_damage = 1000000;
+            m_armor_percentage = 100;
         } else {
             m_max_health = 100;
             m_hp_regen_rate = 1;
             m_melee_damage = 10;
             m_ranged_damage = 10;
+            m_armor_percentage = 0;
         }
     }
 
