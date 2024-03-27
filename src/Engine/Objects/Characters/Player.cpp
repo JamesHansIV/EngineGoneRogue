@@ -124,6 +124,7 @@ void Player::Update(float dt) {
     if (state != nullptr) {
         ChangeState(state);
     }
+    SDL_Log("Player health: %d", m_health->GetHP());
 
     if (timer.GetTicks() - m_last_health_regen > 10000) {
         m_last_health_regen = timer.GetTicks();
@@ -219,7 +220,8 @@ void Player::DropBomb() {
     Properties grenade_props("weapons", {10, 3, 16, 16},
                              {player_x, player_y, 36, 36}, 0.0);
 
-    auto* grenade = new Grenade(grenade_props, {80, 3, 50, 50});
+    auto* grenade = new Grenade(grenade_props,
+                                {80 + m_stats->GetRangedDamage(), 3, 50, 50});
     static_cast<Game*>(Application::Get())->AddObject(grenade);
     ColliderHandler::GetInstance()->AddCollider(grenade);
     m_num_bombs--;

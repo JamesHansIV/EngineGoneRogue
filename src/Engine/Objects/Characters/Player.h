@@ -177,7 +177,6 @@ class PlayerStats {
             m_hp_regen_rate = 100000;
             m_melee_damage = 1000000;
             m_ranged_damage = 1000000;
-            m_armor_percentage = 1000000;
         } else {
             m_max_health = 100;
             m_hp_regen_rate = 1;
@@ -255,7 +254,14 @@ class Player : public Character {
 
     void ToggleGodMode() {
         m_stats->ToggleGodMode();
-        m_num_bombs = 1000;
+        if (m_stats->IsGodMode()) {
+            m_num_bombs = 1000;
+            m_health->SetMaxHealth(m_stats->GetMaxHealth());
+            m_health->IncreaseHealth(100000);
+        } else {
+            m_health->IncreaseHealth(m_stats->GetMaxHealth());
+            m_num_bombs = m_stats->GetMaxGrenades();
+        }
     }
 
    private:
