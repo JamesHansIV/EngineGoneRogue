@@ -50,8 +50,11 @@ void ActionRecordHandler::UndoAction(std::vector<std::vector<GameObject*>>& laye
         case EditorAction::EXECUTE_DELETE_SELECTION:
             UndoDeleteSelection(record, layers[record->GetLayer()]);
             break;
+        case EditorAction::PASTE_CLIPBOARD:
+            UndoPasteClipboard(record, layers[record->GetLayer()]);
+            break;
         default:
-            std::cout << "not implemented yet undo action\n";
+            std::cout << "not implemented yet undo action: " << static_cast<int>(record->GetAction()) << "\n";
     }
 
     // std::cout << "*UNDO: " << m_undo_stack.size() << " | REDO: " << m_redo_stack.size() << std::endl;
@@ -83,6 +86,9 @@ void ActionRecordHandler::RedoAction(std::vector<std::vector<GameObject*>>& laye
         case EditorAction::EXECUTE_DELETE_SELECTION:
             RedoDeleteSelection(record, layers[record->GetLayer()]);
             break;
+        case EditorAction::PASTE_CLIPBOARD:
+            RedoPasteClipboard(record, layers[record->GetLayer()]);
+            break;  
         default:
             std::cout << "not implemented yet redo action\n";
     }
@@ -165,6 +171,10 @@ void ActionRecordHandler::UndoDeleteSelection(ActionRecord* record, std::vector<
     RedoPaintBucket(record, layer);
 }
 
+void ActionRecordHandler::UndoPasteClipboard(ActionRecord* record, std::vector<GameObject*>& layer) {
+    UndoPaintBucket(record, layer);
+}
+
 void ActionRecordHandler::RedoDraw(ActionRecord* record, std::vector<GameObject*>&layer) {
     GameObject* obj = record->GetObjects().front();
     GameObject* new_obj;
@@ -245,6 +255,11 @@ void ActionRecordHandler::RedoPaintBucket(ActionRecord* record, std::vector<Game
 
 void ActionRecordHandler::RedoDeleteSelection(ActionRecord* record, std::vector<GameObject*>& layer) {
     UndoPaintBucket(record, layer);
+}
+
+void ActionRecordHandler::RedoPasteClipboard(ActionRecord* record, std::vector<GameObject*>& layer) {
+    std::cout << "IMPLEMENT ActionRecordHandler::RedoPasteClipboard\n";
+    return;
 }
 
 void ActionRecordHandler::PrintStack(std::stack<ActionRecord*> stack) {

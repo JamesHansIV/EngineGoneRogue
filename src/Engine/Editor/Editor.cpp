@@ -235,6 +235,8 @@ Editor::Editor() {
     m_cursor = new Cursor();
 
     m_action_record_handler = new ActionRecordHandler(TileSize);
+
+    m_clipboard = new ClipBoard();
 }
 
 Editor::~Editor() {
@@ -247,6 +249,8 @@ Editor::~Editor() {
 
     delete m_key_map;
     delete m_cursor;
+    delete m_action_record_handler;
+    delete m_clipboard;
 }
 
 void Editor::CleanLayers() {
@@ -537,6 +541,7 @@ void Editor::ShowObjectEditor() {
                     DeleteObject(obj);
                 }
                 m_selected_objects.clear();
+                m_selected_obj_origin_map.clear();
             }
 
             bool addColliders = true;
@@ -555,6 +560,7 @@ void Editor::ShowObjectEditor() {
                     m_layers[m_current_layer].push_back(c);
                 }
                 m_selected_objects.clear();
+                m_selected_obj_origin_map.clear();
             }
 
         } else if (m_current_object != nullptr) {
@@ -637,6 +643,7 @@ void Editor::ShowObjectEditor() {
 
         if (ImGui::Button("Deselect")) {
             m_selected_objects.clear();
+            m_selected_obj_origin_map.clear();
             StopEditing();
         }
 
@@ -1004,11 +1011,33 @@ void Editor::Update(float /*dt*/) {
 
         // deselect all
         m_selected_objects.clear();
+        m_selected_obj_origin_map.clear();
+    }
+
+    // shift for multiselect
+    // enter
+    if (m_edit_state.EditMode == EditMode::NONE 
+        && !InputChecker::WasKeyAlreadyPresssed(m_key_map->mac_keys_to_sdl[MacKeys::LSHIFT])
+        && InputChecker::IsKeyPressed(m_key_map->mac_keys_to_sdl[MacKeys::LSHIFT])) {
+            // enter multiselect
+            m_edit_state.EditMode = EditMode::TEMP_MULTI_SELECT;
+            m_cursor->SetCursor(m_edit_state.EditMode);
+    }
+    // exit
+    else if (m_edit_state.EditMode == EditMode::TEMP_MULTI_SELECT 
+        && !InputChecker::IsKeyPressed(m_key_map->mac_keys_to_sdl[MacKeys::LSHIFT])) {
+            // enter multiselect
+            m_edit_state.EditMode = EditMode::NONE;
+            m_cursor->SetCursor(m_edit_state.EditMode);
     }
 
     // COPY & PASTE COMBOS
-    m_key_map->CheckInputs(EditorAction::COPY_SELECTION);
-    m_key_map->CheckInputs(EditorAction::PASTE_SELECTION);
+    if (m_key_map->CheckInputs(EditorAction::COPY_SELECTION)) {
+        HandleCopySelectionAciton();
+    }
+    if (m_key_map->CheckInputs(EditorAction::PASTE_CLIPBOARD)) {
+        HandlePasteClipboardAction();
+    }
 
     // UNDO & REDO COMBOS
     if (m_key_map->CheckInputs(EditorAction::UNDO_ACTION)) {
@@ -1113,6 +1142,8 @@ void Editor::OnMouseClicked(SDL_Event& event) {
         case EditMode::PAINT_BUCKET:
             HandlePaintBucketAction(event);
             break;
+        case EditMode::TEMP_MULTI_SELECT:
+            break;
         default:
             throw(std::runtime_error("Unsupported or missing EditMode assigned to m_Editstate"));
     }
@@ -1137,6 +1168,8 @@ void Editor::OnMouseMoved(SDL_Event& event) {
                 HandleNoToolActions(true, event);
                 break;
             case EditMode::PAINT_BUCKET:
+                break;
+            case EditMode::TEMP_MULTI_SELECT:
                 break;
             default:
                 throw(std::runtime_error("Unsupported or missing EditMode assigned to m_Editstate"));
@@ -1167,6 +1200,9 @@ void Editor::OnMouseUp(SDL_Event& event) {
             break;
         case EditMode::PAINT_BUCKET:
             HandlePaintBucketAction(event);
+            break;
+        case EditMode::TEMP_MULTI_SELECT:
+            HandleNoToolActions(false, event);
             break;
         default:
             throw(std::runtime_error("Unsupported or missing EditMode assigned to m_Editstate"));
@@ -1284,6 +1320,21 @@ bool Editor::SelectTile(int row, int col) {
     return selectedOrDeselectedATile;
 }
 
+std::vector<GameObject*> Editor::GetObjectsOnTile(int row, int col) {
+    std::vector<GameObject*>objects;
+    for (GameObject* obj : m_layers[m_current_layer]) {
+        if (obj == nullptr) continue;
+
+        std::pair<int, int> obj_tile_coords = PixelToTilePos(obj->GetX(), obj->GetY());
+
+        if (obj_tile_coords.first == row && obj_tile_coords.second == col) {
+            objects.push_back(obj);
+        }
+    }
+
+    return objects;
+}
+
 void Editor::HandleDrawAction() {
     const auto [x,y] = GetMousePixelPos();
 
@@ -1366,8 +1417,23 @@ void Editor::HandleNoToolActions(bool mouse_moved, SDL_Event& event) {
             clickedEmptyTile = !SelectTile(mouse_tile_coords.row, mouse_tile_coords.col);
 
         // deslect all
-        if (clickedEmptyTile)
+        // if (clickedEmptyTile) {
+        //     m_selected_objects.clear();
+        //     m_selected_obj_origin_map.clear();
+        // }
+        if (m_edit_state.EditMode != EditMode::TEMP_MULTI_SELECT) {
             m_selected_objects.clear();
+            m_selected_obj_origin_map.clear();
+
+            for (auto& obj : GetObjectsOnTile(mouse_tile_coords.row, mouse_tile_coords.col)) {
+                m_selected_objects.insert(obj); 
+                m_selected_obj_origin_map[obj] = { obj->GetX(), obj->GetY() };
+            }
+        } else if (clickedEmptyTile) {
+            m_selected_obj_origin_map.clear();
+            m_selected_objects.clear();
+        }
+
 
         m_edit_state.IsEditing = false;
     }
@@ -1387,6 +1453,7 @@ void Editor::HandleTileSelectAction(bool mouse_moved, SDL_Event& event) {
     bool foundObj = SelectTile(mouse_tile_coords.row, mouse_tile_coords.col);
     if (!foundObj && !mouse_moved) {
         m_selected_objects.clear();
+        m_selected_obj_origin_map.clear();
         StopEditing();
     }
 
@@ -1484,6 +1551,46 @@ void Editor::HandleDeleteSelectionAction() {
 
     ActionRecord* record = new ActionRecord(EditorAction::EXECUTE_DELETE_SELECTION, deleted_objects, m_current_layer);
     m_action_record_handler->RecordAction(record);
+}
+
+void Editor::HandleCopySelectionAciton() { 
+    if (m_selected_objects.empty())
+        return;
+
+    m_clipboard->Clear();
+    for (auto& obj : m_selected_objects) {
+        // SetObjectInfo();
+        m_current_texture = Renderer::GetInstance()->GetTexture(obj->GetTextureID());
+
+        m_clipboard->AddObject(new GameObject(obj));
+    }
+    
+    // std::cout << "COPY: Clipboard size: " << m_clipboard->Size() << "\n";
+}
+
+void Editor::HandlePasteClipboardAction() {
+    if (m_clipboard->Empty())
+        return;
+
+    m_selected_objects.clear();
+    m_selected_obj_origin_map.clear();
+
+    std::vector<GameObject*> pasted_objects;
+    for (auto& obj : m_clipboard->GetObjects()) {
+        // add object and push onto selected objects
+        AddObject(obj->GetX(), obj->GetY());
+
+        m_selected_objects.insert(m_layers[m_current_layer].back());
+        m_selected_obj_origin_map[m_layers[m_current_layer].back()] = { obj->GetX(), obj->GetY() };
+        pasted_objects.push_back(m_layers[m_current_layer].back());
+    }
+
+    if (pasted_objects.size() > 0) {
+        ActionRecord* record = new ActionRecord(EditorAction::PASTE_CLIPBOARD, pasted_objects, m_current_layer);
+        m_action_record_handler->RecordAction(record);
+    }
+
+    // std::cout << "PASTE: num obj = " << m_layers[m_current_layer].size() << "\n";
 }
 
 bool Editor::IsTileEmpty(TileCoords coords) {

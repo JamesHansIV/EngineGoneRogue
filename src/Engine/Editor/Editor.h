@@ -13,6 +13,7 @@
 
 #include "Engine/Editor/EditMode.h"
 #include "Engine/utils/utils.h"
+#include "Engine/ClipBoard/ClipBoard.h"
 
 #include <tuple>
 
@@ -117,6 +118,7 @@ class Editor : public Application {
     int m_current_layer{0};
     std::unordered_map<std::string, std::pair<int,int>>m_cursor_offsets;
     TileCoords m_mouse_input_origin;
+    ClipBoard* m_clipboard;
 
     // static std::vector<std::vector<GameObject*>>* s_layers;
 
@@ -130,6 +132,8 @@ class Editor : public Application {
     void HandleDragMoveAction(SDL_Event& event);
     void HandlePaintBucketAction(SDL_Event& event);
     void HandleDeleteSelectionAction();
+    void HandleCopySelectionAciton();
+    void HandlePasteClipboardAction();
 
     // action handler helpers
     bool SelectTile(int x, int y); // returns true if selection is made, false if no selection is made, x & y are tile coords
@@ -137,6 +141,7 @@ class Editor : public Application {
     bool IsTileEmpty(TileCoords coords);
     void StopEditing();
     void UpdateEditMode(EditMode mode, bool isEditing);
+    std::vector<GameObject*> GetObjectsOnTile(int row, int col);
 
     std::tuple<float, float>GetMousePixelPos();
     TileCoords GetMouseTilePos();
