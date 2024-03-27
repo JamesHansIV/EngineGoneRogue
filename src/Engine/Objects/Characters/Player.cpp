@@ -74,7 +74,7 @@ void Player::Init() {
     m_weapons.push_back(uzi);
 
     Properties props_shotgun("weapons", {0, 2, 16, 16}, {0, 0, 18, 18}, 0.0);
-    RangedWeaponStats stats_shotgun = {true, 200, 25, 20, m_stats};
+    RangedWeaponStats stats_shotgun = {true, 750, 25, 35, m_stats};
     Weapon* shotgun = new Shotgun(props_shotgun, stats_shotgun, this, "Shotgun",
                                   default_projectile_props);
     m_weapons.push_back(shotgun);

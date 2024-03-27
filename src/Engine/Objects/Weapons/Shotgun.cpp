@@ -20,18 +20,21 @@ void Shotgun::Update(float dt) {
 
     const Player* player = Application::Get()->GetPlayer();
 
-    //TODO: Aim at the mouse correctly. Currently is offset for some reason
     if ((InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT) ||
          m_auto_fire_enabled) &&
         SDL_GetTicks() - m_last_fired > m_stats.GetFireRate()) {
         SDL_Log("getmousex: %f, getmousey: %d",
                 static_cast<float>(InputChecker::GetMouseX()),
                 InputChecker::GetMouseY());
+        SDL_Log("playerx: %f, playery: %f", player->GetMidPointX(),
+                player->GetMidPointY());
         m_attack.Shoot(RangedAttackInfo{
             player->GetMidPointX(), player->GetMidPointY(),
-            static_cast<float>(InputChecker::GetMouseX()),
-            static_cast<float>(InputChecker::GetMouseY()), props,
-            kDefaultHitAnimationInfo, 20, 3, 0.314159, true});
+            static_cast<float>(InputChecker::GetMouseX()) +
+                Renderer::GetInstance()->GetCameraX(),
+            static_cast<float>(InputChecker::GetMouseY()) +
+                Renderer::GetInstance()->GetCameraY(),
+            props, kDefaultHitAnimationInfo, 20, 9, .31459 * 3, true});
         m_last_fired = SDL_GetTicks();
     }
 
