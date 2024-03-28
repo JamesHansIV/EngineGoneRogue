@@ -11,15 +11,16 @@
 
 State* SlimeHandleCollide(Slime* enemy, Collider* collidee) {
     switch (collidee->GetObjectType()) {
-        case ObjectType::Projectile:{
+        case ObjectType::Projectile: {
             Projectile* p = dynamic_cast<Projectile*>(collidee);
             if (p->IsPlayerOwned()) {
-                 if(!p->IsInHitSet(enemy->GetID())){
+                if (!p->IsInHitSet(enemy->GetID())) {
                     p->CollideWithEnemy();
                     p->AddtoHitSet(enemy->GetID());
                     return new SlimeIsHit(
-                    enemy, dynamic_cast<Projectile*>(collidee)->GetDamage());
-                }       
+                        enemy,
+                        dynamic_cast<Projectile*>(collidee)->GetDamage());
+                }
             }
             break;
         }
@@ -93,6 +94,7 @@ void SlimeSplit(Slime* enemy) {
 void BigSlimeSelectAnimation(Slime* enemy, StateType type) {
     switch (type) {
         case StateType::Idle:
+        case StateType::Moving:
             enemy->GetAnimation()->SelectAnimation("SlimeIdle");
             break;
         case StateType::Dead:
@@ -112,6 +114,7 @@ void BigSlimeSelectAnimation(Slime* enemy, StateType type) {
 void MiniSlimeSelectAnimation(Slime* enemy, StateType type) {
     switch (type) {
         case StateType::Idle:
+        case StateType::Moving:
             enemy->GetAnimation()->SelectAnimation("MiniSlimeIdle");
             break;
         case StateType::Dead:
@@ -181,7 +184,9 @@ State* SlimeIdle::OnCollideEvent(CollideEvent* event) {
     return SlimeHandleCollide(GetEnemy(), collidee);
 }
 
-void SlimeMoving::Enter() {}
+void SlimeMoving::Enter() {
+    SlimeSelectAnimation(GetEnemy(), GetType());
+}
 
 void SlimeMoving::Exit() {}
 
