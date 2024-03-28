@@ -11,7 +11,7 @@
 #include "Engine/UI/StartScreen.h"
 #include "State.h"
 
-const int kDefaultTransitionTime = 10;
+const int kDefaultTransitionTime = 500;
 
 class Game;
 
@@ -77,7 +77,9 @@ class GameOverState : public GameState {
 class RoomTransitionState : public GameState {
    public:
     explicit RoomTransitionState(Game* game)
-        : GameState(game), m_transition_time(kDefaultTransitionTime) {}
+        : GameState(game),
+          m_enter_time(timer.GetTicks()),
+          m_transition_time(kDefaultTransitionTime) {}
 
     void Enter() override;
     void Exit() override;
@@ -88,6 +90,7 @@ class RoomTransitionState : public GameState {
     StateType GetType() override { return StateType::RoomTransition; }
 
    private:
+    int m_enter_time;
     int m_transition_time;
 };
 

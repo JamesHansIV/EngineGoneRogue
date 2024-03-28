@@ -13,13 +13,13 @@ class Application {
     Application();
     virtual ~Application() = default;
 
-    bool LoadCharacters();
     bool LoadRooms();
     bool LoadNextRoom();
     bool LoadRoom(std::string path);
     bool LoadProject();
     bool LoadMap();
     bool LoadStart(const char* path);
+    bool LoadPlayer();
 
     std::string GetProjectPath() {
         return "../assets/projects/" + m_project_name;
@@ -63,6 +63,8 @@ class Application {
         m_enemy_count--;
         assert(m_enemy_count >= 0);
     }
+
+    void ResetNextRoom() { m_next_room = 0; }
 
     void IncrementEnemyCount() { m_enemy_count++; }
 

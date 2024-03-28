@@ -70,28 +70,6 @@ Application::Application()
     m_is_running = true;
 }
 
-bool Application::LoadCharacters() {
-    std::string objects_path = GetProjectPath();
-    objects_path += "/objects.xml";
-
-    std::vector<GameObject*> const objects = LoadObjects(objects_path.c_str());
-
-    if (objects.empty()) {
-        return false;
-    }
-
-    for (auto* obj : objects) {
-        if (obj->GetID() == "player") {
-            m_player = static_cast<Player*>(obj);
-            continue;
-        }
-        SDL_Log("adding obj %s", obj->GetID().c_str());
-        m_objects.push_back(static_cast<Collider*>(obj));
-    }
-
-    return true;
-}
-
 bool Application::LoadRooms() {
     struct dirent* entry;
     DIR* dp;
@@ -137,9 +115,14 @@ bool Application::LoadRooms() {
 bool Application::LoadNextRoom() {
     if (m_next_room == m_room_order.size()) {
         SDL_Log("Last room already loaded");
+        PushNewEvent(EventType::GameOverEvent);
+        return true;
     }
     LoadRoom(m_room_order[m_next_room].c_str());
-    m_next_room = (m_next_room + 1) % m_room_order.size();
+    m_player->GetRigidBody()->SetPosition(
+        Vector2D(m_start_position.first, m_start_position.second));
+    m_next_room++;
+    return true;
 }
 
 bool Application::LoadRoom(std::string room_id) {
@@ -165,12 +148,6 @@ bool Application::LoadRoom(std::string room_id) {
     }
 
     for (auto* obj : objects) {
-        SDL_Log("Object is null: %d", obj == nullptr);
-        if (obj->GetID() == "player") {
-            SDL_Log("Adding player object");
-            m_player = static_cast<Player*>(obj);
-            continue;
-        }
         SDL_Log("adding obj %s", obj->GetID().c_str());
         SDL_Log("object is collider: %d",
                 dynamic_cast<Collider*>(obj) != nullptr);
@@ -186,6 +163,21 @@ bool Application::LoadRoom(std::string room_id) {
     }
 
     return true;
+}
+
+bool Application::LoadPlayer() {
+    std::string path = GetProjectPath() + "/player.xml";
+
+    SDL_Log("player path: %s", path.c_str());
+
+    std::vector<GameObject*> objects = LoadObjects(path.c_str());
+
+    if (objects.size() != 1) {
+        SDL_Log("Failed to load player");
+        return false;
+    }
+
+    m_player = static_cast<Player*>(objects[0]);
 }
 
 bool Application::LoadMap() {
@@ -212,14 +204,11 @@ bool Application::LoadProject() {
         return false;
     }
 
+    if (!LoadPlayer()) {
+        return false;
+    }
+
     return LoadNextRoom();
-
-    //if (!LoadCharacters()) {
-    //    SDL_Log("failed to load characters");
-    //    return false;
-    //}
-
-    //return LoadRooms();
 }
 
 void Application::Events() {
@@ -322,6 +311,7 @@ bool Application::Clean() {
     Renderer::GetInstance()->Destroy();
     delete Renderer::GetInstance();
 
+    delete m_player;
     for (const auto& it : m_rooms) {
         if (it.first == m_base_room_id) {
             continue;

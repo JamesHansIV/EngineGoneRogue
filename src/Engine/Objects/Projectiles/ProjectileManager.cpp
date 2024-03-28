@@ -4,10 +4,7 @@
 ProjectileManager* ProjectileManager::s_instance = nullptr;
 
 ProjectileManager::~ProjectileManager() {
-    for (auto it = m_projectiles.begin(); it != m_projectiles.end();) {
-        it = RemoveProjectile(*it, it);
-    }
-    m_projectiles.clear();
+    Clean();
 }
 
 void ProjectileManager::AddProjectile(Projectile* projectile) {
@@ -26,7 +23,12 @@ p_iterator ProjectileManager::RemoveProjectile(Projectile* projectile,
     return m_projectiles.erase(it);
 }
 
-void ProjectileManager::Clear() {
+void ProjectileManager::Clean() {
+    for (auto* projectile : m_projectiles) {
+        ColliderHandler::GetInstance()->RemoveCollider(projectile);
+        delete projectile;
+    }
+
     m_projectiles.clear();
 }
 

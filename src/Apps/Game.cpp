@@ -245,7 +245,10 @@ void Game::GenerateRandomEnemy() {
 }
 
 void Game::Update(float dt) {
-    m_state->Update(dt);
+    State* state = m_state->Update(dt);
+    if (state != nullptr) {
+        ChangeState(state);
+    }
 }
 
 void Game::UpdateObjects(float dt) {
@@ -291,10 +294,6 @@ void Game::UpdateObjects(float dt) {
     }
 
     //GenerateRandomEnemyIfNeeded();
-}
-
-void Game::ResetObjects() {
-    ProjectileManager::GetInstance()->Clear();
 }
 
 void Game::Render() {

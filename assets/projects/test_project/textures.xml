@@ -118,4 +118,8 @@
         <FilePath>../assets/textures/game_over.png</FilePath>
         <ID>game-over-background</ID>
     </Texture>
+    <Texture type = "base">
+        <FilePath>../assets/textures/door_lockless.png</FilePath>
+        <ID>door-lockless</ID>
+    </Texture>
 </Root>

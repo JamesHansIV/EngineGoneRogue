@@ -24,8 +24,6 @@ class Game : public Application {
     void AddObject(GameObject* obj);
     void DeleteObject(GameObject* obj);
 
-    void ResetObjects();
-
     void ResetManagers();
 
     void UpdateObjects(float dt);

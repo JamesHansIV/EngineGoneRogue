@@ -1,5 +1,6 @@
 #include "GameState.h"
 #include "Apps/Game.h"
+#include "Engine/Objects/Projectiles/ProjectileManager.h"
 #include "SDL2_mixer/SDL_mixer.h"
 
 void RunningState::Enter() {
@@ -19,7 +20,7 @@ void RunningState::Draw() {
 State* RunningState::Update(float dt) {
     GetGame()->UpdateObjects(dt);
 
-    assert(GetGame()->GetEnemyCount() > 0);
+    assert(GetGame()->GetEnemyCount() >= 0);
     if (GetGame()->GetEnemyCount() == 0) {
         PushNewEvent(EventType::RoomTransitionEvent);
     }
@@ -65,16 +66,20 @@ State* StartState::HandleEvent(Event* event) {
 
 void RoomTransitionState::Enter() {}
 
-void RoomTransitionState::Exit() {}
+void RoomTransitionState::Exit() {
+    ProjectileManager::GetInstance()->Clean();
+    GetGame()->LoadNextRoom();
+}
 
 void RoomTransitionState::Draw() {}
 
 State* RoomTransitionState::Update(float dt) {
-
-    if (m_transition_time <= 0) {
+    if (timer.GetTicks() - m_enter_time > m_transition_time) {
+        SDL_Log("in room transition state to running state: %d",
+                m_transition_time);
         return new RunningState(GetGame());
     }
-    m_transition_time--;
+    return nullptr;
 }
 
 State* RoomTransitionState::HandleEvent(Event* event) {

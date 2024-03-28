@@ -204,8 +204,8 @@ State* GameEventManager::HandleCustomEvents(const SDL_Event& event,
             auto* game = static_cast<Game*>(Application::Get());
             game->GetPlayer()->Clean();
             game->GetPlayer()->Init();
-            game->ResetObjects();
             game->ResetManagers();
+            game->ResetNextRoom();
             return new StartState(static_cast<Game*>(Application::Get()));
         }
         case EventType::RoomTransitionEvent: {
