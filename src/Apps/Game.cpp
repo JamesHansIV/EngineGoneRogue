@@ -8,6 +8,7 @@
 #include "Engine/Objects/Characters/EnemyStats.h"
 #include "Engine/Objects/Characters/Goblin.h"
 #include "Engine/Objects/Characters/HelixEnemy.h"
+#include "Engine/Objects/Characters/Kamikaze.h"
 #include "Engine/Objects/Characters/Mage.h"
 #include "Engine/Objects/Characters/Player.h"
 #include "Engine/Objects/Characters/RingShotEnemy.h"
@@ -54,6 +55,7 @@ Dog* dog_copy = nullptr;
 Skeleton* skeleton_copy = nullptr;
 Goblin* goblin_copy = nullptr;
 HelixEnemy* helix_enemy_copy = nullptr;
+Kamikaze* kamikaze_copy = nullptr;
 
 // Todo: try to clean this up
 // https://stackoverflow.com/questions/27451776/dynamic-cast-for-multiple-derived-classes
@@ -76,6 +78,12 @@ void Game::InitEnemyCopies() {
             slime_copy = new Slime(enemy, enemy->GetEnemyStats());
             continue;
         }
+
+        if ((enemy = dynamic_cast<Kamikaze*>(obj)) != nullptr) {
+            kamikaze_copy = new Kamikaze(enemy, enemy->GetEnemyStats());
+            continue;
+        }
+
         if ((ranged_enemy = dynamic_cast<RingShotEnemy*>(obj)) != nullptr) {
             ring_shot_enemy_copy = new RingShotEnemy(
                 ranged_enemy, ranged_enemy->GetRangedEnemyStats());

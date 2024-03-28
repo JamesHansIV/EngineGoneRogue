@@ -1,6 +1,7 @@
 #include "Enemy.h"
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Objects/Environment/Entrance.h"
+#include "Engine/State/EnemyState.h"
 
 #include <cmath>
 
@@ -111,4 +112,24 @@ void Enemy::OnCollide(Collider* collidee) {
 
 void Enemy::Clean() {
     delete m_health;
+}
+
+EnemyState* Enemy::GetIdleState() {
+    return new EnemyIdle(*this);
+}
+
+EnemyState* Enemy::GetHitState(int damage) {
+    return new EnemyIsHit(*this, damage);
+}
+
+EnemyState* Enemy::GetDeadState() {
+    return new EnemyDead(*this);
+}
+
+EnemyState* Enemy::GetAttackState() {
+    return new EnemyAttack(*this);
+}
+
+EnemyState* Enemy::GetMovingState() {
+    return new EnemyMoving(*this);
 }

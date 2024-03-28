@@ -149,7 +149,8 @@ std::vector<Projectile*> CreateShotgunSpreadBullets(RangedAttackInfo info) {
 
         bullet =
             new Projectile(info.ProjProps, info.ProjSpeed, angle,
-                           info.HitAnimation, info.IsPlayerOwned, 10, 0, owner);
+                           info.HitAnimation, info.IsPlayerOwned,
+                           10 + owner->GetStats().GetRangedDamage(), 0, owner);
         bullets.push_back(bullet);
     }
 
