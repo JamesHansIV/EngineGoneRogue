@@ -197,7 +197,7 @@ void Game::GenerateRandomEnemy() {
     float const generated_y = rand() % 1800 + 20;
 
     // Generate random enemy type
-    int const enemy_type = rand() % 7;
+    int const enemy_type = rand() % 8;
     Enemy* generated_enemy = nullptr;
 
     switch (enemy_type) {
@@ -250,6 +250,13 @@ void Game::GenerateRandomEnemy() {
             generated_enemy = new HelixEnemy(
                 helix_enemy_copy, helix_enemy_copy->GetRangedEnemyStats() *
                                       m_enemy_stat_multiplier);
+            break;
+        case 7:
+            charger_copy->SetX(generated_x);
+            charger_copy->SetY(generated_y);
+            generated_enemy =
+                new Charger(charger_copy, charger_copy->GetEnemyStats() *
+                                              m_enemy_stat_multiplier);
             break;
         default:
             break;
