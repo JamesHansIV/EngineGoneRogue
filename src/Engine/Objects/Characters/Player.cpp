@@ -124,7 +124,6 @@ void Player::Update(float dt) {
     if (state != nullptr) {
         ChangeState(state);
     }
-    SDL_Log("Player health: %d", m_health->GetHP());
 
     if (timer.GetTicks() - m_last_health_regen > 10000) {
         m_last_health_regen = timer.GetTicks();

@@ -18,6 +18,11 @@ void RunningState::Draw() {
 
 State* RunningState::Update(float dt) {
     GetGame()->UpdateObjects(dt);
+
+    assert(GetGame()->GetEnemyCount() > 0);
+    if (GetGame()->GetEnemyCount() == 0) {
+        return new RoomTransitionState(GetGame());
+    }
     return nullptr;
 }
 
@@ -55,6 +60,24 @@ State* StartState::HandleEvent(Event* event) {
         default:
             break;
     }
+    return nullptr;
+}
+
+void RoomTransitionState::Enter() {}
+
+void RoomTransitionState::Exit() {}
+
+void RoomTransitionState::Draw() {}
+
+State* RoomTransitionState::Update(float dt) {
+
+    if (m_transition_time <= 0) {
+        return new RunningState(GetGame());
+    }
+    m_transition_time--;
+}
+
+State* RoomTransitionState::HandleEvent(Event* event) {
     return nullptr;
 }
 

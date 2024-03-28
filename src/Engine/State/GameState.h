@@ -4,12 +4,14 @@
 #include <vector>
 #include "Engine/Events/Event.h"
 #include "Engine/Objects/Characters/Player.h"
-#include "Engine/UI/ChestDropModal.h"
 #include "Engine/UI/Button.h"
+#include "Engine/UI/ChestDropModal.h"
 #include "Engine/UI/GameOverScreen.h"
 #include "Engine/UI/PauseScreen.h"
 #include "Engine/UI/StartScreen.h"
 #include "State.h"
+
+const int kDefaultTransitionTime = 10;
 
 class Game;
 
@@ -70,6 +72,23 @@ class GameOverState : public GameState {
 
    private:
     GameOverScreen m_game_over_screen;
+};
+
+class RoomTransitionState : public GameState {
+   public:
+    explicit RoomTransitionState(Game* game)
+        : GameState(game), m_transition_time(kDefaultTransitionTime) {}
+
+    void Enter() override;
+    void Exit() override;
+    State* Update(float dt) override;
+    void Draw() override;
+    State* HandleEvent(Event* event) override;
+
+    StateType GetType() override { return StateType::RoomTransition; }
+
+   private:
+    int m_transition_time;
 };
 
 struct Option {

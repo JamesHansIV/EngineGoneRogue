@@ -1,4 +1,5 @@
 #include "Config.h"
+#include <fstream>
 #include "Engine/Objects/Characters/Dog.h"
 #include "Engine/Objects/Characters/Goblin.h"
 #include "Engine/Objects/Characters/HelixEnemy.h"
@@ -515,4 +516,53 @@ bool LoadTextures(const char* projectPath) {
         curr_texture = curr_texture->NextSiblingElement("Texture");
     }
     return true;
+}
+
+std::vector<std::string> LoadRoomOrder(const char* path) {
+    std::vector<std::string> order;
+
+    std::string room_order_path = path;
+    room_order_path += "/room_order.txt";
+
+    std::string room_file;
+
+    std::ifstream file;
+
+    file.open(room_order_path.c_str());
+
+    if (file.is_open()) {
+        while (getline(file, room_file)) {
+            order.push_back(room_file);
+        }
+    } else {
+        SDL_Log("FAILED TO LOAD ROOM ORDER FILE");
+    }
+
+    file.close();
+    return order;
+}
+
+std::pair<int, int> LoadStartPosition(const char* path) {
+    std::string line;
+
+    std::ifstream file;
+
+    SDL_Log("path: %s", path);
+    file.open(path);
+
+    int x = 0;
+    int y = 0;
+
+    if (file.is_open()) {
+        getline(file, line);
+        x = atoi(line.c_str());
+        getline(file, line);
+        y = atoi(line.c_str());
+    } else {
+        SDL_Log("FAILED TO LOAD START POSITION FILE");
+    }
+    SDL_Log("start position: %d %d", x, y);
+
+    file.close();
+    return {x, y};
 }

@@ -1,0 +1,5 @@
+
+class RoomTransitionScreen {
+   public:
+   private:
+};

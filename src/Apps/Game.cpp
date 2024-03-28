@@ -106,15 +106,11 @@ void Game::InitEnemyCopies() {
 }
 
 Game::Game() {
-    m_tiles = Application::m_tiles;
-
     srand(time(nullptr));
-
-    m_objects = CopyObjects(Application::m_objects);
 
     InitManagers();
 
-    InitEnemyCopies();
+    //InitEnemyCopies();
 
     SDL_Cursor* cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR);
 
@@ -294,14 +290,11 @@ void Game::UpdateObjects(float dt) {
         }
     }
 
-    GenerateRandomEnemyIfNeeded();
+    //GenerateRandomEnemyIfNeeded();
 }
 
 void Game::ResetObjects() {
     ProjectileManager::GetInstance()->Clear();
-    CleanObjects();
-    m_objects.clear();
-    m_objects = CopyObjects(Application::m_objects);
 }
 
 void Game::Render() {
@@ -351,26 +344,11 @@ void Game::DeleteObject(GameObject* obj) {
     obj = nullptr;
 }
 
-void Game::CleanObjects() {
-    for (auto* obj : m_objects) {
-        obj->Clean();
-        delete obj;
-        obj = nullptr;
-    }
-    m_objects.clear();
-}
-
 Game::~Game() {
-    CleanObjects();
     delete m_weapon_inventory;
     delete m_game_event_manager;
     delete m_heads_up_display;
     delete m_item_manager;
-    for (auto* tile : m_tiles) {
-        delete tile;
-        tile = nullptr;
-    }
-    delete m_player;
     delete slime_copy;
     delete dog_copy;
     delete ring_shot_enemy_copy;

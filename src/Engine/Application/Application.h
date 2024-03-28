@@ -13,11 +13,19 @@ class Application {
     Application();
     virtual ~Application() = default;
 
-    bool LoadCharacters(const char* projectPath);
-    bool LoadRooms(const char* projectPath);
+    bool LoadCharacters();
+    bool LoadRooms();
+    bool LoadRoom();
     bool LoadProject();
+    bool LoadMap();
+    bool LoadStart(const char* path);
+
+    std::string GetProjectPath() {
+        return "../assets/projects/" + m_project_name;
+    }
 
     bool Clean();
+    void ClearObjects();
     void Quit();
 
     virtual void Run();
@@ -46,6 +54,17 @@ class Application {
 
     int& GetMutableWindowHeight() { return m_window_height; }
 
+    std::pair<int, int> GetStartPosition() { return m_start_position; }
+
+    int GetEnemyCount() { return m_enemy_count; }
+
+    void DecrementEnemyCount() {
+        m_enemy_count--;
+        assert(m_enemy_count >= 0);
+    }
+
+    void IncrementEnemyCount() { m_enemy_count++; }
+
     Player* GetPlayer() { return m_player; }
 
     inline static Application* Get() { return m_instance; }
@@ -56,6 +75,11 @@ class Application {
     std::unordered_map<std::string, std::vector<GameObject*>> m_rooms;
     std::vector<GameObject*> m_objects;
     std::vector<GameObject*> m_tiles;
+    std::vector<std::string> m_room_order;
+    int m_next_room;
+    std::pair<int, int> m_start_position;
+    int m_enemy_count;
+
     Uint32 m_last_tick;
     bool m_is_paused;
     bool m_has_focus;

@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "Engine/Renderer/Renderer.h"
 
+#include "Engine/Objects/Characters/Enemy.h"
 #include "Engine/Objects/Characters/Player.h"
 #include "Engine/Objects/GameObject.h"
 
@@ -23,7 +24,12 @@ Application* Application::m_instance = nullptr;
 //const float kDt = 0.0083;
 const float kDt = 0.01;
 
-Application::Application() : m_project_name("test_project"), m_player(nullptr) {
+Application::Application()
+    : m_project_name("test_project"),
+      m_player(nullptr),
+      m_next_room(0),
+      m_start_position({0, 0}),
+      m_enemy_count(0) {
     // std::cout << "DEBUG MESSAGE FLAG " << DEBUG_MESSAGES << std::endl;
     // SDL_Log("Something going on");
     // exit(0);
@@ -64,8 +70,8 @@ Application::Application() : m_project_name("test_project"), m_player(nullptr) {
     m_is_running = true;
 }
 
-bool Application::LoadCharacters(const char* projectPath) {
-    std::string objects_path = projectPath;
+bool Application::LoadCharacters() {
+    std::string objects_path = GetProjectPath();
     objects_path += "/objects.xml";
 
     std::vector<GameObject*> const objects = LoadObjects(objects_path.c_str());
@@ -86,11 +92,11 @@ bool Application::LoadCharacters(const char* projectPath) {
     return true;
 }
 
-bool Application::LoadRooms(const char* projectPath) {
+bool Application::LoadRooms() {
     struct dirent* entry;
     DIR* dp;
 
-    std::string rooms_path = projectPath;
+    std::string rooms_path = GetProjectPath();
     rooms_path += "/rooms";
 
     // NOTE: comment these out to load all rooms for the editor
@@ -128,20 +134,90 @@ bool Application::LoadRooms(const char* projectPath) {
     return true;
 }
 
+bool Application::LoadRoom() {
+    if (m_next_room == m_room_order.size()) {
+        SDL_Log("Last room already loaded");
+    }
+    ClearObjects();
+
+    std::string tile_path =
+        GetProjectPath() + "/rooms/" + m_room_order[m_next_room] + ".xml";
+
+    m_tiles = LoadObjects(tile_path.c_str());
+
+    if (m_tiles.empty()) {
+        SDL_Log("Could not load %s", tile_path.c_str());
+        return false;
+    }
+
+    std::string obj_path = GetProjectPath() + "/rooms/" +
+                           m_room_order[m_next_room] + "_objects.xml";
+
+    std::vector<GameObject*> const objects = LoadObjects(obj_path.c_str());
+
+    if (objects.empty()) {
+        SDL_Log("Could not load %s", obj_path.c_str());
+        return false;
+    }
+
+    for (auto* obj : objects) {
+        SDL_Log("Object is null: %d", obj == nullptr);
+        if (obj->GetID() == "player") {
+            SDL_Log("Adding player object");
+            m_player = static_cast<Player*>(obj);
+            continue;
+        }
+        SDL_Log("adding obj %s", obj->GetID().c_str());
+        SDL_Log("object is collider: %d",
+                dynamic_cast<Collider*>(obj) != nullptr);
+        m_objects.push_back(static_cast<Collider*>(obj));
+    }
+
+    std::string start_pos_path =
+        GetProjectPath() + "/rooms/" + m_room_order[m_next_room] + ".start";
+
+    if (!LoadStart(start_pos_path.c_str())) {
+        SDL_Log("load start position failed");
+        return false;
+    }
+
+    m_next_room++;
+
+    return true;
+}
+
+bool Application::LoadMap() {
+    m_room_order = LoadRoomOrder(GetProjectPath().c_str());
+    if (m_room_order.empty()) {
+        return false;
+    }
+    return true;
+}
+
+bool Application::LoadStart(const char* path) {
+    m_start_position = LoadStartPosition(path);
+    return m_start_position.first != 0 || m_start_position.second != 0;
+}
+
 bool Application::LoadProject() {
-    char project_path[FilepathLen + 1];
-    snprintf(project_path, FilepathLen, "../assets/projects/%s",
-             m_project_name.c_str());
-    if (!LoadTextures(project_path)) {
+    if (!LoadTextures(GetProjectPath().c_str())) {
         return false;
     }
     SDL_Log("Textures are fine");
-    SDL_Log("%s", project_path);
-    if (!LoadCharacters(project_path)) {
-        SDL_Log("cannot load characters");
+
+    if (!LoadMap()) {
+        SDL_Log("failed to load room order");
         return false;
     }
-    return LoadRooms(project_path);
+
+    return LoadRoom();
+
+    //if (!LoadCharacters()) {
+    //    SDL_Log("failed to load characters");
+    //    return false;
+    //}
+
+    //return LoadRooms();
 }
 
 void Application::Events() {
@@ -228,7 +304,19 @@ void Application::Run() {
     Clean();
 }
 
+void Application::ClearObjects() {
+    for (auto* tile : m_tiles) {
+        delete tile;
+    }
+    for (auto* obj : m_objects) {
+        delete obj;
+    }
+    m_tiles.clear();
+    m_objects.clear();
+}
+
 bool Application::Clean() {
+    SDL_Log("enemy count in app: %d", GetEnemyCount());
     Renderer::GetInstance()->Destroy();
     delete Renderer::GetInstance();
 
@@ -240,6 +328,7 @@ bool Application::Clean() {
             delete obj;
         }
     }
+    ClearObjects();
 
     SDL_DestroyWindow(m_window);
     TTF_Quit();

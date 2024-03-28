@@ -46,7 +46,6 @@ class RangedAttack : public Attack {
    private:
     int m_interval;
     std::vector<Projectile*> (*m_create_bullets)(RangedAttackInfo);
-    ProjectileManager m_projectile_manager;
     AttackPattern* m_attack_pattern;
     Uint32 m_last_attack = 0;
 };

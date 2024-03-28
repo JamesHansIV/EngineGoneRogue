@@ -25,3 +25,7 @@ int SaveTextureMap(const char* filepath,
 std::vector<GameObject*> LoadObjects(const char* filepath);
 
 bool LoadTextures(const char* projectPath);
+
+std::vector<std::string> LoadRoomOrder(const char* path);
+
+std::pair<int, int> LoadStartPosition(const char* path);

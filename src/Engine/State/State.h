@@ -24,6 +24,7 @@ enum class StateType {
     Pause,
     ChestDrop,
     Shop,
+    RoomTransition,
 
     //General state
     Idle,
@@ -44,7 +45,7 @@ enum class StateType {
 
 class BitFieldState {
    public:
-    BitFieldState()  = default;
+    BitFieldState() = default;
 
     [[nodiscard]] int GetCurrentStates() const { return m_current_states; }
 
@@ -56,7 +57,9 @@ class BitFieldState {
 
     void RemoveState(int state) { m_current_states &= ~state; }
 
-    [[nodiscard]] bool HasState(int state) const { return (m_current_states & state) != 0; }
+    [[nodiscard]] bool HasState(int state) const {
+        return (m_current_states & state) != 0;
+    }
 
    private:
     int m_current_states{0};
