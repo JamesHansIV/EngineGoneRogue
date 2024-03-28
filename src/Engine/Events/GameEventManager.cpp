@@ -23,6 +23,7 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
     UserEvent event_wrapper;
     State* state = nullptr;
     event_wrapper.SetSDLEvent(&event);
+    Game* game = static_cast<Game*>(Application::Get());
     while (SDL_PollEvent(&event) != 0) {
         switch (event.type) {
             case SDL_QUIT:
@@ -206,6 +207,10 @@ State* GameEventManager::HandleCustomEvents(const SDL_Event& event,
             game->ResetObjects();
             game->ResetManagers();
             return new StartState(static_cast<Game*>(Application::Get()));
+        }
+        case EventType::RoomTransitionEvent: {
+            return new RoomTransitionState(
+                static_cast<Game*>(Application::Get()));
         }
         case EventType::PlayerLevelUpEvent:
             timer.Pause();

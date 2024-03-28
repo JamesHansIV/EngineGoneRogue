@@ -15,7 +15,8 @@ class Application {
 
     bool LoadCharacters();
     bool LoadRooms();
-    bool LoadRoom();
+    bool LoadNextRoom();
+    bool LoadRoom(std::string path);
     bool LoadProject();
     bool LoadMap();
     bool LoadStart(const char* path);

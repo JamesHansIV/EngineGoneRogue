@@ -134,14 +134,18 @@ bool Application::LoadRooms() {
     return true;
 }
 
-bool Application::LoadRoom() {
+bool Application::LoadNextRoom() {
     if (m_next_room == m_room_order.size()) {
         SDL_Log("Last room already loaded");
     }
+    LoadRoom(m_room_order[m_next_room].c_str());
+    m_next_room = (m_next_room + 1) % m_room_order.size();
+}
+
+bool Application::LoadRoom(std::string room_id) {
     ClearObjects();
 
-    std::string tile_path =
-        GetProjectPath() + "/rooms/" + m_room_order[m_next_room] + ".xml";
+    std::string tile_path = GetProjectPath() + "/rooms/" + room_id + ".xml";
 
     m_tiles = LoadObjects(tile_path.c_str());
 
@@ -150,8 +154,8 @@ bool Application::LoadRoom() {
         return false;
     }
 
-    std::string obj_path = GetProjectPath() + "/rooms/" +
-                           m_room_order[m_next_room] + "_objects.xml";
+    std::string obj_path =
+        GetProjectPath() + "/rooms/" + room_id + "_objects.xml";
 
     std::vector<GameObject*> const objects = LoadObjects(obj_path.c_str());
 
@@ -174,14 +178,12 @@ bool Application::LoadRoom() {
     }
 
     std::string start_pos_path =
-        GetProjectPath() + "/rooms/" + m_room_order[m_next_room] + ".start";
+        GetProjectPath() + "/rooms/" + room_id + ".start";
 
     if (!LoadStart(start_pos_path.c_str())) {
         SDL_Log("load start position failed");
         return false;
     }
-
-    m_next_room++;
 
     return true;
 }
@@ -210,7 +212,7 @@ bool Application::LoadProject() {
         return false;
     }
 
-    return LoadRoom();
+    return LoadNextRoom();
 
     //if (!LoadCharacters()) {
     //    SDL_Log("failed to load characters");

@@ -21,7 +21,7 @@ State* RunningState::Update(float dt) {
 
     assert(GetGame()->GetEnemyCount() > 0);
     if (GetGame()->GetEnemyCount() == 0) {
-        return new RoomTransitionState(GetGame());
+        PushNewEvent(EventType::RoomTransitionEvent);
     }
     return nullptr;
 }
