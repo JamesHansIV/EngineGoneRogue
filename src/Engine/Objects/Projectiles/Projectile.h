@@ -1,10 +1,12 @@
 #pragma once
 
+#include <string>
 #include "Engine/Animation/Animation.h"
 #include "Engine/Objects/Collider.h"
 #include "Engine/Objects/GameObject.h"
 #include "Engine/Physics/RigidBody.h"
 #include "SDL2/SDL.h"
+#include "SDL2/SDL_stdinc.h"
 #include "functional"
 
 class Player;
@@ -67,6 +69,18 @@ class Projectile : public Collider {
 
     Player* GetOwner() { return m_owner; };
 
+    std::set<std::string>& GetEnemiesHitSet() {return m_enemies_hit;};
+
+    void AddtoHitSet(std::string id){
+        m_enemies_hit.insert(id);
+    }
+
+    bool IsInHitSet(std::string id){
+        return m_enemies_hit.contains(id);
+    }
+
+    void CollideWithEnemy();
+    
    private:
     bool m_player_owned;
     bool m_hit;
@@ -78,4 +92,5 @@ class Projectile : public Collider {
     int m_piercing;
     int m_numberof_enemies_hit = 0;
     Player* m_owner;
+    std::set<std::string> m_enemies_hit;
 };

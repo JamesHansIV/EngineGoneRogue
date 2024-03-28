@@ -1,5 +1,6 @@
 #include "Game.h"
 #include <cstdlib>
+#include <string>
 #include <vector>
 #include "Engine/Events/ItemManager.h"
 #include "Engine/Input/InputChecker.h"
@@ -24,6 +25,7 @@
 #include "Engine/Timer/Timer.h"
 #include "Engine/UI/Button.h"
 #include "Engine/UI/WeaponInventory.h"
+#include "Engine/utils/utils.h"
 #include "SDL2/SDL_log.h"
 
 std::vector<Collider*> colliders;
@@ -106,6 +108,7 @@ Game::Game() {
     for (auto* obj : m_objects) {
         if ((c = dynamic_cast<Collider*>(obj)) != nullptr) {
             ColliderHandler::GetInstance()->AddCollider(c);
+            c->SetID(std::to_string(++object_counter));
         }
     }
     c = nullptr;

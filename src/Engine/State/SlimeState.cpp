@@ -10,12 +10,18 @@
 
 State* SlimeHandleCollide(Slime* enemy, Collider* collidee) {
     switch (collidee->GetObjectType()) {
-        case ObjectType::Projectile:
-            if (dynamic_cast<Projectile*>(collidee)->IsPlayerOwned()) {
-                return new SlimeIsHit(
+        case ObjectType::Projectile:{
+            Projectile* p = dynamic_cast<Projectile*>(collidee);
+            if (p->IsPlayerOwned()) {
+                 if(!p->IsInHitSet(enemy->GetID())){
+                    p->CollideWithEnemy();
+                    p->AddtoHitSet(enemy->GetID());
+                    return new SlimeIsHit(
                     enemy, dynamic_cast<Projectile*>(collidee)->GetDamage());
+                }       
             }
             break;
+        }
         case ObjectType::Entrance: {
             auto* entrance = dynamic_cast<Entrance*>(collidee);
             if (entrance->GetCurrentState()->GetType() == StateType::Closed ||

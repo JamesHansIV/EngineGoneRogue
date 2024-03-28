@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Engine/Events/Event.h"
 #include "SDL2/SDL.h"
+#include "SDL2/SDL_stdinc.h"
 
 enum { ScreenWidth = 1024, ScreenHeight = 768 };
 
@@ -29,6 +30,8 @@ struct Rect {
 };
 
 const int kHealthBarHeight = 5;
+
+static Uint32 object_counter = 0;
 
 using CustomEventType = Uint32;
 
