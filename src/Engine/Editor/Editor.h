@@ -8,34 +8,14 @@
 #include "Engine/Renderer/Texture.h"
 #include "Engine/Cursors/Cursor.h"
 #include "Engine/KeyMap/KeyMap.h"
-#include "ActionRecordHandling/ActionRecordHandler.h"
+#include "Engine/Editor/TileCoords.h"
+#include "Engine/Editor/ActionRecordHandling/ActionRecordHandler.h"
 
 #include "Engine/Editor/EditMode.h"
 #include "Engine/utils/utils.h"
+#include "Engine/ClipBoard/ClipBoard.h"
 
 #include <tuple>
-
-struct TileCoords {
-    int row{}, col{};
-
-    bool IsInBounds() {
-        int levelRows = (int)LevelHeight / (int)TileSize;
-        int levelCols = (int)LevelWidth / (int)TileSize;
-        return !(row < 0 || col < 0 || row >= levelRows || col >= levelRows);
-    }
-
-    bool operator()(const TileCoords& coords) const {
-        return std::hash<int>()(coords.row) ^ std::hash<int>()(coords.col);
-    }
-
-    bool operator==(const TileCoords& rhs) const {
-        return (row == rhs.row && col == rhs.col);
-    }
-
-    bool operator!=(const TileCoords& rhs) const {
-        return !(row == rhs.row && col == rhs.col);
-    }
-};
 
 struct EEnemyInfo {
     int PerceptionWidth;
@@ -129,6 +109,7 @@ class Editor : public Application {
     Texture* m_current_texture{nullptr};
     GameObject* m_current_object;
     std::set<GameObject*> m_selected_objects;
+    std::unordered_map<GameObject*, std::pair<float, float>>m_selected_obj_origin_map; //x,y
     EditState m_edit_state;
     EObjectInfo m_object_info;
     EEnemyInfo m_enemy_info;
@@ -137,6 +118,7 @@ class Editor : public Application {
     int m_current_layer{0};
     std::unordered_map<std::string, std::pair<int,int>>m_cursor_offsets;
     TileCoords m_mouse_input_origin;
+    ClipBoard* m_clipboard;
 
     // static std::vector<std::vector<GameObject*>>* s_layers;
 
@@ -149,6 +131,9 @@ class Editor : public Application {
     void HandleTileSelectAction(bool mouse_moved,  SDL_Event& event);
     void HandleDragMoveAction(SDL_Event& event);
     void HandlePaintBucketAction(SDL_Event& event);
+    void HandleDeleteSelectionAction();
+    void HandleCopySelectionAciton();
+    void HandlePasteClipboardAction();
 
     // action handler helpers
     bool SelectTile(int x, int y); // returns true if selection is made, false if no selection is made, x & y are tile coords
@@ -156,6 +141,7 @@ class Editor : public Application {
     bool IsTileEmpty(TileCoords coords);
     void StopEditing();
     void UpdateEditMode(EditMode mode, bool isEditing);
+    std::vector<GameObject*> GetObjectsOnTile(int row, int col);
 
     std::tuple<float, float>GetMousePixelPos();
     TileCoords GetMouseTilePos();

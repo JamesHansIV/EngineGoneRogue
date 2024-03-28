@@ -1,4 +1,5 @@
 #include "StartScreen.h"
+#include "Engine/Objects/Characters/Player.h"
 
 StartScreen::StartScreen() {
     const int window_width = Application::Get()->GetWindowWidth();
@@ -29,5 +30,15 @@ void StartScreen::Draw() {
 }
 
 void StartScreen::Update() {
+    const int window_width = Application::Get()->GetWindowWidth();
+    const int window_height = Application::Get()->GetWindowHeight();
+    m_background.ChangeDst({0, 0, window_width, window_height});
     m_start_button.Update();
+}
+
+State* StartScreen::HandleEvent(Event* event) {
+    if (event->GetEventType() == EventType::MouseButtonDownEvent) {
+        //m_start_button.HandleEvent(static_cast<MouseButtonDownEvent*>(event));
+    }
+    return nullptr;
 }

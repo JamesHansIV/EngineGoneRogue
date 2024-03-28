@@ -18,9 +18,11 @@ GameObject::GameObject(GameObject* rhs) {
 GameObject::~GameObject() {
     if (m_animation != nullptr) {
         delete m_animation;
+        m_animation = nullptr;
     }
     if (m_current_state != nullptr) {
         delete m_current_state;
+        m_current_state = nullptr;
     }
 }
 
@@ -53,6 +55,10 @@ void GameObject::Update(float /*dt*/) {
     }
 }
 
+GameObject* GameObject::Copy() {
+    return new GameObject(this);
+}
+
 void GameObject::AddStillFrame(const std::string& id, TilePos tilePos) {
     if (m_still_frames.find(id) != m_still_frames.end()) {
         SDL_Log("TilePos with id %s already exists for object %s", id.c_str(),
@@ -73,8 +79,17 @@ void GameObject::SelectStillFrame(const std::string& id) {
 
 void GameObject::ChangeState(State* state) {
     if (m_current_state != nullptr) {
+        if (GetID() == "player") {
+            SDL_Log("player exiting and deleting state: %d",
+                    m_current_state->GetType());
+        }
         m_current_state->Exit();
         delete m_current_state;
+        m_current_state = nullptr;
+    }
+    if (GetID() == "player") {
+        SDL_Log("player change state");
+        SDL_Log("player new state is null: %d", state == nullptr);
     }
 
     m_current_state = state;

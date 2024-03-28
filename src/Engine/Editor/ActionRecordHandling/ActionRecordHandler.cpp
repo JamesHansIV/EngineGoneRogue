@@ -44,8 +44,17 @@ void ActionRecordHandler::UndoAction(std::vector<std::vector<GameObject*>>& laye
         case EditorAction::EXECUTE_ERASE:
             UndoErase(record, layers[record->GetLayer()]);
             break;
+        case EditorAction::EXECUTE_DRAG_MOVE:
+            UndoDragMove(record, layers[record->GetLayer()]);
+            break;
+        case EditorAction::EXECUTE_DELETE_SELECTION:
+            UndoDeleteSelection(record, layers[record->GetLayer()]);
+            break;
+        case EditorAction::PASTE_CLIPBOARD:
+            UndoPasteClipboard(record, layers[record->GetLayer()]);
+            break;
         default:
-            std::cout << "not implemented yet undo action\n";
+            std::cout << "not implemented yet undo action: " << static_cast<int>(record->GetAction()) << "\n";
     }
 
     // std::cout << "*UNDO: " << m_undo_stack.size() << " | REDO: " << m_redo_stack.size() << std::endl;
@@ -71,6 +80,15 @@ void ActionRecordHandler::RedoAction(std::vector<std::vector<GameObject*>>& laye
         case EditorAction::EXECUTE_ERASE:
             RedoErase(record, layers[record->GetLayer()]);
             break;
+        case EditorAction::EXECUTE_DRAG_MOVE:
+            UndoDragMove(record, layers[record->GetLayer()]);
+            break;
+        case EditorAction::EXECUTE_DELETE_SELECTION:
+            RedoDeleteSelection(record, layers[record->GetLayer()]);
+            break;
+        case EditorAction::PASTE_CLIPBOARD:
+            RedoPasteClipboard(record, layers[record->GetLayer()]);
+            break;  
         default:
             std::cout << "not implemented yet redo action\n";
     }
@@ -121,6 +139,41 @@ void ActionRecordHandler::UndoPaintBucket(ActionRecord* record, std::vector<Game
     }
 }
 
+void ActionRecordHandler::UndoDragMove(ActionRecord* record, std::vector<GameObject*>& layer) {
+    TileCoords orig_coords = record->GetOrigCoords();
+    TileCoords dst_coords = record->GetDstCoords();
+    
+    TileCoords delta_coords = dst_coords - orig_coords;
+
+    // sanity check
+    if (record->GetObjects().size() != record->GetObjectPositions().size())
+        throw std::runtime_error("Object vector and Positions vector size mismatch!");
+
+    // update positions
+    std::vector<std::pair<float, float>>obj_origins = record->GetObjectPositions();
+    for (int i=0; GameObject* obj : record->GetObjects()) {
+        const float curr_x = obj->GetX();
+        const float curr_y = obj->GetY();
+
+        obj->SetX(obj_origins[i].first);
+        obj->SetY(obj_origins[i].second);
+
+        // update record for redo
+        record->SetObjectPos({curr_x, curr_y}, i);
+
+        i++;
+    }
+
+    return;
+}
+
+void ActionRecordHandler::UndoDeleteSelection(ActionRecord* record, std::vector<GameObject*>& layer) {
+    RedoPaintBucket(record, layer);
+}
+
+void ActionRecordHandler::UndoPasteClipboard(ActionRecord* record, std::vector<GameObject*>& layer) {
+    UndoPaintBucket(record, layer);
+}
 
 void ActionRecordHandler::RedoDraw(ActionRecord* record, std::vector<GameObject*>&layer) {
     GameObject* obj = record->GetObjects().front();
@@ -200,6 +253,14 @@ void ActionRecordHandler::RedoPaintBucket(ActionRecord* record, std::vector<Game
     }
 }
 
+void ActionRecordHandler::RedoDeleteSelection(ActionRecord* record, std::vector<GameObject*>& layer) {
+    UndoPaintBucket(record, layer);
+}
+
+void ActionRecordHandler::RedoPasteClipboard(ActionRecord* record, std::vector<GameObject*>& layer) {
+    std::cout << "IMPLEMENT ActionRecordHandler::RedoPasteClipboard\n";
+    return;
+}
 
 void ActionRecordHandler::PrintStack(std::stack<ActionRecord*> stack) {
     std::cout << "TOP: " << stack.top() << "\t| SIZE: " << stack.size() << std::endl;

@@ -10,6 +10,7 @@ class ProjectileManager {
     ~ProjectileManager();
     void AddProjectile(Projectile* projectile);
     p_iterator RemoveProjectile(Projectile* projectile, p_iterator it);
+    void Clear();
     void Draw();
     void UpdateProjectiles(float dt);
 

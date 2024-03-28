@@ -9,5 +9,6 @@ enum class EditMode {
     TILE_SELECT, 
     LAYER_SELECT,
     DRAG_MOVE,
-    PAINT_BUCKET
+    PAINT_BUCKET,
+    TEMP_MULTI_SELECT
 };

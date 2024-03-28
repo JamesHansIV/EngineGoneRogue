@@ -39,13 +39,11 @@ void StartState::Exit() {}
 void StartState::Draw() {
     GetGame()->DrawObjects();
     m_startScreen.Draw();
-    //m_button.Draw();
 }
 
 State* StartState::Update(float dt) {
     GetGame()->UpdateObjects(dt);
     m_startScreen.Update();
-    //m_button.Update();
     return nullptr;
 }
 
@@ -67,15 +65,15 @@ void GameOverState::Enter() {
 void GameOverState::Exit() {}
 
 void GameOverState::Draw() {
-    GetGame()->DrawObjects();
+    m_game_over_screen.Draw();
 }
 
 State* GameOverState::Update(float dt) {
-    GetGame()->UpdateObjects(dt);
+    m_game_over_screen.Update();
     return nullptr;
 }
 
-State* GameOverState::HandleEvent(Event* /*event*/) {
+State* GameOverState::HandleEvent(Event* event) {
     return nullptr;
 }
 
@@ -89,13 +87,11 @@ void PauseState::Enter() {
 void PauseState::Exit() {}
 
 void PauseState::Draw() {
-    GetGame()->DrawObjects();
-    m_button.Draw();
+    m_pause_screen.Draw();
 }
 
 State* PauseState::Update(float dt) {
-    m_button.Update();
-    GetGame()->UpdateObjects(dt);
+    m_pause_screen.Update(*Application::Get()->GetPlayer());
     return nullptr;
 }
 

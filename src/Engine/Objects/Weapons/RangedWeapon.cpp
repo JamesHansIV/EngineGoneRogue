@@ -15,8 +15,6 @@ void RangedWeapon::Draw() {
     Weapon::Draw();
 }
 
-void RangedWeapon::DrawProjectiles() {}
-
 void RangedWeapon::Update(float /*dt*/) {
     m_collision_box.Set(GetX(), GetY(), GetHeight(), GetWidth());
     if (InputChecker::IsKeyPressed(SDLK_f)) {
@@ -52,8 +50,6 @@ void RangedWeapon::Update(float /*dt*/) {
         InputChecker::SetMouseButtonPressed(SDL_BUTTON_LEFT, false);
     }
 }
-
-void RangedWeapon::UpdateProjectiles(float dt) {}
 
 void RangedWeapon::Clean() {}
 

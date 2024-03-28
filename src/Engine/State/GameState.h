@@ -6,6 +6,8 @@
 #include "Engine/Objects/Characters/Player.h"
 #include "Engine/UI/ChestDropModal.h"
 #include "Engine/UI/Button.h"
+#include "Engine/UI/GameOverScreen.h"
+#include "Engine/UI/PauseScreen.h"
 #include "Engine/UI/StartScreen.h"
 #include "State.h"
 
@@ -67,6 +69,7 @@ class GameOverState : public GameState {
     StateType GetType() override { return StateType::GameOver; }
 
    private:
+    GameOverScreen m_game_over_screen;
 };
 
 struct Option {
@@ -97,7 +100,8 @@ class LevelUpState : public GameState {
 
 class PauseState : public GameState {
    public:
-    explicit PauseState(Game* game) : GameState(game) {
+    explicit PauseState(Game* game)
+        : GameState(game), m_pause_screen(*Application::Get()->GetPlayer()) {
         int const x = (Application::Get()->GetWindowWidth() - 100) / 2;
         int const y = (Application::Get()->GetWindowHeight() - 60) / 2;
         m_button = Button("buttons", SDL_Rect{x, y, 150, 80}, "Continue", []() {
@@ -116,6 +120,7 @@ class PauseState : public GameState {
     StateType GetType() override { return StateType::Pause; }
 
    private:
+    PauseScreen m_pause_screen;
     Button m_button;
 };
 

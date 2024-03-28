@@ -28,6 +28,7 @@ void RangedAttack::Shoot(RangedAttackInfo info) {
     if (m_attack_pattern != nullptr && !m_attack_pattern->Attack()) {
         return;
     }
+
     std::vector<Projectile*> const bullets = m_create_bullets(std::move(info));
     m_last_attack = timer.GetTicks();
     for (auto* bullet : bullets) {

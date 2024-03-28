@@ -18,18 +18,32 @@ class Game : public Application {
     void Update(float dt) override;
     void Render() override;
 
+    void InitManagers();
+
     void AddObject(GameObject* obj);
     void DeleteObject(GameObject* obj);
+
+    void ResetObjects();
+
+    void ResetManagers();
 
     void UpdateObjects(float dt);
     void DrawObjects();
 
     void ChangeState(State* state);
 
+    void CleanObjects();
+
     ~Game() override;
 
    private:
-    void InitObjects();
+    std::vector<GameObject*> CopyObjects(
+        const std::vector<GameObject*>& objects);
+    void InitEnemyCopies();
+    ItemInventory m_item_inventory;
+    std::vector<GameObject*> m_objects;
+    std::vector<GameObject*> m_tiles;
+
     State* m_state;
     WeaponInventory* m_weapon_inventory;
     int m_tick = 0;

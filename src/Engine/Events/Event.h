@@ -23,6 +23,9 @@ enum class EventType {
     StartGameEvent,
     LevelUpSelectedGameEvent,
     ContinueGameEvent,
+    RestartGameEvent,
+
+    MouseButtonDownEvent,
 };
 
 class Event {
@@ -144,4 +147,43 @@ class ContinueGameEvent : public Event {
     EventType GetEventType() override { return EventType::ContinueGameEvent; }
 
    private:
+};
+
+class GameOverEvent : public Event {
+   public:
+    explicit GameOverEvent() = default;
+
+    EventType GetEventType() override { return EventType::GameOverEvent; }
+
+   private:
+};
+
+class RestartGameEvent : public Event {
+   public:
+    explicit RestartGameEvent() = default;
+
+    EventType GetEventType() override { return EventType::RestartGameEvent; }
+
+   private:
+};
+
+class MouseButtonDownEvent : public Event {
+   public:
+    explicit MouseButtonDownEvent(int x, int y, int type)
+        : m_x(x), m_y(y), m_type(type) {}
+
+    int GetX() { return m_x; }
+
+    int GetY() { return m_y; }
+
+    int GetType() { return m_type; }
+
+    EventType GetEventType() override {
+        return EventType::MouseButtonDownEvent;
+    }
+
+   private:
+    int m_x;
+    int m_y;
+    int m_type;
 };

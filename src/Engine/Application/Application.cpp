@@ -23,7 +23,7 @@ Application* Application::m_instance = nullptr;
 //const float kDt = 0.0083;
 const float kDt = 0.01;
 
-Application::Application() : m_project_name("test_project") {
+Application::Application() : m_project_name("test_project"), m_player(nullptr) {
     // std::cout << "DEBUG MESSAGE FLAG " << DEBUG_MESSAGES << std::endl;
     // SDL_Log("Something going on");
     // exit(0);
@@ -50,9 +50,15 @@ Application::Application() : m_project_name("test_project") {
 
     SDL_GetWindowSize(m_window, &m_window_width, &m_window_height);
 
-    //TODO: note that the cwd is <projectDir>/build instead of <projectDir>.
-    //      Set a working directory path macro to use absolute file paths
-    Renderer::GetInstance()->Init();
+//TODO: note that the cwd is <projectDir>/build instead of <projectDir>.
+//      Set a working directory path macro to use absolute file paths
+#if EDITOR == 1
+    SDL_RendererFlags flag = SDL_RENDERER_PRESENTVSYNC;  // vsync with editor
+#else
+    SDL_RendererFlags flag =
+        SDL_RENDERER_ACCELERATED;  // hardware accelerated with game
+#endif
+    Renderer::GetInstance()->Init(flag);
 
     if (ShouldLoadProject != 0U) {
         if (!LoadProject()) {
@@ -246,6 +252,7 @@ bool Application::Clean() {
     IMG_Quit();
     Mix_Quit();
     SDL_Quit();
+
     return true;
 }
 

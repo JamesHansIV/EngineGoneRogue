@@ -24,7 +24,7 @@ bool CheckCollision(SDL_Rect& a, SDL_Rect& b) {
 
 Renderer* Renderer::m_instance = nullptr;
 
-void Renderer::Init() {
+void Renderer::Init(SDL_RendererFlags render_flags=SDL_RENDERER_ACCELERATED) {
     SDL_Window* window = Application::Get()->GetWindow();
     m_camera = {0, 0, Application::Get()->GetWindowWidth(),
                 Application::Get()->GetWindowHeight()};
@@ -32,7 +32,10 @@ void Renderer::Init() {
             Application::Get()->GetWindowWidth(),
             Application::Get()->GetWindowHeight());
 
-    m_renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    // m_renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);   // GAME
+    // m_renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);  // EDITOR
+
+    m_renderer = SDL_CreateRenderer(window, -1, render_flags);     // DYNAMIC
     if (m_renderer == nullptr) {
         SDL_Log("Failed to create Renderer: %s", SDL_GetError());
         assert(false);

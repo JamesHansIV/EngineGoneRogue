@@ -15,9 +15,7 @@
 
 CustomEventType custom_event_type = SDL_RegisterEvents(1);
 
-GameEventManager::GameEventManager(Player* player,
-                                   std::vector<GameObject*>& objects)
-    : m_player(player), m_objects(objects) {}
+GameEventManager::GameEventManager(Player* player) : m_player(player) {}
 
 State* GameEventManager::HandleEvents(ItemManager* ItemManager,
                                       State* GameState) {
@@ -69,6 +67,11 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
                             Mix_ChannelFinished(nullptr);
                         });
                         break;
+                    case SDLK_SPACE:
+                        if (GameState->GetType() == StateType::Running) {
+                            m_player->DropBomb();
+                        }
+                        break;
                     default:
                         break;
                 }
@@ -80,6 +83,12 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
                 break;
             case SDL_MOUSEBUTTONDOWN: {
                 InputChecker::SetMouseButtonPressed(event.button.button, true);
+                MouseButtonDownEvent e(event.button.x, event.button.y,
+                                       event.button.button);
+                State* state = GameState->HandleEvent(&e);
+                if (state != nullptr) {
+                    return state;
+                }
                 break;
             }
             case SDL_MOUSEBUTTONUP:
@@ -120,6 +129,9 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
             default:
                 break;
         }
+        if (state != nullptr) {
+            return state;
+        }
         if (timer.IsPaused()) {
             continue;
         }
@@ -156,7 +168,7 @@ State* GameEventManager::HandleCustomEvents(const SDL_Event& event,
             if (m_player != nullptr) {
                 m_player->HandleEvent(&death_event);
                 PlaceItemIfNeededEvent place_item_event(enemy->GetX(),
-                                                          enemy->GetY());
+                                                        enemy->GetY());
                 ItemManager->HandleEvent(&place_item_event);
             }
             return nullptr;
@@ -186,6 +198,14 @@ State* GameEventManager::HandleCustomEvents(const SDL_Event& event,
         }
         case EventType::GameOverEvent: {
             return new GameOverState(static_cast<Game*>(Application::Get()));
+        }
+        case EventType::RestartGameEvent: {
+            auto* game = static_cast<Game*>(Application::Get());
+            game->GetPlayer()->Clean();
+            game->GetPlayer()->Init();
+            game->ResetObjects();
+            game->ResetManagers();
+            return new StartState(static_cast<Game*>(Application::Get()));
         }
         case EventType::PlayerLevelUpEvent:
             timer.Pause();

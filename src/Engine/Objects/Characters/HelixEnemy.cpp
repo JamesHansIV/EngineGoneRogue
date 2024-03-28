@@ -16,7 +16,7 @@ HelixEnemy::HelixEnemy(Collider* rhs, RangedEnemyStats stats)
 }
 
 void HelixEnemy::Init() {
-    ChangeState(new RangedEnemyIdle(this));
+    m_current_state = new RangedEnemyIdle(this);
     SetHealth(new Health(m_stats.health));
     SetAttack(new RangedAttack(CreateHelixBullets, GetFireInterval(),
                                new Burst(3, 50)));
@@ -30,6 +30,10 @@ void HelixEnemy::Draw() {
 void HelixEnemy::Update(float dt) {
     GetAttack()->Update(dt);
     RangedEnemy::Update(dt);
+}
+
+GameObject* HelixEnemy::Copy() {
+    return new HelixEnemy(this, GetRangedEnemyStats());
 }
 
 void HelixEnemy::Shoot() {

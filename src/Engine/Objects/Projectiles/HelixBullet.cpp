@@ -1,5 +1,7 @@
 #include "HelixBullet.h"
 #include <SDL2/SDL.h>
+
+#include <utility>
 #include "Engine/Objects/Characters/Character.h"
 #include "Engine/Objects/Characters/Enemy.h"
 #include "Engine/Objects/ColliderHandler.h"
@@ -8,7 +10,7 @@
 HelixBullet::HelixBullet(Properties& props, float speed, float angle,
                          AnimationInfo hitAnimationInfo, bool playerOwned,
                          bool flipped)
-    : Projectile(props, speed, angle, hitAnimationInfo, playerOwned),
+    : Projectile(props, speed, angle, std::move(hitAnimationInfo), playerOwned),
       m_flipped(static_cast<int>(flipped)),
       m_origin(Vector2D(GetX(), GetY())),
       m_t_pos(0, 0) {
@@ -23,7 +25,7 @@ void HelixBullet::Draw() {
 void HelixBullet::Update(float /*dt*/) {
     if (Hit()) {
         m_animation->Update();
-        if (m_animation && m_animation->Ended()) {
+        if ((m_animation != nullptr) && m_animation->Ended()) {
             m_marked_for_deletion = true;
         }
         return;

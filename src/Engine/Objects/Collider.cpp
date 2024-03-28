@@ -18,8 +18,9 @@ Collider::Collider(GameObject* rhs) : GameObject(rhs) {
 }
 
 Collider::~Collider() {
-    if (m_rigid_body) {
+    if (m_rigid_body != nullptr) {
         delete m_rigid_body;
+        m_rigid_body = nullptr;
     }
 }
 

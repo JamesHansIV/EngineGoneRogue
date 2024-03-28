@@ -1,4 +1,5 @@
 #include "AttackFunctions.h"
+#include "Engine/Application/Application.h"
 #include "Engine/Objects/Projectiles/HelixBullet.h"
 #include "Engine/Objects/Projectiles/RotatingBullet.h"
 
@@ -95,11 +96,60 @@ std::vector<Projectile*> CreateSpreadBullets(RangedAttackInfo info) {
     Projectile* bullet;
     float angle = 0;
 
+    Player* owner = nullptr;
+
+    if (info.IsPlayerOwned) {
+        owner = Application::Get()->GetPlayer();
+    }
+
     for (int i = 0; i < info.ProjCount; i++) {
         angle = spread_start + interval * i;
 
-        bullet = new Projectile(info.ProjProps, info.ProjSpeed, angle,
-                                info.HitAnimation, info.IsPlayerOwned);
+        bullet =
+            new Projectile(info.ProjProps, info.ProjSpeed, angle,
+                           info.HitAnimation, info.IsPlayerOwned, 10, 0, owner);
+        bullets.push_back(bullet);
+    }
+
+    return bullets;
+}
+
+std::vector<Projectile*> CreateShotgunSpreadBullets(RangedAttackInfo info) {
+    std::vector<Projectile*> bullets;
+
+    float center_angle = CalculateAngle(info);
+    float const delta_y = info.TargetY - info.Y;
+    float const delta_x = info.TargetX - info.X;
+
+    if (center_angle < 0) {
+        center_angle += 2 * M_PI;
+    } else if (center_angle > 2 * M_PI) {
+        center_angle -= 2 * M_PI;
+    }
+
+    SDL_Log("target x: %f, target y: %f", info.TargetX, info.TargetY);
+    SDL_Log("delta x: %f, delta y: %f", delta_x, delta_y);
+
+    SDL_Log("center angle: %f", center_angle);
+
+    float const spread_start = center_angle - info.Spread / 2;
+    float const interval = info.Spread / info.ProjCount;
+
+    Projectile* bullet;
+    float angle = 0;
+
+    Player* owner = nullptr;
+
+    if (info.IsPlayerOwned) {
+        owner = Application::Get()->GetPlayer();
+    }
+
+    for (int i = 0; i < info.ProjCount; i++) {
+        angle = spread_start + interval * i;
+
+        bullet =
+            new Projectile(info.ProjProps, info.ProjSpeed, angle,
+                           info.HitAnimation, info.IsPlayerOwned, 10, 0, owner);
         bullets.push_back(bullet);
     }
 

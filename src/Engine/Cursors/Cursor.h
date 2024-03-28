@@ -53,7 +53,9 @@ class Cursor {
             {EditMode::TILE_SELECT, CursorType::MULTI_SELECT},
             {EditMode::LAYER_SELECT, CursorType::POINT},
             {EditMode::DRAG_MOVE, CursorType::DRAG_MOVE},
-            {EditMode::PAINT_BUCKET, CursorType::PAINT_BUCKET}
+            {EditMode::PAINT_BUCKET, CursorType::PAINT_BUCKET},
+            // {EditMode::TEMP_MULTI_SELECT, CursorType::DRAW}
+            {EditMode::TEMP_MULTI_SELECT, CursorType::MULTI_SELECT}
         };
 
         std::unordered_map<CursorType, std::string>m_cursor_type_to_texture_id_map {

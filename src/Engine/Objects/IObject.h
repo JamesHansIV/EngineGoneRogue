@@ -12,7 +12,8 @@ enum class ObjectType {
     MeleeWeapon,
     Entrance,
     HealthPotion,
-    Chest
+    Chest,
+    Grenade,
 };
 
 class IObject {

@@ -11,6 +11,8 @@ class Skeleton : public RangedEnemy {
     void Draw() override;
     void Update(float dt) override;
 
+    GameObject* Copy() override;
+
     void Shoot() override;
 
     void OnCollide(Collider* collidee) override;

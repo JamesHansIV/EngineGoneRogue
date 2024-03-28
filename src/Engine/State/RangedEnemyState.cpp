@@ -5,6 +5,7 @@
 #include "Engine/Objects/Characters/Player.h"
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Objects/Environment/Entrance.h"
+#include "Engine/Objects/Grenade.h"
 #include "Engine/Objects/Projectiles/Projectile.h"
 #include "Engine/Objects/Weapons/MeleeWeapon.h"
 #include "Engine/utils/utils.h"
@@ -42,6 +43,19 @@ State* RangedEnemyHandleCollide(RangedEnemy* enemy, Collider* collidee) {
                 StateType::Dodge) {
                 break;
             }
+        case ObjectType::Grenade: {
+            auto* grenade = dynamic_cast<Grenade*>(collidee);
+            // Should not have to check if it is nullptr, but seg faults if check is not there
+            if (grenade == nullptr) {
+                break;
+            }
+            if (grenade->GetState() == BombState::EXPLODING_DAMAGING) {
+                return new RangedEnemyIsHit(enemy, grenade->GetDamage());
+            }
+
+            enemy->UnCollide(collidee);
+            break;
+        }
         case ObjectType::Enemy:
         case ObjectType::Collider:
             enemy->UnCollide(collidee);
@@ -53,7 +67,9 @@ State* RangedEnemyHandleCollide(RangedEnemy* enemy, Collider* collidee) {
 }
 
 void RangedEnemyIdle::Enter() {
-    GetEnemy()->GetAnimation()->SelectAnimation("Idle");
+    if (GetEnemy()->GetAnimation() != nullptr) {
+        GetEnemy()->GetAnimation()->SelectAnimation("Idle");
+    }
 }
 
 void RangedEnemyIdle::Exit() {}
@@ -260,7 +276,7 @@ State* RangedEnemyIsHit::OnCollideEvent(CollideEvent* event) {
             }
             break;
         }
-        case ObjectType::Chest:
+        case ObjectType::Grenade:
         case ObjectType::Player:
         case ObjectType::Enemy:
         case ObjectType::Collider:

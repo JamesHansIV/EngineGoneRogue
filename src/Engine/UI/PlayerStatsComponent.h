@@ -1,13 +1,15 @@
 #pragma once
 #include <vector>
-#include "Engine/Objects/Weapons/Weapon.h"
 #include "Engine/Objects/Characters/Player.h"
+#include "Engine/Objects/Weapons/Weapon.h"
 
 class PlayerStatsComponent {
    public:
-    explicit PlayerStatsComponent(const PlayerStats& p_stats) : 
-        m_player_stats(p_stats) {
-            FillStatsVector();
+    PlayerStatsComponent() = default;
+
+    explicit PlayerStatsComponent(const PlayerStats& p_stats)
+        : m_player_stats(p_stats) {
+        FillStatsVector();
     };
 
     void Draw();

@@ -5,7 +5,7 @@
 
 class GameEventManager : public virtual EventManager {
    public:
-    GameEventManager(Player* player, std::vector<GameObject*>& objects);
+    GameEventManager(Player* player);
     GameEventManager(const GameEventManager&) = delete;
     GameEventManager(const GameEventManager&&) = delete;
     virtual GameEventManager& operator=(const GameEventManager&) = delete;
@@ -19,5 +19,4 @@ class GameEventManager : public virtual EventManager {
                               State* GameState);
     void HandleSDLEvents();
     Player* m_player;
-    std::vector<GameObject*>& m_objects;
 };

@@ -4,6 +4,7 @@
 #include "Engine/Objects/Characters/Player.h"
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Objects/Environment/Entrance.h"
+#include "Engine/Objects/Grenade.h"
 #include "Engine/Objects/IObject.h"
 #include "Engine/Objects/Projectiles/Projectile.h"
 #include "Engine/Objects/Weapons/MeleeWeapon.h"
@@ -43,6 +44,15 @@ State* SlimeHandleCollide(Slime* enemy, Collider* collidee) {
                 return new SlimeIsHit(enemy,
                                       melee_weapon->GetStats()->GetDamage());
             }
+            break;
+        }
+        case ObjectType::Grenade: {
+            auto* grenade = dynamic_cast<Grenade*>(collidee);
+            if (grenade->GetState() == BombState::EXPLODING_DAMAGING) {
+                return new SlimeIsHit(enemy, grenade->GetDamage());
+            }
+
+            enemy->UnCollide(collidee);
             break;
         }
         case ObjectType::Chest:
@@ -319,7 +329,9 @@ State* SlimeIsHit::OnCollideEvent(CollideEvent* event) {
 }
 
 void SlimeDead::Enter() {
-    SlimeSelectAnimation(GetEnemy(), GetType());
+    if (GetEnemy()->GetAnimation() != nullptr) {
+        SlimeSelectAnimation(GetEnemy(), GetType());
+    }
 }
 
 void SlimeDead::Exit() {}

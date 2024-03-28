@@ -9,8 +9,13 @@ class Player;
 
 class InventoryComponent {
    public:
+    InventoryComponent() = default;
     explicit InventoryComponent(std::unordered_map<std::string, Item*> items)
-        : m_items(std::move(items)){}; 
+        : m_items(std::move(items)){};
+
+    void SetItems(std::unordered_map<std::string, Item*> items) {
+        m_items = items;
+    }
 
     void Draw();
 
