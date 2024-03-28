@@ -262,6 +262,7 @@ void Game::GenerateRandomEnemy() {
             break;
     }
 
+    generated_enemy->SetID(std::to_string(++object_counter));
     ColliderHandler::GetInstance()->AddCollider(generated_enemy);
     m_objects.push_back(generated_enemy);
 }

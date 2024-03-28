@@ -48,7 +48,7 @@ void Player::Init() {
     m_current_tile_pos = m_still_frames["face-down"];
 
     m_stats = new PlayerStats(MovementInfo{80, .90, 110, 500},
-                              CombatInfo{1, 1, 0, 50}, HealthInfo{100, 0, 0},
+                              CombatInfo{1, 1, 1, 50}, HealthInfo{100, 0, 0},
                               InventoryInfo{12, 3, 3});
 
     auto* default_projectile_props = new Properties(
