@@ -52,7 +52,12 @@ Application::Application() : m_project_name("test_project"), m_player(nullptr) {
 
     //TODO: note that the cwd is <projectDir>/build instead of <projectDir>.
     //      Set a working directory path macro to use absolute file paths
-    Renderer::GetInstance()->Init();
+    #if EDITOR == 1
+    SDL_RendererFlags flag = SDL_RENDERER_PRESENTVSYNC; // vsync with editor
+    #else
+    SDL_RendererFlags flag = SDL_RENDERER_ACCELERATED; // hardware accelerated with game
+    #endif
+    Renderer::GetInstance()->Init(flag);
 
     if (ShouldLoadProject != 0U) {
         if (!LoadProject()) {

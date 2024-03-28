@@ -29,7 +29,7 @@ class Renderer {
                    (m_instance != nullptr) ? m_instance : new Renderer();
     }
 
-    void Init();
+    void Init(SDL_RendererFlags render_flags);
 
     SDL_Renderer* GetRenderer() { return m_renderer; }
 
