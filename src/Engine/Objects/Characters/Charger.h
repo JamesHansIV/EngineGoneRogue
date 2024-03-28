@@ -2,12 +2,12 @@
 
 #include "Enemy.h"
 
-class Kamikaze : public Enemy {
+class Charger : public Enemy {
    public:
-    explicit Kamikaze(Properties& props, const EnemyStats& stats);
-    Kamikaze(Collider* rhs, EnemyStats stats);
+    explicit Charger(Properties& props, const EnemyStats& stats);
+    Charger(Collider* rhs, EnemyStats stats);
 
-    ~Kamikaze() override;
+    ~Charger() override;
 
     void Init();
 

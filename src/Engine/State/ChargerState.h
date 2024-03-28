@@ -1,18 +1,18 @@
 #pragma once
 
-#include "Engine/Objects/Characters/Kamikaze.h"
+#include "Engine/Objects/Characters/Charger.h"
 #include "Engine/State/EnemyState.h"
 #include "Engine/Timer/Timer.h"
 #include "State.h"
 
-class KamikazeIdle : public EnemyIdle {
+class ChargerIdle : public EnemyIdle {
    public:
-    explicit KamikazeIdle(Enemy& enemy) : EnemyIdle(enemy) {}
+    explicit ChargerIdle(Enemy& enemy) : EnemyIdle(enemy) {}
 };
 
-class KamikazeMoving : public EnemyMoving {
+class ChargerMoving : public EnemyMoving {
    public:
-    explicit KamikazeMoving(Enemy& enemy) : EnemyMoving(enemy) {}
+    explicit ChargerMoving(Enemy& enemy) : EnemyMoving(enemy) {}
 
     void Enter() override;
     void Exit() override;
@@ -31,16 +31,16 @@ class KamikazeMoving : public EnemyMoving {
     int m_direction{0};
 };
 
-class KamikazeAttack : public EnemyAttack {
+class ChargerAttack : public EnemyAttack {
    public:
-    explicit KamikazeAttack(Kamikaze& enemy)
+    explicit ChargerAttack(Charger& enemy)
         : EnemyAttack(enemy), m_enemy(enemy) {}
 
     void Enter() override {
 
         if (timer.GetTicks() - m_enemy.GetLastAttack() <
             m_enemy.GetAttackInterval()) {
-            SDL_Log("KamikazeAttack::Enter() - Attack on cooldown");
+            SDL_Log("ChargerAttack::Enter() - Attack on cooldown");
             return;
         }
         m_enemy.SetLastAttack(timer.GetTicks());
@@ -50,7 +50,7 @@ class KamikazeAttack : public EnemyAttack {
     State* Update(float dt) override {
         if (timer.GetTicks() - m_enemy.GetLastAttack() >
             m_enemy.GetAttackDuration()) {
-            SDL_Log("KamikazeAttack::Enter() - Attack on cooldown");
+            SDL_Log("ChargerAttack::Enter() - Attack on cooldown");
             return m_enemy.GetIdleState();
         }
 
@@ -61,18 +61,18 @@ class KamikazeAttack : public EnemyAttack {
 
     void Exit() override {
         m_enemy.GetMutableEnemyStats().speed = 70;
-        SDL_Log("KamikazeAttack::Exit()");
+        SDL_Log("ChargerAttack::Exit()");
     }
 
     StateType GetType() override { return StateType::Attack; }
 
    protected:
-    Kamikaze& m_enemy;
+    Charger& m_enemy;
 };
 
-class KamikazeDead : public EnemyDead {
+class ChargerDead : public EnemyDead {
    public:
-    explicit KamikazeDead(Enemy& enemy) : EnemyDead(enemy) {}
+    explicit ChargerDead(Enemy& enemy) : EnemyDead(enemy) {}
 
     void Enter() override;
     void Exit() override;

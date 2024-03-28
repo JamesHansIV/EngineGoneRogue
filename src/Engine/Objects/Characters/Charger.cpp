@@ -1,17 +1,17 @@
-#include "Kamikaze.h"
+#include "Charger.h"
+#include "Engine/State/ChargerState.h"
 #include "Engine/State/EnemyState.h"
-#include "Engine/State/KamikazeState.h"
 
-Kamikaze::Kamikaze(Properties& props, const EnemyStats& stats)
+Charger::Charger(Properties& props, const EnemyStats& stats)
     : Enemy(props, stats) {
     Init();
 }
 
-Kamikaze::Kamikaze(Collider* rhs, EnemyStats stats) : Enemy(rhs, stats) {
+Charger::Charger(Collider* rhs, EnemyStats stats) : Enemy(rhs, stats) {
     Init();
 }
 
-Kamikaze::~Kamikaze() {
+Charger::~Charger() {
     if (m_health != nullptr) {
         delete m_health;
         m_health = nullptr;
@@ -22,20 +22,20 @@ Kamikaze::~Kamikaze() {
     }
 }
 
-void Kamikaze::Init() {
+void Charger::Init() {
     SetHealth(new Health(m_stats.health));
 
     m_current_state = new EnemyIdle(*this);
 }
 
-void Kamikaze::Draw() {
+void Charger::Draw() {
     m_current_state->Draw();
     Enemy::Draw();
     //Todo(Ahmni): Add flag to only show enemy health bar in dev mode.
     m_health->Draw(GetX(), GetY(), GetWidth());
 }
 
-void Kamikaze::Update(float dt) {
+void Charger::Update(float dt) {
     State* state = m_current_state->Update(dt);
     if (state != nullptr) {
         ChangeState(state);
@@ -51,11 +51,11 @@ void Kamikaze::Update(float dt) {
     m_collision_box.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
 }
 
-GameObject* Kamikaze::Copy() {
-    return new Kamikaze(this, GetEnemyStats());
+GameObject* Charger::Copy() {
+    return new Charger(this, GetEnemyStats());
 }
 
-void Kamikaze::OnCollide(Collider* collidee) {
+void Charger::OnCollide(Collider* collidee) {
     if (this == collidee) {
         return;
     }
@@ -67,8 +67,8 @@ void Kamikaze::OnCollide(Collider* collidee) {
     }
 }
 
-void Kamikaze::Clean() {}
+void Charger::Clean() {}
 
-EnemyState* Kamikaze::GetAttackState() {
-    return new KamikazeAttack(*this);
+EnemyState* Charger::GetAttackState() {
+    return new ChargerAttack(*this);
 }

@@ -4,11 +4,11 @@
 #include <vector>
 #include "Engine/Events/ItemManager.h"
 #include "Engine/Input/InputChecker.h"
+#include "Engine/Objects/Characters/Charger.h"
 #include "Engine/Objects/Characters/Dog.h"
 #include "Engine/Objects/Characters/EnemyStats.h"
 #include "Engine/Objects/Characters/Goblin.h"
 #include "Engine/Objects/Characters/HelixEnemy.h"
-#include "Engine/Objects/Characters/Kamikaze.h"
 #include "Engine/Objects/Characters/Mage.h"
 #include "Engine/Objects/Characters/Player.h"
 #include "Engine/Objects/Characters/RingShotEnemy.h"
@@ -55,7 +55,7 @@ Dog* dog_copy = nullptr;
 Skeleton* skeleton_copy = nullptr;
 Goblin* goblin_copy = nullptr;
 HelixEnemy* helix_enemy_copy = nullptr;
-Kamikaze* kamikaze_copy = nullptr;
+Charger* charger_copy = nullptr;
 
 // Todo: try to clean this up
 // https://stackoverflow.com/questions/27451776/dynamic-cast-for-multiple-derived-classes
@@ -65,7 +65,6 @@ std::vector<GameObject*> Game::CopyObjects(
     for (auto* obj : objects) {
         new_objects.push_back(obj->Copy());
         new_objects.back()->SetID(std::to_string(++object_counter));
-
     }
     return new_objects;
 }
@@ -79,8 +78,8 @@ void Game::InitEnemyCopies() {
             continue;
         }
 
-        if ((enemy = dynamic_cast<Kamikaze*>(obj)) != nullptr) {
-            kamikaze_copy = new Kamikaze(enemy, enemy->GetEnemyStats());
+        if ((enemy = dynamic_cast<Charger*>(obj)) != nullptr) {
+            charger_copy = new Charger(enemy, enemy->GetEnemyStats());
             continue;
         }
 

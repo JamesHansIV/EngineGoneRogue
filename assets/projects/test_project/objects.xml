@@ -483,8 +483,8 @@
         </Animation>
         <RangedEnemyStats health="100" damage="25" speed="80" range="250" perception_width="1500" perception_height="1500" xp="30" fire_interval="2000" spread="0.1" spread_count="1"/>
     </Object>
-    <Object texture_id="enemies" object_id="kamikaze" rotation="0">
-        <Types collider="1" kamikaze="1"/>
+    <Object texture_id="enemies" object_id="charger" rotation="0">
+        <Types collider="1" charger="1"/>
         <SrcRect row="6" col="2" w="16" h="16"/>
         <DstRect x="250" y="120" w="36" h="36"/>
 

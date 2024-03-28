@@ -1,8 +1,8 @@
 #include "Config.h"
+#include "Engine/Objects/Characters/Charger.h"
 #include "Engine/Objects/Characters/Dog.h"
 #include "Engine/Objects/Characters/Goblin.h"
 #include "Engine/Objects/Characters/HelixEnemy.h"
-#include "Engine/Objects/Characters/Kamikaze.h"
 #include "Engine/Objects/Characters/Mage.h"
 #include "Engine/Objects/Characters/Player.h"
 #include "Engine/Objects/Characters/RingShotEnemy.h"
@@ -411,11 +411,11 @@ GameObject* BuildObjectOnType(tinyxml2::XMLElement* types,
         delete to_delete;
     }
 
-    if (types->Attribute("kamikaze") != nullptr) {
+    if (types->Attribute("charger") != nullptr) {
         EnemyStats const stats =
             GetEnemyStats(xmlObj->FirstChildElement("EnemyStats"));
         to_delete = new_obj;
-        new_obj = new Kamikaze(static_cast<Collider*>(new_obj), stats);
+        new_obj = new Charger(static_cast<Collider*>(new_obj), stats);
         delete to_delete;
     }
 
