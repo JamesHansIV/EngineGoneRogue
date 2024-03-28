@@ -50,13 +50,14 @@ Application::Application() : m_project_name("test_project"), m_player(nullptr) {
 
     SDL_GetWindowSize(m_window, &m_window_width, &m_window_height);
 
-    //TODO: note that the cwd is <projectDir>/build instead of <projectDir>.
-    //      Set a working directory path macro to use absolute file paths
-    #if EDITOR == 1
-    SDL_RendererFlags flag = SDL_RENDERER_PRESENTVSYNC; // vsync with editor
-    #else
-    SDL_RendererFlags flag = SDL_RENDERER_ACCELERATED; // hardware accelerated with game
-    #endif
+//TODO: note that the cwd is <projectDir>/build instead of <projectDir>.
+//      Set a working directory path macro to use absolute file paths
+#if EDITOR == 1
+    SDL_RendererFlags flag = SDL_RENDERER_PRESENTVSYNC;  // vsync with editor
+#else
+    SDL_RendererFlags flag =
+        SDL_RENDERER_ACCELERATED;  // hardware accelerated with game
+#endif
     Renderer::GetInstance()->Init(flag);
 
     if (ShouldLoadProject != 0U) {
