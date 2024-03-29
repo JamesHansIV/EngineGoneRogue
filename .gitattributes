@@ -1,4 +1,4 @@
-vendor/ linguist-generated=true
-include/ linguist-generated=true
-assets/ linguist-generated=true
-lib/ linguist-generated=true
+vendor/** linguist-generated=true
+include/** linguist-generated=true
+assets/** linguist-generated=true
+lib/** linguist-generated=true
