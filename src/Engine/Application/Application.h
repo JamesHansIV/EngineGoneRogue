@@ -12,6 +12,10 @@
 class Application {
    public:
     Application();
+    Application(const Application&) = delete;
+    Application(Application&&) = delete;
+    virtual Application& operator=(const Application&) = delete;
+    virtual Application& operator=(Application&&) = delete;
     virtual ~Application() = default;
 
     bool LoadRooms();
