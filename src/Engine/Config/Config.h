@@ -7,6 +7,8 @@
 #include <map>
 #include <string>
 
+#include "Engine/Objects/Characters/EnemyStats.h"
+
 class Collider;
 class GameObject;
 class Texture;
@@ -16,6 +18,12 @@ void WriteColliderInfo(tinyxml2::XMLDocument& doc, tinyxml2::XMLElement* xmlObj,
 
 void WriteBaseObjectInfo(tinyxml2::XMLDocument& doc,
                          tinyxml2::XMLElement* xmlObj, GameObject* obj);
+
+void WriteStatsInfo(tinyxml2::XMLDocument& doc, tinyxml2::XMLElement* xmlObj,
+                        EnemyStats stats);
+
+void WriteStatsInfo(tinyxml2::XMLDocument& doc, tinyxml2::XMLElement* xmlObj,
+                        RangedEnemyStats stats);
 
 int SaveObjects(const char* filepath, const std::vector<GameObject*>& objects);
 

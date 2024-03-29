@@ -136,7 +136,7 @@ class Editor : public Application {
     void HandlePasteClipboardAction();
 
     // action handler helpers
-    bool SelectTile(int x, int y); // returns true if selection is made, false if no selection is made, x & y are tile coords
+    bool SelectTile(int x, int y, bool multi_select_enabled); // returns true if selection is made, false if no selection is made, x & y are tile coords
     bool IsMouseOverASelectedTile (TileCoords coords);
     bool IsTileEmpty(TileCoords coords);
     void StopEditing();
