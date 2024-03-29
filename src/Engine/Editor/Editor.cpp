@@ -1320,15 +1320,8 @@ void Editor::CheckForToolSelection(EditorAction editor_action,
 bool Editor::SelectTile(int row, int col, bool multi_select_enabled) {
     bool selectedOrDeselectedATile = false;
 
-    // std::cout << "Layer " << m_current_layer << std::endl;
     std::unordered_map<int,int>object_type_counts;
     for (GameObject* obj : m_layers[m_current_layer]) {
-
-        // if (!object_type_counts.contains(static_cast<int>(obj->GetObjectType())))
-        //     object_type_counts[static_cast<int>(obj->GetObjectType())] = 0;
-        // object_type_counts[static_cast<int>(obj->GetObjectType())] ++;
-        
-        // std::cout << "obj: " << obj <<std::endl;
         
         if (obj == nullptr)
             continue;
@@ -1336,20 +1329,13 @@ bool Editor::SelectTile(int row, int col, bool multi_select_enabled) {
         std::pair<int, int> obj_tile_coords =
             PixelToTilePos(obj->GetX(), obj->GetY());
 
-        // std::cout << "tile x, y: " << obj_tile_coords.first << ", " << obj_tile_coords.second;
-        // std::cout << "\t | mouse x, y: " << col << ", " << row <<std::endl;
-
         if (obj_tile_coords.first == row && obj_tile_coords.second == col) {
             selectedOrDeselectedATile = true;
-
-            std::cout << "TILE: " << row << ", " << col << "  \t| isSelected? " 
-                << m_selected_objects.contains(obj);
 
             if (m_selected_objects.contains(obj)) {
                 if (!m_edit_state.IsEditing) {
                     m_selected_objects.erase(obj);
                     m_selected_obj_origin_map.erase(obj);
-                    std::cout << "\t| DESELECTED\t | worked? " << !m_selected_objects.contains(obj) << "\n";
                 }
             } else {
                 if (!multi_select_enabled) {
@@ -1358,7 +1344,6 @@ bool Editor::SelectTile(int row, int col, bool multi_select_enabled) {
                 }
                 m_selected_objects.insert(obj);
                 m_selected_obj_origin_map[obj] = {obj->GetX(), obj->GetY()};
-                std::cout << "\t| SELECTED\n";
             }
         }
     }
@@ -1491,8 +1476,8 @@ void Editor::HandleTileSelectAction(bool mouse_moved, SDL_Event& event) {
     // if found nothing deselect all && change edit mode
     bool foundObj = SelectTile(mouse_tile_coords.row, mouse_tile_coords.col, true);
     if (!foundObj && !mouse_moved) {
-        // m_selected_objects.clear();
-        // m_selected_obj_origin_map.clear();
+        m_selected_objects.clear();
+        m_selected_obj_origin_map.clear();
         StopEditing();
     }
 
