@@ -522,7 +522,6 @@
                 loop="1">
                 <Tile row="8" col="4" w="16" h="16"/>
             </AnimationInfo>
-
             <AnimationInfo
                 id="Hit"
                 texture_id="enemies"
@@ -538,7 +537,6 @@
                 <Tile row="6" col="0" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
-
         <EnemyStats health="100" damage="25" speed="70" range="200" perception_width="1500" perception_height="1500" xp="30"/>
     </Object>
 
