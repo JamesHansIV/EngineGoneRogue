@@ -1320,7 +1320,13 @@ void Editor::CheckForToolSelection(EditorAction editor_action,
 bool Editor::SelectTile(int row, int col) {
     bool selectedOrDeselectedATile = false;
 
+    std::cout << "Layer " << m_current_layer << std::endl;
+    std::unordered_map<int,int>object_type_counts;
     for (GameObject* obj : m_layers[m_current_layer]) {
+
+        if (!object_type_counts.contains(static_cast<int>(obj->GetObjectType())))
+            object_type_counts[static_cast<int>(obj->GetObjectType())] = 0;
+        object_type_counts[static_cast<int>(obj->GetObjectType())] ++;
         if (obj == nullptr)
             continue;
 
@@ -1341,7 +1347,11 @@ bool Editor::SelectTile(int row, int col) {
             }
         }
     }
-
+    // if (selectedOrDeselectedATile) {
+    //     for (auto pair : object_type_counts){
+    //         std::cout << "Type: "
+    //     }
+    // }
     return selectedOrDeselectedATile;
 }
 

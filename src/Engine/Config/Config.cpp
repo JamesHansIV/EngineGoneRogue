@@ -91,6 +91,37 @@ void WriteBaseObjectInfo(tinyxml2::XMLDocument& doc,
     xmlObj->InsertEndChild(dst_rect);
 }
 
+void WriteStatsInfo(tinyxml2::XMLDocument& doc, tinyxml2::XMLElement* xmlObj, EnemyStats stats) {
+    tinyxml2::XMLElement* stats_element = doc.NewElement("EnemyStats");
+    
+    stats_element->SetAttribute("health", stats.health);
+    stats_element->SetAttribute("damage", stats.damage);
+    stats_element->SetAttribute("speed", stats.speed);
+    stats_element->SetAttribute("range", stats.range);
+    stats_element->SetAttribute("perception_width", stats.perceptionWidth);
+    stats_element->SetAttribute("perception_height", stats.perceptionHeight);
+    stats_element->SetAttribute("xp", stats.xpGiven);
+
+    xmlObj->InsertEndChild(stats_element);
+}
+
+void WriteStatsInfo(tinyxml2::XMLDocument& doc, tinyxml2::XMLElement* xmlObj, RangedEnemyStats stats) {
+    tinyxml2::XMLElement* stats_element = doc.NewElement("RangedEnemyStats");
+    
+    stats_element->SetAttribute("health", stats.health);
+    stats_element->SetAttribute("damage", stats.damage);
+    stats_element->SetAttribute("speed", stats.speed);
+    stats_element->SetAttribute("range", stats.range);
+    stats_element->SetAttribute("perception_width", stats.perceptionWidth);
+    stats_element->SetAttribute("perception_height", stats.perceptionHeight);
+    stats_element->SetAttribute("xp", stats.xpGiven);
+    stats_element->SetAttribute("fire_interval", stats.fireInterval);
+    stats_element->SetAttribute("spread", stats.spread);
+    stats_element->SetAttribute("spread_count", stats.spreadCount);
+
+    xmlObj->InsertEndChild(stats_element);
+}
+
 int SaveObjects(const char* filepath, const std::vector<GameObject*>& objects) {
     tinyxml2::XMLDocument doc;
     tinyxml2::XMLElement* root = doc.NewElement("Root");
@@ -123,35 +154,49 @@ int SaveObjects(const char* filepath, const std::vector<GameObject*>& objects) {
             types->SetAttribute("collider", "1");
         }
 
+        // if (obj->GetObjectType() == ObjectType::Enemy) {
+        //     WriteStatsInfo(doc, curr_xml_object,
+        // }
+
+
+
         // type handling
         const std::type_info& obj_type = typeid(*obj);
         std::cout << "obj type: " << obj_type.name() << std::endl;
 
-        if (strcmp(obj_type.name(), "5Slime") == 0)
+        if (strcmp(obj_type.name(), "5Slime") == 0) {
             types->SetAttribute("slime", "1");
+            WriteStatsInfo(doc, curr_xml_object, dynamic_cast<Enemy*>(obj)->GetEnemyStats());
+        }
         if (strcmp(obj_type.name(), "13RingShotEnemy") == 0) {
             types->SetAttribute("ranged_enemy", "1");
             types->SetAttribute("ring_shot_enemy", "1");
+            WriteStatsInfo(doc, curr_xml_object, dynamic_cast<RangedEnemy*>(obj)->GetRangedEnemyStats());
         }
         if (strcmp(obj_type.name(), "3Dog") == 0) {
             types->SetAttribute("ranged_enemy", "1");
             types->SetAttribute("dog", "1");
+            WriteStatsInfo(doc, curr_xml_object, dynamic_cast<RangedEnemy*>(obj)->GetRangedEnemyStats());
         }
         if (strcmp(obj_type.name(), "10HelixEnemy") == 0) {
             types->SetAttribute("ranged_enemy", "1");
             types->SetAttribute("helix_enemy", "1");
+            WriteStatsInfo(doc, curr_xml_object, dynamic_cast<RangedEnemy*>(obj)->GetRangedEnemyStats());
         }
         if (strcmp(obj_type.name(), "6Goblin") == 0) {
             types->SetAttribute("ranged_enemy", "1");
             types->SetAttribute("goblin", "1");
+            WriteStatsInfo(doc, curr_xml_object, dynamic_cast<RangedEnemy*>(obj)->GetRangedEnemyStats());
         }
         if (strcmp(obj_type.name(), "8Skeleton") == 0) {
             types->SetAttribute("ranged_enemy", "1");
             types->SetAttribute("skeleton", "1");
+            WriteStatsInfo(doc, curr_xml_object, dynamic_cast<RangedEnemy*>(obj)->GetRangedEnemyStats());
         }
         if (strcmp(obj_type.name(), "4Mage") == 0) {
             types->SetAttribute("ranged_enemy", "1");
             types->SetAttribute("mage", "1");
+            WriteStatsInfo(doc, curr_xml_object, dynamic_cast<RangedEnemy*>(obj)->GetRangedEnemyStats());
         }
         root->InsertEndChild(curr_xml_object);
     }
