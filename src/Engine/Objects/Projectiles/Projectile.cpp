@@ -74,9 +74,9 @@ void Projectile::HitTarget() {
     SetY(GetY() + m_rigid_body->Velocity().Y);
 }
 
-void Projectile::CollideWithEnemy(){
+void Projectile::CollideWithEnemy() {
     AddNumberofEnemiesHit();
-    if(m_piercing + 1 == m_numberof_enemies_hit){
+    if (m_piercing + 1 == m_numberof_enemies_hit) {
         HitTarget();
     }
     double const life_steal_multiplier =
@@ -84,7 +84,7 @@ void Projectile::CollideWithEnemy(){
     int const increase_health_amount =
         static_cast<float>(m_damage) * life_steal_multiplier;
     m_owner->GetHealth()->IncreaseHealth(increase_health_amount);
-    Application::Get()->GetAudioManager().PlaySound("low", 20, 0);
+    Application::Get().GetAudioManager().PlaySound("low", 20, 0);
 }
 
 void Projectile::OnCollide(Collider* collidee) {
@@ -99,12 +99,12 @@ void Projectile::OnCollide(Collider* collidee) {
                 (player->GetStats().GetDodgeInvincibility() == 0)) {
                 HitTarget();
                 //dynamic_cast<Character*>(collidee)->GetHealth()->SetDamage(10);
-                Application::Get()->GetAudioManager().PlaySound("high", 5, 0);
+                Application::Get().GetAudioManager().PlaySound("high", 5, 0);
             }
             break;
         }
         case ObjectType::Enemy:
-                // TODO: Piercing is broke, needs to be fixed
+            // TODO: Piercing is broke, needs to be fixed
             break;
         case ObjectType::MeleeWeapon:
         case ObjectType::Projectile:

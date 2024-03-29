@@ -21,10 +21,10 @@ void Health::Draw(int objX, int objY, int objWidth) const {
     SDL_Rect health_bar_container_rect =
         DrawBar(pos, Size{health_bar_container_width, kHealthBarHeight});
 
-    Renderer::GetInstance()->DrawRect(health_bar_container_rect,
-                                      {53, 18, 104, 255}, true);
-    Renderer::GetInstance()->DrawRect(health_bar_rect, {182, 69, 153, 255},
-                                      true);
+    Renderer::GetInstance().DrawRect(health_bar_container_rect,
+                                     {53, 18, 104, 255}, true);
+    Renderer::GetInstance().DrawRect(health_bar_rect, {182, 69, 153, 255},
+                                     true);
 }
 
 void Health::IncreaseHealth(int amount) {

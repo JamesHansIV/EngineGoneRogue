@@ -58,7 +58,7 @@ Application::Application() : m_project_name("test_project"), m_player(nullptr) {
     SDL_RendererFlags flag =
         SDL_RENDERER_ACCELERATED;  // hardware accelerated with game
 #endif
-    Renderer::GetInstance()->Init(flag);
+    Renderer::GetInstance().Init(flag);
 
     if (ShouldLoadProject != 0U) {
         if (!LoadProject()) {
@@ -235,8 +235,8 @@ void Application::Run() {
 }
 
 bool Application::Clean() {
-    Renderer::GetInstance()->Destroy();
-    delete Renderer::GetInstance();
+    Renderer::GetInstance().Destroy();
+    delete &Renderer::GetInstance();
 
     for (const auto& it : m_rooms) {
         if (it.first == m_base_room_id) {

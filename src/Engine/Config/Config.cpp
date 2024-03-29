@@ -515,10 +515,10 @@ bool LoadTextures(const char* projectPath) {
                 atoi(curr_texture->FirstChildElement("TileSize")->GetText());
             rows = atoi(curr_texture->FirstChildElement("Rows")->GetText());
             cols = atoi(curr_texture->FirstChildElement("Cols")->GetText());
-            Renderer::GetInstance()->AddTileMap(id, texture_path, tile_size,
-                                                rows, cols);
+            Renderer::GetInstance().AddTileMap(id, texture_path, tile_size,
+                                               rows, cols);
         } else {
-            Renderer::GetInstance()->AddTexture(id, texture_path);
+            Renderer::GetInstance().AddTexture(id, texture_path);
         }
 
         curr_texture = curr_texture->NextSiblingElement("Texture");

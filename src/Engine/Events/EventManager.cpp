@@ -8,7 +8,7 @@ void EventManager::HandleEvents() {
     while (SDL_PollEvent(&event) != 0) {
         switch (event.type) {
             case SDL_QUIT:
-                Application::Get()->Quit();
+                Application::Get().Quit();
                 return;
             case SDL_KEYDOWN:
                 InputChecker::SetKeyPressed(event.key.keysym.sym, true);

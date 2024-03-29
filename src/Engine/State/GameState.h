@@ -2,10 +2,11 @@
 
 #include <unordered_map>
 #include <vector>
+#include "Apps/Game.h"
 #include "Engine/Events/Event.h"
 #include "Engine/Objects/Characters/Player.h"
-#include "Engine/UI/ChestDropModal.h"
 #include "Engine/UI/Button.h"
+#include "Engine/UI/ChestDropModal.h"
 #include "Engine/UI/GameOverScreen.h"
 #include "Engine/UI/PauseScreen.h"
 #include "Engine/UI/StartScreen.h"
@@ -15,19 +16,19 @@ class Game;
 
 class GameState : public State {
    public:
-    explicit GameState(Game* game) : m_game(game) {}
+    explicit GameState(Game& game) : m_game(game) {}
 
     ~GameState() override = default;
 
-    Game* GetGame() { return m_game; }
+    Game& GetGame() { return m_game; }
 
    private:
-    Game* m_game;
+    Game& m_game;
 };
 
 class RunningState : public GameState {
    public:
-    explicit RunningState(Game* game) : GameState(game) {}
+    explicit RunningState(Game& game) : GameState(game) {}
 
     void Enter() override;
     void Exit() override;
@@ -42,7 +43,7 @@ class RunningState : public GameState {
 
 class StartState : public GameState {
    public:
-    explicit StartState(Game* game) : GameState(game) {}
+    explicit StartState(Game& game) : GameState(game) {}
 
     void Enter() override;
     void Exit() override;
@@ -53,12 +54,12 @@ class StartState : public GameState {
     StateType GetType() override { return StateType::Start; }
 
    private:
-    StartScreen m_startScreen;
+    StartScreen m_start_screen;
 };
 
 class GameOverState : public GameState {
    public:
-    explicit GameOverState(Game* game) : GameState(game) {}
+    explicit GameOverState(Game& game) : GameState(game) {}
 
     void Enter() override;
     void Exit() override;
@@ -80,7 +81,7 @@ struct Option {
 
 class LevelUpState : public GameState {
    public:
-    explicit LevelUpState(Game* game);
+    explicit LevelUpState(Game& game);
     void Enter() override;
 
     void Exit() override;
@@ -100,10 +101,10 @@ class LevelUpState : public GameState {
 
 class PauseState : public GameState {
    public:
-    explicit PauseState(Game* game)
-        : GameState(game), m_pause_screen(*Application::Get()->GetPlayer()) {
-        int const x = (Application::Get()->GetWindowWidth() - 100) / 2;
-        int const y = (Application::Get()->GetWindowHeight() - 60) / 2;
+    explicit PauseState(Game& game)
+        : GameState(game), m_pause_screen(*game.GetPlayer()) {
+        int const x = (Application::Get().GetWindowWidth() - 100) / 2;
+        int const y = (Application::Get().GetWindowHeight() - 60) / 2;
         m_button = Button("buttons", SDL_Rect{x, y, 150, 80}, "Continue", []() {
             SDL_Log("Continue button clicked");
             timer.Unpause();
@@ -126,7 +127,7 @@ class PauseState : public GameState {
 
 class ChestDropState : public GameState {
    public:
-    explicit ChestDropState(Game* game, std::vector<ItemType> items)
+    explicit ChestDropState(Game& game, std::vector<ItemType> items)
         : GameState(game) {
         m_chest_drop_modal = ChestDropModal(items);
     }
@@ -145,7 +146,7 @@ class ChestDropState : public GameState {
 
 class ShopState : public GameState {
    public:
-    explicit ShopState(Game* game) : GameState(game) {}
+    explicit ShopState(Game& game) : GameState(game) {}
 
     void Enter() override;
     void Exit() override;

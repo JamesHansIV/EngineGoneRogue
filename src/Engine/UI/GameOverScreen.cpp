@@ -1,13 +1,13 @@
 #include "GameOverScreen.h"
 
 GameOverScreen::GameOverScreen() {
-    const int window_width = Application::Get()->GetWindowWidth();
-    const int window_height = Application::Get()->GetWindowHeight();
+    const int window_width = Application::Get().GetWindowWidth();
+    const int window_height = Application::Get().GetWindowHeight();
     m_background = DrawElement(kDefaultGameOverScreenTextureID,
                                {0, 0, window_width, window_height});
 
     Texture* texture =
-        Renderer::GetInstance()->GetTexture(kDefaultGameOverScreenTextureID);
+        Renderer::GetInstance().GetTexture(kDefaultGameOverScreenTextureID);
 
     m_background_src = {0, 0, texture->GetWidth(), texture->GetHeight()};
 

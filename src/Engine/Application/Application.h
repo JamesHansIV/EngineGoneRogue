@@ -48,7 +48,7 @@ class Application {
 
     Player* GetPlayer() { return m_player; }
 
-    inline static Application* Get() { return m_instance; }
+    inline static Application& Get() { return *m_instance; }
 
    protected:
     std::string m_project_name;

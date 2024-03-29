@@ -31,7 +31,7 @@ void ItemManager::HandleEvent(Event* event) {
                                    0, "healthpotion");
                 auto* healthpotion = new HealthPotion(props11, 20);
 
-                static_cast<Game*>(Application::Get())->AddObject(healthpotion);
+                static_cast<Game&>(Application::Get()).AddObject(healthpotion);
 
                 ColliderHandler::GetInstance()->AddCollider(healthpotion);
                 return;
@@ -51,7 +51,7 @@ void ItemManager::HandleEvent(Event* event) {
                                     place_item_if_needed_event->GetY(), 32, 32},
                                    0, "chest1");
                 auto* chest1 = new Chest(props13, ChestType::Wooden, items);
-                static_cast<Game*>(Application::Get())->AddObject(chest1);
+                static_cast<Game&>(Application::Get()).AddObject(chest1);
                 ColliderHandler::GetInstance()->AddCollider(chest1);
             }
 

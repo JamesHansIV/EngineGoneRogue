@@ -11,7 +11,7 @@ Texture::Texture(const std::string& filename, std::string id) {
     }
 
     SDL_Texture* texture = SDL_CreateTextureFromSurface(
-        Renderer::GetInstance()->GetRenderer(), surface);
+        Renderer::GetInstance().GetRenderer(), surface);
     if (texture == nullptr) {
         throw std::runtime_error("Failed to create texture from surface");
     }
@@ -32,7 +32,7 @@ Texture::Texture(const char* filename, std::string id) {
     }
 
     SDL_Texture* texture = SDL_CreateTextureFromSurface(
-        Renderer::GetInstance()->GetRenderer(), surface);
+        Renderer::GetInstance().GetRenderer(), surface);
     if (texture == nullptr) {
         throw std::runtime_error("Failed to load texture");
     }
@@ -49,13 +49,13 @@ Texture::Texture(const std::string& text, SDL_Color text_color,
     m_file_path = "";
     m_cur_text = text;
     SDL_Surface* surface = TTF_RenderUTF8_Solid(
-        Renderer::GetInstance()->GetFont(), text.c_str(), text_color);
+        Renderer::GetInstance().GetFont(), text.c_str(), text_color);
     if (surface == nullptr) {
         throw std::runtime_error("Failed to load texture");
     }
 
     SDL_Texture* texture = SDL_CreateTextureFromSurface(
-        Renderer::GetInstance()->GetRenderer(), surface);
+        Renderer::GetInstance().GetRenderer(), surface);
     if (texture == nullptr) {
         throw std::runtime_error("Failed to load texture");
     }

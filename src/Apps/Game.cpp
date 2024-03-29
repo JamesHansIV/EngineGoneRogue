@@ -133,7 +133,7 @@ Game::Game() {
 
     m_weapon_inventory->SetSelectedWeapon(m_player->GetCurrentWeapon());
 
-    ChangeState(new StartState(this));
+    ChangeState(new StartState(*this));
 }
 
 void Game::InitManagers() {
@@ -324,9 +324,9 @@ void Game::ResetObjects() {
 }
 
 void Game::Render() {
-    Renderer::GetInstance()->RenderClear();
+    Renderer::GetInstance().RenderClear();
     m_state->Draw();
-    Renderer::GetInstance()->Render();
+    Renderer::GetInstance().Render();
 }
 
 void Game::DrawObjects() {

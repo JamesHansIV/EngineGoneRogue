@@ -186,10 +186,8 @@ void Player::UpdateWeapon(float dt) {
         InputChecker::SetMouseWheelDirection(0);
     }
 
-    int const weapon_xx =
-        GetMidPointX() - Renderer::GetInstance()->GetCameraX();
-    int const weapon_yy =
-        GetMidPointY() - Renderer::GetInstance()->GetCameraY();
+    int const weapon_xx = GetMidPointX() - Renderer::GetInstance().GetCameraX();
+    int const weapon_yy = GetMidPointY() - Renderer::GetInstance().GetCameraY();
 
     float const delta_x = InputChecker::GetMouseX() - weapon_xx;
     float const delta_y = InputChecker::GetMouseY() - weapon_yy;
@@ -228,7 +226,7 @@ void Player::DropBomb() {
 
     auto* grenade = new Grenade(grenade_props,
                                 {80 + m_stats->GetRangedDamage(), 3, 50, 50});
-    static_cast<Game*>(Application::Get())->AddObject(grenade);
+    static_cast<Game&>(Application::Get()).AddObject(grenade);
     ColliderHandler::GetInstance()->AddCollider(grenade);
     m_num_bombs--;
 }

@@ -18,7 +18,7 @@ void Shotgun::Update(float dt) {
     Properties const props = {
         "weapons", {5, 3, 16, 16}, {GetX(), GetY(), 16, 16}};
 
-    const Player* player = Application::Get()->GetPlayer();
+    const Player* player = Application::Get().GetPlayer();
 
     if ((InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT) ||
          m_auto_fire_enabled) &&
@@ -31,9 +31,9 @@ void Shotgun::Update(float dt) {
         m_attack.Shoot(RangedAttackInfo{
             player->GetMidPointX(), player->GetMidPointY(),
             static_cast<float>(InputChecker::GetMouseX()) +
-                Renderer::GetInstance()->GetCameraX(),
+                Renderer::GetInstance().GetCameraX(),
             static_cast<float>(InputChecker::GetMouseY()) +
-                Renderer::GetInstance()->GetCameraY(),
+                Renderer::GetInstance().GetCameraY(),
             props, kDefaultHitAnimationInfo, 20, 9, .31459 * 3, true});
         m_last_fired = SDL_GetTicks();
     }
