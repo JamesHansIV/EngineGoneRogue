@@ -26,6 +26,6 @@ std::vector<GameObject*> LoadObjects(const char* filepath);
 
 bool LoadTextures(const char* projectPath);
 
-std::vector<std::string> LoadRoomOrder(const char* path);
+std::string LoadStartRoom(const char* path, int& x, int& y);
 
 std::pair<int, int> LoadStartPosition(const char* path);

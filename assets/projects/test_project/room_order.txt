@@ -1,5 +1,0 @@
-room5
-room6
-room1
-room2
-room3

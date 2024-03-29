@@ -27,6 +27,7 @@ const float kDt = 0.01;
 
 Application::Application()
     : m_project_name("test_project"),
+      m_start_room(""),
       m_player(nullptr),
       m_next_room(0),
       m_start_position({0, 0}),
@@ -125,11 +126,7 @@ bool Application::LoadNextRoom() {
         PushNewEvent(EventType::GameOverEvent);
         return true;
     }
-    ProjectileManager::GetInstance()->DeleteProjectiles();
-    ColliderHandler::GetInstance()->Clear();
     LoadRoom(m_room_order[m_next_room].c_str());
-    m_player->GetRigidBody()->SetPosition(
-        Vector2D(m_start_position.first, m_start_position.second));
     m_next_room++;
     return true;
 }
@@ -142,6 +139,8 @@ bool Application::LoadRoom(std::string room_id) {
     // std::cout << "tile path: " << tile_path << "\n";
     m_tiles = LoadObjects(tile_path.c_str());
     // std::cout << "m_tiles.size " << m_tiles.size() << std::endl;
+
+    SDL_Log("LoadRoom room id: %s", room_id.c_str());
 
     if (m_tiles.empty()) {
         SDL_Log("m_tiles.empty(): Could not load %s", tile_path.c_str());
@@ -160,21 +159,21 @@ bool Application::LoadRoom(std::string room_id) {
         return false;
     }
 
-    Entrance* entrance = nullptr;
+    bool load_enemies = m_rooms_cleared.find(room_id) == m_rooms_cleared.end();
+
     for (auto* obj : objects) {
         SDL_Log("adding obj %s", obj->GetID().c_str());
         SDL_Log("object is collider: %d",
                 dynamic_cast<Collider*>(obj) != nullptr);
+        if (!load_enemies && dynamic_cast<Enemy*>(obj) != nullptr) {
+            delete obj;
+            continue;
+        }
         m_objects.push_back(static_cast<Collider*>(obj));
     }
 
-    std::string start_pos_path =
-        GetProjectPath() + "/rooms/" + room_id + ".start";
-
-    if (!LoadStart(start_pos_path.c_str())) {
-        SDL_Log("load start position failed");
-        return false;
-    }
+    m_player->GetRigidBody()->SetPosition(
+        Vector2D(m_start_position.first, m_start_position.second));
 
     return true;
 }
@@ -192,19 +191,18 @@ bool Application::LoadPlayer() {
     }
 
     m_player = static_cast<Player*>(objects[0]);
-}
-
-bool Application::LoadMap() {
-    m_room_order = LoadRoomOrder(GetProjectPath().c_str());
-    if (m_room_order.empty()) {
-        return false;
-    }
     return true;
 }
 
-bool Application::LoadStart(const char* path) {
-    m_start_position = LoadStartPosition(path);
-    return m_start_position.first != 0 || m_start_position.second != 0;
+bool Application::LoadStart() {
+    m_start_room =
+        LoadStartRoom(GetProjectPath().c_str(), m_start_position.first,
+                      m_start_position.second);
+    SDL_Log("start pos: %d %d", m_start_position.first,
+            m_start_position.second);
+    m_global_start = m_start_position;
+    return !m_start_room.empty() &&
+           (m_start_position.first != 0 || m_start_position.second != 0);
 }
 
 bool Application::BuildRoomIds() {
@@ -253,8 +251,8 @@ bool Application::LoadProject() {
     }
     SDL_Log("Textures are fine");
 
-    if (!LoadMap()) {
-        SDL_Log("failed to load room order");
+    if (!LoadStart()) {
+        SDL_Log("failed to load start room");
         return false;
     }
 
@@ -268,8 +266,9 @@ bool Application::LoadProject() {
     }
 
     // load first room ?
-    if (!m_room_ids.empty())
-        return LoadRoom(m_room_ids.front());
+    if (!m_start_room.empty()) {
+        return LoadRoom(m_start_room);
+    }
 
     return true;
 
@@ -368,6 +367,8 @@ void Application::Run() {
 }
 
 void Application::ClearObjects() {
+    ProjectileManager::GetInstance()->DeleteProjectiles();
+    ColliderHandler::GetInstance()->Clear();
     for (auto* tile : m_tiles) {
         delete tile;
     }

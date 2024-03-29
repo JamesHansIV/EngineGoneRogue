@@ -75,8 +75,9 @@ class GameOverState : public GameState {
 
 class RoomTransitionState : public GameState {
    public:
-    explicit RoomTransitionState(Game& game)
+    explicit RoomTransitionState(Game& game, std::string next_room_id)
         : GameState(game),
+          m_next_room_id(next_room_id),
           m_enter_time(timer.GetTicks()),
           m_transition_time(kDefaultTransitionTime) {}
 
@@ -89,6 +90,7 @@ class RoomTransitionState : public GameState {
     StateType GetType() override { return StateType::RoomTransition; }
 
    private:
+    std::string m_next_room_id;
     int m_enter_time;
     int m_transition_time;
 };

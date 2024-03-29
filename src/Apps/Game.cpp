@@ -151,6 +151,14 @@ void Game::ResetManagers() {
     m_heads_up_display->Reset(*GetPlayer());
 }
 
+void Game::Restart() {
+    GetPlayer()->Clean();
+    GetPlayer()->Init();
+    ResetManagers();
+    SetStartPosition(m_global_start.first, m_global_start.second);
+    LoadRoom(GetStartID());
+}
+
 void Game::Events() {
     State* state = m_game_event_manager->HandleEvents(m_item_manager, m_state);
     if (state != nullptr) {
@@ -266,10 +274,7 @@ void Game::GenerateRandomEnemy() {
 }
 
 void Game::HandleEvent(RoomTransitionEvent* event) {
-    //LoadRoom(event->GetNextRoomID());
-    //m_player->GetRigidBody()->SetPosition(
-    //    Vector2D(m_start_position.first, m_start_position.second));
-    ChangeState(new RoomTransitionState(*this));
+    ChangeState(new RoomTransitionState(*this, event->GetNextRoomID()));
 }
 
 void Game::Update(float dt) {

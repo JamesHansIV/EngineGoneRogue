@@ -5,8 +5,10 @@
 
 class Entrance : public Collider {
    public:
-    explicit Entrance(Properties& props, std::string next_room_id);
-    Entrance(Collider* collider, std::string next_room_id);
+    explicit Entrance(Properties& props, std::string curr_room_id,
+                      std::string next_room_id, int x, int y);
+    Entrance(Collider* collider, std::string curr_room_id,
+             std::string next_room_id, int x, int y);
     void Draw() override;
     void Clean() override;
     void Update(float dt) override;
@@ -21,5 +23,7 @@ class Entrance : public Collider {
 
    private:
     bool m_closed;
+    std::string m_curr_room_id;
     std::string m_next_room_id;
+    std::pair<int, int> m_next_start;
 };

@@ -202,11 +202,7 @@ State* GameEventManager::HandleCustomEvents(const SDL_Event& event,
             return new GameOverState(static_cast<Game&>(Application::Get()));
         }
         case EventType::RestartGameEvent: {
-            game.GetPlayer()->Clean();
-            game.GetPlayer()->Init();
-            game.ResetManagers();
-            game.ResetNextRoom();
-            game.LoadNextRoom();
+            game.Restart();
             return new StartState(static_cast<Game&>(Application::Get()));
         }
         case EventType::RoomTransitionEvent: {

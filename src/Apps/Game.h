@@ -19,6 +19,8 @@ class Game : public Application {
     void Update(float dt) override;
     void Render() override;
 
+    void Restart();
+
     void InitManagers();
 
     void AddObject(GameObject* obj);

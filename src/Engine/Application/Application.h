@@ -18,8 +18,7 @@ class Application {
     bool LoadNextRoom();
     bool LoadRoom(std::string room_id);
     bool LoadProject();
-    bool LoadMap();
-    bool LoadStart(const char* path);
+    bool LoadStart();
     bool LoadPlayer();
     bool BuildRoomIds();
 
@@ -57,7 +56,13 @@ class Application {
 
     int& GetMutableWindowHeight() { return m_window_height; }
 
+    std::string GetStartID() { return m_start_room; }
+
+    void SetStartPosition(int x, int y) { m_start_position = {x, y}; }
+
     std::pair<int, int> GetStartPosition() { return m_start_position; }
+
+    std::pair<int, int> GetGlobalStart() { return m_global_start; }
 
     int GetEnemyCount() { return m_enemy_count; }
 
@@ -70,6 +75,10 @@ class Application {
 
     void IncrementEnemyCount() { m_enemy_count++; }
 
+    void AddRoomCleared(std::string room_id) {
+        m_rooms_cleared.insert(room_id);
+    }
+
     Player* GetPlayer() { return m_player; }
 
     inline static Application& Get() { return *m_instance; }
@@ -77,12 +86,16 @@ class Application {
    protected:
     std::string m_project_name;
     std::string m_base_room_id = "room6";
+    std::string m_start_room;
     std::unordered_map<std::string, std::vector<GameObject*>> m_rooms;
     std::vector<GameObject*> m_objects;
     std::vector<GameObject*> m_tiles;
     std::vector<std::string> m_room_order;
     std::vector<std::string> m_room_ids;
+    std::set<std::string> m_rooms_cleared;
+
     int m_next_room;
+    std::pair<int, int> m_global_start;
     std::pair<int, int> m_start_position;
     int m_enemy_count;
 

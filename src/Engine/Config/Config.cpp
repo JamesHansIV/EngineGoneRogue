@@ -427,8 +427,10 @@ GameObject* BuildEntrance(tinyxml2::XMLElement* types,
                           tinyxml2::XMLElement* xmlObj, GameObject* obj) {
 
     SDL_Log("entrance has next room id: %s", types->Attribute("next_room_id"));
-    GameObject* new_obj = new Entrance(static_cast<Collider*>(obj),
-                                       types->Attribute("next_room_id"));
+    GameObject* new_obj = new Entrance(
+        static_cast<Collider*>(obj), types->Attribute("curr_room_id"),
+        types->Attribute("next_room_id"), atoi(types->Attribute("next_x")),
+        atoi(types->Attribute("next_y")));
 
     return new_obj;
 }
@@ -446,7 +448,6 @@ GameObject* BuildObjectOnType(tinyxml2::XMLElement* types,
 
     if (types->Attribute("player") != nullptr) {
         SDL_Log("Adding new player");
-        std::cout << "adding new player\n";
         to_delete = new_obj;
         new_obj = new Player(static_cast<Collider*>(new_obj));
 
@@ -583,28 +584,32 @@ bool LoadTextures(const char* projectPath) {
     return true;
 }
 
-std::vector<std::string> LoadRoomOrder(const char* path) {
-    std::vector<std::string> order;
-
+std::string LoadStartRoom(const char* path, int& x, int& y) {
     std::string room_order_path = path;
-    room_order_path += "/room_order.txt";
+    room_order_path += "/start_room.txt";
 
-    std::string room_file;
+    std::string line;
 
     std::ifstream file;
+
+    std::string start_room;
 
     file.open(room_order_path.c_str());
 
     if (file.is_open()) {
-        while (getline(file, room_file)) {
-            order.push_back(room_file);
-        }
+        getline(file, line);
+        start_room = line;
+
+        getline(file, line);
+        x = atoi(line.c_str());
+        getline(file, line);
+        y = atoi(line.c_str());
     } else {
         SDL_Log("FAILED TO LOAD ROOM ORDER FILE");
     }
 
     file.close();
-    return order;
+    return start_room;
 }
 
 std::pair<int, int> LoadStartPosition(const char* path) {

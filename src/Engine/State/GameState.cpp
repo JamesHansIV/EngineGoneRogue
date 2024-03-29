@@ -63,7 +63,11 @@ State* StartState::HandleEvent(Event* event) {
 void RoomTransitionState::Enter() {}
 
 void RoomTransitionState::Exit() {
-    m_game.LoadNextRoom();
+    if (m_next_room_id == "") {
+        SDL_Log("room transition state next room id is null");
+        assert(false);
+    }
+    m_game.LoadRoom(m_next_room_id);
 }
 
 void RoomTransitionState::Draw() {}
