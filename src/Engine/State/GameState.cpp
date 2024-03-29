@@ -33,6 +33,7 @@ void StartState::Enter() {
     Application::Get().GetAudioManager().SetMusicVolume(80);
     Application::Get().GetAudioManager().PlayMusic("pause-screen", true);
     timer.Pause();
+    SDL_Log("start state enter called");
 }
 
 void StartState::Exit() {}

@@ -116,7 +116,7 @@ void Game::InitEnemyCopies() {
     }
 }
 
-Game::Game() {
+Game::Game() : m_state(nullptr) {
     srand(time(nullptr));
 
     InitManagers();
@@ -130,8 +130,6 @@ Game::Game() {
     m_weapon_inventory->SetSelectedWeapon(m_player->GetCurrentWeapon());
 
     State* state = new StartState(*this);
-    SDL_Log("start state: %d", state != nullptr);
-    SDL_Log("start state type: %d", state->GetType());
 
     ChangeState(state);
 }
@@ -275,10 +273,7 @@ void Game::HandleEvent(RoomTransitionEvent* event) {
 }
 
 void Game::Update(float dt) {
-    SDL_Log("before game update");
     State* state = m_state->Update(dt);
-    SDL_Log("in game update");
-    SDL_Log("state is null: %d", state == nullptr);
     if (state != nullptr) {
         ChangeState(state);
     }
@@ -355,8 +350,6 @@ void Game::ChangeState(State* state) {
         m_state->Exit();
         delete m_state;
     }
-    SDL_Log("changing game state: %d", state != nullptr);
-    SDL_Log("start state: %s", state->GetType());
 
     m_state = state;
     m_state->Enter();

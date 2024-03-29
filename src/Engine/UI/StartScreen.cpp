@@ -30,11 +30,9 @@ void StartScreen::Draw() {
 }
 
 void StartScreen::Update() {
-    SDL_Log("in start screen update");
     const int window_width = Application::Get().GetWindowWidth();
     const int window_height = Application::Get().GetWindowHeight();
     m_background.ChangeDst({0, 0, window_width, window_height});
-    SDL_Log("before start button update");
     m_start_button.Update();
 }
 

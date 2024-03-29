@@ -23,7 +23,7 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
     UserEvent event_wrapper;
     State* state = nullptr;
     event_wrapper.SetSDLEvent(&event);
-    Game game = static_cast<Game&>(Application::Get());
+    Game& game = static_cast<Game&>(Application::Get());
     while (SDL_PollEvent(&event) != 0) {
         switch (event.type) {
             case SDL_QUIT:
@@ -147,7 +147,7 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
 State* GameEventManager::HandleCustomEvents(const SDL_Event& event,
                                             ItemManager* ItemManager,
                                             State* GameState) {
-    Game game = static_cast<Game&>(Application::Get());
+    Game& game = static_cast<Game&>(Application::Get());
     switch (static_cast<EventType>(event.user.code)) {
         case EventType::UserEvent: {
             // Todo: once UserEvent is implemented to use
