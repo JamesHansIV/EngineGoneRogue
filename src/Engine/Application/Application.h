@@ -12,6 +12,8 @@ class Application {
    public:
     Application();
     virtual ~Application() = default;
+    virtual Application& operator=(const Application&) = delete;
+    virtual Application& operator=(Application&&) = delete;
 
     bool LoadCharacters(const char* projectPath);
     bool LoadRooms(const char* projectPath);
