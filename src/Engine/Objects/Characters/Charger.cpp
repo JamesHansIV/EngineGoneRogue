@@ -1,19 +1,17 @@
-#include "Slime.h"
-#include "Engine/Objects/Environment/Entrance.h"
-#include "Engine/Objects/Projectiles/Projectile.h"
-#include "Engine/State/SlimeState.h"
+#include "Charger.h"
+#include "Engine/State/ChargerState.h"
+#include "Engine/State/EnemyState.h"
 
-Slime::Slime(Properties& props, const EnemyStats& stats, bool split)
-    : Enemy(props, stats), m_split(split) {
+Charger::Charger(Properties& props, const EnemyStats& stats)
+    : Enemy(props, stats) {
     Init();
 }
 
-Slime::Slime(Collider* rhs, EnemyStats stats, bool split)
-    : Enemy(rhs, stats), m_split(split) {
+Charger::Charger(Collider* rhs, EnemyStats stats) : Enemy(rhs, stats) {
     Init();
 }
 
-Slime::~Slime() {
+Charger::~Charger() {
     if (m_health != nullptr) {
         delete m_health;
         m_health = nullptr;
@@ -24,20 +22,20 @@ Slime::~Slime() {
     }
 }
 
-void Slime::Init() {
+void Charger::Init() {
     SetHealth(new Health(m_stats.health));
 
-    m_current_state = new SlimeIdle(this);
+    m_current_state = new EnemyIdle(*this);
 }
 
-void Slime::Draw() {
+void Charger::Draw() {
     m_current_state->Draw();
-
+    Enemy::Draw();
     //Todo(Ahmni): Add flag to only show enemy health bar in dev mode.
     m_health->Draw(GetX(), GetY(), GetWidth());
 }
 
-void Slime::Update(float dt) {
+void Charger::Update(float dt) {
     State* state = m_current_state->Update(dt);
     if (state != nullptr) {
         ChangeState(state);
@@ -46,16 +44,18 @@ void Slime::Update(float dt) {
     m_rigid_body->Update(dt);
     m_animation->Update();
 
+    SDL_Log("Enemy speed: %f", m_stats.speed);
+
     SetX(m_rigid_body->Position().X);
     SetY(m_rigid_body->Position().Y);
     m_collision_box.Set(this->GetX(), this->GetY(), GetHeight(), GetWidth());
 }
 
-GameObject* Slime::Copy() {
-    return new Slime(this, GetEnemyStats());
+GameObject* Charger::Copy() {
+    return new Charger(this, GetEnemyStats());
 }
 
-void Slime::OnCollide(Collider* collidee) {
+void Charger::OnCollide(Collider* collidee) {
     if (this == collidee) {
         return;
     }
@@ -67,4 +67,8 @@ void Slime::OnCollide(Collider* collidee) {
     }
 }
 
-void Slime::Clean() {}
+void Charger::Clean() {}
+
+EnemyState* Charger::GetAttackState() {
+    return new ChargerAttack(*this);
+}

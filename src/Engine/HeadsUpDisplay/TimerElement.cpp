@@ -3,7 +3,7 @@
 #include "Engine/Renderer/Renderer.h"
 #include "Engine/Timer/Timer.h"
 
-Renderer* renderer = Renderer::GetInstance();
+Renderer renderer = Renderer::GetInstance();
 const int kDstRectMultiplier = 2;
 const SDL_Color kTimerColor = {255, 255, 255, 255};
 
@@ -29,12 +29,12 @@ void TimerElement::Draw() {
 
     //TODO: Are we adding a new texture every render?? Maybe this is inefficient
     Texture* timer_texture =
-        renderer->AddTextTexture("timer", time, kTimerColor);
+        renderer.AddTextTexture("timer", time, kTimerColor);
     // Timer should be drawn at the top middle of the screen
-    const Position timer_position{renderer->GetCameraX() +
-                                      Application::Get()->GetWindowWidth() / 2 -
+    const Position timer_position{renderer.GetCameraX() +
+                                      Application::Get().GetWindowWidth() / 2 -
                                       timer_texture->GetWidth(),
-                                  renderer->GetCameraY()};
+                                  renderer.GetCameraY()};
 
     SDL_Rect src_rect = {0, 0, timer_texture->GetWidth(),
                          timer_texture->GetHeight()};
@@ -42,5 +42,5 @@ void TimerElement::Draw() {
                          timer_texture->GetWidth() * kDstRectMultiplier,
                          timer_texture->GetHeight() * kDstRectMultiplier};
 
-    renderer->Draw("timer", src_rect, dst_rect, SDL_FLIP_NONE);
+    renderer.Draw("timer", src_rect, dst_rect, SDL_FLIP_NONE);
 }

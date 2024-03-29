@@ -3,13 +3,16 @@
 #include "Character.h"
 #include "Engine/Objects/Collider.h"
 
+class EnemyState;
+
 class Enemy : public Character {
    public:
     explicit Enemy(Properties& props, const EnemyStats& stats);
     Enemy(Collider* rhs, EnemyStats stats);
     ~Enemy();
 
-    void Draw() override = 0;
+    void Draw() override { GameObject::Draw(); }
+
     void Clean() override = 0;
     void Update(float dt) override = 0;
 
@@ -19,6 +22,8 @@ class Enemy : public Character {
 
     bool TargetInRange();
 
+    virtual void Attack() {}
+
     Rect& GetPerception() { return m_perception; }
 
     void SetTarget(Collider* target) { m_target = target; }
@@ -27,7 +32,15 @@ class Enemy : public Character {
 
     [[nodiscard]] EnemyStats GetEnemyStats() const { return m_stats; }
 
+    EnemyStats& GetMutableEnemyStats() { return m_stats; }
+
     void SetEnemyStats(const EnemyStats& stats) { m_stats = stats; }
+
+    virtual EnemyState* GetHitState(int damage);
+    virtual EnemyState* GetIdleState();
+    virtual EnemyState* GetMovingState();
+    virtual EnemyState* GetAttackState();
+    virtual EnemyState* GetDeadState();
 
     void OnCollide(Collider* collidee) override;
 

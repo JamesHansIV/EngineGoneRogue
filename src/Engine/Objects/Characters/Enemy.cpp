@@ -2,6 +2,7 @@
 #include "Engine/Application/Application.h"
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Objects/Environment/Entrance.h"
+#include "Engine/State/EnemyState.h"
 
 #include <cmath>
 
@@ -20,11 +21,11 @@ DEVELOPING BASIC ENEMY BEHAVIOUR:
 
 Enemy::Enemy(Properties& props, EnemyStats const& stats)
     : Character(props), m_stats(stats) {
-    Application::Get()->IncrementEnemyCount();
+    Application::Get().IncrementEnemyCount();
 }
 
 Enemy::Enemy(Collider* rhs, EnemyStats stats) : Character(rhs), m_stats(stats) {
-    Application::Get()->IncrementEnemyCount();
+    Application::Get().IncrementEnemyCount();
 }
 
 bool Enemy::TargetInRange() {
@@ -42,7 +43,7 @@ bool Enemy::TargetInRange() {
 }
 
 Enemy::~Enemy() {
-    Application::Get()->DecrementEnemyCount();
+    Application::Get().DecrementEnemyCount();
 }
 
 bool Enemy::TargetDetected() {
@@ -118,4 +119,24 @@ void Enemy::OnCollide(Collider* collidee) {
 
 void Enemy::Clean() {
     delete m_health;
+}
+
+EnemyState* Enemy::GetIdleState() {
+    return new EnemyIdle(*this);
+}
+
+EnemyState* Enemy::GetHitState(int damage) {
+    return new EnemyIsHit(*this, damage);
+}
+
+EnemyState* Enemy::GetDeadState() {
+    return new EnemyDead(*this);
+}
+
+EnemyState* Enemy::GetAttackState() {
+    return new EnemyAttack(*this);
+}
+
+EnemyState* Enemy::GetMovingState() {
+    return new EnemyMoving(*this);
 }

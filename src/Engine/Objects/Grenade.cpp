@@ -24,6 +24,12 @@ void Grenade::Update(float dt) {
     m_animation->Update();
     m_time_alive += dt;
 
+    // Make the grenade flash faster as it gets closer to exploding
+    if (m_time_alive >= m_time_to_increase_animation_speed) {
+        m_animation->SetAnimationSpeed(m_animation->GetAnimationSpeed() - 30);
+        m_time_to_increase_animation_speed += 0.5;
+    }
+
     if (m_state == BombState::EXPLODING_DAMAGING) {
         m_state = BombState::EXPLODING;
     }
@@ -43,16 +49,13 @@ void Grenade::Update(float dt) {
         m_collision_box.Set(m_dst_rect.x, m_dst_rect.y, m_dst_rect.h,
                             m_dst_rect.w);
         m_state = BombState::EXPLODING_DAMAGING;
+        m_time_to_increase_animation_speed = 99999;
     }
 
     if (m_state == BombState::EXPLODING && m_animation->Ended()) {
         m_marked_for_deletion = true;
     }
 }
-
-// TODO: 3 second timer
-// Flash animation
-// Explosion animation
 
 void Grenade::OnCollide(Collider* collidee) {
     if (this == collidee) {

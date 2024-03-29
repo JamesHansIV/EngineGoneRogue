@@ -1,6 +1,7 @@
 #include "Config.h"
 #include <fstream>
 #include <typeinfo>
+#include "Engine/Objects/Characters/Charger.h"
 #include "Engine/Objects/Characters/Dog.h"
 #include "Engine/Objects/Characters/Goblin.h"
 #include "Engine/Objects/Characters/HelixEnemy.h"
@@ -127,30 +128,30 @@ int SaveObjects(const char* filepath, const std::vector<GameObject*>& objects) {
         std::cout << "obj type: " << obj_type.name() << std::endl;
 
         if (strcmp(obj_type.name(), "5Slime") == 0)
-            types->SetAttribute("slime","1");
+            types->SetAttribute("slime", "1");
         if (strcmp(obj_type.name(), "13RingShotEnemy") == 0) {
-            types->SetAttribute("ranged_enemy","1");
-            types->SetAttribute("ring_shot_enemy","1");
+            types->SetAttribute("ranged_enemy", "1");
+            types->SetAttribute("ring_shot_enemy", "1");
         }
         if (strcmp(obj_type.name(), "3Dog") == 0) {
-            types->SetAttribute("ranged_enemy","1");
-            types->SetAttribute("dog","1");
+            types->SetAttribute("ranged_enemy", "1");
+            types->SetAttribute("dog", "1");
         }
         if (strcmp(obj_type.name(), "10HelixEnemy") == 0) {
-            types->SetAttribute("ranged_enemy","1");
-            types->SetAttribute("helix_enemy","1");
+            types->SetAttribute("ranged_enemy", "1");
+            types->SetAttribute("helix_enemy", "1");
         }
         if (strcmp(obj_type.name(), "6Goblin") == 0) {
-            types->SetAttribute("ranged_enemy","1");
-            types->SetAttribute("goblin","1");
+            types->SetAttribute("ranged_enemy", "1");
+            types->SetAttribute("goblin", "1");
         }
         if (strcmp(obj_type.name(), "8Skeleton") == 0) {
-            types->SetAttribute("ranged_enemy","1");
-            types->SetAttribute("skeleton","1");
+            types->SetAttribute("ranged_enemy", "1");
+            types->SetAttribute("skeleton", "1");
         }
         if (strcmp(obj_type.name(), "4Mage") == 0) {
-            types->SetAttribute("ranged_enemy","1");
-            types->SetAttribute("mage","1");
+            types->SetAttribute("ranged_enemy", "1");
+            types->SetAttribute("mage", "1");
         }
         root->InsertEndChild(curr_xml_object);
     }
@@ -461,6 +462,14 @@ GameObject* BuildObjectOnType(tinyxml2::XMLElement* types,
         delete to_delete;
     }
 
+    if (types->Attribute("charger") != nullptr) {
+        EnemyStats const stats =
+            GetEnemyStats(xmlObj->FirstChildElement("EnemyStats"));
+        to_delete = new_obj;
+        new_obj = new Charger(static_cast<Collider*>(new_obj), stats);
+        delete to_delete;
+    }
+
     if (types->Attribute("ranged_enemy") != nullptr) {
         new_obj = BuildRangedEnemy(types, xmlObj, new_obj);
     }
@@ -480,7 +489,8 @@ std::vector<GameObject*> LoadObjects(const char* filepath) {
 
     tinyxml2::XMLError const error = doc.LoadFile(filepath);
     if (error != tinyxml2::XML_SUCCESS) {
-        std::string what = "Could not load objects file: " + std::string(filepath);
+        std::string what =
+            "Could not load objects file: " + std::string(filepath);
         SDL_LogError(0, what.c_str());
         return objects;
     }
@@ -500,7 +510,6 @@ std::vector<GameObject*> LoadObjects(const char* filepath) {
 
     GameObject* created_obj = nullptr;
     while (curr_object != nullptr) {
-        std::cout << "texture_id " << curr_object->FirstAttribute()->Value() << std::endl;
         types = curr_object->FirstChildElement("Types");
         if (types == nullptr) {
             SDL_Log("Object does not contain types element");
@@ -563,10 +572,10 @@ bool LoadTextures(const char* projectPath) {
                 atoi(curr_texture->FirstChildElement("TileSize")->GetText());
             rows = atoi(curr_texture->FirstChildElement("Rows")->GetText());
             cols = atoi(curr_texture->FirstChildElement("Cols")->GetText());
-            Renderer::GetInstance()->AddTileMap(id, texture_path, tile_size,
-                                                rows, cols);
+            Renderer::GetInstance().AddTileMap(id, texture_path, tile_size,
+                                               rows, cols);
         } else {
-            Renderer::GetInstance()->AddTexture(id, texture_path);
+            Renderer::GetInstance().AddTexture(id, texture_path);
         }
 
         curr_texture = curr_texture->NextSiblingElement("Texture");

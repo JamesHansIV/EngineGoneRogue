@@ -42,8 +42,8 @@ void GameObject::DrawRect() {
     SDL_Rect dst_rect = {static_cast<int>(m_dst_rect.x),
                          static_cast<int>(m_dst_rect.y), m_dst_rect.w,
                          m_dst_rect.h};
-    Renderer::GetInstance()->Draw(m_texture_id, src_rect, dst_rect, m_rotation,
-                                  nullptr, m_flip);
+    Renderer::GetInstance().Draw(m_texture_id, src_rect, dst_rect, m_rotation,
+                                 nullptr, m_flip);
 }
 
 void GameObject::DrawAnimation() {

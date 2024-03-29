@@ -9,6 +9,7 @@
 #include "Engine/Objects/Projectiles/Projectile.h"
 #include "Engine/Objects/Weapons/MeleeWeapon.h"
 #include "Engine/Objects/Weapons/RangedWeapon.h"
+#include "Engine/Objects/Weapons/Shotgun.h"
 #include "Engine/Renderer/Renderer.h"
 #include "Engine/State/State.h"
 #include "Engine/UI/ItemInventory.h"
@@ -20,7 +21,7 @@ const int kIdleAnimationSpeed = 50;
 const int kProjectileWidth = 10;
 const int kProjectileHeight = 10;
 // Experience multiplier for each level
-double k_experience_multiplier = 7.5 / 10.0;
+double k_experience_multiplier = 9 / 10.0;
 
 const int kPlayerStartX = 300;
 const int kPlayerStartY = 300;
@@ -47,7 +48,7 @@ void Player::Init() {
     m_current_tile_pos = m_still_frames["face-down"];
 
     m_stats = new PlayerStats(MovementInfo{80, .90, 110, 500},
-                              CombatInfo{1, 1, 0, 50}, HealthInfo{100, 0, 0},
+                              CombatInfo{1, 1, 1, 50}, HealthInfo{100, 0, 0},
                               InventoryInfo{12, 3, 3});
 
     auto* default_projectile_props = new Properties(
@@ -71,6 +72,12 @@ void Player::Init() {
     Weapon* uzi = new RangedWeapon(props_uzi, stats_uzi, this, "Uzi",
                                    default_projectile_props);
     m_weapons.push_back(uzi);
+
+    Properties props_shotgun("weapons", {0, 2, 16, 16}, {0, 0, 18, 18}, 0.0);
+    RangedWeaponStats stats_shotgun = {true, 750, 25, 35, m_stats};
+    Weapon* shotgun = new Shotgun(props_shotgun, stats_shotgun, this, "Shotgun",
+                                  default_projectile_props);
+    m_weapons.push_back(shotgun);
 
     Properties props_pistol("weapons", {0, 1, 16, 16}, {0, 0, 18, 18}, 0.0);
     RangedWeaponStats stats_pistol = {true, 400, 25, 34, m_stats};
@@ -179,10 +186,8 @@ void Player::UpdateWeapon(float dt) {
         InputChecker::SetMouseWheelDirection(0);
     }
 
-    int const weapon_xx =
-        GetMidPointX() - Renderer::GetInstance()->GetCameraX();
-    int const weapon_yy =
-        GetMidPointY() - Renderer::GetInstance()->GetCameraY();
+    int const weapon_xx = GetMidPointX() - Renderer::GetInstance().GetCameraX();
+    int const weapon_yy = GetMidPointY() - Renderer::GetInstance().GetCameraY();
 
     float const delta_x = InputChecker::GetMouseX() - weapon_xx;
     float const delta_y = InputChecker::GetMouseY() - weapon_yy;
@@ -221,7 +226,7 @@ void Player::DropBomb() {
 
     auto* grenade = new Grenade(grenade_props,
                                 {80 + m_stats->GetRangedDamage(), 3, 50, 50});
-    static_cast<Game*>(Application::Get())->AddObject(grenade);
+    static_cast<Game&>(Application::Get()).AddObject(grenade);
     ColliderHandler::GetInstance()->AddCollider(grenade);
     m_num_bombs--;
 }

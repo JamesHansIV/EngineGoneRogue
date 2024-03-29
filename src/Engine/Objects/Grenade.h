@@ -33,5 +33,6 @@ class Grenade : public Collider {
    private:
     GrenadeStats m_stats;
     double m_time_alive;
+    double m_time_to_increase_animation_speed = .5;
     BombState m_state;
 };

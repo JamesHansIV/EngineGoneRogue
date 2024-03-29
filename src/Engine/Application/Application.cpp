@@ -57,9 +57,15 @@ Application::Application()
 
     SDL_GetWindowSize(m_window, &m_window_width, &m_window_height);
 
-    //TODO: note that the cwd is <projectDir>/build instead of <projectDir>.
-    //      Set a working directory path macro to use absolute file paths
-    Renderer::GetInstance()->Init();
+//TODO: note that the cwd is <projectDir>/build instead of <projectDir>.
+//      Set a working directory path macro to use absolute file paths
+#if EDITOR == 1
+    SDL_RendererFlags flag = SDL_RENDERER_PRESENTVSYNC;  // vsync with editor
+#else
+    SDL_RendererFlags flag =
+        SDL_RENDERER_ACCELERATED;  // hardware accelerated with game
+#endif
+    Renderer::GetInstance().Init(flag);
 
     if (ShouldLoadProject != 0U) {
         if (!LoadProject()) {
@@ -149,7 +155,6 @@ bool Application::LoadRoom(std::string room_id) {
     std::vector<GameObject*> const objects = LoadObjects(obj_path.c_str());
     // std::cout << "objects.size " << objects.size() << std::endl;
 
-
     if (objects.empty()) {
         SDL_Log("objects.empty(): Could not load %s", obj_path.c_str());
         return false;
@@ -218,7 +223,8 @@ bool Application::BuildRoomIds() {
     std::string room_path;
     std::string room_id;
     while ((entry = readdir(dp)) != nullptr) {
-        if (strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0) {
+        if (strcmp(entry->d_name, ".") != 0 &&
+            strcmp(entry->d_name, "..") != 0) {
             std::string const file_name = entry->d_name;
 
             if (file_name.rfind(".xml") == std::string::npos)
@@ -261,12 +267,11 @@ bool Application::LoadProject() {
         return false;
     }
 
-    // load first room ? 
+    // load first room ?
     if (!m_room_ids.empty())
         return LoadRoom(m_room_ids.front());
-    
-    return true;
 
+    return true;
 
     // return LoadNextRoom();
 
@@ -375,8 +380,8 @@ void Application::ClearObjects() {
 
 bool Application::Clean() {
     SDL_Log("enemy count in app: %d", GetEnemyCount());
-    Renderer::GetInstance()->Destroy();
-    delete Renderer::GetInstance();
+    Renderer::GetInstance().Destroy();
+    delete &Renderer::GetInstance();
 
     delete m_player;
     for (const auto& it : m_rooms) {

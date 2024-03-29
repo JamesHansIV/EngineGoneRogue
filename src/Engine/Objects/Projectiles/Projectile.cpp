@@ -5,6 +5,7 @@
 #include "Engine/Objects/Characters/Character.h"
 #include "Engine/Objects/Characters/Enemy.h"
 #include "Engine/Objects/Characters/Player.h"
+#include "Engine/Objects/Collider.h"
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Objects/Weapons/Weapon.h"
 #include "Engine/Renderer/Renderer.h"
@@ -43,6 +44,7 @@ void Projectile::Draw() {
 void Projectile::Update(float dt) {
     if (m_hit) {
         m_animation->Update();
+        m_collision_box.Clear();
         if (m_animation && m_animation->Ended()) {
             m_marked_for_deletion = true;
         }
@@ -72,6 +74,19 @@ void Projectile::HitTarget() {
     SetY(GetY() + m_rigid_body->Velocity().Y);
 }
 
+void Projectile::CollideWithEnemy() {
+    AddNumberofEnemiesHit();
+    if (m_piercing + 1 == m_numberof_enemies_hit) {
+        HitTarget();
+    }
+    double const life_steal_multiplier =
+        m_owner->GetStats().GetLifeStealPercentage() / 100.0;
+    int const increase_health_amount =
+        static_cast<float>(m_damage) * life_steal_multiplier;
+    m_owner->GetHealth()->IncreaseHealth(increase_health_amount);
+    Application::Get().GetAudioManager().PlaySound("low", 20, 0);
+}
+
 void Projectile::OnCollide(Collider* collidee) {
     if (this == collidee || m_hit) {
         return;
@@ -84,22 +99,12 @@ void Projectile::OnCollide(Collider* collidee) {
                 (player->GetStats().GetDodgeInvincibility() == 0)) {
                 HitTarget();
                 //dynamic_cast<Character*>(collidee)->GetHealth()->SetDamage(10);
-                Application::Get()->GetAudioManager().PlaySound("high", 5, 0);
+                Application::Get().GetAudioManager().PlaySound("high", 5, 0);
             }
             break;
         }
         case ObjectType::Enemy:
-            if (m_player_owned) {
-                // TODO: Piercing is broke, needs to be fixed
-                HitTarget();
-                AddNumberofEnemiesHit();
-                double const life_steal_multiplier =
-                    m_owner->GetStats().GetLifeStealPercentage() / 100.0;
-                int const increase_health_amount =
-                    static_cast<float>(m_damage) * life_steal_multiplier;
-                m_owner->GetHealth()->IncreaseHealth(increase_health_amount);
-                Application::Get()->GetAudioManager().PlaySound("low", 20, 0);
-            }
+            // TODO: Piercing is broke, needs to be fixed
             break;
         case ObjectType::MeleeWeapon:
         case ObjectType::Projectile:

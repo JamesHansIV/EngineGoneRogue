@@ -49,6 +49,8 @@ class Animation {
         return m_info.AnimationSpeed;
     }
 
+    void SetAnimationSpeed(int speed) { m_info.AnimationSpeed = speed; }
+
     std::string GetAnimationID() { return m_current_animation_id; }
 
     std::map<std::string, AnimationInfo> GetAnimations() {

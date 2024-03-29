@@ -23,11 +23,11 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
     UserEvent event_wrapper;
     State* state = nullptr;
     event_wrapper.SetSDLEvent(&event);
-    Game* game = static_cast<Game*>(Application::Get());
+    Game game = static_cast<Game&>(Application::Get());
     while (SDL_PollEvent(&event) != 0) {
         switch (event.type) {
             case SDL_QUIT:
-                Application::Get()->Quit();
+                Application::Get().Quit();
                 return nullptr;
             case SDL_KEYDOWN:
                 InputChecker::SetKeyPressed(event.key.keysym.sym, true);
@@ -37,33 +37,33 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
                             if (GameState->GetType() == StateType::Pause ||
                                 GameState->GetType() == StateType::ChestDrop) {
                                 state = new RunningState(
-                                    static_cast<Game*>(Application::Get()));
+                                    static_cast<Game&>(Application::Get()));
                             }
                         } else {
                             if (GameState->GetType() == StateType::Running) {
                                 state = new PauseState(
-                                    static_cast<Game*>(Application::Get()));
+                                    static_cast<Game&>(Application::Get()));
                             }
                         }
                         break;
                     case SDLK_m:
-                        Application::Get()->GetAudioManager().ToggleMusic();
+                        Application::Get().GetAudioManager().ToggleMusic();
                         break;
                     case SDLK_g:
                         m_player->ToggleGodMode();
                         break;
                     case SDLK_COMMA:
-                        Application::Get()->GetAudioManager().ToggleSound();
+                        Application::Get().GetAudioManager().ToggleSound();
                         break;
                     case SDLK_SEMICOLON:
-                        Application::Get()->GetAudioManager().MuteMusic();
+                        Application::Get().GetAudioManager().MuteMusic();
                         AudioManager::StopSound(-1);
-                        Application::Get()->GetAudioManager().PlaySound(
+                        Application::Get().GetAudioManager().PlaySound(
                             "easter-egg", 75, 0);
-                        Application::Get()->GetAudioManager().ToggleSound();
+                        Application::Get().GetAudioManager().ToggleSound();
                         Mix_ChannelFinished([](int /*channel*/) {
-                            Application::Get()->GetAudioManager().ToggleMusic();
-                            Application::Get()->GetAudioManager().ToggleSound();
+                            Application::Get().GetAudioManager().ToggleMusic();
+                            Application::Get().GetAudioManager().ToggleSound();
                             // remove callback
                             Mix_ChannelFinished(nullptr);
                         });
@@ -106,18 +106,18 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
                 if (event.window.event == SDL_WINDOWEVENT_FOCUS_LOST) {
                     if (GameState->GetType() == StateType::Running) {
                         state = new PauseState(
-                            static_cast<Game*>(Application::Get()));
+                            static_cast<Game&>(Application::Get()));
                     }
                 }
                 if (event.window.event == SDL_WINDOWEVENT_RESIZED) {
                     SDL_GetWindowSize(
-                        Application::Get()->GetWindow(),
-                        &Application::Get()->GetMutableWindowWidth(),
-                        &Application::Get()->GetMutableWindowHeight());
+                        Application::Get().GetWindow(),
+                        &Application::Get().GetMutableWindowWidth(),
+                        &Application::Get().GetMutableWindowHeight());
 
-                    Renderer::GetInstance()->SetCameraSize(
-                        Application::Get()->GetWindowWidth(),
-                        Application::Get()->GetWindowHeight());
+                    Renderer::GetInstance().SetCameraSize(
+                        Application::Get().GetWindowWidth(),
+                        Application::Get().GetWindowHeight());
                 }
                 break;
             case SDL_USEREVENT: {
@@ -147,7 +147,7 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
 State* GameEventManager::HandleCustomEvents(const SDL_Event& event,
                                             ItemManager* ItemManager,
                                             State* GameState) {
-    Game* game = static_cast<Game*>(Application::Get());
+    Game game = static_cast<Game&>(Application::Get());
     switch (static_cast<EventType>(event.user.code)) {
         case EventType::UserEvent: {
             // Todo: once UserEvent is implemented to use
@@ -182,7 +182,7 @@ State* GameEventManager::HandleCustomEvents(const SDL_Event& event,
                 static_cast<std::pair<float, float>*>(event.user.data2);
             ChestOpenedEvent chest_open_event(*item, *index);
             ItemManager->HandleEvent(&chest_open_event);
-            return new ChestDropState(static_cast<Game*>(Application::Get()),
+            return new ChestDropState(static_cast<Game&>(Application::Get()),
                                       *item);
         }
         case EventType::StartGameEvent: {
@@ -196,27 +196,27 @@ State* GameEventManager::HandleCustomEvents(const SDL_Event& event,
             return state;
         }
         case EventType::LevelUpSelectedGameEvent: {
-            return new RunningState(static_cast<Game*>(Application::Get()));
+            return new RunningState(static_cast<Game&>(Application::Get()));
         }
         case EventType::GameOverEvent: {
-            return new GameOverState(static_cast<Game*>(Application::Get()));
+            return new GameOverState(static_cast<Game&>(Application::Get()));
         }
         case EventType::RestartGameEvent: {
-            game->GetPlayer()->Clean();
-            game->GetPlayer()->Init();
-            game->ResetManagers();
-            game->ResetNextRoom();
-            game->LoadNextRoom();
-            return new StartState(static_cast<Game*>(Application::Get()));
+            game.GetPlayer()->Clean();
+            game.GetPlayer()->Init();
+            game.ResetManagers();
+            game.ResetNextRoom();
+            game.LoadNextRoom();
+            return new StartState(static_cast<Game&>(Application::Get()));
         }
         case EventType::RoomTransitionEvent: {
             RoomTransitionEvent e(*(std::string*)event.user.data1);
-            game->HandleEvent(&e);
+            game.HandleEvent(&e);
             break;
         }
         case EventType::PlayerLevelUpEvent:
             timer.Pause();
-            return new LevelUpState(static_cast<Game*>(Application::Get()));
+            return new LevelUpState(static_cast<Game&>(Application::Get()));
             break;
         default:
             break;

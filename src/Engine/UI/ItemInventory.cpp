@@ -7,7 +7,7 @@ const int kCellHeight = 60;
 const int kCellWidth = 50;
 
 void ItemInventory::Draw() {
-    GridComponent box_container(1, static_cast<int>(m_items.size()), 0, 40, kCellHeight, kCellWidth);
+    GridComponent box_container(1, static_cast<int>(m_items.size()), 0, 80, kCellHeight, kCellWidth);
 
     int column = 0;
     for (const auto& pair : m_items) {

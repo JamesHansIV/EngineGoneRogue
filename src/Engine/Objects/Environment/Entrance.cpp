@@ -15,7 +15,7 @@ void Entrance::Draw() {
 }
 
 void Entrance::Update(float dt) {
-    if (Application::Get()->GetEnemyCount() == 0) {
+    if (Application::Get().GetEnemyCount() == 0) {
         m_closed = false;
     }
     if (!m_closed) {

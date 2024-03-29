@@ -1,8 +1,10 @@
 #include "Game.h"
 #include <cstdlib>
+#include <string>
 #include <vector>
 #include "Engine/Events/ItemManager.h"
 #include "Engine/Input/InputChecker.h"
+#include "Engine/Objects/Characters/Charger.h"
 #include "Engine/Objects/Characters/Dog.h"
 #include "Engine/Objects/Characters/EnemyStats.h"
 #include "Engine/Objects/Characters/Goblin.h"
@@ -24,6 +26,7 @@
 #include "Engine/Timer/Timer.h"
 #include "Engine/UI/Button.h"
 #include "Engine/UI/WeaponInventory.h"
+#include "Engine/utils/utils.h"
 #include "SDL2/SDL_log.h"
 
 std::vector<Collider*> colliders;
@@ -52,6 +55,7 @@ Dog* dog_copy = nullptr;
 Skeleton* skeleton_copy = nullptr;
 Goblin* goblin_copy = nullptr;
 HelixEnemy* helix_enemy_copy = nullptr;
+Charger* charger_copy = nullptr;
 
 // Todo: try to clean this up
 // https://stackoverflow.com/questions/27451776/dynamic-cast-for-multiple-derived-classes
@@ -60,6 +64,7 @@ std::vector<GameObject*> Game::CopyObjects(
     std::vector<GameObject*> new_objects;
     for (auto* obj : objects) {
         new_objects.push_back(obj->Copy());
+        new_objects.back()->SetID(std::to_string(++object_counter));
     }
     return new_objects;
 }
@@ -72,6 +77,12 @@ void Game::InitEnemyCopies() {
             slime_copy = new Slime(enemy, enemy->GetEnemyStats());
             continue;
         }
+
+        if ((enemy = dynamic_cast<Charger*>(obj)) != nullptr) {
+            charger_copy = new Charger(enemy, enemy->GetEnemyStats());
+            continue;
+        }
+
         if ((ranged_enemy = dynamic_cast<RingShotEnemy*>(obj)) != nullptr) {
             ring_shot_enemy_copy = new RingShotEnemy(
                 ranged_enemy, ranged_enemy->GetRangedEnemyStats());
@@ -118,7 +129,11 @@ Game::Game() {
 
     m_weapon_inventory->SetSelectedWeapon(m_player->GetCurrentWeapon());
 
-    ChangeState(new StartState(this));
+    State* state = new StartState(*this);
+    SDL_Log("start state: %d", state != nullptr);
+    SDL_Log("start state type: %d", state->GetType());
+
+    ChangeState(state);
 }
 
 void Game::InitManagers() {
@@ -182,7 +197,7 @@ void Game::GenerateRandomEnemy() {
     float const generated_y = rand() % 1800 + 20;
 
     // Generate random enemy type
-    int const enemy_type = rand() % 7;
+    int const enemy_type = rand() % 8;
     Enemy* generated_enemy = nullptr;
 
     switch (enemy_type) {
@@ -236,10 +251,18 @@ void Game::GenerateRandomEnemy() {
                 helix_enemy_copy, helix_enemy_copy->GetRangedEnemyStats() *
                                       m_enemy_stat_multiplier);
             break;
+        case 7:
+            charger_copy->SetX(generated_x);
+            charger_copy->SetY(generated_y);
+            generated_enemy =
+                new Charger(charger_copy, charger_copy->GetEnemyStats() *
+                                              m_enemy_stat_multiplier);
+            break;
         default:
             break;
     }
 
+    generated_enemy->SetID(std::to_string(++object_counter));
     ColliderHandler::GetInstance()->AddCollider(generated_enemy);
     m_objects.push_back(generated_enemy);
 }
@@ -248,11 +271,14 @@ void Game::HandleEvent(RoomTransitionEvent* event) {
     //LoadRoom(event->GetNextRoomID());
     //m_player->GetRigidBody()->SetPosition(
     //    Vector2D(m_start_position.first, m_start_position.second));
-    ChangeState(new RoomTransitionState(this));
+    ChangeState(new RoomTransitionState(*this));
 }
 
 void Game::Update(float dt) {
+    SDL_Log("before game update");
     State* state = m_state->Update(dt);
+    SDL_Log("in game update");
+    SDL_Log("state is null: %d", state == nullptr);
     if (state != nullptr) {
         ChangeState(state);
     }
@@ -283,7 +309,7 @@ void Game::UpdateObjects(float dt) {
         }
     }
 
-    for (int i = 0; i < m_objects.size(); i++) {
+    for (int i = 0; i < m_objects.size(); i++) {  // NOLINT: need index deletion
         auto* object = m_objects[i];
         auto* enemy = dynamic_cast<Enemy*>(object);  // Cast to Enemy type
         if (enemy != nullptr) {
@@ -304,9 +330,9 @@ void Game::UpdateObjects(float dt) {
 }
 
 void Game::Render() {
-    Renderer::GetInstance()->RenderClear();
+    Renderer::GetInstance().RenderClear();
     m_state->Draw();
-    Renderer::GetInstance()->Render();
+    Renderer::GetInstance().Render();
 }
 
 void Game::DrawObjects() {
@@ -329,6 +355,8 @@ void Game::ChangeState(State* state) {
         m_state->Exit();
         delete m_state;
     }
+    SDL_Log("changing game state: %d", state != nullptr);
+    SDL_Log("start state: %s", state->GetType());
 
     m_state = state;
     m_state->Enter();

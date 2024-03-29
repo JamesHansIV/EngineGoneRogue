@@ -24,12 +24,12 @@ struct DrawColor {
 
 class Renderer {
    public:
-    static Renderer* GetInstance() {
-        return m_instance =
-                   (m_instance != nullptr) ? m_instance : new Renderer();
+    static Renderer& GetInstance() {
+        static auto* m_renderer = new Renderer();
+        return *m_renderer;
     }
 
-    void Init();
+    void Init(SDL_RendererFlags render_flags);
 
     SDL_Renderer* GetRenderer() { return m_renderer; }
 

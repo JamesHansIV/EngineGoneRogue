@@ -6,4 +6,5 @@ std::vector<Projectile*> CreateSpreadBullet(RangedAttackInfo info);
 std::vector<Projectile*> CreateHelixBullets(RangedAttackInfo info);
 std::vector<Projectile*> CreateRotatingBullets(RangedAttackInfo info);
 std::vector<Projectile*> CreateSpreadBullets(RangedAttackInfo info);
+std::vector<Projectile*> CreateShotgunSpreadBullets(RangedAttackInfo info);
 std::vector<Projectile*> CreateRingBullets(RangedAttackInfo info);

@@ -8,7 +8,7 @@ class Slime : public Enemy {
                    bool split = false);
     Slime(Collider* rhs, EnemyStats stats, bool split = false);
 
-    ~Slime();
+    ~Slime() override;
 
     void Init();
 
