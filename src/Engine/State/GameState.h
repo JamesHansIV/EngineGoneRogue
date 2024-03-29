@@ -20,9 +20,7 @@ class GameState : public State {
 
     ~GameState() override = default;
 
-    Game& GetGame() { return m_game; }
-
-   private:
+   protected:
     Game& m_game;
 };
 

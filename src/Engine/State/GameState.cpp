@@ -4,7 +4,7 @@
 
 void RunningState::Enter() {
     timer.Unpause();
-    Renderer::GetInstance().SetCameraTarget(GetGame().GetPlayer());
+    Renderer::GetInstance().SetCameraTarget(m_game.GetPlayer());
     Application::Get().GetAudioManager().SetMusicVolume(100);
     Application::Get().GetAudioManager().PlayMusicOverride("background-intense",
                                                            true);
@@ -13,11 +13,11 @@ void RunningState::Enter() {
 void RunningState::Exit() {}
 
 void RunningState::Draw() {
-    GetGame().DrawObjects();
+    m_game.DrawObjects();
 }
 
 State* RunningState::Update(float dt) {
-    GetGame().UpdateObjects(dt);
+    m_game.UpdateObjects(dt);
     return nullptr;
 }
 
@@ -37,12 +37,12 @@ void StartState::Enter() {
 void StartState::Exit() {}
 
 void StartState::Draw() {
-    GetGame().DrawObjects();
+    m_game.DrawObjects();
     m_start_screen.Draw();
 }
 
 State* StartState::Update(float dt) {
-    GetGame().UpdateObjects(dt);
+    m_game.UpdateObjects(dt);
     m_start_screen.Update();
     return nullptr;
 }
@@ -50,7 +50,7 @@ State* StartState::Update(float dt) {
 State* StartState::HandleEvent(Event* event) {
     switch (event->GetEventType()) {
         case EventType::StartGameEvent: {
-            return new RunningState(GetGame());
+            return new RunningState(m_game);
         }
         default:
             break;
@@ -98,7 +98,7 @@ State* PauseState::Update(float dt) {
 State* PauseState::HandleEvent(Event* event) {
     switch (event->GetEventType()) {
         case EventType::ContinueGameEvent:
-            return new RunningState(GetGame());
+            return new RunningState(m_game);
         default:
             break;
     }
@@ -106,7 +106,7 @@ State* PauseState::HandleEvent(Event* event) {
 }
 
 void LevelUpState::Enter() {
-    Renderer::GetInstance().SetCameraTarget(GetGame().GetPlayer());
+    Renderer::GetInstance().SetCameraTarget(m_game.GetPlayer());
     Application::Get().GetAudioManager().MuteMusic();
     // save channel and  create callback. then halt sound on exit
     const int channel = Application::Get().GetAudioManager().PlaySound(
@@ -252,14 +252,14 @@ LevelUpState::LevelUpState(Game& game) : GameState(game) {
 }
 
 void LevelUpState::Draw() {
-    GetGame().DrawObjects();
+    m_game.DrawObjects();
     m_option_one_button.Draw();
     m_option_two_button.Draw();
     m_option_three_button.Draw();
 }
 
 State* LevelUpState::Update(float dt) {
-    GetGame().UpdateObjects(dt);
+    m_game.UpdateObjects(dt);
     m_option_one_button.Update();
     m_option_two_button.Update();
     m_option_three_button.Update();
@@ -280,20 +280,20 @@ void ChestDropState::Enter() {
 void ChestDropState::Exit() {}
 
 void ChestDropState::Draw() {
-    GetGame().DrawObjects();
+    m_game.DrawObjects();
     m_chest_drop_modal.Draw();
 }
 
 State* ChestDropState::Update(float dt) {
     m_chest_drop_modal.Update();
-    GetGame().UpdateObjects(dt);
+    m_game.UpdateObjects(dt);
     return nullptr;
 }
 
 State* ChestDropState::HandleEvent(Event* event) {
     switch (event->GetEventType()) {
         case EventType::ContinueGameEvent:
-            return new RunningState(GetGame());
+            return new RunningState(m_game);
         default:
             break;
     }
@@ -305,11 +305,11 @@ void ShopState::Enter() {}
 void ShopState::Exit() {}
 
 void ShopState::Draw() {
-    GetGame().DrawObjects();
+    m_game.DrawObjects();
 }
 
 State* ShopState::Update(float dt) {
-    GetGame().UpdateObjects(dt);
+    m_game.UpdateObjects(dt);
     return nullptr;
 }
 
