@@ -296,7 +296,7 @@ void Game::UpdateObjects(float dt) {
         }
     }
 
-    for (int i = 0; i < m_objects.size(); i++) {
+    for (int i = 0; i < m_objects.size(); i++) {  // NOLINT: need index deletion
         auto* object = m_objects[i];
         auto* enemy = dynamic_cast<Enemy*>(object);  // Cast to Enemy type
         if (enemy != nullptr) {
