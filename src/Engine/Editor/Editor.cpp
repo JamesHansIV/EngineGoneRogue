@@ -1573,7 +1573,7 @@ void Editor::HandleDeleteSelectionAction() {
         return;
 
     std::vector<GameObject*> deleted_objects;
-    for (auto& obj : m_selected_objects) {
+    for (auto* obj : m_selected_objects) {
         deleted_objects.push_back(new GameObject(obj));
         DeleteObject(obj);
     }
@@ -1582,6 +1582,9 @@ void Editor::HandleDeleteSelectionAction() {
         new ActionRecord(EditorAction::EXECUTE_DELETE_SELECTION,
                          deleted_objects, m_current_layer);
     m_action_record_handler->RecordAction(record);
+
+    m_selected_obj_origin_map.clear();
+    m_selected_objects.clear();
 }
 
 void Editor::HandleCopySelectionAciton() {
