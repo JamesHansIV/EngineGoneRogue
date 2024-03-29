@@ -259,6 +259,8 @@ class Player : public Character {
 
     void DropBomb();
 
+    [[nodiscard]] int GetBombCount() const { return m_num_bombs;};
+
     void ToggleGodMode() {
         m_stats->ToggleGodMode();
         if (m_stats->IsGodMode()) {
