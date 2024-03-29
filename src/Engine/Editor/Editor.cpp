@@ -264,17 +264,26 @@ void Editor::CleanLayers() {
 void Editor::SaveRoom(const char* roomName) {
     std::vector<GameObject*> objects;
 
-    for (const auto& layer : m_layers) {
-        for (auto* obj : layer) {
-            objects.push_back(obj);
-        }
-    }
+    // for (const auto& layer : m_layers) {
+    //     for (auto* obj : layer) {
+    //         objects.push_back(obj);
+    //     }
+    // }
 
-    char file_path[FilepathLen + 1];
-    snprintf(file_path, FilepathLen, "../assets/projects/%s/rooms/%s.xml",
+    char tile_path[FilepathLen + 1];
+    snprintf(tile_path, FilepathLen, "../assets/projects/%s/rooms/%s.xml",
              m_project_name.c_str(), roomName);
 
-    int const success = SaveObjects(file_path, objects);
+    char obj_path[FilepathLen + 1];
+    snprintf(obj_path, FilepathLen, "../assets/projects/%s/rooms/%s_objects.xml",
+             m_project_name.c_str(), roomName);
+
+    // if (m_player != nullptr)
+        // m_objects.insert(m_objects.begin(), 1, m_player);
+    
+    int const save_tile_success = SaveObjects(tile_path, m_tiles);
+    int const save_obj_success = SaveObjects(obj_path, m_objects);
+
     SDL_Log("Saving room a success: %d", success);
 }
 
@@ -408,16 +417,16 @@ void Editor::ShowFileManager() {
         }
 
         if (ImGui::BeginPopup("load_room")) {
-            for (const auto& item : m_rooms) {
-                std::string const id = item.first;
+            for (const auto& id : m_room_ids) {
                 SDL_Log("Room: %s", id.c_str());
                 if (strcmp(id.c_str(), "") != 0) {
                     if (ImGui::Button(id.c_str(), ImVec2(100, 30))) {
+                        m_current_room_id = id;
 
                         CleanLayers();
-
-                        m_layers.push_back(CopyObjects(m_rooms[id]));
-                        m_current_room_id = id;
+                        LoadRoom(m_current_room_id);
+                        m_layers.push_back(CopyObjects(m_tiles));
+                        m_layers.push_back(CopyObjects(m_objects));
                         ImGui::CloseCurrentPopup();
                     }
                 }

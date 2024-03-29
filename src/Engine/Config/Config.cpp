@@ -1,5 +1,6 @@
 #include "Config.h"
 #include <fstream>
+#include <typeinfo>
 #include "Engine/Objects/Characters/Dog.h"
 #include "Engine/Objects/Characters/Goblin.h"
 #include "Engine/Objects/Characters/HelixEnemy.h"
@@ -97,10 +98,14 @@ int SaveObjects(const char* filepath, const std::vector<GameObject*>& objects) {
     tinyxml2::XMLElement* types;
     tinyxml2::XMLElement* type;
 
+    std::cout << "Saving " << objects.size() << " objects\n";
+
+    int num_enemies = 0;
     for (auto* obj : objects) {
-        if (obj->GetObjectType() == ObjectType::Enemy) {
-            continue;
-        }
+        // if (obj->GetObjectType() == ObjectType::Enemy) {
+        //     num_enemies++;
+        //     continue;
+        // }
         curr_xml_object = doc.NewElement("Object");
         types = doc.NewElement("Types");
         curr_xml_object->InsertEndChild(types);
@@ -115,8 +120,41 @@ int SaveObjects(const char* filepath, const std::vector<GameObject*>& objects) {
             WriteColliderInfo(doc, curr_xml_object, collider);
             types->SetAttribute("collider", "1");
         }
+
+        // type handling
+        const std::type_info& obj_type = typeid(*obj);
+        std::cout << "obj type: " << obj_type.name() << std::endl;
+
+        if (strcmp(obj_type.name(), "5Slime") == 0)
+            types->SetAttribute("slime","1");
+        if (strcmp(obj_type.name(), "13RingShotEnemy") == 0) {
+            types->SetAttribute("ranged_enemy","1");
+            types->SetAttribute("ring_shot_enemy","1");
+        }
+        if (strcmp(obj_type.name(), "3Dog") == 0) {
+            types->SetAttribute("ranged_enemy","1");
+            types->SetAttribute("dog","1");
+        }
+        if (strcmp(obj_type.name(), "10HelixEnemy") == 0) {
+            types->SetAttribute("ranged_enemy","1");
+            types->SetAttribute("helix_enemy","1");
+        }
+        if (strcmp(obj_type.name(), "6Goblin") == 0) {
+            types->SetAttribute("ranged_enemy","1");
+            types->SetAttribute("goblin","1");
+        }
+        if (strcmp(obj_type.name(), "8Skeleton") == 0) {
+            types->SetAttribute("ranged_enemy","1");
+            types->SetAttribute("skeleton","1");
+        }
+        if (strcmp(obj_type.name(), "4Mage") == 0) {
+            types->SetAttribute("ranged_enemy","1");
+            types->SetAttribute("mage","1");
+        }
         root->InsertEndChild(curr_xml_object);
     }
+
+    std::cout << "num enemies " << num_enemies << std::endl;
 
     return doc.SaveFile(filepath);
 }
@@ -396,6 +434,7 @@ GameObject* BuildObjectOnType(tinyxml2::XMLElement* types,
 
     if (types->Attribute("player") != nullptr) {
         SDL_Log("Adding new player");
+        std::cout << "adding new player\n";
         to_delete = new_obj;
         new_obj = new Player(static_cast<Collider*>(new_obj));
 
@@ -426,7 +465,8 @@ std::vector<GameObject*> LoadObjects(const char* filepath) {
 
     tinyxml2::XMLError const error = doc.LoadFile(filepath);
     if (error != tinyxml2::XML_SUCCESS) {
-        SDL_LogError(0, "Could not load objects file");
+        std::string what = "Could not load objects file: " + std::string(filepath);
+        SDL_LogError(0, what.c_str());
         return objects;
     }
 
@@ -445,6 +485,7 @@ std::vector<GameObject*> LoadObjects(const char* filepath) {
 
     GameObject* created_obj = nullptr;
     while (curr_object != nullptr) {
+        std::cout << "texture_id " << curr_object->FirstAttribute()->Value() << std::endl;
         types = curr_object->FirstChildElement("Types");
         if (types == nullptr) {
             SDL_Log("Object does not contain types element");
@@ -466,7 +507,7 @@ std::vector<GameObject*> LoadObjects(const char* filepath) {
         };
 
         created_obj = BuildObjectOnType(types, curr_object, created_obj);
-
+        // std::cout << created_obj->GetStateType() << std::endl;
         objects.push_back(created_obj);
 
         curr_object = curr_object->NextSiblingElement("Object");

@@ -15,11 +15,12 @@ class Application {
 
     bool LoadRooms();
     bool LoadNextRoom();
-    bool LoadRoom(std::string path);
+    bool LoadRoom(std::string room_id);
     bool LoadProject();
     bool LoadMap();
     bool LoadStart(const char* path);
     bool LoadPlayer();
+    bool BuildRoomIds();
 
     std::string GetProjectPath() {
         return "../assets/projects/" + m_project_name;
@@ -79,6 +80,7 @@ class Application {
     std::vector<GameObject*> m_objects;
     std::vector<GameObject*> m_tiles;
     std::vector<std::string> m_room_order;
+    std::vector<std::string> m_room_ids;
     int m_next_room;
     std::pair<int, int> m_start_position;
     int m_enemy_count;

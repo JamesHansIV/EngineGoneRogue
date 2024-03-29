@@ -130,20 +130,25 @@ bool Application::LoadRoom(std::string room_id) {
 
     std::string tile_path = GetProjectPath() + "/rooms/" + room_id + ".xml";
 
+    // std::cout << "tile path: " << tile_path << "\n";
     m_tiles = LoadObjects(tile_path.c_str());
+    // std::cout << "m_tiles.size " << m_tiles.size() << std::endl;
 
     if (m_tiles.empty()) {
-        SDL_Log("Could not load %s", tile_path.c_str());
+        SDL_Log("m_tiles.empty(): Could not load %s", tile_path.c_str());
         return false;
     }
 
     std::string obj_path =
         GetProjectPath() + "/rooms/" + room_id + "_objects.xml";
+    // std::cout << "objects path: " << tile_path << "\n";
 
     std::vector<GameObject*> const objects = LoadObjects(obj_path.c_str());
+    // std::cout << "objects.size " << objects.size() << std::endl;
+
 
     if (objects.empty()) {
-        SDL_Log("Could not load %s", obj_path.c_str());
+        SDL_Log("objects.empty(): Could not load %s", obj_path.c_str());
         return false;
     }
 
@@ -193,6 +198,45 @@ bool Application::LoadStart(const char* path) {
     return m_start_position.first != 0 || m_start_position.second != 0;
 }
 
+bool Application::BuildRoomIds() {
+    struct dirent* entry;
+    DIR* dp;
+
+    std::string rooms_path = GetProjectPath();
+    rooms_path += "/rooms";
+
+    dp = opendir(rooms_path.c_str());
+    if (dp == nullptr) {
+        perror("Rooms path does not exist");
+        return false;
+    }
+
+    std::string room_path;
+    std::string room_id;
+    while ((entry = readdir(dp)) != nullptr) {
+        if (strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0) {
+            std::string const file_name = entry->d_name;
+
+            if (file_name.rfind(".xml") == std::string::npos)
+                continue;
+
+            if (file_name.rfind("_objects.xml") != std::string::npos)
+                continue;
+
+            room_path += "/";
+            room_path += entry->d_name;
+            room_id = file_name.substr(0, file_name.rfind(".xml"));
+
+            m_room_ids.push_back(room_id);
+
+            room_path = rooms_path;
+        }
+    }
+
+    closedir(dp);
+    return true;
+}
+
 bool Application::LoadProject() {
     if (!LoadTextures(GetProjectPath().c_str())) {
         return false;
@@ -208,7 +252,26 @@ bool Application::LoadProject() {
         return false;
     }
 
-    return LoadNextRoom();
+    if (!BuildRoomIds()) {
+        SDL_Log("failed to build room id vector");
+        return false;
+    }
+
+    // load first room ? 
+    if (!m_room_ids.empty())
+        return LoadRoom(m_room_ids.front());
+    
+    return true;
+
+
+    // return LoadNextRoom();
+
+    //if (!LoadCharacters()) {
+    //    SDL_Log("failed to load characters");
+    //    return false;
+    //}
+
+    //return LoadRooms();
 }
 
 void Application::Events() {
