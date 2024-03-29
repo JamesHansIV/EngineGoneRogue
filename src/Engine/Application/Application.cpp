@@ -4,6 +4,7 @@
 #include "Engine/Objects/Characters/Enemy.h"
 #include "Engine/Objects/Characters/Player.h"
 #include "Engine/Objects/GameObject.h"
+#include "Engine/Objects/Projectiles/ProjectileManager.h"
 
 #include "Engine/Input/InputChecker.h"
 
@@ -118,6 +119,8 @@ bool Application::LoadNextRoom() {
         PushNewEvent(EventType::GameOverEvent);
         return true;
     }
+    ProjectileManager::GetInstance()->DeleteProjectiles();
+    ColliderHandler::GetInstance()->Clear();
     LoadRoom(m_room_order[m_next_room].c_str());
     m_player->GetRigidBody()->SetPosition(
         Vector2D(m_start_position.first, m_start_position.second));
@@ -147,6 +150,7 @@ bool Application::LoadRoom(std::string room_id) {
         return false;
     }
 
+    Entrance* entrance = nullptr;
     for (auto* obj : objects) {
         SDL_Log("adding obj %s", obj->GetID().c_str());
         SDL_Log("object is collider: %d",

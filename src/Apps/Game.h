@@ -24,6 +24,8 @@ class Game : public Application {
     void AddObject(GameObject* obj);
     void DeleteObject(GameObject* obj);
 
+    void HandleEvent(RoomTransitionEvent* event);
+
     void ResetManagers();
 
     void UpdateObjects(float dt);

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SDL2/SDL.h>
+#include <string>
 #include <tuple>
 #include <vector>
 #include "Engine/Objects/Characters/EnemyStats.h"
@@ -25,6 +26,7 @@ enum class EventType {
     ContinueGameEvent,
     RestartGameEvent,
     RoomTransitionEvent,
+    RoomClearEvent,
 
     MouseButtonDownEvent,
 };
@@ -164,6 +166,28 @@ class RestartGameEvent : public Event {
     explicit RestartGameEvent() = default;
 
     EventType GetEventType() override { return EventType::RestartGameEvent; }
+
+   private:
+};
+
+class RoomTransitionEvent : public Event {
+   public:
+    explicit RoomTransitionEvent(std::string next_room_id)
+        : m_next_room_id(next_room_id) {}
+
+    std::string GetNextRoomID() { return m_next_room_id; }
+
+    EventType GetEventType() override { return EventType::RoomTransitionEvent; }
+
+   private:
+    std::string m_next_room_id;
+};
+
+class RoomClearEvent : public Event {
+   public:
+    explicit RoomClearEvent() {}
+
+    EventType GetEventType() override { return EventType::RoomClearEvent; }
 
    private:
 };

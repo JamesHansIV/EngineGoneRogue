@@ -9,6 +9,7 @@
 #include "Engine/Objects/Characters/Skeleton.h"
 #include "Engine/Objects/Characters/Slime.h"
 #include "Engine/Objects/Collider.h"
+#include "Engine/Objects/Environment/Entrance.h"
 #include "Engine/Renderer/Renderer.h"
 
 void WriteColliderInfo(tinyxml2::XMLDocument& doc, tinyxml2::XMLElement* xmlObj,
@@ -383,6 +384,16 @@ GameObject* BuildRangedEnemy(tinyxml2::XMLElement* types,
     return new_obj;
 }
 
+GameObject* BuildEntrance(tinyxml2::XMLElement* types,
+                          tinyxml2::XMLElement* xmlObj, GameObject* obj) {
+
+    SDL_Log("entrance has next room id: %s", types->Attribute("next_room_id"));
+    GameObject* new_obj = new Entrance(static_cast<Collider*>(obj),
+                                       types->Attribute("next_room_id"));
+
+    return new_obj;
+}
+
 GameObject* BuildObjectOnType(tinyxml2::XMLElement* types,
                               tinyxml2::XMLElement* xmlObj, GameObject* obj) {
     GameObject* new_obj = obj;
@@ -413,6 +424,10 @@ GameObject* BuildObjectOnType(tinyxml2::XMLElement* types,
 
     if (types->Attribute("ranged_enemy") != nullptr) {
         new_obj = BuildRangedEnemy(types, xmlObj, new_obj);
+    }
+
+    if (types->Attribute("entrance") != nullptr) {
+        new_obj = BuildEntrance(types, xmlObj, new_obj);
     }
 
     return new_obj;

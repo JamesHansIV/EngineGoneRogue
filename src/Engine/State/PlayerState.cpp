@@ -89,8 +89,7 @@ State* HandleProjectileCollide(Player* player, Projectile* projectile) {
 }
 
 State* HandleEntranceCollide(Player* player, Entrance* entrance) {
-    if (entrance->GetCurrentState()->GetType() == StateType::Closed ||
-        entrance->GetCurrentState()->GetType() == StateType::Opening) {
+    if (entrance->Closed()) {
         player->UnCollide(entrance);
     }
     return nullptr;

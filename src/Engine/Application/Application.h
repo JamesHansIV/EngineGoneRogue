@@ -7,6 +7,7 @@
 #include "Engine/Events/EventManager.h"
 #include "Engine/Layers/Layer.h"
 #include "Engine/Objects/Characters/Player.h"
+#include "Engine/Objects/Environment/Entrance.h"
 
 class Application {
    public:

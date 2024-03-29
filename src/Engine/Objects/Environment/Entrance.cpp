@@ -1,33 +1,33 @@
 #include "Entrance.h"
+#include "Engine/Application/Application.h"
 #include "Engine/State/EntranceState.h"
 
-Entrance::Entrance(Properties& props) : Collider(props) {
-    m_animation = new Animation();
-    m_animation->AddAnimation("open", {"door-open", GetTilePos(), 5, 15});
-    m_animation->AddAnimation("close", {"door-close", GetTilePos(), 5, 15});
-    ChangeState(new EntranceClosed(this));
+Entrance::Entrance(Properties& props, std::string next_room_id)
+    : Collider(props), m_next_room_id(next_room_id), m_closed(true) {}
+
+Entrance::Entrance(Collider* collider, std::string next_room_id)
+    : Collider(collider), m_next_room_id(next_room_id), m_closed(true) {
+    m_animation->SelectAnimation("open");
 }
 
 void Entrance::Draw() {
-    m_current_state->Draw();
+    GameObject::Draw();
 }
 
 void Entrance::Update(float dt) {
-    State* state = m_current_state->Update(dt);
-
-    if (state != nullptr) {
-        ChangeState(state);
+    if (Application::Get()->GetEnemyCount() == 0) {
+        m_closed = false;
+    }
+    if (!m_closed) {
+        m_animation->Update();
     }
 }
 
 void Entrance::OnCollide(Collider* collidee) {
-    CollideEvent event(collidee);
-
-    State* state = m_current_state->HandleEvent(&event);
-
-    if (state != nullptr) {
-        ChangeState(state);
+    if (collidee->GetObjectType() == ObjectType::Player && !m_closed) {
+        PushNewEvent(EventType::RoomTransitionEvent, &m_next_room_id);
+        SDL_Log("ENTRANCE %s COLLIDED WITH PLAYER", GetID().c_str());
     }
-    }
+}
 
 void Entrance::Clean() {}

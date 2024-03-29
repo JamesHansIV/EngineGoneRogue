@@ -19,11 +19,6 @@ void RunningState::Draw() {
 
 State* RunningState::Update(float dt) {
     GetGame()->UpdateObjects(dt);
-
-    assert(GetGame()->GetEnemyCount() >= 0);
-    if (GetGame()->GetEnemyCount() == 0) {
-        PushNewEvent(EventType::RoomTransitionEvent);
-    }
     return nullptr;
 }
 
@@ -67,7 +62,6 @@ State* StartState::HandleEvent(Event* event) {
 void RoomTransitionState::Enter() {}
 
 void RoomTransitionState::Exit() {
-    ProjectileManager::GetInstance()->Clean();
     GetGame()->LoadNextRoom();
 }
 
