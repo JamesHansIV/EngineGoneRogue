@@ -5,7 +5,7 @@
 HUD::HUD(const Player& player)
     : m_weapon_inventory(player.GetPlayerWeapons()),
       m_item_inventory(player.GetPlayerItems()),
-      m_experience_bar(100, 0) {}
+      m_experience_bar(100, 0){}
 
 void HUD::Reset(const Player& player) {
     m_weapon_inventory.SetWeapons(player.GetPlayerWeapons());
@@ -18,6 +18,7 @@ void HUD::Draw(State& state) {
     m_weapon_inventory.Draw();
     m_experience_bar.Draw();
     m_item_inventory.Draw();
+    m_grenade_counter.Draw();
 
     if (state.GetType() == StateType::Pause) {
         PausedDraw();
@@ -30,4 +31,5 @@ void HUD::Update(const Player& player) {
     m_weapon_inventory.Update(player);
     m_experience_bar.Update(player);
     m_item_inventory.Update(player);
+    m_grenade_counter.Update(player);
 }
