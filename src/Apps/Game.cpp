@@ -244,6 +244,13 @@ void Game::GenerateRandomEnemy() {
     m_objects.push_back(generated_enemy);
 }
 
+void Game::HandleEvent(RoomTransitionEvent* event) {
+    //LoadRoom(event->GetNextRoomID());
+    //m_player->GetRigidBody()->SetPosition(
+    //    Vector2D(m_start_position.first, m_start_position.second));
+    ChangeState(new RoomTransitionState(this));
+}
+
 void Game::Update(float dt) {
     State* state = m_state->Update(dt);
     if (state != nullptr) {

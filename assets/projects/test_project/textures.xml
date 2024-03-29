@@ -119,7 +119,11 @@
         <ID>game-over-background</ID>
     </Texture>
     <Texture type = "base">
-        <FilePath>../assets/textures/door_lockless.png</FilePath>
-        <ID>door-lockless</ID>
+        <FilePath>../assets/textures/spritesheets/lockless_door_open.png</FilePath>
+        <ID>lockless-door-open</ID>
+    </Texture>
+    <Texture type = "base">
+        <FilePath>../assets/textures/spritesheets/lockless_door_close.png</FilePath>
+        <ID>lockless-door-close</ID>
     </Texture>
 </Root>

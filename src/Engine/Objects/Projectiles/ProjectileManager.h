@@ -12,6 +12,7 @@ class ProjectileManager {
     p_iterator RemoveProjectile(Projectile* projectile, p_iterator it);
     void Clean();
     void Draw();
+    void DeleteProjectiles();
     void UpdateProjectiles(float dt);
 
     inline static ProjectileManager* GetInstance() {

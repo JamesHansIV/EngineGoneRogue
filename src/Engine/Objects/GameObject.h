@@ -74,10 +74,14 @@ class GameObject : public IObject {
           m_object_id(props.ObjectID),
           m_animation(nullptr),
           m_current_state(nullptr),
-          m_marked_for_deletion(false) {}
+          m_marked_for_deletion(false) {
+        Initialize();
+    }
 
     explicit GameObject(GameObject* rhs);
     virtual ~GameObject();
+
+    virtual void Initialize() {}
 
     void Draw() override;
     void Clean() override{};

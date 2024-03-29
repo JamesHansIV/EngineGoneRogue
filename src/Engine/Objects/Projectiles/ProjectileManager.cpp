@@ -32,6 +32,12 @@ void ProjectileManager::Clean() {
     m_projectiles.clear();
 }
 
+void ProjectileManager::DeleteProjectiles() {
+    for (auto* projectile : m_projectiles) {
+        projectile->MarkForDeletion();
+    }
+}
+
 void ProjectileManager::Draw() {
     for (auto* projectile : m_projectiles) {
         projectile->Draw();
