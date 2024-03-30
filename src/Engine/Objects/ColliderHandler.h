@@ -14,6 +14,8 @@ class ColliderHandler {
     void RemoveCollider(Collider* collider);
     void HandleCollisions();
 
+    void Clear();
+
     inline static ColliderHandler* GetInstance() {
         return s_instance =
                    (s_instance != nullptr) ? s_instance : new ColliderHandler();

@@ -2,8 +2,8 @@
 
 PauseScreen::PauseScreen(const Player& player)
     : m_player_stats(player.GetStats()), m_inventory(player.GetPlayerItems()) {
-    int const x = (Application::Get()->GetWindowWidth() - 100) / 2;
-    int const y = (Application::Get()->GetWindowHeight() - 60) / 2;
+    int const x = (Application::Get().GetWindowWidth() - 100) / 2;
+    int const y = (Application::Get().GetWindowHeight() - 60) / 2;
     m_button = Button("buttons", SDL_Rect{x, y, 150, 80}, "Continue", []() {
         SDL_Log("Continue button clicked");
         timer.Unpause();

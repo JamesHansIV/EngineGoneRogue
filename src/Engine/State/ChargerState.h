@@ -5,32 +5,6 @@
 #include "Engine/Timer/Timer.h"
 #include "State.h"
 
-class ChargerIdle : public EnemyIdle {
-   public:
-    explicit ChargerIdle(Enemy& enemy) : EnemyIdle(enemy) {}
-};
-
-class ChargerMoving : public EnemyMoving {
-   public:
-    explicit ChargerMoving(Enemy& enemy) : EnemyMoving(enemy) {}
-
-    void Enter() override;
-    void Exit() override;
-    State* Update(float dt) override;
-    void Draw() override;
-    State* HandleEvent(Event* event) override;
-
-    State* OnCollideEvent(CollideEvent* event);
-
-    void SelectDirection();
-
-    StateType GetType() override { return StateType::Moving; }
-
-   private:
-    //0 is up and 1 is down
-    int m_direction{0};
-};
-
 class ChargerAttack : public EnemyAttack {
    public:
     explicit ChargerAttack(Charger& enemy)
@@ -68,18 +42,4 @@ class ChargerAttack : public EnemyAttack {
 
    protected:
     Charger& m_enemy;
-};
-
-class ChargerDead : public EnemyDead {
-   public:
-    explicit ChargerDead(Enemy& enemy) : EnemyDead(enemy) {}
-
-    void Enter() override;
-    void Exit() override;
-    State* Update(float dt) override;
-    void Draw() override;
-    State* HandleEvent(Event* event) override;
-    State* OnCollideEvent(CollideEvent* event);
-
-    StateType GetType() override { return StateType::Dead; }
 };

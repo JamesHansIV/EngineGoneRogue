@@ -89,8 +89,7 @@ State* HandleProjectileCollide(Player* player, Projectile* projectile) {
 }
 
 State* HandleEntranceCollide(Player* player, Entrance* entrance) {
-    if (entrance->GetCurrentState()->GetType() == StateType::Closed ||
-        entrance->GetCurrentState()->GetType() == StateType::Opening) {
+    if (entrance->Closed()) {
         player->UnCollide(entrance);
     }
     return nullptr;
@@ -211,7 +210,10 @@ State* PlayerIdle::PollInput(float /*dt*/) {
 }
 
 void PlayerMoving::Enter() {
-    UpdateAnimationDirection(GetPlayer(), GetMoveAnimationIDs());
+    State* state = UpdateAnimationDirection(GetPlayer(), GetMoveAnimationIDs());
+    if (state != nullptr) {
+        delete state;
+    }
 }
 
 void PlayerMoving::Exit() {}
@@ -283,7 +285,12 @@ void PlayerMoving::PollInput(float dt) {
 
 void PlayerDodge::Enter() {
     GetPlayer()->GetMutableStats().SetDodgeCd(m_dodge_cd);
-    UpdateAnimationDirection(GetPlayer(), GetDodgeAnimationIDs());
+    State* state =
+        UpdateAnimationDirection(GetPlayer(), GetDodgeAnimationIDs());
+
+    if (state != nullptr) {
+        delete state;
+    }
     Vector2D const velocity = GetPlayer()->GetRigidBody()->Velocity();
     float const dodge_speed = GetPlayer()->GetStats().GetDodgeSpeed();
 

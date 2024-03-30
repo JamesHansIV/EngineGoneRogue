@@ -116,16 +116,12 @@ void Game::InitEnemyCopies() {
     }
 }
 
-Game::Game() {
-    m_tiles = Application::m_tiles;
-
+Game::Game() : m_state(nullptr) {
     srand(time(nullptr));
-
-    m_objects = CopyObjects(Application::m_objects);
 
     InitManagers();
 
-    InitEnemyCopies();
+    //InitEnemyCopies();
 
     SDL_Cursor* cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR);
 
@@ -133,7 +129,9 @@ Game::Game() {
 
     m_weapon_inventory->SetSelectedWeapon(m_player->GetCurrentWeapon());
 
-    ChangeState(new StartState(this));
+    State* state = new StartState(*this);
+
+    ChangeState(state);
 }
 
 void Game::InitManagers() {
@@ -151,6 +149,14 @@ void Game::ResetManagers() {
     m_weapon_inventory->SetWeapons(m_player->GetPlayerWeapons());
     m_weapon_inventory->SetSelectedWeapon(GetPlayer()->GetCurrentWeapon());
     m_heads_up_display->Reset(*GetPlayer());
+}
+
+void Game::Restart() {
+    GetPlayer()->Clean();
+    GetPlayer()->Init();
+    ResetManagers();
+    SetStartPosition(m_global_start.first, m_global_start.second);
+    LoadRoom(GetStartID());
 }
 
 void Game::Events() {
@@ -267,8 +273,15 @@ void Game::GenerateRandomEnemy() {
     m_objects.push_back(generated_enemy);
 }
 
+void Game::HandleEvent(RoomTransitionEvent* event) {
+    ChangeState(new RoomTransitionState(*this, event->GetNextRoomID()));
+}
+
 void Game::Update(float dt) {
-    m_state->Update(dt);
+    State* state = m_state->Update(dt);
+    if (state != nullptr) {
+        ChangeState(state);
+    }
 }
 
 void Game::UpdateObjects(float dt) {
@@ -313,20 +326,13 @@ void Game::UpdateObjects(float dt) {
         }
     }
 
-    GenerateRandomEnemyIfNeeded();
-}
-
-void Game::ResetObjects() {
-    ProjectileManager::GetInstance()->Clear();
-    CleanObjects();
-    m_objects.clear();
-    m_objects = CopyObjects(Application::m_objects);
+    //GenerateRandomEnemyIfNeeded();
 }
 
 void Game::Render() {
-    Renderer::GetInstance()->RenderClear();
+    Renderer::GetInstance().RenderClear();
     m_state->Draw();
-    Renderer::GetInstance()->Render();
+    Renderer::GetInstance().Render();
 }
 
 void Game::DrawObjects() {
@@ -370,26 +376,11 @@ void Game::DeleteObject(GameObject* obj) {
     obj = nullptr;
 }
 
-void Game::CleanObjects() {
-    for (auto* obj : m_objects) {
-        obj->Clean();
-        delete obj;
-        obj = nullptr;
-    }
-    m_objects.clear();
-}
-
 Game::~Game() {
-    CleanObjects();
     delete m_weapon_inventory;
     delete m_game_event_manager;
     delete m_heads_up_display;
     delete m_item_manager;
-    for (auto* tile : m_tiles) {
-        delete tile;
-        tile = nullptr;
-    }
-    delete m_player;
     delete slime_copy;
     delete dog_copy;
     delete ring_shot_enemy_copy;

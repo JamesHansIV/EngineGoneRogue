@@ -24,18 +24,18 @@ bool CheckCollision(SDL_Rect& a, SDL_Rect& b) {
 
 Renderer* Renderer::m_instance = nullptr;
 
-void Renderer::Init(SDL_RendererFlags render_flags=SDL_RENDERER_ACCELERATED) {
-    SDL_Window* window = Application::Get()->GetWindow();
-    m_camera = {0, 0, Application::Get()->GetWindowWidth(),
-                Application::Get()->GetWindowHeight()};
+void Renderer::Init(SDL_RendererFlags render_flags = SDL_RENDERER_ACCELERATED) {
+    SDL_Window* window = Application::Get().GetWindow();
+    m_camera = {0, 0, Application::Get().GetWindowWidth(),
+                Application::Get().GetWindowHeight()};
     SDL_Log("Window width: %d, Window height: %d",
-            Application::Get()->GetWindowWidth(),
-            Application::Get()->GetWindowHeight());
+            Application::Get().GetWindowWidth(),
+            Application::Get().GetWindowHeight());
 
     // m_renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);   // GAME
     // m_renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);  // EDITOR
 
-    m_renderer = SDL_CreateRenderer(window, -1, render_flags);     // DYNAMIC
+    m_renderer = SDL_CreateRenderer(window, -1, render_flags);  // DYNAMIC
     if (m_renderer == nullptr) {
         SDL_Log("Failed to create Renderer: %s", SDL_GetError());
         assert(false);
@@ -337,8 +337,8 @@ void Renderer::CenterCameraOnObject() {
     int const target_y =
         m_camera_target->GetY() + m_camera_target->GetHeight() / 2;
 
-    m_camera.x = target_x - Application::Get()->GetWindowWidth() / 2;
-    m_camera.y = target_y - Application::Get()->GetWindowHeight() / 2;
+    m_camera.x = target_x - Application::Get().GetWindowWidth() / 2;
+    m_camera.y = target_y - Application::Get().GetWindowHeight() / 2;
 }
 
 void Renderer::MoveCameraX(float x) {

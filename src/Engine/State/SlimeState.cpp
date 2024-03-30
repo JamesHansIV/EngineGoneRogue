@@ -12,7 +12,7 @@
 State* SlimeHandleCollide(Slime* enemy, Collider* collidee) {
     switch (collidee->GetObjectType()) {
         case ObjectType::Projectile: {
-            Projectile* p = dynamic_cast<Projectile*>(collidee);
+            auto* p = dynamic_cast<Projectile*>(collidee);
             if (p->IsPlayerOwned()) {
                 if (!p->IsInHitSet(enemy->GetID())) {
                     p->CollideWithEnemy();
@@ -26,10 +26,7 @@ State* SlimeHandleCollide(Slime* enemy, Collider* collidee) {
         }
         case ObjectType::Entrance: {
             auto* entrance = dynamic_cast<Entrance*>(collidee);
-            if (entrance->GetCurrentState()->GetType() == StateType::Closed ||
-                entrance->GetCurrentState()->GetType() == StateType::Opening) {
-                enemy->UnCollide(collidee);
-            }
+            enemy->UnCollide(collidee);
             break;
         }
         case ObjectType::Player:
@@ -84,8 +81,8 @@ void SlimeSplit(Slime* enemy) {
     slime1->GetRigidBody()->MovePosition(Vector2D(-offset, 0));
     slime2->GetRigidBody()->MovePosition(Vector2D(offset, 0));
 
-    dynamic_cast<Game*>(Application::Get())->AddObject(slime1);
-    dynamic_cast<Game*>(Application::Get())->AddObject(slime2);
+    dynamic_cast<Game&>(Application::Get()).AddObject(slime1);
+    dynamic_cast<Game&>(Application::Get()).AddObject(slime2);
 
     ColliderHandler::GetInstance()->AddCollider(slime1);
     ColliderHandler::GetInstance()->AddCollider(slime2);
@@ -315,11 +312,7 @@ State* SlimeIsHit::OnCollideEvent(CollideEvent* event) {
             break;
         }
         case ObjectType::Entrance: {
-            if (dynamic_cast<Entrance*>(collidee)
-                    ->GetCurrentState()
-                    ->GetType() != StateType::Opened) {
-                GetEnemy()->UnCollide(collidee);
-            }
+            GetEnemy()->UnCollide(collidee);
             break;
         }
         case ObjectType::Player:

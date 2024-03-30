@@ -30,17 +30,17 @@ class Button {
         m_relative_pos = Position{rect.x, rect.y};
         m_callback = callback;
         m_text = text;
-        Renderer::GetInstance()->AddTextTexture(m_text, m_text, {0, 0, 0, 255});
+        Renderer::GetInstance().AddTextTexture(m_text, m_text, {0, 0, 0, 255});
         m_draw_element = DrawElement(textureID, rect);
     };
 
     ~Button() {}
 
     void Draw() {
-        Renderer* renderer = Renderer::GetInstance();
+        Renderer& renderer = Renderer::GetInstance();
 
         const Position pos{m_relative_pos.x, m_relative_pos.y};
-        Texture* text_texture = Renderer::GetInstance()->GetTexture(m_text);
+        Texture* text_texture = Renderer::GetInstance().GetTexture(m_text);
         SDL_Rect src_rect = {0, 0, text_texture->GetWidth(),
                              text_texture->GetHeight()};
 
@@ -63,7 +63,7 @@ class Button {
                 m_draw_element.Draw(m_normal_src);
                 break;
         }
-        renderer->DrawRelative(m_text, src_rect, text_shape);
+        renderer.DrawRelative(m_text, src_rect, text_shape);
     };
 
     void Update() {

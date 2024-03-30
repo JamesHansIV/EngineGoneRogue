@@ -151,7 +151,7 @@ void ColliderHandler::AddCollider(Collider* collider) {
         assert(false);
     }
     const Rect r = collider->GetDstRect();
-    const SDL_Rect camera = Renderer::GetInstance()->GetCamera();
+    const SDL_Rect camera = Renderer::GetInstance().GetCamera();
     if (CheckCollision(r, {static_cast<float>(camera.x),
                            static_cast<float>(camera.y), camera.w, camera.h})) {
         m_colliders.push_back(collider);
@@ -163,4 +163,8 @@ void ColliderHandler::RemoveCollider(Collider* collider) {
     if (it != m_colliders.end()) {
         m_colliders.erase(it);
     }
+}
+
+void ColliderHandler::Clear() {
+    m_colliders.clear();
 }

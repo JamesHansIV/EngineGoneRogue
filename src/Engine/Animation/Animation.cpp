@@ -43,8 +43,8 @@ void Animation::Draw(const Rect& dstRect, float angle) {
     SDL_Rect dst_rect = {static_cast<int>(dstRect.x),
                          static_cast<int>(dstRect.y), dstRect.w, dstRect.h};
 
-    Renderer::GetInstance()->Draw(m_info.TextureID, src_rect, dst_rect, angle,
-                                  nullptr, m_info.Flip);
+    Renderer::GetInstance().Draw(m_info.TextureID, src_rect, dst_rect, angle,
+                                 nullptr, m_info.Flip);
 }
 
 void Animation::StopAnimation() {

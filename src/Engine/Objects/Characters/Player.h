@@ -169,6 +169,7 @@ class PlayerStats {
 
     void Update() {
         if (m_experience >= 100) {
+            SDL_Log("PUSHING NEW LEVEL UP EVENT");
             PushNewEvent(EventType::PlayerLevelUpEvent);
             m_experience -= 100;
             m_level++;

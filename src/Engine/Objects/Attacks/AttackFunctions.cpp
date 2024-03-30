@@ -99,7 +99,7 @@ std::vector<Projectile*> CreateSpreadBullets(RangedAttackInfo info) {
     Player* owner = nullptr;
 
     if (info.IsPlayerOwned) {
-        owner = Application::Get()->GetPlayer();
+        owner = Application::Get().GetPlayer();
     }
 
     for (int i = 0; i < info.ProjCount; i++) {
@@ -141,7 +141,7 @@ std::vector<Projectile*> CreateShotgunSpreadBullets(RangedAttackInfo info) {
     Player* owner = nullptr;
 
     if (info.IsPlayerOwned) {
-        owner = Application::Get()->GetPlayer();
+        owner = Application::Get().GetPlayer();
     }
 
     for (int i = 0; i < info.ProjCount; i++) {

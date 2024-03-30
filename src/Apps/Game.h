@@ -7,6 +7,7 @@
 #include "Engine/Events/GameEventManager.h"
 #include "Engine/Events/ItemManager.h"
 #include "Engine/HeadsUpDisplay/HeadsUpDisplay.h"
+#include "Engine/Objects/Characters/Enemy.h"
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/UI/WeaponInventory.h"
 
@@ -18,12 +19,14 @@ class Game : public Application {
     void Update(float dt) override;
     void Render() override;
 
+    void Restart();
+
     void InitManagers();
 
     void AddObject(GameObject* obj);
     void DeleteObject(GameObject* obj);
 
-    void ResetObjects();
+    void HandleEvent(RoomTransitionEvent* event);
 
     void ResetManagers();
 
@@ -32,8 +35,6 @@ class Game : public Application {
 
     void ChangeState(State* state);
 
-    void CleanObjects();
-
     ~Game() override;
 
    private:
@@ -41,8 +42,6 @@ class Game : public Application {
         const std::vector<GameObject*>& objects);
     void InitEnemyCopies();
     ItemInventory m_item_inventory;
-    std::vector<GameObject*> m_objects;
-    std::vector<GameObject*> m_tiles;
 
     State* m_state;
     WeaponInventory* m_weapon_inventory;

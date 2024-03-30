@@ -9,6 +9,7 @@ class Enemy : public Character {
    public:
     explicit Enemy(Properties& props, const EnemyStats& stats);
     Enemy(Collider* rhs, EnemyStats stats);
+    ~Enemy();
 
     void Draw() override { GameObject::Draw(); }
 

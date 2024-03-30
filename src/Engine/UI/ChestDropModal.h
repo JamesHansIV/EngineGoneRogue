@@ -2,8 +2,8 @@
 #include <unordered_map>
 #include <utility>
 #include <vector>
-#include "Engine/UI/Button.h"
 #include "Engine/Objects/Item.h"
+#include "Engine/UI/Button.h"
 
 const int kCellHeight = 40;
 const int kCellWidth = 50;
@@ -14,8 +14,8 @@ class ChestDropModal {
 
     explicit ChestDropModal(std::vector<ItemType> items)
         : m_items(std::move(items)) {
-        int const window_width = Application::Get()->GetWindowWidth();
-        int const window_height = Application::Get()->GetWindowHeight();
+        int const window_width = Application::Get().GetWindowWidth();
+        int const window_height = Application::Get().GetWindowHeight();
 
         int const grid_height = static_cast<int>(m_items.size()) * kCellHeight;
 
