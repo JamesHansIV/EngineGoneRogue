@@ -5,6 +5,7 @@
 #include "Engine/Objects/Environment/Entrance.h"
 #include "Engine/Objects/Grenade.h"
 #include "Engine/Objects/IObject.h"
+#include "Engine/Objects/Trap.h"
 #include "SDL2/SDL_events.h"
 #include "SDL2/SDL_keycode.h"
 
@@ -96,6 +97,7 @@ State* HandleEntranceCollide(Player* player, Entrance* entrance) {
 }
 
 State* HandleCollide(Player* player, CollideEvent* event) {
+
     Collider* collidee = event->GetCollidee();
 
     if (collidee == nullptr) {
@@ -129,6 +131,13 @@ State* HandleCollide(Player* player, CollideEvent* event) {
                 return new PlayerIsHit(player, grenade->GetDamage() / 2);
             }
             player->UnCollide(collidee);
+            break;
+        }
+        case ObjectType::Trap: {
+            auto* trap = dynamic_cast<Trap*>(collidee);
+            if(trap->GetState() == TrapState::OPENED){
+                return new PlayerIsHit(player, trap->GetDamage());
+            }
             break;
         }
         case ObjectType::Collider:
