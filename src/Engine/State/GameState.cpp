@@ -153,7 +153,7 @@ void LevelUpState::Exit() {
 const std::unordered_map<std::string, Option> kLevelUpOptions = {
     {"damage",
      {"+10% Damage", "Increases damage by 10%",
-      [](auto& button) {
+      []() {
           auto& stats = Application::Get().GetPlayer()->GetMutableStats();
 
           stats.SetRangedDamage(stats.GetRangedDamage() +
@@ -162,7 +162,7 @@ const std::unordered_map<std::string, Option> kLevelUpOptions = {
       }}},
     {"health",
      {"+10% Health", "Increases health by 10%",
-      [](auto& button) {
+      []() {
           auto& stats = Application::Get().GetPlayer()->GetMutableStats();
 
           stats.SetMaxHealth(stats.GetMaxHealth() + stats.GetMaxHealth() * 0.1);
@@ -170,7 +170,7 @@ const std::unordered_map<std::string, Option> kLevelUpOptions = {
       }}},
     {"speed",
      {"+10% Speed", "Increases speed by 10%",
-      [](auto& button) {
+      []() {
           auto& stats = Application::Get().GetPlayer()->GetMutableStats();
 
           stats.SetSpeed(stats.GetSpeed() + stats.GetSpeed() * 0.1);
@@ -179,7 +179,7 @@ const std::unordered_map<std::string, Option> kLevelUpOptions = {
       }}},
     {"piercing",
      {"+1 Piercing", "Increases piercing by 1",
-      [](auto& button) {
+      []() {
           auto& stats = Application::Get().GetPlayer()->GetMutableStats();
 
           stats.SetPiercing(stats.GetPiercing() + 1);
@@ -187,7 +187,7 @@ const std::unordered_map<std::string, Option> kLevelUpOptions = {
       }}},
     {"armor",
      {"+10% Armor", "Increases armor by 10%",
-      [](auto& button) {
+      []() {
           auto& stats = Application::Get().GetPlayer()->GetMutableStats();
 
           stats.SetArmorPercentage(stats.GetArmorPercentage() +
@@ -196,7 +196,7 @@ const std::unordered_map<std::string, Option> kLevelUpOptions = {
       }}},
     {"regen",
      {"+1 HP Regen", "Increases HP regen by 1",
-      [](auto& button) {
+      []() {
           auto& stats = Application::Get().GetPlayer()->GetMutableStats();
 
           stats.SetHpRegenRate(stats.GetHPRegenRate() + 1);
@@ -204,7 +204,7 @@ const std::unordered_map<std::string, Option> kLevelUpOptions = {
       }}},
     {"lifesteal",
      {"+5% Lifesteal", "Increases lifesteal by 5%",
-      [](auto& button) {
+      []() {
           auto& stats = Application::Get().GetPlayer()->GetMutableStats();
 
           stats.SetLifeStealPercentage(stats.GetLifeStealPercentage() + 5);
@@ -212,7 +212,7 @@ const std::unordered_map<std::string, Option> kLevelUpOptions = {
       }}},
     {"dodge",
      {"+1 Dodge", "Increases dodge by 1",
-      [](auto& button) {
+      []() {
           auto& stats = Application::Get().GetPlayer()->GetMutableStats();
 
           stats.SetDodgeCd(stats.GetDodgeCd() - 1);
@@ -220,7 +220,7 @@ const std::unordered_map<std::string, Option> kLevelUpOptions = {
       }}},
     {"ranged",
      {"+5 Ranged Damage", "Increases ranged damage by 5",
-      [](auto& button) {
+      []() {
           auto& stats = Application::Get().GetPlayer()->GetMutableStats();
 
           stats.SetRangedDamage(stats.GetRangedDamage() + 5);
@@ -228,7 +228,7 @@ const std::unordered_map<std::string, Option> kLevelUpOptions = {
       }}},
     {"melee",
      {"+5 Melee Damage", "Increases melee damage by 5",
-      [](auto& button) {
+      []() {
           auto& stats = Application::Get().GetPlayer()->GetMutableStats();
 
           stats.SetMeleeDamage(stats.GetMeleeDamage() + 5);

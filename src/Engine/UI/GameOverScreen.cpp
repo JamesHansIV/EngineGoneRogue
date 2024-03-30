@@ -13,12 +13,12 @@ GameOverScreen::GameOverScreen() {
 
     int const x = (window_width - 150) / 2;
     int const y = window_height - 125;
-    m_restart = Button("buttons", SDL_Rect{x, y, 150, 80}, {"Start Over"},
-                       [](auto& button) {
-                           SDL_Log("Restart button clicked");
-                           timer.Unpause();
-                           PushNewEvent(EventType::RestartGameEvent);
-                       });
+    m_restart =
+        Button("buttons", SDL_Rect{x, y, 150, 80}, {"Start Over"}, []() {
+            SDL_Log("Restart button clicked");
+            timer.Unpause();
+            PushNewEvent(EventType::RestartGameEvent);
+        });
 }
 
 void GameOverScreen::Draw() {
