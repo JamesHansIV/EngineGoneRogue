@@ -29,6 +29,8 @@ enum class EventType {
     RoomClearEvent,
 
     MouseButtonDownEvent,
+    EscapeKeyPressedEvent,
+    WindowFocusLostEvent,
 };
 
 class Event {
@@ -91,6 +93,15 @@ class EnemyDeathEvent : public Event {
 
    private:
     EnemyStats m_stats;
+};
+
+class PlayerLevelUpEvent : public Event {
+   public:
+    explicit PlayerLevelUpEvent() {}
+
+    EventType GetEventType() override { return EventType::PlayerLevelUpEvent; }
+
+   private:
 };
 
 class TargetLostEvent : public Event {
@@ -192,6 +203,17 @@ class RoomClearEvent : public Event {
    private:
 };
 
+class LevelUpSelectedGameEvent : public Event {
+   public:
+    explicit LevelUpSelectedGameEvent() {}
+
+    EventType GetEventType() override {
+        return EventType::LevelUpSelectedGameEvent;
+    }
+
+   private:
+};
+
 class MouseButtonDownEvent : public Event {
    public:
     explicit MouseButtonDownEvent(int x, int y, int type)
@@ -211,4 +233,26 @@ class MouseButtonDownEvent : public Event {
     int m_x;
     int m_y;
     int m_type;
+};
+
+class EscapeKeyPressedEvent : public Event {
+   public:
+    explicit EscapeKeyPressedEvent() {}
+
+    EventType GetEventType() override {
+        return EventType::EscapeKeyPressedEvent;
+    }
+
+   private:
+};
+
+class WindowFocusLostEvent : public Event {
+   public:
+    explicit WindowFocusLostEvent() {}
+
+    EventType GetEventType() override {
+        return EventType::WindowFocusLostEvent;
+    }
+
+   private:
 };

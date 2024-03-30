@@ -184,10 +184,7 @@ void Game::Restart() {
 }
 
 void Game::Events() {
-    State* state = m_game_event_manager->HandleEvents(m_item_manager, m_state);
-    if (state != nullptr) {
-        ChangeState(state);
-    }
+    m_game_event_manager->HandleEvents(m_item_manager, m_state);
 }
 
 void Game::GenerateRandomEnemyIfNeeded() {
@@ -307,6 +304,49 @@ void Game::HandleEvent(StartGameEvent* event) {
         InitEndless();
     }
     ChangeState(new RunningState(*this));
+}
+
+void Game::HandleEvent(LevelUpSelectedGameEvent* event) {
+    ChangeState(new RunningState(*this));
+}
+
+void Game::HandleEvent(PlayerLevelUpEvent* event) {
+    ChangeState(new LevelUpState(*this));
+}
+
+void Game::HandleEvent(GameOverEvent* event) {
+    ChangeState(new GameOverState(*this));
+}
+
+void Game::HandleEvent(ContinueGameEvent* event) {
+    ChangeState(new RunningState(*this));
+}
+
+void Game::HandleEvent(RestartGameEvent* event) {
+    ChangeState(new StartState(*this));
+}
+
+void Game::HandleEvent(ChestOpenedEvent* event) {
+    ChangeState(new ChestDropState(*this, event->GetItemTypes()));
+}
+
+void Game::HandleEvent(EscapeKeyPressedEvent* event) {
+    if (timer.IsPaused()) {
+        if (m_state->GetType() == StateType::Pause ||
+            m_state->GetType() == StateType::ChestDrop) {
+            ChangeState(new RunningState(*this));
+        }
+    } else {
+        if (m_state->GetType() == StateType::Running) {
+            ChangeState(new PauseState(*this));
+        }
+    }
+}
+
+void Game::HandleEvent(WindowFocusLostEvent* event) {
+    if (m_state->GetType() == StateType::Running) {
+        ChangeState(new PauseState(*this));
+    }
 }
 
 void Game::Update(float dt) {

@@ -10,13 +10,13 @@ class GameEventManager : public virtual EventManager {
     GameEventManager(const GameEventManager&&) = delete;
     virtual GameEventManager& operator=(const GameEventManager&) = delete;
 
-    State* HandleEvents(ItemManager* ItemManager, State* GameState);
+    void HandleEvents(ItemManager* ItemManager, State* GameState);
 
     void SetPlayer(Player* player) { m_player = player; }
 
    private:
-    State* HandleCustomEvents(const SDL_Event& event, ItemManager* ItemManager,
-                              State* GameState);
+    void HandleCustomEvents(const SDL_Event& event, ItemManager* ItemManager,
+                            State* GameState);
     void HandleSDLEvents();
     Player* m_player;
 };

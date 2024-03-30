@@ -27,14 +27,15 @@ StartScreen::StartScreen() {
     m_toggle_endless = Button("buttons", SDL_Rect{endless_x, y + 60, 150, 80},
                               {"Normal", "Endless"}, [](auto& button) {
                                   SDL_Log("Toggle endless button clicked");
-                                  if (button.GetText() == "Endless") {
-                                      button.SetText("Normal");
-                                  } else {
-                                      button.SetText("Endless");
-                                  }
                                   Game& game =
                                       static_cast<Game&>(Application::Get());
-                                  game.SetEndless(!game.GetEndless());
+                                  if (!game.GetEndless()) {
+                                      button.SetText("Normal");
+                                      game.SetEndless(true);
+                                  } else {
+                                      button.SetText("Endless");
+                                      game.SetEndless(false);
+                                  }
                               });
 }
 
