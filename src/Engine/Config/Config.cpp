@@ -1,4 +1,5 @@
 #include "Config.h"
+#include <cstddef>
 #include <fstream>
 #include <typeinfo>
 #include "Engine/Objects/Characters/Charger.h"
@@ -12,6 +13,7 @@
 #include "Engine/Objects/Characters/Slime.h"
 #include "Engine/Objects/Collider.h"
 #include "Engine/Objects/Environment/Entrance.h"
+#include "Engine/Objects/Trap.h"
 #include "Engine/Renderer/Renderer.h"
 
 void WriteColliderInfo(tinyxml2::XMLDocument& doc, tinyxml2::XMLElement* xmlObj,
@@ -522,6 +524,12 @@ GameObject* BuildObjectOnType(tinyxml2::XMLElement* types,
 
     if (types->Attribute("entrance") != nullptr) {
         new_obj = BuildEntrance(types, xmlObj, new_obj);
+    }
+
+    if(types->Attribute("trap") != nullptr) {
+        to_delete = new_obj;
+        new_obj = new Trap(static_cast<Collider*>(new_obj), std::stoi(types->Attribute("damage")));
+        delete to_delete;
     }
 
     return new_obj;
