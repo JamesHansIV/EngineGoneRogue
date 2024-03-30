@@ -388,6 +388,7 @@ void Game::UpdateObjects(float dt) {
         }
     }
 
+    SDL_Log("endless: %d", static_cast<int>(m_endless));
     if (m_endless) {
         GenerateRandomEnemyIfNeeded();
     }

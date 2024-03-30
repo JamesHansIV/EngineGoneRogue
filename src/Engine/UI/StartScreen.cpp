@@ -18,25 +18,25 @@ StartScreen::StartScreen() {
     int const y = window_height - 170;
     m_start_button =
         Button("buttons", SDL_Rect{x, y, 100, 60}, {"Start"}, [](auto& button) {
-            SDL_Log("Start button clicked");
             timer.Unpause();
             PushNewEvent(EventType::StartGameEvent);
         });
     int const endless_x = (window_width - 150) / 2;
 
-    m_toggle_endless = Button("buttons", SDL_Rect{endless_x, y + 60, 150, 80},
-                              {"Normal", "Endless"}, [](auto& button) {
-                                  SDL_Log("Toggle endless button clicked");
-                                  Game& game =
-                                      static_cast<Game&>(Application::Get());
-                                  if (!game.GetEndless()) {
-                                      button.SetText("Normal");
-                                      game.SetEndless(true);
-                                  } else {
-                                      button.SetText("Endless");
-                                      game.SetEndless(false);
-                                  }
-                              });
+    m_normal_mode =
+        Button("buttons", SDL_Rect{endless_x + 100, y + 60, 150, 80},
+               {"Normal"}, [](auto& button) {
+                   Game& game = static_cast<Game&>(Application::Get());
+                   game.SetEndless(false);
+               });
+
+    m_endless_mode =
+        Button("buttons", SDL_Rect{endless_x - 100, y + 60, 150, 80},
+               {"Endless"}, [](auto& button) {
+                   Game& game = static_cast<Game&>(Application::Get());
+
+                   game.SetEndless(true);
+               });
 }
 
 StartScreen::~StartScreen() {}
@@ -44,7 +44,8 @@ StartScreen::~StartScreen() {}
 void StartScreen::Draw() {
     m_background.Draw(m_background_src);
     m_start_button.Draw();
-    m_toggle_endless.Draw();
+    m_normal_mode.Draw();
+    m_endless_mode.Draw();
 }
 
 void StartScreen::Update() {
@@ -52,7 +53,8 @@ void StartScreen::Update() {
     const int window_height = Application::Get().GetWindowHeight();
     m_background.ChangeDst({0, 0, window_width, window_height});
     m_start_button.Update();
-    m_toggle_endless.Update();
+    m_normal_mode.Update();
+    m_endless_mode.Update();
 }
 
 State* StartScreen::HandleEvent(Event* event) {
