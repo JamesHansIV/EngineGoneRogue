@@ -6,6 +6,7 @@
 #include "Engine/Objects/Characters/Dog.h"
 #include "Engine/Objects/Characters/Goblin.h"
 #include "Engine/Objects/Characters/HelixEnemy.h"
+#include "Engine/Objects/Characters/Kamikaze.h"
 #include "Engine/Objects/Characters/Mage.h"
 #include "Engine/Objects/Characters/Player.h"
 #include "Engine/Objects/Characters/RingShotEnemy.h"
@@ -93,9 +94,10 @@ void WriteBaseObjectInfo(tinyxml2::XMLDocument& doc,
     xmlObj->InsertEndChild(dst_rect);
 }
 
-void WriteStatsInfo(tinyxml2::XMLDocument& doc, tinyxml2::XMLElement* xmlObj, EnemyStats stats) {
+void WriteStatsInfo(tinyxml2::XMLDocument& doc, tinyxml2::XMLElement* xmlObj,
+                    EnemyStats stats) {
     tinyxml2::XMLElement* stats_element = doc.NewElement("EnemyStats");
-    
+
     stats_element->SetAttribute("health", stats.health);
     stats_element->SetAttribute("damage", stats.damage);
     stats_element->SetAttribute("speed", stats.speed);
@@ -107,9 +109,10 @@ void WriteStatsInfo(tinyxml2::XMLDocument& doc, tinyxml2::XMLElement* xmlObj, En
     xmlObj->InsertEndChild(stats_element);
 }
 
-void WriteStatsInfo(tinyxml2::XMLDocument& doc, tinyxml2::XMLElement* xmlObj, RangedEnemyStats stats) {
+void WriteStatsInfo(tinyxml2::XMLDocument& doc, tinyxml2::XMLElement* xmlObj,
+                    RangedEnemyStats stats) {
     tinyxml2::XMLElement* stats_element = doc.NewElement("RangedEnemyStats");
-    
+
     stats_element->SetAttribute("health", stats.health);
     stats_element->SetAttribute("damage", stats.damage);
     stats_element->SetAttribute("speed", stats.speed);
@@ -160,45 +163,56 @@ int SaveObjects(const char* filepath, const std::vector<GameObject*>& objects) {
         //     WriteStatsInfo(doc, curr_xml_object,
         // }
 
-
-
         // type handling
         const std::type_info& obj_type = typeid(*obj);
         std::cout << "obj type: " << obj_type.name() << std::endl;
 
         if (strcmp(obj_type.name(), "5Slime") == 0) {
             types->SetAttribute("slime", "1");
-            WriteStatsInfo(doc, curr_xml_object, dynamic_cast<Enemy*>(obj)->GetEnemyStats());
+            WriteStatsInfo(doc, curr_xml_object,
+                           dynamic_cast<Enemy*>(obj)->GetEnemyStats());
         }
         if (strcmp(obj_type.name(), "13RingShotEnemy") == 0) {
             types->SetAttribute("ranged_enemy", "1");
             types->SetAttribute("ring_shot_enemy", "1");
-            WriteStatsInfo(doc, curr_xml_object, dynamic_cast<RangedEnemy*>(obj)->GetRangedEnemyStats());
+            WriteStatsInfo(
+                doc, curr_xml_object,
+                dynamic_cast<RangedEnemy*>(obj)->GetRangedEnemyStats());
         }
         if (strcmp(obj_type.name(), "3Dog") == 0) {
             types->SetAttribute("ranged_enemy", "1");
             types->SetAttribute("dog", "1");
-            WriteStatsInfo(doc, curr_xml_object, dynamic_cast<RangedEnemy*>(obj)->GetRangedEnemyStats());
+            WriteStatsInfo(
+                doc, curr_xml_object,
+                dynamic_cast<RangedEnemy*>(obj)->GetRangedEnemyStats());
         }
         if (strcmp(obj_type.name(), "10HelixEnemy") == 0) {
             types->SetAttribute("ranged_enemy", "1");
             types->SetAttribute("helix_enemy", "1");
-            WriteStatsInfo(doc, curr_xml_object, dynamic_cast<RangedEnemy*>(obj)->GetRangedEnemyStats());
+            WriteStatsInfo(
+                doc, curr_xml_object,
+                dynamic_cast<RangedEnemy*>(obj)->GetRangedEnemyStats());
         }
         if (strcmp(obj_type.name(), "6Goblin") == 0) {
             types->SetAttribute("ranged_enemy", "1");
             types->SetAttribute("goblin", "1");
-            WriteStatsInfo(doc, curr_xml_object, dynamic_cast<RangedEnemy*>(obj)->GetRangedEnemyStats());
+            WriteStatsInfo(
+                doc, curr_xml_object,
+                dynamic_cast<RangedEnemy*>(obj)->GetRangedEnemyStats());
         }
         if (strcmp(obj_type.name(), "8Skeleton") == 0) {
             types->SetAttribute("ranged_enemy", "1");
             types->SetAttribute("skeleton", "1");
-            WriteStatsInfo(doc, curr_xml_object, dynamic_cast<RangedEnemy*>(obj)->GetRangedEnemyStats());
+            WriteStatsInfo(
+                doc, curr_xml_object,
+                dynamic_cast<RangedEnemy*>(obj)->GetRangedEnemyStats());
         }
         if (strcmp(obj_type.name(), "4Mage") == 0) {
             types->SetAttribute("ranged_enemy", "1");
             types->SetAttribute("mage", "1");
-            WriteStatsInfo(doc, curr_xml_object, dynamic_cast<RangedEnemy*>(obj)->GetRangedEnemyStats());
+            WriteStatsInfo(
+                doc, curr_xml_object,
+                dynamic_cast<RangedEnemy*>(obj)->GetRangedEnemyStats());
         }
         root->InsertEndChild(curr_xml_object);
     }
@@ -518,6 +532,14 @@ GameObject* BuildObjectOnType(tinyxml2::XMLElement* types,
         delete to_delete;
     }
 
+    if (types->Attribute("kamikaze") != nullptr) {
+        EnemyStats const stats =
+            GetEnemyStats(xmlObj->FirstChildElement("EnemyStats"));
+        to_delete = new_obj;
+        new_obj = new Kamikaze(static_cast<Collider*>(new_obj), stats);
+        delete to_delete;
+    }
+
     if (types->Attribute("ranged_enemy") != nullptr) {
         new_obj = BuildRangedEnemy(types, xmlObj, new_obj);
     }
@@ -526,9 +548,10 @@ GameObject* BuildObjectOnType(tinyxml2::XMLElement* types,
         new_obj = BuildEntrance(types, xmlObj, new_obj);
     }
 
-    if(types->Attribute("trap") != nullptr) {
+    if (types->Attribute("trap") != nullptr) {
         to_delete = new_obj;
-        new_obj = new Trap(static_cast<Collider*>(new_obj), std::stoi(types->Attribute("damage")));
+        new_obj = new Trap(static_cast<Collider*>(new_obj),
+                           std::stoi(types->Attribute("damage")));
         delete to_delete;
     }
 
