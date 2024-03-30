@@ -1212,11 +1212,13 @@ void Editor::Update(float /*dt*/) {
 
     // Tool deselection
     if (m_key_map->CheckInputs(EditorAction::EXIT_CURRENT_TOOL)) {
+        if (m_edit_state.EditMode == EditMode::NONE || m_edit_state.EditMode == EditMode::TEMP_MULTI_SELECT) {
+            // deselect all
+            m_selected_objects.clear();
+            m_selected_obj_origin_map.clear();
+        }
+        
         StopEditing();
-
-        // deselect all
-        m_selected_objects.clear();
-        m_selected_obj_origin_map.clear();
     }
 
     // shift for multiselect
@@ -1842,7 +1844,8 @@ void Editor::HandlePasteClipboardAction() {
         m_action_record_handler->RecordAction(record);
     }
 
-    // std::cout << "PASTE: num obj = " << m_layers[m_current_layer].size() << "\n";
+    m_edit_state.EditMode = EditMode::NONE;
+    m_cursor->SetCursor(m_edit_state.EditMode);
 }
 
 bool Editor::IsTileEmpty(TileCoords coords) {
