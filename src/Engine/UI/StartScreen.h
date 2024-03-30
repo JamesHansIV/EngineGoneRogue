@@ -21,5 +21,6 @@ class StartScreen {
 
     SDL_Rect m_title_rect;
     Button m_start_button;
-    Button m_toggle_endless;
+    Button m_normal_mode;
+    Button m_endless_mode;
 };
