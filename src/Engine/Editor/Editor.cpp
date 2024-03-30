@@ -1212,11 +1212,13 @@ void Editor::Update(float /*dt*/) {
 
     // Tool deselection
     if (m_key_map->CheckInputs(EditorAction::EXIT_CURRENT_TOOL)) {
+        if (m_edit_state.EditMode == EditMode::NONE || m_edit_state.EditMode == EditMode::TEMP_MULTI_SELECT) {
+            // deselect all
+            m_selected_objects.clear();
+            m_selected_obj_origin_map.clear();
+        }
+        
         StopEditing();
-
-        // deselect all
-        m_selected_objects.clear();
-        m_selected_obj_origin_map.clear();
     }
 
     // shift for multiselect
