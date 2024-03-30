@@ -29,10 +29,6 @@ class Kamikaze : public Enemy {
 
     [[nodiscard]] unsigned int GetLastAttack() const { return m_last_attack; }
 
-    [[nodiscard]] unsigned int GetAttackInterval() const {
-        return m_attack_interval;
-    }
-
     [[nodiscard]] unsigned int GetAttackDuration() const {
         return m_attack_duration;
     }
@@ -40,6 +36,5 @@ class Kamikaze : public Enemy {
    private:
     // TODO: Probably should be apart of EnemyStats
     unsigned int m_last_attack = 0;
-    unsigned int m_attack_interval = 999999;
     unsigned int m_attack_duration = 3000;
 };

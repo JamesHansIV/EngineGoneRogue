@@ -13,11 +13,9 @@ class KamikazeAttack : public EnemyAttack {
         : EnemyAttack(enemy), m_enemy(enemy) {}
 
     void Enter() override {
-
         m_enemy.SetLastAttack(timer.GetTicks());
         m_enemy.GetMutableEnemyStats().speed *= 2;
         m_enemy.GetAnimation()->SelectAnimation("Attack-down");
-        SDL_Log("KamikazeAttack::Enter()");
     }
 
     State* Update(float dt) override {
@@ -36,17 +34,12 @@ class KamikazeAttack : public EnemyAttack {
             return m_enemy.GetDeadState();
         }
 
-        SDL_Log("KamikazeAttack::Update()");
-
         m_enemy.MoveTowardsTarget(dt);
 
         return nullptr;
     }
 
-    void Exit() override {
-        m_enemy.GetMutableEnemyStats().speed = 70;
-        SDL_Log("KamikazeAttack::Exit()");
-    }
+    void Exit() override { m_enemy.GetMutableEnemyStats().speed = 70; }
 
     StateType GetType() override { return StateType::Attack; }
 
