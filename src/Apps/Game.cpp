@@ -122,8 +122,6 @@ Game::Game() : m_state(nullptr), m_endless(false) {
 
     InitManagers();
 
-    InitEnemyCopies();
-
     Properties p_trap("", {0, 0, 16, 16}, {500, 500, 32, 32}, 0.0);
     Trap* trap = new Trap(p_trap, 30);
     m_objects.push_back(trap);
