@@ -1842,7 +1842,8 @@ void Editor::HandlePasteClipboardAction() {
         m_action_record_handler->RecordAction(record);
     }
 
-    // std::cout << "PASTE: num obj = " << m_layers[m_current_layer].size() << "\n";
+    m_edit_state.EditMode = EditMode::NONE;
+    m_cursor->SetCursor(m_edit_state.EditMode);
 }
 
 bool Editor::IsTileEmpty(TileCoords coords) {
