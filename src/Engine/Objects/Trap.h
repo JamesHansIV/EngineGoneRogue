@@ -6,13 +6,15 @@ enum TrapState {
     IDLE,
     TOUCHEDBYPLAYER,
     OPENING,
-    CLOSING,
     OPENED,
+    CLOSING,
 };
 
 class Trap : public Collider {
    public:
-    explicit Trap(Properties& props, int damage);
+    Trap(Properties& props, int damage);
+
+    Trap(Collider* collider, int damage);
 
     void Draw() override { GameObject::Draw(); }
 

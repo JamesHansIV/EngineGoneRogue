@@ -17,6 +17,13 @@ Trap::Trap(Properties& props, int damage) : Collider(props){
     m_state = TrapState::IDLE;
 }
 
+Trap::Trap(Collider* collider, int damage) :Collider(collider){
+    m_damage = damage;
+    m_collision_box.Set(GetX(), GetY(), GetHeight(), GetWidth());
+    m_animation->SelectAnimation("trap_idle");
+    m_state = TrapState::IDLE;
+} 
+
 void Trap::Update(float dt) {
     m_animation->Update();
 
