@@ -230,7 +230,6 @@ Editor::Editor() {
 
     // create keymap
     m_key_map = new KeyMap();
-    BuildHelpPopUpText();
 
     // create cursor
     m_cursor = new Cursor();
@@ -238,6 +237,8 @@ Editor::Editor() {
     m_action_record_handler = new ActionRecordHandler(TileSize);
 
     m_clipboard = new ClipBoard();
+
+    m_toolbar = new Toolbar(m_key_map);
 }
 
 Editor::~Editor() {
@@ -987,67 +988,6 @@ void Editor::ShowObjectManager() {
     ImGui::End();
 }
 
-void Editor::BuildHelpPopUpText() {
-    std::cout << "Called\n";
-
-    const std::unordered_map<int, std::string>keycode_to_char = {
-        {SDLK_ESCAPE, "esc"},
-        {SDLK_d, "d"},
-        {SDLK_e, "e"},
-        {SDLK_t, "t"},
-        {SDLK_m, "m"},
-        {SDLK_p, "p"},
-        {SDLK_DOWN, "DOWN"},
-        {SDLK_UP, "UP"},
-        {SDLK_RIGHT, "RIGHT"},
-        {SDLK_LEFT, "LEFT"},
-        {SDLK_LGUI, "command"},
-        {SDLK_LSHIFT, "shift"},
-        {SDLK_c, "c"},
-        {SDLK_v, "v"},
-        {SDLK_z, "z"},
-        {SDLK_BACKSPACE, "delete"}
-    };
-
-    const std::vector<std::pair<std::string, EditorAction>>actions_bind_pairs = {
-        {"Exit current tool \n   & deselect all", EditorAction::EXIT_CURRENT_TOOL},
-        {"Paint select tool", EditorAction::ENTER_TILE_SELECT_TOOL},
-        {"Move selection",EditorAction::ENTER_SELECTION_MOVE_TOOL},
-        {"Draw tool",EditorAction::ENTER_DRAW_TOOL},
-        {"Paint button tool",EditorAction::ENTER_PAINT_BUCKET_TOOL},
-        {"Erase tool", EditorAction::ENTER_ERASE_TOOL},
-        {"Delete selection", EditorAction::EXECUTE_DELETE_SELECTION},
-        {"Pan camera down", EditorAction::PAN_CAMERA_DOWN},
-        {"Pan camera up", EditorAction::PAN_CAMERA_UP},
-        {"Pan camera right", EditorAction::PAN_CAMERA_RIGHT},
-        {"Pan camera left", EditorAction::PAN_CAMERA_LEFT},
-        {"Copy selection", EditorAction::COPY_SELECTION},
-        {"Paste clipboard", EditorAction::PASTE_CLIPBOARD},
-        {"Undo", EditorAction::UNDO_ACTION},
-        {"Redo", EditorAction::REDO_ACTION},
-    };
-
-    int i = 0;
-    for (auto action_bind_pair : actions_bind_pairs) {
-        auto description = action_bind_pair.first;
-        auto editor_action = action_bind_pair.second;
-        auto keys = m_key_map->GetBindingMap()[editor_action].keys;
-
-        std::string str = description + ": ";
-        for (SDL_Keycode key : keys) {
-            if (key == keys.front())
-                str += keycode_to_char.at(key);
-            else 
-                str += " + " + keycode_to_char.at(key);
-            
-            if (key == keys.back())
-                str += "\n\n";
-        }
-        m_help_popup_text += str;
-    }
-    // std::cout << "build string: "<< m_help_popup_text << "\n";
-}
-
 void Editor::ShowToolBar() {
     int width = 54;
     int vertical_gap = 50;
@@ -1081,35 +1021,75 @@ void Editor::ShowToolBar() {
         m_selected_objects.clear();
         m_selected_obj_origin_map.clear();
     }
+    if (ImGui::IsItemHovered()) {
+        ImGui::BeginTooltip();
+        ImGui::Text("%s", m_toolbar->action_to_description_map[EditorAction::EXIT_CURRENT_TOOL].c_str());
+        ImGui::EndTooltip();
+    }
     if (ImGui::ImageButton(Renderer::GetInstance().GetTexture("editor-cursor-multi-select")->GetTexture(), button_size_vector)) {
         m_edit_state.EditMode = m_edit_state.EditMode != EditMode::TILE_SELECT ? EditMode::TILE_SELECT : EditMode::NONE;
         m_cursor->SetCursor(m_edit_state.EditMode);
     };
+    if (ImGui::IsItemHovered()) {
+        ImGui::BeginTooltip();
+        ImGui::Text("%s", m_toolbar->action_to_description_map[EditorAction::ENTER_TILE_SELECT_TOOL].c_str());
+        ImGui::EndTooltip();
+    }
     if (ImGui::ImageButton(Renderer::GetInstance().GetTexture("editor-cursor-drag-move")->GetTexture(), button_size_vector)) {
         m_edit_state.EditMode = m_edit_state.EditMode != EditMode::DRAG_MOVE ? EditMode::DRAG_MOVE : EditMode::NONE;
         m_cursor->SetCursor(m_edit_state.EditMode);
     };
+    if (ImGui::IsItemHovered()) {
+        ImGui::BeginTooltip();
+        ImGui::Text("%s", m_toolbar->action_to_description_map[EditorAction::ENTER_SELECTION_MOVE_TOOL].c_str());
+        ImGui::EndTooltip();
+    }
     if (ImGui::ImageButton(Renderer::GetInstance().GetTexture("editor-cursor-draw")->GetTexture(), button_size_vector)) {
         m_edit_state.EditMode = m_edit_state.EditMode != EditMode::DRAW ? EditMode::DRAW : EditMode::NONE;
         m_cursor->SetCursor(m_edit_state.EditMode);
     };
+    if (ImGui::IsItemHovered()) {
+        ImGui::BeginTooltip();
+        ImGui::Text("%s", m_toolbar->action_to_description_map[EditorAction::ENTER_DRAW_TOOL].c_str());
+        ImGui::EndTooltip();
+    }
     if (ImGui::ImageButton(Renderer::GetInstance().GetTexture("editor-cursor-paint-bucket")->GetTexture(), button_size_vector)) {
         m_edit_state.EditMode = m_edit_state.EditMode != EditMode::PAINT_BUCKET ? EditMode::PAINT_BUCKET : EditMode::NONE;
         m_cursor->SetCursor(m_edit_state.EditMode);
     };
+    if (ImGui::IsItemHovered()) {
+        ImGui::BeginTooltip();
+        ImGui::Text("%s", m_toolbar->action_to_description_map[EditorAction::ENTER_PAINT_BUCKET_TOOL].c_str());
+        ImGui::EndTooltip();
+    }
     if (ImGui::ImageButton(Renderer::GetInstance().GetTexture("editor-cursor-erase")->GetTexture(), button_size_vector)) {
         m_edit_state.EditMode = m_edit_state.EditMode != EditMode::ERASE ? EditMode::ERASE : EditMode::NONE;
         m_cursor->SetCursor(m_edit_state.EditMode);
     };
+    if (ImGui::IsItemHovered()) {
+        ImGui::BeginTooltip();
+        ImGui::Text("%s", m_toolbar->action_to_description_map[EditorAction::ENTER_ERASE_TOOL].c_str());
+        ImGui::EndTooltip();
+    }
     if (ImGui::ImageButton(Renderer::GetInstance().GetTexture("editor-icon-delete-selection")->GetTexture(), button_size_vector)) {
         HandleDeleteSelectionAction();
     };
+    if (ImGui::IsItemHovered()) {
+        ImGui::BeginTooltip();
+        ImGui::Text("%s", m_toolbar->action_to_description_map[EditorAction::EXECUTE_DELETE_SELECTION].c_str());
+        ImGui::EndTooltip();
+    }
 
     // add gap 
     ImGui::Dummy(ImVec2(0.0f, group_gap));
     // copy and pase
     if (ImGui::ImageButton(Renderer::GetInstance().GetTexture("editor-icon-copy")->GetTexture(), button_size_vector)) {
         HandleCopySelectionAciton();
+    }
+    if (ImGui::IsItemHovered()) {
+        ImGui::BeginTooltip();
+        ImGui::Text("%s", m_toolbar->action_to_description_map[EditorAction::COPY_SELECTION].c_str());
+        ImGui::EndTooltip();
     }
     if (ImGui::ImageButton(Renderer::GetInstance().GetTexture("editor-icon-cut")->GetTexture(), button_size_vector)) {
         // HandlePasteClipboardAction();
@@ -1118,6 +1098,11 @@ void Editor::ShowToolBar() {
     if (ImGui::ImageButton(Renderer::GetInstance().GetTexture("editor-icon-paste")->GetTexture(), button_size_vector)) {
         HandlePasteClipboardAction();
     }
+    if (ImGui::IsItemHovered()) {
+        ImGui::BeginTooltip();
+        ImGui::Text("%s", m_toolbar->action_to_description_map[EditorAction::PASTE_CLIPBOARD].c_str());
+        ImGui::EndTooltip();
+    }
 
     // add gap
     ImGui::Dummy(ImVec2(0.0f, group_gap));
@@ -1125,21 +1110,32 @@ void Editor::ShowToolBar() {
     if (ImGui::ImageButton(Renderer::GetInstance().GetTexture("editor-icon-undo")->GetTexture(), button_size_vector)) {
         m_action_record_handler->UndoAction(m_layers);
     }
+    if (ImGui::IsItemHovered()) {
+        ImGui::BeginTooltip();
+        ImGui::Text("%s", m_toolbar->action_to_description_map[EditorAction::UNDO_ACTION].c_str());
+        ImGui::EndTooltip();
+    }
     
     if (ImGui::ImageButton(Renderer::GetInstance().GetTexture("editor-icon-redo")->GetTexture(), button_size_vector)) {
         m_action_record_handler->RedoAction(m_layers);
     }
-
-    static bool open(true);
+    if (ImGui::IsItemHovered()) {
+        ImGui::BeginTooltip();
+        ImGui::Text("%s", m_toolbar->action_to_description_map[EditorAction::REDO_ACTION].c_str());
+        ImGui::EndTooltip();
+    }
 
     ImGui::Dummy(ImVec2(0.0f, group_gap));
     if (ImGui::ImageButton(Renderer::GetInstance().GetTexture("editor-icon-help")->GetTexture(), button_size_vector)) {
-        std::cout << "HELP POPUP NOT IMPLEMENTED\n";
         ImGui::OpenPopup("help_popup");        
     }
-
+    if (ImGui::IsItemHovered()) {
+        ImGui::BeginTooltip();
+        ImGui::Text("help");
+        ImGui::EndTooltip();
+    }
     if(ImGui::BeginPopup("help_popup")) {
-        ImGui::Text(m_help_popup_text.c_str());
+        ImGui::Text("%s", m_toolbar->help_popup_text.c_str());
         ImGui::EndPopup();
     }
 
@@ -1893,8 +1889,6 @@ bool Editor::LoadEditorTextures() {
                     curr_texture->FirstChildElement("OffsetY")->GetText());
 
                 m_cursor_offsets[id] = {offsetX, offsetY};
-            } else {
-                std::cout << "TYPE: " << type << std::endl;
             }
         }
 

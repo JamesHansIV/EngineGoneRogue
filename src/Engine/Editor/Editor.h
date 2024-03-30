@@ -15,6 +15,8 @@
 #include "Engine/utils/utils.h"
 #include "Engine/ClipBoard/ClipBoard.h"
 
+#include "Engine/Editor/UI/Toolbar.h"
+
 #include <tuple>
 
 struct EEnemyInfo {
@@ -121,6 +123,9 @@ class Editor : public Application {
     std::unordered_map<std::string, std::pair<int,int>>m_cursor_offsets;
     TileCoords m_mouse_input_origin;
     ClipBoard* m_clipboard;
+    Toolbar* m_toolbar;
+
+
 
     // static std::vector<std::vector<GameObject*>>* s_layers;
 
