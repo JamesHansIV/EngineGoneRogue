@@ -131,6 +131,8 @@ bool Application::LoadNextRoom() {
     return true;
 }
 
+static int loadroom = 0;
+
 bool Application::LoadRoom(std::string room_id) {
     ClearObjects();
 
@@ -174,6 +176,9 @@ bool Application::LoadRoom(std::string room_id) {
 
     m_player->GetRigidBody()->SetPosition(
         Vector2D(m_start_position.first, m_start_position.second));
+
+    loadroom++;
+    SDL_Log("LoadRooms called %d times", loadroom);
 
     return true;
 }

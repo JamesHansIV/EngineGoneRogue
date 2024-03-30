@@ -187,8 +187,8 @@ State* GameEventManager::HandleCustomEvents(const SDL_Event& event,
         }
         case EventType::StartGameEvent: {
             StartGameEvent start_game_event;
-            State* state = GameState->HandleEvent(&start_game_event);
-            return state;
+            game.HandleEvent(&start_game_event);
+            break;
         }
         case EventType::ContinueGameEvent: {
             ContinueGameEvent continue_game_event;

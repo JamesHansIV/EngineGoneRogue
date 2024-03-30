@@ -57,8 +57,6 @@ Goblin* goblin_copy = nullptr;
 HelixEnemy* helix_enemy_copy = nullptr;
 Charger* charger_copy = nullptr;
 
-// Todo: try to clean this up
-// https://stackoverflow.com/questions/27451776/dynamic-cast-for-multiple-derived-classes
 std::vector<GameObject*> Game::CopyObjects(
     const std::vector<GameObject*>& objects) {
     std::vector<GameObject*> new_objects;
@@ -69,6 +67,8 @@ std::vector<GameObject*> Game::CopyObjects(
     return new_objects;
 }
 
+// Todo: try to clean this up
+// https://stackoverflow.com/questions/27451776/dynamic-cast-for-multiple-derived-classes
 void Game::InitEnemyCopies() {
     Enemy* enemy = nullptr;
     RangedEnemy* ranged_enemy = nullptr;
@@ -116,12 +116,10 @@ void Game::InitEnemyCopies() {
     }
 }
 
-Game::Game() : m_state(nullptr) {
+Game::Game() : m_state(nullptr), m_endless(false) {
     srand(time(nullptr));
 
     InitManagers();
-
-    //InitEnemyCopies();
 
     SDL_Cursor* cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR);
 
@@ -132,6 +130,21 @@ Game::Game() : m_state(nullptr) {
     State* state = new StartState(*this);
 
     ChangeState(state);
+}
+
+void Game::InitEndless() {
+    GameObject* to_delete = nullptr;
+    for (auto it = m_objects.begin(); it != m_objects.end();) {
+        if (dynamic_cast<Entrance*>(*it) != nullptr) {
+            to_delete = *it;
+            it = m_objects.erase(it);
+            delete to_delete;
+            to_delete = nullptr;
+        } else {
+            it++;
+        }
+    }
+    InitEnemyCopies();
 }
 
 void Game::InitManagers() {
@@ -277,6 +290,14 @@ void Game::HandleEvent(RoomTransitionEvent* event) {
     ChangeState(new RoomTransitionState(*this, event->GetNextRoomID()));
 }
 
+void Game::HandleEvent(StartGameEvent* event) {
+    SDL_Log("in handle event for start game event");
+    if (m_endless) {
+        InitEndless();
+    }
+    ChangeState(new RunningState(*this));
+}
+
 void Game::Update(float dt) {
     State* state = m_state->Update(dt);
     if (state != nullptr) {
@@ -326,7 +347,9 @@ void Game::UpdateObjects(float dt) {
         }
     }
 
-    //GenerateRandomEnemyIfNeeded();
+    if (m_endless) {
+        GenerateRandomEnemyIfNeeded();
+    }
 }
 
 void Game::Render() {

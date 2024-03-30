@@ -3,22 +3,24 @@
 #include "Engine/State/EntranceState.h"
 
 Entrance::Entrance(Properties& props, std::string curr_room_id,
-                   std::string next_room_id, int x, int y)
+                   std::string next_room_id, int x, int y, int collideless_time)
     : Collider(props),
       m_curr_room_id(curr_room_id),
       m_next_room_id(next_room_id),
       m_next_start({x, y}),
-      m_closed(true) {
+      m_closed(true),
+      m_collideless_time(collideless_time) {
     m_animation->SelectAnimation("open");
 }
 
 Entrance::Entrance(Collider* collider, std::string curr_room_id,
-                   std::string next_room_id, int x, int y)
+                   std::string next_room_id, int x, int y, int collideless_time)
     : Collider(collider),
       m_curr_room_id(curr_room_id),
       m_next_room_id(next_room_id),
       m_next_start({x, y}),
-      m_closed(true) {
+      m_closed(true),
+      m_collideless_time(collideless_time) {
     m_animation->SelectAnimation("open");
 }
 
@@ -27,6 +29,10 @@ void Entrance::Draw() {
 }
 
 void Entrance::Update(float dt) {
+    if (m_collideless_time > 0) {
+        m_collideless_time--;
+    }
+
     if (Application::Get().GetEnemyCount() == 0) {
         m_closed = false;
     }
@@ -36,7 +42,8 @@ void Entrance::Update(float dt) {
 }
 
 void Entrance::OnCollide(Collider* collidee) {
-    if (collidee->GetObjectType() == ObjectType::Player && !m_closed) {
+    if (collidee->GetObjectType() == ObjectType::Player && !m_closed &&
+        m_collideless_time == 0) {
         Application::Get().AddRoomCleared(m_curr_room_id);
         Application::Get().SetStartPosition(m_next_start.first,
                                             m_next_start.second);

@@ -27,11 +27,18 @@ class Game : public Application {
     void DeleteObject(GameObject* obj);
 
     void HandleEvent(RoomTransitionEvent* event);
+    void HandleEvent(StartGameEvent* event);
 
     void ResetManagers();
 
     void UpdateObjects(float dt);
     void DrawObjects();
+
+    void InitEndless();
+
+    bool GetEndless() { return m_endless; }
+
+    void SetEndless(bool endless) { m_endless = endless; }
 
     void ChangeState(State* state);
 
@@ -44,6 +51,7 @@ class Game : public Application {
     ItemInventory m_item_inventory;
 
     State* m_state;
+    bool m_endless;
     WeaponInventory* m_weapon_inventory;
     int m_tick = 0;
     Uint32 m_last_enemy_spawn_time = 0;

@@ -98,7 +98,7 @@ class RoomTransitionState : public GameState {
 struct Option {
     std::string text;
     std::string description;
-    void (*side_effect)();
+    void (*side_effect)(Button&);
 };
 
 class LevelUpState : public GameState {
@@ -127,11 +127,12 @@ class PauseState : public GameState {
         : GameState(game), m_pause_screen(*game.GetPlayer()) {
         int const x = (Application::Get().GetWindowWidth() - 100) / 2;
         int const y = (Application::Get().GetWindowHeight() - 60) / 2;
-        m_button = Button("buttons", SDL_Rect{x, y, 150, 80}, "Continue", []() {
-            SDL_Log("Continue button clicked");
-            timer.Unpause();
-            PushNewEvent(EventType::ContinueGameEvent);
-        });
+        m_button = Button("buttons", SDL_Rect{x, y, 150, 80}, {"Continue"},
+                          [](auto& button) {
+                              SDL_Log("Continue button clicked");
+                              timer.Unpause();
+                              PushNewEvent(EventType::ContinueGameEvent);
+                          });
     }
 
     void Enter() override;
