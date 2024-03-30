@@ -164,3 +164,7 @@ void ColliderHandler::RemoveCollider(Collider* collider) {
         m_colliders.erase(it);
     }
 }
+
+void ColliderHandler::Clear() {
+    m_colliders.clear();
+}

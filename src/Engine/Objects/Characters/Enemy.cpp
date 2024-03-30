@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include "Engine/Application/Application.h"
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Objects/Environment/Entrance.h"
 #include "Engine/State/EnemyState.h"
@@ -19,10 +20,12 @@ DEVELOPING BASIC ENEMY BEHAVIOUR:
 */
 
 Enemy::Enemy(Properties& props, EnemyStats const& stats)
-    : Character(props), m_stats(stats) {}
+    : Character(props), m_stats(stats) {
+    Application::Get().IncrementEnemyCount();
+}
 
 Enemy::Enemy(Collider* rhs, EnemyStats stats) : Character(rhs), m_stats(stats) {
-    SDL_Log("enemy copy constructor: %s", rhs->GetID().c_str());
+    Application::Get().IncrementEnemyCount();
 }
 
 bool Enemy::TargetInRange() {
@@ -37,6 +40,10 @@ bool Enemy::TargetInRange() {
     const Rect rect1 = GetTarget()->GetDstRect();
 
     return ColliderHandler::CheckCollision(rect1, range);
+}
+
+Enemy::~Enemy() {
+    Application::Get().DecrementEnemyCount();
 }
 
 bool Enemy::TargetDetected() {

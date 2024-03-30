@@ -22,19 +22,25 @@ class Button {
    public:
     Button() = default;
 
-    Button(std::string textureID, SDL_Rect rect, const std::string& text,
-           void (*callback)())
+    Button(std::string textureID, SDL_Rect rect,
+           std::vector<const std::string> texts, void (*callback)(Button&))
         : m_shape(rect),
           m_normal_src(kDefaultNormal),
           m_hover_src(kDefaultHover) {
         m_relative_pos = Position{rect.x, rect.y};
         m_callback = callback;
-        m_text = text;
-        Renderer::GetInstance().AddTextTexture(m_text, m_text, {0, 0, 0, 255});
+        m_text = texts[0];
+        for (auto& text : texts) {
+            Renderer::GetInstance().AddTextTexture(text, text, {0, 0, 0, 255});
+        }
         m_draw_element = DrawElement(textureID, rect);
     };
 
     ~Button() {}
+
+    const std::string& GetText() { return m_text; }
+
+    void SetText(std::string text) { m_text = text; }
 
     void Draw() {
         Renderer& renderer = Renderer::GetInstance();
@@ -74,7 +80,7 @@ class Button {
             m_state = ButtonStateHover;
             if (InputChecker::IsMouseButtonPressed(SDL_BUTTON_LEFT)) {
                 m_state = ButtonStatePressed;
-                m_callback();
+                m_callback(*this);
             }
         } else {
             m_state = ButtonStateNormal;
@@ -86,7 +92,7 @@ class Button {
         int mouse_y = event->GetY();
         if (mouse_x > m_shape.x && mouse_x < m_shape.x + m_shape.w &&
             mouse_y > m_shape.y && mouse_y < m_shape.y + m_shape.h) {
-            m_callback();
+            m_callback(*this);
         }
     }
 
@@ -99,5 +105,5 @@ class Button {
     SDL_Rect m_shape;
     std::string m_text;
     ButtonState m_state;
-    void (*m_callback)();
+    void (*m_callback)(Button&);
 };

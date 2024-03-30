@@ -91,6 +91,7 @@ std::unordered_map<EditorAction, Bind> KeyMap::default_bindings = {
     // Copy and paste
     {EditorAction::COPY_SELECTION, CreateBind(EditorAction::COPY_SELECTION, InputType::LATCH, std::vector<SDL_KeyCode>{mac_keys_to_sdl[MacKeys::LCOMMAND], SDLK_c})},
     {EditorAction::PASTE_CLIPBOARD, CreateBind(EditorAction::PASTE_CLIPBOARD, InputType::LATCH, std::vector<SDL_KeyCode>{mac_keys_to_sdl[MacKeys::LCOMMAND], SDLK_v})},
+    {EditorAction::CUT_SELECTION, CreateBind(EditorAction::CUT_SELECTION, InputType::LATCH, std::vector<SDL_KeyCode>{mac_keys_to_sdl[MacKeys::LCOMMAND], SDLK_x})},
 
     // Undo and Redo
     {EditorAction::UNDO_ACTION, CreateBind(EditorAction::UNDO_ACTION, InputType::ON_UP_LATCH, std::vector<SDL_KeyCode>{mac_keys_to_sdl[MacKeys::LCOMMAND], SDLK_z})},

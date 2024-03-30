@@ -12,14 +12,26 @@
 // and one paint could easily be the same size as 10-30 draws
 
 ActionRecordHandler::~ActionRecordHandler() {
+    while (!m_undo_stack.empty()) {
+        ActionRecord* top = m_undo_stack.top();
+        m_undo_stack.pop();
+        delete top;
+    }
     while (!m_redo_stack.empty()) {
-        delete m_redo_stack.top();
+        ActionRecord* top = m_redo_stack.top();
         m_redo_stack.pop();
+        delete top;
     }
 }
 
 void ActionRecordHandler::RecordAction(ActionRecord* record) {
     m_undo_stack.push(record);
+    while (!m_redo_stack.empty()) {
+        // ActionRecord* top = m_redo_stack.top();
+        m_redo_stack.pop();
+        // delete top;
+    }
+    // std::cout << "REDO STACK " << m_redo_stack.size() << "\n";
 }
 
 void ActionRecordHandler::UndoAction(std::vector<std::vector<GameObject*>>& layers) {

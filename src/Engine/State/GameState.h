@@ -12,6 +12,8 @@
 #include "Engine/UI/StartScreen.h"
 #include "State.h"
 
+const int kDefaultTransitionTime = 500;
+
 class Game;
 
 class GameState : public State {
@@ -71,10 +73,32 @@ class GameOverState : public GameState {
     GameOverScreen m_game_over_screen;
 };
 
+class RoomTransitionState : public GameState {
+   public:
+    explicit RoomTransitionState(Game& game, std::string next_room_id)
+        : GameState(game),
+          m_next_room_id(next_room_id),
+          m_enter_time(timer.GetTicks()),
+          m_transition_time(kDefaultTransitionTime) {}
+
+    void Enter() override;
+    void Exit() override;
+    State* Update(float dt) override;
+    void Draw() override;
+    State* HandleEvent(Event* event) override;
+
+    StateType GetType() override { return StateType::RoomTransition; }
+
+   private:
+    std::string m_next_room_id;
+    int m_enter_time;
+    int m_transition_time;
+};
+
 struct Option {
     std::string text;
     std::string description;
-    void (*side_effect)();
+    void (*side_effect)(Button&);
 };
 
 class LevelUpState : public GameState {
@@ -103,11 +127,12 @@ class PauseState : public GameState {
         : GameState(game), m_pause_screen(*game.GetPlayer()) {
         int const x = (Application::Get().GetWindowWidth() - 100) / 2;
         int const y = (Application::Get().GetWindowHeight() - 60) / 2;
-        m_button = Button("buttons", SDL_Rect{x, y, 150, 80}, "Continue", []() {
-            SDL_Log("Continue button clicked");
-            timer.Unpause();
-            PushNewEvent(EventType::ContinueGameEvent);
-        });
+        m_button = Button("buttons", SDL_Rect{x, y, 150, 80}, {"Continue"},
+                          [](auto& button) {
+                              SDL_Log("Continue button clicked");
+                              timer.Unpause();
+                              PushNewEvent(EventType::ContinueGameEvent);
+                          });
     }
 
     void Enter() override;

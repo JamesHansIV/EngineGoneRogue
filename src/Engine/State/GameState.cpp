@@ -1,5 +1,6 @@
 #include "GameState.h"
 #include "Apps/Game.h"
+#include "Engine/Objects/Projectiles/ProjectileManager.h"
 #include "SDL2_mixer/SDL_mixer.h"
 
 void RunningState::Enter() {
@@ -32,29 +33,48 @@ void StartState::Enter() {
     Application::Get().GetAudioManager().SetMusicVolume(80);
     Application::Get().GetAudioManager().PlayMusic("pause-screen", true);
     timer.Pause();
+    SDL_Log("start state enter called");
 }
 
 void StartState::Exit() {}
 
 void StartState::Draw() {
-    m_game.DrawObjects();
+    //m_game.DrawObjects();
     m_start_screen.Draw();
 }
 
 State* StartState::Update(float dt) {
-    m_game.UpdateObjects(dt);
+    //m_game.UpdateObjects(dt);
     m_start_screen.Update();
     return nullptr;
 }
 
 State* StartState::HandleEvent(Event* event) {
-    switch (event->GetEventType()) {
-        case EventType::StartGameEvent: {
-            return new RunningState(m_game);
-        }
-        default:
-            break;
+    return nullptr;
+}
+
+void RoomTransitionState::Enter() {}
+
+void RoomTransitionState::Exit() {
+    if (m_next_room_id == "") {
+        SDL_Log("room transition state next room id is null");
+        assert(false);
     }
+    m_game.LoadRoom(m_next_room_id);
+}
+
+void RoomTransitionState::Draw() {}
+
+State* RoomTransitionState::Update(float dt) {
+    if (timer.GetTicks() - m_enter_time > m_transition_time) {
+        SDL_Log("in room transition state to running state: %d",
+                m_transition_time);
+        return new RunningState(m_game);
+    }
+    return nullptr;
+}
+
+State* RoomTransitionState::HandleEvent(Event* event) {
     return nullptr;
 }
 
@@ -133,7 +153,7 @@ void LevelUpState::Exit() {
 const std::unordered_map<std::string, Option> kLevelUpOptions = {
     {"damage",
      {"+10% Damage", "Increases damage by 10%",
-      []() {
+      [](auto& button) {
           auto& stats = Application::Get().GetPlayer()->GetMutableStats();
 
           stats.SetRangedDamage(stats.GetRangedDamage() +
@@ -142,7 +162,7 @@ const std::unordered_map<std::string, Option> kLevelUpOptions = {
       }}},
     {"health",
      {"+10% Health", "Increases health by 10%",
-      []() {
+      [](auto& button) {
           auto& stats = Application::Get().GetPlayer()->GetMutableStats();
 
           stats.SetMaxHealth(stats.GetMaxHealth() + stats.GetMaxHealth() * 0.1);
@@ -150,7 +170,7 @@ const std::unordered_map<std::string, Option> kLevelUpOptions = {
       }}},
     {"speed",
      {"+10% Speed", "Increases speed by 10%",
-      []() {
+      [](auto& button) {
           auto& stats = Application::Get().GetPlayer()->GetMutableStats();
 
           stats.SetSpeed(stats.GetSpeed() + stats.GetSpeed() * 0.1);
@@ -159,7 +179,7 @@ const std::unordered_map<std::string, Option> kLevelUpOptions = {
       }}},
     {"piercing",
      {"+1 Piercing", "Increases piercing by 1",
-      []() {
+      [](auto& button) {
           auto& stats = Application::Get().GetPlayer()->GetMutableStats();
 
           stats.SetPiercing(stats.GetPiercing() + 1);
@@ -167,7 +187,7 @@ const std::unordered_map<std::string, Option> kLevelUpOptions = {
       }}},
     {"armor",
      {"+10% Armor", "Increases armor by 10%",
-      []() {
+      [](auto& button) {
           auto& stats = Application::Get().GetPlayer()->GetMutableStats();
 
           stats.SetArmorPercentage(stats.GetArmorPercentage() +
@@ -176,7 +196,7 @@ const std::unordered_map<std::string, Option> kLevelUpOptions = {
       }}},
     {"regen",
      {"+1 HP Regen", "Increases HP regen by 1",
-      []() {
+      [](auto& button) {
           auto& stats = Application::Get().GetPlayer()->GetMutableStats();
 
           stats.SetHpRegenRate(stats.GetHPRegenRate() + 1);
@@ -184,7 +204,7 @@ const std::unordered_map<std::string, Option> kLevelUpOptions = {
       }}},
     {"lifesteal",
      {"+5% Lifesteal", "Increases lifesteal by 5%",
-      []() {
+      [](auto& button) {
           auto& stats = Application::Get().GetPlayer()->GetMutableStats();
 
           stats.SetLifeStealPercentage(stats.GetLifeStealPercentage() + 5);
@@ -192,7 +212,7 @@ const std::unordered_map<std::string, Option> kLevelUpOptions = {
       }}},
     {"dodge",
      {"+1 Dodge", "Increases dodge by 1",
-      []() {
+      [](auto& button) {
           auto& stats = Application::Get().GetPlayer()->GetMutableStats();
 
           stats.SetDodgeCd(stats.GetDodgeCd() - 1);
@@ -200,7 +220,7 @@ const std::unordered_map<std::string, Option> kLevelUpOptions = {
       }}},
     {"ranged",
      {"+5 Ranged Damage", "Increases ranged damage by 5",
-      []() {
+      [](auto& button) {
           auto& stats = Application::Get().GetPlayer()->GetMutableStats();
 
           stats.SetRangedDamage(stats.GetRangedDamage() + 5);
@@ -208,7 +228,7 @@ const std::unordered_map<std::string, Option> kLevelUpOptions = {
       }}},
     {"melee",
      {"+5 Melee Damage", "Increases melee damage by 5",
-      []() {
+      [](auto& button) {
           auto& stats = Application::Get().GetPlayer()->GetMutableStats();
 
           stats.SetMeleeDamage(stats.GetMeleeDamage() + 5);
@@ -240,13 +260,13 @@ LevelUpState::LevelUpState(Game& game) : GameState(game) {
         }
 
         m_option_one_button = Button("buttons", SDL_Rect{x, y, w, h},
-                                     m_options[opt_one_index].text,
+                                     {m_options[opt_one_index].text},
                                      m_options[opt_one_index].side_effect);
         m_option_two_button = Button("buttons", SDL_Rect{x * 2, y, w, h},
-                                     m_options[opt_two_index].text,
+                                     {m_options[opt_two_index].text},
                                      m_options[opt_two_index].side_effect);
         m_option_three_button = Button("buttons", SDL_Rect{x * 3, y, w, h},
-                                       m_options[opt_three_index].text,
+                                       {m_options[opt_three_index].text},
                                        m_options[opt_three_index].side_effect);
     }
 }

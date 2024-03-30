@@ -23,6 +23,7 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
     UserEvent event_wrapper;
     State* state = nullptr;
     event_wrapper.SetSDLEvent(&event);
+    Game& game = static_cast<Game&>(Application::Get());
     while (SDL_PollEvent(&event) != 0) {
         switch (event.type) {
             case SDL_QUIT:
@@ -146,6 +147,7 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
 State* GameEventManager::HandleCustomEvents(const SDL_Event& event,
                                             ItemManager* ItemManager,
                                             State* GameState) {
+    Game& game = static_cast<Game&>(Application::Get());
     switch (static_cast<EventType>(event.user.code)) {
         case EventType::UserEvent: {
             // Todo: once UserEvent is implemented to use
@@ -185,8 +187,8 @@ State* GameEventManager::HandleCustomEvents(const SDL_Event& event,
         }
         case EventType::StartGameEvent: {
             StartGameEvent start_game_event;
-            State* state = GameState->HandleEvent(&start_game_event);
-            return state;
+            game.HandleEvent(&start_game_event);
+            break;
         }
         case EventType::ContinueGameEvent: {
             ContinueGameEvent continue_game_event;
@@ -200,12 +202,13 @@ State* GameEventManager::HandleCustomEvents(const SDL_Event& event,
             return new GameOverState(static_cast<Game&>(Application::Get()));
         }
         case EventType::RestartGameEvent: {
-            auto* game = static_cast<Game*>(&Application::Get());
-            game->GetPlayer()->Clean();
-            game->GetPlayer()->Init();
-            game->ResetObjects();
-            game->ResetManagers();
+            game.Restart();
             return new StartState(static_cast<Game&>(Application::Get()));
+        }
+        case EventType::RoomTransitionEvent: {
+            RoomTransitionEvent e(*(std::string*)event.user.data1);
+            game.HandleEvent(&e);
+            break;
         }
         case EventType::PlayerLevelUpEvent:
             timer.Pause();

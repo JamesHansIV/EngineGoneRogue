@@ -1,4 +1,5 @@
 #include "StartScreen.h"
+#include "Apps/Game.h"
 #include "Engine/Objects/Characters/Player.h"
 
 StartScreen::StartScreen() {
@@ -14,12 +15,27 @@ StartScreen::StartScreen() {
                                {0, 0, window_width, window_height});
 
     int const x = (window_width - 100) / 2;
-    int const y = window_height - 125;
-    m_start_button = Button("buttons", SDL_Rect{x, y, 100, 60}, "Start", []() {
-        SDL_Log("Start button clicked");
-        timer.Unpause();
-        PushNewEvent(EventType::StartGameEvent);
-    });
+    int const y = window_height - 170;
+    m_start_button =
+        Button("buttons", SDL_Rect{x, y, 100, 60}, {"Start"}, [](auto& button) {
+            SDL_Log("Start button clicked");
+            timer.Unpause();
+            PushNewEvent(EventType::StartGameEvent);
+        });
+    int const endless_x = (window_width - 150) / 2;
+
+    m_toggle_endless = Button("buttons", SDL_Rect{endless_x, y + 60, 150, 80},
+                              {"Normal", "Endless"}, [](auto& button) {
+                                  SDL_Log("Toggle endless button clicked");
+                                  if (button.GetText() == "Endless") {
+                                      button.SetText("Normal");
+                                  } else {
+                                      button.SetText("Endless");
+                                  }
+                                  Game& game =
+                                      static_cast<Game&>(Application::Get());
+                                  game.SetEndless(!game.GetEndless());
+                              });
 }
 
 StartScreen::~StartScreen() {}
@@ -27,6 +43,7 @@ StartScreen::~StartScreen() {}
 void StartScreen::Draw() {
     m_background.Draw(m_background_src);
     m_start_button.Draw();
+    m_toggle_endless.Draw();
 }
 
 void StartScreen::Update() {
@@ -34,6 +51,7 @@ void StartScreen::Update() {
     const int window_height = Application::Get().GetWindowHeight();
     m_background.ChangeDst({0, 0, window_width, window_height});
     m_start_button.Update();
+    m_toggle_endless.Update();
 }
 
 State* StartScreen::HandleEvent(Event* event) {

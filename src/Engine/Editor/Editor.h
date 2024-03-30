@@ -15,6 +15,8 @@
 #include "Engine/utils/utils.h"
 #include "Engine/ClipBoard/ClipBoard.h"
 
+#include "Engine/Editor/UI/Toolbar.h"
+
 #include <tuple>
 
 struct EEnemyInfo {
@@ -95,6 +97,8 @@ class Editor : public Application {
     void ShowTextureIDs();
     void ShowObjectManager();
 
+    void ShowToolBar();
+
     void CreateProjectFolder();
     void AddRoom();
     void SaveRoom(const char* roomName);
@@ -119,6 +123,9 @@ class Editor : public Application {
     std::unordered_map<std::string, std::pair<int,int>>m_cursor_offsets;
     TileCoords m_mouse_input_origin;
     ClipBoard* m_clipboard;
+    Toolbar* m_toolbar;
+
+
 
     // static std::vector<std::vector<GameObject*>>* s_layers;
 
@@ -132,11 +139,12 @@ class Editor : public Application {
     void HandleDragMoveAction(SDL_Event& event);
     void HandlePaintBucketAction(SDL_Event& event);
     void HandleDeleteSelectionAction();
-    void HandleCopySelectionAciton();
+    void HandleCopySelectionAction();
+    void HandleCutSelectionAction();
     void HandlePasteClipboardAction();
 
     // action handler helpers
-    bool SelectTile(int x, int y); // returns true if selection is made, false if no selection is made, x & y are tile coords
+    bool SelectTile(int x, int y, bool multi_select_enabled); // returns true if selection is made, false if no selection is made, x & y are tile coords
     bool IsMouseOverASelectedTile (TileCoords coords);
     bool IsTileEmpty(TileCoords coords);
     void StopEditing();
@@ -154,4 +162,7 @@ class Editor : public Application {
 
     // undo redo
     ActionRecordHandler* m_action_record_handler;
+
+    std::string m_help_popup_text;
+    void BuildHelpPopUpText();
 };

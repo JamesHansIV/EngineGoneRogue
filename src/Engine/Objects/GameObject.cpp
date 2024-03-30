@@ -13,6 +13,7 @@ GameObject::GameObject(GameObject* rhs) {
     if (rhs->m_animation != nullptr) {
         m_animation = new Animation(rhs->m_animation);
     }
+    Initialize();
 }
 
 GameObject::~GameObject() {

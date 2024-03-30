@@ -27,10 +27,7 @@ State* SlimeHandleCollide(Slime* enemy, Collider* collidee) {
         }
         case ObjectType::Entrance: {
             auto* entrance = dynamic_cast<Entrance*>(collidee);
-            if (entrance->GetCurrentState()->GetType() == StateType::Closed ||
-                entrance->GetCurrentState()->GetType() == StateType::Opening) {
-                enemy->UnCollide(collidee);
-            }
+            enemy->UnCollide(collidee);
             break;
         }
         case ObjectType::Player:
@@ -317,11 +314,7 @@ State* SlimeIsHit::OnCollideEvent(CollideEvent* event) {
             break;
         }
         case ObjectType::Entrance: {
-            if (dynamic_cast<Entrance*>(collidee)
-                    ->GetCurrentState()
-                    ->GetType() != StateType::Opened) {
-                GetEnemy()->UnCollide(collidee);
-            }
+            GetEnemy()->UnCollide(collidee);
             break;
         }
         case ObjectType::Player:

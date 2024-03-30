@@ -41,4 +41,36 @@
         <OffsetX>-2</OffsetX>
         <OffsetY>20</OffsetY>
     </Texture>
+    <Texture type="icon">
+        <FilePath>../assets/editor/icons/delete_icon.png</FilePath>
+        <ID>editor-icon-delete-selection</ID>
+    </Texture>
+    <Texture type="icon">
+        <FilePath>../assets/editor/icons/selection_icon.png</FilePath>
+        <ID>editor-icon-selection</ID>
+    </Texture>
+    <Texture type="icon">
+        <FilePath>../assets/editor/icons/undo_icon.png</FilePath>
+        <ID>editor-icon-undo</ID>
+    </Texture>
+    <Texture type="icon">
+        <FilePath>../assets/editor/icons/redo_icon.png</FilePath>
+        <ID>editor-icon-redo</ID>
+    </Texture>
+    <Texture type="icon">
+        <FilePath>../assets/editor/icons/copy_icon.png</FilePath>
+        <ID>editor-icon-copy</ID>
+    </Texture>
+    <Texture type="icon">
+        <FilePath>../assets/editor/icons/paste_icon.png</FilePath>
+        <ID>editor-icon-paste</ID>
+    </Texture>
+    <Texture type="icon">
+        <FilePath>../assets/editor/icons/cut_icon.png</FilePath>
+        <ID>editor-icon-cut</ID>
+    </Texture>
+    <Texture type="icon">
+        <FilePath>../assets/editor/icons/help_icon.png</FilePath>
+        <ID>editor-icon-help</ID>
+    </Texture>
 </Root>

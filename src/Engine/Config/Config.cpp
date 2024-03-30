@@ -1,4 +1,6 @@
 #include "Config.h"
+#include <fstream>
+#include <typeinfo>
 #include "Engine/Objects/Characters/Charger.h"
 #include "Engine/Objects/Characters/Dog.h"
 #include "Engine/Objects/Characters/Goblin.h"
@@ -9,6 +11,7 @@
 #include "Engine/Objects/Characters/Skeleton.h"
 #include "Engine/Objects/Characters/Slime.h"
 #include "Engine/Objects/Collider.h"
+#include "Engine/Objects/Environment/Entrance.h"
 #include "Engine/Renderer/Renderer.h"
 
 void WriteColliderInfo(tinyxml2::XMLDocument& doc, tinyxml2::XMLElement* xmlObj,
@@ -88,6 +91,37 @@ void WriteBaseObjectInfo(tinyxml2::XMLDocument& doc,
     xmlObj->InsertEndChild(dst_rect);
 }
 
+void WriteStatsInfo(tinyxml2::XMLDocument& doc, tinyxml2::XMLElement* xmlObj, EnemyStats stats) {
+    tinyxml2::XMLElement* stats_element = doc.NewElement("EnemyStats");
+    
+    stats_element->SetAttribute("health", stats.health);
+    stats_element->SetAttribute("damage", stats.damage);
+    stats_element->SetAttribute("speed", stats.speed);
+    stats_element->SetAttribute("range", stats.range);
+    stats_element->SetAttribute("perception_width", stats.perceptionWidth);
+    stats_element->SetAttribute("perception_height", stats.perceptionHeight);
+    stats_element->SetAttribute("xp", stats.xpGiven);
+
+    xmlObj->InsertEndChild(stats_element);
+}
+
+void WriteStatsInfo(tinyxml2::XMLDocument& doc, tinyxml2::XMLElement* xmlObj, RangedEnemyStats stats) {
+    tinyxml2::XMLElement* stats_element = doc.NewElement("RangedEnemyStats");
+    
+    stats_element->SetAttribute("health", stats.health);
+    stats_element->SetAttribute("damage", stats.damage);
+    stats_element->SetAttribute("speed", stats.speed);
+    stats_element->SetAttribute("range", stats.range);
+    stats_element->SetAttribute("perception_width", stats.perceptionWidth);
+    stats_element->SetAttribute("perception_height", stats.perceptionHeight);
+    stats_element->SetAttribute("xp", stats.xpGiven);
+    stats_element->SetAttribute("fire_interval", stats.fireInterval);
+    stats_element->SetAttribute("spread", stats.spread);
+    stats_element->SetAttribute("spread_count", stats.spreadCount);
+
+    xmlObj->InsertEndChild(stats_element);
+}
+
 int SaveObjects(const char* filepath, const std::vector<GameObject*>& objects) {
     tinyxml2::XMLDocument doc;
     tinyxml2::XMLElement* root = doc.NewElement("Root");
@@ -97,10 +131,14 @@ int SaveObjects(const char* filepath, const std::vector<GameObject*>& objects) {
     tinyxml2::XMLElement* types;
     tinyxml2::XMLElement* type;
 
+    std::cout << "Saving " << objects.size() << " objects\n";
+
+    int num_enemies = 0;
     for (auto* obj : objects) {
-        if (obj->GetObjectType() == ObjectType::Enemy) {
-            continue;
-        }
+        // if (obj->GetObjectType() == ObjectType::Enemy) {
+        //     num_enemies++;
+        //     continue;
+        // }
         curr_xml_object = doc.NewElement("Object");
         types = doc.NewElement("Types");
         curr_xml_object->InsertEndChild(types);
@@ -115,8 +153,55 @@ int SaveObjects(const char* filepath, const std::vector<GameObject*>& objects) {
             WriteColliderInfo(doc, curr_xml_object, collider);
             types->SetAttribute("collider", "1");
         }
+
+        // if (obj->GetObjectType() == ObjectType::Enemy) {
+        //     WriteStatsInfo(doc, curr_xml_object,
+        // }
+
+
+
+        // type handling
+        const std::type_info& obj_type = typeid(*obj);
+        std::cout << "obj type: " << obj_type.name() << std::endl;
+
+        if (strcmp(obj_type.name(), "5Slime") == 0) {
+            types->SetAttribute("slime", "1");
+            WriteStatsInfo(doc, curr_xml_object, dynamic_cast<Enemy*>(obj)->GetEnemyStats());
+        }
+        if (strcmp(obj_type.name(), "13RingShotEnemy") == 0) {
+            types->SetAttribute("ranged_enemy", "1");
+            types->SetAttribute("ring_shot_enemy", "1");
+            WriteStatsInfo(doc, curr_xml_object, dynamic_cast<RangedEnemy*>(obj)->GetRangedEnemyStats());
+        }
+        if (strcmp(obj_type.name(), "3Dog") == 0) {
+            types->SetAttribute("ranged_enemy", "1");
+            types->SetAttribute("dog", "1");
+            WriteStatsInfo(doc, curr_xml_object, dynamic_cast<RangedEnemy*>(obj)->GetRangedEnemyStats());
+        }
+        if (strcmp(obj_type.name(), "10HelixEnemy") == 0) {
+            types->SetAttribute("ranged_enemy", "1");
+            types->SetAttribute("helix_enemy", "1");
+            WriteStatsInfo(doc, curr_xml_object, dynamic_cast<RangedEnemy*>(obj)->GetRangedEnemyStats());
+        }
+        if (strcmp(obj_type.name(), "6Goblin") == 0) {
+            types->SetAttribute("ranged_enemy", "1");
+            types->SetAttribute("goblin", "1");
+            WriteStatsInfo(doc, curr_xml_object, dynamic_cast<RangedEnemy*>(obj)->GetRangedEnemyStats());
+        }
+        if (strcmp(obj_type.name(), "8Skeleton") == 0) {
+            types->SetAttribute("ranged_enemy", "1");
+            types->SetAttribute("skeleton", "1");
+            WriteStatsInfo(doc, curr_xml_object, dynamic_cast<RangedEnemy*>(obj)->GetRangedEnemyStats());
+        }
+        if (strcmp(obj_type.name(), "4Mage") == 0) {
+            types->SetAttribute("ranged_enemy", "1");
+            types->SetAttribute("mage", "1");
+            WriteStatsInfo(doc, curr_xml_object, dynamic_cast<RangedEnemy*>(obj)->GetRangedEnemyStats());
+        }
         root->InsertEndChild(curr_xml_object);
     }
+
+    std::cout << "num enemies " << num_enemies << std::endl;
 
     return doc.SaveFile(filepath);
 }
@@ -383,6 +468,18 @@ GameObject* BuildRangedEnemy(tinyxml2::XMLElement* types,
     return new_obj;
 }
 
+GameObject* BuildEntrance(tinyxml2::XMLElement* types,
+                          tinyxml2::XMLElement* xmlObj, GameObject* obj) {
+
+    SDL_Log("entrance has next room id: %s", types->Attribute("next_room_id"));
+    GameObject* new_obj = new Entrance(
+        static_cast<Collider*>(obj), types->Attribute("curr_room_id"),
+        types->Attribute("next_room_id"), atoi(types->Attribute("next_x")),
+        atoi(types->Attribute("next_y")));
+
+    return new_obj;
+}
+
 GameObject* BuildObjectOnType(tinyxml2::XMLElement* types,
                               tinyxml2::XMLElement* xmlObj, GameObject* obj) {
     GameObject* new_obj = obj;
@@ -423,6 +520,10 @@ GameObject* BuildObjectOnType(tinyxml2::XMLElement* types,
         new_obj = BuildRangedEnemy(types, xmlObj, new_obj);
     }
 
+    if (types->Attribute("entrance") != nullptr) {
+        new_obj = BuildEntrance(types, xmlObj, new_obj);
+    }
+
     return new_obj;
 }
 
@@ -434,7 +535,9 @@ std::vector<GameObject*> LoadObjects(const char* filepath) {
 
     tinyxml2::XMLError const error = doc.LoadFile(filepath);
     if (error != tinyxml2::XML_SUCCESS) {
-        SDL_LogError(0, "Could not load objects file");
+        std::string what =
+            "Could not load objects file: " + std::string(filepath);
+        SDL_LogError(0, what.c_str());
         return objects;
     }
 
@@ -474,7 +577,7 @@ std::vector<GameObject*> LoadObjects(const char* filepath) {
         };
 
         created_obj = BuildObjectOnType(types, curr_object, created_obj);
-
+        // std::cout << created_obj->GetStateType() << std::endl;
         objects.push_back(created_obj);
 
         curr_object = curr_object->NextSiblingElement("Object");
@@ -524,4 +627,57 @@ bool LoadTextures(const char* projectPath) {
         curr_texture = curr_texture->NextSiblingElement("Texture");
     }
     return true;
+}
+
+std::string LoadStartRoom(const char* path, int& x, int& y) {
+    std::string room_order_path = path;
+    room_order_path += "/start_room.txt";
+
+    std::string line;
+
+    std::ifstream file;
+
+    std::string start_room;
+
+    file.open(room_order_path.c_str());
+
+    if (file.is_open()) {
+        getline(file, line);
+        start_room = line;
+
+        getline(file, line);
+        x = atoi(line.c_str());
+        getline(file, line);
+        y = atoi(line.c_str());
+    } else {
+        SDL_Log("FAILED TO LOAD ROOM ORDER FILE");
+    }
+
+    file.close();
+    return start_room;
+}
+
+std::pair<int, int> LoadStartPosition(const char* path) {
+    std::string line;
+
+    std::ifstream file;
+
+    SDL_Log("path: %s", path);
+    file.open(path);
+
+    int x = 0;
+    int y = 0;
+
+    if (file.is_open()) {
+        getline(file, line);
+        x = atoi(line.c_str());
+        getline(file, line);
+        y = atoi(line.c_str());
+    } else {
+        SDL_Log("FAILED TO LOAD START POSITION FILE");
+    }
+    SDL_Log("start position: %d %d", x, y);
+
+    file.close();
+    return {x, y};
 }
