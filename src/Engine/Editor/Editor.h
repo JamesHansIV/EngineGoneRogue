@@ -95,6 +95,8 @@ class Editor : public Application {
     void ShowTextureIDs();
     void ShowObjectManager();
 
+    void ShowToolBar();
+
     void CreateProjectFolder();
     void AddRoom();
     void SaveRoom(const char* roomName);

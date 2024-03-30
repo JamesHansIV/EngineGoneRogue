@@ -986,6 +986,68 @@ void Editor::ShowObjectManager() {
     ImGui::End();
 }
 
+void Editor::ShowToolBar() {
+    int width = 54;
+    int vertical_gap = 50;
+    int horizontal_gap = 20;
+    float button_size = 30;
+    ImVec2 button_size_vector = {button_size, button_size};
+
+    // center buttons
+
+    ImGuiViewport* viewport = ImGui::GetMainViewport();
+	ImGui::SetNextWindowPos(ImVec2(viewport->Pos.x + horizontal_gap, viewport->Pos.y + vertical_gap));
+	ImGui::SetNextWindowSize(ImVec2(width, viewport->Size.y - 2 * vertical_gap));
+	ImGui::SetNextWindowViewport(viewport->ID);
+    
+    ImGuiWindowFlags flags = 0
+        | ImGuiWindowFlags_NoDocking 
+		| ImGuiWindowFlags_NoTitleBar 
+		| ImGuiWindowFlags_NoResize 
+		| ImGuiWindowFlags_NoMove 
+		| ImGuiWindowFlags_NoScrollbar 
+		| ImGuiWindowFlags_NoSavedSettings
+		;
+
+    ImGui::Begin("Toolbar", NULL, flags);
+
+    // ImGui::SetCursorPosX((width - button_size) * 0.5f);
+    // ImGuiStyle& style = ImGui::GetStyle();
+
+    if (ImGui::ImageButton(Renderer::GetInstance().GetTexture("editor-icon-selection")->GetTexture(), button_size_vector)) {
+        StopEditing();
+        m_selected_objects.clear();
+        m_selected_obj_origin_map.clear();
+    }
+    if (ImGui::ImageButton(Renderer::GetInstance().GetTexture("editor-cursor-multi-select")->GetTexture(), button_size_vector)) {
+        m_edit_state.EditMode = m_edit_state.EditMode != EditMode::TILE_SELECT ? EditMode::TILE_SELECT : EditMode::NONE;
+        m_cursor->SetCursor(m_edit_state.EditMode);
+    };
+    if (ImGui::ImageButton(Renderer::GetInstance().GetTexture("editor-cursor-drag-move")->GetTexture(), button_size_vector)) {
+        m_edit_state.EditMode = m_edit_state.EditMode != EditMode::DRAG_MOVE ? EditMode::DRAG_MOVE : EditMode::NONE;
+        m_cursor->SetCursor(m_edit_state.EditMode);
+    };
+    if (ImGui::ImageButton(Renderer::GetInstance().GetTexture("editor-cursor-draw")->GetTexture(), button_size_vector)) {
+        m_edit_state.EditMode = m_edit_state.EditMode != EditMode::DRAW ? EditMode::DRAW : EditMode::NONE;
+        m_cursor->SetCursor(m_edit_state.EditMode);
+    };
+    if (ImGui::ImageButton(Renderer::GetInstance().GetTexture("editor-cursor-paint-bucket")->GetTexture(), button_size_vector)) {
+        m_edit_state.EditMode = m_edit_state.EditMode != EditMode::PAINT_BUCKET ? EditMode::PAINT_BUCKET : EditMode::NONE;
+        m_cursor->SetCursor(m_edit_state.EditMode);
+    };
+    if (ImGui::ImageButton(Renderer::GetInstance().GetTexture("editor-cursor-erase")->GetTexture(), button_size_vector)) {
+        m_edit_state.EditMode = m_edit_state.EditMode != EditMode::ERASE ? EditMode::ERASE : EditMode::NONE;
+        m_cursor->SetCursor(m_edit_state.EditMode);
+    };
+    if (ImGui::ImageButton(Renderer::GetInstance().GetTexture("editor-icon-delete-selection")->GetTexture(), button_size_vector)) {
+        HandleDeleteSelectionAction();
+    };
+
+    // ADD GAP then "Color pallete" (like ms paints color switch and pallete at bottom of toolbar)
+
+    ImGui::End();
+}
+
 void Editor::Update(float /*dt*/) {
     // Now includes checks for previous keys
 
@@ -1074,6 +1136,7 @@ void Editor::Render() {
 
     ImGui::ShowDemoWindow();
     ShowObjectManager();
+    ShowToolBar();
 
     ImGui::Render();
 
@@ -1720,12 +1783,16 @@ bool Editor::LoadEditorTextures() {
                 curr_texture->FirstChildElement("FilePath")->GetText();
             Renderer::GetInstance().AddTexture(id, texture_path);
 
-            int offsetX = std::stoi(
-                curr_texture->FirstChildElement("OffsetX")->GetText());
-            int offsetY = std::stoi(
-                curr_texture->FirstChildElement("OffsetY")->GetText());
+            if (type == "cursor"){
+                int offsetX = std::stoi(
+                    curr_texture->FirstChildElement("OffsetX")->GetText());
+                int offsetY = std::stoi(
+                    curr_texture->FirstChildElement("OffsetY")->GetText());
 
-            m_cursor_offsets[id] = {offsetX, offsetY};
+                m_cursor_offsets[id] = {offsetX, offsetY};
+            } else {
+                std::cout << "TYPE: " << type << std::endl;
+            }
         }
 
         curr_texture = curr_texture->NextSiblingElement("Texture");
