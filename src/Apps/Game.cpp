@@ -20,6 +20,7 @@
 #include "Engine/Objects/GameObject.h"
 #include "Engine/Objects/HealthPotion.h"
 #include "Engine/Objects/Item.h"
+#include "Engine/Objects/Trap.h"
 #include "Engine/Objects/Weapons/Weapon.h"
 #include "Engine/Renderer/Renderer.h"
 #include "Engine/State/GameState.h"
@@ -126,6 +127,16 @@ Game::Game() {
     InitManagers();
 
     InitEnemyCopies();
+
+    Properties p_trap("", {0, 0, 16, 16}, {500, 500, 32, 32}, 0.0);
+    Trap* trap = new Trap(p_trap, 30);
+    m_objects.push_back(trap);
+    Properties p_trap2("", {0, 0, 16, 16}, {600, 1000, 32, 32}, 0.0);
+    Trap* trap2 = new Trap(p_trap2, 30);
+    m_objects.push_back(trap2);
+    Properties p_trap3("", {0, 0, 16, 16}, {1000, 500, 32, 32}, 0.0);
+    Trap* trap3 = new Trap(p_trap3, 30);
+    m_objects.push_back(trap3);
 
     SDL_Cursor* cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR);
 

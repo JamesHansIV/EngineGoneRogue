@@ -14,6 +14,7 @@ enum class ObjectType {
     HealthPotion,
     Chest,
     Grenade,
+    Trap
 };
 
 class IObject {

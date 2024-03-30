@@ -7,6 +7,7 @@
 #include "Engine/Objects/Grenade.h"
 #include "Engine/Objects/IObject.h"
 #include "Engine/Objects/Projectiles/Projectile.h"
+#include "Engine/Objects/Trap.h"
 #include "Engine/Objects/Weapons/MeleeWeapon.h"
 
 State* SlimeHandleCollide(Slime* enemy, Collider* collidee) {
@@ -56,6 +57,7 @@ State* SlimeHandleCollide(Slime* enemy, Collider* collidee) {
             enemy->UnCollide(collidee);
             break;
         }
+        case ObjectType::Trap: 
         case ObjectType::Chest:
         case ObjectType::Enemy:
         case ObjectType::Collider:

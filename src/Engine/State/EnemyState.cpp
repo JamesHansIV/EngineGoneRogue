@@ -3,6 +3,7 @@
 #include "Engine/Objects/Characters/Player.h"
 #include "Engine/Objects/Environment/Entrance.h"
 #include "Engine/Objects/Grenade.h"
+#include "Engine/Objects/Trap.h"
 #include "Engine/Objects/Weapons/MeleeWeapon.h"
 
 // 2 ways to have a general enemystate:
@@ -48,6 +49,7 @@ State* EnemyHandleCollide(Enemy& enemy, Collider* collidee) {
             enemy.UnCollide(collidee);
             break;
         }
+        case ObjectType::Trap:
         case ObjectType::Chest:
         case ObjectType::Enemy:
         case ObjectType::Collider:

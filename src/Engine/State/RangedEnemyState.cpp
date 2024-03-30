@@ -6,7 +6,9 @@
 #include "Engine/Objects/ColliderHandler.h"
 #include "Engine/Objects/Environment/Entrance.h"
 #include "Engine/Objects/Grenade.h"
+#include "Engine/Objects/IObject.h"
 #include "Engine/Objects/Projectiles/Projectile.h"
+#include "Engine/Objects/Trap.h"
 #include "Engine/Objects/Weapons/MeleeWeapon.h"
 #include "Engine/utils/utils.h"
 
@@ -53,6 +55,11 @@ State* RangedEnemyHandleCollide(RangedEnemy* enemy, Collider* collidee) {
                 return new RangedEnemyIsHit(enemy, grenade->GetDamage());
             }
 
+            enemy->UnCollide(collidee);
+            break;
+        }
+        case ObjectType::Trap: {
+            auto* grenade = dynamic_cast<Trap*>(collidee);
             enemy->UnCollide(collidee);
             break;
         }
@@ -279,6 +286,7 @@ State* RangedEnemyIsHit::OnCollideEvent(CollideEvent* event) {
         case ObjectType::Grenade:
         case ObjectType::Player:
         case ObjectType::Enemy:
+        case ObjectType::Trap:
         case ObjectType::Collider:
             GetEnemy()->UnCollide(collidee);
             break;
