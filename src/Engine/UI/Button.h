@@ -96,6 +96,8 @@ class Button {
         }
     }
 
+    void SetState(ButtonState state) { m_state = state; }
+
    private:
     std::string m_texture_id;
     DrawElement m_draw_element;

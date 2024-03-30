@@ -45,7 +45,7 @@ class Game : public Application {
 
     void InitEndless();
 
-    bool GetEndless() { return m_endless; }
+    [[nodiscard]] bool GetEndless() const { return m_endless; }
 
     void SetEndless(bool endless) { m_endless = endless; }
 

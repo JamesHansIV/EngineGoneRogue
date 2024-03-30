@@ -39,7 +39,7 @@ StartScreen::StartScreen() {
                });
 }
 
-StartScreen::~StartScreen() {}
+StartScreen::~StartScreen() = default;
 
 void StartScreen::Draw() {
     m_background.Draw(m_background_src);
@@ -49,12 +49,20 @@ void StartScreen::Draw() {
 }
 
 void StartScreen::Update() {
+    Game& game = static_cast<Game&>(Application::Get());
     const int window_width = Application::Get().GetWindowWidth();
     const int window_height = Application::Get().GetWindowHeight();
     m_background.ChangeDst({0, 0, window_width, window_height});
     m_start_button.Update();
     m_normal_mode.Update();
     m_endless_mode.Update();
+    if (game.GetEndless()) {
+        m_endless_mode.SetState(ButtonState::ButtonStateHover);
+        m_normal_mode.SetState(ButtonState::ButtonStateNormal);
+    } else {
+        m_endless_mode.SetState(ButtonState::ButtonStateNormal);
+        m_normal_mode.SetState(ButtonState::ButtonStateHover);
+    }
 }
 
 State* StartScreen::HandleEvent(Event* event) {
