@@ -537,7 +537,7 @@ std::vector<GameObject*> LoadObjects(const char* filepath) {
     if (error != tinyxml2::XML_SUCCESS) {
         std::string what =
             "Could not load objects file: " + std::string(filepath);
-        SDL_LogError(0, what.c_str());
+        SDL_LogError(0, "%s",what.c_str());
         return objects;
     }
 
