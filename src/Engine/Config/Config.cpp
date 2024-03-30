@@ -1,4 +1,5 @@
 #include "Config.h"
+#include <stdlib.h>
 #include <cstddef>
 #include <fstream>
 #include <typeinfo>
@@ -157,6 +158,21 @@ int SaveObjects(const char* filepath, const std::vector<GameObject*>& objects) {
         if (auto* collider = dynamic_cast<Collider*>(obj)) {
             WriteColliderInfo(doc, curr_xml_object, collider);
             types->SetAttribute("collider", "1");
+        }
+
+        if (auto* entrance = dynamic_cast<Entrance*>(obj)) {
+            types->SetAttribute("curr_room_id",
+                                entrance->GetCurrentRoomID().c_str());
+            types->SetAttribute("next_room_id",
+                                entrance->GetNextRoomID().c_str());
+            std::pair<int, int> next_start = entrance->GetNextStart();
+            types->SetAttribute("next_x", next_start.first);
+            types->SetAttribute("next_y", next_start.second);
+        }
+
+        if (auto* trap = dynamic_cast<Trap*>(obj)) {
+            types->SetAttribute("trap", "1");
+            types->SetAttribute("damage", trap->GetDamage());
         }
 
         // if (obj->GetObjectType() == ObjectType::Enemy) {
