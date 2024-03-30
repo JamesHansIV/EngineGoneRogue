@@ -51,6 +51,7 @@ void Toolbar::InitActionDescriptionBindPairs() {
         {"Pan camera right", EditorAction::PAN_CAMERA_RIGHT},
         {"Pan camera left", EditorAction::PAN_CAMERA_LEFT},
         {"Copy selection", EditorAction::COPY_SELECTION},
+        {"Cut Selection", EditorAction::CUT_SELECTION},
         {"Paste clipboard", EditorAction::PASTE_CLIPBOARD},
         {"Undo", EditorAction::UNDO_ACTION},
         {"Redo", EditorAction::REDO_ACTION},
