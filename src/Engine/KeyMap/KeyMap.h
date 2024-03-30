@@ -41,6 +41,8 @@ class KeyMap {
 
         static Bind CreateBind(EditorAction action, InputType input_type, std::vector<SDL_KeyCode> keys);
 
+        std::unordered_map<EditorAction, Bind> GetBindingMap() { return m_Bindings_Map; }
+
     private:
         std::unordered_map<EditorAction, Bind> m_Bindings_Map;
         // std::map<EditorAction, Bind> m_Default_Bindings_Map;

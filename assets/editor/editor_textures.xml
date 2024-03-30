@@ -69,4 +69,8 @@
         <FilePath>../assets/editor/icons/cut_icon.png</FilePath>
         <ID>editor-icon-cut</ID>
     </Texture>
+    <Texture type="icon">
+        <FilePath>../assets/editor/icons/help_icon.png</FilePath>
+        <ID>editor-icon-help</ID>
+    </Texture>
 </Root>
