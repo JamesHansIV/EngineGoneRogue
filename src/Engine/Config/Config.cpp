@@ -162,7 +162,7 @@ int SaveObjects(const char* filepath, const std::vector<GameObject*>& objects) {
 
         // type handling
         const std::type_info& obj_type = typeid(*obj);
-        std::cout << "obj type: " << obj_type.name() << std::endl;
+        // std::cout << "obj type: " << obj_type.name() << std::endl;
 
         if (strcmp(obj_type.name(), "5Slime") == 0) {
             types->SetAttribute("slime", "1");
@@ -201,7 +201,7 @@ int SaveObjects(const char* filepath, const std::vector<GameObject*>& objects) {
         root->InsertEndChild(curr_xml_object);
     }
 
-    std::cout << "num enemies " << num_enemies << std::endl;
+    std::cout << "sving file " << num_enemies << std::endl;
 
     return doc.SaveFile(filepath);
 }

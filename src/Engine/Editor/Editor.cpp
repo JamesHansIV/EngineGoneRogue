@@ -267,7 +267,7 @@ void Editor::CleanLayers() {
     m_layers.clear();
 }
 
-void Editor::SaveRoom(const char* roomName) {
+bool Editor::SaveRoom(const char* roomName) {
     std::vector<GameObject*> objects;
 
     // for (const auto& layer : m_layers) {
@@ -293,6 +293,17 @@ void Editor::SaveRoom(const char* roomName) {
 
     SDL_Log("Saving room tiles a success: %d", save_tile_success);
     SDL_Log("Saving room objects a success: %d", save_obj_success);
+
+    return (save_tile_success==0 && save_obj_success==0);
+}
+
+void Editor::NewProject(std::string project_name) {
+    m_project_name = project_name;
+    CreateProjectFolder();
+}
+
+void Editor::LoadProject(std::string project_name) {
+    m_project_name = project_name;
 }
 
 void Editor::SaveProject() {
@@ -988,16 +999,151 @@ void Editor::ShowObjectManager() {
     ImGui::End();
 }
 
+void Editor::ShowRibbon() {
+    int height = 30;
+    std::string msg;
+
+    // center popups on screen
+
+    ImGuiViewport* viewport = ImGui::GetMainViewport();
+    ImGui::SetNextWindowPos(ImVec2(viewport->Pos.x, viewport->Pos.y));
+    ImGui::SetNextWindowSize(ImVec2(viewport->Size.x, height));
+    ImGui::SetNextWindowViewport(viewport->ID);
+
+    ImGuiWindowFlags flags = 0
+        | ImGuiWindowFlags_NoDocking
+		| ImGuiWindowFlags_NoTitleBar 
+		| ImGuiWindowFlags_NoResize 
+		| ImGuiWindowFlags_NoMove 
+		| ImGuiWindowFlags_NoScrollbar 
+		| ImGuiWindowFlags_NoSavedSettings
+		;
+
+    // ImGui::Begin("Ribbon", NULL, flags);
+    std::string menu_action;
+    if(ImGui::BeginMainMenuBar()) {
+        if(ImGui::BeginMenu("File")) {
+            if (ImGui::MenuItem("New Project")) menu_action = "new_project";
+            if (ImGui::MenuItem("Save Project")) menu_action = "save_project";
+            ImGui::Separator();
+            if (ImGui::MenuItem("New Room")) menu_action = "new_room";
+            if (ImGui::MenuItem("Load Room")) menu_action = "load_room";
+            if (ImGui::MenuItem("Save Room")) menu_action = "save_room";
+            if (ImGui::MenuItem("Save Room As...")) menu_action = "save_room_as";
+            ImGui::EndMenu();
+        }
+        if (ImGui::BeginMenu("Layers")) {
+            ImGui::EndMenu();
+        }
+        if (ImGui::BeginMenu("Objects")) {
+            ImGui::EndMenu();
+        }
+        if (ImGui::BeginMenu("Textures")) {
+            ImGui::EndMenu();
+        }
+        ImGui::EndMainMenuBar();
+    }
+
+    // menu actions
+    if (menu_action == "new_project") ImGui::OpenPopup("new_project");
+    if (menu_action == "save_project") SaveProject();
+    if (menu_action == "new_room") ImGui::OpenPopup("new_room");
+    if (menu_action == "save_room") {
+        if (strcmp(m_current_room_id.c_str(), "") != 0) {
+            m_success = SaveRoom(m_current_room_id.c_str());
+            ImGui::OpenPopup("save_room");
+        } else {
+            menu_action = "save_room_as";
+        }
+    }
+    if (menu_action == "save_room_as") ImGui::OpenPopup("save_room_as");
+    if (menu_action == "load_room") ImGui::OpenPopup("load_room");
+
+    // popups
+    if (ImGui::BeginPopup("new_project")) { ImGui::Text("new_project"); ImGui::EndPopup(); }
+    if (ImGui::BeginPopup("save_project")) { ImGui::Text("save_project"); ImGui::EndPopup(); }
+    if (ImGui::BeginPopup("save_project_as")) { ImGui::Text("save_project_as"); ImGui::EndPopup(); }
+    
+    if (ImGui::BeginPopup("new_room")) { 
+        ImGui::Text("New Room"); 
+        ImGui::Separator();
+        static char room_name[128];
+        ImGui::Text("Room Name");
+        ImGui::SameLine();
+        ImGui::InputText(" ", room_name, sizeof(room_name));
+        if (ImGui::Button("cancel")) 
+            ImGui::CloseCurrentPopup();
+        ImGui::SameLine();
+        if (ImGui::Button("create") && strcmp(room_name,"") !=0) {
+            CleanLayers();
+            m_current_room_id = room_name;
+            AddRoom();
+            ImGui::CloseCurrentPopup();                
+        }
+            
+        ImGui::EndPopup(); 
+    }
+    if (ImGui::BeginPopup("save_room")) {
+        ImGui::Text("Save Room");
+        ImGui::Separator();
+        msg = m_current_room_id + (m_success ? " successfully saved!" : " failed to save!");
+        ImGui::Text("%s", msg.c_str());
+        if (ImGui::Button("okay")) {
+            ImGui::CloseCurrentPopup();
+        }
+        ImGui::EndPopup(); 
+    
+    }
+    if (ImGui::BeginPopup("save_room_as")) { 
+        ImGui::Text("Save Room As...");
+        ImGui::Separator();
+        static char room_name[128];
+        ImGui::Text("Room Name");
+        ImGui::SameLine();
+        ImGui::InputText(" ", room_name, sizeof(room_name));
+        if (ImGui::Button("cancel")) 
+                ImGui::CloseCurrentPopup();
+        ImGui::SameLine();
+        if (ImGui::Button("save") && strcmp(room_name, "") != 0) {
+            CleanLayers();
+            m_current_room_id = room_name;
+            AddRoom();
+            ImGui::CloseCurrentPopup();                
+        }            
+        
+        ImGui::EndPopup(); 
+    }
+    if (ImGui::BeginPopup("load_room")) { 
+        ImGui::Text("Load Room");
+        ImGui::Separator();
+
+        for (const auto& id : m_room_ids) {
+            SDL_Log("Room: %s", id.c_str());
+            if (strcmp(id.c_str(), "") != 0) {
+                if (ImGui::Button(id.c_str(), ImVec2(150, 30))) {
+                    m_current_room_id = id;
+
+                    CleanLayers();
+                    LoadRoom(m_current_room_id);
+                    m_layers.push_back(CopyObjects(m_tiles));
+                    m_layers.push_back(CopyObjects(m_objects));
+                    ImGui::CloseCurrentPopup();
+                }
+            }
+        }
+
+        ImGui::EndPopup(); 
+    }
+}
+
 void Editor::ShowToolBar() {
     int width = 54;
-    int vertical_gap = 50;
+    int vertical_gap = 60;
     int horizontal_gap = 20;
     float group_gap = 20;
     float button_size = 30;
     ImVec2 button_size_vector = {button_size, button_size};
     
-
-    // center buttons
 
     ImGuiViewport* viewport = ImGui::GetMainViewport();
 	ImGui::SetNextWindowPos(ImVec2(viewport->Pos.x + horizontal_gap, viewport->Pos.y + vertical_gap));
@@ -1271,6 +1417,7 @@ void Editor::Render() {
     ImGui::ShowDemoWindow();
     ShowObjectManager();
     ShowToolBar();
+    ShowRibbon();
 
     ImGui::Render();
 
