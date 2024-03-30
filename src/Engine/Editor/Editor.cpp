@@ -1110,7 +1110,7 @@ void Editor::ShowToolBar() {
     ImGui::Dummy(ImVec2(0.0f, group_gap));
     // copy and pase
     if (ImGui::ImageButton(Renderer::GetInstance().GetTexture("editor-icon-copy")->GetTexture(), button_size_vector)) {
-        HandleCopySelectionAciton();
+        HandleCopySelectionAction();
     }
     if (ImGui::IsItemHovered()) {
         ImGui::BeginTooltip();
@@ -1118,8 +1118,12 @@ void Editor::ShowToolBar() {
         ImGui::EndTooltip();
     }
     if (ImGui::ImageButton(Renderer::GetInstance().GetTexture("editor-icon-cut")->GetTexture(), button_size_vector)) {
-        // HandlePasteClipboardAction();
-        std::cout << "CUT NOT IMPLEMENTED\n";
+        HandleCutSelectionAction();
+    }
+    if (ImGui::IsItemHovered()) {
+        ImGui::BeginTooltip();
+        ImGui::Text("%s", m_toolbar->action_to_description_map[EditorAction::CUT_SELECTION].c_str());
+        ImGui::EndTooltip();
     }
     if (ImGui::ImageButton(Renderer::GetInstance().GetTexture("editor-icon-paste")->GetTexture(), button_size_vector)) {
         HandlePasteClipboardAction();
@@ -1237,10 +1241,13 @@ void Editor::Update(float /*dt*/) {
 
     // COPY & PASTE COMBOS
     if (m_key_map->CheckInputs(EditorAction::COPY_SELECTION)) {
-        HandleCopySelectionAciton();
+        HandleCopySelectionAction();
     }
     if (m_key_map->CheckInputs(EditorAction::PASTE_CLIPBOARD)) {
         HandlePasteClipboardAction();
+    }
+    if (m_key_map->CheckInputs(EditorAction::CUT_SELECTION)) {
+        HandleCutSelectionAction();
     }
 
     // UNDO & REDO COMBOS
@@ -1775,7 +1782,7 @@ void Editor::HandleDeleteSelectionAction() {
     m_selected_objects.clear();
 }
 
-void Editor::HandleCopySelectionAciton() {
+void Editor::HandleCopySelectionAction() {
     if (m_selected_objects.empty())
         return;
 
@@ -1787,8 +1794,28 @@ void Editor::HandleCopySelectionAciton() {
 
         m_clipboard->AddObject(new GameObject(obj));
     }
+}
 
-    // std::cout << "COPY: Clipboard size: " << m_clipboard->Size() << "\n";
+void Editor::HandleCutSelectionAction() {
+    // HandleCopySelectionAction();
+    // HandleDeleteSelectionAction();
+    if (m_selected_objects.empty())
+        return;
+
+    m_clipboard->Clear();
+
+    std::vector<GameObject*>deleted_objects;
+    for (auto* obj : m_selected_objects) {
+        deleted_objects.push_back(new GameObject(obj));
+        m_clipboard->AddObject(new GameObject(obj));
+        DeleteObject(obj);
+    }
+
+    ActionRecord* record = new ActionRecord(EditorAction::EXECUTE_DELETE_SELECTION, deleted_objects, m_current_layer);
+    m_action_record_handler->RecordAction(record);
+
+    m_selected_objects.clear();
+    m_selected_obj_origin_map.clear();
 }
 
 void Editor::HandlePasteClipboardAction() {

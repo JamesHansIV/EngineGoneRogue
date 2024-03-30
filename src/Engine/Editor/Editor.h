@@ -139,7 +139,8 @@ class Editor : public Application {
     void HandleDragMoveAction(SDL_Event& event);
     void HandlePaintBucketAction(SDL_Event& event);
     void HandleDeleteSelectionAction();
-    void HandleCopySelectionAciton();
+    void HandleCopySelectionAction();
+    void HandleCutSelectionAction();
     void HandlePasteClipboardAction();
 
     // action handler helpers
