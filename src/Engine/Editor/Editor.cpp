@@ -230,6 +230,7 @@ Editor::Editor() {
 
     // create keymap
     m_key_map = new KeyMap();
+    BuildHelpPopUpText();
 
     // create cursor
     m_cursor = new Cursor();
@@ -986,6 +987,67 @@ void Editor::ShowObjectManager() {
     ImGui::End();
 }
 
+void Editor::BuildHelpPopUpText() {
+    std::cout << "Called\n";
+
+    const std::unordered_map<int, std::string>keycode_to_char = {
+        {SDLK_ESCAPE, "esc"},
+        {SDLK_d, "d"},
+        {SDLK_e, "e"},
+        {SDLK_t, "t"},
+        {SDLK_m, "m"},
+        {SDLK_p, "p"},
+        {SDLK_DOWN, "DOWN"},
+        {SDLK_UP, "UP"},
+        {SDLK_RIGHT, "RIGHT"},
+        {SDLK_LEFT, "LEFT"},
+        {SDLK_LGUI, "command"},
+        {SDLK_LSHIFT, "shift"},
+        {SDLK_c, "c"},
+        {SDLK_v, "v"},
+        {SDLK_z, "z"},
+        {SDLK_BACKSPACE, "delete"}
+    };
+
+    const std::vector<std::pair<std::string, EditorAction>>actions_bind_pairs = {
+        {"Exit current tool \n   & deselect all", EditorAction::EXIT_CURRENT_TOOL},
+        {"Paint select tool", EditorAction::ENTER_TILE_SELECT_TOOL},
+        {"Move selection",EditorAction::ENTER_SELECTION_MOVE_TOOL},
+        {"Draw tool",EditorAction::ENTER_DRAW_TOOL},
+        {"Paint button tool",EditorAction::ENTER_PAINT_BUCKET_TOOL},
+        {"Erase tool", EditorAction::ENTER_ERASE_TOOL},
+        {"Delete selection", EditorAction::EXECUTE_DELETE_SELECTION},
+        {"Pan camera down", EditorAction::PAN_CAMERA_DOWN},
+        {"Pan camera up", EditorAction::PAN_CAMERA_UP},
+        {"Pan camera right", EditorAction::PAN_CAMERA_RIGHT},
+        {"Pan camera left", EditorAction::PAN_CAMERA_LEFT},
+        {"Copy selection", EditorAction::COPY_SELECTION},
+        {"Paste clipboard", EditorAction::PASTE_CLIPBOARD},
+        {"Undo", EditorAction::UNDO_ACTION},
+        {"Redo", EditorAction::REDO_ACTION},
+    };
+
+    int i = 0;
+    for (auto action_bind_pair : actions_bind_pairs) {
+        auto description = action_bind_pair.first;
+        auto editor_action = action_bind_pair.second;
+        auto keys = m_key_map->GetBindingMap()[editor_action].keys;
+
+        std::string str = description + ": ";
+        for (SDL_Keycode key : keys) {
+            if (key == keys.front())
+                str += keycode_to_char.at(key);
+            else 
+                str += " + " + keycode_to_char.at(key);
+            
+            if (key == keys.back())
+                str += "\n\n";
+        }
+        m_help_popup_text += str;
+    }
+    // std::cout << "build string: "<< m_help_popup_text << "\n";
+}
+
 void Editor::ShowToolBar() {
     int width = 54;
     int vertical_gap = 50;
@@ -1003,7 +1065,7 @@ void Editor::ShowToolBar() {
 	ImGui::SetNextWindowViewport(viewport->ID);
     
     ImGuiWindowFlags flags = 0
-        | ImGuiWindowFlags_NoDocking 
+        | ImGuiWindowFlags_NoDocking
 		| ImGuiWindowFlags_NoTitleBar 
 		| ImGuiWindowFlags_NoResize 
 		| ImGuiWindowFlags_NoMove 
@@ -1012,9 +1074,6 @@ void Editor::ShowToolBar() {
 		;
 
     ImGui::Begin("Toolbar", NULL, flags);
-
-    // ImGui::SetCursorPosX((width - button_size) * 0.5f);
-    // ImGuiStyle& style = ImGui::GetStyle();
 
     // tool group
     if (ImGui::ImageButton(Renderer::GetInstance().GetTexture("editor-icon-selection")->GetTexture(), button_size_vector)) {
@@ -1071,10 +1130,24 @@ void Editor::ShowToolBar() {
         m_action_record_handler->RedoAction(m_layers);
     }
 
+    static bool open(true);
+
+    ImGui::Dummy(ImVec2(0.0f, group_gap));
+    if (ImGui::ImageButton(Renderer::GetInstance().GetTexture("editor-icon-help")->GetTexture(), button_size_vector)) {
+        std::cout << "HELP POPUP NOT IMPLEMENTED\n";
+        ImGui::OpenPopup("help_popup");        
+    }
+
+    if(ImGui::BeginPopup("help_popup")) {
+        ImGui::Text(m_help_popup_text.c_str());
+        ImGui::EndPopup();
+    }
+
     // agg gap
 
     // ADD GAP then "Color pallete" (like ms paints color switch and pallete at bottom of toolbar)
 
+    // ADD TOOLTIPS TO BUTTONS
     ImGui::End();
 }
 

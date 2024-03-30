@@ -156,4 +156,7 @@ class Editor : public Application {
 
     // undo redo
     ActionRecordHandler* m_action_record_handler;
+
+    std::string m_help_popup_text;
+    void BuildHelpPopUpText();
 };
