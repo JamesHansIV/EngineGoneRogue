@@ -31,7 +31,7 @@ void ActionRecordHandler::RecordAction(ActionRecord* record) {
         m_redo_stack.pop();
         // delete top;
     }
-    std::cout << "REDO STACK " << m_redo_stack.size() << "\n";
+    // std::cout << "REDO STACK " << m_redo_stack.size() << "\n";
 }
 
 void ActionRecordHandler::UndoAction(std::vector<std::vector<GameObject*>>& layers) {
