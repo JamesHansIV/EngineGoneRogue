@@ -990,8 +990,10 @@ void Editor::ShowToolBar() {
     int width = 54;
     int vertical_gap = 50;
     int horizontal_gap = 20;
+    float group_gap = 20;
     float button_size = 30;
     ImVec2 button_size_vector = {button_size, button_size};
+    
 
     // center buttons
 
@@ -1014,6 +1016,7 @@ void Editor::ShowToolBar() {
     // ImGui::SetCursorPosX((width - button_size) * 0.5f);
     // ImGuiStyle& style = ImGui::GetStyle();
 
+    // tool group
     if (ImGui::ImageButton(Renderer::GetInstance().GetTexture("editor-icon-selection")->GetTexture(), button_size_vector)) {
         StopEditing();
         m_selected_objects.clear();
@@ -1042,6 +1045,33 @@ void Editor::ShowToolBar() {
     if (ImGui::ImageButton(Renderer::GetInstance().GetTexture("editor-icon-delete-selection")->GetTexture(), button_size_vector)) {
         HandleDeleteSelectionAction();
     };
+
+    // add gap 
+    ImGui::Dummy(ImVec2(0.0f, group_gap));
+    // copy and pase
+    if (ImGui::ImageButton(Renderer::GetInstance().GetTexture("editor-icon-copy")->GetTexture(), button_size_vector)) {
+        HandleCopySelectionAciton();
+    }
+    if (ImGui::ImageButton(Renderer::GetInstance().GetTexture("editor-icon-cut")->GetTexture(), button_size_vector)) {
+        // HandlePasteClipboardAction();
+        std::cout << "CUT NOT IMPLEMENTED\n";
+    }
+    if (ImGui::ImageButton(Renderer::GetInstance().GetTexture("editor-icon-paste")->GetTexture(), button_size_vector)) {
+        HandlePasteClipboardAction();
+    }
+
+    // add gap
+    ImGui::Dummy(ImVec2(0.0f, group_gap));
+    // undo redo
+    if (ImGui::ImageButton(Renderer::GetInstance().GetTexture("editor-icon-undo")->GetTexture(), button_size_vector)) {
+        m_action_record_handler->UndoAction(m_layers);
+    }
+    
+    if (ImGui::ImageButton(Renderer::GetInstance().GetTexture("editor-icon-redo")->GetTexture(), button_size_vector)) {
+        m_action_record_handler->RedoAction(m_layers);
+    }
+
+    // agg gap
 
     // ADD GAP then "Color pallete" (like ms paints color switch and pallete at bottom of toolbar)
 
