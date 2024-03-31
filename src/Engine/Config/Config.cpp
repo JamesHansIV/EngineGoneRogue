@@ -12,6 +12,7 @@
 #include "Engine/Objects/Characters/Skeleton.h"
 #include "Engine/Objects/Characters/Slime.h"
 #include "Engine/Objects/Collider.h"
+#include "Engine/Objects/DestructibleItem.h"
 #include "Engine/Objects/Environment/Entrance.h"
 #include "Engine/Objects/Trap.h"
 #include "Engine/Renderer/Renderer.h"
@@ -529,6 +530,11 @@ GameObject* BuildObjectOnType(tinyxml2::XMLElement* types,
     if(types->Attribute("trap") != nullptr) {
         to_delete = new_obj;
         new_obj = new Trap(static_cast<Collider*>(new_obj), std::stoi(types->Attribute("damage")));
+        delete to_delete;
+    }
+    if(types->Attribute("destructibleitem") != nullptr){
+        to_delete = new_obj;
+        new_obj = new DestructibleItem(static_cast<Collider*>(new_obj));
         delete to_delete;
     }
 

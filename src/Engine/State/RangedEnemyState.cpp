@@ -60,6 +60,7 @@ State* RangedEnemyHandleCollide(RangedEnemy* enemy, Collider* collidee) {
             enemy->UnCollide(collidee);
             break;
         }
+        case ObjectType::DestructibleItem:
         case ObjectType::Enemy:
         case ObjectType::Collider:
             enemy->UnCollide(collidee);
@@ -276,6 +277,7 @@ State* RangedEnemyIsHit::OnCollideEvent(CollideEvent* event) {
             GetEnemy()->UnCollide(collidee);
             break;
         }
+        case ObjectType::DestructibleItem:
         case ObjectType::Grenade:
         case ObjectType::Player:
         case ObjectType::Enemy:

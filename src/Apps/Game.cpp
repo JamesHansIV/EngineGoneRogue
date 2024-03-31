@@ -16,6 +16,7 @@
 #include "Engine/Objects/Characters/Slime.h"
 #include "Engine/Objects/Chests/Chest.h"
 #include "Engine/Objects/ColliderHandler.h"
+#include "Engine/Objects/DestructibleItem.h"
 #include "Engine/Objects/Environment/Entrance.h"
 #include "Engine/Objects/GameObject.h"
 #include "Engine/Objects/HealthPotion.h"

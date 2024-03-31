@@ -138,4 +138,8 @@
         <FilePath>../assets/textures/spritesheets/trap_closing.png</FilePath>
         <ID>trap_closing</ID>
     </Texture>
+    <Texture type = "base">
+        <FilePath>../assets/textures/spritesheets/destructible_objects.png</FilePath>
+        <ID>destructible_objects</ID>
+    </Texture>
 </Root>

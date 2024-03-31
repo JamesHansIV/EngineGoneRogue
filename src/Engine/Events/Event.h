@@ -20,6 +20,7 @@ enum class EventType {
     GameOverEvent,
     PlaceItemIfNeededEvent,
     ChestOpenedEvent,
+    ItemDestroyedEvent,
 
     StartGameEvent,
     LevelUpSelectedGameEvent,
@@ -127,6 +128,21 @@ class PlaceItemIfNeededEvent : public Event {
     float m_x;
     float m_y;
 };
+
+class ItemDestroyedEvent : public Event {
+   public:
+    explicit ItemDestroyedEvent(std::pair<float, float>& index) : m_index(index){};
+
+    EventType GetEventType() override {
+        return EventType::ItemDestroyedEvent;
+    }
+
+    std::pair<float, float> GetIndex() { return m_index; };
+
+   private:
+    std::pair<float, float> m_index;
+};
+
 
 class ChestOpenedEvent : public Event {
    public:
