@@ -991,9 +991,9 @@ void Editor::ShowObjectManager() {
     ImGui::Begin("Game Object Manager", nullptr, window_flags);
 
     if (ImGui::BeginTabBar("##tabs", ImGuiTabBarFlags_None)) {
-        ShowFileManager();
-        ShowChooseLayer();
-        ShowLoadTexture();
+        // ShowFileManager();
+        // ShowChooseLayer();
+        // ShowLoadTexture();
         ShowObjectEditor();
         ShowCreateObject();
 
@@ -1048,14 +1048,41 @@ void Editor::ShowRibbon() {
             ImGui::EndMenu();
         }
         if (ImGui::BeginMenu("Layers")) {
+            for (int i = 0; i < m_layers.size(); i++){
+                std::string selected = (i == m_current_layer) ? "\tX" : "";
+                if (ImGui::MenuItem(std::string("Select Layer " + std::to_string(i) + selected).c_str()))
+                    m_current_layer = i;
+            }
+            ImGui::Separator();
+            for (int i = 0; i < m_layers.size(); i++) {
+                std::string hide = (m_hidden_layers.find(i) == m_hidden_layers.end()) ? "Hide " : "Show ";
+                if (ImGui::MenuItem(std::string(hide + "Layer " + std::to_string(i)).c_str())){
+                    if (m_hidden_layers.find(i) == m_hidden_layers.end())
+                        m_hidden_layers.insert(i);
+                    else
+                        m_hidden_layers.erase(i);
+                }
+            }
+            ImGui::Separator();
+            if (ImGui::MenuItem("Add Layer"))
+                m_layers.emplace_back();
+            ImGui::EndMenu();
+        }
+        if (ImGui::BeginMenu("Textures")) {
+            if(ImGui::MenuItem("Load Texture")) menu_action = "load_texture";
+            // list textures
             ImGui::EndMenu();
         }
         if (ImGui::BeginMenu("Objects")) {
             ImGui::EndMenu();
         }
-        if (ImGui::BeginMenu("Textures")) {
-            ImGui::EndMenu();
-        }
+        ImGui::SameLine();
+        ImGui::Dummy(ImVec2(5,height));
+        ImGui::Separator();
+        ImGui::Dummy(ImVec2(5,height));
+        ImGui::Text("%s",std::string("Layer: " + std::to_string(m_current_layer)).c_str());
+        ImGui::Dummy(ImVec2(5,height));
+        ImGui::Separator();
         ImGui::EndMainMenuBar();
     }
 
@@ -1074,6 +1101,7 @@ void Editor::ShowRibbon() {
     }
     if (menu_action == "save_room_as") ImGui::OpenPopup("save_room_as");
     if (menu_action == "load_room") ImGui::OpenPopup("load_room");
+    if (menu_action == "load_texture") ImGui::OpenPopup("load_texture");
 
     // popups
     if (ImGui::BeginPopup("new_project")) { ImGui::Text("new_project"); ImGui::EndPopup(); }
@@ -1117,10 +1145,14 @@ void Editor::ShowRibbon() {
         ImGui::Text("Room Name");
         ImGui::SameLine();
         ImGui::InputText(" ", room_name, sizeof(room_name));
-        if (ImGui::Button("cancel")) 
+        ImGui::Dummy({10, 2});
+        ImVec2 button_size = {90.f, 20};
+        if (ImGui::Button("cancel", button_size)) 
             ImGui::CloseCurrentPopup();
         ImGui::SameLine();
-        if (ImGui::Button("save") && strcmp(room_name, "") != 0) {
+        float width_needed = button_size.x + ImGui::GetStyle().ItemSpacing.x;
+        ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetContentRegionAvail().x - width_needed - 3.f);
+        if (ImGui::Button("save", button_size) && strcmp(room_name, "") != 0) {
             LoadFromLayers();
             SaveRoom(room_name);
             // update room ids
@@ -1154,6 +1186,74 @@ void Editor::ShowRibbon() {
         }
 
         ImGui::EndPopup(); 
+    }
+    if (ImGui::BeginPopup("load_texture")) {
+        ImGui::Text("Load Texture");
+        ImGui::Separator();
+
+        static char filepath[256] = "";
+        static char texture_id[256] = "";
+        ImGui::Text("Filepath\t");
+        ImGui::SameLine();
+        ImGui::InputText(" ", filepath, sizeof(filepath));
+        ImGui::Text("Texture name");
+        ImGui::SameLine();
+        ImGui::InputText("  ", texture_id, sizeof(texture_id));
+
+        static bool is_tile_map = false;
+        ImGui::Checkbox("Tile map", &is_tile_map);
+        static int tile_size = 0;
+        static int rows = 0;
+        static int cols = 0;
+        if (is_tile_map) {
+            ImGui::Text("Set tile size     ");
+            ImGui::SameLine();
+            ImGui::PushItemWidth(100);
+            ImGui::InputInt("## ", &tile_size);
+            ImGui::Text("Number of rows    ");
+            ImGui::SameLine();
+            ImGui::InputInt("##", &rows);
+            ImGui::Text("Number of columns ");
+            ImGui::SameLine();
+            ImGui::InputInt("###", &cols);
+            ImGui::PopItemWidth();
+        }
+
+        static char invalid_filepath[256] = "";
+
+        ImVec2 button_size = {90.f, 20};
+        ImGui::Dummy(ImVec2(10,5));
+        if (ImGui::Button("cancel", button_size)) 
+            ImGui::CloseCurrentPopup();
+
+        ImGui::SameLine();
+        float width_needed = button_size.x + ImGui::GetStyle().ItemSpacing.x;
+        ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetContentRegionAvail().x - width_needed - 10.f);
+        if (ImGui::Button("load texture", button_size)) {
+            if (strcmp(filepath, "") != 0 && strcmp(texture_id, "") != 0) {
+                m_current_texture =
+                    (is_tile_map)
+                        ? Renderer::GetInstance().AddTileMap(
+                                texture_id, filepath, tile_size, rows, cols)
+                        : Renderer::GetInstance().AddTexture(texture_id,
+                                                                filepath);
+
+                if (m_current_texture == nullptr) {
+                    strcpy(invalid_filepath, filepath);
+                } else {
+                    SetObjectInfo();
+                    strcpy(invalid_filepath, "");
+                }
+                strcpy(filepath, "");
+                strcpy(texture_id, "");
+                tile_size = 0;
+                rows = 0;
+                cols = 0;
+                is_tile_map = false;
+            }
+        }
+
+        ImGui::EndPopup();
     }
 }
 
