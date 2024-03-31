@@ -13,12 +13,18 @@
 // And can replace one with a more specific state when needed.
 State* EnemyHandleCollide(Enemy& enemy, Collider* collidee) {
     switch (collidee->GetObjectType()) {
-        case ObjectType::Projectile:
-            if (dynamic_cast<Projectile*>(collidee)->IsPlayerOwned()) {
-                return enemy.GetHitState(
+        case ObjectType::Projectile:{
+            auto* p = dynamic_cast<Projectile*>(collidee);
+            if (p->IsPlayerOwned()) {
+                if(!p->IsInHitSet(enemy.GetID())){
+                    p->CollideWithEnemy();
+                    p->AddtoHitSet(enemy.GetID());
+                    return enemy.GetHitState(
                     dynamic_cast<Projectile*>(collidee)->GetDamage());
+                }
             }
             break;
+        }
         case ObjectType::Entrance: {
             enemy.UnCollide(collidee);
             break;
