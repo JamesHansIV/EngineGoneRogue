@@ -99,7 +99,10 @@ std::unordered_map<EditorAction, Bind> KeyMap::default_bindings = {
                                             std::vector<SDL_KeyCode>{mac_keys_to_sdl[MacKeys::LCOMMAND], mac_keys_to_sdl[MacKeys::LSHIFT], SDLK_z})},
 
     // delete selection
-    {EditorAction::EXECUTE_DELETE_SELECTION, CreateBind(EditorAction::EXECUTE_DELETE_SELECTION, InputType::LATCH, std::vector<SDL_KeyCode>{mac_keys_to_sdl[MacKeys::DELETE]})}
+    {EditorAction::EXECUTE_DELETE_SELECTION, CreateBind(EditorAction::EXECUTE_DELETE_SELECTION, InputType::LATCH, std::vector<SDL_KeyCode>{mac_keys_to_sdl[MacKeys::DELETE]})},
+
+    // save room 
+    {EditorAction::SAVE_ROOM, CreateBind(EditorAction::SAVE_ROOM, InputType::ON_UP_LATCH, std::vector<SDL_KeyCode>{mac_keys_to_sdl[MacKeys::LCOMMAND], SDLK_s})},
 };
 
 std::unordered_set<SDL_KeyCode> KeyMap::InitModifierKeys() {

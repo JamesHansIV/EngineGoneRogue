@@ -20,11 +20,7 @@ State* EnemyHandleCollide(Enemy& enemy, Collider* collidee) {
             }
             break;
         case ObjectType::Entrance: {
-            auto* entrance = dynamic_cast<Entrance*>(collidee);
-            if (entrance->GetCurrentState()->GetType() == StateType::Closed ||
-                entrance->GetCurrentState()->GetType() == StateType::Opening) {
-                enemy.UnCollide(collidee);
-            }
+            enemy.UnCollide(collidee);
             break;
         }
         case ObjectType::Player:
@@ -255,11 +251,7 @@ State* EnemyIsHit::OnCollideEvent(CollideEvent* event) {
             break;
         }
         case ObjectType::Entrance: {
-            if (dynamic_cast<Entrance*>(collidee)
-                    ->GetCurrentState()
-                    ->GetType() != StateType::Opened) {
-                m_enemy.UnCollide(collidee);
-            }
+            m_enemy.UnCollide(collidee);
             break;
         }
         case ObjectType::Player:

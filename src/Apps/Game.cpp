@@ -9,6 +9,7 @@
 #include "Engine/Objects/Characters/EnemyStats.h"
 #include "Engine/Objects/Characters/Goblin.h"
 #include "Engine/Objects/Characters/HelixEnemy.h"
+#include "Engine/Objects/Characters/Kamikaze.h"
 #include "Engine/Objects/Characters/Mage.h"
 #include "Engine/Objects/Characters/Player.h"
 #include "Engine/Objects/Characters/RingShotEnemy.h"
@@ -58,6 +59,7 @@ Skeleton* skeleton_copy = nullptr;
 Goblin* goblin_copy = nullptr;
 HelixEnemy* helix_enemy_copy = nullptr;
 Charger* charger_copy = nullptr;
+Kamikaze* kamikaze_copy = nullptr;
 
 std::vector<GameObject*> Game::CopyObjects(
     const std::vector<GameObject*>& objects) {
@@ -82,6 +84,11 @@ void Game::InitEnemyCopies() {
 
         if ((enemy = dynamic_cast<Charger*>(obj)) != nullptr) {
             charger_copy = new Charger(enemy, enemy->GetEnemyStats());
+            continue;
+        }
+
+        if ((enemy = dynamic_cast<Kamikaze*>(obj)) != nullptr) {
+            kamikaze_copy = new Kamikaze(enemy, enemy->GetEnemyStats());
             continue;
         }
 
@@ -215,7 +222,7 @@ void Game::GenerateRandomEnemy() {
     float const generated_y = rand() % 1800 + 20;
 
     // Generate random enemy type
-    int const enemy_type = rand() % 8;
+    int const enemy_type = 8;
     Enemy* generated_enemy = nullptr;
 
     switch (enemy_type) {
@@ -276,6 +283,14 @@ void Game::GenerateRandomEnemy() {
                 new Charger(charger_copy, charger_copy->GetEnemyStats() *
                                               m_enemy_stat_multiplier);
             break;
+        case 8:
+            kamikaze_copy->SetX(generated_x);
+            kamikaze_copy->SetY(generated_y);
+            generated_enemy =
+                new Kamikaze(kamikaze_copy, charger_copy->GetEnemyStats() *
+                                                m_enemy_stat_multiplier);
+            break;
+
         default:
             break;
     }
@@ -389,7 +404,6 @@ void Game::UpdateObjects(float dt) {
         }
     }
 
-    SDL_Log("endless: %d", static_cast<int>(m_endless));
     if (m_endless) {
         GenerateRandomEnemyIfNeeded();
     }

@@ -6,7 +6,7 @@ enum BombState { ACTIVE, EXPLODING, EXPLODING_DAMAGING, INACTIVE };
 
 struct GrenadeStats {
     int damage;
-    int time_to_explode;
+    double time_to_explode;
     int explosion_radius;
     int explosion_damage;
     int explosion_duration;

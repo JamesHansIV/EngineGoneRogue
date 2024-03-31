@@ -98,11 +98,14 @@ class Editor : public Application {
     void ShowObjectManager();
 
     void ShowToolBar();
+    void ShowRibbon();
 
     void CreateProjectFolder();
     void AddRoom();
-    void SaveRoom(const char* roomName);
+    bool SaveRoom(const char* roomName);
     void SaveProject();
+    void NewProject(std::string project_name);
+    void LoadProject(std::string project_name);
 
     bool LoadEditorTextures();
 
@@ -124,6 +127,8 @@ class Editor : public Application {
     TileCoords m_mouse_input_origin;
     ClipBoard* m_clipboard;
     Toolbar* m_toolbar;
+
+    bool m_success = false;
 
 
 

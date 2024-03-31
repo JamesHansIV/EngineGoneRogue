@@ -17,7 +17,7 @@ StartScreen::StartScreen() {
     int const x = (window_width - 100) / 2;
     int const y = window_height - 170;
     m_start_button =
-        Button("buttons", SDL_Rect{x, y, 100, 60}, {"Start"}, [](auto& button) {
+        Button("buttons", SDL_Rect{x, y, 100, 60}, {"Start"}, []() {
             timer.Unpause();
             PushNewEvent(EventType::StartGameEvent);
         });
@@ -25,14 +25,14 @@ StartScreen::StartScreen() {
 
     m_normal_mode =
         Button("buttons", SDL_Rect{endless_x + 100, y + 60, 150, 80},
-               {"Normal"}, [](auto& button) {
+               {"Normal"}, []() {
                    Game& game = static_cast<Game&>(Application::Get());
                    game.SetEndless(false);
                });
 
     m_endless_mode =
         Button("buttons", SDL_Rect{endless_x - 100, y + 60, 150, 80},
-               {"Endless"}, [](auto& button) {
+               {"Endless"}, []() {
                    Game& game = static_cast<Game&>(Application::Get());
 
                    game.SetEndless(true);

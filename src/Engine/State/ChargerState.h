@@ -14,7 +14,6 @@ class ChargerAttack : public EnemyAttack {
 
         if (timer.GetTicks() - m_enemy.GetLastAttack() <
             m_enemy.GetAttackInterval()) {
-            SDL_Log("ChargerAttack::Enter() - Attack on cooldown");
             return;
         }
         m_enemy.SetLastAttack(timer.GetTicks());
@@ -24,7 +23,6 @@ class ChargerAttack : public EnemyAttack {
     State* Update(float dt) override {
         if (timer.GetTicks() - m_enemy.GetLastAttack() >
             m_enemy.GetAttackDuration()) {
-            SDL_Log("ChargerAttack::Enter() - Attack on cooldown");
             return m_enemy.GetIdleState();
         }
 
@@ -33,10 +31,7 @@ class ChargerAttack : public EnemyAttack {
         return nullptr;
     }
 
-    void Exit() override {
-        m_enemy.GetMutableEnemyStats().speed = 70;
-        SDL_Log("ChargerAttack::Exit()");
-    }
+    void Exit() override { m_enemy.GetMutableEnemyStats().speed = 70; }
 
     StateType GetType() override { return StateType::Attack; }
 
