@@ -53,6 +53,8 @@ class Editor : public Application {
     Editor();
     ~Editor() override;
 
+    void LoadFromLayers();
+
     void CleanLayers();
 
     void PrintLayer();

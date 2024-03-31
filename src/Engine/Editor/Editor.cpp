@@ -288,7 +288,11 @@ bool Editor::SaveRoom(const char* roomName) {
     // if (m_player != nullptr)
     // m_objects.insert(m_objects.begin(), 1, m_player);
 
+    std::cout << "TRYING TO SAVE ROOM\n";
+
+    std::cout << "TILES " << m_tiles.size() << std::endl;
     int const save_tile_success = SaveObjects(tile_path, m_tiles);
+    std::cout << "OBJECTS " << m_objects.size() << std::endl;
     int const save_obj_success = SaveObjects(obj_path, m_objects);
 
     SDL_Log("Saving room tiles a success: %d", save_tile_success);
@@ -431,9 +435,9 @@ void Editor::ShowFileManager() {
             ImGui::EndPopup();
         }
 
-        if (ImGui::Button("Load Room", ImVec2(150, 20))) {
-            ImGui::OpenPopup("load_room");
-        }
+        // if (ImGui::Button("Load Room", ImVec2(150, 20))) {
+        //     ImGui::OpenPopup("load_room");
+        // }
 
         if (ImGui::BeginPopup("load_room")) {
             for (const auto& id : m_room_ids) {
@@ -442,7 +446,7 @@ void Editor::ShowFileManager() {
                     if (ImGui::Button(id.c_str(), ImVec2(100, 30))) {
                         m_current_room_id = id;
 
-                        CleanLayers();
+                        // CleanLayers();
                         LoadRoom(m_current_room_id);
                         m_layers.push_back(CopyObjects(m_tiles));
                         m_layers.push_back(CopyObjects(m_objects));
@@ -999,6 +1003,17 @@ void Editor::ShowObjectManager() {
     ImGui::End();
 }
 
+void Editor::LoadFromLayers() {
+    for (auto* tile : m_tiles) {
+                delete tile;
+            }
+            for (auto* obj : m_objects) {
+                delete obj;
+            }
+            m_tiles = CopyObjects(m_layers[0]);
+            m_objects = CopyObjects(m_layers[1]);
+}
+
 void Editor::ShowRibbon() {
     int height = 30;
     std::string msg;
@@ -1050,6 +1065,7 @@ void Editor::ShowRibbon() {
     if (menu_action == "new_room") ImGui::OpenPopup("new_room");
     if (menu_action == "save_room") {
         if (strcmp(m_current_room_id.c_str(), "") != 0) {
+            LoadFromLayers();
             m_success = SaveRoom(m_current_room_id.c_str());
             ImGui::OpenPopup("save_room");
         } else {
@@ -1105,9 +1121,12 @@ void Editor::ShowRibbon() {
                 ImGui::CloseCurrentPopup();
         ImGui::SameLine();
         if (ImGui::Button("save") && strcmp(room_name, "") != 0) {
-            CleanLayers();
+            //CleanLayers();
+            //m_layers.push_back(CopyObjects(m_tiles));
+            //m_layers.push_back(CopyObjects(m_objects));
+            LoadFromLayers();
+            SaveRoom(room_name);
             m_current_room_id = room_name;
-            AddRoom();
             ImGui::CloseCurrentPopup();                
         }            
         

@@ -140,7 +140,7 @@ int SaveObjects(const char* filepath, const std::vector<GameObject*>& objects) {
     std::cout << "Saving " << objects.size() << " objects\n";
 
     int num_enemies = 0;
-    for (auto* obj : objects) {
+    for (GameObject* obj : objects) {
         // if (obj->GetObjectType() == ObjectType::Enemy) {
         //     num_enemies++;
         //     continue;
@@ -154,13 +154,18 @@ int SaveObjects(const char* filepath, const std::vector<GameObject*>& objects) {
         if (obj->GetAnimation() != nullptr) {
             WriteAnimationInfo(doc, curr_xml_object, obj);
         }
+        
+        // const std::type_info& obj_type = typeid(*obj);
+        // std::cout << obj << std::endl;
+        // std::cout << static_cast<int>(obj->GetObjectType()) << std::endl;
 
-        if (auto* collider = dynamic_cast<Collider*>(obj)) {
+        Collider* collider = dynamic_cast<Collider*>(obj);
+        if (collider != nullptr) {
             WriteColliderInfo(doc, curr_xml_object, collider);
             types->SetAttribute("collider", "1");
         }
-
-        if (auto* entrance = dynamic_cast<Entrance*>(obj)) {
+        Entrance* entrance = nullptr;
+        if ((entrance = dynamic_cast<Entrance*>(obj)) != nullptr) {
             types->SetAttribute("curr_room_id",
                                 entrance->GetCurrentRoomID().c_str());
             types->SetAttribute("next_room_id",
@@ -169,8 +174,8 @@ int SaveObjects(const char* filepath, const std::vector<GameObject*>& objects) {
             types->SetAttribute("next_x", next_start.first);
             types->SetAttribute("next_y", next_start.second);
         }
-
-        if (auto* trap = dynamic_cast<Trap*>(obj)) {
+        Trap* trap = nullptr;
+        if ((trap = dynamic_cast<Trap*>(obj)) != nullptr) {
             types->SetAttribute("trap", "1");
             types->SetAttribute("damage", trap->GetDamage());
         }
