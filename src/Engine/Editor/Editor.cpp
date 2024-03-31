@@ -1118,14 +1118,16 @@ void Editor::ShowRibbon() {
         ImGui::SameLine();
         ImGui::InputText(" ", room_name, sizeof(room_name));
         if (ImGui::Button("cancel")) 
-                ImGui::CloseCurrentPopup();
+            ImGui::CloseCurrentPopup();
         ImGui::SameLine();
         if (ImGui::Button("save") && strcmp(room_name, "") != 0) {
-            //CleanLayers();
-            //m_layers.push_back(CopyObjects(m_tiles));
-            //m_layers.push_back(CopyObjects(m_objects));
             LoadFromLayers();
             SaveRoom(room_name);
+            // update room ids
+            bool is_new_id = true;
+            for (auto id : m_room_ids)
+                if (id == room_name) is_new_id = false;
+            m_room_ids.push_back(room_name);
             m_current_room_id = room_name;
             ImGui::CloseCurrentPopup();                
         }            
@@ -1328,6 +1330,7 @@ void Editor::ShowToolBar() {
     ImGui::Separator();
     ImGui::Dummy(ImVec2(0.0f, group_gap));
     if (ImGui::ImageButton(Renderer::GetInstance().GetTexture("editor-icon-save")->GetTexture(), button_size_vector)) {
+        LoadFromLayers();
         SaveRoom(m_current_room_id.c_str());
     };
     if (ImGui::IsItemHovered()) {
@@ -1443,8 +1446,9 @@ void Editor::Update(float /*dt*/) {
         m_action_record_handler->RedoAction(m_layers);
     }
 
-    // save 
+    // filesystem 
     if (m_key_map->CheckInputs(EditorAction::SAVE_ROOM)) {
+        LoadFromLayers();
         SaveRoom(m_current_room_id.c_str());
     }
 

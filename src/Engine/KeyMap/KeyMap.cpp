@@ -95,14 +95,15 @@ std::unordered_map<EditorAction, Bind> KeyMap::default_bindings = {
 
     // Undo and Redo
     {EditorAction::UNDO_ACTION, CreateBind(EditorAction::UNDO_ACTION, InputType::ON_UP_LATCH, std::vector<SDL_KeyCode>{mac_keys_to_sdl[MacKeys::LCOMMAND], SDLK_z})},
-    {EditorAction::REDO_ACTION, CreateBind(EditorAction::REDO_ACTION, InputType::ON_UP_LATCH, 
-                                            std::vector<SDL_KeyCode>{mac_keys_to_sdl[MacKeys::LCOMMAND], mac_keys_to_sdl[MacKeys::LSHIFT], SDLK_z})},
+    {EditorAction::REDO_ACTION, CreateBind(EditorAction::REDO_ACTION, InputType::ON_UP_LATCH, std::vector<SDL_KeyCode>{mac_keys_to_sdl[MacKeys::LCOMMAND], mac_keys_to_sdl[MacKeys::LSHIFT], SDLK_z})},
 
     // delete selection
     {EditorAction::EXECUTE_DELETE_SELECTION, CreateBind(EditorAction::EXECUTE_DELETE_SELECTION, InputType::LATCH, std::vector<SDL_KeyCode>{mac_keys_to_sdl[MacKeys::DELETE]})},
 
-    // save room 
+    // file system
     {EditorAction::SAVE_ROOM, CreateBind(EditorAction::SAVE_ROOM, InputType::ON_UP_LATCH, std::vector<SDL_KeyCode>{mac_keys_to_sdl[MacKeys::LCOMMAND], SDLK_s})},
+    // {EditorAction::SAVE_ROOM_AS, CreateBind(EditorAction::SAVE_ROOM_AS, InputType::ON_UP_LATCH, std::vector<SDL_KeyCode>{mac_keys_to_sdl[MacKeys::LCOMMAND], mac_keys_to_sdl[MacKeys::LSHIFT], SDLK_s})},
+    // {EditorAction::LOAD_ROOM, CreateBind(EditorAction::LOAD_ROOM, InputType::ON_UP_LATCH, std::vector<SDL_KeyCode>{mac_keys_to_sdl[MacKeys::LCOMMAND], SDLK_o})},
 };
 
 std::unordered_set<SDL_KeyCode> KeyMap::InitModifierKeys() {
