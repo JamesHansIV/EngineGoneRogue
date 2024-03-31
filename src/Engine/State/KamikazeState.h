@@ -43,13 +43,19 @@ class KamikazeDead : public EnemyDead {
 
     void Enter() override {
         EnemyDead::Enter();
-        Properties grenade_props("weapons", {10, 3, 16, 16},
-                                 {m_enemy.GetX(), m_enemy.GetY(), 36, 36}, 0.0);
 
-        auto* grenade = new Grenade(
-            grenade_props, {80 + m_enemy.GetEnemyStats().damage, 0.1, 50, 50});
-        static_cast<Game&>(Application::Get()).AddObject(grenade);
-        ColliderHandler::GetInstance()->AddCollider(grenade);
+        for (int i = 0; i < 1; i++) {
+            Properties grenade_props("weapons", {10, 3, 16, 16},
+                                     {m_enemy.GetX(), m_enemy.GetY(), 36, 36},
+                                     0.0);
+
+            auto* grenade =
+                new Grenade(grenade_props,
+                            {80 + m_enemy.GetEnemyStats().damage, 1, 50, 50});
+            grenade->GetRigidBody()->SetVelocity(Vector2D(3.0 * i, 3.0 * i));
+            static_cast<Game&>(Application::Get()).AddObject(grenade);
+            ColliderHandler::GetInstance()->AddCollider(grenade);
+        }
     }
 
    protected:

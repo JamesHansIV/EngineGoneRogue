@@ -50,7 +50,7 @@ void Player::Init() {
     m_collision_box.SetCorrection(8, 8, 16, 16);
 
     m_stats = new PlayerStats(MovementInfo{80, .90, 110, 500},
-                              CombatInfo{1, 1, 1, 50}, HealthInfo{100, 0, 0},
+                              CombatInfo{1, 1, 0, 50}, HealthInfo{100, 0, 0},
                               InventoryInfo{12, 3, 3});
 
     auto* default_projectile_props = new Properties(

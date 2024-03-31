@@ -605,5 +605,87 @@
         </Animation>
         <EnemyStats health="100" damage="25" speed="80" range="250" perception_width="1500" perception_height="1500" xp="30" fire_interval="2000" spread="0.1" spread_count="1"/>
     </Object>
+    <Object texture_id="boss" object_id="boss" rotation="0">
+        <Types collider="1" boss="1"/>
+        <SrcRect row="6" col="2" w="16" h="16"/>
+        <DstRect x="200" y="300" w="36" h="36"/>
+
+
+        <Animation>
+            <AnimationInfo
+                id="Idle"
+                texture_id="boss"
+                frame_count="3"
+                speed="500"
+                loop="1">
+                <Tile row="9" col="2" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo
+                id="Move-up"
+                texture_id="enemies"
+                frame_count="4"
+                speed="250"
+                loop="1">
+                <Tile row="11" col="4" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo
+                id="Move-down"
+                texture_id="enemies"
+                frame_count="4"
+                speed="250"
+                loop="1">
+                <Tile row="11" col="0" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo
+                id="Attack-down"
+                texture_id="boss"
+                frame_count="4"
+                speed="250">
+                >
+                <Tile row="1" col="0" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo
+                id="Attack-up"
+                texture_id="boss"
+                frame_count="4"
+                speed="250">
+                >
+                <Tile row="2" col="0" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo
+                id="Attack-right"
+                texture_id="boss"
+                frame_count="4"
+                speed="250">
+                >
+                <Tile row="4" col="0" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo
+                id="Attack-left"
+                texture_id="boss"
+                frame_count="4"
+                speed="250">
+                >
+                <Tile row="3" col="0" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo
+                id="Hit"
+                texture_id="enemies"
+                frame_count="3"
+                speed="50">
+                >
+                <Tile row="10" col="0" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo
+                id="Dead"
+                texture_id="enemies"
+                frame_count="2"
+                speed="500"
+                >
+                <Tile row="9" col="0" w="16" h="16"/>
+            </AnimationInfo>
+        </Animation>
+        <EnemyStats health="100" damage="25" speed="80" range="250" perception_width="1500" perception_height="1500" xp="30" fire_interval="2000" spread="0.1" spread_count="1"/>
+    </Object>
 
 </Root>
