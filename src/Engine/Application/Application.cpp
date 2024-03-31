@@ -199,10 +199,9 @@ bool Application::LoadPlayer() {
     return true;
 }
 
-bool Application::LoadStart() {
+bool Application::LoadStart(const char* path) {
     m_start_room =
-        LoadStartRoom(GetProjectPath().c_str(), m_start_position.first,
-                      m_start_position.second);
+        LoadStartRoom(path, m_start_position.first, m_start_position.second);
     SDL_Log("start pos: %d %d", m_start_position.first,
             m_start_position.second);
     m_global_start = m_start_position;
@@ -256,7 +255,8 @@ bool Application::LoadProject() {
     }
     SDL_Log("Textures are fine");
 
-    if (!LoadStart()) {
+    std::string start_path = GetProjectPath() + "/start_room.txt";
+    if (!LoadStart(start_path.c_str())) {
         SDL_Log("failed to load start room");
         return false;
     }

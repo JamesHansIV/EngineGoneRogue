@@ -54,7 +54,7 @@
             </AnimationInfo>
         </Animation>
         <CollisionBox x="604" y="304" w="28" h="298"/>
-        <RangedEnemyStats health="100" damage="25" speed="70" range="250" perception_width="1500" perception_height="1804134288" xp="30" fire_interval="5000" spread="0" spread_count="0"/>
+        <RangedEnemyStats health="100" damage="25" speed="70" range="250" perception_width="1500" perception_height="1799907216" xp="30" fire_interval="5000" spread="0" spread_count="0"/>
     </Object>
     <Object texture_id="enemies" object_id="dog" rotation="0">
         <Types collider="1" ranged_enemy="1" dog="1"/>
@@ -78,7 +78,7 @@
             </AnimationInfo>
         </Animation>
         <CollisionBox x="504" y="264" w="28" h="258"/>
-        <RangedEnemyStats health="100" damage="25" speed="70" range="250" perception_width="1500" perception_height="1804134288" xp="30" fire_interval="1000" spread="0" spread_count="0"/>
+        <RangedEnemyStats health="100" damage="25" speed="70" range="250" perception_width="1500" perception_height="1799907216" xp="30" fire_interval="1000" spread="0" spread_count="0"/>
     </Object>
     <Object texture_id="enemies" object_id="goblin" rotation="0">
         <Types collider="1" ranged_enemy="1" goblin="1"/>
@@ -102,7 +102,7 @@
             </AnimationInfo>
         </Animation>
         <CollisionBox x="254" y="404" w="28" h="398"/>
-        <RangedEnemyStats health="100" damage="25" speed="80" range="250" perception_width="1500" perception_height="1804134288" xp="30" fire_interval="250" spread="3.9478419" spread_count="78"/>
+        <RangedEnemyStats health="100" damage="25" speed="80" range="250" perception_width="1500" perception_height="1799907216" xp="30" fire_interval="250" spread="3.9478419" spread_count="78"/>
     </Object>
     <Object texture_id="enemies" object_id="helixenemy" rotation="0">
         <Types collider="1" ranged_enemy="1" helix_enemy="1"/>
@@ -126,7 +126,7 @@
             </AnimationInfo>
         </Animation>
         <CollisionBox x="604" y="154" w="28" h="148"/>
-        <RangedEnemyStats health="100" damage="25" speed="70" range="180" perception_width="1500" perception_height="1804134288" xp="30" fire_interval="2000" spread="0" spread_count="0"/>
+        <RangedEnemyStats health="100" damage="25" speed="70" range="180" perception_width="1500" perception_height="1799907216" xp="30" fire_interval="2000" spread="0" spread_count="0"/>
     </Object>
     <Object texture_id="enemies" object_id="mage" rotation="0">
         <Types collider="1" ranged_enemy="1" mage="1"/>
@@ -150,12 +150,12 @@
             </AnimationInfo>
         </Animation>
         <CollisionBox x="554" y="304" w="28" h="298"/>
-        <RangedEnemyStats health="100" damage="25" speed="80" range="250" perception_width="1500" perception_height="1804134288" xp="30" fire_interval="3000" spread="0" spread_count="0"/>
+        <RangedEnemyStats health="100" damage="25" speed="80" range="250" perception_width="1500" perception_height="1799907216" xp="30" fire_interval="3000" spread="0" spread_count="0"/>
     </Object>
     <Object texture_id="enemies" object_id="skeleton" rotation="0">
         <Types collider="1" ranged_enemy="1" skeleton="1"/>
         <SrcRect row="6" col="2" w="16" h="16"/>
-        <DstRect x="620" y="1280" w="36" h="36"/>
+        <DstRect x="250" y="150" w="36" h="36"/>
         <Animation>
             <AnimationInfo id="Dead" texture_id="enemies" frame_count="2" speed="500" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
                 <Tile row="9" col="0" w="16" h="16"/>
@@ -174,12 +174,12 @@
             </AnimationInfo>
         </Animation>
         <CollisionBox x="254" y="154" w="28" h="148"/>
-        <RangedEnemyStats health="100" damage="25" speed="80" range="250" perception_width="1500" perception_height="1804134288" xp="30" fire_interval="2000" spread="0.98696047" spread_count="9"/>
+        <RangedEnemyStats health="100" damage="25" speed="80" range="250" perception_width="1500" perception_height="1799907216" xp="30" fire_interval="2000" spread="0.98696047" spread_count="9"/>
     </Object>
-    <Object texture_id="lockless-door-open" object_id="entrance" rotation="90">
-        <Types collider="1" entrance="1" curr_room_id="room4" next_room_id="room5" next_x="240" next_y="370"/>
+    <Object texture_id="lockless-door-open" object_id="entrance" rotation="0">
+        <Types collider="1"/>
         <SrcRect row="6" col="2" w="16" h="16"/>
-        <DstRect x="1990" y="400" w="48" h="48"/>
+        <DstRect x="500" y="500" w="36" h="36"/>
         <Animation>
             <AnimationInfo id="close" texture_id="lockless-door-close" frame_count="5" speed="250" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
                 <Tile row="0" col="0" w="32" h="32"/>
@@ -188,23 +188,144 @@
                 <Tile row="0" col="0" w="32" h="32"/>
             </AnimationInfo>
         </Animation>
-        <CollisionBox x="2000" y="400" w="48" h="48"/>
+        <CollisionBox x="514" y="514" w="8" h="508"/>
     </Object>
-    <Object texture_id="trap_idle" object_id="trap" rotation="0">
-        <Types collider="1" trap="1" damage="30"/>
-        <SrcRect row="0" col="0" w="16" h="16"/>
-        <DstRect x="600" y="300" w="32" h="32"/>
+    <Object texture_id="lockless-door-open" object_id="entrance" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="6" col="2" w="16" h="16"/>
+        <DstRect x="500" y="100" w="36" h="36"/>
         <Animation>
-            <AnimationInfo id="trap_closing" texture_id="trap_closing" frame_count="3" speed="50" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
-                <Tile row="0" col="0" w="16" h="16"/>
+            <AnimationInfo id="close" texture_id="lockless-door-close" frame_count="5" speed="250" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
+                <Tile row="0" col="0" w="32" h="32"/>
             </AnimationInfo>
-            <AnimationInfo id="trap_idle" texture_id="trap_idle" frame_count="1" speed="0" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
-                <Tile row="0" col="0" w="16" h="16"/>
-            </AnimationInfo>
-            <AnimationInfo id="trap_opening" texture_id="trap_opening" frame_count="5" speed="25" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
-                <Tile row="0" col="0" w="16" h="16"/>
+            <AnimationInfo id="open" texture_id="lockless-door-open" frame_count="5" speed="250" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
+                <Tile row="0" col="0" w="32" h="32"/>
             </AnimationInfo>
         </Animation>
-        <CollisionBox x="602" y="302" w="28" h="28"/>
+        <CollisionBox x="514" y="114" w="8" h="108"/>
+    </Object>
+    <Object texture_id="enemies" object_id="charger" rotation="0">
+        <Types collider="1" charger="1"/>
+        <SrcRect row="6" col="2" w="16" h="16"/>
+        <DstRect x="250" y="120" w="36" h="36"/>
+
+        <Animation>
+            <AnimationInfo
+                id="Idle"
+                texture_id="enemies"
+                frame_count="2"
+                speed="250"
+                loop="1">
+                <Tile row="6" col="2" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo
+                id="Move-up"
+                texture_id="enemies"
+                frame_count="4"
+                speed="250"
+                loop="1">
+                <Tile row="8" col="4" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo
+                id="Move-down"
+                texture_id="enemies"
+                frame_count="4"
+                speed="250"
+                loop="1">
+                <Tile row="8" col="0" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo
+                id="Attack"
+                texture_id="weapons"
+                frame_count="4"
+                speed="250"
+                loop="1">
+                <Tile row="8" col="4" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo
+                id="Hit"
+                texture_id="enemies"
+                frame_count="3"
+                speed="50">
+                <Tile row="7" col="0" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo
+                id="Dead"
+                texture_id="enemies"
+                frame_count="2"
+                speed="500">
+                <Tile row="6" col="0" w="16" h="16"/>
+            </AnimationInfo>
+        </Animation>
+        <EnemyStats health="100" damage="25" speed="70" range="200" perception_width="1500" perception_height="1500" xp="30"/>
+    </Object>
+    <Object texture_id="kamikaze" object_id="kamikaze" rotation="0">
+        <Types collider="1" kamikaze="1"/>
+        <SrcRect row="6" col="2" w="16" h="16"/>
+        <DstRect x="0" y="0" w="36" h="36"/>
+
+
+        <Animation>
+            <AnimationInfo
+                id="Idle"
+                texture_id="enemies"
+                frame_count="2"
+                speed="500"
+                loop="1">
+                <Tile row="9" col="2" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo
+                id="Move-up"
+                texture_id="enemies"
+                frame_count="4"
+                speed="250"
+                loop="1">
+                <Tile row="11" col="4" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo
+                id="Move-down"
+                texture_id="enemies"
+                frame_count="4"
+                speed="250"
+                loop="1">
+                <Tile row="11" col="0" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo
+                id="Attack-down"
+                texture_id="kamikaze"
+                frame_count="8"
+                speed="250"
+                loop="1"
+                >
+                <Tile row="0" col="0" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo
+                id="Attack-up"
+                texture_id="kamikaze"
+                frame_count="8"
+                speed="250"
+                loop="1"
+                >
+                <Tile row="1" col="0" w="16" h="16"/>
+            </AnimationInfo>
+
+            <AnimationInfo
+                id="Hit"
+                texture_id="enemies"
+                frame_count="3"
+                speed="50">
+                >
+                <Tile row="10" col="0" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo
+                id="Dead"
+                texture_id="enemies"
+                frame_count="2"
+                speed="500"
+                >
+                <Tile row="9" col="0" w="16" h="16"/>
+            </AnimationInfo>
+        </Animation>
+        <EnemyStats health="100" damage="25" speed="80" range="250" perception_width="1500" perception_height="1500" xp="30" fire_interval="2000" spread="0.1" spread_count="1"/>
     </Object>
 </Root>

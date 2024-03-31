@@ -1,4 +1,8 @@
 <Root>
+    <Texture type="base">
+        <FilePath>../assets/textures/items/magenta.png</FilePath>
+        <ID>armor</ID>
+    </Texture>
     <Texture type="tileMap">
         <TileSize>16</TileSize>
         <Rows>25</Rows>
@@ -7,32 +11,140 @@
         <ID>background-tiles</ID>
     </Texture>
     <Texture type="base">
-        <FilePath>../assets/textures/spritesheets/door2-open.png</FilePath>
-        <ID>door-open</ID>
+        <FilePath>../assets/textures/spritesheets/bullet_explosion2.png</FilePath>
+        <ID>bullet-explosion</ID>
+    </Texture>
+    <Texture type="base">
+        <FilePath>../assets/textures/GUI/big_buttons.png</FilePath>
+        <ID>buttons</ID>
+    </Texture>
+    <Texture type="base">
+        <FilePath>../assets/textures/spritesheets/destructible_objects.png</FilePath>
+        <ID>destructible_objects</ID>
+    </Texture>
+    <Texture type="base">
+        <FilePath>../assets/textures/items/purple.png</FilePath>
+        <ID>dodge-charm</ID>
     </Texture>
     <Texture type="base">
         <FilePath>../assets/textures/spritesheets/door2-close.png</FilePath>
         <ID>door-close</ID>
     </Texture>
     <Texture type="base">
+        <FilePath>../assets/textures/spritesheets/door2-open.png</FilePath>
+        <ID>door-open</ID>
+    </Texture>
+    <Texture type="base">
         <FilePath>../assets/textures/spritesheets/door-idle.png</FilePath>
         <ID>door1</ID>
+    </Texture>
+    <Texture type="base">
+        <FilePath>../assets/editor/cursors/drag_move_cursor.png</FilePath>
+        <ID>editor-cursor-drag-move</ID>
+    </Texture>
+    <Texture type="base">
+        <FilePath>../assets/editor/cursors/draw_cursor.png</FilePath>
+        <ID>editor-cursor-draw</ID>
+    </Texture>
+    <Texture type="base">
+        <FilePath>../assets/editor/cursors/erase_cursor.png</FilePath>
+        <ID>editor-cursor-erase</ID>
+    </Texture>
+    <Texture type="base">
+        <FilePath>../assets/editor/cursors/multi_select_cursor.png</FilePath>
+        <ID>editor-cursor-multi-select</ID>
+    </Texture>
+    <Texture type="base">
+        <FilePath>../assets/editor/cursors/paint_bucket_cursor.png</FilePath>
+        <ID>editor-cursor-paint-bucket</ID>
+    </Texture>
+    <Texture type="base">
+        <FilePath>../assets/editor/icons/copy_icon.png</FilePath>
+        <ID>editor-icon-copy</ID>
+    </Texture>
+    <Texture type="base">
+        <FilePath>../assets/editor/icons/cut_icon.png</FilePath>
+        <ID>editor-icon-cut</ID>
+    </Texture>
+    <Texture type="base">
+        <FilePath>../assets/editor/icons/delete_icon.png</FilePath>
+        <ID>editor-icon-delete-selection</ID>
+    </Texture>
+    <Texture type="base">
+        <FilePath>../assets/editor/icons/help_icon.png</FilePath>
+        <ID>editor-icon-help</ID>
+    </Texture>
+    <Texture type="base">
+        <FilePath>../assets/editor/icons/paste_icon.png</FilePath>
+        <ID>editor-icon-paste</ID>
+    </Texture>
+    <Texture type="base">
+        <FilePath>../assets/editor/icons/redo_icon.png</FilePath>
+        <ID>editor-icon-redo</ID>
+    </Texture>
+    <Texture type="base">
+        <FilePath>../assets/editor/icons/save_icon.png</FilePath>
+        <ID>editor-icon-save</ID>
+    </Texture>
+    <Texture type="base">
+        <FilePath>../assets/editor/icons/selection_icon.png</FilePath>
+        <ID>editor-icon-selection</ID>
+    </Texture>
+    <Texture type="base">
+        <FilePath>../assets/editor/icons/undo_icon.png</FilePath>
+        <ID>editor-icon-undo</ID>
     </Texture>
     <Texture type="base">
         <FilePath>../assets/textures/spritesheets/enemies.png</FilePath>
         <ID>enemies</ID>
     </Texture>
     <Texture type="base">
-        <FilePath>../assets/textures/spritesheets/kamikaze.png</FilePath>
-        <ID>kamikaze</ID>
+        <FilePath>../assets/textures/spritesheets/enemy_bullet_explosion.png</FilePath>
+        <ID>enemy-bullet-explosion</ID>
+    </Texture>
+    <Texture type="base">
+        <FilePath>../assets/textures/items/red.png</FilePath>
+        <ID>fire-rate</ID>
     </Texture>
     <Texture type="base">
         <FilePath>../assets/textures/foo.png</FilePath>
         <ID>foo</ID>
     </Texture>
     <Texture type="base">
+        <FilePath>../assets/textures/game_over.png</FilePath>
+        <ID>game-over-background</ID>
+    </Texture>
+    <Texture type="base">
         <FilePath>../assets/textures/spritesheets/lifepotion.png</FilePath>
         <ID>healthpotion</ID>
+    </Texture>
+    <Texture type="base">
+        <FilePath>../assets/textures/items/blue.png</FilePath>
+        <ID>hp-regen</ID>
+    </Texture>
+    <Texture type="base">
+        <FilePath>../assets/textures/spritesheets/kamikaze.png</FilePath>
+        <ID>kamikaze</ID>
+    </Texture>
+    <Texture type="base">
+        <FilePath>../assets/textures/items/gold.png</FilePath>
+        <ID>life-steal</ID>
+    </Texture>
+    <Texture type="base">
+        <FilePath>../assets/textures/spritesheets/lockless_door_close.png</FilePath>
+        <ID>lockless-door-close</ID>
+    </Texture>
+    <Texture type="base">
+        <FilePath>../assets/textures/spritesheets/lockless_door_open.png</FilePath>
+        <ID>lockless-door-open</ID>
+    </Texture>
+    <Texture type="base">
+        <FilePath>../assets/textures/items/lime.png</FilePath>
+        <ID>melee-boost</ID>
+    </Texture>
+    <Texture type="base">
+        <FilePath>../assets/textures/items/black.png</FilePath>
+        <ID>piercing</ID>
     </Texture>
     <Texture type="base">
         <FilePath>../assets/textures/spritesheets/player-sheet.png</FilePath>
@@ -43,12 +155,40 @@
         <ID>player-dodge</ID>
     </Texture>
     <Texture type="base">
+        <FilePath>../assets/textures/items/turquiose.png</FilePath>
+        <ID>projectile-speed</ID>
+    </Texture>
+    <Texture type="base">
+        <FilePath>../assets/textures/items/green.png</FilePath>
+        <ID>ranged-boost</ID>
+    </Texture>
+    <Texture type="base">
         <FilePath>../assets/textures/spritesheets/side-door-idle.png</FilePath>
         <ID>side-door</ID>
     </Texture>
     <Texture type="base">
         <FilePath>../assets/textures/BulletHell/PURPLE/Weapons/weapons/Firearms/spr_weapon06.png</FilePath>
         <ID>sniper</ID>
+    </Texture>
+    <Texture type="base">
+        <FilePath>../assets/textures/start_background.png</FilePath>
+        <ID>start-background</ID>
+    </Texture>
+    <Texture type="base">
+        <FilePath>../assets/textures/items/orange.png</FilePath>
+        <ID>swift-boots</ID>
+    </Texture>
+    <Texture type="base">
+        <FilePath>../assets/textures/spritesheets/trap_closing.png</FilePath>
+        <ID>trap_closing</ID>
+    </Texture>
+    <Texture type="base">
+        <FilePath>../assets/textures/BulletHell/PURPLE/TileSet/Trap/spr_trap1.png</FilePath>
+        <ID>trap_idle</ID>
+    </Texture>
+    <Texture type="base">
+        <FilePath>../assets/textures/spritesheets/trap_opening.png</FilePath>
+        <ID>trap_opening</ID>
     </Texture>
     <Texture type="base">
         <FilePath>../assets/textures/spritesheets/weapons.png</FilePath>
@@ -61,89 +201,5 @@
     <Texture type="base">
         <FilePath>../assets/textures/spritesheets/chest.png</FilePath>
         <ID>wooden-chest-opening</ID>
-    </Texture>
-    <Texture type="base">
-        <FilePath>../assets/textures/spritesheets/bullet_explosion2.png</FilePath>
-        <ID>bullet-explosion</ID>
-    </Texture>
-    <Texture type="base">
-        <FilePath>../assets/textures/spritesheets/enemy_bullet_explosion.png</FilePath>
-        <ID>enemy-bullet-explosion</ID>
-    </Texture>
-    <Texture type = "base">
-        <FilePath>../assets/textures/items/black.png</FilePath>
-        <ID>piercing</ID>
-    </Texture>  
-    <Texture type = "base">
-        <FilePath>../assets/textures/items/blue.png</FilePath>
-        <ID>hp-regen</ID>
-    </Texture>  
-    <Texture type = "base">
-        <FilePath>../assets/textures/items/gold.png</FilePath>
-        <ID>life-steal</ID>
-    </Texture>  
-    <Texture type = "base">
-        <FilePath>../assets/textures/items/green.png</FilePath>
-        <ID>ranged-boost</ID>
-    </Texture>  
-    <Texture type = "base">
-        <FilePath>../assets/textures/items/lime.png</FilePath>
-        <ID>melee-boost</ID>
-    </Texture>  
-    <Texture type = "base">
-        <FilePath>../assets/textures/items/magenta.png</FilePath>
-        <ID>armor</ID>
-    </Texture>  
-    <Texture type = "base">
-        <FilePath>../assets/textures/items/orange.png</FilePath>
-        <ID>swift-boots</ID>
-    </Texture>  
-    <Texture type = "base">
-        <FilePath>../assets/textures/items/purple.png</FilePath>
-        <ID>dodge-charm</ID>
-    </Texture>  
-    <Texture type = "base">
-        <FilePath>../assets/textures/items/red.png</FilePath>
-        <ID>fire-rate</ID>
-    </Texture> 
-    <Texture type = "base">
-        <FilePath>../assets/textures/items/turquiose.png</FilePath>
-        <ID>projectile-speed</ID>
-    </Texture> 
-    <Texture type = "base">
-        <FilePath>../assets/textures/start_background.png</FilePath>
-        <ID>start-background</ID>
-    </Texture>
-    <Texture type = "base">
-        <FilePath>../assets/textures/GUI/big_buttons.png</FilePath>
-        <ID>buttons</ID>
-    </Texture>
-    <Texture type = "base">
-        <FilePath>../assets/textures/game_over.png</FilePath>
-        <ID>game-over-background</ID>
-    </Texture>
-    <Texture type = "base">
-        <FilePath>../assets/textures/spritesheets/lockless_door_open.png</FilePath>
-        <ID>lockless-door-open</ID>
-    </Texture>
-    <Texture type = "base">
-        <FilePath>../assets/textures/spritesheets/lockless_door_close.png</FilePath>
-        <ID>lockless-door-close</ID>
-    </Texture>
-    <Texture type = "base">
-        <FilePath>../assets/textures/BulletHell/PURPLE/TileSet/Trap/spr_trap1.png</FilePath>
-        <ID>trap_idle</ID>
-    </Texture>
-    <Texture type = "base">
-        <FilePath>../assets/textures/spritesheets/trap_opening.png</FilePath>
-        <ID>trap_opening</ID>
-    </Texture>
-    <Texture type = "base">
-        <FilePath>../assets/textures/spritesheets/trap_closing.png</FilePath>
-        <ID>trap_closing</ID>
-    </Texture>
-    <Texture type = "base">
-        <FilePath>../assets/textures/spritesheets/destructible_objects.png</FilePath>
-        <ID>destructible_objects</ID>
     </Texture>
 </Root>

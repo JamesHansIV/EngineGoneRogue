@@ -22,7 +22,7 @@ class Application {
     bool LoadNextRoom();
     bool LoadRoom(std::string room_id);
     bool LoadProject();
-    bool LoadStart();
+    bool LoadStart(const char* path);
     bool LoadPlayer();
     bool BuildRoomIds();
 

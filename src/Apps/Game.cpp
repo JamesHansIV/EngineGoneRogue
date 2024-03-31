@@ -142,9 +142,14 @@ Game::Game() : m_state(nullptr), m_endless(false) {
 }
 
 void Game::InitEndless() {
+    std::string endless_path = GetProjectPath() + "/endless.txt";
+    LoadStart(endless_path.c_str());
+    LoadRoom(m_start_room);
+
     GameObject* to_delete = nullptr;
     for (auto it = m_objects.begin(); it != m_objects.end();) {
         if (dynamic_cast<Entrance*>(*it) != nullptr) {
+            SDL_Log("deleting entrance from objects");
             to_delete = *it;
             it = m_objects.erase(it);
             delete to_delete;
@@ -176,6 +181,7 @@ void Game::ResetManagers() {
 void Game::Restart() {
     GetPlayer()->Clean();
     GetPlayer()->Init();
+    m_rooms_cleared.clear();
     ResetManagers();
     SetStartPosition(m_global_start.first, m_global_start.second);
     LoadRoom(GetStartID());

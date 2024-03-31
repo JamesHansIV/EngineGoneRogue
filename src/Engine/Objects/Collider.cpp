@@ -24,6 +24,10 @@ Collider::~Collider() {
     }
 }
 
+GameObject* Collider::Copy() {
+    return new Collider(this);
+}
+
 void Collider::UnCollide(Collider* collidee) {
     if (!m_do_un_collide) {
         return;

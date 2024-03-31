@@ -17,6 +17,8 @@ class Entrance : public Collider {
     void Clean() override;
     void Update(float dt) override;
 
+    GameObject* Copy() override;
+
     std::string GetCurrentRoomID() { return m_curr_room_id; }
 
     std::string GetNextRoomID() { return m_next_room_id; }

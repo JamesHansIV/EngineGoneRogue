@@ -46,6 +46,11 @@ void Entrance::Update(float dt) {
     }
 }
 
+GameObject* Entrance::Copy() {
+    return new Entrance(this, m_curr_room_id, m_next_room_id,
+                        m_next_start.first, m_next_start.second);
+}
+
 void Entrance::OnCollide(Collider* collidee) {
     if (collidee->GetObjectType() == ObjectType::Player && !m_closed &&
         m_collideless_time == 0) {

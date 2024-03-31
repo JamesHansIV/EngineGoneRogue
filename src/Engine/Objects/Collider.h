@@ -19,6 +19,8 @@ class Collider : public GameObject {
 
     ~Collider();
 
+    GameObject* Copy() override;
+
     void SetDoUnCollide(bool doUnCollide) { m_do_un_collide = doUnCollide; }
 
     [[nodiscard]] bool GetDoUnCollide() const { return m_do_un_collide; }

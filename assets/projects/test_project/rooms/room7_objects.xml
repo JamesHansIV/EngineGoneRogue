@@ -1,6 +1,6 @@
 <Root>
     <Object texture_id="enemies" object_id="slime" rotation="0">
-        <Types collider="1" slime="1"/>
+        <Types collider="1"/>
         <SrcRect row="0" col="1" w="16" h="16"/>
         <DstRect x="500" y="200" w="36" h="36"/>
         <Animation>
@@ -29,11 +29,10 @@
                 <Tile row="3" col="2" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
-        <CollisionBox x="504" y="204" w="28" h="198"/>
-        <EnemyStats health="100" damage="25" speed="70" range="50" perception_width="1500" perception_height="1500" xp="30"/>
+        <CollisionBox x="508" y="208" w="20" h="202"/>
     </Object>
     <Object texture_id="enemies" object_id="ringshotenemy" rotation="0">
-        <Types collider="1" ranged_enemy="1" ring_shot_enemy="1"/>
+        <Types collider="1"/>
         <SrcRect row="6" col="2" w="16" h="16"/>
         <DstRect x="600" y="300" w="36" h="36"/>
         <Animation>
@@ -53,11 +52,10 @@
                 <Tile row="11" col="4" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
-        <CollisionBox x="604" y="304" w="28" h="298"/>
-        <RangedEnemyStats health="100" damage="25" speed="70" range="250" perception_width="1500" perception_height="1804134288" xp="30" fire_interval="5000" spread="0" spread_count="0"/>
+        <CollisionBox x="608" y="308" w="20" h="302"/>
     </Object>
     <Object texture_id="enemies" object_id="dog" rotation="0">
-        <Types collider="1" ranged_enemy="1" dog="1"/>
+        <Types collider="1"/>
         <SrcRect row="6" col="2" w="16" h="16"/>
         <DstRect x="500" y="260" w="36" h="36"/>
         <Animation>
@@ -77,11 +75,10 @@
                 <Tile row="8" col="4" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
-        <CollisionBox x="504" y="264" w="28" h="258"/>
-        <RangedEnemyStats health="100" damage="25" speed="70" range="250" perception_width="1500" perception_height="1804134288" xp="30" fire_interval="1000" spread="0" spread_count="0"/>
+        <CollisionBox x="508" y="268" w="20" h="262"/>
     </Object>
     <Object texture_id="enemies" object_id="goblin" rotation="0">
-        <Types collider="1" ranged_enemy="1" goblin="1"/>
+        <Types collider="1"/>
         <SrcRect row="6" col="2" w="16" h="16"/>
         <DstRect x="250" y="400" w="36" h="36"/>
         <Animation>
@@ -101,11 +98,10 @@
                 <Tile row="13" col="4" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
-        <CollisionBox x="254" y="404" w="28" h="398"/>
-        <RangedEnemyStats health="100" damage="25" speed="80" range="250" perception_width="1500" perception_height="1804134288" xp="30" fire_interval="250" spread="3.9478419" spread_count="78"/>
+        <CollisionBox x="258" y="408" w="20" h="402"/>
     </Object>
     <Object texture_id="enemies" object_id="helixenemy" rotation="0">
-        <Types collider="1" ranged_enemy="1" helix_enemy="1"/>
+        <Types collider="1"/>
         <SrcRect row="6" col="2" w="16" h="16"/>
         <DstRect x="600" y="150" w="36" h="36"/>
         <Animation>
@@ -125,11 +121,10 @@
                 <Tile row="13" col="4" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
-        <CollisionBox x="604" y="154" w="28" h="148"/>
-        <RangedEnemyStats health="100" damage="25" speed="70" range="180" perception_width="1500" perception_height="1804134288" xp="30" fire_interval="2000" spread="0" spread_count="0"/>
+        <CollisionBox x="608" y="158" w="20" h="152"/>
     </Object>
     <Object texture_id="enemies" object_id="mage" rotation="0">
-        <Types collider="1" ranged_enemy="1" mage="1"/>
+        <Types collider="1"/>
         <SrcRect row="6" col="2" w="16" h="16"/>
         <DstRect x="550" y="300" w="36" h="36"/>
         <Animation>
@@ -149,13 +144,12 @@
                 <Tile row="8" col="4" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
-        <CollisionBox x="554" y="304" w="28" h="298"/>
-        <RangedEnemyStats health="100" damage="25" speed="80" range="250" perception_width="1500" perception_height="1804134288" xp="30" fire_interval="3000" spread="0" spread_count="0"/>
+        <CollisionBox x="558" y="308" w="20" h="302"/>
     </Object>
     <Object texture_id="enemies" object_id="skeleton" rotation="0">
-        <Types collider="1" ranged_enemy="1" skeleton="1"/>
+        <Types collider="1"/>
         <SrcRect row="6" col="2" w="16" h="16"/>
-        <DstRect x="620" y="1280" w="36" h="36"/>
+        <DstRect x="600" y="1480" w="36" h="36"/>
         <Animation>
             <AnimationInfo id="Dead" texture_id="enemies" frame_count="2" speed="500" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
                 <Tile row="9" col="0" w="16" h="16"/>
@@ -173,13 +167,12 @@
                 <Tile row="11" col="4" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
-        <CollisionBox x="254" y="154" w="28" h="148"/>
-        <RangedEnemyStats health="100" damage="25" speed="80" range="250" perception_width="1500" perception_height="1804134288" xp="30" fire_interval="2000" spread="0.98696047" spread_count="9"/>
+        <CollisionBox x="258" y="158" w="20" h="152"/>
     </Object>
-    <Object texture_id="lockless-door-open" object_id="entrance" rotation="90">
-        <Types collider="1" entrance="1" curr_room_id="room4" next_room_id="room5" next_x="240" next_y="370"/>
+    <Object texture_id="lockless-door-open" object_id="entrance" rotation="0">
+        <Types collider="1" entrance="1" curr_room_id="room7" next_room_id="boss" next_x="960" next_y="1600"/>
         <SrcRect row="6" col="2" w="16" h="16"/>
-        <DstRect x="1990" y="400" w="48" h="48"/>
+        <DstRect x="570" y="80" w="48" h="48"/>
         <Animation>
             <AnimationInfo id="close" texture_id="lockless-door-close" frame_count="5" speed="250" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
                 <Tile row="0" col="0" w="32" h="32"/>
@@ -188,10 +181,10 @@
                 <Tile row="0" col="0" w="32" h="32"/>
             </AnimationInfo>
         </Animation>
-        <CollisionBox x="2000" y="400" w="48" h="48"/>
+        <CollisionBox x="570" y="70" w="48" h="48"/>
     </Object>
     <Object texture_id="trap_idle" object_id="trap" rotation="0">
-        <Types collider="1" trap="1" damage="30"/>
+        <Types collider="1"/>
         <SrcRect row="0" col="0" w="16" h="16"/>
         <DstRect x="600" y="300" w="32" h="32"/>
         <Animation>
@@ -205,6 +198,6 @@
                 <Tile row="0" col="0" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
-        <CollisionBox x="602" y="302" w="28" h="28"/>
+        <CollisionBox x="608" y="308" w="16" h="302"/>
     </Object>
 </Root>

@@ -139,11 +139,6 @@
         <SrcRect row="7" col="0" w="16" h="16"/>
         <DstRect x="64" y="192" w="32" h="32"/>
     </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles29" rotation="0">
-        <Types/>
-        <SrcRect row="7" col="0" w="16" h="16"/>
-        <DstRect x="64" y="224" w="32" h="32"/>
-    </Object>
     <Object texture_id="background-tiles" object_id="background-tiles31" rotation="0">
         <Types/>
         <SrcRect row="7" col="0" w="16" h="16"/>
@@ -173,121 +168,6 @@
         <Types/>
         <SrcRect row="7" col="0" w="16" h="16"/>
         <DstRect x="64" y="448" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles37" rotation="0">
-        <Types/>
-        <SrcRect row="12" col="2" w="16" h="16"/>
-        <DstRect x="96" y="480" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles38" rotation="0">
-        <Types/>
-        <SrcRect row="12" col="2" w="16" h="16"/>
-        <DstRect x="128" y="480" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles39" rotation="0">
-        <Types/>
-        <SrcRect row="12" col="2" w="16" h="16"/>
-        <DstRect x="160" y="480" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles40" rotation="0">
-        <Types/>
-        <SrcRect row="12" col="2" w="16" h="16"/>
-        <DstRect x="192" y="480" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles41" rotation="0">
-        <Types/>
-        <SrcRect row="12" col="2" w="16" h="16"/>
-        <DstRect x="224" y="480" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles42" rotation="0">
-        <Types/>
-        <SrcRect row="12" col="2" w="16" h="16"/>
-        <DstRect x="256" y="480" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles43" rotation="0">
-        <Types/>
-        <SrcRect row="12" col="2" w="16" h="16"/>
-        <DstRect x="288" y="480" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles44" rotation="0">
-        <Types/>
-        <SrcRect row="12" col="2" w="16" h="16"/>
-        <DstRect x="320" y="480" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles46" rotation="0">
-        <Types/>
-        <SrcRect row="12" col="2" w="16" h="16"/>
-        <DstRect x="384" y="480" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles47" rotation="0">
-        <Types/>
-        <SrcRect row="12" col="2" w="16" h="16"/>
-        <DstRect x="416" y="480" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles48" rotation="0">
-        <Types/>
-        <SrcRect row="12" col="2" w="16" h="16"/>
-        <DstRect x="448" y="480" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles50" rotation="0">
-        <Types/>
-        <SrcRect row="12" col="2" w="16" h="16"/>
-        <DstRect x="512" y="480" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles51" rotation="0">
-        <Types/>
-        <SrcRect row="12" col="2" w="16" h="16"/>
-        <DstRect x="544" y="480" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles52" rotation="0">
-        <Types/>
-        <SrcRect row="12" col="2" w="16" h="16"/>
-        <DstRect x="576" y="480" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles53" rotation="0">
-        <Types/>
-        <SrcRect row="12" col="2" w="16" h="16"/>
-        <DstRect x="608" y="480" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles54" rotation="0">
-        <Types/>
-        <SrcRect row="12" col="2" w="16" h="16"/>
-        <DstRect x="640" y="480" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles55" rotation="0">
-        <Types/>
-        <SrcRect row="12" col="2" w="16" h="16"/>
-        <DstRect x="672" y="480" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles56" rotation="0">
-        <Types/>
-        <SrcRect row="12" col="2" w="16" h="16"/>
-        <DstRect x="704" y="480" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles57" rotation="0">
-        <Types/>
-        <SrcRect row="12" col="2" w="16" h="16"/>
-        <DstRect x="736" y="480" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles58" rotation="0">
-        <Types/>
-        <SrcRect row="12" col="2" w="16" h="16"/>
-        <DstRect x="768" y="480" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles59" rotation="0">
-        <Types/>
-        <SrcRect row="12" col="2" w="16" h="16"/>
-        <DstRect x="800" y="480" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles60" rotation="0">
-        <Types/>
-        <SrcRect row="12" col="2" w="16" h="16"/>
-        <DstRect x="832" y="480" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles61" rotation="0">
-        <Types/>
-        <SrcRect row="12" col="2" w="16" h="16"/>
-        <DstRect x="864" y="480" w="32" h="32"/>
     </Object>
     <Object texture_id="background-tiles" object_id="background-tiles62" rotation="0">
         <Types/>
@@ -334,16 +214,6 @@
         <SrcRect row="9" col="7" w="16" h="16"/>
         <DstRect x="896" y="192" w="32" h="32"/>
     </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles71" rotation="0">
-        <Types/>
-        <SrcRect row="9" col="7" w="16" h="16"/>
-        <DstRect x="896" y="224" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles73" rotation="0">
-        <Types/>
-        <SrcRect row="9" col="7" w="16" h="16"/>
-        <DstRect x="896" y="288" w="32" h="32"/>
-    </Object>
     <Object texture_id="background-tiles" object_id="background-tiles74" rotation="0">
         <Types/>
         <SrcRect row="9" col="7" w="16" h="16"/>
@@ -363,156 +233,6 @@
         <Types/>
         <SrcRect row="5" col="6" w="16" h="16"/>
         <DstRect x="896" y="32" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles78" rotation="0">
-        <Types/>
-        <SrcRect row="10" col="7" w="16" h="16"/>
-        <DstRect x="896" y="480" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles79" rotation="0">
-        <Types/>
-        <SrcRect row="10" col="0" w="16" h="16"/>
-        <DstRect x="64" y="480" w="32" h="32"/>
-    </Object>
-    <Object texture_id="door1" object_id="door12" rotation="0">
-        <Types/>
-        <SrcRect row="0" col="0" w="16" h="32"/>
-        <DstRect x="480" y="16" w="32" h="48"/>
-    </Object>
-    <Object texture_id="door1" object_id="door14" rotation="180">
-        <Types/>
-        <SrcRect row="0" col="0" w="16" h="32"/>
-        <DstRect x="481" y="481" w="32" h="48"/>
-    </Object>
-    <Object texture_id="door1" object_id="door17" rotation="90">
-        <Types/>
-        <SrcRect row="0" col="0" w="16" h="32"/>
-        <DstRect x="75" y="248" w="32" h="48"/>
-    </Object>
-    <Object texture_id="door1" object_id="door15" rotation="270">
-        <Types/>
-        <SrcRect row="0" col="0" w="16" h="32"/>
-        <DstRect x="886" y="249" w="32" h="48"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles80" rotation="0">
-        <Types/>
-        <SrcRect row="14" col="1" w="16" h="16"/>
-        <DstRect x="96" y="64" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles82" rotation="0">
-        <Types/>
-        <SrcRect row="14" col="2" w="16" h="16"/>
-        <DstRect x="160" y="64" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles83" rotation="0">
-        <Types/>
-        <SrcRect row="14" col="2" w="16" h="16"/>
-        <DstRect x="192" y="64" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles84" rotation="0">
-        <Types/>
-        <SrcRect row="14" col="2" w="16" h="16"/>
-        <DstRect x="224" y="64" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles85" rotation="0">
-        <Types/>
-        <SrcRect row="14" col="2" w="16" h="16"/>
-        <DstRect x="256" y="64" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles86" rotation="0">
-        <Types/>
-        <SrcRect row="14" col="2" w="16" h="16"/>
-        <DstRect x="288" y="64" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles87" rotation="0">
-        <Types/>
-        <SrcRect row="14" col="2" w="16" h="16"/>
-        <DstRect x="320" y="64" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles88" rotation="0">
-        <Types/>
-        <SrcRect row="14" col="2" w="16" h="16"/>
-        <DstRect x="352" y="64" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles89" rotation="0">
-        <Types/>
-        <SrcRect row="14" col="2" w="16" h="16"/>
-        <DstRect x="384" y="64" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles90" rotation="0">
-        <Types/>
-        <SrcRect row="14" col="2" w="16" h="16"/>
-        <DstRect x="416" y="64" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles91" rotation="0">
-        <Types/>
-        <SrcRect row="14" col="2" w="16" h="16"/>
-        <DstRect x="448" y="64" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles92" rotation="0">
-        <Types/>
-        <SrcRect row="14" col="2" w="16" h="16"/>
-        <DstRect x="480" y="64" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles93" rotation="0">
-        <Types/>
-        <SrcRect row="14" col="2" w="16" h="16"/>
-        <DstRect x="512" y="64" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles94" rotation="0">
-        <Types/>
-        <SrcRect row="14" col="2" w="16" h="16"/>
-        <DstRect x="544" y="64" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles95" rotation="0">
-        <Types/>
-        <SrcRect row="14" col="2" w="16" h="16"/>
-        <DstRect x="576" y="64" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles96" rotation="0">
-        <Types/>
-        <SrcRect row="14" col="2" w="16" h="16"/>
-        <DstRect x="608" y="64" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles97" rotation="0">
-        <Types/>
-        <SrcRect row="14" col="2" w="16" h="16"/>
-        <DstRect x="640" y="64" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles98" rotation="0">
-        <Types/>
-        <SrcRect row="14" col="2" w="16" h="16"/>
-        <DstRect x="672" y="64" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles101" rotation="0">
-        <Types/>
-        <SrcRect row="14" col="2" w="16" h="16"/>
-        <DstRect x="704" y="64" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles102" rotation="0">
-        <Types/>
-        <SrcRect row="14" col="2" w="16" h="16"/>
-        <DstRect x="736" y="64" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles103" rotation="0">
-        <Types/>
-        <SrcRect row="14" col="2" w="16" h="16"/>
-        <DstRect x="768" y="64" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles104" rotation="0">
-        <Types/>
-        <SrcRect row="14" col="2" w="16" h="16"/>
-        <DstRect x="800" y="64" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles105" rotation="0">
-        <Types/>
-        <SrcRect row="14" col="2" w="16" h="16"/>
-        <DstRect x="832" y="64" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles152" rotation="0">
-        <Types/>
-        <SrcRect row="16" col="1" w="16" h="16"/>
-        <DstRect x="96" y="448" w="32" h="32"/>
     </Object>
     <Object texture_id="background-tiles" object_id="background-tiles164" rotation="0">
         <Types/>
@@ -563,16 +283,6 @@
         <Types/>
         <SrcRect row="15" col="2" w="16" h="16"/>
         <DstRect x="128" y="384" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles174" rotation="0">
-        <Types/>
-        <SrcRect row="15" col="2" w="16" h="16"/>
-        <DstRect x="128" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles175" rotation="0">
-        <Types/>
-        <SrcRect row="15" col="2" w="16" h="16"/>
-        <DstRect x="160" y="416" w="32" h="32"/>
     </Object>
     <Object texture_id="background-tiles" object_id="background-tiles176" rotation="0">
         <Types/>
@@ -673,16 +383,6 @@
         <Types/>
         <SrcRect row="15" col="2" w="16" h="16"/>
         <DstRect x="192" y="384" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles196" rotation="0">
-        <Types/>
-        <SrcRect row="15" col="2" w="16" h="16"/>
-        <DstRect x="192" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles197" rotation="0">
-        <Types/>
-        <SrcRect row="15" col="2" w="16" h="16"/>
-        <DstRect x="224" y="416" w="32" h="32"/>
     </Object>
     <Object texture_id="background-tiles" object_id="background-tiles198" rotation="0">
         <Types/>
@@ -804,101 +504,6 @@
         <SrcRect row="15" col="2" w="16" h="16"/>
         <DstRect x="256" y="384" w="32" h="32"/>
     </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles222" rotation="0">
-        <Types/>
-        <SrcRect row="15" col="2" w="16" h="16"/>
-        <DstRect x="256" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles223" rotation="0">
-        <Types/>
-        <SrcRect row="15" col="2" w="16" h="16"/>
-        <DstRect x="288" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles224" rotation="0">
-        <Types/>
-        <SrcRect row="15" col="2" w="16" h="16"/>
-        <DstRect x="320" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles225" rotation="0">
-        <Types/>
-        <SrcRect row="15" col="2" w="16" h="16"/>
-        <DstRect x="352" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles226" rotation="0">
-        <Types/>
-        <SrcRect row="15" col="2" w="16" h="16"/>
-        <DstRect x="384" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles227" rotation="0">
-        <Types/>
-        <SrcRect row="15" col="2" w="16" h="16"/>
-        <DstRect x="416" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles228" rotation="0">
-        <Types/>
-        <SrcRect row="15" col="2" w="16" h="16"/>
-        <DstRect x="448" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles229" rotation="0">
-        <Types/>
-        <SrcRect row="15" col="2" w="16" h="16"/>
-        <DstRect x="480" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles230" rotation="0">
-        <Types/>
-        <SrcRect row="15" col="2" w="16" h="16"/>
-        <DstRect x="512" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles231" rotation="0">
-        <Types/>
-        <SrcRect row="15" col="2" w="16" h="16"/>
-        <DstRect x="544" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles232" rotation="0">
-        <Types/>
-        <SrcRect row="15" col="2" w="16" h="16"/>
-        <DstRect x="576" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles233" rotation="0">
-        <Types/>
-        <SrcRect row="15" col="2" w="16" h="16"/>
-        <DstRect x="608" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles234" rotation="0">
-        <Types/>
-        <SrcRect row="15" col="2" w="16" h="16"/>
-        <DstRect x="640" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles235" rotation="0">
-        <Types/>
-        <SrcRect row="15" col="2" w="16" h="16"/>
-        <DstRect x="672" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles236" rotation="0">
-        <Types/>
-        <SrcRect row="15" col="2" w="16" h="16"/>
-        <DstRect x="704" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles237" rotation="0">
-        <Types/>
-        <SrcRect row="15" col="2" w="16" h="16"/>
-        <DstRect x="736" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles238" rotation="0">
-        <Types/>
-        <SrcRect row="15" col="2" w="16" h="16"/>
-        <DstRect x="768" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles239" rotation="0">
-        <Types/>
-        <SrcRect row="15" col="2" w="16" h="16"/>
-        <DstRect x="800" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles240" rotation="0">
-        <Types/>
-        <SrcRect row="15" col="2" w="16" h="16"/>
-        <DstRect x="832" y="416" w="32" h="32"/>
-    </Object>
     <Object texture_id="background-tiles" object_id="background-tiles241" rotation="0">
         <Types/>
         <SrcRect row="15" col="2" w="16" h="16"/>
@@ -969,21 +574,6 @@
         <SrcRect row="15" col="2" w="16" h="16"/>
         <DstRect x="704" y="96" w="32" h="32"/>
     </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles255" rotation="0">
-        <Types/>
-        <SrcRect row="15" col="2" w="16" h="16"/>
-        <DstRect x="704" y="64" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles256" rotation="0">
-        <Types/>
-        <SrcRect row="15" col="2" w="16" h="16"/>
-        <DstRect x="672" y="64" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles257" rotation="0">
-        <Types/>
-        <SrcRect row="15" col="2" w="16" h="16"/>
-        <DstRect x="640" y="64" w="32" h="32"/>
-    </Object>
     <Object texture_id="background-tiles" object_id="background-tiles258" rotation="0">
         <Types/>
         <SrcRect row="15" col="2" w="16" h="16"/>
@@ -993,21 +583,6 @@
         <Types/>
         <SrcRect row="15" col="2" w="16" h="16"/>
         <DstRect x="640" y="96" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles260" rotation="0">
-        <Types/>
-        <SrcRect row="14" col="2" w="16" h="16"/>
-        <DstRect x="704" y="64" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles261" rotation="0">
-        <Types/>
-        <SrcRect row="14" col="2" w="16" h="16"/>
-        <DstRect x="672" y="64" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles262" rotation="0">
-        <Types/>
-        <SrcRect row="14" col="2" w="16" h="16"/>
-        <DstRect x="640" y="64" w="32" h="32"/>
     </Object>
     <Object texture_id="background-tiles" object_id="background-tiles263" rotation="0">
         <Types/>
@@ -1063,26 +638,6 @@
         <Types/>
         <SrcRect row="15" col="2" w="16" h="16"/>
         <DstRect x="288" y="96" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles81" rotation="0">
-        <Types/>
-        <SrcRect row="14" col="2" w="16" h="16"/>
-        <DstRect x="129" y="65" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles281" rotation="0">
-        <Types/>
-        <SrcRect row="13" col="1" w="16" h="16"/>
-        <DstRect x="192" y="64" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles297" rotation="0">
-        <Types/>
-        <SrcRect row="13" col="1" w="16" h="16"/>
-        <DstRect x="736" y="64" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles315" rotation="0">
-        <Types/>
-        <SrcRect row="13" col="2" w="16" h="16"/>
-        <DstRect x="96" y="448" w="32" h="32"/>
     </Object>
     <Object texture_id="background-tiles" object_id="background-tiles348" rotation="0">
         <Types/>
@@ -1234,116 +789,6 @@
         <SrcRect row="15" col="3" w="16" h="16"/>
         <DstRect x="832" y="384" w="32" h="32"/>
     </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles378" rotation="0">
-        <Types/>
-        <SrcRect row="16" col="2" w="16" h="16"/>
-        <DstRect x="800" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles379" rotation="0">
-        <Types/>
-        <SrcRect row="16" col="2" w="16" h="16"/>
-        <DstRect x="768" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles380" rotation="0">
-        <Types/>
-        <SrcRect row="16" col="2" w="16" h="16"/>
-        <DstRect x="736" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles381" rotation="0">
-        <Types/>
-        <SrcRect row="16" col="2" w="16" h="16"/>
-        <DstRect x="704" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles382" rotation="0">
-        <Types/>
-        <SrcRect row="16" col="2" w="16" h="16"/>
-        <DstRect x="672" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles383" rotation="0">
-        <Types/>
-        <SrcRect row="16" col="2" w="16" h="16"/>
-        <DstRect x="640" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles384" rotation="0">
-        <Types/>
-        <SrcRect row="16" col="2" w="16" h="16"/>
-        <DstRect x="608" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles385" rotation="0">
-        <Types/>
-        <SrcRect row="16" col="2" w="16" h="16"/>
-        <DstRect x="576" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles386" rotation="0">
-        <Types/>
-        <SrcRect row="16" col="2" w="16" h="16"/>
-        <DstRect x="544" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles387" rotation="0">
-        <Types/>
-        <SrcRect row="16" col="2" w="16" h="16"/>
-        <DstRect x="512" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles388" rotation="0">
-        <Types/>
-        <SrcRect row="16" col="2" w="16" h="16"/>
-        <DstRect x="480" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles389" rotation="0">
-        <Types/>
-        <SrcRect row="16" col="2" w="16" h="16"/>
-        <DstRect x="448" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles390" rotation="0">
-        <Types/>
-        <SrcRect row="16" col="2" w="16" h="16"/>
-        <DstRect x="416" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles391" rotation="0">
-        <Types/>
-        <SrcRect row="16" col="2" w="16" h="16"/>
-        <DstRect x="384" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles392" rotation="0">
-        <Types/>
-        <SrcRect row="16" col="2" w="16" h="16"/>
-        <DstRect x="352" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles393" rotation="0">
-        <Types/>
-        <SrcRect row="16" col="2" w="16" h="16"/>
-        <DstRect x="320" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles394" rotation="0">
-        <Types/>
-        <SrcRect row="16" col="2" w="16" h="16"/>
-        <DstRect x="288" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles395" rotation="0">
-        <Types/>
-        <SrcRect row="16" col="2" w="16" h="16"/>
-        <DstRect x="256" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles396" rotation="0">
-        <Types/>
-        <SrcRect row="16" col="2" w="16" h="16"/>
-        <DstRect x="224" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles397" rotation="0">
-        <Types/>
-        <SrcRect row="16" col="2" w="16" h="16"/>
-        <DstRect x="192" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles398" rotation="0">
-        <Types/>
-        <SrcRect row="16" col="2" w="16" h="16"/>
-        <DstRect x="160" y="416" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles399" rotation="0">
-        <Types/>
-        <SrcRect row="16" col="2" w="16" h="16"/>
-        <DstRect x="128" y="416" w="32" h="32"/>
-    </Object>
     <Object texture_id="background-tiles" object_id="background-tiles400" rotation="0">
         <Types/>
         <SrcRect row="15" col="1" w="16" h="16"/>
@@ -1389,11 +834,6 @@
         <SrcRect row="15" col="1" w="16" h="16"/>
         <DstRect x="128" y="128" w="32" h="32"/>
     </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles409" rotation="0">
-        <Types/>
-        <SrcRect row="16" col="1" w="16" h="16"/>
-        <DstRect x="128" y="416" w="32" h="32"/>
-    </Object>
     <Object texture_id="background-tiles" object_id="background-tiles410" rotation="0">
         <Types/>
         <SrcRect row="14" col="1" w="16" h="16"/>
@@ -1403,11 +843,6 @@
         <Types/>
         <SrcRect row="14" col="3" w="16" h="16"/>
         <DstRect x="832" y="96" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles412" rotation="0">
-        <Types/>
-        <SrcRect row="16" col="3" w="16" h="16"/>
-        <DstRect x="832" y="416" w="32" h="32"/>
     </Object>
     <Object texture_id="background-tiles" object_id="background-tiles413" rotation="0">
         <Types/>
@@ -2254,21 +1689,6 @@
         <SrcRect row="21" col="2" w="16" h="16"/>
         <DstRect x="192" y="96" w="32" h="32"/>
     </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles585" rotation="0">
-        <Types/>
-        <SrcRect row="7" col="2" w="16" h="16"/>
-        <DstRect x="96" y="256" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles586" rotation="0">
-        <Types/>
-        <SrcRect row="7" col="2" w="16" h="16"/>
-        <DstRect x="864" y="256" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles587" rotation="0">
-        <Types/>
-        <SrcRect row="8" col="1" w="16" h="16"/>
-        <DstRect x="480" y="448" w="32" h="32"/>
-    </Object>
     <Object texture_id="background-tiles" object_id="background-tiles588" rotation="0">
         <Types/>
         <SrcRect row="21" col="1" w="16" h="16"/>
@@ -2298,26 +1718,6 @@
         <Types/>
         <SrcRect row="13" col="2" w="16" h="16"/>
         <DstRect x="864" y="192" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles284" rotation="0">
-        <Types/>
-        <SrcRect row="13" col="1" w="16" h="16"/>
-        <DstRect x="288" y="64" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles294" rotation="0">
-        <Types/>
-        <SrcRect row="13" col="1" w="16" h="16"/>
-        <DstRect x="640" y="64" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles288" rotation="0">
-        <Types/>
-        <SrcRect row="13" col="1" w="16" h="16"/>
-        <DstRect x="416" y="64" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles45" rotation="0">
-        <Types/>
-        <SrcRect row="12" col="2" w="16" h="16"/>
-        <DstRect x="352" y="480" w="32" h="32"/>
     </Object>
     <Object texture_id="background-tiles" object_id="background-tiles311" rotation="-90">
         <Types/>
@@ -2369,126 +1769,6 @@
         <SrcRect row="13" col="1" w="16" h="16"/>
         <DstRect x="96" y="416" w="32" h="32"/>
     </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles345" rotation="0">
-        <Types/>
-        <SrcRect row="2" col="5" w="16" h="16"/>
-        <DstRect x="96" y="448" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles328" rotation="-180">
-        <Types/>
-        <SrcRect row="13" col="1" w="16" h="16"/>
-        <DstRect x="128" y="448" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles306" rotation="-180">
-        <Types/>
-        <SrcRect row="13" col="3" w="16" h="16"/>
-        <DstRect x="160" y="448" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles329" rotation="-180">
-        <Types/>
-        <SrcRect row="13" col="1" w="16" h="16"/>
-        <DstRect x="192" y="448" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles330" rotation="-180">
-        <Types/>
-        <SrcRect row="13" col="1" w="16" h="16"/>
-        <DstRect x="224" y="448" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles304" rotation="-180">
-        <Types/>
-        <SrcRect row="13" col="3" w="16" h="16"/>
-        <DstRect x="256" y="448" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles331" rotation="-180">
-        <Types/>
-        <SrcRect row="13" col="1" w="16" h="16"/>
-        <DstRect x="288" y="448" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles332" rotation="-180">
-        <Types/>
-        <SrcRect row="13" col="1" w="16" h="16"/>
-        <DstRect x="320" y="448" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles333" rotation="-180">
-        <Types/>
-        <SrcRect row="13" col="1" w="16" h="16"/>
-        <DstRect x="352" y="448" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles305" rotation="-180">
-        <Types/>
-        <SrcRect row="13" col="3" w="16" h="16"/>
-        <DstRect x="384" y="448" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles334" rotation="-180">
-        <Types/>
-        <SrcRect row="13" col="1" w="16" h="16"/>
-        <DstRect x="416" y="448" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles335" rotation="-180">
-        <Types/>
-        <SrcRect row="13" col="1" w="16" h="16"/>
-        <DstRect x="448" y="448" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles336" rotation="180">
-        <Types/>
-        <SrcRect row="13" col="1" w="16" h="16"/>
-        <DstRect x="512" y="448" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles337" rotation="180">
-        <Types/>
-        <SrcRect row="13" col="1" w="16" h="16"/>
-        <DstRect x="544" y="448" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles338" rotation="180">
-        <Types/>
-        <SrcRect row="13" col="1" w="16" h="16"/>
-        <DstRect x="576" y="448" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles339" rotation="180">
-        <Types/>
-        <SrcRect row="13" col="1" w="16" h="16"/>
-        <DstRect x="608" y="448" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles340" rotation="180">
-        <Types/>
-        <SrcRect row="13" col="1" w="16" h="16"/>
-        <DstRect x="640" y="448" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles318" rotation="180">
-        <Types/>
-        <SrcRect row="13" col="2" w="16" h="16"/>
-        <DstRect x="672" y="448" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles317" rotation="180">
-        <Types/>
-        <SrcRect row="13" col="2" w="16" h="16"/>
-        <DstRect x="704" y="448" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles341" rotation="180">
-        <Types/>
-        <SrcRect row="13" col="1" w="16" h="16"/>
-        <DstRect x="736" y="448" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles303" rotation="180">
-        <Types/>
-        <SrcRect row="13" col="3" w="16" h="16"/>
-        <DstRect x="768" y="448" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles342" rotation="180">
-        <Types/>
-        <SrcRect row="13" col="1" w="16" h="16"/>
-        <DstRect x="800" y="448" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles343" rotation="180">
-        <Types/>
-        <SrcRect row="13" col="1" w="16" h="16"/>
-        <DstRect x="832" y="448" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles344" rotation="0">
-        <Types/>
-        <SrcRect row="2" col="6" w="16" h="16"/>
-        <DstRect x="864" y="448" w="32" h="32"/>
-    </Object>
     <Object texture_id="background-tiles" object_id="background-tiles321" rotation="90">
         <Types/>
         <SrcRect row="13" col="2" w="16" h="16"/>
@@ -2514,11 +1794,6 @@
         <SrcRect row="13" col="2" w="16" h="16"/>
         <DstRect x="864" y="288" w="32" h="32"/>
     </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles584" rotation="90">
-        <Types/>
-        <SrcRect row="13" col="2" w="16" h="16"/>
-        <DstRect x="864" y="224" w="32" h="32"/>
-    </Object>
     <Object texture_id="background-tiles" object_id="background-tiles3" rotation="90">
         <Types/>
         <SrcRect row="23" col="2" w="16" h="16"/>
@@ -2539,119 +1814,1736 @@
         <SrcRect row="13" col="2" w="16" h="16"/>
         <DstRect x="864" y="96" w="32" h="32"/>
     </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles347" rotation="0">
+    <Object texture_id="background-tiles" object_id="background-tiles0" rotation="-90">
         <Types/>
+        <SrcRect row="6" col="2" w="16" h="16"/>
+        <DstRect x="96" y="256" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles1" rotation="90">
+        <Types/>
+        <SrcRect row="6" col="2" w="16" h="16"/>
+        <DstRect x="864" y="224" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles2" rotation="90">
+        <Types/>
+        <SrcRect row="6" col="2" w="16" h="16"/>
+        <DstRect x="864" y="256" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles3" rotation="0">
+        <Types/>
+        <SrcRect row="7" col="7" w="16" h="16"/>
+        <DstRect x="896" y="224" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles4" rotation="0">
+        <Types/>
+        <SrcRect row="7" col="7" w="16" h="16"/>
+        <DstRect x="896" y="256" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles5" rotation="0">
+        <Types/>
+        <SrcRect row="7" col="7" w="16" h="16"/>
+        <DstRect x="896" y="288" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles6" rotation="0">
+        <Types/>
+        <SrcRect row="7" col="0" w="16" h="16"/>
+        <DstRect x="64" y="224" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles7" rotation="0">
+        <Types/>
+        <SrcRect row="7" col="0" w="16" h="16"/>
+        <DstRect x="64" y="256" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles8" rotation="90">
+        <Types/>
+        <SrcRect row="6" col="3" w="16" h="16"/>
+        <DstRect x="864" y="448" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles9" rotation="90">
+        <Types/>
+        <SrcRect row="6" col="3" w="16" h="16"/>
+        <DstRect x="864" y="480" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles10" rotation="90">
+        <Types/>
+        <SrcRect row="6" col="3" w="16" h="16"/>
+        <DstRect x="864" y="512" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles11" rotation="90">
+        <Types/>
+        <SrcRect row="6" col="3" w="16" h="16"/>
+        <DstRect x="864" y="544" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles12" rotation="90">
+        <Types/>
+        <SrcRect row="6" col="3" w="16" h="16"/>
+        <DstRect x="864" y="576" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles13" rotation="90">
+        <Types/>
+        <SrcRect row="6" col="3" w="16" h="16"/>
+        <DstRect x="864" y="608" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles14" rotation="-90">
+        <Types/>
+        <SrcRect row="6" col="3" w="16" h="16"/>
+        <DstRect x="96" y="448" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles15" rotation="-90">
+        <Types/>
+        <SrcRect row="6" col="3" w="16" h="16"/>
+        <DstRect x="96" y="480" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles16" rotation="-90">
+        <Types/>
+        <SrcRect row="6" col="3" w="16" h="16"/>
+        <DstRect x="96" y="512" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles17" rotation="-90">
+        <Types/>
+        <SrcRect row="6" col="3" w="16" h="16"/>
+        <DstRect x="96" y="544" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles18" rotation="-90">
+        <Types/>
+        <SrcRect row="6" col="3" w="16" h="16"/>
+        <DstRect x="96" y="576" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles19" rotation="-90">
+        <Types/>
+        <SrcRect row="6" col="3" w="16" h="16"/>
+        <DstRect x="96" y="608" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles20" rotation="-90">
+        <Types/>
+        <SrcRect row="6" col="3" w="16" h="16"/>
+        <DstRect x="96" y="640" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles21" rotation="90">
+        <Types/>
+        <SrcRect row="6" col="3" w="16" h="16"/>
+        <DstRect x="864" y="640" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles22" rotation="0">
+        <Types/>
+        <SrcRect row="2" col="5" w="16" h="16"/>
+        <DstRect x="96" y="672" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles23" rotation="0">
+        <Types/>
+        <SrcRect row="2" col="6" w="16" h="16"/>
+        <DstRect x="864" y="672" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles24" rotation="-180">
+        <Types/>
+        <SrcRect row="13" col="2" w="16" h="16"/>
+        <DstRect x="128" y="672" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles25" rotation="-180">
+        <Types/>
+        <SrcRect row="13" col="2" w="16" h="16"/>
+        <DstRect x="160" y="672" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles26" rotation="-180">
+        <Types/>
+        <SrcRect row="13" col="2" w="16" h="16"/>
+        <DstRect x="192" y="672" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles27" rotation="-180">
+        <Types/>
+        <SrcRect row="13" col="2" w="16" h="16"/>
+        <DstRect x="224" y="672" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles28" rotation="-180">
+        <Types/>
+        <SrcRect row="13" col="6" w="16" h="16"/>
+        <DstRect x="256" y="672" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles29" rotation="-180">
+        <Types/>
+        <SrcRect row="13" col="2" w="16" h="16"/>
+        <DstRect x="288" y="672" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles30" rotation="-180">
+        <Types/>
+        <SrcRect row="13" col="2" w="16" h="16"/>
+        <DstRect x="320" y="672" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles31" rotation="-180">
+        <Types/>
+        <SrcRect row="13" col="2" w="16" h="16"/>
+        <DstRect x="352" y="672" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles32" rotation="-180">
+        <Types/>
+        <SrcRect row="13" col="2" w="16" h="16"/>
+        <DstRect x="384" y="672" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles33" rotation="-180">
+        <Types/>
+        <SrcRect row="13" col="2" w="16" h="16"/>
+        <DstRect x="448" y="672" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles34" rotation="-180">
+        <Types/>
+        <SrcRect row="13" col="2" w="16" h="16"/>
+        <DstRect x="480" y="672" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles35" rotation="-180">
+        <Types/>
+        <SrcRect row="13" col="2" w="16" h="16"/>
+        <DstRect x="512" y="672" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles36" rotation="-180">
+        <Types/>
+        <SrcRect row="13" col="2" w="16" h="16"/>
+        <DstRect x="544" y="672" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles37" rotation="-180">
+        <Types/>
+        <SrcRect row="13" col="2" w="16" h="16"/>
+        <DstRect x="576" y="672" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles38" rotation="-180">
+        <Types/>
+        <SrcRect row="13" col="2" w="16" h="16"/>
+        <DstRect x="416" y="672" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles39" rotation="-180">
+        <Types/>
+        <SrcRect row="13" col="2" w="16" h="16"/>
+        <DstRect x="608" y="672" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles40" rotation="-180">
+        <Types/>
+        <SrcRect row="13" col="2" w="16" h="16"/>
+        <DstRect x="640" y="672" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles41" rotation="-180">
+        <Types/>
+        <SrcRect row="13" col="2" w="16" h="16"/>
+        <DstRect x="672" y="672" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles42" rotation="-180">
+        <Types/>
+        <SrcRect row="13" col="2" w="16" h="16"/>
+        <DstRect x="704" y="672" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles43" rotation="-180">
+        <Types/>
+        <SrcRect row="13" col="1" w="16" h="16"/>
+        <DstRect x="736" y="672" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles44" rotation="-180">
+        <Types/>
+        <SrcRect row="13" col="1" w="16" h="16"/>
+        <DstRect x="768" y="672" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles45" rotation="-180">
+        <Types/>
+        <SrcRect row="13" col="1" w="16" h="16"/>
+        <DstRect x="800" y="672" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles46" rotation="-180">
+        <Types/>
+        <SrcRect row="13" col="1" w="16" h="16"/>
+        <DstRect x="832" y="672" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles47" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="160" y="416" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles48" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="192" y="416" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles49" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="224" y="416" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles50" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="256" y="416" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles51" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="288" y="416" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles52" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="320" y="416" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles53" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="352" y="416" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles54" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="384" y="416" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles55" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="416" y="416" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles56" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="448" y="416" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles57" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="480" y="416" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles58" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="512" y="416" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles59" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="544" y="416" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles60" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="576" y="416" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles61" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="608" y="416" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles62" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="640" y="416" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles63" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="672" y="416" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles64" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="704" y="416" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles65" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="736" y="416" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles66" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="768" y="416" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles67" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="800" y="416" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles68" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="800" y="448" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles69" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="800" y="480" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles70" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="800" y="512" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles71" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="800" y="544" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles72" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="800" y="576" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles73" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="800" y="608" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles74" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="1" w="16" h="16"/>
+        <DstRect x="128" y="416" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles75" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="1" w="16" h="16"/>
+        <DstRect x="128" y="448" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles76" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="1" w="16" h="16"/>
+        <DstRect x="128" y="480" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles77" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="1" w="16" h="16"/>
+        <DstRect x="128" y="512" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles78" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="1" w="16" h="16"/>
+        <DstRect x="128" y="544" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles79" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="1" w="16" h="16"/>
+        <DstRect x="128" y="576" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles80" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="1" w="16" h="16"/>
+        <DstRect x="128" y="608" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles81" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="3" w="16" h="16"/>
+        <DstRect x="832" y="416" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles82" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="3" w="16" h="16"/>
+        <DstRect x="832" y="448" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles83" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="3" w="16" h="16"/>
+        <DstRect x="832" y="480" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles84" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="3" w="16" h="16"/>
+        <DstRect x="832" y="512" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles85" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="3" w="16" h="16"/>
+        <DstRect x="832" y="544" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles86" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="3" w="16" h="16"/>
+        <DstRect x="832" y="576" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles87" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="3" w="16" h="16"/>
+        <DstRect x="832" y="608" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles88" rotation="0">
+        <Types/>
+        <SrcRect row="16" col="3" w="16" h="16"/>
+        <DstRect x="832" y="640" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles89" rotation="0">
+        <Types/>
+        <SrcRect row="16" col="1" w="16" h="16"/>
+        <DstRect x="128" y="640" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles90" rotation="0">
+        <Types/>
+        <SrcRect row="16" col="2" w="16" h="16"/>
+        <DstRect x="160" y="640" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles91" rotation="0">
+        <Types/>
+        <SrcRect row="16" col="2" w="16" h="16"/>
+        <DstRect x="192" y="640" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles92" rotation="0">
+        <Types/>
+        <SrcRect row="16" col="2" w="16" h="16"/>
+        <DstRect x="224" y="640" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles93" rotation="0">
+        <Types/>
+        <SrcRect row="16" col="2" w="16" h="16"/>
+        <DstRect x="256" y="640" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles94" rotation="0">
+        <Types/>
+        <SrcRect row="16" col="2" w="16" h="16"/>
+        <DstRect x="288" y="640" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles95" rotation="0">
+        <Types/>
+        <SrcRect row="16" col="2" w="16" h="16"/>
+        <DstRect x="320" y="640" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles96" rotation="0">
+        <Types/>
+        <SrcRect row="16" col="2" w="16" h="16"/>
+        <DstRect x="352" y="640" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles97" rotation="0">
+        <Types/>
+        <SrcRect row="16" col="2" w="16" h="16"/>
+        <DstRect x="384" y="640" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles98" rotation="0">
+        <Types/>
+        <SrcRect row="16" col="2" w="16" h="16"/>
+        <DstRect x="416" y="640" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles99" rotation="0">
+        <Types/>
+        <SrcRect row="16" col="2" w="16" h="16"/>
+        <DstRect x="448" y="640" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles100" rotation="0">
+        <Types/>
+        <SrcRect row="16" col="2" w="16" h="16"/>
+        <DstRect x="480" y="640" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles101" rotation="0">
+        <Types/>
+        <SrcRect row="16" col="2" w="16" h="16"/>
+        <DstRect x="512" y="640" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles102" rotation="0">
+        <Types/>
+        <SrcRect row="16" col="2" w="16" h="16"/>
+        <DstRect x="544" y="640" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles103" rotation="0">
+        <Types/>
+        <SrcRect row="16" col="2" w="16" h="16"/>
+        <DstRect x="576" y="640" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles104" rotation="0">
+        <Types/>
+        <SrcRect row="16" col="2" w="16" h="16"/>
+        <DstRect x="608" y="640" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles105" rotation="0">
+        <Types/>
+        <SrcRect row="16" col="2" w="16" h="16"/>
+        <DstRect x="640" y="640" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles106" rotation="0">
+        <Types/>
+        <SrcRect row="16" col="2" w="16" h="16"/>
+        <DstRect x="672" y="640" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles107" rotation="0">
+        <Types/>
+        <SrcRect row="16" col="2" w="16" h="16"/>
+        <DstRect x="704" y="640" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles108" rotation="0">
+        <Types/>
+        <SrcRect row="16" col="2" w="16" h="16"/>
+        <DstRect x="736" y="640" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles109" rotation="0">
+        <Types/>
+        <SrcRect row="16" col="2" w="16" h="16"/>
+        <DstRect x="768" y="640" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles110" rotation="0">
+        <Types/>
+        <SrcRect row="16" col="2" w="16" h="16"/>
+        <DstRect x="800" y="640" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles111" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="384" y="512" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles112" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="384" y="480" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles113" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="416" y="512" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles114" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="384" y="544" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles115" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="352" y="512" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles116" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="384" y="448" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles117" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="416" y="480" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles118" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="352" y="480" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles119" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="448" y="512" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles120" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="416" y="544" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles121" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="384" y="576" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles122" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="352" y="544" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles123" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="320" y="512" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles124" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="416" y="448" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles125" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="352" y="448" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles126" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="448" y="480" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles127" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="320" y="480" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles128" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="480" y="512" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles129" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="448" y="544" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles130" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="416" y="576" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles131" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="384" y="608" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles132" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="352" y="576" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles133" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="320" y="544" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles134" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="288" y="512" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles135" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="448" y="448" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles136" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="320" y="448" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles137" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="480" y="480" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles138" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="288" y="480" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles139" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="512" y="512" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles140" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="480" y="544" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles141" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="448" y="576" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles142" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="416" y="608" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles143" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="352" y="608" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles144" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="320" y="576" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles145" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="288" y="544" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles146" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="256" y="512" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles147" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="480" y="448" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles148" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="288" y="448" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles149" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="512" y="480" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles150" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="256" y="480" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles151" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="544" y="512" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles152" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="512" y="544" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles153" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="480" y="576" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles154" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="448" y="608" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles155" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="320" y="608" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles156" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="288" y="576" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles157" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="256" y="544" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles158" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="224" y="512" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles159" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="512" y="448" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles160" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="256" y="448" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles161" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="544" y="480" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles162" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="224" y="480" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles163" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="576" y="512" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles164" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="544" y="544" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles165" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="512" y="576" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles166" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="480" y="608" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles167" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="288" y="608" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles168" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="256" y="576" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles169" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="224" y="544" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles170" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="192" y="512" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles171" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="544" y="448" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles172" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="224" y="448" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles173" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="576" y="480" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles174" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="192" y="480" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles175" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="608" y="512" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles176" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="576" y="544" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles177" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="544" y="576" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles178" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="512" y="608" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles179" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="256" y="608" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles180" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="224" y="576" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles181" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="192" y="544" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles182" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="160" y="512" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles183" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="576" y="448" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles184" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="192" y="448" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles185" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="608" y="480" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles186" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="160" y="480" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles187" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="640" y="512" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles188" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="608" y="544" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles189" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="576" y="576" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles190" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="544" y="608" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles191" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="224" y="608" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles192" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="192" y="576" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles193" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="160" y="544" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles194" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="608" y="448" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles195" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="160" y="448" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles196" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="640" y="480" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles197" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="672" y="512" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles198" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="640" y="544" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles199" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="608" y="576" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles200" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="576" y="608" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles201" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="192" y="608" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles202" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="160" y="576" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles203" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="640" y="448" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles204" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="672" y="480" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles205" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="704" y="512" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles206" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="672" y="544" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles207" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="640" y="576" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles208" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="608" y="608" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles209" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="160" y="608" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles210" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="672" y="448" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles211" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="704" y="480" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles212" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="736" y="512" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles213" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="704" y="544" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles214" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="672" y="576" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles215" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="640" y="608" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles216" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="704" y="448" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles217" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="736" y="480" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles218" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="768" y="512" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles219" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="736" y="544" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles220" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="704" y="576" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles221" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="672" y="608" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles222" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="736" y="448" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles223" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="768" y="480" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles224" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="768" y="544" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles225" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="736" y="576" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles226" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="704" y="608" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles227" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="768" y="448" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles228" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="768" y="576" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles229" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="736" y="608" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles230" rotation="0">
+        <Types/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="768" y="608" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles231" rotation="0">
+        <Types/>
+        <SrcRect row="7" col="7" w="16" h="16"/>
+        <DstRect x="896" y="480" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles232" rotation="0">
+        <Types/>
+        <SrcRect row="7" col="7" w="16" h="16"/>
+        <DstRect x="896" y="512" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles233" rotation="0">
+        <Types/>
+        <SrcRect row="7" col="7" w="16" h="16"/>
+        <DstRect x="896" y="544" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles234" rotation="0">
+        <Types/>
+        <SrcRect row="7" col="7" w="16" h="16"/>
+        <DstRect x="896" y="576" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles235" rotation="0">
+        <Types/>
+        <SrcRect row="7" col="7" w="16" h="16"/>
+        <DstRect x="896" y="608" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles236" rotation="0">
+        <Types/>
+        <SrcRect row="7" col="7" w="16" h="16"/>
+        <DstRect x="896" y="640" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles237" rotation="0">
+        <Types/>
+        <SrcRect row="7" col="7" w="16" h="16"/>
+        <DstRect x="896" y="672" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles238" rotation="0">
+        <Types/>
+        <SrcRect row="7" col="0" w="16" h="16"/>
+        <DstRect x="64" y="480" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles239" rotation="0">
+        <Types/>
+        <SrcRect row="7" col="0" w="16" h="16"/>
+        <DstRect x="64" y="512" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles240" rotation="0">
+        <Types/>
+        <SrcRect row="7" col="0" w="16" h="16"/>
+        <DstRect x="64" y="544" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles241" rotation="0">
+        <Types/>
+        <SrcRect row="7" col="0" w="16" h="16"/>
+        <DstRect x="64" y="576" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles242" rotation="0">
+        <Types/>
+        <SrcRect row="7" col="0" w="16" h="16"/>
+        <DstRect x="64" y="608" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles243" rotation="0">
+        <Types/>
+        <SrcRect row="7" col="0" w="16" h="16"/>
+        <DstRect x="64" y="640" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles244" rotation="0">
+        <Types/>
+        <SrcRect row="7" col="0" w="16" h="16"/>
+        <DstRect x="64" y="672" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles245" rotation="0">
+        <Types/>
+        <SrcRect row="12" col="3" w="16" h="16"/>
+        <DstRect x="96" y="704" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles246" rotation="0">
+        <Types/>
+        <SrcRect row="12" col="3" w="16" h="16"/>
+        <DstRect x="128" y="704" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles247" rotation="0">
+        <Types/>
+        <SrcRect row="12" col="3" w="16" h="16"/>
+        <DstRect x="160" y="704" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles248" rotation="0">
+        <Types/>
+        <SrcRect row="12" col="3" w="16" h="16"/>
+        <DstRect x="192" y="704" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles249" rotation="0">
+        <Types/>
+        <SrcRect row="12" col="3" w="16" h="16"/>
+        <DstRect x="224" y="704" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles250" rotation="0">
+        <Types/>
+        <SrcRect row="12" col="3" w="16" h="16"/>
+        <DstRect x="256" y="704" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles251" rotation="0">
+        <Types/>
+        <SrcRect row="12" col="3" w="16" h="16"/>
+        <DstRect x="288" y="704" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles252" rotation="0">
+        <Types/>
+        <SrcRect row="12" col="3" w="16" h="16"/>
+        <DstRect x="320" y="704" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles253" rotation="0">
+        <Types/>
+        <SrcRect row="12" col="3" w="16" h="16"/>
+        <DstRect x="352" y="704" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles254" rotation="0">
+        <Types/>
+        <SrcRect row="12" col="3" w="16" h="16"/>
+        <DstRect x="384" y="704" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles255" rotation="0">
+        <Types/>
+        <SrcRect row="12" col="3" w="16" h="16"/>
+        <DstRect x="416" y="704" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles256" rotation="0">
+        <Types/>
+        <SrcRect row="12" col="3" w="16" h="16"/>
+        <DstRect x="448" y="704" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles257" rotation="0">
+        <Types/>
+        <SrcRect row="12" col="3" w="16" h="16"/>
+        <DstRect x="480" y="704" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles258" rotation="0">
+        <Types/>
+        <SrcRect row="12" col="3" w="16" h="16"/>
+        <DstRect x="512" y="704" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles259" rotation="0">
+        <Types/>
+        <SrcRect row="12" col="3" w="16" h="16"/>
+        <DstRect x="544" y="704" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles260" rotation="0">
+        <Types/>
+        <SrcRect row="12" col="3" w="16" h="16"/>
+        <DstRect x="576" y="704" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles261" rotation="0">
+        <Types/>
+        <SrcRect row="12" col="3" w="16" h="16"/>
+        <DstRect x="608" y="704" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles262" rotation="0">
+        <Types/>
+        <SrcRect row="12" col="3" w="16" h="16"/>
+        <DstRect x="640" y="704" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles263" rotation="0">
+        <Types/>
+        <SrcRect row="12" col="3" w="16" h="16"/>
+        <DstRect x="672" y="704" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles264" rotation="0">
+        <Types/>
+        <SrcRect row="12" col="3" w="16" h="16"/>
+        <DstRect x="704" y="704" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles265" rotation="0">
+        <Types/>
+        <SrcRect row="12" col="3" w="16" h="16"/>
+        <DstRect x="736" y="704" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles266" rotation="0">
+        <Types/>
+        <SrcRect row="12" col="3" w="16" h="16"/>
+        <DstRect x="768" y="704" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles267" rotation="0">
+        <Types/>
+        <SrcRect row="12" col="3" w="16" h="16"/>
+        <DstRect x="800" y="704" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles268" rotation="0">
+        <Types/>
+        <SrcRect row="12" col="3" w="16" h="16"/>
+        <DstRect x="832" y="704" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles269" rotation="0">
+        <Types/>
+        <SrcRect row="12" col="3" w="16" h="16"/>
+        <DstRect x="864" y="704" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles271" rotation="0">
+        <Types/>
+        <SrcRect row="12" col="6" w="16" h="16"/>
+        <DstRect x="896" y="704" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles272" rotation="0">
+        <Types/>
+        <SrcRect row="12" col="1" w="16" h="16"/>
+        <DstRect x="64" y="704" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles80" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="14" col="1" w="16" h="16"/>
+        <DstRect x="96" y="64" w="32" h="32"/>
+        <CollisionBox x="100" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles82" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="14" col="2" w="16" h="16"/>
+        <DstRect x="160" y="64" w="32" h="32"/>
+        <CollisionBox x="164" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles83" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="14" col="2" w="16" h="16"/>
+        <DstRect x="192" y="64" w="32" h="32"/>
+        <CollisionBox x="196" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles84" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="14" col="2" w="16" h="16"/>
+        <DstRect x="224" y="64" w="32" h="32"/>
+        <CollisionBox x="228" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles85" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="14" col="2" w="16" h="16"/>
+        <DstRect x="256" y="64" w="32" h="32"/>
+        <CollisionBox x="260" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles86" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="14" col="2" w="16" h="16"/>
+        <DstRect x="288" y="64" w="32" h="32"/>
+        <CollisionBox x="292" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles87" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="14" col="2" w="16" h="16"/>
+        <DstRect x="320" y="64" w="32" h="32"/>
+        <CollisionBox x="324" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles88" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="14" col="2" w="16" h="16"/>
+        <DstRect x="352" y="64" w="32" h="32"/>
+        <CollisionBox x="356" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles89" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="14" col="2" w="16" h="16"/>
+        <DstRect x="384" y="64" w="32" h="32"/>
+        <CollisionBox x="388" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles90" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="14" col="2" w="16" h="16"/>
+        <DstRect x="416" y="64" w="32" h="32"/>
+        <CollisionBox x="420" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles91" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="14" col="2" w="16" h="16"/>
+        <DstRect x="448" y="64" w="32" h="32"/>
+        <CollisionBox x="452" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles93" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="14" col="2" w="16" h="16"/>
+        <DstRect x="512" y="64" w="32" h="32"/>
+        <CollisionBox x="516" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles94" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="14" col="2" w="16" h="16"/>
+        <DstRect x="544" y="64" w="32" h="32"/>
+        <CollisionBox x="548" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles95" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="14" col="2" w="16" h="16"/>
+        <DstRect x="576" y="64" w="32" h="32"/>
+        <CollisionBox x="580" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles96" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="14" col="2" w="16" h="16"/>
+        <DstRect x="608" y="64" w="32" h="32"/>
+        <CollisionBox x="612" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles97" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="14" col="2" w="16" h="16"/>
+        <DstRect x="640" y="64" w="32" h="32"/>
+        <CollisionBox x="644" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles98" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="14" col="2" w="16" h="16"/>
+        <DstRect x="672" y="64" w="32" h="32"/>
+        <CollisionBox x="676" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles101" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="14" col="2" w="16" h="16"/>
+        <DstRect x="704" y="64" w="32" h="32"/>
+        <CollisionBox x="708" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles102" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="14" col="2" w="16" h="16"/>
+        <DstRect x="736" y="64" w="32" h="32"/>
+        <CollisionBox x="740" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles103" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="14" col="2" w="16" h="16"/>
+        <DstRect x="768" y="64" w="32" h="32"/>
+        <CollisionBox x="772" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles104" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="14" col="2" w="16" h="16"/>
+        <DstRect x="800" y="64" w="32" h="32"/>
+        <CollisionBox x="804" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles105" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="14" col="2" w="16" h="16"/>
+        <DstRect x="832" y="64" w="32" h="32"/>
+        <CollisionBox x="836" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles284" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="13" col="1" w="16" h="16"/>
+        <DstRect x="288" y="64" w="32" h="32"/>
+        <CollisionBox x="292" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles294" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="13" col="1" w="16" h="16"/>
+        <DstRect x="640" y="64" w="32" h="32"/>
+        <CollisionBox x="644" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles288" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="13" col="1" w="16" h="16"/>
+        <DstRect x="416" y="64" w="32" h="32"/>
+        <CollisionBox x="420" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles347" rotation="0">
+        <Types collider="1"/>
         <SrcRect row="1" col="6" w="16" h="16"/>
         <DstRect x="864" y="64" w="32" h="32"/>
+        <CollisionBox x="868" y="68" w="24" h="62"/>
     </Object>
     <Object texture_id="background-tiles" object_id="background-tiles300" rotation="0">
-        <Types/>
+        <Types collider="1"/>
         <SrcRect row="13" col="1" w="16" h="16"/>
         <DstRect x="832" y="64" w="32" h="32"/>
+        <CollisionBox x="836" y="68" w="24" h="62"/>
     </Object>
     <Object texture_id="background-tiles" object_id="background-tiles299" rotation="0">
-        <Types/>
+        <Types collider="1"/>
         <SrcRect row="13" col="1" w="16" h="16"/>
         <DstRect x="800" y="64" w="32" h="32"/>
+        <CollisionBox x="804" y="68" w="24" h="62"/>
     </Object>
     <Object texture_id="background-tiles" object_id="background-tiles298" rotation="0">
-        <Types/>
+        <Types collider="1"/>
         <SrcRect row="13" col="1" w="16" h="16"/>
         <DstRect x="768" y="64" w="32" h="32"/>
+        <CollisionBox x="772" y="68" w="24" h="62"/>
     </Object>
     <Object texture_id="background-tiles" object_id="background-tiles580" rotation="0">
-        <Types/>
+        <Types collider="1"/>
         <SrcRect row="20" col="4" w="16" h="16"/>
         <DstRect x="736" y="64" w="32" h="32"/>
+        <CollisionBox x="740" y="68" w="24" h="62"/>
     </Object>
     <Object texture_id="background-tiles" object_id="background-tiles296" rotation="0">
-        <Types/>
+        <Types collider="1"/>
         <SrcRect row="13" col="1" w="16" h="16"/>
         <DstRect x="704" y="64" w="32" h="32"/>
+        <CollisionBox x="708" y="68" w="24" h="62"/>
     </Object>
     <Object texture_id="background-tiles" object_id="background-tiles295" rotation="0">
-        <Types/>
+        <Types collider="1"/>
         <SrcRect row="13" col="1" w="16" h="16"/>
         <DstRect x="672" y="64" w="32" h="32"/>
+        <CollisionBox x="676" y="68" w="24" h="62"/>
     </Object>
     <Object texture_id="background-tiles" object_id="background-tiles1" rotation="0">
-        <Types/>
+        <Types collider="1"/>
         <SrcRect row="23" col="2" w="16" h="16"/>
         <DstRect x="640" y="64" w="32" h="32"/>
+        <CollisionBox x="644" y="68" w="24" h="62"/>
     </Object>
     <Object texture_id="background-tiles" object_id="background-tiles293" rotation="0">
-        <Types/>
+        <Types collider="1"/>
         <SrcRect row="13" col="1" w="16" h="16"/>
         <DstRect x="608" y="64" w="32" h="32"/>
+        <CollisionBox x="612" y="68" w="24" h="62"/>
     </Object>
     <Object texture_id="background-tiles" object_id="background-tiles292" rotation="0">
-        <Types/>
+        <Types collider="1"/>
         <SrcRect row="13" col="1" w="16" h="16"/>
         <DstRect x="576" y="64" w="32" h="32"/>
+        <CollisionBox x="580" y="68" w="24" h="62"/>
     </Object>
     <Object texture_id="background-tiles" object_id="background-tiles291" rotation="0">
-        <Types/>
+        <Types collider="1"/>
         <SrcRect row="13" col="1" w="16" h="16"/>
         <DstRect x="544" y="64" w="32" h="32"/>
+        <CollisionBox x="548" y="68" w="24" h="62"/>
     </Object>
     <Object texture_id="background-tiles" object_id="background-tiles290" rotation="0">
-        <Types/>
+        <Types collider="1"/>
         <SrcRect row="13" col="1" w="16" h="16"/>
         <DstRect x="512" y="64" w="32" h="32"/>
+        <CollisionBox x="516" y="68" w="24" h="62"/>
     </Object>
     <Object texture_id="background-tiles" object_id="background-tiles289" rotation="0">
-        <Types/>
+        <Types collider="1"/>
         <SrcRect row="13" col="1" w="16" h="16"/>
         <DstRect x="448" y="64" w="32" h="32"/>
+        <CollisionBox x="452" y="68" w="24" h="62"/>
     </Object>
     <Object texture_id="background-tiles" object_id="background-tiles287" rotation="0">
-        <Types/>
+        <Types collider="1"/>
         <SrcRect row="13" col="1" w="16" h="16"/>
         <DstRect x="384" y="64" w="32" h="32"/>
+        <CollisionBox x="388" y="68" w="24" h="62"/>
     </Object>
     <Object texture_id="background-tiles" object_id="background-tiles286" rotation="0">
-        <Types/>
+        <Types collider="1"/>
         <SrcRect row="13" col="1" w="16" h="16"/>
         <DstRect x="352" y="64" w="32" h="32"/>
+        <CollisionBox x="356" y="68" w="24" h="62"/>
     </Object>
     <Object texture_id="background-tiles" object_id="background-tiles285" rotation="0">
-        <Types/>
+        <Types collider="1"/>
         <SrcRect row="13" col="1" w="16" h="16"/>
         <DstRect x="320" y="64" w="32" h="32"/>
+        <CollisionBox x="324" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles0" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="23" col="2" w="16" h="16"/>
+        <DstRect x="288" y="64" w="32" h="32"/>
+        <CollisionBox x="292" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles283" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="13" col="1" w="16" h="16"/>
+        <DstRect x="256" y="64" w="32" h="32"/>
+        <CollisionBox x="260" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles282" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="13" col="1" w="16" h="16"/>
+        <DstRect x="224" y="64" w="32" h="32"/>
+        <CollisionBox x="228" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles583" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="20" col="2" w="16" h="16"/>
+        <DstRect x="192" y="64" w="32" h="32"/>
+        <CollisionBox x="196" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles280" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="13" col="1" w="16" h="16"/>
+        <DstRect x="160" y="64" w="32" h="32"/>
+        <CollisionBox x="164" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles279" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="13" col="1" w="16" h="16"/>
+        <DstRect x="128" y="64" w="32" h="32"/>
+        <CollisionBox x="132" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles346" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="1" col="5" w="16" h="16"/>
+        <DstRect x="96" y="64" w="32" h="32"/>
+        <CollisionBox x="100" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles255" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="704" y="64" w="32" h="32"/>
+        <CollisionBox x="708" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles256" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="672" y="64" w="32" h="32"/>
+        <CollisionBox x="676" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles257" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="15" col="2" w="16" h="16"/>
+        <DstRect x="640" y="64" w="32" h="32"/>
+        <CollisionBox x="644" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles260" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="14" col="2" w="16" h="16"/>
+        <DstRect x="704" y="64" w="32" h="32"/>
+        <CollisionBox x="708" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles261" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="14" col="2" w="16" h="16"/>
+        <DstRect x="672" y="64" w="32" h="32"/>
+        <CollisionBox x="676" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles262" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="14" col="2" w="16" h="16"/>
+        <DstRect x="640" y="64" w="32" h="32"/>
+        <CollisionBox x="644" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles81" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="14" col="2" w="16" h="16"/>
+        <DstRect x="129" y="65" w="32" h="32"/>
+        <CollisionBox x="133" y="69" w="24" h="63"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles281" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="13" col="1" w="16" h="16"/>
+        <DstRect x="192" y="64" w="32" h="32"/>
+        <CollisionBox x="196" y="68" w="24" h="62"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles297" rotation="0">
+        <Types collider="1"/>
+        <SrcRect row="13" col="1" w="16" h="16"/>
+        <DstRect x="736" y="64" w="32" h="32"/>
+        <CollisionBox x="740" y="68" w="24" h="62"/>
     </Object>
     <Object texture_id="background-tiles" object_id="background-tiles0" rotation="0">
         <Types/>
-        <SrcRect row="23" col="2" w="16" h="16"/>
-        <DstRect x="288" y="64" w="32" h="32"/>
+        <SrcRect row="6" col="3" w="16" h="16"/>
+        <DstRect x="704" y="64" w="32" h="32"/>
     </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles283" rotation="0">
+    <Object texture_id="background-tiles" object_id="background-tiles1" rotation="0">
         <Types/>
-        <SrcRect row="13" col="1" w="16" h="16"/>
-        <DstRect x="256" y="64" w="32" h="32"/>
+        <SrcRect row="6" col="3" w="16" h="16"/>
+        <DstRect x="672" y="64" w="32" h="32"/>
     </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles282" rotation="0">
+    <Object texture_id="background-tiles" object_id="background-tiles2" rotation="0">
         <Types/>
-        <SrcRect row="13" col="1" w="16" h="16"/>
-        <DstRect x="224" y="64" w="32" h="32"/>
+        <SrcRect row="6" col="3" w="16" h="16"/>
+        <DstRect x="640" y="64" w="32" h="32"/>
     </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles583" rotation="0">
+    <Object texture_id="background-tiles" object_id="background-tiles3" rotation="0">
         <Types/>
-        <SrcRect row="20" col="2" w="16" h="16"/>
-        <DstRect x="192" y="64" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles280" rotation="0">
-        <Types/>
-        <SrcRect row="13" col="1" w="16" h="16"/>
-        <DstRect x="160" y="64" w="32" h="32"/>
-    </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles279" rotation="0">
-        <Types/>
-        <SrcRect row="13" col="1" w="16" h="16"/>
+        <SrcRect row="6" col="3" w="16" h="16"/>
         <DstRect x="128" y="64" w="32" h="32"/>
     </Object>
-    <Object texture_id="background-tiles" object_id="background-tiles346" rotation="0">
+    <Object texture_id="background-tiles" object_id="background-tiles4" rotation="0">
         <Types/>
-        <SrcRect row="1" col="5" w="16" h="16"/>
-        <DstRect x="96" y="64" w="32" h="32"/>
+        <SrcRect row="20" col="1" w="16" h="16"/>
+        <DstRect x="192" y="64" w="32" h="32"/>
+    </Object>
+    <Object texture_id="background-tiles" object_id="background-tiles5" rotation="0">
+        <Types/>
+        <SrcRect row="20" col="4" w="16" h="16"/>
+        <DstRect x="736" y="64" w="32" h="32"/>
     </Object>
 </Root>

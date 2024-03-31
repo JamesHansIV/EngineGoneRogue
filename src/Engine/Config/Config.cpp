@@ -155,7 +155,7 @@ int SaveObjects(const char* filepath, const std::vector<GameObject*>& objects) {
         if (obj->GetAnimation() != nullptr) {
             WriteAnimationInfo(doc, curr_xml_object, obj);
         }
-        
+
         // const std::type_info& obj_type = typeid(*obj);
         // std::cout << obj << std::endl;
         // std::cout << static_cast<int>(obj->GetObjectType()) << std::endl;
@@ -165,8 +165,8 @@ int SaveObjects(const char* filepath, const std::vector<GameObject*>& objects) {
             WriteColliderInfo(doc, curr_xml_object, collider);
             types->SetAttribute("collider", "1");
         }
-        Entrance* entrance = nullptr;
-        if ((entrance = dynamic_cast<Entrance*>(obj)) != nullptr) {
+        Entrance* entrance = dynamic_cast<Entrance*>(obj);
+        if (entrance != nullptr) {
             types->SetAttribute("curr_room_id",
                                 entrance->GetCurrentRoomID().c_str());
             types->SetAttribute("next_room_id",
@@ -175,8 +175,8 @@ int SaveObjects(const char* filepath, const std::vector<GameObject*>& objects) {
             types->SetAttribute("next_x", next_start.first);
             types->SetAttribute("next_y", next_start.second);
         }
-        Trap* trap = nullptr;
-        if ((trap = dynamic_cast<Trap*>(obj)) != nullptr) {
+        Trap* trap = dynamic_cast<Trap*>(obj);
+        if (trap != nullptr) {
             types->SetAttribute("trap", "1");
             types->SetAttribute("damage", trap->GetDamage());
         }
@@ -576,7 +576,7 @@ GameObject* BuildObjectOnType(tinyxml2::XMLElement* types,
                            std::stoi(types->Attribute("damage")));
         delete to_delete;
     }
-    if(types->Attribute("destructibleitem") != nullptr){
+    if (types->Attribute("destructibleitem") != nullptr) {
         to_delete = new_obj;
         new_obj = new DestructibleItem(static_cast<Collider*>(new_obj));
         delete to_delete;
@@ -595,7 +595,7 @@ std::vector<GameObject*> LoadObjects(const char* filepath) {
     if (error != tinyxml2::XML_SUCCESS) {
         std::string what =
             "Could not load objects file: " + std::string(filepath);
-        SDL_LogError(0, "%s",what.c_str());
+        SDL_LogError(0, "%s", what.c_str());
         return objects;
     }
 
@@ -689,7 +689,6 @@ bool LoadTextures(const char* projectPath) {
 
 std::string LoadStartRoom(const char* path, int& x, int& y) {
     std::string room_order_path = path;
-    room_order_path += "/start_room.txt";
 
     std::string line;
 
@@ -708,7 +707,7 @@ std::string LoadStartRoom(const char* path, int& x, int& y) {
         getline(file, line);
         y = atoi(line.c_str());
     } else {
-        SDL_Log("FAILED TO LOAD ROOM ORDER FILE");
+        SDL_Log("FAILED TO LOAD START ROOM FILE");
     }
 
     file.close();

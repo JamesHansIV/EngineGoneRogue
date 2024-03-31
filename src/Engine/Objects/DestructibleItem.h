@@ -11,6 +11,8 @@ class DestructibleItem : public Collider {
 
     void Clean() override{};
 
+    GameObject* Copy() override;
+
     ObjectType GetObjectType() override { return ObjectType::DestructibleItem; }
 
     void Update(float dt) override;

@@ -20,6 +20,8 @@ class Trap : public Collider {
 
     void Clean() override{};
 
+    GameObject* Copy() override;
+
     ObjectType GetObjectType() override { return ObjectType::Trap; }
 
     void Update(float dt) override;
@@ -27,10 +29,11 @@ class Trap : public Collider {
     void OnCollide(Collider* collidee) override;
 
     [[nodiscard]] TrapState GetState() const { return m_state; }
-    
-    void SetAnimationAndState(const std::string& animationName, TrapState state);
 
-    [[nodiscard]] int GetDamage() const {return m_damage;};
+    void SetAnimationAndState(const std::string& animationName,
+                              TrapState state);
+
+    [[nodiscard]] int GetDamage() const { return m_damage; };
 
    private:
     TrapState m_state;
