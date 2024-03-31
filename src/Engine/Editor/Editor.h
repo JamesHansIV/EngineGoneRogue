@@ -101,6 +101,7 @@ class Editor : public Application {
 
     void ShowToolBar();
     void ShowRibbon();
+    // void ShowObjectEditor(); // NEEDS NEW NAME
 
     void CreateProjectFolder();
     void AddRoom();
@@ -174,4 +175,7 @@ class Editor : public Application {
 
     std::string m_help_popup_text;
     void BuildHelpPopUpText();
+
+    bool m_show_create_object;
+    bool m_show_object_editor = false;
 };
