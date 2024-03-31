@@ -27,7 +27,7 @@ class ChestDropModal {
         m_button =
             Button("buttons",
                    SDL_Rect{button_x, button_y, button_width, button_height},
-                   {"Continue"}, [](auto& button) {
+                   {"Continue"}, []() {
                        SDL_Log("Continue button clicked");
                        timer.Unpause();
                        PushNewEvent(EventType::ContinueGameEvent);

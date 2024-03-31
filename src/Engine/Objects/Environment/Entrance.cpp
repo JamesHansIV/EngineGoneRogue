@@ -10,6 +10,7 @@ Entrance::Entrance(Properties& props, std::string curr_room_id,
       m_next_start({x, y}),
       m_closed(true),
       m_collideless_time(collideless_time) {
+    m_collision_box.SetCorrection(5, 5, 12, 12);
     m_animation->SelectAnimation("open");
 }
 
@@ -21,11 +22,15 @@ Entrance::Entrance(Collider* collider, std::string curr_room_id,
       m_next_start({x, y}),
       m_closed(true),
       m_collideless_time(collideless_time) {
+    m_collision_box.SetCorrection(5, 0, 12, 12);
     m_animation->SelectAnimation("open");
 }
 
 void Entrance::Draw() {
     GameObject::Draw();
+    //Rect box = m_collision_box.GetRect();
+    //SDL_Rect rect = {(int)box.x, (int)box.y, box.w, box.h};
+    //Renderer::GetInstance().DrawRect(rect, {255, 255, 255, 255});
 }
 
 void Entrance::Update(float dt) {

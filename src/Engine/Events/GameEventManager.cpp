@@ -17,35 +17,24 @@ CustomEventType custom_event_type = SDL_RegisterEvents(1);
 
 GameEventManager::GameEventManager(Player* player) : m_player(player) {}
 
-State* GameEventManager::HandleEvents(ItemManager* ItemManager,
-                                      State* GameState) {
+void GameEventManager::HandleEvents(ItemManager* ItemManager,
+                                    State* GameState) {
     SDL_Event event;
     UserEvent event_wrapper;
-    State* state = nullptr;
     event_wrapper.SetSDLEvent(&event);
     Game& game = static_cast<Game&>(Application::Get());
     while (SDL_PollEvent(&event) != 0) {
         switch (event.type) {
             case SDL_QUIT:
                 Application::Get().Quit();
-                return nullptr;
             case SDL_KEYDOWN:
                 InputChecker::SetKeyPressed(event.key.keysym.sym, true);
                 switch (event.key.keysym.sym) {
-                    case SDLK_ESCAPE:
-                        if (timer.IsPaused()) {
-                            if (GameState->GetType() == StateType::Pause ||
-                                GameState->GetType() == StateType::ChestDrop) {
-                                state = new RunningState(
-                                    static_cast<Game&>(Application::Get()));
-                            }
-                        } else {
-                            if (GameState->GetType() == StateType::Running) {
-                                state = new PauseState(
-                                    static_cast<Game&>(Application::Get()));
-                            }
-                        }
+                    case SDLK_ESCAPE: {
+                        EscapeKeyPressedEvent e;
+                        game.HandleEvent(&e);
                         break;
+                    }
                     case SDLK_m:
                         Application::Get().GetAudioManager().ToggleMusic();
                         break;
@@ -84,12 +73,6 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
                 break;
             case SDL_MOUSEBUTTONDOWN: {
                 InputChecker::SetMouseButtonPressed(event.button.button, true);
-                MouseButtonDownEvent e(event.button.x, event.button.y,
-                                       event.button.button);
-                State* state = GameState->HandleEvent(&e);
-                if (state != nullptr) {
-                    return state;
-                }
                 break;
             }
             case SDL_MOUSEBUTTONUP:
@@ -104,10 +87,8 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
                 break;
             case SDL_WINDOWEVENT:
                 if (event.window.event == SDL_WINDOWEVENT_FOCUS_LOST) {
-                    if (GameState->GetType() == StateType::Running) {
-                        state = new PauseState(
-                            static_cast<Game&>(Application::Get()));
-                    }
+                    WindowFocusLostEvent e;
+                    game.HandleEvent(&e);
                 }
                 if (event.window.event == SDL_WINDOWEVENT_RESIZED) {
                     SDL_GetWindowSize(
@@ -121,17 +102,10 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
                 }
                 break;
             case SDL_USEREVENT: {
-                State* potential_state =
-                    HandleCustomEvents(event, ItemManager, GameState);
-                if (potential_state != nullptr) {
-                    state = potential_state;
-                }
+                HandleCustomEvents(event, ItemManager, GameState);
             }
             default:
                 break;
-        }
-        if (state != nullptr) {
-            return state;
         }
         if (timer.IsPaused()) {
             continue;
@@ -140,13 +114,11 @@ State* GameEventManager::HandleEvents(ItemManager* ItemManager,
             m_player->HandleEvent(&event_wrapper);
         }
     }
-
-    return state;
 }
 
-State* GameEventManager::HandleCustomEvents(const SDL_Event& event,
-                                            ItemManager* ItemManager,
-                                            State* GameState) {
+void GameEventManager::HandleCustomEvents(const SDL_Event& event,
+                                          ItemManager* ItemManager,
+                                          State* GameState) {
     Game& game = static_cast<Game&>(Application::Get());
     switch (static_cast<EventType>(event.user.code)) {
         case EventType::UserEvent: {
@@ -173,7 +145,7 @@ State* GameEventManager::HandleCustomEvents(const SDL_Event& event,
                                                         enemy->GetY());
                 ItemManager->HandleEvent(&place_item_event);
             }
-            return nullptr;
+            break;
         }
         case EventType::ChestOpenedEvent: {
             SDL_Log("ChestDropEvent");
@@ -182,8 +154,8 @@ State* GameEventManager::HandleCustomEvents(const SDL_Event& event,
                 static_cast<std::pair<float, float>*>(event.user.data2);
             ChestOpenedEvent chest_open_event(*item, *index);
             ItemManager->HandleEvent(&chest_open_event);
-            return new ChestDropState(static_cast<Game&>(Application::Get()),
-                                      *item);
+            game.HandleEvent(&chest_open_event);
+            break;
         }
         case EventType::StartGameEvent: {
             StartGameEvent start_game_event;
@@ -192,33 +164,40 @@ State* GameEventManager::HandleCustomEvents(const SDL_Event& event,
         }
         case EventType::ContinueGameEvent: {
             ContinueGameEvent continue_game_event;
-            State* state = GameState->HandleEvent(&continue_game_event);
-            return state;
+            game.HandleEvent(&continue_game_event);
+            break;
         }
         case EventType::LevelUpSelectedGameEvent: {
-            return new RunningState(static_cast<Game&>(Application::Get()));
+            LevelUpSelectedGameEvent e;
+            game.HandleEvent(&e);
+            break;
         }
         case EventType::GameOverEvent: {
-            return new GameOverState(static_cast<Game&>(Application::Get()));
+            GameOverEvent e;
+            game.HandleEvent(&e);
+            break;
         }
         case EventType::RestartGameEvent: {
+            RestartGameEvent e;
             game.Restart();
-            return new StartState(static_cast<Game&>(Application::Get()));
+            game.HandleEvent(&e);
+            break;
         }
         case EventType::RoomTransitionEvent: {
             RoomTransitionEvent e(*(std::string*)event.user.data1);
             game.HandleEvent(&e);
             break;
         }
-        case EventType::PlayerLevelUpEvent:
+        case EventType::PlayerLevelUpEvent: {
             timer.Pause();
-            return new LevelUpState(static_cast<Game&>(Application::Get()));
+            PlayerLevelUpEvent e;
+
+            game.HandleEvent(&e);
             break;
+        }
         default:
             break;
     }
-
-    return nullptr;
 }
 
 // void GameEventManager::PlaceChestIfNeeded(float chest_x, float chest_y) {

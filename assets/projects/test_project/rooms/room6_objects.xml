@@ -400,4 +400,161 @@
             </AnimationInfo>
         </Animation>
     </Object>
+     <Object texture_id="trap_idle" object_id="trap" rotation="0">
+        <Types collider="1" trap = "1" damage= "30"/>
+        <SrcRect row="0" col="0" w="16" h="16"/>
+        <DstRect x="600" y="300" w="32" h="32"/>
+        <Animation>
+            <AnimationInfo
+                id="trap_idle"
+                texture_id="trap_idle"
+                frame_count="1"
+                speed="0"
+                loop="1">
+                <Tile row="0" col="0" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo
+                id="trap_opening"
+                texture_id="trap_opening"
+                frame_count="5"
+                speed="25"
+                loop="0">
+                <Tile row="0" col="0" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo
+                id="trap_closing"
+                texture_id="trap_closing"
+                frame_count="3"
+                speed="50"
+                loop="0">
+                <Tile row="0" col="0" w="16" h="16"/>
+            </AnimationInfo>
+        </Animation>
+    </Object>
+    <Object texture_id="enemies" object_id="charger" rotation="0">
+        <Types collider="1" charger="1"/>
+        <SrcRect row="6" col="2" w="16" h="16"/>
+        <DstRect x="250" y="120" w="36" h="36"/>
+
+
+        <Animation>
+            <AnimationInfo
+                id="Idle"
+                texture_id="enemies"
+                frame_count="2"
+                speed="250"
+                loop="1">
+                <Tile row="6" col="2" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo
+                id="Move-up"
+                texture_id="enemies"
+                frame_count="4"
+                speed="250"
+                loop="1">
+                <Tile row="8" col="4" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo
+                id="Move-down"
+                texture_id="enemies"
+                frame_count="4"
+                speed="250"
+                loop="1">
+                <Tile row="8" col="0" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo
+                id="Attack"
+                texture_id="weapons"
+                frame_count="4"
+                speed="250"
+                loop="1">
+                <Tile row="8" col="4" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo
+                id="Hit"
+                texture_id="enemies"
+                frame_count="3"
+                speed="50">
+                <Tile row="7" col="0" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo
+                id="Dead"
+                texture_id="enemies"
+                frame_count="2"
+                speed="500">
+                <Tile row="6" col="0" w="16" h="16"/>
+            </AnimationInfo>
+        </Animation>
+        <EnemyStats health="100" damage="25" speed="70" range="200" perception_width="1500" perception_height="1500" xp="30"/>
+    </Object>
+    <Object texture_id="kamikaze" object_id="kamikaze" rotation="0">
+        <Types collider="1" kamikaze="1"/>
+        <SrcRect row="6" col="2" w="16" h="16"/>
+        <DstRect x="0" y="0" w="36" h="36"/>
+
+
+        <Animation>
+            <AnimationInfo
+                id="Idle"
+                texture_id="enemies"
+                frame_count="2"
+                speed="500"
+                loop="1">
+                <Tile row="9" col="2" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo
+                id="Move-up"
+                texture_id="enemies"
+                frame_count="4"
+                speed="250"
+                loop="1">
+                <Tile row="11" col="4" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo
+                id="Move-down"
+                texture_id="enemies"
+                frame_count="4"
+                speed="250"
+                loop="1">
+                <Tile row="11" col="0" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo
+                id="Attack-down"
+                texture_id="kamikaze"
+                frame_count="8"
+                speed="250"
+                loop="1"
+                >
+                <Tile row="0" col="0" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo
+                id="Attack-up"
+                texture_id="kamikaze"
+                frame_count="8"
+                speed="250"
+                loop="1"
+                >
+                <Tile row="1" col="0" w="16" h="16"/>
+            </AnimationInfo>
+
+            <AnimationInfo
+                id="Hit"
+                texture_id="enemies"
+                frame_count="3"
+                speed="50">
+                >
+                <Tile row="10" col="0" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo
+                id="Dead"
+                texture_id="enemies"
+                frame_count="2"
+                speed="500"
+                >
+                <Tile row="9" col="0" w="16" h="16"/>
+            </AnimationInfo>
+        </Animation>
+        <EnemyStats health="100" damage="25" speed="80" range="250" perception_width="1500" perception_height="1500" xp="30" fire_interval="2000" spread="0.1" spread_count="1"/>
+    </Object>
+
 </Root>

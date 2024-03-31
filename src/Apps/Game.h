@@ -4,6 +4,7 @@
 #include <iostream>
 #include "Engine/Application/Application.h"
 #include "Engine/Audio/AudioManager.h"
+#include "Engine/Events/Event.h"
 #include "Engine/Events/GameEventManager.h"
 #include "Engine/Events/ItemManager.h"
 #include "Engine/HeadsUpDisplay/HeadsUpDisplay.h"
@@ -28,6 +29,14 @@ class Game : public Application {
 
     void HandleEvent(RoomTransitionEvent* event);
     void HandleEvent(StartGameEvent* event);
+    void HandleEvent(RestartGameEvent* event);
+    void HandleEvent(LevelUpSelectedGameEvent* event);
+    void HandleEvent(ContinueGameEvent* event);
+    void HandleEvent(GameOverEvent* event);
+    void HandleEvent(PlayerLevelUpEvent* event);
+    void HandleEvent(ChestOpenedEvent* event);
+    void HandleEvent(EscapeKeyPressedEvent* event);
+    void HandleEvent(WindowFocusLostEvent* event);
 
     void ResetManagers();
 
@@ -36,7 +45,7 @@ class Game : public Application {
 
     void InitEndless();
 
-    bool GetEndless() { return m_endless; }
+    [[nodiscard]] bool GetEndless() const { return m_endless; }
 
     void SetEndless(bool endless) { m_endless = endless; }
 

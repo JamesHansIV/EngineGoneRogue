@@ -9,6 +9,7 @@
 #include "Engine/Objects/Characters/EnemyStats.h"
 #include "Engine/Objects/Characters/Goblin.h"
 #include "Engine/Objects/Characters/HelixEnemy.h"
+#include "Engine/Objects/Characters/Kamikaze.h"
 #include "Engine/Objects/Characters/Mage.h"
 #include "Engine/Objects/Characters/Player.h"
 #include "Engine/Objects/Characters/RingShotEnemy.h"
@@ -57,6 +58,7 @@ Skeleton* skeleton_copy = nullptr;
 Goblin* goblin_copy = nullptr;
 HelixEnemy* helix_enemy_copy = nullptr;
 Charger* charger_copy = nullptr;
+Kamikaze* kamikaze_copy = nullptr;
 
 std::vector<GameObject*> Game::CopyObjects(
     const std::vector<GameObject*>& objects) {
@@ -81,6 +83,11 @@ void Game::InitEnemyCopies() {
 
         if ((enemy = dynamic_cast<Charger*>(obj)) != nullptr) {
             charger_copy = new Charger(enemy, enemy->GetEnemyStats());
+            continue;
+        }
+
+        if ((enemy = dynamic_cast<Kamikaze*>(obj)) != nullptr) {
+            kamikaze_copy = new Kamikaze(enemy, enemy->GetEnemyStats());
             continue;
         }
 
@@ -121,18 +128,6 @@ Game::Game() : m_state(nullptr), m_endless(false) {
     srand(time(nullptr));
 
     InitManagers();
-
-    InitEnemyCopies();
-
-    Properties p_trap("", {0, 0, 16, 16}, {500, 500, 32, 32}, 0.0);
-    Trap* trap = new Trap(p_trap, 30);
-    m_objects.push_back(trap);
-    Properties p_trap2("", {0, 0, 16, 16}, {600, 1000, 32, 32}, 0.0);
-    Trap* trap2 = new Trap(p_trap2, 30);
-    m_objects.push_back(trap2);
-    Properties p_trap3("", {0, 0, 16, 16}, {1000, 500, 32, 32}, 0.0);
-    Trap* trap3 = new Trap(p_trap3, 30);
-    m_objects.push_back(trap3);
 
     SDL_Cursor* cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR);
 
@@ -186,10 +181,7 @@ void Game::Restart() {
 }
 
 void Game::Events() {
-    State* state = m_game_event_manager->HandleEvents(m_item_manager, m_state);
-    if (state != nullptr) {
-        ChangeState(state);
-    }
+    m_game_event_manager->HandleEvents(m_item_manager, m_state);
 }
 
 void Game::GenerateRandomEnemyIfNeeded() {
@@ -229,7 +221,7 @@ void Game::GenerateRandomEnemy() {
     float const generated_y = rand() % 1800 + 20;
 
     // Generate random enemy type
-    int const enemy_type = rand() % 8;
+    int const enemy_type = 8;
     Enemy* generated_enemy = nullptr;
 
     switch (enemy_type) {
@@ -290,6 +282,14 @@ void Game::GenerateRandomEnemy() {
                 new Charger(charger_copy, charger_copy->GetEnemyStats() *
                                               m_enemy_stat_multiplier);
             break;
+        case 8:
+            kamikaze_copy->SetX(generated_x);
+            kamikaze_copy->SetY(generated_y);
+            generated_enemy =
+                new Kamikaze(kamikaze_copy, charger_copy->GetEnemyStats() *
+                                                m_enemy_stat_multiplier);
+            break;
+
         default:
             break;
     }
@@ -309,6 +309,49 @@ void Game::HandleEvent(StartGameEvent* event) {
         InitEndless();
     }
     ChangeState(new RunningState(*this));
+}
+
+void Game::HandleEvent(LevelUpSelectedGameEvent* event) {
+    ChangeState(new RunningState(*this));
+}
+
+void Game::HandleEvent(PlayerLevelUpEvent* event) {
+    ChangeState(new LevelUpState(*this));
+}
+
+void Game::HandleEvent(GameOverEvent* event) {
+    ChangeState(new GameOverState(*this));
+}
+
+void Game::HandleEvent(ContinueGameEvent* event) {
+    ChangeState(new RunningState(*this));
+}
+
+void Game::HandleEvent(RestartGameEvent* event) {
+    ChangeState(new StartState(*this));
+}
+
+void Game::HandleEvent(ChestOpenedEvent* event) {
+    ChangeState(new ChestDropState(*this, event->GetItemTypes()));
+}
+
+void Game::HandleEvent(EscapeKeyPressedEvent* event) {
+    if (timer.IsPaused()) {
+        if (m_state->GetType() == StateType::Pause ||
+            m_state->GetType() == StateType::ChestDrop) {
+            ChangeState(new RunningState(*this));
+        }
+    } else {
+        if (m_state->GetType() == StateType::Running) {
+            ChangeState(new PauseState(*this));
+        }
+    }
+}
+
+void Game::HandleEvent(WindowFocusLostEvent* event) {
+    if (m_state->GetType() == StateType::Running) {
+        ChangeState(new PauseState(*this));
+    }
 }
 
 void Game::Update(float dt) {

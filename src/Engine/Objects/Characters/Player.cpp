@@ -115,6 +115,12 @@ void Player::Init() {
 
 void Player::Draw() {
     m_current_state->Draw();
+    Rect box = m_collision_box.GetRect();
+
+    //SDL_Rect rect = {(int)(box.x + m_rigid_body->Velocity().X),
+    //                 (int)(box.y + m_rigid_body->Velocity().Y), box.w, box.h};
+    //Renderer::GetInstance().DrawRect(rect, {255, 255, 255, 255}, false);
+
     m_health->Draw(GetX(), GetY(), GetWidth());
     m_current_weapon->Draw();
 }
