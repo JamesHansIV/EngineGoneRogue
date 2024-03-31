@@ -55,6 +55,7 @@ void Toolbar::InitActionDescriptionBindPairs() {
         {"Paste clipboard", EditorAction::PASTE_CLIPBOARD},
         {"Undo", EditorAction::UNDO_ACTION},
         {"Redo", EditorAction::REDO_ACTION},
+        {"Save room", EditorAction::SAVE_ROOM}
     };
 }
 

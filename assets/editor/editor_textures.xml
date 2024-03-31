@@ -73,4 +73,8 @@
         <FilePath>../assets/editor/icons/help_icon.png</FilePath>
         <ID>editor-icon-help</ID>
     </Texture>
+    <Texture type="icon">
+        <FilePath>../assets/editor/icons/save_icon.png</FilePath>
+        <ID>editor-icon-save</ID>
+    </Texture>
 </Root>

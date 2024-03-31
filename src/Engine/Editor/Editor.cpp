@@ -1140,7 +1140,7 @@ void Editor::ShowToolBar() {
     int width = 54;
     int vertical_gap = 60;
     int horizontal_gap = 20;
-    float group_gap = 20;
+    float group_gap = 2;
     float button_size = 30;
     ImVec2 button_size_vector = {button_size, button_size};
     
@@ -1254,6 +1254,8 @@ void Editor::ShowToolBar() {
 
     // add gap 
     ImGui::Dummy(ImVec2(0.0f, group_gap));
+    ImGui::Separator();
+    ImGui::Dummy(ImVec2(0.0f, group_gap));
     // copy and pase
     if (ImGui::ImageButton(Renderer::GetInstance().GetTexture("editor-icon-copy")->GetTexture(), button_size_vector)) {
         HandleCopySelectionAction();
@@ -1282,6 +1284,8 @@ void Editor::ShowToolBar() {
 
     // add gap
     ImGui::Dummy(ImVec2(0.0f, group_gap));
+    ImGui::Separator();
+    ImGui::Dummy(ImVec2(0.0f, group_gap));
     // undo redo
     if (ImGui::ImageButton(Renderer::GetInstance().GetTexture("editor-icon-undo")->GetTexture(), button_size_vector)) {
         m_action_record_handler->UndoAction(m_layers);
@@ -1301,6 +1305,20 @@ void Editor::ShowToolBar() {
         ImGui::EndTooltip();
     }
 
+    ImGui::Dummy(ImVec2(0.0f, group_gap));
+    ImGui::Separator();
+    ImGui::Dummy(ImVec2(0.0f, group_gap));
+    if (ImGui::ImageButton(Renderer::GetInstance().GetTexture("editor-icon-save")->GetTexture(), button_size_vector)) {
+        SaveRoom(m_current_room_id.c_str());
+    };
+    if (ImGui::IsItemHovered()) {
+        ImGui::BeginTooltip();
+        ImGui::Text("%s", m_toolbar->action_to_description_map[EditorAction::SAVE_ROOM].c_str());
+        ImGui::EndTooltip();
+    }
+
+    ImGui::Dummy(ImVec2(0.0f, group_gap));
+    ImGui::Separator();
     ImGui::Dummy(ImVec2(0.0f, group_gap));
     if (ImGui::ImageButton(Renderer::GetInstance().GetTexture("editor-icon-help")->GetTexture(), button_size_vector)) {
         ImGui::OpenPopup("help_popup");        
@@ -1404,6 +1422,11 @@ void Editor::Update(float /*dt*/) {
     }
     if (m_key_map->CheckInputs(EditorAction::REDO_ACTION)) {
         m_action_record_handler->RedoAction(m_layers);
+    }
+
+    // save 
+    if (m_key_map->CheckInputs(EditorAction::SAVE_ROOM)) {
+        SaveRoom(m_current_room_id.c_str());
     }
 
     InputChecker::SetPrevFrameKeys();
