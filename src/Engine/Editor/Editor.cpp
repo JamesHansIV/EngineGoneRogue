@@ -438,10 +438,6 @@ void Editor::ShowFileManager() {
             ImGui::EndPopup();
         }
 
-        // if (ImGui::Button("Load Room", ImVec2(150, 20))) {
-        //     ImGui::OpenPopup("load_room");
-        // }
-
         if (ImGui::BeginPopup("load_room")) {
             for (const auto& id : m_room_ids) {
                 SDL_Log("Room: %s", id.c_str());
@@ -1083,6 +1079,10 @@ void Editor::ShowRibbon() {
             ImGui::EndMenu();
         }
         ImGui::SameLine();
+        ImGui::Separator();
+        ImGui::Dummy(ImVec2(5,height));
+        std::string room_str = (m_current_room_id == "") ? "Unsaved Room" : m_current_room_id;
+        ImGui::Text("%s", std::string("Room: " + room_str).c_str());
         ImGui::Dummy(ImVec2(5,height));
         ImGui::Separator();
         ImGui::Dummy(ImVec2(5,height));
@@ -1092,6 +1092,20 @@ void Editor::ShowRibbon() {
         ImGui::Dummy(ImVec2(5,height));
         std::string texture_str = (m_current_texture == nullptr) ? "NONE SELECTED" : m_current_texture->GetID();
         ImGui::Text("%s",std::string("Texture: " + texture_str).c_str());
+        ImGui::Dummy(ImVec2(5,height));
+        ImGui::Separator();
+        ImGui::Dummy(ImVec2(5,height));
+        std::string obj_str;
+        if (m_selected_objects.empty()) obj_str = "NONE SELECTED";
+        else {
+            GameObject* obj;
+            for (auto* o : m_selected_objects) { obj = o; break; }
+            if (m_selected_objects.size() == 1) obj_str = obj->GetID();
+            if (m_selected_objects.size() > 1) 
+                obj_str = obj->GetID() + " ...and " + std::to_string(m_selected_objects.size() - 1) + " more";
+        }
+        std::string plural = (m_selected_objects.size() > 1) ? "s" : "";
+        ImGui::Text("%s", std::string("Object" + plural + ": " + obj_str).c_str());
         ImGui::Dummy(ImVec2(5,height));
         ImGui::Separator();
         ImGui::EndMainMenuBar();
