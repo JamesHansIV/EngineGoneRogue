@@ -62,6 +62,7 @@ void Trap::OnCollide(Collider *collidee){
             if(m_state == TrapState::IDLE){
                 m_state = TrapState::TOUCHEDBYPLAYER;
             }
+            break;
         case ObjectType::Enemy:
             UnCollide(collidee);
             break;

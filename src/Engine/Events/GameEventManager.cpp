@@ -148,13 +148,19 @@ void GameEventManager::HandleCustomEvents(const SDL_Event& event,
             break;
         }
         case EventType::ChestOpenedEvent: {
-            SDL_Log("ChestDropEvent");
             auto* item = static_cast<std::vector<ItemType>*>(event.user.data1);
             auto* index =
                 static_cast<std::pair<float, float>*>(event.user.data2);
             ChestOpenedEvent chest_open_event(*item, *index);
             ItemManager->HandleEvent(&chest_open_event);
             game.HandleEvent(&chest_open_event);
+            break;
+        }
+        case EventType::ItemDestroyedEvent:{
+            auto* index =
+                static_cast<std::pair<float, float>*>(event.user.data1);
+            ItemDestroyedEvent item_destroyed_event(*index);
+            ItemManager->HandleEvent(&item_destroyed_event);
             break;
         }
         case EventType::StartGameEvent: {

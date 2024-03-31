@@ -3,6 +3,7 @@
 #include "Engine/Objects/Characters/Player.h"
 #include "Engine/Objects/Environment/Entrance.h"
 #include "Engine/Objects/Grenade.h"
+#include "Engine/Objects/IObject.h"
 #include "Engine/Objects/Trap.h"
 #include "Engine/Objects/Weapons/MeleeWeapon.h"
 
@@ -12,12 +13,18 @@
 // And can replace one with a more specific state when needed.
 State* EnemyHandleCollide(Enemy& enemy, Collider* collidee) {
     switch (collidee->GetObjectType()) {
-        case ObjectType::Projectile:
-            if (dynamic_cast<Projectile*>(collidee)->IsPlayerOwned()) {
-                return enemy.GetHitState(
+        case ObjectType::Projectile:{
+            auto* p = dynamic_cast<Projectile*>(collidee);
+            if (p->IsPlayerOwned()) {
+                if(!p->IsInHitSet(enemy.GetID())){
+                    p->CollideWithEnemy();
+                    p->AddtoHitSet(enemy.GetID());
+                    return enemy.GetHitState(
                     dynamic_cast<Projectile*>(collidee)->GetDamage());
+                }
             }
             break;
+        }
         case ObjectType::Entrance: {
             enemy.UnCollide(collidee);
             break;
@@ -45,6 +52,7 @@ State* EnemyHandleCollide(Enemy& enemy, Collider* collidee) {
             enemy.UnCollide(collidee);
             break;
         }
+        case ObjectType::DestructibleItem:
         case ObjectType::Trap:
         case ObjectType::Chest:
         case ObjectType::Enemy:

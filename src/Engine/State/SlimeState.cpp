@@ -54,6 +54,7 @@ State* SlimeHandleCollide(Slime* enemy, Collider* collidee) {
             enemy->UnCollide(collidee);
             break;
         }
+        case ObjectType::DestructibleItem:
         case ObjectType::Trap: 
         case ObjectType::Chest:
         case ObjectType::Enemy:

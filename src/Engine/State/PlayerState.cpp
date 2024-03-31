@@ -140,6 +140,8 @@ State* HandleCollide(Player* player, CollideEvent* event) {
             }
             break;
         }
+        case ObjectType::DestructibleItem:
+            player->UnCollide(collidee);
         case ObjectType::Collider:
             player->UnCollide(collidee);
             break;

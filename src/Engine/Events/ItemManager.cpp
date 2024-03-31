@@ -1,9 +1,12 @@
 #include "ItemManager.h"
+#include <cstdlib>
 #include <random>
 #include <tuple>
 #include "Apps/Game.h"
 #include "Engine/Events/Event.h"
 #include "Engine/Objects/Chests/Chest.h"
+#include "Engine/Objects/Grenade.h"
+#include "Engine/Objects/GrenadeDrop.h"
 #include "Engine/Objects/HealthPotion.h"
 #include "Engine/UI/ItemInventory.h"
 #include "Engine/utils/utils.h"
@@ -79,6 +82,32 @@ void ItemManager::HandleEvent(Event* event) {
                 }
             }
             break;
+        }
+        case EventType::ItemDestroyedEvent: {
+            auto* item_destroyed_event = dynamic_cast<ItemDestroyedEvent*>(event);
+            std::random_device rd;
+            std::mt19937 gen(rd());
+            std::uniform_int_distribution<> dis(0, 1);
+            int const drop_type = dis(gen);
+
+            if (drop_type == 0) {
+                Properties props11("weapons", {10, 1, 16, 16},
+                                {item_destroyed_event->GetIndex().first,
+                                    item_destroyed_event->GetIndex().second, 25, 25},
+                                0, "healthpotion2");
+                auto* healthpotion = new HealthPotion(props11, 20);
+
+                static_cast<Game&>(Application::Get()).AddObject(healthpotion);
+                ColliderHandler::GetInstance()->AddCollider(healthpotion);
+            } else {
+                Properties props12("weapons", {10, 2, 16, 16},
+                                {item_destroyed_event->GetIndex().first,
+                                    item_destroyed_event->GetIndex().second, 36, 36},
+                                0, "bomb");
+                auto* grenade = new GrenadeDrop(props12);
+                static_cast<Game&>(Application::Get()).AddObject(grenade);
+                ColliderHandler::GetInstance()->AddCollider(grenade);
+            }
         }
         default:
             break;
