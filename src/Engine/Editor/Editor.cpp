@@ -1460,7 +1460,6 @@ void Editor::Render() {
     ImGui_ImplSDL2_NewFrame();
     ImGui::NewFrame();
 
-    ImGui::ShowDemoWindow();
     ShowObjectManager();
     ShowToolBar();
     ShowRibbon();
