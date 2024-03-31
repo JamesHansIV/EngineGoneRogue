@@ -19,6 +19,8 @@ class Kamikaze : public Enemy {
 
     EnemyState* GetAttackState() override;
 
+    EnemyState* GetDeadState() override;
+
     void OnCollide(Collider* collidee) override;
 
     ObjectType GetObjectType() override { return ObjectType::Enemy; }

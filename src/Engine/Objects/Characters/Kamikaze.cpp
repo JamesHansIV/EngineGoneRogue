@@ -70,3 +70,7 @@ void Kamikaze::Clean() {}
 EnemyState* Kamikaze::GetAttackState() {
     return new KamikazeAttack(*this);
 }
+
+EnemyState* Kamikaze::GetDeadState() {
+    return new KamikazeDead(*this);
+}
