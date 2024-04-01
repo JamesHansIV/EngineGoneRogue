@@ -205,7 +205,7 @@
         <CollisionBox x="270" y="170" w="-4" h="164"/>
     </Object>
     <Object texture_id="lockless-door-open" object_id="entrance" rotation="0">
-        <Types collider="1"/>
+        <Types collider="1" entrance="1" curr_room_id="room6" next_room_id="boss" next_x="960" next_y="1600"/>
         <SrcRect row="6" col="2" w="16" h="16"/>
         <DstRect x="1880" y="130" w="48" h="48"/>
         <Animation>

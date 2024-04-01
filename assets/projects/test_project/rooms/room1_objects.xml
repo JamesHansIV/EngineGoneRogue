@@ -1,6 +1,6 @@
 <Root>
     <Object texture_id="lockless-door-open" object_id="entrance" rotation="0">
-        <Types collider="1" curr_room_id="room1" next_room_id="room2" next_x="875" next_y="1300"/>
+        <Types collider="1" entrance="1" curr_room_id="room1" next_room_id="room2" next_x="875" next_y="1300"/>
         <SrcRect row="6" col="2" w="16" h="16"/>
         <DstRect x="470" y="30" w="48" h="48"/>
         <Animation>

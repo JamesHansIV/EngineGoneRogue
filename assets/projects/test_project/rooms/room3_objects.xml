@@ -1,63 +1,8 @@
 <Root>
-    <Object texture_id="enemies" object_id="slime" rotation="0">
-        <Types collider="1"/>
-        <SrcRect row="0" col="1" w="16" h="16"/>
-        <DstRect x="1850" y="990" w="36" h="36"/>
-        <Animation>
-            <AnimationInfo id="MiniSlimeAttack" texture_id="enemies" frame_count="8" speed="250" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
-                <Tile row="2" col="0" w="16" h="16"/>
-            </AnimationInfo>
-            <AnimationInfo id="MiniSlimeDead" texture_id="enemies" frame_count="2" speed="500" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
-                <Tile row="0" col="0" w="16" h="16"/>
-            </AnimationInfo>
-            <AnimationInfo id="MiniSlimeHit" texture_id="enemies" frame_count="3" speed="50" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
-                <Tile row="1" col="0" w="16" h="16"/>
-            </AnimationInfo>
-            <AnimationInfo id="MiniSlimeIdle" texture_id="enemies" frame_count="2" speed="300" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
-                <Tile row="0" col="2" w="16" h="16"/>
-            </AnimationInfo>
-            <AnimationInfo id="SlimeAttack" texture_id="enemies" frame_count="8" speed="250" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
-                <Tile row="5" col="0" w="16" h="16"/>
-            </AnimationInfo>
-            <AnimationInfo id="SlimeDead" texture_id="enemies" frame_count="2" speed="500" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
-                <Tile row="3" col="0" w="16" h="16"/>
-            </AnimationInfo>
-            <AnimationInfo id="SlimeHit" texture_id="enemies" frame_count="3" speed="50" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
-                <Tile row="4" col="0" w="16" h="16"/>
-            </AnimationInfo>
-            <AnimationInfo id="SlimeIdle" texture_id="enemies" frame_count="2" speed="300" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
-                <Tile row="3" col="2" w="16" h="16"/>
-            </AnimationInfo>
-        </Animation>
-        <CollisionBox x="526" y="226" w="-16" h="220"/>
-    </Object>
-    <Object texture_id="enemies" object_id="ringshotenemy" rotation="0">
-        <Types collider="1"/>
-        <SrcRect row="6" col="2" w="16" h="16"/>
-        <DstRect x="600" y="300" w="36" h="36"/>
-        <Animation>
-            <AnimationInfo id="Dead" texture_id="enemies" frame_count="2" speed="500" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
-                <Tile row="9" col="0" w="16" h="16"/>
-            </AnimationInfo>
-            <AnimationInfo id="Hit" texture_id="enemies" frame_count="3" speed="50" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
-                <Tile row="10" col="0" w="16" h="16"/>
-            </AnimationInfo>
-            <AnimationInfo id="Idle" texture_id="enemies" frame_count="2" speed="500" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
-                <Tile row="9" col="2" w="16" h="16"/>
-            </AnimationInfo>
-            <AnimationInfo id="Move-down" texture_id="enemies" frame_count="4" speed="250" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
-                <Tile row="11" col="0" w="16" h="16"/>
-            </AnimationInfo>
-            <AnimationInfo id="Move-up" texture_id="enemies" frame_count="4" speed="250" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
-                <Tile row="11" col="4" w="16" h="16"/>
-            </AnimationInfo>
-        </Animation>
-        <CollisionBox x="626" y="326" w="-16" h="320"/>
-    </Object>
     <Object texture_id="enemies" object_id="dog" rotation="0">
-        <Types collider="1"/>
+        <Types collider="1" ranged_enemy="1" dog="1"/>
         <SrcRect row="6" col="2" w="16" h="16"/>
-        <DstRect x="500" y="260" w="36" h="36"/>
+        <DstRect x="800" y="700" w="36" h="36"/>
         <Animation>
             <AnimationInfo id="Dead" texture_id="enemies" frame_count="2" speed="500" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
                 <Tile row="6" col="0" w="16" h="16"/>
@@ -75,58 +20,13 @@
                 <Tile row="8" col="4" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
-        <CollisionBox x="526" y="286" w="-16" h="280"/>
+        <CollisionBox x="504" y="264" w="28" h="258"/>
+        <RangedEnemyStats health="100" damage="25" speed="70" range="250" perception_width="1500" perception_height="1799907216" xp="30" fire_interval="1000" spread="0" spread_count="0"/>
     </Object>
-    <Object texture_id="enemies" object_id="goblin" rotation="0">
-        <Types collider="1"/>
+    <Object texture_id="enemies" object_id="dog" rotation="0">
+        <Types collider="1" ranged_enemy="1" dog="1"/>
         <SrcRect row="6" col="2" w="16" h="16"/>
-        <DstRect x="250" y="400" w="36" h="36"/>
-        <Animation>
-            <AnimationInfo id="Dead" texture_id="enemies" frame_count="2" speed="500" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
-                <Tile row="12" col="0" w="16" h="16"/>
-            </AnimationInfo>
-            <AnimationInfo id="Hit" texture_id="enemies" frame_count="3" speed="50" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
-                <Tile row="14" col="0" w="16" h="16"/>
-            </AnimationInfo>
-            <AnimationInfo id="Idle" texture_id="enemies" frame_count="2" speed="500" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
-                <Tile row="12" col="2" w="16" h="16"/>
-            </AnimationInfo>
-            <AnimationInfo id="Move-down" texture_id="enemies" frame_count="4" speed="250" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
-                <Tile row="13" col="0" w="16" h="16"/>
-            </AnimationInfo>
-            <AnimationInfo id="Move-up" texture_id="enemies" frame_count="4" speed="250" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
-                <Tile row="13" col="4" w="16" h="16"/>
-            </AnimationInfo>
-        </Animation>
-        <CollisionBox x="276" y="426" w="-16" h="420"/>
-    </Object>
-    <Object texture_id="enemies" object_id="helixenemy" rotation="0">
-        <Types collider="1"/>
-        <SrcRect row="6" col="2" w="16" h="16"/>
-        <DstRect x="600" y="150" w="36" h="36"/>
-        <Animation>
-            <AnimationInfo id="Dead" texture_id="enemies" frame_count="2" speed="500" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
-                <Tile row="12" col="0" w="16" h="16"/>
-            </AnimationInfo>
-            <AnimationInfo id="Hit" texture_id="enemies" frame_count="3" speed="50" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
-                <Tile row="14" col="0" w="16" h="16"/>
-            </AnimationInfo>
-            <AnimationInfo id="Idle" texture_id="enemies" frame_count="2" speed="500" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
-                <Tile row="12" col="2" w="16" h="16"/>
-            </AnimationInfo>
-            <AnimationInfo id="Move-down" texture_id="enemies" frame_count="4" speed="250" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
-                <Tile row="13" col="0" w="16" h="16"/>
-            </AnimationInfo>
-            <AnimationInfo id="Move-up" texture_id="enemies" frame_count="4" speed="250" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
-                <Tile row="13" col="4" w="16" h="16"/>
-            </AnimationInfo>
-        </Animation>
-        <CollisionBox x="626" y="176" w="-16" h="170"/>
-    </Object>
-    <Object texture_id="enemies" object_id="mage" rotation="0">
-        <Types collider="1"/>
-        <SrcRect row="6" col="2" w="16" h="16"/>
-        <DstRect x="550" y="300" w="36" h="36"/>
+        <DstRect x="900" y="800" w="36" h="36"/>
         <Animation>
             <AnimationInfo id="Dead" texture_id="enemies" frame_count="2" speed="500" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
                 <Tile row="6" col="0" w="16" h="16"/>
@@ -134,7 +34,7 @@
             <AnimationInfo id="Hit" texture_id="enemies" frame_count="3" speed="50" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
                 <Tile row="7" col="0" w="16" h="16"/>
             </AnimationInfo>
-            <AnimationInfo id="Idle" texture_id="enemies" frame_count="2" speed="500" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
+            <AnimationInfo id="Idle" texture_id="enemies" frame_count="2" speed="250" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
                 <Tile row="6" col="2" w="16" h="16"/>
             </AnimationInfo>
             <AnimationInfo id="Move-down" texture_id="enemies" frame_count="4" speed="250" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
@@ -144,12 +44,37 @@
                 <Tile row="8" col="4" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
-        <CollisionBox x="576" y="326" w="-16" h="320"/>
+        <CollisionBox x="504" y="264" w="28" h="258"/>
+        <RangedEnemyStats health="100" damage="25" speed="70" range="250" perception_width="1500" perception_height="1799907216" xp="30" fire_interval="1000" spread="0" spread_count="0"/>
+    </Object>
+    <Object texture_id="enemies" object_id="dog" rotation="0">
+        <Types collider="1" ranged_enemy="1" dog="1"/>
+        <SrcRect row="6" col="2" w="16" h="16"/>
+        <DstRect x="1100" y="600" w="36" h="36"/>
+        <Animation>
+            <AnimationInfo id="Dead" texture_id="enemies" frame_count="2" speed="500" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
+                <Tile row="6" col="0" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo id="Hit" texture_id="enemies" frame_count="3" speed="50" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
+                <Tile row="7" col="0" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo id="Idle" texture_id="enemies" frame_count="2" speed="250" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
+                <Tile row="6" col="2" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo id="Move-down" texture_id="enemies" frame_count="4" speed="250" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
+                <Tile row="8" col="0" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo id="Move-up" texture_id="enemies" frame_count="4" speed="250" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
+                <Tile row="8" col="4" w="16" h="16"/>
+            </AnimationInfo>
+        </Animation>
+        <CollisionBox x="504" y="264" w="28" h="258"/>
+        <RangedEnemyStats health="100" damage="25" speed="70" range="250" perception_width="1500" perception_height="1799907216" xp="30" fire_interval="1000" spread="0" spread_count="0"/>
     </Object>
     <Object texture_id="enemies" object_id="skeleton" rotation="0">
-        <Types collider="1"/>
+        <Types collider="1" ranged_enemy="1" skeleton="1"/>
         <SrcRect row="6" col="2" w="16" h="16"/>
-        <DstRect x="250" y="150" w="36" h="36"/>
+        <DstRect x="880" y="700" w="36" h="36"/>
         <Animation>
             <AnimationInfo id="Dead" texture_id="enemies" frame_count="2" speed="500" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
                 <Tile row="9" col="0" w="16" h="16"/>
@@ -167,10 +92,107 @@
                 <Tile row="11" col="4" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
-        <CollisionBox x="276" y="176" w="-16" h="170"/>
+        <CollisionBox x="254" y="154" w="28" h="148"/>
+        <RangedEnemyStats health="100" damage="25" speed="80" range="250" perception_width="1500" perception_height="1799907216" xp="30" fire_interval="2000" spread="0.98696047" spread_count="9"/>
+    </Object>
+    <Object texture_id="enemies" object_id="skeleton" rotation="0">
+        <Types collider="1" ranged_enemy="1" skeleton="1"/>
+        <SrcRect row="6" col="2" w="16" h="16"/>
+        <DstRect x="770" y="650" w="36" h="36"/>
+        <Animation>
+            <AnimationInfo id="Dead" texture_id="enemies" frame_count="2" speed="500" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
+                <Tile row="9" col="0" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo id="Hit" texture_id="enemies" frame_count="3" speed="50" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
+                <Tile row="10" col="0" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo id="Idle" texture_id="enemies" frame_count="2" speed="500" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
+                <Tile row="9" col="2" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo id="Move-down" texture_id="enemies" frame_count="4" speed="250" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
+                <Tile row="11" col="0" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo id="Move-up" texture_id="enemies" frame_count="4" speed="250" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
+                <Tile row="11" col="4" w="16" h="16"/>
+            </AnimationInfo>
+        </Animation>
+        <CollisionBox x="254" y="154" w="28" h="148"/>
+        <RangedEnemyStats health="100" damage="25" speed="80" range="250" perception_width="1500" perception_height="1799907216" xp="30" fire_interval="2000" spread="0.98696047" spread_count="9"/>
+    </Object>
+    <Object texture_id="enemies" object_id="helixenemy" rotation="0">
+        <Types collider="1" ranged_enemy="1" helix_enemy="1"/>
+        <SrcRect row="6" col="2" w="16" h="16"/>
+        <DstRect x="1100" y="500" w="36" h="36"/>
+        <Animation>
+            <AnimationInfo id="Dead" texture_id="enemies" frame_count="2" speed="500" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
+                <Tile row="12" col="0" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo id="Hit" texture_id="enemies" frame_count="3" speed="50" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
+                <Tile row="14" col="0" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo id="Idle" texture_id="enemies" frame_count="2" speed="500" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
+                <Tile row="12" col="2" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo id="Move-down" texture_id="enemies" frame_count="4" speed="250" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
+                <Tile row="13" col="0" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo id="Move-up" texture_id="enemies" frame_count="4" speed="250" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
+                <Tile row="13" col="4" w="16" h="16"/>
+            </AnimationInfo>
+        </Animation>
+        <CollisionBox x="604" y="154" w="28" h="148"/>
+        <RangedEnemyStats health="100" damage="25" speed="70" range="180" perception_width="1500" perception_height="1799907216" xp="30" fire_interval="2000" spread="0" spread_count="0"/>
+    </Object>
+    <Object texture_id="enemies" object_id="mage" rotation="0">
+        <Types collider="1" ranged_enemy="1" mage="1"/>
+        <SrcRect row="6" col="2" w="16" h="16"/>
+        <DstRect x="990" y="900" w="36" h="36"/>
+        <Animation>
+            <AnimationInfo id="Dead" texture_id="enemies" frame_count="2" speed="500" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
+                <Tile row="6" col="0" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo id="Hit" texture_id="enemies" frame_count="3" speed="50" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
+                <Tile row="7" col="0" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo id="Idle" texture_id="enemies" frame_count="2" speed="500" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
+                <Tile row="6" col="2" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo id="Move-down" texture_id="enemies" frame_count="4" speed="250" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
+                <Tile row="8" col="0" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo id="Move-up" texture_id="enemies" frame_count="4" speed="250" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
+                <Tile row="8" col="4" w="16" h="16"/>
+            </AnimationInfo>
+        </Animation>
+        <CollisionBox x="554" y="304" w="28" h="298"/>
+        <RangedEnemyStats health="100" damage="25" speed="80" range="250" perception_width="1500" perception_height="1799907216" xp="30" fire_interval="3000" spread="0" spread_count="0"/>
+    </Object>
+    <Object texture_id="enemies" object_id="mage" rotation="0">
+        <Types collider="1" ranged_enemy="1" mage="1"/>
+        <SrcRect row="6" col="2" w="16" h="16"/>
+        <DstRect x="900" y="900" w="36" h="36"/>
+        <Animation>
+            <AnimationInfo id="Dead" texture_id="enemies" frame_count="2" speed="500" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
+                <Tile row="6" col="0" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo id="Hit" texture_id="enemies" frame_count="3" speed="50" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
+                <Tile row="7" col="0" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo id="Idle" texture_id="enemies" frame_count="2" speed="500" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
+                <Tile row="6" col="2" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo id="Move-down" texture_id="enemies" frame_count="4" speed="250" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
+                <Tile row="8" col="0" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo id="Move-up" texture_id="enemies" frame_count="4" speed="250" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
+                <Tile row="8" col="4" w="16" h="16"/>
+            </AnimationInfo>
+        </Animation>
+        <CollisionBox x="554" y="304" w="28" h="298"/>
+        <RangedEnemyStats health="100" damage="25" speed="80" range="250" perception_width="1500" perception_height="1799907216" xp="30" fire_interval="3000" spread="0" spread_count="0"/>
     </Object>
     <Object texture_id="lockless-door-open" object_id="entrance" rotation="0">
-        <Types collider="1"/>
+        <Types collider="1" entrance="1" next_room_id="room4" curr_room_id="room3" next_x="620" next_y="1280"/>
         <SrcRect row="6" col="2" w="16" h="16"/>
         <DstRect x="460" y="140" w="48" h="48"/>
         <Animation>
@@ -182,22 +204,5 @@
             </AnimationInfo>
         </Animation>
         <CollisionBox x="480" y="140" w="8" h="134"/>
-    </Object>
-    <Object texture_id="trap_idle" object_id="trap" rotation="0">
-        <Types collider="1"/>
-        <SrcRect row="0" col="0" w="16" h="16"/>
-        <DstRect x="600" y="300" w="32" h="32"/>
-        <Animation>
-            <AnimationInfo id="trap_closing" texture_id="trap_closing" frame_count="3" speed="50" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
-                <Tile row="0" col="0" w="16" h="16"/>
-            </AnimationInfo>
-            <AnimationInfo id="trap_idle" texture_id="trap_idle" frame_count="1" speed="0" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
-                <Tile row="0" col="0" w="16" h="16"/>
-            </AnimationInfo>
-            <AnimationInfo id="trap_opening" texture_id="trap_opening" frame_count="5" speed="25" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
-                <Tile row="0" col="0" w="16" h="16"/>
-            </AnimationInfo>
-        </Animation>
-        <CollisionBox x="626" y="326" w="-20" h="320"/>
     </Object>
 </Root>

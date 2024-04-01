@@ -177,7 +177,7 @@
         <RangedEnemyStats health="100" damage="25" speed="80" range="250" perception_width="1500" perception_height="1831722080" xp="30" fire_interval="2000" spread="9.7409096" spread_count="87"/>
     </Object>
     <Object texture_id="lockless-door-open" object_id="entrance" rotation="90">
-        <Types collider="1"/>
+        <Types collider="1" entrance="1" curr_room_id="room5" next_room_id="room6" next_x="260" next_y="900"/>
         <SrcRect row="6" col="2" w="16" h="16"/>
         <DstRect x="1700" y="380" w="48" h="48"/>
         <Animation>

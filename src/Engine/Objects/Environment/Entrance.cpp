@@ -52,8 +52,10 @@ GameObject* Entrance::Copy() {
 }
 
 void Entrance::OnCollide(Collider* collidee) {
+    SDL_Log("collide with something");
     if (collidee->GetObjectType() == ObjectType::Player && !m_closed &&
         m_collideless_time == 0) {
+        SDL_Log("player collide with entrance");
         Application::Get().AddRoomCleared(m_curr_room_id);
         Application::Get().SetStartPosition(m_next_start.first,
                                             m_next_start.second);
