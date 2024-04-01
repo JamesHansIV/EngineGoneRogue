@@ -107,8 +107,8 @@
         <ID>fire-rate</ID>
     </Texture>
     <Texture type="base">
-        <FilePath>../assets/textures/foo.png</FilePath>
-        <ID>foo</ID>
+        <FilePath>../assets/textures/spritesheets/boss.png</FilePath>
+        <ID>boss</ID>
     </Texture>
     <Texture type="base">
         <FilePath>../assets/textures/game_over.png</FilePath>

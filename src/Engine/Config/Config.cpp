@@ -3,7 +3,8 @@
 #include <cstddef>
 #include <fstream>
 #include <typeinfo>
-#include "Engine/Objects/Characters/Charger.h"
+#include "Engine/Objects/Characters/Boss.h"
+#include "Engine/Objects/Characters/Charger.h"  
 #include "Engine/Objects/Characters/Dog.h"
 #include "Engine/Objects/Characters/Goblin.h"
 #include "Engine/Objects/Characters/HelixEnemy.h"
@@ -551,6 +552,14 @@ GameObject* BuildObjectOnType(tinyxml2::XMLElement* types,
             GetEnemyStats(xmlObj->FirstChildElement("EnemyStats"));
         to_delete = new_obj;
         new_obj = new Charger(static_cast<Collider*>(new_obj), stats);
+        delete to_delete;
+    }
+
+    if (types->Attribute("boss") != nullptr) {
+        EnemyStats const stats =
+            GetEnemyStats(xmlObj->FirstChildElement("EnemyStats"));
+        to_delete = new_obj;
+        new_obj = new Boss(static_cast<Collider*>(new_obj), stats);
         delete to_delete;
     }
 

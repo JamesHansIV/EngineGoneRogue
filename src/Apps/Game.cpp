@@ -4,6 +4,7 @@
 #include <vector>
 #include "Engine/Events/ItemManager.h"
 #include "Engine/Input/InputChecker.h"
+#include "Engine/Objects/Characters/Boss.h"
 #include "Engine/Objects/Characters/Charger.h"
 #include "Engine/Objects/Characters/Dog.h"
 #include "Engine/Objects/Characters/EnemyStats.h"
@@ -60,6 +61,7 @@ Goblin* goblin_copy = nullptr;
 HelixEnemy* helix_enemy_copy = nullptr;
 Charger* charger_copy = nullptr;
 Kamikaze* kamikaze_copy = nullptr;
+Boss* boss_copy = nullptr;
 
 std::vector<GameObject*> Game::CopyObjects(
     const std::vector<GameObject*>& objects) {
@@ -84,6 +86,11 @@ void Game::InitEnemyCopies() {
 
         if ((enemy = dynamic_cast<Charger*>(obj)) != nullptr) {
             charger_copy = new Charger(enemy, enemy->GetEnemyStats());
+            continue;
+        }
+
+        if ((enemy = dynamic_cast<Boss*>(obj)) != nullptr) {
+            boss_copy = new Boss(enemy, enemy->GetEnemyStats());
             continue;
         }
 

@@ -234,6 +234,9 @@ Editor::Editor() {
     m_clipboard = new ClipBoard();
 
     m_toolbar = new Toolbar(m_key_map);
+
+    m_show_create_object = false;
+    m_show_object_editor = false;
 }
 
 Editor::~Editor() {
@@ -429,10 +432,6 @@ void Editor::ShowFileManager() {
             }
             ImGui::EndPopup();
         }
-
-        // if (ImGui::Button("Load Room", ImVec2(150, 20))) {
-        //     ImGui::OpenPopup("load_room");
-        // }
 
         if (ImGui::BeginPopup("load_room")) {
             for (const auto& id : m_room_ids) {
@@ -871,8 +870,8 @@ void Editor::ShowTiles(TileMap* tileMap) {
             ImGui::PushStyleColor(ImGuiCol_ButtonActive,
                                   ImVec4(23, 30, 57, 255));
 
-            if (ImGui::ImageButton("", (ImTextureID)tileMap->GetTexture(), size,
-                                   uv0, uv1) ||
+            if (ImGui::ImageButton("##", (ImTextureID)tileMap->GetTexture(),
+                                   size, uv0, uv1) ||
                 ImGui::IsItemClicked()) {
                 tileMap->ClearButtons();
                 m_object_info.Tile.row = i;
@@ -986,11 +985,11 @@ void Editor::ShowObjectManager() {
     ImGui::Begin("Game Object Manager", nullptr, window_flags);
 
     if (ImGui::BeginTabBar("##tabs", ImGuiTabBarFlags_None)) {
-        ShowFileManager();
-        ShowChooseLayer();
-        ShowLoadTexture();
+        // ShowFileManager();
+        // ShowChooseLayer();
+        // ShowLoadTexture();
         ShowObjectEditor();
-        ShowCreateObject();
+        // ShowCreateObject();
 
         ImGui::EndTabBar();
     }
@@ -1045,14 +1044,89 @@ void Editor::ShowRibbon() {
             ImGui::EndMenu();
         }
         if (ImGui::BeginMenu("Layers")) {
-            ImGui::EndMenu();
-        }
-        if (ImGui::BeginMenu("Objects")) {
+            for (int i = 0; i < m_layers.size(); i++) {
+                std::string selected = (i == m_current_layer) ? "\tX" : "";
+                if (ImGui::MenuItem(std::string("Select Layer " +
+                                                std::to_string(i) + selected)
+                                        .c_str()))
+                    m_current_layer = i;
+            }
+            ImGui::Separator();
+            for (int i = 0; i < m_layers.size(); i++) {
+                std::string hide =
+                    (m_hidden_layers.find(i) == m_hidden_layers.end())
+                        ? "Hide "
+                        : "Show ";
+                if (ImGui::MenuItem(
+                        std::string(hide + "Layer " + std::to_string(i))
+                            .c_str())) {
+                    if (m_hidden_layers.find(i) == m_hidden_layers.end())
+                        m_hidden_layers.insert(i);
+                    else
+                        m_hidden_layers.erase(i);
+                }
+            }
+            ImGui::Separator();
+            if (ImGui::MenuItem("Add Layer"))
+                m_layers.emplace_back();
             ImGui::EndMenu();
         }
         if (ImGui::BeginMenu("Textures")) {
+            if (ImGui::MenuItem("Load Texture"))
+                menu_action = "load_texture";
+            // list textures
             ImGui::EndMenu();
         }
+        if (ImGui::BeginMenu("Objects")) {
+            if (ImGui::MenuItem("Create object"))
+                m_show_create_object = true;
+            if (ImGui::MenuItem("Edit object"))
+                m_show_object_editor = true;
+            ImGui::EndMenu();
+        }
+        ImGui::SameLine();
+        ImGui::Separator();
+        ImGui::Dummy(ImVec2(5, height));
+        std::string room_str =
+            (m_current_room_id == "") ? "Unsaved Room" : m_current_room_id;
+        ImGui::Text("%s", std::string("Room: " + room_str).c_str());
+        ImGui::Dummy(ImVec2(5, height));
+        ImGui::Separator();
+        ImGui::Dummy(ImVec2(5, height));
+        ImGui::Text(
+            "%s",
+            std::string("Layer: " + std::to_string(m_current_layer)).c_str());
+        ImGui::Dummy(ImVec2(5, height));
+        ImGui::Separator();
+        ImGui::Dummy(ImVec2(5, height));
+        std::string texture_str = (m_current_texture == nullptr)
+                                      ? "NONE SELECTED"
+                                      : m_current_texture->GetID();
+        ImGui::Text("%s", std::string("Texture: " + texture_str).c_str());
+        ImGui::Dummy(ImVec2(5, height));
+        ImGui::Separator();
+        ImGui::Dummy(ImVec2(5, height));
+        std::string obj_str;
+        if (m_selected_objects.empty())
+            obj_str = "NONE SELECTED";
+        else {
+            GameObject* obj;
+            for (auto* o : m_selected_objects) {
+                obj = o;
+                break;
+            }
+            if (m_selected_objects.size() == 1)
+                obj_str = obj->GetID();
+            if (m_selected_objects.size() > 1)
+                obj_str = obj->GetID() + " ...and " +
+                          std::to_string(m_selected_objects.size() - 1) +
+                          " more";
+        }
+        std::string plural = (m_selected_objects.size() > 1) ? "s" : "";
+        ImGui::Text("%s",
+                    std::string("Object" + plural + ": " + obj_str).c_str());
+        ImGui::Dummy(ImVec2(5, height));
+        ImGui::Separator();
         ImGui::EndMainMenuBar();
     }
 
@@ -1076,6 +1150,8 @@ void Editor::ShowRibbon() {
         ImGui::OpenPopup("save_room_as");
     if (menu_action == "load_room")
         ImGui::OpenPopup("load_room");
+    if (menu_action == "load_texture")
+        ImGui::OpenPopup("load_texture");
 
     // popups
     if (ImGui::BeginPopup("new_project")) {
@@ -1128,10 +1204,16 @@ void Editor::ShowRibbon() {
         ImGui::Text("Room Name");
         ImGui::SameLine();
         ImGui::InputText(" ", room_name, sizeof(room_name));
-        if (ImGui::Button("cancel"))
+        ImGui::Dummy({10, 2});
+        ImVec2 button_size = {90.f, 20};
+        if (ImGui::Button("cancel", button_size))
             ImGui::CloseCurrentPopup();
         ImGui::SameLine();
-        if (ImGui::Button("save") && strcmp(room_name, "") != 0) {
+        float width_needed = button_size.x + ImGui::GetStyle().ItemSpacing.x;
+        ImGui::SetCursorPosX(ImGui::GetCursorPosX() +
+                             ImGui::GetContentRegionAvail().x - width_needed -
+                             3.f);
+        if (ImGui::Button("save", button_size) && strcmp(room_name, "") != 0) {
             LoadFromLayers();
             SaveRoom(room_name);
             // update room ids
@@ -1166,6 +1248,310 @@ void Editor::ShowRibbon() {
         }
 
         ImGui::EndPopup();
+    }
+    if (ImGui::BeginPopup("load_texture")) {
+        ImGui::Text("Load Texture");
+        ImGui::Separator();
+
+        static char filepath[256] = "";
+        static char texture_id[256] = "";
+        ImGui::Text("Filepath\t");
+        ImGui::SameLine();
+        ImGui::InputText(" ", filepath, sizeof(filepath));
+        ImGui::Text("Texture name");
+        ImGui::SameLine();
+        ImGui::InputText("  ", texture_id, sizeof(texture_id));
+
+        static bool is_tile_map = false;
+        ImGui::Checkbox("Tile map", &is_tile_map);
+        static int tile_size = 0;
+        static int rows = 0;
+        static int cols = 0;
+        if (is_tile_map) {
+            ImGui::Text("Set tile size     ");
+            ImGui::SameLine();
+            ImGui::PushItemWidth(100);
+            ImGui::InputInt("## ", &tile_size);
+            ImGui::Text("Number of rows    ");
+            ImGui::SameLine();
+            ImGui::InputInt("##", &rows);
+            ImGui::Text("Number of columns ");
+            ImGui::SameLine();
+            ImGui::InputInt("###", &cols);
+            ImGui::PopItemWidth();
+        }
+
+        static char invalid_filepath[256] = "";
+
+        ImVec2 button_size = {90.f, 20};
+        ImGui::Dummy(ImVec2(10, 5));
+        if (ImGui::Button("cancel", button_size))
+            ImGui::CloseCurrentPopup();
+
+        ImGui::SameLine();
+        float width_needed = button_size.x + ImGui::GetStyle().ItemSpacing.x;
+        ImGui::SetCursorPosX(ImGui::GetCursorPosX() +
+                             ImGui::GetContentRegionAvail().x - width_needed -
+                             10.f);
+        if (ImGui::Button("load texture", button_size)) {
+            if (strcmp(filepath, "") != 0 && strcmp(texture_id, "") != 0) {
+                m_current_texture =
+                    (is_tile_map)
+                        ? Renderer::GetInstance().AddTileMap(
+                              texture_id, filepath, tile_size, rows, cols)
+                        : Renderer::GetInstance().AddTexture(texture_id,
+                                                             filepath);
+
+                if (m_current_texture == nullptr) {
+                    strcpy(invalid_filepath, filepath);
+                } else {
+                    SetObjectInfo();
+                    strcpy(invalid_filepath, "");
+                }
+                strcpy(filepath, "");
+                strcpy(texture_id, "");
+                tile_size = 0;
+                rows = 0;
+                cols = 0;
+                is_tile_map = false;
+            }
+        }
+
+        ImGui::EndPopup();
+    }
+
+    ImGuiWindowFlags object_window_flags =
+        0 | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoCollapse;
+    ;
+
+    if (m_show_create_object) {
+        if (ImGui::Begin("Create Object", &m_show_create_object,
+                         object_window_flags)) {
+            ImGui::Text("Texture");
+            static std::string selected_texture = "";
+            std::vector<std::string> const& texture_ids =
+                Renderer::GetInstance().GetTextureIDs();
+            if (ImGui::BeginCombo("##", selected_texture.c_str())) {
+                for (int i = 0; i < texture_ids.size(); i++) {
+                    bool is_selected = (selected_texture == texture_ids[i]);
+                    if (ImGui::Selectable(texture_ids[i].c_str(),
+                                          is_selected)) {
+                        selected_texture = texture_ids[i].c_str();
+                        m_current_texture =
+                            Renderer::GetInstance().GetTexture(texture_ids[i]);
+                        SetObjectInfo();
+                    }
+                    if (is_selected)
+                        ImGui::SetItemDefaultFocus();
+                }
+                ImGui::EndCombo();
+            }
+            ImGui::Separator();
+
+            if (m_current_texture != nullptr) {
+                ImGui::Image((void*)m_current_texture->GetTexture(),
+                             ImVec2(m_current_texture->GetWidth(),
+                                    m_current_texture->GetHeight()));
+                ImGui::Text("size = %d x %d", m_current_texture->GetWidth(),
+                            m_current_texture->GetHeight());
+
+                auto* tile_map = dynamic_cast<TileMap*>(m_current_texture);
+                if (tile_map != nullptr) {
+                    ShowTiles(tile_map);
+                }
+                ImGui::Separator();
+                ImGui::Dummy({10, 2});
+                ImGui::Text("Select Dimensions");
+                ImGui::Dummy({10, 2});
+                ImGui::Text("destination width ");
+                ImGui::SameLine();
+                ImGui::SliderInt("## ", &m_object_info.DstRect.w, 0,
+                                 LevelWidth);
+                ImGui::Text("desgination height");
+                ImGui::SameLine();
+                ImGui::SliderInt("##  ", &m_object_info.DstRect.h, 0,
+                                 LevelHeight);
+                m_object_info.CollisionBox = {0, 0, m_object_info.DstRect.w,
+                                              m_object_info.DstRect.h};
+            }
+        }
+        ImGui::End();
+    }
+
+    if (m_show_object_editor) {
+        if (ImGui::Begin("Edit Object", &m_show_object_editor,
+                         object_window_flags)) {
+            ImGui::Text("Object");
+            ImGui::SameLine(
+                ImGui::GetContentRegionAvail().x -
+                ImGui::CalcTextSize(
+                    std::string("Layer " + std::to_string(m_current_layer))
+                        .c_str())
+                    .x);
+            ImGui::Text("%s",
+                        std::string("Layer: " + std::to_string(m_current_layer))
+                            .c_str());
+
+            // if (ImGui::TreeNode("Object list")) {
+            //     for (auto it = m_layers[m_current_layer].begin();
+            //         it != m_layers[m_current_layer].end(); it++) {
+            //         if (ImGui::Button((*it)->GetID().c_str(), ImVec2(140, 20))) {
+            //             m_current_object = *it;
+            //             m_layers[m_current_layer].erase(it);
+            //             m_layers[m_current_layer].insert(
+            //             m_layers[m_current_layer].end(), m_current_object);
+            //         }
+            //     }
+            //     ImGui::TreePop();
+            // }
+            GameObject* obj;
+            std::string init_selected_object_id = "";
+            for (auto* o : m_selected_objects) {
+                obj = o;
+                break;
+            }
+            if (m_selected_objects.size() == 1)
+                init_selected_object_id = obj->GetID();
+
+            std::vector<GameObject*> layer = m_layers[m_current_layer];
+            static std::string selected_object_id = init_selected_object_id;
+            static int selected_index = 0;
+            if (ImGui::BeginCombo("##", selected_object_id.c_str())) {
+                for (int i = 0; i < layer.size(); i++) {
+                    const bool is_selected =
+                        (layer[i]->GetID() == selected_object_id);
+                    if (ImGui::Selectable(layer[i]->GetID().c_str(),
+                                          is_selected)) {
+                        selected_object_id = layer[i]->GetID();
+                        m_selected_obj_origin_map.clear();
+                        m_selected_objects.clear();
+                        m_selected_objects.insert(layer[i]);
+                        m_selected_obj_origin_map[layer[i]] = {
+                            layer[i]->GetX(), layer[i]->GetY()};
+                    }
+
+                    if (is_selected)
+                        ImGui::SetItemDefaultFocus();
+                }
+
+                ImGui::EndCombo();
+            }
+
+            if (!m_selected_objects.empty()) {
+                if (ImGui::Button("Rotate left", ImVec2(100, 30))) {
+                    for (const auto& obj : m_selected_objects) {
+                        obj->GetRotation() -= 90.0F;
+                        obj->SetRotation(static_cast<int>(obj->GetRotation()) %
+                                         360);
+                    }
+                }
+                ImGui::SameLine();
+                if (ImGui::Button("Rotate right", ImVec2(100, 30))) {
+                    for (const auto& obj : m_selected_objects) {
+                        obj->GetRotation() += 90.0F;
+                        obj->SetRotation(static_cast<int>(obj->GetRotation()) %
+                                         360);
+                    }
+                }
+
+                if (ImGui::Button("Delete objects", ImVec2(100, 30))) {
+
+                    for (const auto& obj : m_selected_objects) {
+                        DeleteObject(obj);
+                    }
+                    m_selected_objects.clear();
+                    m_selected_obj_origin_map.clear();
+                }
+
+                bool addColliders = true;
+                for (auto* obj : m_selected_objects) {
+                    auto* c = dynamic_cast<Collider*>(obj);
+                    if (c != nullptr) {
+                        addColliders = false;
+                    }
+                }
+                if (addColliders &&
+                    ImGui::Button("Add Colliders", ImVec2(150, 30))) {
+                    Collider* c = nullptr;
+                    for (auto* obj : m_selected_objects) {
+                        c = new Collider(obj);
+                        DeleteObject(obj);
+                        m_layers[m_current_layer].push_back(c);
+                    }
+                    m_selected_objects.clear();
+                    m_selected_obj_origin_map.clear();
+                }
+
+            } else if (m_current_object != nullptr) {
+                ImGui::Text("Selected object: %s",
+                            m_current_object->GetID().c_str());
+                ImGui::Text("Texture:");
+                Texture* obj_texture = Renderer::GetInstance().GetTexture(
+                    m_current_object->GetTextureID());
+
+                ImVec2 size;
+                ImVec2 uv0;
+                ImVec2 uv1;
+
+                if (auto* tile_map = dynamic_cast<TileMap*>(obj_texture)) {
+                    size = {static_cast<float>(tile_map->GetTileSize()) * 10,
+                            static_cast<float>(tile_map->GetTileSize()) * 10};
+                    uv0 = ImVec2(m_current_object->GetTilePos().col /
+                                     static_cast<float>(tile_map->GetCols()),
+                                 m_current_object->GetTilePos().row /
+                                     static_cast<float>(tile_map->GetRows()));
+                    uv1 = ImVec2((m_current_object->GetTilePos().col + 1) /
+                                     static_cast<float>(tile_map->GetCols()),
+                                 (m_current_object->GetTilePos().row + 1) /
+                                     static_cast<float>(tile_map->GetRows()));
+                } else {
+                    size = ImVec2(obj_texture->GetWidth(),
+                                  obj_texture->GetHeight());
+                    uv0 = {0, 0};
+                    uv1 = {1, 1};
+                }
+
+                ImGui::Image((void*)obj_texture->GetTexture(), size, uv0, uv1);
+
+                ImGui::SliderFloat("X position", &m_current_object->GetX(), 0,
+                                   LevelWidth - m_current_object->GetWidth());
+                ImGui::SliderFloat("Y position", &m_current_object->GetY(), 0,
+                                   LevelHeight - m_current_object->GetHeight());
+
+                ImGui::SliderInt("Width", &m_current_object->GetWidth(), 0,
+                                 LevelWidth);
+                ImGui::SliderInt("Height", &m_current_object->GetHeight(), 0,
+                                 LevelHeight);
+
+                if (ImGui::Button("Rotate left", ImVec2(100, 30))) {
+                    m_current_object->GetRotation() -= 90.0F;
+                    m_current_object->GetRotation() =
+                        static_cast<int>(m_current_object->GetRotation()) % 360;
+                }
+                ImGui::SameLine();
+                if (ImGui::Button("Rotate right", ImVec2(100, 30))) {
+                    m_current_object->GetRotation() += 90.0F;
+                    m_current_object->GetRotation() =
+                        static_cast<int>(m_current_object->GetRotation()) % 360;
+                }
+
+                if (ImGui::Button("Delete object", ImVec2(100, 30))) {
+                    DeleteObject(m_current_object);
+                }
+
+                ShowAddCollider();
+                ShowAddAnimation();
+            }
+
+            ImGui::Text("Snap to grid: ");
+            ImGui::SameLine();
+            const char* snap_to_grid =
+                m_object_info.SnapToGrid ? "True" : "False";
+            if (ImGui::Button(snap_to_grid, ImVec2(80, 30))) {
+                m_object_info.SnapToGrid = !m_object_info.SnapToGrid;
+            }
+        }
+        ImGui::End();
     }
 }
 
@@ -1591,8 +1977,7 @@ void Editor::Render() {
     ImGui_ImplSDL2_NewFrame();
     ImGui::NewFrame();
 
-    ImGui::ShowDemoWindow();
-    ShowObjectManager();
+    // ShowObjectManager();
     ShowToolBar();
     ShowRibbon();
 
