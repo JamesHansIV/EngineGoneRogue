@@ -29,7 +29,7 @@
                 <Tile row="3" col="2" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
-        <CollisionBox x="508" y="208" w="20" h="202"/>
+        <CollisionBox x="526" y="226" w="-16" h="220"/>
     </Object>
     <Object texture_id="enemies" object_id="ringshotenemy" rotation="0">
         <Types collider="1"/>
@@ -52,7 +52,7 @@
                 <Tile row="11" col="4" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
-        <CollisionBox x="608" y="308" w="20" h="302"/>
+        <CollisionBox x="626" y="326" w="-16" h="320"/>
     </Object>
     <Object texture_id="enemies" object_id="dog" rotation="0">
         <Types collider="1"/>
@@ -75,7 +75,7 @@
                 <Tile row="8" col="4" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
-        <CollisionBox x="508" y="268" w="20" h="262"/>
+        <CollisionBox x="526" y="286" w="-16" h="280"/>
     </Object>
     <Object texture_id="enemies" object_id="goblin" rotation="0">
         <Types collider="1"/>
@@ -98,7 +98,7 @@
                 <Tile row="13" col="4" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
-        <CollisionBox x="258" y="408" w="20" h="402"/>
+        <CollisionBox x="276" y="426" w="-16" h="420"/>
     </Object>
     <Object texture_id="enemies" object_id="helixenemy" rotation="0">
         <Types collider="1"/>
@@ -121,7 +121,7 @@
                 <Tile row="13" col="4" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
-        <CollisionBox x="608" y="158" w="20" h="152"/>
+        <CollisionBox x="626" y="176" w="-16" h="170"/>
     </Object>
     <Object texture_id="enemies" object_id="mage" rotation="0">
         <Types collider="1"/>
@@ -144,7 +144,7 @@
                 <Tile row="8" col="4" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
-        <CollisionBox x="558" y="308" w="20" h="302"/>
+        <CollisionBox x="576" y="326" w="-16" h="320"/>
     </Object>
     <Object texture_id="enemies" object_id="skeleton" rotation="0">
         <Types collider="1"/>
@@ -167,10 +167,10 @@
                 <Tile row="11" col="4" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
-        <CollisionBox x="258" y="158" w="20" h="152"/>
+        <CollisionBox x="276" y="176" w="-16" h="170"/>
     </Object>
     <Object texture_id="lockless-door-open" object_id="entrance" rotation="0">
-        <Types collider="1" entrance="1" next_room_id="room4" curr_room_id="room3" next_x="620" next_y="1280"/>
+        <Types collider="1"/>
         <SrcRect row="6" col="2" w="16" h="16"/>
         <DstRect x="460" y="140" w="48" h="48"/>
         <Animation>
@@ -181,7 +181,7 @@
                 <Tile row="0" col="0" w="32" h="32"/>
             </AnimationInfo>
         </Animation>
-        <CollisionBox x="460" y="120" w="48" h="48"/>
+        <CollisionBox x="480" y="140" w="8" h="134"/>
     </Object>
     <Object texture_id="trap_idle" object_id="trap" rotation="0">
         <Types collider="1"/>
@@ -198,6 +198,6 @@
                 <Tile row="0" col="0" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
-        <CollisionBox x="608" y="308" w="16" h="302"/>
+        <CollisionBox x="626" y="326" w="-20" h="320"/>
     </Object>
 </Root>

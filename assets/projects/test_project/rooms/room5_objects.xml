@@ -54,7 +54,7 @@
             </AnimationInfo>
         </Animation>
         <CollisionBox x="604" y="304" w="28" h="298"/>
-        <RangedEnemyStats health="100" damage="25" speed="70" range="250" perception_width="1500" perception_height="1868195728" xp="30" fire_interval="5000" spread="0" spread_count="0"/>
+        <RangedEnemyStats health="100" damage="25" speed="70" range="250" perception_width="1500" perception_height="1831722080" xp="30" fire_interval="5000" spread="0" spread_count="0"/>
     </Object>
     <Object texture_id="enemies" object_id="dog" rotation="0">
         <Types collider="1" ranged_enemy="1" dog="1"/>
@@ -78,7 +78,7 @@
             </AnimationInfo>
         </Animation>
         <CollisionBox x="504" y="264" w="28" h="258"/>
-        <RangedEnemyStats health="100" damage="25" speed="70" range="250" perception_width="1500" perception_height="1868195728" xp="30" fire_interval="1000" spread="0" spread_count="0"/>
+        <RangedEnemyStats health="100" damage="25" speed="70" range="250" perception_width="1500" perception_height="1831722080" xp="30" fire_interval="1000" spread="0" spread_count="0"/>
     </Object>
     <Object texture_id="enemies" object_id="goblin" rotation="0">
         <Types collider="1" ranged_enemy="1" goblin="1"/>
@@ -102,7 +102,7 @@
             </AnimationInfo>
         </Animation>
         <CollisionBox x="254" y="404" w="28" h="398"/>
-        <RangedEnemyStats health="100" damage="25" speed="80" range="250" perception_width="1500" perception_height="1868195728" xp="30" fire_interval="250" spread="3.9478419" spread_count="78"/>
+        <RangedEnemyStats health="100" damage="25" speed="80" range="250" perception_width="1500" perception_height="1831722080" xp="30" fire_interval="250" spread="38.963638" spread_count="769"/>
     </Object>
     <Object texture_id="enemies" object_id="helixenemy" rotation="0">
         <Types collider="1" ranged_enemy="1" helix_enemy="1"/>
@@ -126,7 +126,7 @@
             </AnimationInfo>
         </Animation>
         <CollisionBox x="604" y="154" w="28" h="148"/>
-        <RangedEnemyStats health="100" damage="25" speed="70" range="180" perception_width="1500" perception_height="1868195728" xp="30" fire_interval="2000" spread="0" spread_count="0"/>
+        <RangedEnemyStats health="100" damage="25" speed="70" range="180" perception_width="1500" perception_height="1831722080" xp="30" fire_interval="2000" spread="0" spread_count="0"/>
     </Object>
     <Object texture_id="enemies" object_id="mage" rotation="0">
         <Types collider="1" ranged_enemy="1" mage="1"/>
@@ -150,7 +150,7 @@
             </AnimationInfo>
         </Animation>
         <CollisionBox x="554" y="304" w="28" h="298"/>
-        <RangedEnemyStats health="100" damage="25" speed="80" range="250" perception_width="1500" perception_height="1868195728" xp="30" fire_interval="3000" spread="0" spread_count="0"/>
+        <RangedEnemyStats health="100" damage="25" speed="80" range="250" perception_width="1500" perception_height="1831722080" xp="30" fire_interval="3000" spread="0" spread_count="0"/>
     </Object>
     <Object texture_id="enemies" object_id="skeleton" rotation="0">
         <Types collider="1" ranged_enemy="1" skeleton="1"/>
@@ -173,11 +173,11 @@
                 <Tile row="11" col="4" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
-        <CollisionBox x="254" y="154" w="28" h="148"/>
-        <RangedEnemyStats health="100" damage="25" speed="80" range="250" perception_width="1500" perception_height="1868195728" xp="30" fire_interval="2000" spread="0.98696047" spread_count="9"/>
+        <CollisionBox x="244" y="374" w="28" h="368"/>
+        <RangedEnemyStats health="100" damage="25" speed="80" range="250" perception_width="1500" perception_height="1831722080" xp="30" fire_interval="2000" spread="9.7409096" spread_count="87"/>
     </Object>
     <Object texture_id="lockless-door-open" object_id="entrance" rotation="90">
-        <Types collider="1" entrance="1" curr_room_id="room5" next_room_id="room6" next_x="260" next_y="900"/>
+        <Types collider="1"/>
         <SrcRect row="6" col="2" w="16" h="16"/>
         <DstRect x="1700" y="380" w="48" h="48"/>
         <Animation>
@@ -188,6 +188,6 @@
                 <Tile row="0" col="0" w="32" h="32"/>
             </AnimationInfo>
         </Animation>
-        <CollisionBox x="1720" y="380" w="48" h="48"/>
+        <CollisionBox x="1734" y="394" w="20" h="388"/>
     </Object>
 </Root>
