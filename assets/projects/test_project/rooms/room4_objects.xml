@@ -155,7 +155,7 @@
     <Object texture_id="enemies" object_id="skeleton" rotation="0">
         <Types collider="1" ranged_enemy="1" skeleton="1"/>
         <SrcRect row="6" col="2" w="16" h="16"/>
-        <DstRect x="620" y="1280" w="36" h="36"/>
+        <DstRect x="620" y="600" w="36" h="36"/>
         <Animation>
             <AnimationInfo id="Dead" texture_id="enemies" frame_count="2" speed="500" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
                 <Tile row="9" col="0" w="16" h="16"/>
@@ -173,7 +173,7 @@
                 <Tile row="11" col="4" w="16" h="16"/>
             </AnimationInfo>
         </Animation>
-        <CollisionBox x="624" y="1284" w="28" h="1278"/>
+        <CollisionBox x="624" y="600" w="28" h="1278"/>
         <RangedEnemyStats health="100" damage="25" speed="80" range="250" perception_width="1500" perception_height="1831722080" xp="30" fire_interval="2000" spread="9.7409096" spread_count="87"/>
     </Object>
     <Object texture_id="lockless-door-open" object_id="entrance" rotation="90">
