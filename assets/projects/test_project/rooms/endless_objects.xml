@@ -410,4 +410,83 @@
         </Animation>
         <EnemyStats health="1000" damage="25" speed="140" range="500" perception_width="1500" perception_height="1500" xp="30" fire_interval="2000" spread="0.1" spread_count="1"/>
     </Object>
+    <Object texture_id="trap_idle" object_id="trap" rotation="0">
+        <Types collider="1" trap="1" damage="30"/>
+        <SrcRect row="0" col="0" w="16" h="16"/>
+        <DstRect x="600" y="300" w="32" h="32"/>
+        <Animation>
+            <AnimationInfo id="trap_closing" texture_id="trap_closing" frame_count="3" speed="50" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
+                <Tile row="0" col="0" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo id="trap_idle" texture_id="trap_idle" frame_count="1" speed="0" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
+                <Tile row="0" col="0" w="16" h="16"/>
+            </AnimationInfo>
+            <AnimationInfo id="trap_opening" texture_id="trap_opening" frame_count="5" speed="25" flip="0" loop="false" key_frames_start="0" key_frames_end="0">
+                <Tile row="0" col="0" w="16" h="16"/>
+            </AnimationInfo>
+        </Animation>
+        <CollisionBox x="602" y="302" w="28" h="28"/>
+        </Object>
+        <Object texture_id="" object_id="destructibleitem" rotation="0">
+        <Types collider="1" destructibleitem = "1"/>
+        <SrcRect row="0" col="0" w="16" h="16"/>
+        <DstRect x="500" y="600" w="48" h="48"/>
+        <Animation>
+            <AnimationInfo
+                id="item_idle"
+                texture_id="destructible_objects"
+                frame_count="1"
+                speed="0"
+                loop="1">
+                <Tile row="0" col="0" w="32" h="32"/>
+            </AnimationInfo>
+            <AnimationInfo
+                id="item_destroying"
+                texture_id="destructible_objects"
+                frame_count="7"
+                speed="150"
+                loop="0">
+                <Tile row="0" col="0" w="32" h="32"/>
+            </AnimationInfo>
+            <AnimationInfo
+                id="item_destroyed"
+                texture_id="destructible_objects"
+                frame_count="1"
+                speed="0"
+                loop="0">
+                <Tile row="0" col="6" w="32" h="32"/>
+            </AnimationInfo>
+        </Animation>
+    </Object>
+     <Object texture_id="" object_id="destructibleitem" rotation="0">
+        <Types collider="1" destructibleitem = "1"/>
+        <SrcRect row="0" col="0" w="16" h="16"/>
+        <DstRect x="700" y="600" w="48" h="48"/>
+        <Animation>
+            <AnimationInfo
+                id="item_idle"
+                texture_id="destructible_objects"
+                frame_count="1"
+                speed="0"
+                loop="1">
+                <Tile row="1" col="0" w="32" h="32"/>
+            </AnimationInfo>
+            <AnimationInfo
+                id="item_destroying"
+                texture_id="destructible_objects"
+                frame_count="7"
+                speed="150"
+                loop="0">
+                <Tile row="1" col="0" w="32" h="32"/>
+            </AnimationInfo>
+            <AnimationInfo
+                id="item_destroyed"
+                texture_id="destructible_objects"
+                frame_count="1"
+                speed="0"
+                loop="0">
+                <Tile row="1" col="6" w="32" h="32"/>
+            </AnimationInfo>
+        </Animation>
+    </Object>
 </Root>
