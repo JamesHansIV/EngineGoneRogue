@@ -3,7 +3,6 @@
 #include "Engine/Renderer/Renderer.h"
 #include "Engine/Timer/Timer.h"
 
-Renderer renderer = Renderer::GetInstance();
 const int kDstRectMultiplier = 2;
 const SDL_Color kTimerColor = {255, 255, 255, 255};
 
@@ -27,6 +26,7 @@ std::string GetFormattedTime() {
 void TimerElement::Draw() {
     const std::string time = GetFormattedTime();
 
+    Renderer renderer = Renderer::GetInstance();
     //TODO: Are we adding a new texture every render?? Maybe this is inefficient
     Texture* timer_texture =
         renderer.AddTextTexture("timer", time, kTimerColor);

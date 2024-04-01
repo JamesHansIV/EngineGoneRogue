@@ -229,7 +229,7 @@ void Game::GenerateRandomEnemy() {
     float const generated_y = rand() % 1800 + 20;
 
     // Generate random enemy type
-    int const enemy_type = 8;
+    int const enemy_type = rand() % 9;
     Enemy* generated_enemy = nullptr;
 
     switch (enemy_type) {
