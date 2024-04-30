@@ -2,4 +2,4 @@ vendor/** linguist-generated=true
 include/** linguist-generated=true
 assets/** linguist-generated=true
 lib/** linguist-generated=true
-elen/**
+elen/** linguist-generated=true
